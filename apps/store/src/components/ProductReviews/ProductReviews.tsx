@@ -1,36 +1,34 @@
 import styled from '@emotion/styled'
-import React, { useState } from 'react'
-import { Space, theme } from 'ui'
+import { useTranslation } from 'next-i18next'
+import { Button, Space, theme } from 'ui'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
-import type {
-  Score,
-  Review,
-  ReviewsDistribution,
-} from '@/features/memberReviews/memberReviews.types'
-import { useProuctReviewsDataContext } from '@/features/memberReviews/ProductReviewsDataProvider'
 import { TrustpilotWidget } from '@/features/memberReviews/TruspilotWidget'
-import { useTrustpilotData } from '@/features/memberReviews/TrustpilotDataProvider'
 import { AverageRating } from './AverageRating'
 import { ReviewsDialog } from './ReviewsDialog'
 import { ReviewsDistributionByScore } from './ReviewsDistributionByScore'
-import { ReviewTabs, TABS, type Tab } from './ReviewTabs'
+import { ReviewTabs, TABS } from './ReviewTabs'
+import { useReviews } from './useReviews'
 
 type Props = {
   tooltipText?: string
 }
 
 export const ProductReviews = (props: Props) => {
-  const getReviewsData = useGetReviewsData()
+  const { t } = useTranslation('common')
+  const {
+    rating,
+    reviews,
+    reviewsDistribution,
+    selectedTab,
+    setSelectedTab,
+    setSelectedScore,
+    selectedScore,
+  } = useReviews()
 
-  const [selectedScore, setSelectedScore] = useState<Score>(5)
-  const [selectedTab, setSelectedTab] = useState<Tab>(TABS.PRODUCT)
-
-  const reviewsData = getReviewsData(selectedTab, selectedScore)
-  if (!reviewsData) {
-    console.warn('[ProductReviews]: No review data available. Skip rendering.')
+  if (!rating) {
+    console.warn('ProductReviews | No rating data available')
     return null
   }
-  const { rating, reviewsDistribution, reviews } = reviewsData
 
   return (
     <Wrapper y={3.5}>
@@ -64,50 +62,12 @@ export const ProductReviews = (props: Props) => {
           selectedScore={selectedScore}
           onSelectedScoreChange={setSelectedScore}
           tooltipText={props.tooltipText}
-        />
+        >
+          <Button variant="ghost">{t('VIEW_REVIEWS_LABEL')}</Button>
+        </ReviewsDialog>
       </Space>
     </Wrapper>
   )
-}
-
-const useGetReviewsData = () => {
-  const productReviewsData = useProuctReviewsDataContext()
-  const trustpilotData = useTrustpilotData()
-
-  const getReviewsData = (selectedTab: Tab, selectedScore: Score) => {
-    if (!productReviewsData && !trustpilotData) {
-      return null
-    }
-
-    const rating = { score: 0, totalOfReviews: 0 }
-    if (selectedTab === TABS.PRODUCT && productReviewsData?.averageRating) {
-      rating.score = productReviewsData.averageRating.score
-      rating.totalOfReviews = productReviewsData.averageRating.totalOfReviews
-    } else if (selectedTab === TABS.TRUSTPILOT && trustpilotData) {
-      rating.score = trustpilotData.averageRating.score
-      rating.totalOfReviews = trustpilotData.averageRating.totalOfReviews
-    }
-
-    let reviews: Array<Review> = []
-    if (selectedTab === TABS.PRODUCT && productReviewsData?.reviewsByScore) {
-      reviews = productReviewsData.reviewsByScore[selectedScore].reviews
-    } else if (selectedTab === TABS.TRUSTPILOT && trustpilotData) {
-      reviews = trustpilotData.reviews
-    }
-
-    let reviewsDistribution: ReviewsDistribution = []
-    if (selectedTab === TABS.PRODUCT && productReviewsData?.reviewsDistribution) {
-      reviewsDistribution = productReviewsData.reviewsDistribution
-    }
-
-    return {
-      rating,
-      reviews,
-      reviewsDistribution,
-    }
-  }
-
-  return getReviewsData
 }
 
 const Wrapper = styled(Space)({

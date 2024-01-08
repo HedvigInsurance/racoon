@@ -29,7 +29,7 @@ export const AverageRating = (props: Props) => {
 
       <SpaceFlex direction="horizontal" space={0.25} align="center">
         <Text as="span" color="textSecondary">
-          {t('RATING_REVIEWS_COUNT_LABEL', { reviewsCount: props.reviewsCount })}
+          {t('REVIEWS_COUNT_BASED_ON_LABEL', { count: props.reviewsCount })}
         </Text>
 
         {props.explanation && (

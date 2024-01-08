@@ -1,26 +1,31 @@
 import styled from '@emotion/styled'
 import Head from 'next/head'
-import { Text, InfoIcon, theme } from 'ui'
+import { useTranslation } from 'next-i18next'
+import { type ComponentProps } from 'react'
+import { Text, StarIcon, theme, mq } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ProductData } from '@/components/ProductData/ProductData.types'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
-import { Stars } from '@/components/ProductReviews/Stars'
+import { ReviewsDialog } from '@/components/ProductReviews/ReviewsDialog'
+import { useReviews } from '@/components/ProductReviews/useReviews'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { Tooltip } from '@/components/Tooltip/Tooltip'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
 import { useProuctReviewsDataContext } from '@/features/memberReviews/ProductReviewsDataProvider'
 
 type AverageRating = NonNullable<ReturnType<typeof useProuctReviewsDataContext>>['averageRating']
 
 export const ProductAverageRatingBlock = () => {
+  const { t } = useTranslation('common')
   const productReviewsData = useProuctReviewsDataContext()
+
   const productData = useProductData()
 
   if (!productReviewsData) {
-    console.warn(`AverageRatingBlock | Average rating for product ${productData.name} not found`)
+    console.warn(
+      `ProductAverageRatingBlock | Average rating for product ${productData.name} not found`,
+    )
     return null
   }
-
   const { averageRating } = productReviewsData
 
   return (
@@ -42,25 +47,22 @@ export const ProductAverageRatingBlock = () => {
           }}
         >
           <Wrapper>
-            <Stars score={averageRating.score} />
+            <StarIcon />
 
             <SpaceFlex direction="horizontal" space={0.5} align="center">
-              <Text size={{ _: 'sm', md: 'md' }}>
-                {/* TODO: lokalise this */}
-                {averageRating.score} out of {MAX_SCORE}
+              <Text as="span" color="textSecondary" size={{ _: 'sm', md: 'md' }}>
+                {t('RATING_SCORE_LABEL', { score: averageRating.score, maxScore: MAX_SCORE })}
               </Text>
 
-              <Text color="textSecondaryOnGray" size={{ _: 'xs', md: 'sm' }}>
-                {/* TODO: lokalise this */}
-                Based on {averageRating.totalOfReviews} reviews
+              <Text as="span" color="textSecondary">
+                •
               </Text>
 
-              {/* TODO: lokalise this */}
-              <Tooltip message="These ratings are obtained from users that have made a claim">
-                <button style={{ marginTop: 2 }}>
-                  <InfoIcon color={theme.colors.textSecondary} />
-                </button>
-              </Tooltip>
+              <Dialog>
+                <Trigger>
+                  {t('REVIEWS_COUNT_LABEL', { count: averageRating.totalOfReviews })}
+                </Trigger>
+              </Dialog>
             </SpaceFlex>
           </Wrapper>
         </GridLayout.Content>
@@ -71,11 +73,60 @@ export const ProductAverageRatingBlock = () => {
 
 ProductAverageRatingBlock.blockName = 'productAverageRating'
 
+const Dialog = (props: Pick<ComponentProps<typeof ReviewsDialog>, 'children'>) => {
+  const {
+    rating,
+    reviews,
+    reviewsDistribution,
+    selectedTab,
+    setSelectedTab,
+    selectedScore,
+    setSelectedScore,
+  } = useReviews()
+
+  if (!rating) return null
+
+  return (
+    <ReviewsDialog
+      rating={rating}
+      reviews={reviews}
+      reviewsDistribution={reviewsDistribution}
+      selectedTab={selectedTab}
+      onSelectedTabChange={setSelectedTab}
+      selectedScore={selectedScore}
+      onSelectedScoreChange={setSelectedScore}
+    >
+      {props.children}
+    </ReviewsDialog>
+  )
+}
+
 const Wrapper = styled.div({
   display: 'flex',
   justifyContent: 'center',
   gap: theme.space.xs,
   flexWrap: 'wrap',
+})
+
+const Trigger = styled.button({
+  color: theme.colors.textSecondary,
+  fontSize: theme.fontSizes.sm,
+  textDecoration: 'underline',
+  cursor: 'pointer',
+
+  [mq.md]: {
+    fontSize: theme.fontSizes.md,
+  },
+
+  ':focus-visible': {
+    boxShadow: theme.shadow.focus,
+  },
+
+  '@media (hover: hover)': {
+    ':hover': {
+      color: theme.colors.textPrimary,
+    },
+  },
 })
 
 const getProductStructuredData = (product: ProductData, averageRating: AverageRating) => {
