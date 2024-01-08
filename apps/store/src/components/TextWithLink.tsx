@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import Link from 'next/link'
 import { type ComponentProps } from 'react'
 import { Text } from 'ui'
+import { getLinkRel } from '@/services/storyblok/Storyblok.helpers'
 import { nestedLinkStyles } from './RichText/RichText.styles'
 
 type WithLinkProps = Pick<ComponentProps<typeof Link>, 'href' | 'target' | 'rel'> & {
@@ -28,8 +29,7 @@ export const WithLink = (props: WithLinkProps) => {
 
   const [linkText, afterLink] = rest.split(']]', 2)
 
-  // If no rel is provided, we default to noopener for external links
-  const rel = props.rel ?? props.target === '_blank' ? 'noopener' : undefined
+  const rel = getLinkRel(props)
 
   return (
     <NestedLink>

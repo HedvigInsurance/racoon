@@ -90,3 +90,19 @@ export const getImgSrc = (src: string) => {
   }
   return (src || '').replace('//a.storyblok.com', '//assets.hedvig.com')
 }
+
+/**
+ * If rel is set, use rel value from custom attributes in Storyblok link field
+ * If target is _blank, default to noopener
+ */
+export const getLinkRel = (link: Pick<LinkField, 'rel' | 'target'>) => {
+  if (link.rel) {
+    return link.rel
+  }
+
+  if (link.target === '_blank') {
+    return 'noopener'
+  }
+
+  return undefined
+}

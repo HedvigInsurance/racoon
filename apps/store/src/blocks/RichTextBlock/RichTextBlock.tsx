@@ -5,6 +5,7 @@ import { render, type RenderOptions, MARK_LINK } from 'storyblok-rich-text-react
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { RichText } from '@/components/RichText/RichText'
 import { type GridColumnsField, type SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { getLinkRel } from '@/services/storyblok/Storyblok.helpers'
 import { ImageBlock, type ImageBlockProps } from '../ImageBlock'
 
 export type RichTextBlockProps = SbBaseBlockProps<{
@@ -59,7 +60,8 @@ const RENDER_OPTIONS: RenderOptions = {
 
       // External links
       if (isExternalLink(href)) {
-        return <a {...linkProps} />
+        const rel = getLinkRel(linkProps)
+        return <a {...linkProps} rel={rel} />
       }
 
       // Internal links
