@@ -7,7 +7,7 @@ import { TrustpilotLogo } from '@/components/TrustpilotLogo/TrustpilotLogo'
 import { useTrustpilotData } from '@/features/memberReviews/TrustpilotDataProvider'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { LinkField } from '@/services/storyblok/storyblok'
-import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
+import { getLinkFieldURL, getLinkRel } from '@/services/storyblok/Storyblok.helpers'
 import { useFormatter } from '@/utils/useFormatter'
 
 type Props = SbBaseBlockProps<{
@@ -25,9 +25,7 @@ export const TrustpilotBlock = ({ blok }: Props) => {
   }
 
   const isInternalLink = blok.link.linktype === 'story'
-
-  // If no rel is provided, we default to noopener for external links
-  const rel = blok.link.rel ?? isInternalLink ? undefined : 'noopener'
+  const rel = getLinkRel(blok.link)
 
   return (
     <Wrapper {...storyblokEditable(blok)}>
