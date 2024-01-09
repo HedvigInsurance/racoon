@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { theme, mq, Button } from 'ui'
 import { resetAuthTokens } from '@/services/authApi/persist'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
