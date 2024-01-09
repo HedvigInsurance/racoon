@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
-import { useTranslation } from 'next-i18next'
-import { Dialog, Button, Space, CrossIcon, theme, mq } from 'ui'
+import { type ReactNode } from 'react'
+import { Dialog, Space, CrossIcon, theme, mq } from 'ui'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
 import type { Score } from '@/features/memberReviews/memberReviews.types'
 import type {
@@ -14,6 +14,7 @@ import { ReviewsFilter } from './ReviewsFilter'
 import { ReviewTabs, TABS, type Tab } from './ReviewTabs'
 
 type Props = {
+  children: ReactNode
   reviews: Array<Review>
   rating: Rating
   reviewsDistribution: ReviewsDistribution
@@ -25,6 +26,7 @@ type Props = {
 }
 
 export const ReviewsDialog = ({
+  children,
   reviews,
   rating,
   reviewsDistribution,
@@ -34,13 +36,9 @@ export const ReviewsDialog = ({
   onSelectedScoreChange,
   tooltipText,
 }: Props) => {
-  const { t } = useTranslation('common')
-
   return (
     <Dialog.Root>
-      <Dialog.Trigger asChild={true}>
-        <Button variant="ghost">{t('VIEW_REVIEWS_LABEL')}</Button>
-      </Dialog.Trigger>
+      <Dialog.Trigger asChild={true}>{children}</Dialog.Trigger>
 
       <DialogContent centerContent={true}>
         <DialogWindow>
