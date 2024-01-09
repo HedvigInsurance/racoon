@@ -40,6 +40,7 @@
   "PAYMENT_CONNECT_RETRY": "Försök igen",
   "PAYMENT_CONNECT_SUCCESS": "Autogiro kopplat! Du kan stänga sidan nu :)",
   "PAYMENT_CONNECT_TITLE": "Koppla autogiro",
+  "PRODUCT_REVIEWS_DISCLAIMER": "Dessa omdömen har samlats in via inbjudan till alla medlemmar som haft ett skadeärende hos Hedvig.",
   "PRODUCT_REVIEWS_TAB_LABEL": "Omdömen ({{score}})",
   "RATING_SCORE_LABEL": "{{score}} av {{maxScore}}",
   "READ_MORE": "Läs mer",

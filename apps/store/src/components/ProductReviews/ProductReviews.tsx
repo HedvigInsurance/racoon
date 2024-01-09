@@ -9,11 +9,7 @@ import { ReviewsDistributionByScore } from './ReviewsDistributionByScore'
 import { ReviewTabs, TABS } from './ReviewTabs'
 import { useReviews } from './useReviews'
 
-type Props = {
-  tooltipText?: string
-}
-
-export const ProductReviews = (props: Props) => {
+export const ProductReviews = () => {
   const { t } = useTranslation('common')
   const {
     rating,
@@ -30,13 +26,18 @@ export const ProductReviews = (props: Props) => {
     return null
   }
 
+  const tooltipText =
+    selectedTab === TABS.PRODUCT
+      ? t('PRODUCT_REVIEWS_DISCLAIMER')
+      : t('TRUSTPILOT_REVIEWS_DISCLAIMER')
+
   return (
     <Wrapper y={3.5}>
       <AverageRating
         score={rating.score}
         maxScore={MAX_SCORE}
         reviewsCount={rating.totalOfReviews}
-        explanation={props.tooltipText}
+        explanation={tooltipText}
       />
 
       <Space y={1}>
@@ -61,7 +62,7 @@ export const ProductReviews = (props: Props) => {
           onSelectedTabChange={setSelectedTab}
           selectedScore={selectedScore}
           onSelectedScoreChange={setSelectedScore}
-          tooltipText={props.tooltipText}
+          tooltipText={tooltipText}
         >
           <Button variant="ghost">{t('VIEW_REVIEWS_LABEL')}</Button>
         </ReviewsDialog>

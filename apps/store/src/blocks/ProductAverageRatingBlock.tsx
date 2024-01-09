@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import Head from 'next/head'
 import { useTranslation } from 'next-i18next'
-import { type ComponentProps } from 'react'
+import { type ReactNode } from 'react'
 import { Text, StarIcon, theme, mq } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ProductData } from '@/components/ProductData/ProductData.types'
@@ -17,7 +17,6 @@ type AverageRating = NonNullable<ReturnType<typeof useProuctReviewsDataContext>>
 export const ProductAverageRatingBlock = () => {
   const { t } = useTranslation('common')
   const productReviewsData = useProuctReviewsDataContext()
-
   const productData = useProductData()
 
   if (!productReviewsData) {
@@ -73,7 +72,12 @@ export const ProductAverageRatingBlock = () => {
 
 ProductAverageRatingBlock.blockName = 'productAverageRating'
 
-const Dialog = (props: Pick<ComponentProps<typeof ReviewsDialog>, 'children'>) => {
+type DialogProps = {
+  children: ReactNode
+}
+
+const Dialog = (props: DialogProps) => {
+  const { t } = useTranslation('common')
   const {
     rating,
     reviews,
@@ -86,6 +90,9 @@ const Dialog = (props: Pick<ComponentProps<typeof ReviewsDialog>, 'children'>) =
 
   if (!rating) return null
 
+  const tooltipText =
+    selectedTab === 'product' ? t('PRODUCT_REVIEWS_DISCLAIMER') : t('TRUSTPILOT_REVIEWS_DISCLAIMER')
+
   return (
     <ReviewsDialog
       rating={rating}
@@ -95,6 +102,7 @@ const Dialog = (props: Pick<ComponentProps<typeof ReviewsDialog>, 'children'>) =
       onSelectedTabChange={setSelectedTab}
       selectedScore={selectedScore}
       onSelectedScoreChange={setSelectedScore}
+      tooltipText={tooltipText}
     >
       {props.children}
     </ReviewsDialog>
