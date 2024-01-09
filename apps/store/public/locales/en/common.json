@@ -51,6 +51,7 @@
   "REVIEWS_COUNT_BASED_ON_LABEL_other": "Based on {{count}} reviews",
   "REVIEWS_COUNT_LABEL_one": "{{count}} review",
   "REVIEWS_COUNT_LABEL_other": "{{count}} reviews",
+  "REVIEW_COMMENTS_READ_MORE": "Read more",
   "SELECT_INSURANCE": "Select insurance",
   "TRUSTPILOT_REVIEWS_COUNT": "Based on {{numberOfReviews}} reviews",
   "TRUSTPILOT_REVIEWS_DISCLAIMER": "We encourage our members to write reviews about us on Trustpilot. The platform is open to everyone and cannot verify that only Hedvig's members leave reviews.",
