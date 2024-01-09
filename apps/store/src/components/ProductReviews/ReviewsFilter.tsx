@@ -5,7 +5,7 @@ import { ReviewsDistributionByScore } from './ReviewsDistributionByScore'
 
 type Props = {
   reviewsDistribution: ReviewsDistribution
-  selectedScore: number
+  selectedScore: Score
   onSelectedScoreChange: (score: Score) => void
 }
 
@@ -42,9 +42,11 @@ const ReviewsFilterOption = styled.button<{ selected: boolean }>(({ selected }) 
   },
 
   '@media (hover: hover)': {
-    ':not(:disabled) :hover': {
-      backgroundColor: theme.colors.opaque1,
-      cursor: 'pointer',
+    ':not(:disabled)': {
+      ':hover': {
+        backgroundColor: theme.colors.opaque1,
+        cursor: 'pointer',
+      },
     },
   },
 }))

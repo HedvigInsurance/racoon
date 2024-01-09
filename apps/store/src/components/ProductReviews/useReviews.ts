@@ -17,11 +17,8 @@ export const useReviews = (initialSelectedTab: Tab = TABS.PRODUCT) => {
     const defaultScore: Score = 5
 
     if (productReviewsData?.reviewsByScore) {
-      // Object.keys changes the types of object keys to string, so we need to cast it back to Score
-      const sortedScores = Object.keys(productReviewsData.reviewsByScore).sort(
-        (a, b) => Number(b) - Number(a),
-      ) as unknown as Array<Score>
-      const initialSelectedScore: Score | undefined = sortedScores.find(
+      const scores: Array<Score> = [5, 4, 3, 2, 1]
+      const initialSelectedScore: Score | undefined = scores.find(
         (score) => productReviewsData.reviewsByScore[score].reviews.length > 0,
       )
 

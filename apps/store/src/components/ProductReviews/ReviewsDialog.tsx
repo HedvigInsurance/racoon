@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { type ReactNode } from 'react'
-import { Dialog, Space, CrossIcon, theme, mq } from 'ui'
+import { Dialog, Text, Space, CrossIcon, theme, mq } from 'ui'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
 import type { Score } from '@/features/memberReviews/memberReviews.types'
 import type {
@@ -36,18 +37,20 @@ export const ReviewsDialog = ({
   onSelectedScoreChange,
   tooltipText,
 }: Props) => {
+  const { t } = useTranslation('common')
+
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild={true}>{children}</Dialog.Trigger>
 
       <DialogContent centerContent={true}>
-        <DialogWindow>
-          <Dialog.Close asChild={true}>
-            <CloseButton>
-              <CrossIcon size={'1.5rem'} />
-            </CloseButton>
-          </Dialog.Close>
+        <Dialog.Close asChild={true}>
+          <CloseButton>
+            <CrossIcon size={'1rem'} />
+          </CloseButton>
+        </Dialog.Close>
 
+        <DialogWindow>
           <Space y={3.5}>
             <AverageRating
               score={Number(rating.score)}
@@ -67,11 +70,20 @@ export const ReviewsDialog = ({
                 />
               )}
 
-              <Reviews y={{ base: 0.5, md: 1 }}>
-                {reviews.map((review) => (
-                  <Review key={review.id} {...review} />
-                ))}
-              </Reviews>
+              {reviews.length > 0 ? (
+                <Reviews y={{ base: 0.5, md: 1 }}>
+                  {reviews.map((review) => (
+                    <Review key={review.id} {...review} />
+                  ))}
+                  <LatestReviewsWithCommentsLabel align="center" color="textSecondary">
+                    {t('LATEST_REVIEWS_WITH_COMMENTS_LABEL')}
+                  </LatestReviewsWithCommentsLabel>
+                </Reviews>
+              ) : (
+                <NoReviewsLabel align="center" color="textSecondary">
+                  {t('NO_REVIEWS_LABEL')}
+                </NoReviewsLabel>
+              )}
             </Space>
           </Space>
         </DialogWindow>
@@ -86,7 +98,10 @@ const CloseButton = styled.button({
   right: theme.space.md,
   borderRadius: '50%',
   padding: theme.space.xs,
+  backgroundColor: theme.colors.translucent1,
+  backdropFilter: 'blur(30px)',
   cursor: 'pointer',
+  zIndex: 1,
 
   [mq.md]: {
     top: theme.space.lg,
@@ -101,7 +116,6 @@ const CloseButton = styled.button({
 })
 
 const DialogWindow = styled(Dialog.Window)({
-  position: 'relative',
   borderRadius: theme.radius.lg,
   paddingInline: theme.space.md,
   paddingBlock: theme.space.xxxl,
@@ -113,12 +127,14 @@ const DialogWindow = styled(Dialog.Window)({
 })
 
 const DialogContent = styled(Dialog.Content)({
+  position: 'relative',
   alignSelf: 'center',
   display: 'flex',
   flexDirection: 'column',
   width: `calc(100% - ${theme.space.md} * 2)`,
   maxWidth: '28.5rem',
   maxHeight: `calc(100% - ${theme.space.md} * 2)`,
+  isolation: 'isolate',
 
   [mq.md]: {
     width: `calc(100% - ${theme.space.md} * 2)`,
@@ -144,4 +160,17 @@ const Review = styled(ReviewComment)({
       marginBottom: theme.space.xxl,
     },
   },
+})
+
+const LatestReviewsWithCommentsLabel = styled(Text)({
+  marginBottom: theme.space.md,
+  padding: theme.space.md,
+
+  [mq.md]: {
+    marginBottom: theme.space.xl,
+  },
+})
+
+const NoReviewsLabel = styled(Text)({
+  padding: theme.space.md,
 })
