@@ -14,8 +14,6 @@
 
   "labels": ["needs approval/merge"],
   "ignoreDeps": [
-    // Know issue with navigation: https://hedviginsurance.slack.com/archives/C041SD67G82/p1703158085170629
-    "@storyblok/react",
     // Not actively used, only needed in closing markets
     "@adyen/adyen-web",
     // Following dependencies are brought in as direct to solve versioning conflicts
