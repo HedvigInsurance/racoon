@@ -3,12 +3,15 @@ import styled from '@emotion/styled'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { theme, mq } from 'ui'
+import { theme, mq, Text } from 'ui'
 import { resetAuthTokens } from '@/services/authApi/persist'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
+import { useMemberAreaInfo } from '../useMemberAreaInfo'
 
 export const Menu = () => {
+  const currentMember = useMemberAreaInfo()
+  const memberName = `${currentMember.firstName} ${currentMember.lastName}`
   const router = useRouter()
   const { t } = useTranslation('memberArea')
   const { routingLocale } = useCurrentLocale()
@@ -22,6 +25,10 @@ export const Menu = () => {
 
   return (
     <Navigation>
+      <MemberInfo>
+        <Text>{memberName}</Text>
+        <Text color="textSecondary">{currentMember.ssn}</Text>
+      </MemberInfo>
       <NavigationList>
         <NavgationItem>
           <NavigationLink
@@ -73,6 +80,14 @@ const Navigation = styled.nav({
 
   [mq.lg]: {
     paddingInline: theme.space.xl,
+  },
+})
+
+const MemberInfo = styled.div({
+  display: 'none',
+  [mq.lg]: {
+    display: 'block',
+    marginBottom: theme.space.lg,
   },
 })
 
