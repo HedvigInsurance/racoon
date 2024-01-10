@@ -8,15 +8,18 @@ import { Skeleton } from '@/components/Skeleton'
 import { resetAuthTokens } from '@/services/authApi/persist'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
+import { useFormatter } from '@/utils/useFormatter'
 import { useMemberAreaInfo } from '../useMemberAreaInfo'
 
 export const Menu = () => {
-  const currentMember = useMemberAreaInfo()
-  const memberName = `${currentMember.firstName} ${currentMember.lastName}`
   const router = useRouter()
-  const { t } = useTranslation('memberArea')
+  const { firstName, lastName, ssn } = useMemberAreaInfo()
   const { routingLocale } = useCurrentLocale()
+  const { t } = useTranslation('memberArea')
+  const formatter = useFormatter()
+
   const currentRoute = router.pathname
+  const memberName = `${firstName} ${lastName}`
 
   const internalItems = {
     claim: PageLink.memberAreaClaim().pathname,
@@ -28,7 +31,7 @@ export const Menu = () => {
     <Navigation>
       <MemberInfo>
         <Text>{memberName}</Text>
-        <Text color="textSecondary">{currentMember.ssn}</Text>
+        {ssn && <Text color="textSecondary">{formatter.ssn(ssn)}</Text>}
       </MemberInfo>
       <NavigationList>
         <NavgationItem>
