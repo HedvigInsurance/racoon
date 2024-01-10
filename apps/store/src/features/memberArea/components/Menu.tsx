@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { theme, mq, Text } from 'ui'
+import { Skeleton } from '@/components/Skeleton'
 import { resetAuthTokens } from '@/services/authApi/persist'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
@@ -87,7 +88,9 @@ const MemberInfo = styled.div({
   display: 'none',
   [mq.lg]: {
     display: 'block',
+    width: '100%',
     marginBottom: theme.space.lg,
+    lineHeight: 1.33,
   },
 })
 
@@ -100,6 +103,7 @@ const NavigationList = styled.ul({
   [mq.lg]: {
     flexDirection: 'column',
     gap: theme.space.md,
+    width: '100%',
   },
 })
 
@@ -142,3 +146,29 @@ const NavigationButton = styled.button(NavigationItemStyles, {
 })
 
 const NavigationLink = styled(Link)(NavigationItemStyles)
+
+export const MenuLoadingState = () => {
+  return (
+    <Navigation>
+      <NavigationList>
+        <NavItemSkeleton />
+        <NavItemSkeleton />
+        <NavItemSkeleton />
+        <NavItemSkeleton />
+        <NavItemSkeleton />
+        <NavItemSkeleton />
+      </NavigationList>
+    </Navigation>
+  )
+}
+
+const NavItemSkeleton = styled(Skeleton)({
+  width: '165px',
+  height: '2.5rem',
+  '&:nth-child(even)': { width: '98px' },
+
+  [mq.lg]: {
+    '&&': { width: '100%' },
+    height: '3rem',
+  },
+})
