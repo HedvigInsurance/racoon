@@ -16,16 +16,12 @@ export const useReviews = (initialSelectedTab: Tab = TABS.PRODUCT) => {
   const [selectedScore, setSelectedScore] = useState<Score>(() => {
     const defaultScore: Score = 5
 
-    if (productReviewsData?.reviewsByScore) {
-      const scores: Array<Score> = [5, 4, 3, 2, 1]
-      const initialSelectedScore: Score | undefined = scores.find(
-        (score) => productReviewsData.reviewsByScore[score].reviews.length > 0,
-      )
+    const scores: Array<Score> = [5, 4, 3, 2, 1]
+    const initialSelectedScore = productReviewsData
+      ? scores.find((score) => productReviewsData.reviewsByScore[score].reviews.length)
+      : undefined
 
-      return initialSelectedScore ?? defaultScore
-    }
-
-    return defaultScore
+    return initialSelectedScore ?? defaultScore
   })
   const [selectedTab, setSelectedTab] = useState<Tab>(initialSelectedTab)
 
