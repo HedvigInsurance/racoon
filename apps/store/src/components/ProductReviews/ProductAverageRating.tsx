@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import Head from 'next/head'
 import { useTranslation } from 'next-i18next'
 import { type ReactNode } from 'react'
-import { Text, StarIcon, theme, mq } from 'ui'
+import { Text, StarIcon, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ProductData } from '@/components/ProductData/ProductData.types'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
@@ -11,9 +11,11 @@ import { useReviews } from '@/components/ProductReviews/useReviews'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
 import { useProuctReviewsDataContext } from '@/features/memberReviews/ProductReviewsDataProvider'
+import { useFormatter } from '@/utils/useFormatter'
 
 export const ProductAverageRating = () => {
   const { t } = useTranslation('common')
+  const { numberGrouping } = useFormatter()
   const productReviewsData = useProuctReviewsDataContext()
   const productData = useProductData()
 
@@ -44,20 +46,23 @@ export const ProductAverageRating = () => {
           }}
         >
           <Wrapper>
-            <StarIcon />
+            <StarIcon size="1rem" />
 
-            <SpaceFlex direction="horizontal" space={0.5} align="center">
-              <Text as="span" color="textSecondary" size={{ _: 'sm', md: 'md' }}>
+            <SpaceFlex direction="horizontal" space={0.2} align="center">
+              <Text as="span" color="textSecondary" size={{ _: 'xs' }}>
                 {t('RATING_SCORE_LABEL', { score: averageRating.score, maxScore: MAX_SCORE })}
               </Text>
 
-              <Text as="span" color="textSecondary">
-                •
+              <Text as="span" color="textSecondary" size={{ _: 'xs' }}>
+                ·
               </Text>
 
               <Dialog>
                 <Trigger>
-                  {t('REVIEWS_COUNT_LABEL', { count: averageRating.totalOfReviews })}
+                  {t('REVIEWS_COUNT_LABEL', {
+                    count: averageRating.totalOfReviews,
+                    reviewsCount: numberGrouping(averageRating.totalOfReviews),
+                  })}
                 </Trigger>
               </Dialog>
             </SpaceFlex>
@@ -107,20 +112,17 @@ const Dialog = (props: DialogProps) => {
 
 const Wrapper = styled.div({
   display: 'flex',
+  alignItems: 'center',
   justifyContent: 'center',
-  gap: theme.space.xs,
+  gap: theme.space.xxs,
   flexWrap: 'wrap',
 })
 
 const Trigger = styled.button({
   color: theme.colors.textSecondary,
-  fontSize: theme.fontSizes.sm,
+  fontSize: theme.fontSizes.xs,
   textDecoration: 'underline',
   cursor: 'pointer',
-
-  [mq.md]: {
-    fontSize: theme.fontSizes.md,
-  },
 
   ':focus-visible': {
     boxShadow: theme.shadow.focus,
