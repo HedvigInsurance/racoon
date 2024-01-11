@@ -1,7 +1,12 @@
 import { ProductReviews } from '@/components/ProductReviews/ProductReviews'
+import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
-export const ProductReviewsBlock = () => {
-  return <ProductReviews />
+type Props = SbBaseBlockProps<{
+  productAverageRatingThreshold?: number
+}>
+
+export const ProductReviewsBlock = ({ blok }: Props) => {
+  return <ProductReviews productAverageRatingThreshold={blok.productAverageRatingThreshold} />
 }
 
 ProductReviewsBlock.blockName = 'productReviews'
