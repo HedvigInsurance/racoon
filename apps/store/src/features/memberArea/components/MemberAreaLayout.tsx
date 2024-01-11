@@ -7,6 +7,7 @@ import {
   GLOBAL_PRODUCT_METADATA_PROP_NAME,
   GlobalProductMetadata,
 } from '@/components/LayoutWithMenu/fetchProductMetadata'
+import { useMemberAreaMemberInfoQuery } from '@/services/graphql/generated'
 import { GlobalStory, PageStory } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 import { Menu } from './Menu'
@@ -22,6 +23,7 @@ type Props = {
 
 export const MemberAreaLayout = ({ children }: Props) => {
   const { className, globalStory } = children.props
+  const { loading } = useMemberAreaMemberInfoQuery()
 
   // Happens for transitions from pages with layout to pages without layout
   if (!globalStory) return null
@@ -37,10 +39,13 @@ export const MemberAreaLayout = ({ children }: Props) => {
         {headerBlock.map((nestedBlock) => (
           <HeaderBlock key={nestedBlock._uid} blok={nestedBlock} />
         ))}
-        <Main>
-          <Menu />
-          <Content>{children}</Content>
-        </Main>
+        {loading && <div>Loading...</div>}
+        {!loading && (
+          <Main>
+            <Menu />
+            <Content>{children}</Content>
+          </Main>
+        )}
       </Wrapper>
     </>
   )
