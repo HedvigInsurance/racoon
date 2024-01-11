@@ -20,6 +20,7 @@ export type ProductPageBlockProps = SbBaseBlockProps<{
   overview: Array<SbBlokData>
   coverage: Array<SbBlokData>
   body: Array<SbBlokData>
+  showAverageRating: boolean
 }>
 
 export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
@@ -59,7 +60,7 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
       <Grid>
         <GridLayout.Content width="1/2" align="right">
           <PurchaseFormWrapper>
-            <PurchaseForm />
+            <PurchaseForm showAverageRating={blok.showAverageRating} />
           </PurchaseFormWrapper>
         </GridLayout.Content>
 

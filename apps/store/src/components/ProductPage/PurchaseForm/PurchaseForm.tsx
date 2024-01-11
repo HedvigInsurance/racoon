@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { ReactNode, useCallback, useRef, useState } from 'react'
 import { Balancer } from 'react-wrap-balancer'
-import { Button, Heading, mq, Text, theme, WarningTriangleIcon } from 'ui'
+import { Button, Heading, Space, mq, Text, theme, WarningTriangleIcon } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { ProductItemProps } from '@/components/CartNotification/ProductItem'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
@@ -21,6 +21,7 @@ import {
   useIsPriceCalculatorExpanded,
   useOpenPriceCalculatorQueryParam,
 } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
+import { ProductAverageRating } from '@/components/ProductReviews/ProductAverageRating'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { BankSigneringEvent } from '@/services/bankSignering'
 import {
@@ -43,7 +44,11 @@ import { ProductHero } from './ProductHero/ProductHero'
 import { usePurchaseFormState } from './usePurchaseFormState'
 import { useSelectedOffer } from './useSelectedOffer'
 
-export const PurchaseForm = () => {
+type Props = {
+  showAverageRating?: boolean
+}
+
+export const PurchaseForm = (props: Props) => {
   const { t } = useTranslation('purchase-form')
   const { priceTemplate } = useProductPageContext()
   const productData = useProductData()
@@ -239,7 +244,7 @@ export const PurchaseForm = () => {
           )
         }
 
-        return <IdleState onClick={handleOpen} />
+        return <IdleState onClick={handleOpen} showAverageRating={props.showAverageRating} />
       }}
     </Layout>
   )
@@ -289,9 +294,9 @@ const ProductHeroContainer = (props: ProductHeroContainerProps) => {
   )
 }
 
-type IdleStateProps = { onClick: () => void }
+type IdleStateProps = { onClick: () => void } & Pick<Props, 'showAverageRating'>
 
-const IdleState = ({ onClick }: IdleStateProps) => {
+const IdleState = ({ onClick, showAverageRating }: IdleStateProps) => {
   const ref = useRef<HTMLDivElement>(null)
   const { t } = useTranslation('purchase-form')
 
@@ -299,7 +304,10 @@ const IdleState = ({ onClick }: IdleStateProps) => {
     <>
       <div ref={ref}>
         <ProductHeroContainer size="large">
-          <Button onClick={onClick}>{t('OPEN_PRICE_CALCULATOR_BUTTON')}</Button>
+          <Space y={1}>
+            <Button onClick={onClick}>{t('OPEN_PRICE_CALCULATOR_BUTTON')}</Button>
+            {showAverageRating && <ProductAverageRating />}
+          </Space>
         </ProductHeroContainer>
       </div>
       <ScrollPast targetRef={ref}>

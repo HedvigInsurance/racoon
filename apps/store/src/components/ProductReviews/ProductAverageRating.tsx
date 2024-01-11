@@ -12,9 +12,7 @@ import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
 import { useProuctReviewsDataContext } from '@/features/memberReviews/ProductReviewsDataProvider'
 
-type AverageRating = NonNullable<ReturnType<typeof useProuctReviewsDataContext>>['averageRating']
-
-export const ProductAverageRatingBlock = () => {
+export const ProductAverageRating = () => {
   const { t } = useTranslation('common')
   const productReviewsData = useProuctReviewsDataContext()
   const productData = useProductData()
@@ -69,8 +67,6 @@ export const ProductAverageRatingBlock = () => {
     </>
   )
 }
-
-ProductAverageRatingBlock.blockName = 'productAverageRating'
 
 type DialogProps = {
   children: ReactNode
@@ -136,6 +132,8 @@ const Trigger = styled.button({
     },
   },
 })
+
+type AverageRating = NonNullable<ReturnType<typeof useProuctReviewsDataContext>>['averageRating']
 
 const getProductStructuredData = (product: ProductData, averageRating: AverageRating) => {
   return {

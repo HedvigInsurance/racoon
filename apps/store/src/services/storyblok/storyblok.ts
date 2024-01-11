@@ -43,7 +43,6 @@ import { MediaListBlock } from '@/blocks/MediaListBlock'
 import { ModalBlock } from '@/blocks/ModalBlock'
 import { PageBlock } from '@/blocks/PageBlock'
 import { PerilsBlock } from '@/blocks/PerilsBlock'
-import { ProductAverageRatingBlock } from '@/blocks/ProductAverageRatingBlock'
 import { ProductCardBlock } from '@/blocks/ProductCardBlock'
 import { ProductDocumentsBlock } from '@/blocks/ProductDocumentsBlock'
 import { ProductGridBlock } from '@/blocks/ProductGridBlock'
@@ -195,6 +194,7 @@ export type ProductStory = ISbStoryData<
     body: Array<SbBlokData>
     globalStory: GlobalStory
     hideChat?: boolean
+    showAverageRating?: boolean
   } & SEOData
 >
 
@@ -255,7 +255,6 @@ export const initStoryblok = () => {
     AccordionBlock,
     AccordionItemBlock,
     AnnouncementBlock,
-    ProductAverageRatingBlock,
     BannerBlock,
     ButtonBlock,
     CheckListBlock,
