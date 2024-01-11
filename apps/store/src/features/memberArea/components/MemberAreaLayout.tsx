@@ -7,10 +7,12 @@ import {
   GLOBAL_PRODUCT_METADATA_PROP_NAME,
   GlobalProductMetadata,
 } from '@/components/LayoutWithMenu/fetchProductMetadata'
+import { Skeleton } from '@/components/Skeleton'
 import { useMemberAreaMemberInfoQuery } from '@/services/graphql/generated'
 import { GlobalStory, PageStory } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
-import { Menu } from './Menu'
+import { CONTENT_WIDTH } from '../InsuranceSection/InsurancesSection'
+import { MenuLoadingState, Menu } from './Menu'
 
 type Props = {
   children: ReactElement<{
@@ -39,8 +41,12 @@ export const MemberAreaLayout = ({ children }: Props) => {
         {headerBlock.map((nestedBlock) => (
           <HeaderBlock key={nestedBlock._uid} blok={nestedBlock} />
         ))}
-        {loading && <div>Loading...</div>}
-        {!loading && (
+        {loading ? (
+          <Main>
+            <MenuLoadingState />
+            <ContentLoadingState />
+          </Main>
+        ) : (
           <Main>
             <Menu />
             <Content>{children}</Content>
@@ -76,4 +82,28 @@ const Content = styled.div({
   width: '100%',
   marginInline: 'auto',
   paddingInline: theme.space.md,
+})
+
+const ContentLoadingState = () => {
+  return (
+    <LoadingWrapper>
+      <ContentSkeleton />
+      <ContentSkeleton />
+    </LoadingWrapper>
+  )
+}
+
+const ContentSkeleton = styled(Skeleton)({
+  width: '100%',
+  maxWidth: CONTENT_WIDTH,
+  aspectRatio: '343/182',
+})
+
+const LoadingWrapper = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: theme.space.lg,
+  width: '100%',
+  maxWidth: CONTENT_WIDTH,
+  marginInline: 'auto',
 })
