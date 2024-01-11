@@ -3,6 +3,7 @@ import { useTranslation } from 'next-i18next'
 import { Text, InfoIcon, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Tooltip } from '@/components/Tooltip/Tooltip'
+import { useFormatter } from '@/utils/useFormatter'
 
 type Props = {
   score: number
@@ -13,6 +14,7 @@ type Props = {
 
 export const AverageRating = (props: Props) => {
   const { t } = useTranslation('common')
+  const { numberGrouping } = useFormatter()
 
   return (
     <Wrapper>
@@ -29,7 +31,10 @@ export const AverageRating = (props: Props) => {
 
       <SpaceFlex direction="horizontal" space={0.25} align="center">
         <Text as="span" color="textSecondary">
-          {t('REVIEWS_COUNT_BASED_ON_LABEL', { count: props.reviewsCount })}
+          {t('REVIEWS_COUNT_BASED_ON_LABEL', {
+            count: props.reviewsCount,
+            reviewsCount: numberGrouping(props.reviewsCount),
+          })}
         </Text>
 
         {props.explanation && (

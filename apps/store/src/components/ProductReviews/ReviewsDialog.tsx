@@ -43,7 +43,7 @@ export const ReviewsDialog = ({
     <Dialog.Root>
       <Dialog.Trigger asChild={true}>{children}</Dialog.Trigger>
 
-      <DialogContent centerContent={true}>
+      <DialogContent centerContent={true} frostedOverlay={true}>
         <Dialog.Close asChild={true}>
           <CloseButton>
             <CrossIcon size={'1rem'} />
@@ -110,16 +110,20 @@ const CloseButton = styled.button({
 
   '@media (hover: hover)': {
     ':hover': {
-      backgroundColor: theme.colors.opaque1,
+      backgroundColor: theme.colors.translucent2,
     },
   },
 })
 
 const DialogWindow = styled(Dialog.Window)({
-  borderRadius: theme.radius.lg,
   paddingInline: theme.space.md,
   paddingBlock: theme.space.xxxl,
   overflowY: 'auto',
+  // Hide scrollbar in Dialog
+  scrollbarWidth: 'none',
+  '&::-webkit-scrollbar': {
+    display: 'none',
+  },
 
   [mq.md]: {
     padding: theme.space.xxxl,
@@ -131,21 +135,22 @@ const DialogContent = styled(Dialog.Content)({
   alignSelf: 'center',
   display: 'flex',
   flexDirection: 'column',
-  width: `calc(100% - ${theme.space.md} * 2)`,
-  maxWidth: '28.5rem',
+  width: `min(35.5rem, calc(100% - ${theme.space.md} * 2))`,
   maxHeight: `calc(100% - ${theme.space.md} * 2)`,
+  border: `1px solid ${theme.colors.borderTranslucent1}`,
+  borderRadius: theme.radius.lg,
+  backgroundColor: theme.colors.backgroundStandard,
+  boxShadow: theme.shadow.default,
   isolation: 'isolate',
+  overflow: 'hidden',
 
   [mq.md]: {
-    width: `calc(100% - ${theme.space.md} * 2)`,
-    maxWidth: '36rem',
     maxHeight: `calc(100% - ${theme.space.xxxl} * 2)`,
   },
 })
 
 const Reviews = styled(Space)({
   marginBottom: `-${theme.space.xxxl}`,
-  overflowY: 'auto',
 })
 
 const Review = styled(ReviewComment)({
