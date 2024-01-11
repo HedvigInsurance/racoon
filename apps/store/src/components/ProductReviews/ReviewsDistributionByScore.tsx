@@ -22,7 +22,7 @@ const Wrapper = styled.div({
   alignItems: 'center',
   justifyContent: 'space-between',
   gap: theme.space.md,
-  width: 'min(28.5rem, 100%)',
+  width: 'min(30.5rem, 100%)',
   padding: theme.space.md,
   borderRadius: theme.radius.md,
 })

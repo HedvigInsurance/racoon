@@ -72,7 +72,7 @@ export const ProductReviews = () => {
 }
 
 const Wrapper = styled(Space)({
-  width: 'min(28.5rem, 100%)',
+  width: 'min(30.5rem, 100%)',
   marginInline: 'auto',
   paddingInline: theme.space.md,
 })

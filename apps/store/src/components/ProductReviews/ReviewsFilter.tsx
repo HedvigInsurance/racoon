@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { theme } from 'ui'
+import { Space, theme } from 'ui'
 import type { Score, ReviewsDistribution } from '@/features/memberReviews/memberReviews.types'
 import { ReviewsDistributionByScore } from './ReviewsDistributionByScore'
 
@@ -16,7 +16,7 @@ export const ReviewsFilter = (props: Props) => {
   }
 
   return (
-    <div>
+    <Space y={0.25}>
       {props.reviewsDistribution.map(([score, percentage]) => (
         <ReviewsFilterOption
           key={score}
@@ -28,7 +28,7 @@ export const ReviewsFilter = (props: Props) => {
           <ReviewsDistributionByScore score={score} percentage={percentage} />
         </ReviewsFilterOption>
       ))}
-    </div>
+    </Space>
   )
 }
 
