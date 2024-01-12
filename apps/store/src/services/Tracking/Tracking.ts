@@ -58,6 +58,7 @@ type TrackingContext = Partial<{
   zipCode: string
   productId: string
   productDisplayName: string
+  partner: string
 }>
 
 // Simple version with 2 destinations (GTM and Datadog) implemented inline
@@ -127,6 +128,7 @@ export class Tracking {
       },
       userData,
       ...this.shopSessionData(),
+      ...this.sessionData(),
     }
     this.logger.log(event, eventData)
     pushToGTMDataLayer({ event, ...eventData })
@@ -242,8 +244,23 @@ export class Tracking {
     }
   }
 
+  static sessionData(context: TrackingContext) {
+    return {
+      sessionData: context.partner
+        ? {
+            channel: 'widget',
+            partner: context.partner,
+          }
+        : { channel: 'store' },
+    }
+  }
+
   private shopSessionData() {
     return Tracking.shopSessionData(this.context)
+  }
+
+  private sessionData() {
+    return Tracking.sessionData(this.context)
   }
 
   public reportInsurelyPrompted() {
@@ -309,6 +326,7 @@ const offerToEcommerceEvent = ({
       ],
     },
     ...Tracking.shopSessionData(context),
+    ...Tracking.sessionData(context),
     price_match: {
       exposure_matched: !!offer.priceMatch,
       price_matched: !!offer.priceMatch && offer.priceMatch.priceReduction.amount > 0,
@@ -336,6 +354,7 @@ const cartToEcommerceEvent = (
       })),
     },
     ...Tracking.shopSessionData(context),
+    ...Tracking.sessionData(context),
   } as const
 }
 
@@ -355,6 +374,7 @@ const productDataToEcommerceEvent = (
       ],
     },
     ...Tracking.shopSessionData(context),
+    ...Tracking.sessionData(context),
   } as const
 }
 

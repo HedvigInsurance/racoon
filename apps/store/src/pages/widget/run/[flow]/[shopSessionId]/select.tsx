@@ -19,7 +19,7 @@ import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
 
-type Props = ComponentProps<typeof SelectProductPage>
+type Props = ComponentProps<typeof SelectProductPage> & { partner?: string }
 
 type Params = {
   flow: string
@@ -47,6 +47,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 
   const searchParams = new URLSearchParams(stringify(context.query))
   const compareInsurance = story.content.compareInsurance ?? false
+  const partner = story.content.partner
 
   if (products.length === 1) {
     const productName = products[0].name
@@ -94,23 +95,24 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       ...context.params,
       ...hideChatOnPage(),
       products,
+      partner,
       compareInsurance,
       showBackButton: story.content.showBackButton ?? false,
     },
   }
 }
 
-const NextPage = (props: Props) => {
+const NextPage = ({ partner, ...rest }: Props) => {
   const { t } = useTranslation('widget')
-  const { data } = useShopSessionQuery({ variables: { shopSessionId: props.shopSessionId } })
+  const { data } = useShopSessionQuery({ variables: { shopSessionId: rest.shopSessionId } })
 
   return (
     <>
       <Head>
         <title>{`Hedvig | ${t('SELECT_PAGE_TITLE')}`}</title>
       </Head>
-      <TrackingProvider shopSession={data?.shopSession}>
-        <SelectProductPage {...props} />
+      <TrackingProvider shopSession={data?.shopSession} partner={partner}>
+        <SelectProductPage {...rest} />
       </TrackingProvider>
     </>
   )
