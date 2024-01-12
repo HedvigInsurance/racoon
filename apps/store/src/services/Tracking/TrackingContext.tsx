@@ -12,6 +12,7 @@ type Props = {
   shopSession?: ShopSession
   priceIntent?: PriceIntent
   productData?: ProductData
+  partner?: string
 }
 
 export const TrackingProvider = (props: Props) => {
@@ -23,6 +24,7 @@ export const TrackingProvider = (props: Props) => {
       ...parseCustomerData(props.shopSession?.customer),
       ...parsePriceIntentData(props.priceIntent?.data ?? {}),
       ...(props.productData && parseProductData(props.productData)),
+      partner: props.partner,
       countryCode,
     }
   }, [
@@ -30,6 +32,7 @@ export const TrackingProvider = (props: Props) => {
     props.shopSession?.customer,
     props.priceIntent?.data,
     props.productData,
+    props.partner,
     countryCode,
   ])
 

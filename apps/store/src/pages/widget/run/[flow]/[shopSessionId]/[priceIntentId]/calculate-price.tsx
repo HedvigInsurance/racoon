@@ -25,6 +25,7 @@ type Props = Pick<
 > & {
   priceIntentId: string
   shopSessionId: string
+  partner?: string
 }
 
 type Params = {
@@ -53,6 +54,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     ])
 
     const compareInsurance = story.content.compareInsurance ?? false
+    const partner = story.content.partner
     const priceTemplate = getPriceTemplate(priceIntent.product.name, compareInsurance)
 
     console.info(`Widget | Calculate Price: ${priceIntent.product.name}/${priceTemplate.name}`)
@@ -62,6 +64,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       props: {
         priceIntent,
         priceTemplate,
+        partner,
         ...hideChatOnPage(),
         ...translations,
         ...context.params,
@@ -74,16 +77,16 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   }
 }
 
-const Page = (props: Props) => {
+const Page = ({ partner, ...rest }: Props) => {
   const { t } = useTranslation('widget')
 
   const shopSessionResult = useShopSessionQuery({
-    variables: { shopSessionId: props.shopSessionId },
+    variables: { shopSessionId: rest.shopSessionId },
   })
   const shopSession = shopSessionResult.data?.shopSession
 
   const priceIntentResult = useWidgetPriceIntentQuery({
-    variables: { priceIntentId: props.priceIntentId },
+    variables: { priceIntentId: rest.priceIntentId },
   })
   const priceIntent = priceIntentResult.data?.priceIntent
 
@@ -95,8 +98,8 @@ const Page = (props: Props) => {
       <Head>
         <title>{`Hedvig | ${t('CALCULATE_PRICE_PAGE_TITLE')}`}</title>
       </Head>
-      <TrackingProvider shopSession={shopSession} priceIntent={priceIntent}>
-        <CalculatePricePage {...props} shopSession={shopSession} priceIntent={priceIntent} />
+      <TrackingProvider shopSession={shopSession} priceIntent={priceIntent} partner={partner}>
+        <CalculatePricePage {...rest} shopSession={shopSession} priceIntent={priceIntent} />
       </TrackingProvider>
     </>
   )
