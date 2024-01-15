@@ -43,7 +43,7 @@ export const ReviewsDialog = ({
     <Dialog.Root>
       <Dialog.Trigger asChild={true}>{children}</Dialog.Trigger>
 
-      <DialogContent centerContent={true} frostedOverlay={true}>
+      <DialogContent centerContent={true}>
         <Dialog.Close asChild={true}>
           <CloseButton>
             <CrossIcon size={'1rem'} />
@@ -154,7 +154,7 @@ const DialogContent = styled(Dialog.Content)({
   alignSelf: 'center',
   display: 'flex',
   flexDirection: 'column',
-  width: `min(35.5rem, calc(100% - ${theme.space.md} * 2))`,
+  width: `min(35.5rem, calc(100% - ${theme.space.xs} * 2))`,
   maxHeight: `calc(100% - ${theme.space.md} * 2)`,
   border: `1px solid ${theme.colors.borderTranslucent1}`,
   borderRadius: theme.radius.lg,
