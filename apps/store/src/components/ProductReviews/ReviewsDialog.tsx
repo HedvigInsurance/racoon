@@ -70,15 +70,29 @@ export const ReviewsDialog = ({
                 />
               )}
 
+              {selectedTab === TABS.TRUSTPILOT && (
+                <LatestReviewsTrustpilotLabel
+                  size="xs"
+                  color="textSecondary"
+                  align="center"
+                  balance={true}
+                >
+                  {t('LATEST_REVIEWS_TRUSTPILOT_LABEL')}
+                </LatestReviewsTrustpilotLabel>
+              )}
+
               {reviews.length > 0 ? (
-                <Reviews y={{ base: 0.5, md: 1 }}>
+                <Space y={{ base: 0.5, md: 1 }}>
                   {reviews.map((review) => (
                     <Review key={review.id} {...review} />
                   ))}
-                  <LatestReviewsWithCommentsLabel align="center" color="textSecondary">
-                    {t('LATEST_REVIEWS_WITH_COMMENTS_LABEL')}
-                  </LatestReviewsWithCommentsLabel>
-                </Reviews>
+
+                  {selectedTab === TABS.PRODUCT && (
+                    <LatestReviewsWithCommentsLabel size="xs" align="center" color="textSecondary">
+                      {t('LATEST_REVIEWS_WITH_COMMENTS_LABEL')}
+                    </LatestReviewsWithCommentsLabel>
+                  )}
+                </Space>
               ) : (
                 <NoReviewsLabel align="center" color="textSecondary">
                   {t('NO_REVIEWS_LABEL')}
@@ -168,31 +182,19 @@ const DialogContent = styled(Dialog.Content)({
   },
 })
 
-const Reviews = styled(Space)({
-  marginBottom: `-${theme.space.xxxl}`,
-})
-
 const Review = styled(ReviewComment)({
   width: '100%',
-
-  ':last-of-type': {
-    marginBottom: theme.space.md,
-  },
-
-  [mq.md]: {
-    ':last-of-type': {
-      marginBottom: theme.space.xxl,
-    },
-  },
 })
 
 const LatestReviewsWithCommentsLabel = styled(Text)({
-  marginBottom: theme.space.md,
-  padding: theme.space.md,
+  paddingTop: theme.space.md,
+  paddingInline: theme.space.md,
+})
 
-  [mq.md]: {
-    marginBottom: theme.space.xl,
-  },
+const LatestReviewsTrustpilotLabel = styled(Text)({
+  paddingTop: theme.space.lg,
+  paddingBottom: theme.space.sm,
+  paddingInline: theme.space.md,
 })
 
 const NoReviewsLabel = styled(Text)({
