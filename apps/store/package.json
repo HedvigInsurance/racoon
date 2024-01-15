@@ -115,7 +115,7 @@
     "eslint-config-custom": "workspace:",
     "eslint-config-next": "14.0.4",
     "eslint-config-prettier": "9.1.0",
-    "eslint-plugin-jest": "27.6.1",
+    "eslint-plugin-jest": "27.6.2",
     "eslint-plugin-testing-library": "6.2.0",
     "graphql-tag": "2.12.6",
     "i18next-parser": "8.12.0",
