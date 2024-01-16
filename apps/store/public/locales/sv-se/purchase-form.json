@@ -109,6 +109,7 @@
   "OPEN_PRICE_CALCULATOR_BUTTON": "Se ditt pris",
   "PRESENT_OFFER_EDIT_BUTTON": "Ändra din info",
   "PRICE_CALCULATOR_SECTION_EDIT_BUTTON": "Ändra",
+  "PRICE_INTENT_WARNING_ACCEPT_BUTTON_LABEL": "För att försäkringen ska börja gälla behöver {{regNumber}} vara påställd och du stå som ägare inom 8 dagar",
   "PRICE_INTENT_WARNING_CAR_DECOMMISSIONED_HEADER": "Bilen är avställd",
   "PRICE_INTENT_WARNING_CAR_DECOMMISSIONED_MESSAGE": "För att försäkringen ska börja gälla behöver {{regNumber}} vara påställd inom 8 dagar",
   "PRICE_INTENT_WARNING_MEMBER_NOT_CAR_OWNER_AND_CAR_DECOMMISSIONED_HEADER": "Bilen är avställd och du står inte som ägare",
