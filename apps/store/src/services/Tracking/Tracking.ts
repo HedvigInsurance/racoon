@@ -34,12 +34,10 @@ export enum TrackingEvent {
   BeginCheckout = 'begin_checkout',
   DeleteFromCart = 'delete_from_cart',
   ExperimentImpression = 'experiment_impression',
-  OfferCreated = 'offer_created',
   OpenPriceCalculator = 'open_price_calculator',
   PageView = 'virtual_page_view',
   Purchase = 'purchase',
   SelectItem = 'select_item',
-  SignedCustomer = 'signed_customer',
   ViewCart = 'view_cart',
   ViewItem = 'view_item',
   InsurelyPrompted = 'insurely_prompted',
@@ -121,52 +119,6 @@ export class Tracking {
     )
   }
 
-  // Legacy event in market-web format
-  public async reportOfferCreated(offer: ProductOfferFragment) {
-    const event = TrackingEvent.OfferCreated
-    const userData = await getLegacyUserData(this.context)
-    const eventData = {
-      offerData: {
-        insurance_price: offer.cost.gross.amount,
-        currency: offer.cost.gross.currencyCode as string,
-
-        insurance_type: offer.variant.typeOfContract,
-        flow_type: offer.product.name,
-        ...getLegacyEventFlags([offer.variant.typeOfContract]),
-      },
-      userData,
-      ...this.shopSessionData(),
-      ...this.sessionData(),
-    }
-    this.logger.log(event, eventData)
-    pushToGTMDataLayer({ event, ...eventData })
-  }
-
-  // Legacy event in market-web format
-  public async reportSignedCustomer(cart: CartFragmentFragment, memberId: string) {
-    const event = TrackingEvent.SignedCustomer
-    const userData = await getLegacyUserData(this.context)
-
-    const eventData = {
-      offerData: {
-        quote_cart_id: cart.id,
-        transaction_id: cart.id,
-        discounted_premium: cart.cost.net.amount,
-        insurance_price: cart.cost.gross.amount,
-        currency: cart.cost.net.currencyCode as string,
-
-        insurance_type: cart.entries[0].variant.typeOfContract,
-        flow_type: cart.entries[0].product.name,
-        memberId: memberId,
-        ...getLegacyEventFlags(cart.entries.map((entry) => entry.variant.typeOfContract)),
-      },
-      ...this.shopSessionData(),
-      userData,
-    }
-    this.logger.log(event, eventData)
-    pushToGTMDataLayer({ event, ...eventData })
-  }
-
   public reportAdtractionEvent(cart: CartFragmentFragment, context: TrackingContext) {
     const event = TrackingEvent.Adtraction
     // We currently only support 1 campaign code
@@ -239,7 +191,6 @@ export class Tracking {
     this.reportEcommerceEvent(event)
 
     // Also report in web-onboarding format
-    this.reportSignedCustomer(cart, memberId)
     this.reportAdtractionEvent(cart, this.context)
   }
 
@@ -404,20 +355,6 @@ const productDataToEcommerceEvent = async (
     ...Tracking.shopSessionData(context),
     ...Tracking.sessionData(context),
     ...(await Tracking.userData(context)),
-  } as const
-}
-
-// TODO: Decide what do to with
-// ownership_type - maybe expose though API?
-// number_of_people - get from offer, tricky for cart
-const getLegacyEventFlags = (typesOfContract: Array<string>) => {
-  return {
-    has_home: typesOfContract.some((type) => type.includes('_APARTMENT')),
-    has_house: typesOfContract.some((type) => type.includes('_HOUSE')),
-    has_car: typesOfContract.some((type) => type.includes('_CAR_')),
-    has_accident: typesOfContract.some((type) => type.includes('_ACCIDENT')),
-    is_student: typesOfContract.some((type) => type.includes('STUDENT')),
-    car_sub_type: typesOfContract.find((type) => type.includes('_CAR_')),
   } as const
 }
 

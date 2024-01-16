@@ -329,7 +329,6 @@ type EditingStateProps = {
 const EditingState = (props: EditingStateProps) => {
   const { shopSession, priceIntent, onComplete, priceTemplate } = props
   const { t } = useTranslation('purchase-form')
-  const tracking = useTracking()
 
   const priceLoaderPromise = useRef<Promise<void> | null>(null)
   const [confirmPriceIntent, result] = usePriceIntentConfirmMutation({
@@ -350,7 +349,6 @@ const EditingState = (props: EditingStateProps) => {
     async onCompleted(data) {
       const updatedPriceIntent = data.priceIntentConfirm.priceIntent
       if (updatedPriceIntent) {
-        updatedPriceIntent.offers.forEach((offer) => tracking.reportOfferCreated(offer))
         const hasBankSigneringOffer = updatedPriceIntent.offers.some(
           (item) => item.cancellation.option === ExternalInsuranceCancellationOption.Banksignering,
         )
