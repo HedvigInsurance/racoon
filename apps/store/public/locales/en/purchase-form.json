@@ -113,6 +113,7 @@
   "PRICE_INTENT_WARNING_CAR_DECOMMISSIONED_MESSAGE": "This car has been decommissioned",
   "PRICE_INTENT_WARNING_MEMBER_NOT_CAR_OWNER_AND_CAR_DECOMMISSIONED_HEADER": "Car is decommissioned and you are not the owner of the car",
   "PRICE_INTENT_WARNING_MEMBER_NOT_CAR_OWNER_AND_CAR_DECOMMISSIONED_MESSAGE": "You are not the owner of this car {{regNumber}} and the car is decommissioned",
+  "PRICE_INTENT_WARNING_MEMBER_NOT_CAR_OWNER_AND_CAR_DECOMMISSIONED_MESSAGE_copy": "You are not the owner of this car {{regNumber}} and the car is decommissioned",
   "PRICE_INTENT_WARNING_MEMBER_NOT_CAR_OWNER_HEADER": "You are not the owner",
   "PRICE_INTENT_WARNING_MEMBER_NOT_CAR_OWNER_MESSAGE": "You are not the owner of this car",
   "PRICE_MATCH_BUBBLE_INCOMPARABLE_SUBTITLE": "We could not match your current price",
