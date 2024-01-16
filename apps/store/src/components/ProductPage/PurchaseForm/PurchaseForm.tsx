@@ -21,7 +21,10 @@ import {
   useIsPriceCalculatorExpanded,
   useOpenPriceCalculatorQueryParam,
 } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
-import { ProductAverageRating } from '@/components/ProductReviews/ProductAverageRating'
+import {
+  ProductAverageRating,
+  type AverageRatingSource,
+} from '@/components/ProductReviews/ProductAverageRating'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { BankSigneringEvent } from '@/services/bankSignering'
 import {
@@ -44,11 +47,12 @@ import { ProductHero } from './ProductHero/ProductHero'
 import { usePurchaseFormState } from './usePurchaseFormState'
 import { useSelectedOffer } from './useSelectedOffer'
 
-type Props = {
+export type PurchaseFormProps = {
   showAverageRating?: boolean
+  averageRatingSource?: AverageRatingSource
 }
 
-export const PurchaseForm = (props: Props) => {
+export const PurchaseForm = (props: PurchaseFormProps) => {
   const { t } = useTranslation('purchase-form')
   const { priceTemplate } = useProductPageContext()
   const productData = useProductData()
@@ -244,7 +248,13 @@ export const PurchaseForm = (props: Props) => {
           )
         }
 
-        return <IdleState onClick={handleOpen} showAverageRating={props.showAverageRating} />
+        return (
+          <IdleState
+            onClick={handleOpen}
+            showAverageRating={props.showAverageRating}
+            averageRatingSource={props.averageRatingSource}
+          />
+        )
       }}
     </Layout>
   )
@@ -294,9 +304,12 @@ const ProductHeroContainer = (props: ProductHeroContainerProps) => {
   )
 }
 
-type IdleStateProps = { onClick: () => void } & Pick<Props, 'showAverageRating'>
+type IdleStateProps = { onClick: () => void } & Pick<
+  PurchaseFormProps,
+  'showAverageRating' | 'averageRatingSource'
+>
 
-const IdleState = ({ onClick, showAverageRating }: IdleStateProps) => {
+const IdleState = ({ onClick, showAverageRating, averageRatingSource }: IdleStateProps) => {
   const ref = useRef<HTMLDivElement>(null)
   const { t } = useTranslation('purchase-form')
 
@@ -306,7 +319,9 @@ const IdleState = ({ onClick, showAverageRating }: IdleStateProps) => {
         <ProductHeroContainer size="large">
           <Space y={1}>
             <Button onClick={onClick}>{t('OPEN_PRICE_CALCULATOR_BUTTON')}</Button>
-            {showAverageRating && <ProductAverageRating />}
+            {showAverageRating && (
+              <ProductAverageRating averageRatingSource={averageRatingSource} />
+            )}
           </Space>
         </ProductHeroContainer>
       </div>
