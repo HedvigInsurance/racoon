@@ -8657,12 +8657,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storyblok/js@npm:3.0.2":
-  version: 3.0.2
-  resolution: "@storyblok/js@npm:3.0.2"
+"@storyblok/js@npm:3.0.3":
+  version: 3.0.3
+  resolution: "@storyblok/js@npm:3.0.3"
   dependencies:
     storyblok-js-client: ^6.5.0
-  checksum: f942cda45d97693d474d46f314425ad39915448dbdd2ffc067862c4062ff0f8eee49de9ef9bee3fbe5bd53ccee3412be92f1ef1969077b87d6568cbec79c2faf
+  checksum: d40230128a5a9c74cac4648865849fcf9715ac4bc4e10d1ec2ecb25235785df1532dd9092f964a43588d897dcd7d7efaeff082373e9165b8f979e6f25b25058c
   languageName: node
   linkType: hard
 
@@ -24446,7 +24446,7 @@ __metadata:
     "@radix-ui/react-switch": 1.0.3
     "@radix-ui/react-tabs": 1.0.4
     "@radix-ui/react-tooltip": 1.0.7
-    "@storyblok/js": 3.0.2
+    "@storyblok/js": 3.0.3
     "@storyblok/react": 3.0.5
     "@storybook/addon-actions": 7.6.7
     "@storybook/addon-designs": 7.0.9
