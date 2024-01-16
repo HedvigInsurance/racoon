@@ -38,11 +38,7 @@ export const ReviewComment = ({ type, score, date, content, className }: Props) 
             <>
               <VerifiedIcon />
 
-              <Text
-                size={{
-                  _: 'xs',
-                }}
-              >
+              <Text as="span" size="xs">
                 {t('VERIFIED_CUSTOMER_LABEL')}
               </Text>
             </>
@@ -50,7 +46,9 @@ export const ReviewComment = ({ type, score, date, content, className }: Props) 
           {type === 'company' && <TrustpilotLogo width={97} height={24} />}
         </SpaceFlex>
 
-        {formatter.dateFull(new Date(date), { abbreviateMonth: true })}
+        <Text as="span" size="xs">
+          {formatter.dateFull(new Date(date), { abbreviateMonth: true })}
+        </Text>
       </Footer>
     </Wrapper>
   )
