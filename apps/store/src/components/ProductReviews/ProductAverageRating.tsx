@@ -12,6 +12,7 @@ import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
 import { useProuctReviewsDataContext } from '@/features/memberReviews/ProductReviewsDataProvider'
 import { useTrustpilotData } from '@/features/memberReviews/TrustpilotDataProvider'
+import { sendDialogEvent } from '@/utils/dialogEvent'
 import { useFormatter } from '@/utils/useFormatter'
 import { TABS, type Tab } from './ReviewTabs'
 
@@ -27,6 +28,10 @@ export const ProductAverageRating = ({ averageRatingSource = 'product' }: Props)
   const productReviewsData = useProuctReviewsDataContext()
   const trustpilotData = useTrustpilotData()
   const productData = useProductData()
+
+  const openDialog = () => {
+    sendDialogEvent('open')
+  }
 
   if (!isAverageRatingSourceValid(averageRatingSource)) {
     console.warn(
@@ -83,7 +88,7 @@ export const ProductAverageRating = ({ averageRatingSource = 'product' }: Props)
                   averageRatingSource === 'product' ? TABS.PRODUCT : TABS.TRUSTPILOT
                 }
               >
-                <Trigger>
+                <Trigger onClick={openDialog}>
                   {t('REVIEWS_COUNT_LABEL', {
                     count: averageRating.totalOfReviews,
                     reviewsCount: numberGrouping(averageRating.totalOfReviews),
@@ -118,6 +123,10 @@ const Dialog = (props: DialogProps) => {
     setSelectedScore,
   } = useReviews(props.initialSelectedTab)
 
+  const closeDialog = () => {
+    sendDialogEvent('close')
+  }
+
   if (!rating) return null
 
   const tooltipText =
@@ -133,6 +142,7 @@ const Dialog = (props: DialogProps) => {
       selectedScore={selectedScore}
       onSelectedScoreChange={setSelectedScore}
       tooltipText={tooltipText}
+      onClose={closeDialog}
     >
       {props.children}
     </ReviewsDialog>
