@@ -2,23 +2,19 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { Button, Space, theme } from 'ui'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
-import type { Rating } from '@/features/memberReviews/memberReviews.types'
-import { useProuctReviewsDataContext } from '@/features/memberReviews/ProductReviewsDataProvider'
 import { TrustpilotWidget } from '@/features/memberReviews/TruspilotWidget'
 import { AverageRating } from './AverageRating'
 import { ReviewsDialog } from './ReviewsDialog'
 import { ReviewsDistributionByScore } from './ReviewsDistributionByScore'
-import { ReviewTabs, TABS } from './ReviewTabs'
+import { ReviewTabs, TABS, type Tab } from './ReviewTabs'
 import { useReviews } from './useReviews'
 
 type Props = {
-  productAverageRatingThreshold?: number
+  defaultActiveTab?: Tab
 }
 
 export const ProductReviews = (props: Props) => {
   const { t } = useTranslation('common')
-
-  const productReviewsData = useProuctReviewsDataContext()
 
   const {
     rating,
@@ -28,9 +24,7 @@ export const ProductReviews = (props: Props) => {
     setSelectedTab,
     setSelectedScore,
     selectedScore,
-  } = useReviews(
-    getInitialSelectedTab(productReviewsData?.averageRating, props.productAverageRatingThreshold),
-  )
+  } = useReviews(getInitialSelectedTab(props.defaultActiveTab))
 
   if (!rating) {
     console.warn('ProductReviews | No rating data available')
@@ -106,12 +100,14 @@ const StyledTrustpilotWidget = styled(TrustpilotWidget)({
   borderRadius: theme.radius.md,
 })
 
-const getInitialSelectedTab = (averageRating?: Rating, threshold?: number) => {
-  const defaultTab = TABS.PRODUCT
+const getInitialSelectedTab = (defaultActiveTab?: Tab) => {
+  if (!defaultActiveTab) return TABS.PRODUCT
 
-  if (!averageRating || !threshold) {
-    return defaultTab
+  const isValidTab = Object.values(TABS).includes(defaultActiveTab)
+  if (isValidTab) {
+    return defaultActiveTab
   } else {
-    return averageRating.score >= threshold ? TABS.PRODUCT : TABS.TRUSTPILOT
+    console.warn(`ProductReviews | Invalid default tab ${defaultActiveTab}. Defaulting to product`)
+    return TABS.PRODUCT
   }
 }
