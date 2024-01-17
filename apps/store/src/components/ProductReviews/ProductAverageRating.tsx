@@ -20,9 +20,7 @@ export const ProductAverageRating = () => {
   const productData = useProductData()
 
   if (!productReviewsData) {
-    console.warn(
-      `ProductAverageRatingBlock | Average rating for product ${productData.name} not found`,
-    )
+    console.warn(`ProductAverageRating | Average rating for product ${productData.name} not found`)
     return null
   }
   const { averageRating } = productReviewsData
@@ -143,9 +141,14 @@ const getProductStructuredData = (product: ProductData, averageRating: AverageRa
     '@type': 'Product',
     name: product.displayNameFull,
     description: product.tagline,
+    brand: {
+      '@type': 'Brand',
+      name: 'Hedvig',
+    },
     aggregateRating: {
       '@type': 'AggregateRating',
       ratingValue: averageRating.score,
+      bestRating: MAX_SCORE,
       reviewCount: averageRating.totalOfReviews,
     },
   }
