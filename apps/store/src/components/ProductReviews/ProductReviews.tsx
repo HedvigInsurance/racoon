@@ -55,11 +55,11 @@ export const ProductReviews = (props: Props) => {
         <ReviewTabs selectedTab={selectedTab} onTabChange={setSelectedTab} />
 
         {selectedTab === TABS.PRODUCT && (
-          <div>
+          <DistributionByScoreWrapper>
             {reviewsDistribution.map(([score, percentage]) => (
               <ReviewsDistributionByScore key={score} score={score} percentage={percentage} />
             ))}
-          </div>
+          </DistributionByScoreWrapper>
         )}
         {selectedTab === TABS.TRUSTPILOT && (
           <StyledTrustpilotWidget variant="mini" data-style-height="112px" />
@@ -82,16 +82,23 @@ export const ProductReviews = (props: Props) => {
   )
 }
 
+const TAB_CONTENT_HEIGHT = '17.18rem' // 275px
+
 const Wrapper = styled(Space)({
   width: 'min(30.5rem, 100%)',
   marginInline: 'auto',
   paddingInline: theme.space.md,
 })
 
+const DistributionByScoreWrapper = styled.div({
+  height: TAB_CONTENT_HEIGHT,
+})
+
 const StyledTrustpilotWidget = styled(TrustpilotWidget)({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  height: TAB_CONTENT_HEIGHT,
   padding: theme.space.lg,
   // Optical alignment so widget gets horizontally centered
   paddingLeft: '2.5rem',
