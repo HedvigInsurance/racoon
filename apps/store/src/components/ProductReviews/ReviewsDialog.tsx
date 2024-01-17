@@ -116,13 +116,32 @@ const CloseButton = styled.button({
 })
 
 const DialogWindow = styled(Dialog.Window)({
+  '--scrollbar-thumb-color': theme.colors.gray500,
+  '--scrollbar-thumb-color-hover': theme.colors.gray600,
+  '--scrollbar-track-width': '8px',
+
   paddingInline: theme.space.md,
   paddingBlock: theme.space.xxxl,
   overflowY: 'auto',
-  // Hide scrollbar in Dialog
-  scrollbarWidth: 'none',
-  '&::-webkit-scrollbar': {
-    display: 'none',
+
+  // Scrollbar styles
+  [mq.sm]: {
+    // Firefox
+    scrollbarColor: 'var(--scrollbar-thumb-color)',
+    scrollbarWidth: 'thin',
+
+    // Webkit based browsers
+    '::-webkit-scrollbar': {
+      width: 'var(--scrollbar-track-width)',
+      height: 'var(--scrollbar-track-width)',
+    },
+    '::-webkit-scrollbar-thumb': {
+      borderRadius: '1000px',
+      backgroundColor: 'var(--scrollbar-thumb-color)',
+    },
+    '::-webkit-scrollbar-thumb:hover': {
+      backgroundColor: 'var(--scrollbar-thumb-color-hover)',
+    },
   },
 
   [mq.md]: {
