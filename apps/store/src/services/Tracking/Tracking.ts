@@ -101,15 +101,23 @@ export class Tracking {
     this.reportSelectItem(productData, 'store')
   }
 
-  public reportSelectItem(productData: TrackingProductData, itemListId: string) {
-    const event = productDataToEcommerceEvent(TrackingEvent.SelectItem, productData, this.context)
+  public async reportSelectItem(productData: TrackingProductData, itemListId: string) {
+    const event = await productDataToEcommerceEvent(
+      TrackingEvent.SelectItem,
+      productData,
+      this.context,
+    )
     Object.assign(event.ecommerce, { item_list_id: itemListId })
     this.reportEcommerceEvent(event)
   }
 
-  public reportOpenPriceCalculator(productData: TrackingProductData) {
+  public async reportOpenPriceCalculator(productData: TrackingProductData) {
     this.reportEcommerceEvent(
-      productDataToEcommerceEvent(TrackingEvent.OpenPriceCalculator, productData, this.context),
+      await productDataToEcommerceEvent(
+        TrackingEvent.OpenPriceCalculator,
+        productData,
+        this.context,
+      ),
     )
   }
 
@@ -178,9 +186,9 @@ export class Tracking {
     pushToGTMDataLayer({ event, ...eventData })
   }
 
-  public reportViewItem(offer: TrackingOffer, source: ItemListSource) {
+  public async reportViewItem(offer: TrackingOffer, source: ItemListSource) {
     this.reportEcommerceEvent(
-      offerToEcommerceEvent({
+      await offerToEcommerceEvent({
         event: TrackingEvent.ViewItem,
         offer,
         context: this.context,
@@ -189,9 +197,9 @@ export class Tracking {
     )
   }
 
-  public reportAddToCart(offer: TrackingOffer, source: ItemListSource) {
+  public async reportAddToCart(offer: TrackingOffer, source: ItemListSource) {
     this.reportEcommerceEvent(
-      offerToEcommerceEvent({
+      await offerToEcommerceEvent({
         event: TrackingEvent.AddToCart,
         offer,
         context: this.context,
@@ -200,9 +208,9 @@ export class Tracking {
     )
   }
 
-  public reportDeleteFromCart(offer: TrackingOffer) {
+  public async reportDeleteFromCart(offer: TrackingOffer) {
     this.reportEcommerceEvent(
-      offerToEcommerceEvent({
+      await offerToEcommerceEvent({
         event: TrackingEvent.DeleteFromCart,
         offer,
         context: this.context,
@@ -210,18 +218,22 @@ export class Tracking {
     )
   }
 
-  public reportViewCart(cart: CartFragmentFragment) {
-    this.reportEcommerceEvent(cartToEcommerceEvent(TrackingEvent.ViewCart, cart, this.context))
+  public async reportViewCart(cart: CartFragmentFragment) {
+    this.reportEcommerceEvent(
+      await cartToEcommerceEvent(TrackingEvent.ViewCart, cart, this.context),
+    )
   }
 
-  public reportBeginCheckout(cart: CartFragmentFragment) {
-    this.reportEcommerceEvent(cartToEcommerceEvent(TrackingEvent.BeginCheckout, cart, this.context))
+  public async reportBeginCheckout(cart: CartFragmentFragment) {
+    this.reportEcommerceEvent(
+      await cartToEcommerceEvent(TrackingEvent.BeginCheckout, cart, this.context),
+    )
   }
 
-  public reportPurchase(cart: CartFragmentFragment, memberId: string, isNewMember: boolean) {
+  public async reportPurchase(cart: CartFragmentFragment, memberId: string, isNewMember: boolean) {
     setUserId(memberId)
 
-    const event = cartToEcommerceEvent(TrackingEvent.Purchase, cart, this.context)
+    const event = await cartToEcommerceEvent(TrackingEvent.Purchase, cart, this.context)
     event.ecommerce.transaction_id = cart.id
     event.new_customer = isNewMember
     this.reportEcommerceEvent(event)
@@ -255,6 +267,12 @@ export class Tracking {
     }
   }
 
+  static async userData(context: TrackingContext) {
+    return {
+      userData: await getLegacyUserData(context),
+    }
+  }
+
   private shopSessionData() {
     return Tracking.shopSessionData(this.context)
   }
@@ -263,21 +281,29 @@ export class Tracking {
     return Tracking.sessionData(this.context)
   }
 
-  public reportInsurelyPrompted() {
+  public async reportInsurelyPrompted() {
     this.reportEcommerceEvent(
-      productDataToEcommerceEvent(TrackingEvent.InsurelyPrompted, this.productData(), this.context),
+      await productDataToEcommerceEvent(
+        TrackingEvent.InsurelyPrompted,
+        this.productData(),
+        this.context,
+      ),
     )
   }
 
-  public reportInsurelyAccepted() {
+  public async reportInsurelyAccepted() {
     this.reportEcommerceEvent(
-      productDataToEcommerceEvent(TrackingEvent.InsurelyAccepted, this.productData(), this.context),
+      await productDataToEcommerceEvent(
+        TrackingEvent.InsurelyAccepted,
+        this.productData(),
+        this.context,
+      ),
     )
   }
 
-  public reportInsurelyCorrectlyFetched() {
+  public async reportInsurelyCorrectlyFetched() {
     this.reportEcommerceEvent(
-      productDataToEcommerceEvent(
+      await productDataToEcommerceEvent(
         TrackingEvent.InsurelyCorrectlyFetched,
         this.productData(),
         this.context,
@@ -304,12 +330,12 @@ type OfferToEcommerseEventParams = {
   source?: ItemListSource
 }
 
-const offerToEcommerceEvent = ({
+const offerToEcommerceEvent = async ({
   event,
   offer,
   context,
   source,
-}: OfferToEcommerseEventParams): EcommerceEvent => {
+}: OfferToEcommerseEventParams): Promise<EcommerceEvent> => {
   return {
     event,
     ecommerce: {
@@ -327,6 +353,7 @@ const offerToEcommerceEvent = ({
     },
     ...Tracking.shopSessionData(context),
     ...Tracking.sessionData(context),
+    ...(await Tracking.userData(context)),
     price_match: {
       exposure_matched: !!offer.priceMatch,
       price_matched: !!offer.priceMatch && offer.priceMatch.priceReduction.amount > 0,
@@ -336,11 +363,11 @@ const offerToEcommerceEvent = ({
 
 // NOTE: Intentionally not adding coupon field, there's no good mapping between our model and analytics
 // Let's figure it out later when/if it becomes a priority
-const cartToEcommerceEvent = (
+const cartToEcommerceEvent = async (
   event: TrackingEvent,
   cart: CartFragmentFragment,
   context: TrackingContext,
-): EcommerceEvent => {
+): Promise<EcommerceEvent> => {
   return {
     event,
     ecommerce: {
@@ -355,14 +382,15 @@ const cartToEcommerceEvent = (
     },
     ...Tracking.shopSessionData(context),
     ...Tracking.sessionData(context),
+    ...(await Tracking.userData(context)),
   } as const
 }
 
-const productDataToEcommerceEvent = (
+const productDataToEcommerceEvent = async (
   event: TrackingEvent,
   productData: TrackingProductData,
   context: TrackingContext,
-): EcommerceEvent => {
+): Promise<EcommerceEvent> => {
   return {
     event,
     ecommerce: {
@@ -375,6 +403,7 @@ const productDataToEcommerceEvent = (
     },
     ...Tracking.shopSessionData(context),
     ...Tracking.sessionData(context),
+    ...(await Tracking.userData(context)),
   } as const
 }
 
