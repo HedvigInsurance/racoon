@@ -27,6 +27,7 @@
   "HOME_PAGE_LINK_LABEL": "Hemsidan",
   "LANGUAGE_LABEL_en": "English",
   "LANGUAGE_LABEL_sv": "Svenska",
+  "LATEST_REVIEWS_TRUSTPILOT_LABEL": "Visar senaste recensioner för alla Hedvigs försäkringar på Trustpilot.",
   "LATEST_REVIEWS_WITH_COMMENTS_LABEL": "Visar senaste recensioner med kommentarer",
   "LOGIN_BUTTON_TEXT": "Logga in",
   "MONTHLY_PRICE": "{{displayAmount}}/mån",

@@ -30,6 +30,7 @@
   "LANGUAGE_LABEL_en": "English",
   "LANGUAGE_LABEL_no": "Norwegian",
   "LANGUAGE_LABEL_sv": "Swedish",
+  "LATEST_REVIEWS_TRUSTPILOT_LABEL": "Shows the latest reviews for all Hedvig's insurances on Trustpilot.",
   "LATEST_REVIEWS_WITH_COMMENTS_LABEL": "Shows latest reviews with comments",
   "LOGIN_BUTTON_TEXT": "Log in",
   "MONTHLY_PRICE": "{{displayAmount}}/mo.",
