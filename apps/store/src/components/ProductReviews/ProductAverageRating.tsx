@@ -11,31 +11,54 @@ import { useReviews } from '@/components/ProductReviews/useReviews'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
 import { useProuctReviewsDataContext } from '@/features/memberReviews/ProductReviewsDataProvider'
+import { useTrustpilotData } from '@/features/memberReviews/TrustpilotDataProvider'
 import { useFormatter } from '@/utils/useFormatter'
+import { TABS, type Tab } from './ReviewTabs'
 
-export const ProductAverageRating = () => {
+export type AverageRatingSource = 'product' | 'trustpilot'
+
+type Props = {
+  averageRatingSource?: AverageRatingSource
+}
+
+export const ProductAverageRating = ({ averageRatingSource = 'product' }: Props) => {
   const { t } = useTranslation('common')
   const { numberGrouping } = useFormatter()
   const productReviewsData = useProuctReviewsDataContext()
+  const trustpilotData = useTrustpilotData()
   const productData = useProductData()
 
-  if (!productReviewsData) {
-    console.warn(`ProductAverageRating | Average rating for product ${productData.name} not found`)
+  if (!isAverageRatingSourceValid(averageRatingSource)) {
+    console.warn(
+      `ProductAverageRating | Invalid average rating source: ${averageRatingSource}. Using 'product' instead.`,
+    )
+    averageRatingSource = 'product'
+  }
+
+  const averageRating =
+    averageRatingSource === 'product'
+      ? productReviewsData?.averageRating
+      : trustpilotData?.averageRating
+  if (!averageRating) {
+    console.log(`ProductAverageRating | No reviews data found for product ${productData.name}`)
     return null
   }
-  const { averageRating } = productReviewsData
 
   return (
     <>
-      <Head>
-        <script
-          key="product-structured-data"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(getProductStructuredData(productData, averageRating)),
-          }}
-        />
-      </Head>
+      {productReviewsData?.averageRating && (
+        <Head>
+          <script
+            key="product-structured-data"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(
+                getProductStructuredData(productData, productReviewsData.averageRating),
+              ),
+            }}
+          />
+        </Head>
+      )}
 
       <GridLayout.Root>
         <GridLayout.Content
@@ -55,7 +78,11 @@ export const ProductAverageRating = () => {
                 ·
               </Text>
 
-              <Dialog>
+              <Dialog
+                initialSelectedTab={
+                  averageRatingSource === 'product' ? TABS.PRODUCT : TABS.TRUSTPILOT
+                }
+              >
                 <Trigger>
                   {t('REVIEWS_COUNT_LABEL', {
                     count: averageRating.totalOfReviews,
@@ -71,8 +98,12 @@ export const ProductAverageRating = () => {
   )
 }
 
+const isAverageRatingSourceValid = (source: string): source is AverageRatingSource =>
+  ['product', 'trustpilot'].includes(source)
+
 type DialogProps = {
   children: ReactNode
+  initialSelectedTab?: Tab
 }
 
 const Dialog = (props: DialogProps) => {
@@ -85,7 +116,7 @@ const Dialog = (props: DialogProps) => {
     setSelectedTab,
     selectedScore,
     setSelectedScore,
-  } = useReviews()
+  } = useReviews(props.initialSelectedTab)
 
   if (!rating) return null
 

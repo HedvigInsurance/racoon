@@ -5,7 +5,10 @@ import { useState, useEffect, useRef, ReactNode } from 'react'
 import { theme, mq } from 'ui'
 import { GridLayout, MAX_WIDTH } from '@/components/GridLayout/GridLayout'
 import { HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header'
-import { PurchaseForm } from '@/components/ProductPage/PurchaseForm/PurchaseForm'
+import {
+  PurchaseForm,
+  type PurchaseFormProps,
+} from '@/components/ProductPage/PurchaseForm/PurchaseForm'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { zIndexes } from '@/utils/zIndex'
 
@@ -14,14 +17,15 @@ const SCROLL_PERCENTAGE_THRESHOLD = 10 // 10%
 
 export type PageSection = 'overview' | 'coverage'
 
-export type ProductPageBlockProps = SbBaseBlockProps<{
-  overviewLabel: string
-  coverageLabel: string
-  overview: Array<SbBlokData>
-  coverage: Array<SbBlokData>
-  body: Array<SbBlokData>
-  showAverageRating: boolean
-}>
+export type ProductPageBlockProps = SbBaseBlockProps<
+  {
+    overviewLabel: string
+    coverageLabel: string
+    overview: Array<SbBlokData>
+    coverage: Array<SbBlokData>
+    body: Array<SbBlokData>
+  } & Pick<PurchaseFormProps, 'showAverageRating' | 'averageRatingSource'>
+>
 
 export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
   const [activeSection, setActiveSection] = useState<PageSection>('overview')
@@ -60,7 +64,10 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
       <Grid>
         <GridLayout.Content width="1/2" align="right">
           <PurchaseFormWrapper>
-            <PurchaseForm showAverageRating={blok.showAverageRating} />
+            <PurchaseForm
+              showAverageRating={blok.showAverageRating}
+              averageRatingSource={blok.averageRatingSource}
+            />
           </PurchaseFormWrapper>
         </GridLayout.Content>
 
