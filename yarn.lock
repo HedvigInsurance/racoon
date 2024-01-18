@@ -8666,24 +8666,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storyblok/js@npm:^3.0.2":
-  version: 3.0.4
-  resolution: "@storyblok/js@npm:3.0.4"
+"@storyblok/js@npm:^3.0.4":
+  version: 3.0.5
+  resolution: "@storyblok/js@npm:3.0.5"
   dependencies:
-    storyblok-js-client: ^6.6.1
-  checksum: cc5a7eb1443109450ea432e1d9534882b43e87b08d31139c94c205d3a8c8c4c053da0e69af7f1f4da51d868cb2e19acc96d5e2846ded6fd731b25a5cdcb62617
+    storyblok-js-client: ^6.6.2
+  checksum: fb9409fb0c9ada345f89b01caf3a84e2263c64849d80c41304e2d7289c8f30810e0a789548c193f5d1659088300c1f3175b2044285aa12a03a73cf1bef10c537
   languageName: node
   linkType: hard
 
-"@storyblok/react@npm:3.0.5":
-  version: 3.0.5
-  resolution: "@storyblok/react@npm:3.0.5"
+"@storyblok/react@npm:3.0.6":
+  version: 3.0.6
+  resolution: "@storyblok/react@npm:3.0.6"
   dependencies:
-    "@storyblok/js": ^3.0.2
+    "@storyblok/js": ^3.0.4
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
     react-dom: ^17.0.0 || ^18.0.0
-  checksum: 702a04cddc200f1573ab38e72e8e6427a12395e33477eccd86c8160327f6327e513d6e49b0c312d4e7ae2082f372798529b2fbeff7ef0129d40ab3e005a66939
+  checksum: ac84d21daf832e9d027f1178474ece2b782cddbfa2535b5e1d380bca373b24bcbf91a116b6497b948497738b1276c5ed57aefd12fdbb97c1033cc3ad7273f13a
   languageName: node
   linkType: hard
 
@@ -24447,7 +24447,7 @@ __metadata:
     "@radix-ui/react-tabs": 1.0.4
     "@radix-ui/react-tooltip": 1.0.7
     "@storyblok/js": 3.0.3
-    "@storyblok/react": 3.0.5
+    "@storyblok/react": 3.0.6
     "@storybook/addon-actions": 7.6.8
     "@storybook/addon-designs": 7.0.9
     "@storybook/addon-essentials": 7.6.8
@@ -24525,7 +24525,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"storyblok-js-client@npm:^6.5.0, storyblok-js-client@npm:^6.6.1":
+"storyblok-js-client@npm:^6.5.0, storyblok-js-client@npm:^6.6.2":
   version: 6.6.2
   resolution: "storyblok-js-client@npm:6.6.2"
   checksum: 880aa72dea307ba0cc64c3dd24a53bb931df7fd4d122650be49f30daae0937c7f65417ab15f4acfc823f656d61d57b136b79f25fd275c97b575d16b4e5de4a42
