@@ -13,7 +13,7 @@ type Story = StoryObj<typeof WarningPrompt>
 
 export const Default: Story = {
   args: {
-    heading: 'Du står inte som ägare',
+    header: 'Du står inte som ägare',
     message:
       'För att kunna teckna en försäkring för ABH234 behöver du stå som registrerad ägare för bilen inom 8 dagar',
   },

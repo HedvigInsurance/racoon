@@ -16,6 +16,7 @@ import { PriceCalculatorAccordion } from './PriceCalculatorAccordion'
 import { PriceCalculatorSection } from './PriceCalculatorSection'
 import { useShowFetchInsurance } from './useFetchInsurance'
 import { useHandleSubmitPriceCalculator } from './useHandleSubmitPriceCalculator'
+import { Warning } from './Warning/Warning'
 
 type Props = {
   priceIntent: PriceIntent
@@ -118,6 +119,8 @@ export const PriceCalculator = (props: Props) => {
           </PriceCalculatorSection>
         )}
       </PriceCalculatorAccordion>
+
+      {priceIntent.warning && <Warning priceIntentWarning={priceIntent.warning} />}
 
       <FetchInsuranceContainer priceIntent={priceIntent}>
         {({ externalInsurer, insurely }) => (
