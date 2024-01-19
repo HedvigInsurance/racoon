@@ -30,6 +30,18 @@ module.exports = {
         '@typescript-eslint/no-unsafe-argument': 'off',
         '@typescript-eslint/no-unsafe-assignment': 'off',
         '@typescript-eslint/no-unsafe-member-access': 'off',
+        'no-restricted-imports': [
+          'error',
+          {
+            paths: [
+              {
+                name: 'react-i18next',
+                importNames: ['useTranslation'],
+                message: "Get it from 'next-i18next' instead",
+              },
+            ],
+          },
+        ],
       },
     },
   ],

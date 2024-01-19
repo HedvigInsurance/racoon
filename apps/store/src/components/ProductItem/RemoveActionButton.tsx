@@ -1,5 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { Button, Dialog, Text } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'

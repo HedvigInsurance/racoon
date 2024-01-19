@@ -1,5 +1,5 @@
+import { useTranslation } from 'next-i18next'
 import { useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
 import { Combobox } from '@/components/Combobox/Combobox'
 import { PriceIntentAnimal, usePriceIntentAvailableBreedsQuery } from '@/services/graphql/generated'
 import {

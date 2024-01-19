@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { Variants, motion } from 'framer-motion'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { Space, Text, theme } from 'ui'
 
 const ANIMATION_DURATION_SEC = 2

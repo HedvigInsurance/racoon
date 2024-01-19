@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { Space } from 'ui'
 import { InputStartDay } from '@/components/InputDay/InputStartDay'
 import { useFormatter } from '@/utils/useFormatter'

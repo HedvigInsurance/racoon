@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import { theme } from 'ui'
 import { StoryblokAsset } from '@/services/storyblok/storyblok'
 import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'

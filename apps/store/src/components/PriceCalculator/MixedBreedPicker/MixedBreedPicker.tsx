@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { Space, Text, CrossIconSmall, InfoIcon, theme } from 'ui'
 import { Combobox } from '@/components/Combobox/Combobox'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
