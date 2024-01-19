@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
+import { useTranslation } from 'next-i18next'
 import { useState, useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
 import { Button, Text, WarningTriangleIcon, theme } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { resetAuthTokens } from '@/services/authApi/persist'
