@@ -8657,16 +8657,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storyblok/js@npm:3.0.3":
-  version: 3.0.3
-  resolution: "@storyblok/js@npm:3.0.3"
-  dependencies:
-    storyblok-js-client: ^6.5.0
-  checksum: d40230128a5a9c74cac4648865849fcf9715ac4bc4e10d1ec2ecb25235785df1532dd9092f964a43588d897dcd7d7efaeff082373e9165b8f979e6f25b25058c
-  languageName: node
-  linkType: hard
-
-"@storyblok/js@npm:^3.0.4":
+"@storyblok/js@npm:3.0.5, @storyblok/js@npm:^3.0.4":
   version: 3.0.5
   resolution: "@storyblok/js@npm:3.0.5"
   dependencies:
@@ -10367,12 +10358,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:20.11.3":
-  version: 20.11.3
-  resolution: "@types/node@npm:20.11.3"
+"@types/node@npm:20.11.4":
+  version: 20.11.4
+  resolution: "@types/node@npm:20.11.4"
   dependencies:
     undici-types: ~5.26.4
-  checksum: 56d58fec1352af4fddcf07b6f003e427b34c9bdd936ef895f8c3db4dccf7606662a8c536865532a7b58f1208712744cce777ba23767325e66d6beaa5c772219f
+  checksum: b9cf2c5397ea31f3355656edd204aee777a36db75b79b8b7aba2bed7ea5b29914fa808489da5c632c5eddbb33c3106188bef0bff3b7648bd39aa50dee466a73b
   languageName: node
   linkType: hard
 
@@ -24446,7 +24437,7 @@ __metadata:
     "@radix-ui/react-switch": 1.0.3
     "@radix-ui/react-tabs": 1.0.4
     "@radix-ui/react-tooltip": 1.0.7
-    "@storyblok/js": 3.0.3
+    "@storyblok/js": 3.0.5
     "@storyblok/react": 3.0.6
     "@storybook/addon-actions": 7.6.8
     "@storybook/addon-designs": 7.0.9
@@ -24462,7 +24453,7 @@ __metadata:
     "@testing-library/user-event": 14.5.2
     "@types/clone-deep": 4.0.4
     "@types/md5": 2.3.5
-    "@types/node": 20.11.3
+    "@types/node": 20.11.4
     "@types/nprogress": 0.2.3
     "@types/react": 18.2.48
     "@types/react-dom": 18.2.18
@@ -24525,7 +24516,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"storyblok-js-client@npm:^6.5.0, storyblok-js-client@npm:^6.6.2":
+"storyblok-js-client@npm:^6.6.2":
   version: 6.6.2
   resolution: "storyblok-js-client@npm:6.6.2"
   checksum: 880aa72dea307ba0cc64c3dd24a53bb931df7fd4d122650be49f30daae0937c7f65417ab15f4acfc823f656d61d57b136b79f25fd275c97b575d16b4e5de4a42
