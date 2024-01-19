@@ -55,7 +55,7 @@
   "REVIEW_COMMENTS_READ_MORE": "Read more",
   "SELECT_INSURANCE": "Select insurance",
   "TRUSTPILOT_REVIEWS_COUNT": "Based on {{numberOfReviews}} reviews",
-  "TRUSTPILOT_REVIEWS_DISCLAIMER": "We encourage our members to write reviews about us on Trustpilot. The platform is open to everyone and cannot verify that only Hedvig's members leave reviews.",
+  "TRUSTPILOT_REVIEWS_DISCLAIMER": "Trustpilot is open to everyone and cannot verify that only Hedvig's members leave reviews.",
   "TRUSTPILOT_REVIEWS_TAB_LABEL": "Trustpilot ({{score}})",
   "TRUSTPILOT_SCORE": "{{score}} of 5",
   "UNKNOWN_ERROR_MESSAGE": "Something went wrong, please try again.",
