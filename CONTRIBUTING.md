@@ -53,39 +53,24 @@ Exceptions:
 
 ### Commits
 
+We try to write commit messages that show what is done and why.
+Keep it simple as long-term history is usually formed mostly from PR descriptions.
+
 ### Branch names
 
-We name our branches following this pattern:
+No requirements, go nuts if you want :)
+We had previously enforced naming conventions for branches, and it had not shown enough value to be worth it.
 
-`[Jira issue ID, if applicable]/[type]/[description]`
-
-Example:
-
-```
-GRW-123/feat/add-modal-component
-```
-
-Prefixing the branch name with the issue number will link it to the ticket in Jira
-
-#### Branch types
-
-- `build`: Changes that affect the build system or external dependencies
-- `chore`: Other changes that don’t modify src or test files
-- `ci`: Changes to our CI configuration files and scripts
-- `copy`: Copy update
-- `docs`: Documentation only changes
-- `feat`: A new feature
-- `fix`: Bug fixes
-- `refactor`: A code change that neither fixes a bug nor adds a feature
-- `revert`: Reverts a previous commit/PR
-- `style`: Changes that do not affect the meaning of the code (white-space, formatting etc)
-- `test`: Adding tests or correcting existing tests
+The important thing is to have good PR titles and descriptions.
 
 ## Pull Requests and Code Reviews
 
+We mostly use Graphite for Pull Requests as it provides better experience and developer productivity compared to Github PRs.
+It's a recommendation, not a requirement - everything works through Github PR UI as well.
+
 ### Pull Requests
 
-- Break down your work into small (easy to review) PRs!
+- Break down your work into small (easy to review) PRs. Stacked PRs (Graphite) makes it easier
 - It’s your responsibility to get your PRs merged
 - Try to pair program on complex tasks - then the PR review will be much easier
 - If people are not reviewing your PR => reach out and suggest you can go over it together
@@ -114,7 +99,8 @@ When a PR is merged to the `main` branch it will be automatically deployed to pr
 ## Code guidelines
 
 - Make use of object and array destructuring
-- Respect the code style guidelines, `prettier` and `yarn lint` is everyone's best friend
+- We try to automate naming and formatting rules that can be automated - major part of code conventions are enforced with prettier and eslint.
+  Those conventions are not described here to avoid duplication
 
 ### Exports
 
@@ -171,7 +157,10 @@ export const DoSomething: ReactNode = () => {
 
 #### Components in files
 
-As stated in the section on Files the rule of thumb is pretty easy - **one React component per file**. And the component exported from a file **should be named the same as the file**.
+As stated in the section on Files the rule of thumb is pretty easy - **one React component per file**.
+And the component exported from a file **should be named the same as the file**.
+
+Exception: co-locating small inner components in the same module is fine as long as they aren't exported - think of it as an implementation detail
 
 #### Declaring components
 
@@ -198,45 +187,6 @@ export function Component() {
 Our React components should be easy to get an overview of, which means that their returned JSX "markup" _ideally_ fits on the screen of a 15/16 inch laptop without you having to scroll. If it's bigger than that you should probably look into splitting it up into smaller components. If you feel like you can't then you should most likely do some refactoring :)
 
 ### Props
-
-#### Receiving props
-
-We always destructure props in the component **receiving** them.
-
-```tsx
-// Do:
-
-const MyComponent = ({ prop1, prop2 }) => {
-  return (
-    <>
-      <div>{prop1}</div>
-      <div>{prop2}</div>
-    </>
-  )
-}
-
-const MyComponent = ({ prop1, ...rest }) => {
-  return (
-    <>
-      <div>{prop1}</div>
-      <MyOtherComponent {...rest} />
-    </>
-  )
-}
-```
-
-```tsx
-// Don't:
-
-const MyComponent = (props) => {
-  return (
-    <>
-      <div>{props.prop1}</div>
-      <div>{props.prop2}</div>
-    </>
-  )
-}
-```
 
 #### Passing props
 
@@ -501,6 +451,11 @@ const AnotherNotCoolDiv = styled.div`
   background: peachpuff;
 `
 ```
+
+### Theme and variables
+
+- We try to reuse design tokens from our theme for things like colors, paddings, text size, etc
+- Theme should be treated as compile-time constant. Just import values from it instead of using dynamic theme API
 
 ### Responsive design
 
