@@ -86,6 +86,25 @@ export const PriceCalculator = (props: Props) => {
     },
   })
 
+  const goBackToPreviousSection = () => {
+    setActiveSectionId((currentSectionId) => {
+      const currentSectionIndex = form.sections.findIndex(({ id }) => id === currentSectionId)
+
+      const prevSection = form.sections[currentSectionIndex - 1]
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (prevSection) {
+        return prevSection.id
+      } else {
+        datadogLogs.logger.error('Failed to find previous section', {
+          currentSectionId,
+          templateName: priceTemplate.name,
+          priceIntentId: priceIntent.id,
+        })
+        return currentSectionId
+      }
+    })
+  }
+
   return (
     <>
       <PriceCalculatorAccordion
@@ -120,7 +139,12 @@ export const PriceCalculator = (props: Props) => {
         )}
       </PriceCalculatorAccordion>
 
-      {priceIntent.warning && <Warning priceIntentWarning={priceIntent.warning} />}
+      {priceIntent.warning && (
+        <Warning
+          priceIntentWarning={priceIntent.warning}
+          goBackToPreviousSection={goBackToPreviousSection}
+        />
+      )}
 
       <FetchInsuranceContainer priceIntent={priceIntent}>
         {({ externalInsurer, insurely }) => (
