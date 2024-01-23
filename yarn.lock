@@ -8657,7 +8657,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storyblok/js@npm:3.0.5, @storyblok/js@npm:^3.0.4":
+"@storyblok/js@npm:3.0.5":
   version: 3.0.5
   resolution: "@storyblok/js@npm:3.0.5"
   dependencies:
@@ -8666,15 +8666,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storyblok/react@npm:3.0.6":
+"@storyblok/js@npm:^3.0.6":
   version: 3.0.6
-  resolution: "@storyblok/react@npm:3.0.6"
+  resolution: "@storyblok/js@npm:3.0.6"
   dependencies:
-    "@storyblok/js": "npm:^3.0.4"
+    storyblok-js-client: "npm:^6.6.3"
+  checksum: 8b6da099b75b45a2f111c40f426946dc458400255c01d3c4232d616e2b0d35ff80395985cf03d9e4f9d4c08944bb52fc4503ce6ccbdd8fa0ebe762f4023c0d1b
+  languageName: node
+  linkType: hard
+
+"@storyblok/react@npm:3.0.8":
+  version: 3.0.8
+  resolution: "@storyblok/react@npm:3.0.8"
+  dependencies:
+    "@storyblok/js": "npm:^3.0.6"
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
     react-dom: ^17.0.0 || ^18.0.0
-  checksum: 92370cffa661e1e49ca48b355c6382263200a96c56ab0d4b9070fe2c1e4e09c8fe1297dfc8440d6d4102d0e109834c60775a26b66037f6796b485330600866f5
+  checksum: 91c3b1cac8b9a1b96b24d70af6188e05747e419c079bf2991c786c69be333ed23d0180ca1d4fb34f05b32bbd38c29eb884e21e67f470df1b6d0dc5e8c9b7d604
   languageName: node
   linkType: hard
 
@@ -24436,7 +24445,7 @@ __metadata:
     "@radix-ui/react-tabs": "npm:1.0.4"
     "@radix-ui/react-tooltip": "npm:1.0.7"
     "@storyblok/js": "npm:3.0.5"
-    "@storyblok/react": "npm:3.0.6"
+    "@storyblok/react": "npm:3.0.8"
     "@storybook/addon-actions": "npm:7.6.10"
     "@storybook/addon-designs": "npm:7.0.9"
     "@storybook/addon-essentials": "npm:7.6.10"
@@ -24518,6 +24527,13 @@ __metadata:
   version: 6.6.2
   resolution: "storyblok-js-client@npm:6.6.2"
   checksum: 41fcc963b099c6fc4f93c341b122fc3704a9f9516c23912d1a6b2c2452f59df613a4caea58ce2e6d2af2be2d353139d67d4925eea9fef7f2273a6f733ffa1375
+  languageName: node
+  linkType: hard
+
+"storyblok-js-client@npm:^6.6.3":
+  version: 6.6.3
+  resolution: "storyblok-js-client@npm:6.6.3"
+  checksum: 12ab679adc63904306db25a6add2c8a1a507cea056a63c7e6d6f1f46da3493d46ee208f6a250aac1c969938e82edbba432142b0e303a8c3708134416f63315ee
   languageName: node
   linkType: hard
 
