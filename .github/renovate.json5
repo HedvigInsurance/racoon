@@ -34,6 +34,12 @@
       // It's much less likely that dev dependencies will break our site, so let's automerge starting from midnight
       "automergeSchedule": ["before 2pm every weekday"],
       "labels": ["dev-deps"]
+    },
+    {
+      // Treat @storyblok/js and @storyblok/react as single update group to keep versions compatible
+      // By default, renovate does not group them and most updates break because of this
+      "matchPackagePatterns": ["^@storyblok"],
+      groupName: "storyblok packages",
     }
   ],
   // Rate limits
