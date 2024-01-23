@@ -1,14 +1,25 @@
 import { atom, useAtomValue } from 'jotai'
-import { useHydrateAtoms } from 'jotai/utils'
+import { atomFamily, useHydrateAtoms } from 'jotai/utils'
 import { globalStore } from '@/utils/globalStore'
-import { GlobalProductMetadata } from './fetchProductMetadata'
+import { type RoutingLocale } from '@/utils/l10n/types'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { type GlobalProductMetadata } from './fetchProductMetadata'
 
-const productsAtom = atom<GlobalProductMetadata | null>(null)
+// We don't actually neeed _routineLocale for the atom creation. It will be used
+// to create a new atom for each locale by default.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const productsMetadataAtom = atomFamily((_routingLocale: RoutingLocale) =>
+  atom<GlobalProductMetadata | null>(null),
+)
 
 export const useProductMetadata = () => {
-  return useAtomValue(productsAtom, { store: globalStore })
+  const { routingLocale } = useCurrentLocale()
+
+  return useAtomValue(productsMetadataAtom(routingLocale), { store: globalStore })
 }
 
 export const useHydrateProductMetadata = (metadata: GlobalProductMetadata) => {
-  useHydrateAtoms([[productsAtom, metadata]], { store: globalStore })
+  const { routingLocale } = useCurrentLocale()
+
+  useHydrateAtoms([[productsMetadataAtom(routingLocale), metadata]], { store: globalStore })
 }
