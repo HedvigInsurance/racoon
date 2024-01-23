@@ -40,6 +40,47 @@ Requirements:
 
 - Add `APOLLO_KEY` to `.env.local` (see Vercel)
 
+## VS Code debugging
+
+Create a `.vscode/.launch.json` file with the following content:
+
+```
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Next.js: debug server-side",
+      "type": "node-terminal",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/apps/store",
+      "command": "yarn dev"
+    },
+    {
+      "name": "Next.js: debug client-side",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:8040"
+    },
+    {
+      "name": "Next.js: debug full stack",
+      "type": "node-terminal",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/apps/store",
+      "command": "yarn dev",
+      "serverReadyAction": {
+        "pattern": "- Local:.+(https?://.+)",
+        "uriFormat": "%s",
+        "action": "debugWithChrome"
+      }
+    }
+  ]
+}
+```
+
+Now go to the Debug panel (Ctrl+Shift+D on Windows/Linux, ⇧+⌘+D on macOS), select a launch configuration and start the app in debug mode.
+
+More information can be found on the [nextjs's official debugging guide](https://nextjs.org/docs/pages/building-your-application/configuring/debugging).
+
 ## Share / Resume a Shop Session
 
 It can be useful to share a shop session with someone. Perhaps you've got into a strange state and want to share the session with a colleague so you can debug together.
