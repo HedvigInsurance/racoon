@@ -3957,9 +3957,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datadog/datadog-ci@npm:2.27.0":
-  version: 2.27.0
-  resolution: "@datadog/datadog-ci@npm:2.27.0"
+"@datadog/datadog-ci@npm:2.28.0":
+  version: 2.28.0
+  resolution: "@datadog/datadog-ci@npm:2.28.0"
   dependencies:
     "@aws-sdk/client-cloudwatch-logs": "npm:^3.454.0"
     "@aws-sdk/client-iam": "npm:^3.454.0"
@@ -3975,7 +3975,7 @@ __metadata:
     ajv: "npm:^8.12.0"
     ajv-formats: "npm:^2.1.1"
     async-retry: "npm:1.3.1"
-    axios: "npm:1.6.0"
+    axios: "npm:^1.6.5"
     chalk: "npm:3.0.0"
     clipanion: "npm:^3.2.1"
     datadog-metrics: "npm:0.9.3"
@@ -4008,7 +4008,7 @@ __metadata:
     yamux-js: "npm:0.1.2"
   bin:
     datadog-ci: dist/cli.js
-  checksum: 0450efed06b9fa274427964a0f941aa4b61137d80cec9d29da954f9372ea74b593849b188d05ab1144f5cf834b87fd243f4efff3613af2ebc43c07cf7f71e050
+  checksum: b09057324fc1460e25bc8c5e441fbe414c311c43e6e0147faa9849f8ee5493269d11f0ef64959629e8e3b446ee3b0318316946fc3d5b8ebe98be9646e6fa7d8e
   languageName: node
   linkType: hard
 
@@ -12020,14 +12020,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.6.0":
-  version: 1.6.0
-  resolution: "axios@npm:1.6.0"
+"axios@npm:^1.6.5":
+  version: 1.6.5
+  resolution: "axios@npm:1.6.5"
   dependencies:
-    follow-redirects: "npm:^1.15.0"
+    follow-redirects: "npm:^1.15.4"
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 2879e17b96cbca7e2096d231a44e2d0f03e657d79f8928ea38ec5fbaf5a5b7bf952d580cdb58a66ba328c26eb3528b89d5a32da57cc5cf89813786c044f7e9d6
+  checksum: aeb9acf87590d8aa67946072ced38e01ca71f5dfe043782c0ccea667e5dd5c45830c08afac9be3d7c894f09684b8ab2a458f497d197b73621233bcf202d9d468
   languageName: node
   linkType: hard
 
@@ -16295,13 +16295,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.15.0":
-  version: 1.15.3
-  resolution: "follow-redirects@npm:1.15.3"
+"follow-redirects@npm:^1.15.4":
+  version: 1.15.5
+  resolution: "follow-redirects@npm:1.15.5"
   peerDependenciesMeta:
     debug:
       optional: true
-  checksum: 915a2cf22e667bdf47b1a43cc6b7dce14d95039e9bbf9a24d0e739abfbdfa00077dd43c86d4a7a19efefcc7a99af144920a175eedc3888d268af5df67c272ee5
+  checksum: 418d71688ceaf109dfd6f85f747a0c75de30afe43a294caa211def77f02ef19865b547dfb73fde82b751e1cc507c06c754120b848fe5a7400b0a669766df7615
   languageName: node
   linkType: hard
 
@@ -24410,7 +24410,7 @@ __metadata:
     "@babel/preset-typescript": "npm:7.23.3"
     "@datadog/browser-logs": "npm:5.8.0"
     "@datadog/browser-rum": "npm:5.8.0"
-    "@datadog/datadog-ci": "npm:2.27.0"
+    "@datadog/datadog-ci": "npm:2.28.0"
     "@emotion/babel-plugin": "npm:11.11.0"
     "@emotion/is-prop-valid": "npm:1.2.1"
     "@emotion/react": "npm:11.11.1"
