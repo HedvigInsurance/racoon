@@ -7,22 +7,32 @@ import { WarningPrompt } from './WarningPrompt/WarningPrompt'
 
 type Props = {
   priceIntentWarning: PriceIntentWarning
+  goBackToPreviousSection: () => void
 }
 
-export const Warning = ({ priceIntentWarning }: Props) => {
+export const Warning = ({ priceIntentWarning, goBackToPreviousSection }: Props) => {
   const [open, setOpen] = useState(true)
 
   const handleClickConfirm = () => {
     setOpen(false)
   }
 
+  const handleEditPriceIntent = () => {
+    setOpen(false)
+    goBackToPreviousSection()
+  }
+
   if (!Features.enabled('PRICE_INTENT_WARNING')) return null
 
   return (
     <DialogRoot open={open}>
-      <DialogContent centerContent={true}>
+      <DialogContent centerContent={true} onClose={handleClickConfirm}>
         <DialogWindow>
-          <WarningPrompt {...priceIntentWarning} onClickConfirm={handleClickConfirm} />
+          <WarningPrompt
+            {...priceIntentWarning}
+            onClickConfirm={handleClickConfirm}
+            onClickEdit={handleEditPriceIntent}
+          />
         </DialogWindow>
       </DialogContent>
     </DialogRoot>

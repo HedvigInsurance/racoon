@@ -6,9 +6,10 @@ import { PriceIntentWarning } from '@/services/graphql/generated'
 
 type Props = {
   onClickConfirm: () => void
+  onClickEdit: () => void
 } & PriceIntentWarning
 
-export const WarningPrompt = ({ header, message, onClickConfirm }: Props) => {
+export const WarningPrompt = ({ header, message, onClickConfirm, onClickEdit }: Props) => {
   const { t } = useTranslation('purchase-form')
 
   return (
@@ -26,7 +27,7 @@ export const WarningPrompt = ({ header, message, onClickConfirm }: Props) => {
 
         <Space y={0.25}>
           <Button onClick={onClickConfirm}>{t('PRICE_INTENT_WARNING_ACCEPT_BUTTON_LABEL')}</Button>
-          <Button onClick={onClickConfirm} variant="ghost">
+          <Button onClick={onClickEdit} variant="ghost">
             {t('PRICE_INTENT_WARNING_EDIT_BUTTON_LABEL')}
           </Button>
         </Space>
