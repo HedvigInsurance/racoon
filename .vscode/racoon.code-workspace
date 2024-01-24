@@ -37,6 +37,7 @@
       "**/.pnp.*": true
     },
     "githubPullRequests.ignoredPullRequestBranches": ["main"],
-    "terminal.integrated.cwd": "${workspaceFolder}"
+    "terminal.integrated.cwd": "${workspaceFolder}",
+    "search.useGlobalIgnoreFiles": true
   }
 }

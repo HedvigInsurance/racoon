@@ -48,6 +48,7 @@ export const HeadSeoInfo = ({ story, robots }: Props) => {
           </>
         )}
         <script
+          key="organization-structured-data"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }}
         />
