@@ -2,13 +2,13 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { Button, InfoIcon, Space, Text, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { PriceIntentWarning } from '@/services/graphql/generated'
 
 type Props = {
-  heading?: string
-  message?: string
-}
+  onClickConfirm: () => void
+} & PriceIntentWarning
 
-export const WarningPrompt = ({ heading, message }: Props) => {
+export const WarningPrompt = ({ header, message, onClickConfirm }: Props) => {
   const { t } = useTranslation('purchase-form')
 
   return (
@@ -17,14 +17,18 @@ export const WarningPrompt = ({ heading, message }: Props) => {
         <SpaceFlex space={1} direction="vertical" align="center">
           <InfoIcon size="1.5rem" color={theme.colors.signalBlueElement} />
           <div>
-            <Text>{heading}</Text>
-            <Text color="textSecondary">{message}</Text>
+            <Text balance={true}>{header}</Text>
+            <Text color="textSecondary" balance={true}>
+              {message}
+            </Text>
           </div>
         </SpaceFlex>
 
         <Space y={0.25}>
-          <Button>{t('PRICE_INTENT_WARNING_ACCEPT_BUTTON_LABEL')}</Button>
-          <Button variant="ghost">{t('PRICE_INTENT_WARNING_EDIT_BUTTON_LABEL')}</Button>
+          <Button onClick={onClickConfirm}>{t('PRICE_INTENT_WARNING_ACCEPT_BUTTON_LABEL')}</Button>
+          <Button onClick={onClickConfirm} variant="ghost">
+            {t('PRICE_INTENT_WARNING_EDIT_BUTTON_LABEL')}
+          </Button>
         </Space>
       </Space>
     </Wrapper>
