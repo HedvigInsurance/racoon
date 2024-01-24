@@ -1,3 +1,4 @@
+import styled from '@emotion/styled'
 import { type ISbRichtext, storyblokEditable } from '@storyblok/react'
 import Link from 'next/link'
 import { useMemo, type ReactNode } from 'react'
@@ -14,8 +15,12 @@ export type RichTextBlockProps = SbBaseBlockProps<{
   largeText?: boolean
 }>
 
-export const RichTextBlock = ({ blok }: RichTextBlockProps) => {
+export const RichTextBlock = ({ blok, nested }: RichTextBlockProps) => {
   const content = useMemo(() => renderRichText(blok.content), [blok.content])
+
+  if (nested) {
+    return <NestedRichText largeText={blok.largeText}>{content}</NestedRichText>
+  }
 
   return (
     <GridLayout.Root {...storyblokEditable(blok)}>
@@ -29,6 +34,12 @@ export const RichTextBlock = ({ blok }: RichTextBlockProps) => {
   )
 }
 RichTextBlock.blockName = 'richText'
+
+const NestedRichText = styled(RichText)({
+  ':is([data-large-text=true], &) :is(h2, h3, h4):first-of-type': {
+    marginTop: 0,
+  },
+})
 
 const RENDER_OPTIONS: RenderOptions = {
   blokResolvers: {
