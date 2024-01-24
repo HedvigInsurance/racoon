@@ -20,6 +20,7 @@ type Props = {
   rating: Rating
   reviewsDistribution: ReviewsDistribution
   selectedTab: Tab
+  onClose?: () => void
   onSelectedTabChange: (tab: Tab) => void
   selectedScore: Score
   onSelectedScoreChange: (score: Score) => void
@@ -32,6 +33,7 @@ export const ReviewsDialog = ({
   rating,
   reviewsDistribution,
   selectedTab,
+  onClose,
   onSelectedTabChange,
   selectedScore,
   onSelectedScoreChange,
@@ -43,8 +45,8 @@ export const ReviewsDialog = ({
     <Dialog.Root>
       <Dialog.Trigger asChild={true}>{children}</Dialog.Trigger>
 
-      <DialogContent centerContent={true}>
-        <Dialog.Close asChild={true}>
+      <DialogContent centerContent={true} onClose={onClose}>
+        <Dialog.Close asChild={true} onClick={onClose}>
           <CloseButton>
             <CrossIcon size={'1rem'} />
           </CloseButton>
