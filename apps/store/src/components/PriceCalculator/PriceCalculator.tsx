@@ -1,4 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
+import { useSetAtom } from 'jotai'
 import { useMemo, useState } from 'react'
 import {
   prefillData,
@@ -16,6 +17,7 @@ import { PriceCalculatorAccordion } from './PriceCalculatorAccordion'
 import { PriceCalculatorSection } from './PriceCalculatorSection'
 import { useShowFetchInsurance } from './useFetchInsurance'
 import { useHandleSubmitPriceCalculator } from './useHandleSubmitPriceCalculator'
+import { showPriceIntentWarningAtom } from './Warning/showPriceIntentWarningAtom'
 import { Warning } from './Warning/Warning'
 
 type Props = {
@@ -48,6 +50,7 @@ export const PriceCalculator = (props: Props) => {
   })
 
   const showFetchInsurance = useShowFetchInsurance({ priceIntentId: priceIntent.id })
+  const showPriceIntentWarning = useSetAtom(showPriceIntentWarningAtom)
   const [handleSubmit, handleSubmitSection, isLoading] = useHandleSubmitPriceCalculator({
     shopSession,
     priceIntent,
@@ -61,6 +64,7 @@ export const PriceCalculator = (props: Props) => {
         onConfirm()
       } else {
         if (priceIntent.externalInsurer) showFetchInsurance()
+        if (priceIntent.warning) showPriceIntentWarning(true)
 
         setActiveSectionId((prevSectionId) => {
           const currentSectionIndex = form.sections.findIndex(({ id }) => id === prevSectionId)

@@ -1,8 +1,9 @@
 import styled from '@emotion/styled'
-import { useState } from 'react'
+import { useAtom } from 'jotai'
 import { Dialog, theme } from 'ui'
 import { PriceIntentWarning } from '@/services/graphql/generated'
 import { Features } from '@/utils/Features'
+import { showPriceIntentWarningAtom } from './showPriceIntentWarningAtom'
 import { WarningPrompt } from './WarningPrompt/WarningPrompt'
 
 type Props = {
@@ -11,21 +12,21 @@ type Props = {
 }
 
 export const Warning = ({ priceIntentWarning, goBackToPreviousSection }: Props) => {
-  const [open, setOpen] = useState(true)
+  const [isOpen, setIsOpen] = useAtom(showPriceIntentWarningAtom)
 
   const handleClickConfirm = () => {
-    setOpen(false)
+    setIsOpen(false)
   }
 
   const handleEditPriceIntent = () => {
-    setOpen(false)
+    setIsOpen(false)
     goBackToPreviousSection()
   }
 
   if (!Features.enabled('PRICE_INTENT_WARNING')) return null
 
   return (
-    <DialogRoot open={open}>
+    <DialogRoot open={isOpen}>
       <DialogContent centerContent={true} onClose={handleClickConfirm}>
         <DialogWindow>
           <WarningPrompt
