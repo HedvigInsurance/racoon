@@ -46,7 +46,7 @@ type USPItemBlockProps = SbBaseBlockProps<{
 export const USPBlockItem = ({ blok, numberOfItems }: USPItemBlockProps) => {
   return (
     <ListItem numberOfItems={numberOfItems}>
-      <Badge>{blok.title}</Badge>
+      <Badge as="h3">{blok.title}</Badge>
       <Text size={{ _: 'xl' }}>{blok.content}</Text>
     </ListItem>
   )

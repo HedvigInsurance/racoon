@@ -56,7 +56,7 @@ export const TextBase = styled(
   ...(strikethrough && { textDecorationLine: 'line-through' }),
 }))
 
-export const Text = ({ as, balance, children, className, ...rest }: TextProps) => (
+export const Text = ({ as = 'p', balance, children, className, ...rest }: TextProps) => (
   <TextBase as={as} className={className} {...rest}>
     {!balance ? children : <Balancer>{children}</Balancer>}
   </TextBase>
