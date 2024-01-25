@@ -33,7 +33,7 @@ export const WithoutPaymentConnected = {
   ...Template,
   args: {
     contract: CAR_TRIAL_DATA_QUERY.trialContract,
-    priceIntent: CAR_TRIAL_DATA_QUERY.shopSession.priceIntents[0]!,
+    priceIntent: CAR_TRIAL_DATA_QUERY.shopSession.priceIntents[0],
     shopSession: CAR_TRIAL_DATA_QUERY.shopSession,
     requirePaymentConnection: true,
   },
