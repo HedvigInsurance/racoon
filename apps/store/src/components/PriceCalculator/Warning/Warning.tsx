@@ -8,19 +8,19 @@ import { WarningPrompt } from './WarningPrompt/WarningPrompt'
 
 type Props = {
   priceIntentWarning: PriceIntentWarning
-  goBackToPreviousSection: () => void
+  onConfirm: () => void
 }
 
-export const Warning = ({ priceIntentWarning, goBackToPreviousSection }: Props) => {
+export const Warning = ({ priceIntentWarning, onConfirm }: Props) => {
   const [isOpen, setIsOpen] = useAtom(showPriceIntentWarningAtom)
 
   const handleClickConfirm = () => {
     setIsOpen(false)
+    onConfirm()
   }
 
   const handleEditPriceIntent = () => {
     setIsOpen(false)
-    goBackToPreviousSection()
   }
 
   if (!Features.enabled('PRICE_INTENT_WARNING')) return null

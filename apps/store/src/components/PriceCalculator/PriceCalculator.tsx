@@ -63,48 +63,37 @@ export const PriceCalculator = (props: Props) => {
       if (isFormReadyToConfirm({ form, priceIntent, customer })) {
         onConfirm()
       } else {
-        if (priceIntent.externalInsurer) showFetchInsurance()
         if (priceIntent.warning) showPriceIntentWarning(true)
+        if (priceIntent.externalInsurer) showFetchInsurance()
 
-        setActiveSectionId((prevSectionId) => {
-          const currentSectionIndex = form.sections.findIndex(({ id }) => id === prevSectionId)
-          // If section has both customer and priceIntent fields, we'll get two onSuccess callbacks
-          // in unknown order. Making sure we only go forward when section fields are all filled
-          if (form.sections[currentSectionIndex].state !== 'valid') {
-            return form.sections[currentSectionIndex].id
-          }
-          const nextSection = form.sections[currentSectionIndex + 1]
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-          if (nextSection) {
-            return nextSection.id
-          } else {
-            datadogLogs.logger.error('Failed to find next section', {
-              prevSectionId,
-              templateName: priceTemplate.name,
-              priceIntentId: priceIntent.id,
-            })
-            return prevSectionId
-          }
-        })
+        // If we show a warning, prevent the user from going to the
+        // next section without interacting with the warning dialog
+        if (!priceIntent.warning) {
+          goToNextSection()
+        }
       }
     },
   })
 
-  const goBackToPreviousSection = () => {
-    setActiveSectionId((currentSectionId) => {
-      const currentSectionIndex = form.sections.findIndex(({ id }) => id === currentSectionId)
-
-      const prevSection = form.sections[currentSectionIndex - 1]
+  const goToNextSection = () => {
+    setActiveSectionId((prevSectionId) => {
+      const currentSectionIndex = form.sections.findIndex(({ id }) => id === prevSectionId)
+      // If section has both customer and priceIntent fields, we'll get two onSuccess callbacks
+      // in unknown order. Making sure we only go forward when section fields are all filled
+      if (form.sections[currentSectionIndex].state !== 'valid') {
+        return form.sections[currentSectionIndex].id
+      }
+      const nextSection = form.sections[currentSectionIndex + 1]
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (prevSection) {
-        return prevSection.id
+      if (nextSection) {
+        return nextSection.id
       } else {
-        datadogLogs.logger.error('Failed to find previous section', {
-          currentSectionId,
+        datadogLogs.logger.error('Failed to find next section', {
+          prevSectionId,
           templateName: priceTemplate.name,
           priceIntentId: priceIntent.id,
         })
-        return currentSectionId
+        return prevSectionId
       }
     })
   }
@@ -144,10 +133,7 @@ export const PriceCalculator = (props: Props) => {
       </PriceCalculatorAccordion>
 
       {priceIntent.warning && (
-        <Warning
-          priceIntentWarning={priceIntent.warning}
-          goBackToPreviousSection={goBackToPreviousSection}
-        />
+        <Warning priceIntentWarning={priceIntent.warning} onConfirm={goToNextSection} />
       )}
 
       <FetchInsuranceContainer priceIntent={priceIntent}>
