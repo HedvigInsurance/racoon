@@ -1,4 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
+import { datadogRum } from '@datadog/browser-rum'
 import { useSetAtom } from 'jotai'
 import { useMemo, useState } from 'react'
 import {
@@ -63,7 +64,10 @@ export const PriceCalculator = (props: Props) => {
       if (isFormReadyToConfirm({ form, priceIntent, customer })) {
         onConfirm()
       } else {
-        if (priceIntent.warning) showPriceIntentWarning(true)
+        if (priceIntent.warning) {
+          showPriceIntentWarning(true)
+          datadogRum.addAction('Show PriceIntent Warning')
+        }
         if (priceIntent.externalInsurer) showFetchInsurance()
 
         // If we show a warning, prevent the user from going to the
