@@ -27,7 +27,7 @@ export const Warning = ({ priceIntentWarning, onConfirm }: Props) => {
 
   return (
     <DialogRoot open={isOpen}>
-      <DialogContent centerContent={true} onClose={handleClickConfirm}>
+      <DialogContent centerContent={true} frostedOverlay={true} onClose={handleClickConfirm}>
         <DialogWindow>
           <WarningPrompt
             {...priceIntentWarning}
