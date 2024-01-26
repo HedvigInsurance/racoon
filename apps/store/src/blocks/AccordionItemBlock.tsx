@@ -19,7 +19,9 @@ export const AccordionItemBlock = ({ blok, openItem }: AccordionItemBlockProps) 
   return (
     <Accordion.Item value={value} {...storyblokEditable(blok)}>
       <Accordion.HeaderWithTrigger>
-        <Text size={{ _: 'md', md: 'lg' }}>{blok.title}</Text>
+        <Text as="span" size={{ _: 'md', md: 'lg' }}>
+          {blok.title}
+        </Text>
       </Accordion.HeaderWithTrigger>
       <Accordion.Content open={openItem === value} asChild={true}>
         <RichText>{content}</RichText>
