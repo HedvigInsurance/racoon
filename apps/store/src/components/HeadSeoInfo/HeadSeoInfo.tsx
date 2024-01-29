@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { SEOData } from '@/services/storyblok/storyblok'
 import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
+import { isBrowser } from '@/utils/env'
 import { Features } from '@/utils/Features'
 import { organization } from '@/utils/jsonSchema'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
@@ -28,7 +29,6 @@ export const HeadSeoInfo = ({ story, robots }: Props) => {
     <>
       <Head>
         <meta property="og:type" content="website" />
-
         <link rel="canonical" href={canonicalUrl || pageURL.toString()} />
         <meta property="og:url" content={pageURL.toString()} />
         <meta name="robots" content={robotsContent} />
@@ -47,11 +47,14 @@ export const HeadSeoInfo = ({ story, robots }: Props) => {
             <title>{seoTitle}</title>
           </>
         )}
-        <script
-          key="organization-structured-data"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }}
-        />
+        {/* isBrowser check is needed due to bug in Next where script tag is inserted twice despite having a key */}
+        {isBrowser() && (
+          <script
+            key="organization-structured-data"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }}
+          />
+        )}
       </Head>
       {/* Must include link to self along with other variants */}
 
