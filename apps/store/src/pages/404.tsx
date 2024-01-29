@@ -34,7 +34,6 @@ const NextPage: NextPageWithLayout = () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const rawLocale = context.locale ?? context.defaultLocale
-  // TODO: Remove this when we have a global 404 page
   const locale: RoutingLocale = isRoutingLocale(rawLocale) ? rawLocale : 'se-en'
   context.locale = locale
 

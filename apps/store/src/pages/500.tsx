@@ -1,10 +1,13 @@
-import { NextPageWithLayout } from 'next'
+import { GetStaticProps, NextPageWithLayout } from 'next'
 import { useTranslation } from 'next-i18next'
 import { Heading } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { ErrorPage } from '@/components/ErrorPage/ErrorPage'
+import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { isRoutingLocale } from '@/utils/l10n/localeUtils'
+import { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
 
 const NextPage: NextPageWithLayout = () => {
@@ -29,7 +32,20 @@ const NextPage: NextPageWithLayout = () => {
   )
 }
 
-export { getStaticProps } from '@/pages/404'
+export const getStaticProps: GetStaticProps = async (context) => {
+  try {
+    const rawLocale = context.locale ?? context.defaultLocale
+    const locale: RoutingLocale = isRoutingLocale(rawLocale) ? rawLocale : 'se-en'
+    context.locale = locale
+
+    const props = await getLayoutWithMenuProps(context)
+
+    return { props }
+  } catch (e) {
+    console.log('500 getStaticProps error', e)
+    return { props: {} }
+  }
+}
 
 NextPage.getLayout = (children) => <LayoutWithMenu overlayMenu={true}>{children}</LayoutWithMenu>
 
