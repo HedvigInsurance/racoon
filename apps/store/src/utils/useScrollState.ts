@@ -13,8 +13,13 @@ export const useScrollState = ({ threshold = 0 }: Params) => {
     return scrollY.on('change', (latest) => {
       if (latest === 0) return setScrollState('TOP')
 
+      let isScrollingDown = false
+      const previousY = scrollY.getPrevious()
+      if (previousY) {
+        isScrollingDown = previousY - latest < 0
+      }
+
       const isAbove = latest <= threshold
-      const isScrollingDown = scrollY.getPrevious() - latest < 0
 
       if (isAbove) {
         return setScrollState((prev) => {
