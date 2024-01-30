@@ -3984,9 +3984,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datadog/datadog-ci@npm:2.28.0":
-  version: 2.28.0
-  resolution: "@datadog/datadog-ci@npm:2.28.0"
+"@datadog/datadog-ci@npm:2.29.0":
+  version: 2.29.0
+  resolution: "@datadog/datadog-ci@npm:2.29.0"
   dependencies:
     "@aws-sdk/client-cloudwatch-logs": "npm:^3.454.0"
     "@aws-sdk/client-iam": "npm:^3.454.0"
@@ -4035,7 +4035,7 @@ __metadata:
     yamux-js: "npm:0.1.2"
   bin:
     datadog-ci: dist/cli.js
-  checksum: b09057324fc1460e25bc8c5e441fbe414c311c43e6e0147faa9849f8ee5493269d11f0ef64959629e8e3b446ee3b0318316946fc3d5b8ebe98be9646e6fa7d8e
+  checksum: 0113bc2c39aa37746bc19f6cb9e0b1e3226bc640519252b78e1787103402c6b685429935ebf5db9883734c7890f5d6979993b1e8ea6c57da795ff552a7e836d8
   languageName: node
   linkType: hard
 
@@ -24457,7 +24457,7 @@ __metadata:
     "@babel/preset-typescript": "npm:7.23.3"
     "@datadog/browser-logs": "npm:5.8.0"
     "@datadog/browser-rum": "npm:5.8.0"
-    "@datadog/datadog-ci": "npm:2.28.0"
+    "@datadog/datadog-ci": "npm:2.29.0"
     "@emotion/babel-plugin": "npm:11.11.0"
     "@emotion/is-prop-valid": "npm:1.2.1"
     "@emotion/react": "npm:11.11.1"
