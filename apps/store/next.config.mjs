@@ -1,6 +1,7 @@
 import nextBundleAnalyzer from '@next/bundle-analyzer'
 import { apiPlugin, storyblokInit } from '@storyblok/js'
 import experimentJson from './experiment.json' assert { type: 'json' }
+import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin'
 
 import { SiteCsp, StoryblokCsp } from './next-csp.config.mjs'
 import i18nConfig from './next-i18next.config.cjs'
@@ -218,7 +219,10 @@ const getStoryblokRedirects = async () => {
 const withBundleAnalyzer = nextBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 })
-const nextConfig = withBundleAnalyzer(config)
+const withVanillaExtract = createVanillaExtractPlugin({
+  transpilePackages: ['ui'],
+})
+const nextConfig = withVanillaExtract(withBundleAnalyzer(config))
 // Don't delete this console log, useful to see the commerce config in Vercel deployments
 console.log('next.config.mjs %O', nextConfig)
 export default nextConfig

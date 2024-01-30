@@ -1,8 +1,8 @@
-import styled from '@emotion/styled'
 import Link from 'next/link'
 import React from 'react'
-import { mq, Text, theme } from 'ui'
+import { Text } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
+import { link, pillow } from './ProductPillow.css'
 
 export type ProductPillowProps = {
   name: string
@@ -13,31 +13,11 @@ export type ProductPillowProps = {
 
 export const ProductPillow = ({ name, image, url }: ProductPillowProps) => {
   return (
-    <PillowLink href={url}>
-      <StyledPillow src={image} size="large" />
+    <Link href={url} className={link}>
+      <Pillow src={image} size="large" className={pillow} />
       <Text as="span" size="md">
         {name}
       </Text>
-    </PillowLink>
+    </Link>
   )
 }
-
-const PillowLink = styled(Link)({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: theme.space.sm,
-  padding: `${theme.space.sm} ${theme.space.md}`,
-  borderRadius: theme.radius.sm,
-
-  ':focus': {
-    backgroundColor: theme.colors.grayTranslucent100,
-  },
-})
-
-const StyledPillow = styled(Pillow)({
-  [mq.lg]: {
-    height: '6rem',
-    width: '6rem',
-  },
-})
