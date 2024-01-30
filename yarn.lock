@@ -10045,13 +10045,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/cookie@npm:^0.4.1":
-  version: 0.4.1
-  resolution: "@types/cookie@npm:0.4.1"
-  checksum: f96afe12bd51be1ec61410b0641243d93fa3a494702407c787a4c872b5c8bcd39b224471452055e44a9ce42af1a636e87d161994226eaf4c2be9c30f60418409
-  languageName: node
-  linkType: hard
-
 "@types/cookie@npm:^0.6.0":
   version: 0.6.0
   resolution: "@types/cookie@npm:0.6.0"
@@ -13662,21 +13655,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cookie@npm:^0.4.0":
-  version: 0.4.2
-  resolution: "cookie@npm:0.4.2"
-  checksum: beab41fbd7c20175e3a2799ba948c1dcc71ef69f23fe14eeeff59fc09f50c517b0f77098db87dbb4c55da802f9d86ee86cdc1cd3efd87760341551838d53fca2
+"cookie@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "cookie@npm:0.6.0"
+  checksum: f2318b31af7a31b4ddb4a678d024514df5e705f9be5909a192d7f116cfb6d45cbacf96a473fa733faa95050e7cff26e7832bb3ef94751592f1387b71c8956686
   languageName: node
   linkType: hard
 
-"cookies-next@npm:4.1.0":
-  version: 4.1.0
-  resolution: "cookies-next@npm:4.1.0"
+"cookies-next@npm:4.1.1":
+  version: 4.1.1
+  resolution: "cookies-next@npm:4.1.1"
   dependencies:
-    "@types/cookie": "npm:^0.4.1"
+    "@types/cookie": "npm:^0.6.0"
     "@types/node": "npm:^16.10.2"
-    cookie: "npm:^0.4.0"
-  checksum: 199d568921c5ac222b0e56144399c14566be4fe111ce58b74a3059c73c6a3980960704625f5ded7ee5a9a26694e9e1d90500ec3e8fb1c9a24e9c7f092bb2bb34
+    cookie: "npm:^0.6.0"
+  checksum: 6848fdbe2f29ee94194d323a0c7e8d71dddd0628bf2d26da2382854e43f05cae47acea8795cc12f3fbe7e4e679d30c362c6276e3ea0dcf2bf906ebc6f68bbb3b
   languageName: node
   linkType: hard
 
@@ -24519,7 +24512,7 @@ __metadata:
     apollo-link-timeout: "npm:4.0.0"
     babel-loader: "npm:9.1.3"
     clone-deep: "npm:4.0.1"
-    cookies-next: "npm:4.1.0"
+    cookies-next: "npm:4.1.1"
     date-fns: "npm:3.3.1"
     dotenv: "npm:16.3.2"
     downshift: "npm:8.3.1"
