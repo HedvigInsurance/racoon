@@ -6109,9 +6109,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mswjs/interceptors@npm:^0.25.14":
-  version: 0.25.14
-  resolution: "@mswjs/interceptors@npm:0.25.14"
+"@mswjs/interceptors@npm:^0.25.15":
+  version: 0.25.15
+  resolution: "@mswjs/interceptors@npm:0.25.15"
   dependencies:
     "@open-draft/deferred-promise": "npm:^2.2.0"
     "@open-draft/logger": "npm:^0.3.0"
@@ -6119,7 +6119,7 @@ __metadata:
     is-node-process: "npm:^1.2.0"
     outvariant: "npm:^1.2.1"
     strict-event-emitter: "npm:^0.5.1"
-  checksum: 4cb1678348134e0ed3d9aa40d3b8d4eb96f319ef888aeafdc023a29917f39684e93016d2ab416dffe702c47a9dcbe62ba7e488eff35302a943dfe621264f0d01
+  checksum: 518e259586acf32d68618d19e7129c5a2b8c51c922cbbc946f48cf0210cab41d46644d8ea5155c715568ba11e3947ba4fadea5b4656250a809f7c6619f0000d1
   languageName: node
   linkType: hard
 
@@ -20794,14 +20794,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"msw@npm:2.1.4":
-  version: 2.1.4
-  resolution: "msw@npm:2.1.4"
+"msw@npm:2.1.5":
+  version: 2.1.5
+  resolution: "msw@npm:2.1.5"
   dependencies:
     "@bundled-es-modules/cookie": "npm:^2.0.0"
     "@bundled-es-modules/statuses": "npm:^1.0.1"
     "@mswjs/cookies": "npm:^1.1.0"
-    "@mswjs/interceptors": "npm:^0.25.14"
+    "@mswjs/interceptors": "npm:^0.25.15"
     "@open-draft/until": "npm:^2.1.0"
     "@types/cookie": "npm:^0.6.0"
     "@types/statuses": "npm:^2.0.4"
@@ -20823,7 +20823,7 @@ __metadata:
       optional: true
   bin:
     msw: cli/index.js
-  checksum: b3ea0b1011b5c99902e8d58029c1958a18d7a9578272bc8d3aa86e6d15f272668eea5c57b29140f15f7759b3233316b07e6713de6cb0a21df018f210827112f4
+  checksum: ed1be6ee2863a5ff598f8fcd6f6497b1ba8c1310083afc220eca46b29b22bbfcd848f421cfbaac7aa7ff5f11fb2eaeae00f0a0fb4c3b912a1477c50e74e92e9f
   languageName: node
   linkType: hard
 
@@ -24532,7 +24532,7 @@ __metadata:
     jotai: "npm:2.6.2"
     jwt-decode: "npm:4.0.0"
     md5: "npm:2.3.0"
-    msw: "npm:2.1.4"
+    msw: "npm:2.1.5"
     next: "npm:14.1.0"
     next-i18next: "npm:15.2.0"
     next-router-mock: "npm:0.9.11"
