@@ -2,7 +2,12 @@ import styled from '@emotion/styled'
 import { type ISbRichtext, storyblokEditable } from '@storyblok/react'
 import Link from 'next/link'
 import { useMemo, type ReactNode } from 'react'
-import { render, type RenderOptions, MARK_LINK } from 'storyblok-rich-text-react-renderer'
+import {
+  render,
+  type RenderOptions,
+  MARK_LINK,
+  MARK_TEXT_STYLE,
+} from 'storyblok-rich-text-react-renderer'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { RichText } from '@/components/RichText/RichText'
 import { type GridColumnsField, type SbBaseBlockProps } from '@/services/storyblok/storyblok'
@@ -77,6 +82,12 @@ const RENDER_OPTIONS: RenderOptions = {
 
       // Internal links
       return <Link {...linkProps} />
+    },
+    [MARK_TEXT_STYLE]: (children, { color }) => {
+      // Avoids hydration errors when 'color' is not valid: nullish or empty string
+      const props = color ? { style: { color } } : {}
+
+      return <span {...props}>{children}</span>
     },
   },
 }
