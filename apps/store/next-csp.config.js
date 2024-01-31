@@ -11,6 +11,7 @@ const gtmInjectedOrigins = [
   'https://*.googleadservices.com',
   'https://*.google-analytics.com',
   'https://ion.hedvig.com',
+  'https://px.ads.linkedin.com',
 ]
 
 const adyenOrigins = [
@@ -95,8 +96,6 @@ const imgSrc = [
   'https://vercel.live',
   // Server-side Google Tag Manager
   'https://sgtm.hedvig.com',
-  // Linkedin
-  'https://px.ads.linkedin.com',
 
   ...adyenOrigins,
   ...gtmInjectedOrigins,
