@@ -131,7 +131,7 @@ const connectSrc = [
   'https://vercel.com',
   // Google
   'https://www.gstatic.com',
-  'https://translate-pa.googleapis.com',
+  'https://translate.googleapis.com',
   // Facebook
   'https://connect.facebook.net',
   // Linkedin
