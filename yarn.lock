@@ -9535,28 +9535,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/react-webpack5@npm:7.6.10":
-  version: 7.6.10
-  resolution: "@storybook/react-webpack5@npm:7.6.10"
-  dependencies:
-    "@storybook/builder-webpack5": "npm:7.6.10"
-    "@storybook/preset-react-webpack": "npm:7.6.10"
-    "@storybook/react": "npm:7.6.10"
-    "@types/node": "npm:^18.0.0"
-  peerDependencies:
-    "@babel/core": ^7.22.0
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-    typescript: "*"
-  peerDependenciesMeta:
-    "@babel/core":
-      optional: true
-    typescript:
-      optional: true
-  checksum: 9406f464f0fcfb9c226b1b962194e06b9445527bd2d6c0e6e99074d4174b69992fb99b8d2e069977030c879cf4296c6ea0cc6675e0022cc51f9c54f05fe2ca07
-  languageName: node
-  linkType: hard
-
 "@storybook/react@npm:7.6.10":
   version: 7.6.10
   resolution: "@storybook/react@npm:7.6.10"
@@ -26059,11 +26037,7 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:11.11.0"
     "@radix-ui/react-dialog": "npm:1.0.5"
-    "@storybook/addon-actions": "npm:7.6.10"
-    "@storybook/addon-essentials": "npm:7.6.10"
-    "@storybook/addon-links": "npm:7.6.10"
     "@storybook/react": "npm:7.6.10"
-    "@storybook/react-webpack5": "npm:7.6.10"
     "@testing-library/dom": "npm:9.3.4"
     "@testing-library/jest-dom": "npm:6.3.0"
     "@testing-library/react": "npm:14.1.2"
@@ -26086,7 +26060,6 @@ __metadata:
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
     react-wrap-balancer: "npm:1.1.0"
-    storybook: "npm:7.6.10"
     ts-jest: "npm:29.1.2"
     tsconfig-paths-webpack-plugin: "npm:4.1.0"
     typescript: "npm:5.3.3"
