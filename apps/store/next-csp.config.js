@@ -79,6 +79,7 @@ const fontSrc = [
   'https://*.vercel.com',
   // Hedvig CDN S3 bucket
   'https://cdn.hedvig.com',
+  'data:',
   "'self'",
 ]
 const imgSrc = [
