@@ -66,7 +66,9 @@ type TitleDataCellProps = { children: React.ReactNode; className?: string }
 export const TitleDataCell = ({ children, ...props }: TitleDataCellProps) => {
   return (
     <StyledTitleDataCell {...props}>
-      <Text size={{ _: 'sm', lg: 'md' }}>{children}</Text>
+      <Text as="span" size={{ _: 'sm', lg: 'md' }}>
+        {children}
+      </Text>
     </StyledTitleDataCell>
   )
 }
