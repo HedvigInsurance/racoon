@@ -11,7 +11,7 @@ const gtmInjectedOrigins = [
   'https://*.googleadservices.com',
   'https://*.google-analytics.com',
   'https://ion.hedvig.com',
-  'https://px.ads.linkedin.com',
+  '*.ads.linkedin.com',
 ]
 
 const adyenOrigins = [
