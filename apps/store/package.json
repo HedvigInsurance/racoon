@@ -30,6 +30,8 @@
     "@emotion/styled": "11.11.0",
     "@graphql-typed-document-node/core": "3.2.0",
     "@lottiefiles/react-lottie-player": "3.5.3",
+    "@opentelemetry/api": "1.7.0",
+    "@opentelemetry/api-logs": "0.48.0",
     "@radix-ui/react-accordion": "1.1.2",
     "@radix-ui/react-collapsible": "1.0.3",
     "@radix-ui/react-dialog": "1.0.5",
