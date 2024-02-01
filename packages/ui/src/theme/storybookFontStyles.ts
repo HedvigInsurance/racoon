@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import { HedvigFont } from './theme/typography'
+import { HedvigFont } from './typography'
 
 // Replacement for next/font/local for storybook
 
@@ -28,7 +28,6 @@ export const storybookFontStyles = css`
   `,
     )
     .join('\n')}
-
   body {
     --hedvig-font-small: ${HedvigFont.HEDVIG_LETTERS_SMALL};
     --hedvig-font-standard: ${HedvigFont.HEDVIG_LETTERS_STANDARD};

@@ -2,9 +2,9 @@ import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import { ReactNode } from 'react'
 import Balancer from 'react-wrap-balancer'
-import { FontSizeProps, getFontSize } from '../../lib/fontSizes'
-import { UIColors } from '../../lib/theme/colors/colors'
-import { theme } from '../../lib/theme/theme'
+import { theme } from '../../theme'
+import { UIColors } from '../../theme/colors/colors'
+import { FontSizeProps, getFontSize } from '../../theme/typography'
 import { Space } from '../Space'
 
 type TextColor = Pick<

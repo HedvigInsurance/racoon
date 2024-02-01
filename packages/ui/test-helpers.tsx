@@ -1,7 +1,7 @@
 import { type Theme } from '@emotion/react'
 import { render, type RenderResult } from '@testing-library/react'
 import { type ReactElement, type ReactNode } from 'react'
-import { ThemeProvider } from './src'
+import { ThemeProvider } from './src/components/ThemeProvider'
 
 type WrappingThemeProviderProps = {
   children: ReactNode

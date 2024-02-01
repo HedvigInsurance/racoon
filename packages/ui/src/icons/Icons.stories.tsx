@@ -3,7 +3,7 @@ import { Meta, StoryFn } from '@storybook/react'
 import { useCallback } from 'react'
 import { Heading } from '../components/Heading/Heading'
 import { Space } from '../components/Space'
-import { theme } from '../lib/theme/theme'
+import { theme } from '../theme'
 import * as AllIcons from './index'
 
 type IconProps = {

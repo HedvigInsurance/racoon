@@ -1,7 +1,7 @@
 import { type Decorator } from '@storybook/react'
 import { Global } from '@emotion/react'
 import { ThemeProvider } from 'ui'
-import { storybookFontStyles } from 'ui/src/lib/storybookFontStyles'
+import { storybookFontStyles } from 'ui/src/theme/storybookFontStyles'
 import { GridLayout } from '../src/components/GridLayout/GridLayout'
 
 export const themeDecorator: Decorator = (Story) => (

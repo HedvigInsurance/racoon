@@ -1,21 +1,23 @@
 import { css } from '@emotion/react'
-import { theme } from './theme/theme'
+import { theme } from './index'
 
 export const globalStyles = css`
   /***
-    The following CSS reset is heavily inspired by:
-    https://github.com/elad2412/the-new-css-reset
-  ***/
+      The following CSS reset is heavily inspired by:
+      https://github.com/elad2412/the-new-css-reset
+    ***/
 
   /*
-    Remove all the styles of the "User-Agent-Stylesheet", except for the 'display' property
-  */
+      Remove all the styles of the "User-Agent-Stylesheet", except for the 'display' property
+    */
+
   *:where(:not(iframe, canvas, img, svg, video):not(svg *)) {
     all: unset;
     display: revert;
   }
 
   /* Preferred box-sizing model */
+
   *,
   *::before,
   *::after {
@@ -32,6 +34,7 @@ export const globalStyles = css`
     scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
   }
+
   @media screen and (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
@@ -39,6 +42,7 @@ export const globalStyles = css`
   }
 
   /* Set default font rules and color on body */
+
   body {
     color: var(--body-text-color);
     background-color: var(--body-bg-color);
@@ -47,12 +51,14 @@ export const globalStyles = css`
   }
 
   /* Responsive images */
+
   img {
     max-width: 100%;
     height: auto;
   }
 
   /* Sane display value for media elements */
+
   img,
   iframe,
   picture,
@@ -63,6 +69,7 @@ export const globalStyles = css`
   }
 
   /* Remove default list styles */
+
   ol,
   ul {
     list-style: none;
@@ -71,18 +78,21 @@ export const globalStyles = css`
   }
 
   /* Reapply the pointer cursor for anchor tags */
+
   a,
   button {
     cursor: revert;
   }
 
   /* Fix the feature of 'hidden' attribute.
-   "display:revert;" revert to element instead of attribute */
+     "display:revert;" revert to element instead of attribute */
+
   :where([hidden]) {
     display: none;
   }
 
   /* Isolate app stacking context so it doesn't mess up with portals */
+
   #__next {
     isolation: isolate;
   }

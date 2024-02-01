@@ -11,13 +11,10 @@ export * as Dialog from './components/Dialog/Dialog'
 export { Badge, type BadgeProps } from './components/Badge/Badge'
 export { ConditionalWrapper } from './components/ConditionalWrapper'
 
-export type { Level } from './lib/media-query'
-export { mq, getMediaQueryBreakpoint } from './lib/media-query'
+export * from './icons'
 
-export type { FontSizes } from './lib/theme/typography'
-export { theme, getColor, DEFAULT_IMAGE_QUALITY } from './lib/theme/theme'
-export type { UIColors, UIColorKeys } from './lib/theme/colors/colors'
-export { ThemeProvider } from './lib/theme/ThemeProvider'
-export { globalStyles } from './lib/globalStyles'
+export * from './theme'
 
-export * from './icons/index'
+// Overriding default of 75 to flush old image cache.  Do not change it back to 75 or 74
+// unless you're ready to manually change every single storyblok image or solve it some other way
+export const DEFAULT_IMAGE_QUALITY = 73

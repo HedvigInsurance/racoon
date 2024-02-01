@@ -1,7 +1,7 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import { ButtonHTMLAttributes, forwardRef, type ReactNode } from 'react'
-import { theme } from '../../lib/theme/theme'
+import { theme } from '../../theme'
 import { ButtonSize, getButtonSizeStyles } from './Button.helpers'
 import { DotPulse } from './DotPulse'
 

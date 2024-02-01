@@ -1,6 +1,6 @@
 import { Global, Theme, ThemeProvider as EmotionThemeProvider } from '@emotion/react'
-import { globalStyles } from '../globalStyles'
-import { theme as hedvigTheme } from './theme'
+import { globalStyles } from '../theme/globalStyles'
+import { theme as hedvigTheme } from '../theme/theme'
 
 type ThemeProviderProps = {
   children: React.ReactNode

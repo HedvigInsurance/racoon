@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { WarningTriangleIcon } from '../icons'
-import { theme } from '../lib/theme/theme'
+import { theme } from '../theme'
 import { Space } from './Space'
 
 const Label = styled.label({

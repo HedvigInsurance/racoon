@@ -1,4 +1,4 @@
-import { Heading } from '../../components/Heading/Heading'
+import { Heading } from '../components/Heading/Heading'
 import { theme } from './theme'
 
 const config = {
