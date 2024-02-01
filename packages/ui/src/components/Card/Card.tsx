@@ -1,7 +1,6 @@
 import { Theme } from '@emotion/react'
 import styled from '@emotion/styled'
-import { getColor } from '../../theme'
-import { mq } from '../../theme/media-query'
+import { getColor, mq } from '../../theme'
 
 const CardSizes = {
   sm: '16rem',

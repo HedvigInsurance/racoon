@@ -1,6 +1,5 @@
 import { CSSObject } from '@emotion/react'
-import { theme } from '../../theme'
-import { Level, mq } from '../../theme/media-query'
+import { type Level, mq, theme } from '../../theme'
 
 const HEIGHT = {
   large: '3.5rem',
