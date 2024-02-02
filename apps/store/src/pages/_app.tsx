@@ -11,6 +11,7 @@ import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import { globalStyles, theme } from 'ui'
 import { AppErrorDialog } from '@/components/AppErrorDialog'
 import { BankIdDialog } from '@/components/BankIdDialog'
+import { BankIdV6Dialog } from '@/components/BankIdV6Dialog'
 import { ContactUs } from '@/components/ContactUs/ContactUs'
 import { GlobalLinkStyles } from '@/components/RichText/RichText.styles'
 import { usePublishWidgetInitEvent } from '@/features/widget/usePublishWidgetInitEvent'
@@ -112,7 +113,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
                     {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
                   </AppErrorProvider>
                 </BalancerProvider>
-                <BankIdDialog />
+                {Features.enabled('BANKID_V6') ? <BankIdV6Dialog /> : <BankIdDialog />}
               </BankIdContextProvider>
             </ShopSessionTrackingProvider>
           </ShopSessionProvider>

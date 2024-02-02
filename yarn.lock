@@ -22543,6 +22543,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"qrcode.react@npm:3.1.0":
+  version: 3.1.0
+  resolution: "qrcode.react@npm:3.1.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 10c0/af183e99ecaad90f7ef14bd027510ae7866935693c53ccf81b172438abbbf7f29c283c5dc7c2141b420d2413960b8f8dca8d9949646475afe669ed638e8fb722
+  languageName: node
+  linkType: hard
+
 "qs@npm:6.11.0":
   version: 6.11.0
   resolution: "qs@npm:6.11.0"
@@ -24498,6 +24507,7 @@ __metadata:
     path-browserify: "npm:1.0.1"
     personnummer: "npm:3.2.1"
     prettier: "npm:3.2.4"
+    qrcode.react: "npm:3.1.0"
     react: "npm:18.2.0"
     react-day-picker: "npm:8.10.0"
     react-dom: "npm:18.2.0"

@@ -4,7 +4,7 @@ import { BankIdDispatch, bankIdReducer, BankIdReducerState } from './bankIdReduc
 import { useBankIdCheckoutSign } from './useBankIdCheckoutSign'
 import { useBankIdLogin } from './useBankIdLogin'
 
-type BankIdContextValue = BankIdReducerState & {
+export type BankIdContextValue = BankIdReducerState & {
   dispatch: BankIdDispatch
   showLoginPrompt: (options: LoginPromptOptions) => void
   startLogin: (options: StartLoginOptions) => void
