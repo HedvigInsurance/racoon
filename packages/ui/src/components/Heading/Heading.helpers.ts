@@ -1,6 +1,5 @@
 import { CSSObject } from '@emotion/react'
-import { mq, Level } from '../../lib/media-query'
-import { theme } from '../../lib/theme/theme'
+import { type Level, mq, theme } from '../../theme'
 
 type StandardHeadingSize = '18' | '20' | '24' | '32' | '40' | '48' | '56' | '72' | '96'
 type SerifHeadingSize = Exclude<StandardHeadingSize, '18'>

@@ -1,8 +1,6 @@
 import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
-import { getMargins, Margins } from '../../lib/margins'
-import { UIColors } from '../../lib/theme/colors/colors'
-import { getColor, theme } from '../../lib/theme/theme'
+import { getColor, getMargins, Margins, theme, UIColors } from '../../theme'
 import { BadgeSizeProps, getBadgeSize } from './Badge.helper'
 
 type BadgeColors = Pick<

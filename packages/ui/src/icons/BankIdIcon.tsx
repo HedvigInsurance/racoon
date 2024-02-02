@@ -1,4 +1,4 @@
-import { theme } from '../lib/theme/theme'
+import { theme } from '../theme'
 
 type Props = {
   color?: keyof typeof theme.colors

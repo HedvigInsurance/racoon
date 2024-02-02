@@ -1,6 +1,5 @@
 import { CSSObject } from '@emotion/react'
-import { Level, mq } from '../../lib/media-query'
-import { theme } from '../../lib/theme/theme'
+import { type Level, mq, theme } from '../../theme'
 
 type PartialRecord<K extends keyof any, T> = Partial<Record<K, T>>
 

@@ -2,7 +2,7 @@ import isPropValid from '@emotion/is-prop-valid'
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { theme } from '../../lib/theme/theme'
+import { theme } from '../../theme'
 
 type OverlayProps = {
   frosted?: boolean
