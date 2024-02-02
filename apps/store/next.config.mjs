@@ -1,13 +1,12 @@
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-})
-const experimentJson = require('./experiment.json')
-const { SiteCsp, StoryblokCsp } = require('./next-csp.config')
-const { i18n } = require('./next-i18next.config')
-const { storyblokInit, apiPlugin } = require('@storyblok/js')
+import nextBundleAnalyzer from '@next/bundle-analyzer'
+import { apiPlugin, storyblokInit } from '@storyblok/js'
+import experimentJson from './experiment.json' assert { type: 'json' }
+
+import { SiteCsp, StoryblokCsp } from './next-csp.config.mjs'
+import i18nConfig from './next-i18next.config.js'
 
 /** @type {import('next').NextConfig} */
-module.exports = withBundleAnalyzer({
+const config = {
   experimental: {
     instrumentationHook: true,
     strictNextHead: true,
@@ -31,7 +30,7 @@ module.exports = withBundleAnalyzer({
     ],
   },
   productionBrowserSourceMaps: true,
-  i18n,
+  i18n: i18nConfig.i18n,
   transpilePackages: ['ui', 'i18next'],
   // Docs: https://nextjs.org/docs/advanced-features/security-headers
   async headers() {
@@ -140,7 +139,7 @@ module.exports = withBundleAnalyzer({
       ...storyblokRedirects,
     ]
   },
-})
+}
 
 const securityHeaders = [
   // Reduce latency when the user clicks a link
@@ -216,5 +215,10 @@ const getStoryblokRedirects = async () => {
   }
 }
 
+const withBundleAnalyzer = nextBundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+})
+const nextConfig = withBundleAnalyzer(config)
 // Don't delete this console log, useful to see the commerce config in Vercel deployments
-console.log('next.config.js %O', module.exports)
+console.log('next.config.mjs %O', nextConfig)
+export default nextConfig
