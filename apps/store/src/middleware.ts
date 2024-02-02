@@ -10,12 +10,13 @@ export const config = {
     /*
      * Match all request paths except for the ones starting with:
      * - api (API routes)
+     * - debugger (internal tools)
      * - _next/static (static files)
      * - _next/image (image optimization files)
      *
      * OR paths that contain a period (.) from public-folder
      */
-    '/((?!api|_next/static|_next/image|.*\\.).*)',
+    '/((?!api|debugger|_next/static|_next/image|.*\\.).*)',
     '/',
   ],
 }

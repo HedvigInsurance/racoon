@@ -1,4 +1,4 @@
-// Workaround to make app dir works with emotion compiler enabled
+// Workaround to make app dir work with emotion compiler enabled
 // next.config.js - { compiler: { emotion: true } }
 /** @jsxImportSource react */
 
