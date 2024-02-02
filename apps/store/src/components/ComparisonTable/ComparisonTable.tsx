@@ -38,7 +38,7 @@ export const Header = ({ children, active, ...props }: HeaderProps) => {
   const Component = active ? ActiveTableHeader : TableHeader
   return (
     <Component {...props}>
-      <Text size="xs" color="textSecondary" align="center">
+      <Text as="span" size="xs" color="textSecondary" align="center">
         {children}
       </Text>
     </Component>
@@ -48,6 +48,7 @@ export const Header = ({ children, active, ...props }: HeaderProps) => {
 const TableHeader = styled.th({
   paddingBlock: theme.space.sm,
   paddingInline: theme.space.xs,
+  textAlign: 'center',
 
   [mq.lg]: {
     paddingBlock: theme.space.md,
@@ -116,7 +117,7 @@ const ActiveTableDataCell = styled(TableDataCell)({
   backgroundColor: theme.colors.green100,
 })
 
-const Aligned = styled.div({
+const Aligned = styled.span({
   display: 'flex',
 
   '&[data-alignment="left"]': {
