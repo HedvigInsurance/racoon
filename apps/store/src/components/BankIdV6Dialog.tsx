@@ -15,6 +15,7 @@ import {
 } from 'ui'
 import { BankIdLoginForm } from '@/components/BankIdLoginForm'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
+import { Skeleton } from '@/components/Skeleton'
 import { BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { ShopSessionAuthenticationStatus } from '@/services/graphql/generated'
@@ -92,7 +93,11 @@ export const BankIdV6Dialog = () => {
 
             <BankIdIcon color="blue900" size="4rem" />
 
-            <QRCode size={200} value="https://www.hedvig.com/" level="M" />
+            {currentOperation.qrCodeData ? (
+              <QRCode size={200} value={currentOperation.qrCodeData} level="M" />
+            ) : (
+              <QRCodeSkeleton />
+            )}
 
             <Space y={6.5}>
               <div>
@@ -156,6 +161,13 @@ export const BankIdV6Dialog = () => {
   )
 }
 
+const IconWithText = styled(Text)({
+  gap: theme.space.xs,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+})
+
 const Wrapper = styled(Space)({
   position: 'relative',
   display: 'grid',
@@ -200,15 +212,13 @@ const CloseButton = styled(FullscreenDialog.Close)({
   },
 })
 
-const IconWithText = styled(Text)({
-  gap: theme.space.xs,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-})
-
 const QRCode = styled(QRCodeSVG)({
   padding: theme.space.md,
   borderRadius: theme.radius.md,
   border: `1px solid ${theme.colors.grayTranslucent200}`,
+})
+
+const QRCodeSkeleton = styled(Skeleton)({
+  width: 200,
+  aspectRatio: '1 / 1',
 })
