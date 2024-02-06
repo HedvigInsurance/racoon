@@ -4,7 +4,14 @@ const baseConfig = require('eslint-config-custom')
 module.exports = {
   root: true,
   ...baseConfig,
-  ignorePatterns: ['src/services/graphql/*', '*.js'],
+  ignorePatterns: [
+    'src/services/graphql/*',
+    // Ignore non-ts modules since our rules don't allow safely checking them
+    // Recommended solution here did not work
+    '*.js',
+    '*.cjs',
+    '*.mjs',
+  ],
   parserOptions: {
     project: ['./tsconfig.json'],
     tsconfigRootDir: __dirname,
