@@ -3,7 +3,7 @@
 coverage
 dist
 storybook-static
-
 generated.ts
 
 mockServiceWorker.js
+apps/store/public/pdfjs/**
