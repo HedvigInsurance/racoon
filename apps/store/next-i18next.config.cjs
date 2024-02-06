@@ -55,3 +55,5 @@ module.exports = {
   localePath: typeof window === 'undefined' ? path.resolve('./public/locales') : '/locales',
   lowerCaseLng: true,
 }
+// Override import path used in next-i18next/serverSideTranslations
+process.env.I18NEXT_DEFAULT_CONFIG_PATH = './next-i18next.config.cjs'

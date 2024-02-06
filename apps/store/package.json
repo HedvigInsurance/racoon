@@ -2,6 +2,7 @@
   "name": "store",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "analyze-bundle": "ANALYZE=true next build",
     "dev": "next dev --port 8040",
