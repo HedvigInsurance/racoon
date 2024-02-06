@@ -212,8 +212,6 @@ const ContentSecurityPolicy = `
   report-uri /api/csp-reports;
 `
 
-module.exports = {
-  SiteCsp: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
-  // Remove CSP from Storyblok editor - only internal users need it, and we don't want to maintain another whitelist
-  StoryblokCsp: "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;",
-}
+export const SiteCsp = ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim()
+// Remove CSP from Storyblok editor - only internal users need it, and we don't want to maintain another whitelist
+export const StoryblokCsp = "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;"
