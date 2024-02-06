@@ -1,6 +1,7 @@
 fragment ShopSessionSigning on ShopSessionSigning {
   id
   status
+  seBankidLiveQrCodeData
   completion {
     authorizationCode
   }

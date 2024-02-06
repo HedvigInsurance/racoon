@@ -14,6 +14,7 @@ type BankIdLoginOperation = {
   ssn: string
   state: BankIdState
   error?: unknown
+  qrCodeData?: string
 }
 
 type BankIdSignOperation = {
@@ -22,6 +23,7 @@ type BankIdSignOperation = {
   customerAuthenticationStatus: ShopSessionAuthenticationStatus
   state: BankIdState
   error?: unknown
+  qrCodeData?: string
 }
 
 export type BankIdOperation = BankIdLoginOperation | BankIdSignOperation

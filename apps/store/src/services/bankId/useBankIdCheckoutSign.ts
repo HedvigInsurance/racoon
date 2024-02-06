@@ -84,7 +84,10 @@ export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
   const subscriptionRef = useRef<Subscription | null>(null)
   const startSign = useCallback(
     ({ shopSessionId, onSuccess, onError }: SignOptions) => {
-      subscriptionRef.current = new Observable<BankIdState>((subscriber) => {
+      subscriptionRef.current = new Observable<{
+        nextOperationState: BankIdState
+        qrCodeData?: string
+      }>((subscriber) => {
         const startPolling = (shopSessionSigningId: string) => {
           fetchSigning({
             variables: { shopSessionSigningId },
@@ -94,8 +97,12 @@ export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
             notifyOnNetworkStatusChange: true,
             async onCompleted(data) {
               if (subscriber.closed) return
-              const { status, completion } = data.shopSessionSigning
-              subscriber.next(apiStatusToBankIdState(status))
+              const { status, completion, seBankidLiveQrCodeData } = data.shopSessionSigning
+              subscriber.next({
+                nextOperationState: apiStatusToBankIdState(status),
+                // TODO: get a better type for 'seBankidLiveQrCodeData'
+                qrCodeData: seBankidLiveQrCodeData ?? undefined,
+              })
               if (status === ShopSessionSigningStatus.Signed && completion) {
                 signingResult.stopPolling()
                 bankIdLogger.info('Signing complete')
@@ -142,8 +149,11 @@ export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
           },
         })
       }).subscribe({
-        next(value) {
-          dispatch({ type: 'operationStateChange', nextOperationState: value })
+        next({ nextOperationState, qrCodeData }) {
+          dispatch({ type: 'operationStateChange', nextOperationState })
+          if (qrCodeData) {
+            dispatch({ type: 'qrCodeDataUpdate', qrCodeData })
+          }
         },
         complete() {
           onSuccess()

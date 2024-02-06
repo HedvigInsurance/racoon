@@ -48,10 +48,12 @@ export type MemberLoginStatusResponse =
   | {
       status: 'PENDING' | 'FAILED'
       statusText: string
+      seBankidLiveQrCodeData?: string
     }
   | {
       status: 'COMPLETED'
       authorizationCode: string
+      seBankidLiveQrCodeData?: string
     }
 
 const memberLoginStatus = async (statusUrl: string) => {
