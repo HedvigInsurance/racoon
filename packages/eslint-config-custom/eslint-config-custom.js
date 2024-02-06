@@ -87,6 +87,13 @@ module.exports = {
     'import/no-anonymous-default-export': 'off', // For Storybook stories
   },
   overrides: [
+    {
+      files: ['**/*.tsx?'],
+      extends: [
+        'plugin:@typescript-eslint/recommended-type-checked',
+        'plugin:@typescript-eslint/stylistic-type-checked',
+      ],
+    },
     // Only uses Testing Library lint rules in test files
     {
       files: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
