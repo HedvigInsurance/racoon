@@ -8,6 +8,7 @@ import Router from 'next/router'
 import { appWithTranslation } from 'next-i18next'
 import { type ReactNode } from 'react'
 import { Provider as BalancerProvider } from 'react-wrap-balancer'
+import globalCss from 'ui/src/global.css'
 import { globalStyles, theme } from 'ui'
 import { AppErrorDialog } from '@/components/AppErrorDialog'
 import { BankIdDialog } from '@/components/BankIdDialog'
@@ -40,6 +41,16 @@ import { useDebugTranslationKeys } from '@/utils/l10n/useDebugTranslationKeys'
 import { useForceHtmlLangAttribute } from '@/utils/l10n/useForceHtmlLangAttribute'
 import { useAllowActiveStylesInSafari } from '@/utils/useAllowActiveStylesInSafari'
 import { useReloadOnCountryChange } from '@/utils/useReloadOnCountryChange'
+
+// GOTCHA: Here we need to trick compiler into thinking we need global.css import
+// for anything other than side effects
+// Would've been easier if we just imported module without using it, but this leads to
+// styles never appearing in resulting HTML. I guess tree shaking or similar optimization
+// is the reason
+//
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const noop = (val: any) => {}
+noop(globalCss)
 
 const DynamicGlobalBanner = dynamic(() => import('@/components/GlobalBanner/GlobalBanner'), {
   ssr: false,
