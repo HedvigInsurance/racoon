@@ -5,7 +5,8 @@
 
 // Remove all the styles of the "User-Agent-Stylesheet", except for the 'display' property
 import { globalStyle } from '@vanilla-extract/css'
-import { animationAllowed } from './theme'
+import { animationAllowed, colors } from './theme'
+import { bodyBgColor, bodyTextColor } from './theme/vars.css'
 
 globalStyle('*:where(:not(iframe, canvas, img, svg, video):not(svg *))', {
   all: 'unset',
@@ -28,8 +29,14 @@ globalStyle('html', {
 })
 
 globalStyle('body', {
+  vars: {
+    [bodyBgColor]: colors.backgroundStandard,
+    [bodyTextColor]: colors.textPrimary,
+  },
   WebkitFontSmoothing: 'antialiased',
   MozOsxFontSmoothing: 'grayscale',
+  color: bodyTextColor,
+  backgroundColor: bodyBgColor,
 })
 
 // Responsive images

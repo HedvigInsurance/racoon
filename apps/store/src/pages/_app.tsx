@@ -1,5 +1,4 @@
 import { ApolloProvider } from '@apollo/client'
-import { Global } from '@emotion/react'
 import { Provider as JotaiProvider } from 'jotai'
 import type { AppPropsWithLayout } from 'next/app'
 import dynamic from 'next/dynamic'
@@ -9,7 +8,7 @@ import { appWithTranslation } from 'next-i18next'
 import { type ReactNode } from 'react'
 import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import globalCss from 'ui/src/global.css'
-import { globalStyles, theme } from 'ui'
+import { theme } from 'ui'
 import { AppErrorDialog } from '@/components/AppErrorDialog'
 import { BankIdDialog } from '@/components/BankIdDialog'
 import { BankIdV6Dialog } from '@/components/BankIdV6Dialog'
@@ -109,7 +108,6 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       <GTMAppScript />
 
       <ApolloProvider client={apolloClient}>
-        <Global styles={globalStyles} />
         <GlobalLinkStyles />
         <OneTrustStyles />
         <PageTransitionProgressBar />
