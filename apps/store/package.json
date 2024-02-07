@@ -21,8 +21,8 @@
   },
   "dependencies": {
     "@adyen/adyen-web": "3.23.0",
-    "@apollo/client": "3.8.10",
-    "@apollo/experimental-nextjs-app-support": "0.7.0",
+    "@apollo/client": "3.9.2",
+    "@apollo/experimental-nextjs-app-support": "0.8.0",
     "@datadog/browser-logs": "5.8.0",
     "@datadog/browser-rum": "5.8.0",
     "@emotion/is-prop-valid": "1.2.1",
