@@ -4,10 +4,15 @@
 
 import { type PropsWithChildren } from 'react'
 import { NextAppDirEmotionCacheProvider } from 'tss-react/next/appDir'
+import globalCss from 'ui/src/global.css'
 import { ApolloWrapper } from '@/services/apollo/app-router/ApolloWrapper'
 import { contentFontClassName } from '@/utils/fonts'
 import { ORIGIN_URL } from '@/utils/PageLink'
-import { GlobalStyles } from './GlobalStyles'
+
+// Trick compiler into thinking we need global.css import for anything other than side effects
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const noop = (val: any) => {}
+noop(globalCss)
 
 const Layout = ({ children }: PropsWithChildren) => {
   return (
@@ -20,7 +25,6 @@ const Layout = ({ children }: PropsWithChildren) => {
       <body className={contentFontClassName}>
         <ApolloWrapper>
           <NextAppDirEmotionCacheProvider options={{ key: 'css' }}>
-            <GlobalStyles />
             {children}
           </NextAppDirEmotionCacheProvider>
         </ApolloWrapper>
