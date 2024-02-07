@@ -5,6 +5,7 @@
 import { type PropsWithChildren } from 'react'
 import { NextAppDirEmotionCacheProvider } from 'tss-react/next/appDir'
 import globalCss from 'ui/src/global.css'
+import { theme } from 'ui'
 import { ApolloWrapper } from '@/services/apollo/app-router/ApolloWrapper'
 import { contentFontClassName } from '@/utils/fonts'
 import { ORIGIN_URL } from '@/utils/PageLink'
@@ -19,15 +20,12 @@ const Layout = ({ children }: PropsWithChildren) => {
     <html lang="en">
       {/* head-tag needed, even if empty: https://docs.tss-react.dev/ssr/next.js */}
       <head>
-        {/* theme.colors.light */}
-        <meta name="theme-color" content="hsl(0, 0%, 98%)" />
+        <meta name="theme-color" content={theme.colors.light} />
       </head>
       <body className={contentFontClassName}>
-        <ApolloWrapper>
-          <NextAppDirEmotionCacheProvider options={{ key: 'css' }}>
-            {children}
-          </NextAppDirEmotionCacheProvider>
-        </ApolloWrapper>
+        <NextAppDirEmotionCacheProvider options={{ key: 'css' }}>
+          <ApolloWrapper>{children}</ApolloWrapper>
+        </NextAppDirEmotionCacheProvider>
       </body>
     </html>
   )
