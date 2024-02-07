@@ -2,6 +2,7 @@ const path = require('path')
 
 const englishFallback = ['en']
 
+// TODO: Remove the feature, we always support English since after its first launch
 const englishLanguageEnabled = process.env.NEXT_PUBLIC_FEATURE_ENGLISH_LANGUAGE === 'true'
 
 // GOTCHA: This file has to stay .js or next-i18next will fail during Vercel build
@@ -20,9 +21,6 @@ module.exports = {
   // - Dictionaries download script
   i18n: {
     locales: [
-      // Technical value for "locale not selected", see https://nextjs.org/docs/advanced-features/i18n-routing#prefixing-the-default-locale
-      'default',
-
       // Generic English with optional country-specific variants (generally should be empty)
       ...(englishLanguageEnabled ? ['en', 'dk-en', 'no-en', 'se-en'] : []),
 
@@ -33,12 +31,10 @@ module.exports = {
       'dk',
       'no',
     ],
-    defaultLocale: 'default',
+    defaultLocale: 'en',
     localeDetection: false,
   },
   fallbackLng: {
-    // Only used in country selector page
-    default: englishFallback,
     // Need explicit fallbacks, locale loading fails with nonExplicitSupportedLngs: true,
     'se-en': englishFallback,
     'dk-en': englishFallback,

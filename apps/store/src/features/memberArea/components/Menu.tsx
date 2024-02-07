@@ -22,9 +22,9 @@ export const Menu = () => {
   const memberName = `${firstName} ${lastName}`
 
   const internalItems = {
-    claim: PageLink.memberAreaClaim().pathname,
-    insurances: PageLink.memberAreaInsurances().pathname,
-    payments: PageLink.memberAreaPayments().pathname,
+    claim: PageLink.memberAreaClaim({ locale }).pathname,
+    insurances: PageLink.memberAreaInsurances({ locale }).pathname,
+    payments: PageLink.memberAreaPayments({ locale }).pathname,
   }
 
   return (

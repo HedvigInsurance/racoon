@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { Button, theme } from 'ui'
 import { TextField } from '@/components/TextField/TextField'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 
 const INPUT_NAME = 'shopSessionId'
@@ -10,6 +11,7 @@ const INPUT_NAME = 'shopSessionId'
 export const DebugResumeSessionSection = () => {
   const { shopSession } = useShopSession()
   const router = useRouter()
+  const locale = useRoutingLocale()
 
   if (!shopSession) return null
 
@@ -21,7 +23,7 @@ export const DebugResumeSessionSection = () => {
 
     if (typeof shopSessionId !== 'string') return
 
-    const redirect = PageLink.session({ shopSessionId, next: router.asPath })
+    const redirect = PageLink.session({ locale, shopSessionId, next: router.asPath })
     router.push(redirect)
   }
 

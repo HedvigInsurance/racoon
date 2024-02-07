@@ -4,9 +4,10 @@ import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, useImperativeHandle, useState } from 'react'
-import { Space, mq, theme, Button } from 'ui'
+import { Button, mq, Space, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { MENU_BAR_HEIGHT_DESKTOP } from '@/components/Header/HeaderStyles'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { ProductItem, ProductItemProps } from './ProductItem'
 
@@ -39,6 +40,8 @@ type Props = ProductItemProps & {
 
 export const CartNotificationContent = ({ onClose, ...productItemProps }: Props) => {
   const { t } = useTranslation('purchase-form')
+  const locale = useRoutingLocale()
+
   const handleClose = () => onClose()
 
   const handleClickLink = (type: 'Primary' | 'Secondary') => () => {
@@ -54,7 +57,7 @@ export const CartNotificationContent = ({ onClose, ...productItemProps }: Props)
             <ProductItem {...productItemProps} />
             <Space y={0.5}>
               <ButtonNextLink
-                href={PageLink.cart().pathname}
+                href={PageLink.cart({ locale }).pathname}
                 variant="primary"
                 onClick={handleClickLink('Primary')}
               >

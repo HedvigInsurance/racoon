@@ -74,7 +74,7 @@ if (typeof window !== 'undefined') {
   initDatadog()
 
   Router.ready(() => {
-    const { routingLocale } = getLocaleOrFallback(Router.locale as UiLocale)
+    const { routingLocale } = getLocaleOrFallback(Router.query.locale as UiLocale)
     const { countryCode } = getCountryByLocale(routingLocale)
     tracking.reportAppInit(countryCode)
 

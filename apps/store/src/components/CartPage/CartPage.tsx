@@ -28,6 +28,7 @@ export const CartPage = () => {
   const { t } = useTranslation('cart')
   const { shopSession } = useShopSession()
   const router = useRouter()
+  const locale = useRoutingLocale()
   const { productRecommendations, offerRecommendation } = useProductRecommendations()
   const tracking = useTracking()
 
@@ -87,7 +88,7 @@ export const CartPage = () => {
               )}
 
               <ButtonNextLink
-                href={PageLink.checkout({ expandCart: true }).toRelative()}
+                href={PageLink.checkout({ locale, expandCart: true }).toRelative()}
                 onClick={handleClickCheckout}
               >
                 {t('CHECKOUT_BUTTON')}

@@ -3,13 +3,14 @@ import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { useState, type FormEventHandler } from 'react'
-import { Button, Heading, Space, mq, theme } from 'ui'
+import { type FormEventHandler, useState } from 'react'
+import { Button, Heading, mq, Space, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { type GlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import * as RadioOptionList from '@/components/RadioOptionList/RadioOptionList'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 import { useTracking } from '@/services/Tracking/useTracking'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { Header } from './Header'
 import { createPriceIntent, getPriceTemplate } from './widget.helpers'
@@ -27,6 +28,7 @@ export const SelectProductPage = (props: Props) => {
   const [productName, setProductName] = useState<string | undefined>(undefined)
 
   const router = useRouter()
+  const locale = useRoutingLocale()
   const apolloClient = useApolloClient()
   const tracking = useTracking()
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
@@ -54,6 +56,7 @@ export const SelectProductPage = (props: Props) => {
     datadogRum.setGlobalContextProperty('priceIntentId', priceIntent.id)
 
     const nextUrl = PageLink.widgetCalculatePrice({
+      locale,
       flow: props.flow,
       shopSessionId: props.shopSessionId,
       priceIntentId: priceIntent.id,

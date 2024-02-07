@@ -224,6 +224,7 @@ const useSignMigration = (
   const { showError } = useAppErrorHandleContext()
   const router = useRouter()
   const apolloClient = useApolloClient()
+  const locale = useRoutingLocale()
 
   const [fillCart, fillCartResult] = useManyPetsFillCartMutation()
 
@@ -282,7 +283,9 @@ const useSignMigration = (
 
             setupShopSessionServiceClientSide(apolloClient).reset()
 
-            await router.push(getCheckoutStepLink({ step: nextCheckoutStep, shopSessionId }))
+            await router.push(
+              getCheckoutStepLink({ locale, step: nextCheckoutStep, shopSessionId }),
+            )
           },
         })
       } catch (err) {
@@ -293,7 +296,7 @@ const useSignMigration = (
         return
       }
     },
-    [shopSession, startCheckoutSign, fillCart, offerIds, apolloClient, router, showError],
+    [shopSession, startCheckoutSign, fillCart, offerIds, apolloClient, router, locale, showError],
   )
 
   useEffect(() => {

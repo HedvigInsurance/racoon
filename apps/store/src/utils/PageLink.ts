@@ -19,7 +19,7 @@ export const ORIGIN_URL =
     ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
     : 'http://localhost:8040')
 
-type BaseParams = { locale?: RoutingLocale }
+type BaseParams = { locale: RoutingLocale }
 
 type ConfirmationPage = BaseParams & { shopSessionId: string }
 type CarDealershipConfirmationPage = BaseParams & { contractId: string }
@@ -51,28 +51,24 @@ type MemberLoginPage = BaseParams & {
   next?: string
 }
 
-// We need explicit locale when doing server-side redirects.  On client side NextJs adds it automatically
-const localePrefix = (locale?: RoutingLocale) => (locale ? `/${locale}` : '')
-
 export const PageLink = {
-  home: ({ locale }: BaseParams = {}) => {
-    const pathname = localePrefix(locale) || '/'
-    return new URL(pathname, ORIGIN_URL)
+  home: ({ locale }: BaseParams) => {
+    return new URL(locale, ORIGIN_URL)
   },
   // TODO: we probably want a better setup for locale-specific slugs than just hardcoding them
   // and manually maintaining consistency between CMS and code
-  store: ({ locale }: Required<BaseParams>) => {
+  store: ({ locale }: BaseParams) => {
     let slug = 'insurances'
     if (locale === 'se') {
       slug = 'forsakringar'
     }
-    return new URL(`${localePrefix(locale)}/${slug}`, ORIGIN_URL)
+    return new URL(`${locale}/${slug}`, ORIGIN_URL)
   },
-  cart: ({ locale }: BaseParams = {}) => {
-    return new URL(`${localePrefix(locale)}/cart`, ORIGIN_URL)
+  cart: ({ locale }: BaseParams) => {
+    return new URL(`${locale}/cart`, ORIGIN_URL)
   },
-  checkout: ({ locale, expandCart = false }: CheckoutPage = {}) => {
-    const url = new ExtendedURL(`${localePrefix(locale)}/checkout`, ORIGIN_URL)
+  checkout: ({ locale, expandCart = false }: CheckoutPage) => {
+    const url = new ExtendedURL(`${locale}/checkout`, ORIGIN_URL)
 
     if (expandCart) {
       url.searchParams.set(CheckoutPageQueryParam.ExpandCart, '1')
@@ -81,7 +77,7 @@ export const PageLink = {
     return url
   },
   checkoutPaymentTrustly: ({ locale, shopSessionId, nextUrl }: CheckoutPaymentTrustlyPage) => {
-    const pathname = `${localePrefix(locale)}/checkout/${shopSessionId}/payment/trustly`
+    const pathname = `${locale}/checkout/${shopSessionId}/payment/trustly`
     const url = new URL(pathname, ORIGIN_URL)
 
     if (nextUrl) {
@@ -91,11 +87,11 @@ export const PageLink = {
     return url
   },
   confirmation: ({ locale, shopSessionId }: ConfirmationPage) => {
-    const pathname = `${localePrefix(locale)}/confirmation/${shopSessionId}`
+    const pathname = `${locale}/confirmation/${shopSessionId}`
     return new URL(pathname, ORIGIN_URL)
   },
   carDealershipConfirmation: ({ locale, contractId }: CarDealershipConfirmationPage) => {
-    const pathname = `${localePrefix(locale)}/car-buyer/confirmation/${contractId}`
+    const pathname = `${locale}/car-buyer/confirmation/${contractId}`
     return new URL(pathname, ORIGIN_URL)
   },
 
@@ -116,20 +112,20 @@ export const PageLink = {
     return url
   },
 
-  memberArea: ({ locale }: BaseParams = {}) => {
-    return new URL(`${localePrefix(locale)}/member`, ORIGIN_URL)
+  memberArea: ({ locale }: BaseParams) => {
+    return new URL(`${locale}/member`, ORIGIN_URL)
   },
-  memberAreaClaim: ({ locale }: BaseParams = {}) => {
-    return new URL(`${localePrefix(locale)}/member/claim`, ORIGIN_URL)
+  memberAreaClaim: ({ locale }: BaseParams) => {
+    return new URL(`${locale}/member/claim`, ORIGIN_URL)
   },
-  memberAreaInsurances: ({ locale }: BaseParams = {}) => {
-    return new URL(`${localePrefix(locale)}/member/insurances`, ORIGIN_URL)
+  memberAreaInsurances: ({ locale }: BaseParams) => {
+    return new URL(`${locale}/member/insurances`, ORIGIN_URL)
   },
-  memberAreaPayments: ({ locale }: BaseParams = {}) => {
-    return new URL(`${localePrefix(locale)}/member/payments`, ORIGIN_URL)
+  memberAreaPayments: ({ locale }: BaseParams) => {
+    return new URL(`${locale}/member/payments`, ORIGIN_URL)
   },
-  memberAreaLogin: (params: MemberLoginPage = {}) => {
-    const url = new ExtendedURL(`${localePrefix(params.locale)}/member/login`, ORIGIN_URL)
+  memberAreaLogin: (params: MemberLoginPage) => {
+    const url = new ExtendedURL(`${params.locale}/member/login`, ORIGIN_URL)
 
     if (params.next) {
       url.searchParams.set('next', params.next)
@@ -138,24 +134,24 @@ export const PageLink = {
     return url
   },
 
-  paymentConnect: (params?: BaseParams) => {
-    return new URL(`${localePrefix(params?.locale)}/payment/connect`, ORIGIN_URL)
+  paymentConnect: ({ locale }: BaseParams) => {
+    return new URL(`${locale}/payment/connect`, ORIGIN_URL)
   },
-  paymentConnectReady: (params?: BaseParams) => {
-    return new URL(`${localePrefix(params?.locale)}/payment/connect/ready`, ORIGIN_URL)
+  paymentConnectReady: ({ locale }: BaseParams) => {
+    return new URL(`${locale}/payment/connect/ready`, ORIGIN_URL)
   },
-  paymentConnectSuccess: (params?: BaseParams) => {
-    return new URL(`${localePrefix(params?.locale)}/payment/connect/success`, ORIGIN_URL)
+  paymentConnectSuccess: ({ locale }: BaseParams) => {
+    return new URL(`${locale}/payment/connect/success`, ORIGIN_URL)
   },
 
-  paymentSuccess: ({ locale }: Required<BaseParams>) => {
+  paymentSuccess: ({ locale }: BaseParams) => {
     return new URL(`${locale}/payment-success`, ORIGIN_URL)
   },
-  paymentFailure: ({ locale }: Required<BaseParams>) => {
+  paymentFailure: ({ locale }: BaseParams) => {
     return new URL(`${locale}/payment-failure`, ORIGIN_URL)
   },
 
-  customerService: ({ locale }: Required<BaseParams>) => {
+  customerService: ({ locale }: BaseParams) => {
     const url = CUSTOMER_SERVICE_URL[locale]
     if (!url) {
       datadogLogs.logger.error('Missing support link for locale', { locale })
@@ -164,7 +160,7 @@ export const PageLink = {
     return url
   },
 
-  deductibleHelp: ({ locale }: Required<BaseParams>) => {
+  deductibleHelp: ({ locale }: BaseParams) => {
     const url = DEDUCTIBLE_HELP_URL[locale]
     if (!url) {
       datadogLogs.logger.error('Missing deductible info link for locale', { locale })
@@ -173,7 +169,7 @@ export const PageLink = {
     return url
   },
 
-  privacyPolicy: ({ locale }: Required<BaseParams>) => {
+  privacyPolicy: ({ locale }: BaseParams) => {
     const url = PRIVACY_POLICY_URL[locale]
     if (!url) {
       datadogLogs.logger.error('Missing privacy policy link for locale', { locale })
@@ -196,7 +192,7 @@ export const PageLink = {
   },
 
   session: (params: SessionLink) => {
-    const pathname = `${localePrefix(params.locale)}/session/${params.shopSessionId}`
+    const pathname = `${params.locale}/session/${params.shopSessionId}`
     const url = new URL(pathname, ORIGIN_URL)
 
     if (params.code) {
@@ -212,16 +208,16 @@ export const PageLink = {
     return url
   },
 
-  paymentConnectLegacy: ({ locale }: Required<BaseParams>) => {
+  paymentConnectLegacy: ({ locale }: BaseParams) => {
     return new URL(`/${locale}/payment/connect-legacy`, ORIGIN_URL)
   },
-  apiAdyenCallback: ({ locale }: Required<BaseParams>) => {
+  apiAdyenCallback: ({ locale }: BaseParams) => {
     return new URL(`api/adyen-callback/${locale}`, ORIGIN_URL)
   },
-  paymentConnectLegacySuccess: ({ locale }: Required<BaseParams>) => {
+  paymentConnectLegacySuccess: ({ locale }: BaseParams) => {
     return new URL(`/${locale}/payment/connect-legacy/success`, ORIGIN_URL)
   },
-  paymentConnectLegacyError: ({ locale }: Required<BaseParams>) => {
+  paymentConnectLegacyError: ({ locale }: BaseParams) => {
     return new URL(`/${locale}/payment/connect-legacy/error`, ORIGIN_URL)
   },
   apiAuthExchange: ({ authorizationCode, next }: AuthExchangeRoute) => {
@@ -235,7 +231,7 @@ export const PageLink = {
   },
 
   retargeting: ({ locale, shopSessionId }: BaseParams & RetargetingRoute) => {
-    const url = new URL(`${localePrefix(locale)}/session/resume`, ORIGIN_URL)
+    const url = new URL(`${locale}/session/resume`, ORIGIN_URL)
     url.searchParams.set('shopSessionId', shopSessionId)
     return url
   },
@@ -248,22 +244,20 @@ export const PageLink = {
   apiAppStoreRedirect: () => {
     return new URL(`/api/redirect/appstore`, ORIGIN_URL)
   },
-  fourOhFour: ({ locale }: BaseParams = {}) => {
-    return new URL(`${localePrefix(locale)}/404`, ORIGIN_URL)
+  fourOhFour: ({ locale }: BaseParams) => {
+    return new URL(`${locale}/404`, ORIGIN_URL)
   },
 
   widgetSelectProduct: (params: Omit<WidgetParams, 'priceIntentId'>) => {
     return new URL(
-      [localePrefix(params.locale), 'widget/run', params.flow, params.shopSessionId, 'select'].join(
-        '/',
-      ),
+      [params.locale, 'widget/run', params.flow, params.shopSessionId, 'select'].join('/'),
       ORIGIN_URL,
     )
   },
   widgetCalculatePrice: (params: WidgetParams) => {
     return new URL(
       [
-        localePrefix(params.locale),
+        params.locale,
         'widget/run',
         params.flow,
         params.shopSessionId,
@@ -276,7 +270,7 @@ export const PageLink = {
   widgetSwitch: (params: WidgetParams) => {
     return new URL(
       [
-        localePrefix(params.locale),
+        params.locale,
         'widget/run',
         params.flow,
         params.shopSessionId,
@@ -289,7 +283,7 @@ export const PageLink = {
   widgetSign: (params: WidgetParams) => {
     return new URL(
       [
-        localePrefix(params.locale),
+        params.locale,
         'widget/run',
         params.flow,
         params.shopSessionId,
@@ -301,30 +295,18 @@ export const PageLink = {
   },
   widgetPayment: (params: Omit<WidgetParams, 'priceIntentId'>) => {
     return new URL(
-      [
-        localePrefix(params.locale),
-        'widget/run',
-        params.flow,
-        params.shopSessionId,
-        'payment',
-      ].join('/'),
+      [params.locale, 'widget/run', params.flow, params.shopSessionId, 'payment'].join('/'),
       ORIGIN_URL,
     )
   },
   widgetConfirmation: (params: Omit<WidgetParams, 'priceIntentId'>) => {
     return new URL(
-      [
-        localePrefix(params.locale),
-        'widget/run',
-        params.flow,
-        params.shopSessionId,
-        'confirmation',
-      ].join('/'),
+      [params.locale, 'widget/run', params.flow, params.shopSessionId, 'confirmation'].join('/'),
       ORIGIN_URL,
     )
   },
 
-  forever: (params: Required<BaseParams> & { code: string }) => {
+  forever: (params: BaseParams & { code: string }) => {
     return new URL(`${params.locale}/forever/${params.code}`, ORIGIN_URL)
   },
 } as const

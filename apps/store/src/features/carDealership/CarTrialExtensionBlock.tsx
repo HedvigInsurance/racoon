@@ -10,6 +10,7 @@ import { useGlobalBanner } from '@/components/GlobalBanner/useGlobalBanner'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { useCarTrialExtensionQuery } from '@/services/graphql/generated'
 import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
 import { CarTrialExtension, TrialContract } from './carDealership.types'
@@ -82,6 +83,7 @@ type UseCarTrialQueryParams = Pick<QueryHookOptions<NonNullable<CarTrialExtensio
 const useCarTrialQuery = (params: UseCarTrialQueryParams) => {
   const router = useRouter()
   const queryParam = router.query['contractId']
+  const locale = useRoutingLocale()
 
   let contractId = undefined
   if (typeof queryParam === 'string') {
@@ -103,7 +105,7 @@ const useCarTrialQuery = (params: UseCarTrialQueryParams) => {
         name: error.name,
         message: error.message,
       })
-      router.push(PageLink.fourOhFour().pathname)
+      router.push(PageLink.fourOhFour({ locale }).pathname)
     },
   })
 

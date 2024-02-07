@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
-import { SSRConfig } from 'next-i18next'
 import type { AppProps } from 'next/app'
+import { SSRConfig } from 'next-i18next'
 import type { ReactElement, ReactNode } from 'react'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 
@@ -84,3 +84,4 @@ type InsurelyPrefill = {
     company?: string
   }
 }
+export { pathPerLocale } from '@/utils/staticPathsPerSwedenLocale'

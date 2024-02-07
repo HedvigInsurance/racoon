@@ -20,7 +20,7 @@ const NextPage: NextPageWithLayout = () => {
       <ButtonNextLink
         variant="primary"
         size={{ base: 'small', lg: 'medium' }}
-        href={PageLink.home().pathname}
+        href={PageLink.home({ locale: toRoutingLocale(FALLBACK_LOCALE) }).pathname}
       >
         {t('500_PAGE_BUTTON')}
       </ButtonNextLink>
