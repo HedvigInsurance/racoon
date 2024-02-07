@@ -47,7 +47,7 @@
     "@types/uuid": "9.0.8",
     "@vercel/edge-config": "0.4.1",
     "@vercel/kv": "1.0.1",
-    "@vercel/otel": "1.0.0",
+    "@vercel/otel": "1.2.1",
     "ajv": "8.12.0",
     "apollo-link-timeout": "4.0.0",
     "clone-deep": "4.0.1",
