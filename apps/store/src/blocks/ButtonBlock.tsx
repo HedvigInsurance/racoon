@@ -21,7 +21,7 @@ export const ButtonBlock = ({ blok, nested }: ButtonBlockProps) => {
   const [loading, setLoading] = useState(false)
   const searchParams = useSearchParams()
   const href = useMemo(() => {
-    if (blok.forwardQueryString) {
+    if (blok.forwardQueryString && searchParams != null) {
       return mergeSearchParams(getLinkFieldURL(blok.link, blok.text), searchParams)
     }
 
