@@ -10,13 +10,13 @@ import {
   TRUSTLY_IFRAME_MAX_WIDTH,
   TrustlyIframe,
 } from '@/services/trustly/TrustlyIframe'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 
 type State = { type: 'IDLE' } | { type: 'READY'; trustlyUrl: string }
 
 export const PaymentConnection = ({ startButtonText }: { startButtonText: string }) => {
   const { showError } = useAppErrorHandleContext()
-  const { routingLocale } = useCurrentLocale()
+  const locale = useRoutingLocale()
   const [createTrustlyUrl, result] = useTrustlyInitMutation({
     onError: showError,
     onCompleted(data) {
@@ -28,7 +28,7 @@ export const PaymentConnection = ({ startButtonText }: { startButtonText: string
 
   const handleClickStart = () => {
     datadogRum.addAction('Payment Config Start')
-    createTrustlyUrl({ variables: getTrustlyInitMutationVariables(routingLocale) })
+    createTrustlyUrl({ variables: getTrustlyInitMutationVariables(locale) })
   }
 
   const handleClose = () => {

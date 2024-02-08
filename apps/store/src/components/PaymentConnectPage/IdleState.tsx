@@ -10,7 +10,7 @@ import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
 import { getAccessToken, saveAuthTokens } from '@/services/authApi/persist'
 import { createTrustlyUrl } from '@/services/trustly/createTrustlyUrl'
 import { trustlyIframeStyles } from '@/services/trustly/TrustlyIframe'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { Layout } from './Layout'
 
 type State = 'IDLE' | 'LOADING' | 'ERROR'
@@ -25,7 +25,7 @@ export const IdleState = (props: Props) => {
   const { t } = useTranslation(['common', 'checkout'])
   const router = useRouter()
   const apolloClient = useApolloClient()
-  const { routingLocale } = useCurrentLocale()
+  const locale = useRoutingLocale()
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault()
@@ -41,7 +41,7 @@ export const IdleState = (props: Props) => {
     }
 
     try {
-      const trustlyUrl = await createTrustlyUrl({ apolloClient, locale: routingLocale })
+      const trustlyUrl = await createTrustlyUrl({ apolloClient, locale })
       props.onCompleted(trustlyUrl)
     } catch (error) {
       datadogLogs.logger.warn('Payment Connect failed to create trustly url', { error })

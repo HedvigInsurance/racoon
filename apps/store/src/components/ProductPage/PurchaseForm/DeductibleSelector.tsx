@@ -7,7 +7,7 @@ import { Text } from 'ui'
 import * as TierLevelRadioGroup from '@/components/TierSelector/TierLevelRadioGroup'
 import * as TierSelector from '@/components/TierSelector/TierSelector'
 import { Money, ProductOfferFragment } from '@/services/graphql/generated'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
 
@@ -26,7 +26,7 @@ type Props = {
 
 export const DeductibleSelector = ({ offers, selectedOffer, onValueChange }: Props) => {
   const { t } = useTranslation('purchase-form')
-  const { routingLocale } = useCurrentLocale()
+  const locale = useRoutingLocale()
   const formatter = useFormatter()
 
   const deductibleLevels = useMemo(() => {
@@ -70,11 +70,7 @@ export const DeductibleSelector = ({ offers, selectedOffer, onValueChange }: Pro
           ))}
         </TierLevelRadioGroup.Root>
         <TierSelector.Footer>
-          <Link
-            href={PageLink.deductibleHelp({ locale: routingLocale })}
-            target="_blank"
-            rel="noopener"
-          >
+          <Link href={PageLink.deductibleHelp({ locale })} target="_blank" rel="noopener">
             <Text as="span" size="xs">
               {t('DEDUCTIBLE_SELECTOR_FOOTER_LINK')}
             </Text>
