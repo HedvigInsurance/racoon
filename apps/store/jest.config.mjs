@@ -11,7 +11,7 @@ const createJestConfig = nextJest({
 /** @type {import('jest').Config} */
 const customJestConfig = {
   testMatch: ['**/?(*.)test.[jt]s?(x)'],
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  setupFilesAfterEnv: ['<rootDir>/jest-setup.ts'],
   moduleNameMapper: pathsToModuleNameMapper(data.compilerOptions.paths, {
     prefix: `<rootDir>/${data.compilerOptions.baseUrl}/`,
   }),

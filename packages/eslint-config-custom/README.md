@@ -16,7 +16,7 @@ Add a new dependency to your app/package in your `package.json`:
 
 > You can only use this package as part of this monorepo.
 
-Create a `.eslintrc.js` file in the workspace root and extend this config:
+Create a `.eslintrc.cjs` file in the workspace root and extend this config:
 
 ```js
 module.exports = {

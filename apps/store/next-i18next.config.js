@@ -1,7 +1,10 @@
+const path = require('path')
+
 const englishFallback = ['en']
 
 const englishLanguageEnabled = process.env.NEXT_PUBLIC_FEATURE_ENGLISH_LANGUAGE === 'true'
 
+// GOTCHA: This file has to stay .js or next-i18next will fail during Vercel build
 /**
  * @type {import('next-i18next').UserConfig}
  */
@@ -49,7 +52,6 @@ module.exports = {
     se: ['sv-se'],
   },
   fallbackNS: 'common',
-  localePath:
-    typeof window === 'undefined' ? require('path').resolve('./public/locales') : '/locales',
+  localePath: typeof window === 'undefined' ? path.resolve('./public/locales') : '/locales',
   lowerCaseLng: true,
 }
