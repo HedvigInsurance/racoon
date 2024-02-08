@@ -12,11 +12,11 @@ enum MemberLoginMethod {
 export const loginMemberSeBankId = (ssn: string): Observable<MemberLoginStatusResponse> => {
   return new Observable((subscriber) => {
     let pollTimeoutId: number
-    const poll = async (statusUrl: string) => {
+    const poll = async (autoStartToken: string, statusUrl: string) => {
       if (subscriber.closed) return
       try {
         const result = await memberLoginStatus(statusUrl)
-        subscriber.next(result)
+        subscriber.next({ ...result, seBankidAutoStartToken: autoStartToken })
 
         if (result.status === 'COMPLETED') {
           subscriber.complete()
@@ -33,11 +33,13 @@ export const loginMemberSeBankId = (ssn: string): Observable<MemberLoginStatusRe
         }
       }
 
-      pollTimeoutId = window.setTimeout(() => poll(statusUrl), POLL_INTERVAL)
+      pollTimeoutId = window.setTimeout(() => poll(autoStartToken, statusUrl), POLL_INTERVAL)
     }
 
     memberLoginCreateSE(ssn)
-      .then(({ statusUrl }) => poll(AuthEndpoint.LOGIN_STATUS(statusUrl)))
+      .then(({ statusUrl, seBankIdProperties }) =>
+        poll(seBankIdProperties.autoStartToken, AuthEndpoint.LOGIN_STATUS(statusUrl)),
+      )
       .catch((err) => subscriber.error(err))
 
     return () => clearTimeout(pollTimeoutId)
@@ -49,11 +51,13 @@ export type MemberLoginStatusResponse =
       status: 'PENDING' | 'FAILED'
       statusText: string
       seBankidLiveQrCodeData?: string
+      seBankidAutoStartToken?: string
     }
   | {
       status: 'COMPLETED'
       authorizationCode: string
       seBankidLiveQrCodeData?: string
+      seBankidAutoStartToken?: string
     }
 
 const memberLoginStatus = async (statusUrl: string) => {
