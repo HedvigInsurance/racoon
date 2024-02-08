@@ -7,7 +7,7 @@ import { AndroidIcon, AppleIcon, Button, mq, theme } from 'ui'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
-import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { LogoWrapper } from '../Header'
 import {
   focusableStyles,
@@ -57,7 +57,7 @@ export const TopMenuMobile = (props: TopMenuMobileProps) => {
   const { children, isOpen, setIsOpen, defaultValue } = props
   const router = useRouter()
   const { t } = useTranslation('common')
-  const locale = useRoutingLocale()
+  const { routingLocale } = useCurrentLocale()
 
   useEffect(() => {
     const closeDialog = () => setIsOpen(false)
@@ -83,7 +83,7 @@ export const TopMenuMobile = (props: TopMenuMobileProps) => {
                 <div>{children}</div>
                 <ButtonWrapper>
                   <Button
-                    href={getAppStoreLink('apple', locale).toString()}
+                    href={getAppStoreLink('apple', routingLocale).toString()}
                     target="_blank"
                     rel="noopener noreferrer"
                     variant="secondary"
@@ -95,7 +95,7 @@ export const TopMenuMobile = (props: TopMenuMobileProps) => {
                     </SpaceFlex>
                   </Button>
                   <Button
-                    href={getAppStoreLink('google', locale).toString()}
+                    href={getAppStoreLink('google', routingLocale).toString()}
                     target="_blank"
                     rel="noopener noreferrer"
                     variant="secondary"

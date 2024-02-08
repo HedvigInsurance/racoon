@@ -1,19 +1,19 @@
 import { useRouter } from 'next/router'
 import { Button, Space } from 'ui'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { CopyToClipboard } from './CopyToClipboard'
 import { DebugResumeSessionSection } from './DebugResumeSessionSection'
 
 export const DebugShopSessionSection = () => {
   const { shopSession } = useShopSession()
-  const locale = useRoutingLocale()
+  const { routingLocale } = useCurrentLocale()
   const router = useRouter()
 
   if (!shopSession) return null
 
-  const nextUrl = `/${locale}${router.asPath}`
+  const nextUrl = `/${routingLocale}${router.asPath}`
 
   return (
     <Space y={0.25}>

@@ -1,17 +1,22 @@
+import { Global } from '@emotion/react'
+import styled from '@emotion/styled'
 import { StoryblokComponent } from '@storyblok/react'
-import { clsx } from 'clsx'
 import { Fragment, type ReactElement } from 'react'
-import { dark } from 'ui/src/theme/dark.css'
+import { theme } from 'ui'
 import { FooterBlock } from '@/blocks/FooterBlock'
 import { HeaderBlock } from '@/blocks/HeaderBlock'
 import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
-import { wrapper } from '@/components/LayoutWithMenu/LayoutWithMenu.css'
 import { GlobalStory, PageStory } from '@/services/storyblok/storyblok'
 import { filterByBlockType, isProductStory } from '@/services/storyblok/Storyblok.helpers'
 import { useChangeLocale } from '@/utils/l10n/useChangeLocale'
 import { BreadcrumbList, BreadcrumbListItem } from './BreadcrumbList'
-import { GLOBAL_PRODUCT_METADATA_PROP_NAME, GlobalProductMetadata } from './fetchProductMetadata'
+import { GlobalProductMetadata, GLOBAL_PRODUCT_METADATA_PROP_NAME } from './fetchProductMetadata'
 import { useHydrateProductMetadata } from './ProductMetadataContext'
+
+const Wrapper = styled.div({
+  minHeight: '100vh',
+  isolation: 'isolate',
+})
 
 type LayoutWithMenuProps = {
   children: ReactElement<{
@@ -53,7 +58,18 @@ export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
 
   return (
     <>
-      <div className={clsx(wrapper, className, darkBackground && dark)}>
+      {darkBackground && (
+        <Global
+          styles={{
+            ':root': {
+              '--body-bg-color': theme.colors.dark,
+              '--body-text-color': theme.colors.textNegative,
+              '--header-bg-transparent-color': 'hsla(0, 0%, 7%, 0)',
+            },
+          }}
+        />
+      )}
+      <Wrapper className={className}>
         {reusableBlock.map((referencedBlok) => (
           <StoryblokComponent key={referencedBlok._uid} blok={referencedBlok} />
         ))}
@@ -79,7 +95,7 @@ export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
               />
             </Fragment>
           ))}
-      </div>
+      </Wrapper>
     </>
   )
 }

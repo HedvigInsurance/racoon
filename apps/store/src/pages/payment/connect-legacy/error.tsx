@@ -1,15 +1,15 @@
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
-import { Text, theme, WarningTriangleIcon } from 'ui'
+import { Text, WarningTriangleIcon, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { Layout } from '@/components/PaymentConnectPage/Layout'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useAdyenTranslations } from '@/services/adyen/useAdyenTranslations'
-import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 
 const PaymentConnectLegacyErrorPage = () => {
-  const locale = useRoutingLocale()
+  const { routingLocale } = useCurrentLocale()
   const { title, retry, error } = useAdyenTranslations()
 
   return (
@@ -27,7 +27,7 @@ const PaymentConnectLegacyErrorPage = () => {
           </div>
         </SpaceFlex>
         <ButtonNextLink
-          href={PageLink.paymentConnectLegacy({ locale })}
+          href={PageLink.paymentConnectLegacy({ locale: routingLocale })}
           size="medium"
           onClick={() => datadogRum.addAction('PaymentConnectLegacy Retry')}
         >

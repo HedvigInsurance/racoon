@@ -3,10 +3,10 @@ import styled from '@emotion/styled'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { mq, Text, theme } from 'ui'
+import { theme, mq, Text } from 'ui'
 import { Skeleton } from '@/components/Skeleton'
 import { resetAuthTokens } from '@/services/authApi/persist'
-import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
 import { useMemberAreaInfo } from '../useMemberAreaInfo'
@@ -14,7 +14,7 @@ import { useMemberAreaInfo } from '../useMemberAreaInfo'
 export const Menu = () => {
   const router = useRouter()
   const { firstName, lastName, ssn } = useMemberAreaInfo()
-  const locale = useRoutingLocale()
+  const { routingLocale } = useCurrentLocale()
   const { t } = useTranslation('memberArea')
   const formatter = useFormatter()
 
@@ -59,7 +59,7 @@ export const Menu = () => {
           </NavigationLink>
         </NavgationItem>
         <NavgationItem>
-          <NavigationLink href={PageLink.faq({ locale })}>FAQ</NavigationLink>
+          <NavigationLink href={PageLink.faq({ locale: routingLocale })}>FAQ</NavigationLink>
         </NavgationItem>
         <LogoutButton />
       </NavigationList>

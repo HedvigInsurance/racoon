@@ -2,7 +2,7 @@ import { atom, useAtomValue } from 'jotai'
 import { atomFamily, useHydrateAtoms } from 'jotai/utils'
 import { globalStore } from '@/utils/globalStore'
 import { type RoutingLocale } from '@/utils/l10n/types'
-import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { type GlobalProductMetadata } from './fetchProductMetadata'
 
 // We don't actually neeed _routineLocale for the atom creation. It will be used
@@ -13,13 +13,13 @@ const productsMetadataAtom = atomFamily((_routingLocale: RoutingLocale) =>
 )
 
 export const useProductMetadata = () => {
-  const locale = useRoutingLocale()
+  const { routingLocale } = useCurrentLocale()
 
-  return useAtomValue(productsMetadataAtom(locale), { store: globalStore })
+  return useAtomValue(productsMetadataAtom(routingLocale), { store: globalStore })
 }
 
 export const useHydrateProductMetadata = (metadata: GlobalProductMetadata) => {
-  const locale = useRoutingLocale()
+  const { routingLocale } = useCurrentLocale()
 
-  useHydrateAtoms([[productsMetadataAtom(locale), metadata]], { store: globalStore })
+  useHydrateAtoms([[productsMetadataAtom(routingLocale), metadata]], { store: globalStore })
 }

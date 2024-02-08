@@ -3,18 +3,18 @@ import { datadogRum } from '@datadog/browser-rum'
 import { useRouter } from 'next/router'
 import { useEffect, useMemo } from 'react'
 import { type RoutingLocale } from '@/utils/l10n/types'
-import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
 import { QueryParam } from './retargeting.constants'
 
 export const useApiRedirectEffect = () => {
   const router = useRouter()
-  const locale = useRoutingLocale()
+  const { routingLocale } = useCurrentLocale()
 
   const redirect = useMemo(() => {
     if (!router.isReady) return null
-    return getApiRedirect(router.asPath, locale)
-  }, [locale, router.asPath, router.isReady])
+    return getApiRedirect(router.asPath, routingLocale)
+  }, [routingLocale, router.asPath, router.isReady])
 
   useEffect(() => {
     if (!redirect) return
@@ -29,7 +29,7 @@ export const useApiRedirectEffect = () => {
 
     // Avoid `router.push` since it triggers middleware for API routes
     window.location.assign(redirect.url.toString())
-  }, [router, redirect, locale])
+  }, [router, redirect, routingLocale])
 }
 
 type Redirect = { type: 'api' | 'fallback'; url: URL }

@@ -19,7 +19,7 @@ import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountCont
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
-import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { QueryParam } from './CartPage.constants'
 import { PageDebugDialog } from './PageDebugDialog'
@@ -159,7 +159,7 @@ type EmptyStateProps = { shopSession: ShopSession; children: ReactNode }
 
 const EmptyState = (props: EmptyStateProps) => {
   const { t } = useTranslation('cart')
-  const locale = useRoutingLocale()
+  const { routingLocale } = useCurrentLocale()
 
   return (
     <PageWrapper>
@@ -175,7 +175,7 @@ const EmptyState = (props: EmptyStateProps) => {
                       {t('CART_EMPTY_SUMMARY')}
                     </Text>
                   </Space>
-                  <ButtonNextLink href={PageLink.store({ locale })}>
+                  <ButtonNextLink href={PageLink.store({ locale: routingLocale })}>
                     {t('GO_TO_STORE_BUTTON')}
                   </ButtonNextLink>
                 </Space>

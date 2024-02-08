@@ -7,7 +7,7 @@ import { DebugDialog } from '@/components/DebugDialog/DebugDialog'
 import { DebugShopSessionSection } from '@/components/DebugDialog/DebugShopSessionSection'
 import { DebugTextKeys } from '@/components/DebugDialog/DebugTextKeys'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 
 export const PageDebugDialog = () => {
@@ -25,31 +25,31 @@ export const PageDebugDialog = () => {
 
 const LinkToCartSection = () => {
   const { shopSession } = useShopSession()
-  const locale = useRoutingLocale()
+  const { routingLocale } = useCurrentLocale()
   const cartLink = useMemo(() => {
     if (!shopSession) return null
 
     return PageLink.session({
-      locale,
+      locale: routingLocale,
       shopSessionId: shopSession.id,
-      next: PageLink.cart({ locale }).pathname,
+      next: PageLink.cart({ locale: routingLocale }).pathname,
     }).toString()
-  }, [shopSession, locale])
+  }, [shopSession, routingLocale])
 
   return <CopyToClipboard label="Copy link to cart">{cartLink ?? ''}</CopyToClipboard>
 }
 
 const LinkToRetargetingSection = () => {
   const { shopSession } = useShopSession()
-  const locale = useRoutingLocale()
+  const { routingLocale } = useCurrentLocale()
   const retargetingLink = useMemo(() => {
     if (!shopSession) return null
 
     return PageLink.retargeting({
-      locale,
+      locale: routingLocale,
       shopSessionId: shopSession.id,
     }).toString()
-  }, [shopSession, locale])
+  }, [shopSession, routingLocale])
 
   return <CopyToClipboard label="Copy re-targeting link">{retargetingLink ?? ''}</CopyToClipboard>
 }

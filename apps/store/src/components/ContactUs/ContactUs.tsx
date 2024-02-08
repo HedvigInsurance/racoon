@@ -3,20 +3,20 @@ import styled from '@emotion/styled'
 import * as Popover from '@radix-ui/react-popover'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
-  AndroidIcon,
-  AppleIcon,
-  Button,
+  Text,
+  Space,
   Heading,
+  Button,
   HedvigSymbol,
   MinusIcon,
-  Space,
-  Text,
+  AndroidIcon,
+  AppleIcon,
   theme,
 } from 'ui'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
-import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
 import { zIndexes } from '@/utils/zIndex'
@@ -47,7 +47,7 @@ export const ContactUs = () => {
   const hasMounted = useHasMounted()
   const isDesktop = useBreakpoint('lg')
   const { t } = useTranslation('contact-us')
-  const locale = useRoutingLocale()
+  const { routingLocale } = useCurrentLocale()
   const [open, setOpen] = useState(false)
 
   // There's no way to determine how this component should look on the server
@@ -85,7 +85,7 @@ export const ContactUs = () => {
               <AppButtons>
                 <Button
                   data-dd-action-name="Contact us | IOS App"
-                  href={getAppStoreLink('apple', locale).toString()}
+                  href={getAppStoreLink('apple', routingLocale).toString()}
                   target="_blank"
                   rel="noopener noreferrer"
                   variant="secondary"
@@ -97,7 +97,7 @@ export const ContactUs = () => {
 
                 <Button
                   data-dd-action-name="Contact us | Android App"
-                  href={getAppStoreLink('google', locale).toString()}
+                  href={getAppStoreLink('google', routingLocale).toString()}
                   target="_blank"
                   rel="noopener noreferrer"
                   variant="secondary"
@@ -117,7 +117,7 @@ export const ContactUs = () => {
                   <Space y={0.5}>
                     <LinkButton
                       data-dd-action-name="Contact us | faq"
-                      href={PageLink.faq({ locale }).pathname}
+                      href={PageLink.faq({ locale: routingLocale }).pathname}
                       target="_blank"
                     >
                       <span>{t('FAQ_OPTION_LABEL')}</span>
@@ -131,7 +131,7 @@ export const ContactUs = () => {
 
                     <LinkButton
                       data-dd-action-name="Contact us | phone"
-                      href={PageLink.help({ locale }).pathname}
+                      href={PageLink.help({ locale: routingLocale }).pathname}
                       target="_blank"
                     >
                       <span>{t('TELEPHONE_OPTION_LABEL')}</span>

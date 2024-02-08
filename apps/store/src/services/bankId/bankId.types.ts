@@ -15,7 +15,6 @@ type BankIdLoginOperation = {
   state: BankIdState
   error?: unknown
   qrCodeData?: string
-  autoStartToken?: string
 }
 
 type BankIdSignOperation = {
@@ -25,7 +24,6 @@ type BankIdSignOperation = {
   state: BankIdState
   error?: unknown
   qrCodeData?: string
-  autoStartToken?: string
 }
 
 export type BankIdOperation = BankIdLoginOperation | BankIdSignOperation

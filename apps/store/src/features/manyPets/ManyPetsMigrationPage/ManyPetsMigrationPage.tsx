@@ -4,8 +4,9 @@ import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { FormEventHandler, ReactNode, useCallback, useEffect, useRef } from 'react'
-import { BankIdIcon, Button, Heading, HedvigLogo, mq, Space, theme } from 'ui'
+import { useRef } from 'react'
+import { FormEventHandler, ReactNode, useCallback, useEffect } from 'react'
+import { Space, Button, Heading, HedvigLogo, BankIdIcon, mq, theme } from 'ui'
 import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import {
   fetchCheckoutSteps,
@@ -29,7 +30,7 @@ import {
 import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
-import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { type ComparisonTableData } from '../manyPets.types'
 import { LatestAdoptionNote } from './LatestAdoptionNote'
@@ -61,7 +62,7 @@ export const ManyPetsMigrationPage = ({
   latestAdoptionDate,
   comparisonTableData,
 }: ManyPetsMigrationPageProps) => {
-  const locale = useRoutingLocale()
+  const { routingLocale } = useCurrentLocale()
   const { t } = useTranslation('checkout')
 
   const migrationSessionQueryResult = useShopSessionQuery({
@@ -113,7 +114,7 @@ export const ManyPetsMigrationPage = ({
                   size={{ _: 'xs', md: 'sm' }}
                   align="center"
                   color="textSecondary"
-                  href={PageLink.privacyPolicy({ locale })}
+                  href={PageLink.privacyPolicy({ locale: routingLocale })}
                   target="_blank"
                 >
                   {t('SIGN_DISCLAIMER')}

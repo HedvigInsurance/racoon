@@ -1,8 +1,8 @@
 import { css, keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-import { type ReactEventHandler, useEffect, useState } from 'react'
+import { useEffect, type ReactEventHandler, useState } from 'react'
 import { theme } from 'ui'
-import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
 }
 
 export const TrustlyIframe = ({ url, onSuccess, onFail, className }: Props) => {
-  const locale = useRoutingLocale()
+  const { routingLocale } = useCurrentLocale()
 
   useEffect(() => {
     const handler = (event: MessageEvent) => {
@@ -34,9 +34,9 @@ export const TrustlyIframe = ({ url, onSuccess, onFail, className }: Props) => {
   const handleLoad: ReactEventHandler<HTMLIFrameElement> = (event) => {
     try {
       const url = event.currentTarget.contentWindow?.location.href
-      if (url === PageLink.paymentSuccess({ locale }).href) {
+      if (url === PageLink.paymentSuccess({ locale: routingLocale }).href) {
         onSuccess()
-      } else if (url === PageLink.paymentFailure({ locale }).href) {
+      } else if (url === PageLink.paymentFailure({ locale: routingLocale }).href) {
         onFail()
       }
     } catch (error) {

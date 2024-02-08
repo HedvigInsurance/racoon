@@ -6,8 +6,8 @@ import { StoryblokComponent } from '@storyblok/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { type FormEvent, type MouseEvent, type PropsWithChildren, useState } from 'react'
-import { BankIdIcon, Button, CheckIcon, Heading, mq, Space, Text, theme } from 'ui'
+import { useState, type PropsWithChildren, type MouseEvent, type FormEvent } from 'react'
+import { Heading, Text, Button, Space, BankIdIcon, CheckIcon, theme, mq } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { FormElement } from '@/components/CheckoutPage/CheckoutPage.constants'
 import { useHandleSubmitCheckout } from '@/components/CheckoutPage/useHandleSubmitCheckout'
@@ -22,15 +22,15 @@ import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountCont
 import { TextField } from '@/components/TextField/TextField'
 import { TextWithLink } from '@/components/TextWithLink'
 import {
-  MemberPaymentConnectionStatus,
   type ProductOfferFragment,
   ShopSessionAuthenticationStatus,
   useCartEntryRemoveMutation,
   useCurrentMemberLazyQuery,
+  MemberPaymentConnectionStatus,
 } from '@/services/graphql/generated'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'
-import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { Header } from './Header'
 import { ProductItemContainer } from './ProductItemContainer'
@@ -51,7 +51,7 @@ type Props = {
 
 export const SignPage = (props: Props) => {
   const { t } = useTranslation(['widget', 'checkout', 'cart'])
-  const locale = useRoutingLocale()
+  const { routingLocale: locale } = useCurrentLocale()
 
   const { offerRecommendation } = useProductRecommendations(props.shopSession.id)
 

@@ -1,10 +1,49 @@
+import isPropValid from '@emotion/is-prop-valid'
+import { keyframes } from '@emotion/react'
+import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { clsx } from 'clsx'
-import { forwardRef, PropsWithChildren, ReactNode } from 'react'
-import { contentWrapper, dialogWindow, overlay } from './Dialog.css'
+import { theme } from '../../theme'
+
+type OverlayProps = {
+  frosted?: boolean
+}
+
+const overlayShow = keyframes({
+  '0%': { opacity: 0 },
+  '100%': { opacity: 1 },
+})
+
+const contentShow = keyframes({
+  '0%': { opacity: 0, transform: 'scale(.96)' },
+  '100%': { opacity: 1, transform: 'scale(1)' },
+})
+
+const StyledOverlay = styled(DialogPrimitive.Overlay, {
+  shouldForwardProp: isPropValid,
+})<OverlayProps>(({ frosted }) => ({
+  backgroundColor: 'rgba(0, 0, 0, 0.15)',
+  position: 'fixed',
+  inset: 0,
+  '@media (prefers-reduced-motion: no-preference)': {
+    animation: `${overlayShow} 500ms cubic-bezier(0.16, 1, 0.3, 1) forwards`,
+  },
+
+  ...(frosted && {
+    backgroundColor: theme.colors.backgroundFrostedGlass,
+    backdropFilter: 'blur(64px)',
+  }),
+}))
+
+export const Window = styled.div({
+  backgroundColor: theme.colors.white,
+  boxShadow: 'hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px',
+  '@media (prefers-reduced-motion: no-preference)': {
+    animation: `${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) forwards`,
+  },
+})
 
 type ContentProps = {
-  children: ReactNode
+  children: React.ReactNode
   onClose?: () => void
   className?: string
   frostedOverlay?: boolean
@@ -16,9 +55,9 @@ export const Content = (props: ContentProps) => {
 
   return (
     <DialogPrimitive.Portal>
-      <Overlay frosted={props.frostedOverlay} />
+      <StyledOverlay frosted={props.frostedOverlay} />
 
-      <div className={clsx(contentWrapper.base, props.centerContent && contentWrapper.centered)}>
+      <StyledContentWrapper center={props.centerContent ?? false}>
         <DialogPrimitive.Content
           className={props.className}
           onEscapeKeyDown={handleClose}
@@ -26,29 +65,24 @@ export const Content = (props: ContentProps) => {
         >
           {props.children}
         </DialogPrimitive.Content>
-      </div>
+      </StyledContentWrapper>
     </DialogPrimitive.Portal>
   )
 }
 
-type OverlayProps = {
-  frosted?: boolean
-}
-const Overlay = forwardRef<HTMLDivElement, OverlayProps>(({ frosted }, ref) => {
-  return (
-    <DialogPrimitive.Overlay ref={ref} className={clsx(overlay.base, frosted && overlay.frosted)} />
-  )
-})
-Overlay.displayName = 'Overlay'
+const StyledContentWrapper = styled.div<{ center: boolean }>(
+  {
+    position: 'fixed',
+    inset: 0,
+  },
+  ({ center }) =>
+    center && {
+      display: 'flex',
+      justifyContent: 'center',
+      overflowY: 'auto',
+    },
+)
 
 export const Root = DialogPrimitive.Root
 export const Trigger = DialogPrimitive.Trigger
 export const Close = DialogPrimitive.Close
-
-// Example of exposing base component for further styling by either vanilla-extract or emotion
-export const Window = ({
-  className,
-  ...forwardedProps
-}: { className?: string } & PropsWithChildren) => (
-  <div className={clsx(dialogWindow, className)} {...forwardedProps} />
-)

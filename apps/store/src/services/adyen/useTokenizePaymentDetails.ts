@@ -4,11 +4,11 @@ import {
   TokenizationChannel,
   useAdyenTokenizePaymentDetailsMutation,
 } from '@/services/graphql/generated'
-import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 
 export const useTokenizePaymentDetails = () => {
-  const locale = useRoutingLocale()
+  const { routingLocale } = useCurrentLocale()
   const [tokenizePaymentDetails] = useAdyenTokenizePaymentDetailsMutation()
 
   return useCallback(
@@ -19,7 +19,7 @@ export const useTokenizePaymentDetails = () => {
             browserInfo,
             paymentMethodDetails: JSON.stringify(paymentMethod),
             channel: TokenizationChannel.Web,
-            returnUrl: PageLink.apiAdyenCallback({ locale }).href,
+            returnUrl: PageLink.apiAdyenCallback({ locale: routingLocale }).href,
           },
         },
       })
@@ -32,6 +32,6 @@ export const useTokenizePaymentDetails = () => {
 
       return response
     },
-    [tokenizePaymentDetails, locale],
+    [tokenizePaymentDetails, routingLocale],
   )
 }

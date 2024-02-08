@@ -9,7 +9,7 @@ import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { type ConfirmationStory } from '@/services/storyblok/storyblok'
 import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
-import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { CheckList, CheckListItem } from './CheckList'
 import qrCodeImage from './download-app-qrcode.png'
 import { ImageSection } from './ImageSection'
@@ -89,12 +89,12 @@ const DownloadAppWrapper = styled.div({
 })
 
 const AppStoreButtons = () => {
-  const locale = useRoutingLocale()
+  const { routingLocale } = useCurrentLocale()
 
   return (
     <ButtonWrapper>
       <Button
-        href={getAppStoreLink('apple', locale).toString()}
+        href={getAppStoreLink('apple', routingLocale).toString()}
         target="_blank"
         rel="noopener noreferrer"
         variant="secondary"
@@ -106,7 +106,7 @@ const AppStoreButtons = () => {
         </SpaceFlex>
       </Button>
       <Button
-        href={getAppStoreLink('google', locale).toString()}
+        href={getAppStoreLink('google', routingLocale).toString()}
         target="_blank"
         rel="noopener noreferrer"
         variant="secondary"

@@ -7,7 +7,7 @@ import { DebugDialog } from '@/components/DebugDialog/DebugDialog'
 import { DebugShopSessionSection } from '@/components/DebugDialog/DebugShopSessionSection'
 import { DebugTextKeys } from '@/components/DebugDialog/DebugTextKeys'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { usePriceIntent } from './PriceIntentContext'
 
@@ -24,7 +24,7 @@ export const PageDebugDialog = () => {
 }
 
 const LinkToOfferSection = () => {
-  const locale = useRoutingLocale()
+  const { routingLocale } = useCurrentLocale()
   const { shopSession } = useShopSession()
   const [priceIntent] = usePriceIntent()
 
@@ -32,11 +32,11 @@ const LinkToOfferSection = () => {
     if (!(shopSession && priceIntent)) return null
 
     return PageLink.session({
-      locale,
+      locale: routingLocale,
       shopSessionId: shopSession.id,
       priceIntentId: priceIntent.id,
     }).toString()
-  }, [locale, shopSession, priceIntent])
+  }, [routingLocale, shopSession, priceIntent])
 
   return <CopyToClipboard label="Share link to offer">{link ?? ''}</CopyToClipboard>
 }

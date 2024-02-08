@@ -6,7 +6,7 @@ import { Button, Space, Text } from 'ui'
 import { linkStyles } from '@/components/RichText/RichText.styles'
 import { deserializeField } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { type FormSection, type JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
-import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
+import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
@@ -19,7 +19,7 @@ type Props = {
 }
 
 export const PriceCalculatorSection = ({ section, loading, onSubmit, last, children }: Props) => {
-  const locale = useRoutingLocale()
+  const { routingLocale } = useCurrentLocale()
   const { t } = useTranslation('purchase-form')
   const translateLabel = useTranslateFieldLabel()
 
@@ -51,7 +51,7 @@ export const PriceCalculatorSection = ({ section, loading, onSubmit, last, child
           </Button>
 
           {last && (
-            <Link href={PageLink.privacyPolicy({ locale })} target="_blank">
+            <Link href={PageLink.privacyPolicy({ locale: routingLocale })} target="_blank">
               <Text as="span" size="xs">
                 {t('GDPR_LINK_BEFORE_OFFER')}
               </Text>
