@@ -1,5 +1,8 @@
 import type { StorybookConfig } from '@storybook/nextjs'
 import babelConfig from './babelConfig'
+import { VanillaExtractPlugin } from '@vanilla-extract/webpack-plugin'
+// @ts-expect-error it uses `export = ` but we'd rather not enable esModuleInterop for everything
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 
 const path = require('path')
 // Extracted inline declarations from storybook docs for supporting PNP mode
@@ -49,6 +52,7 @@ const config: StorybookConfig = {
         crypto: false,
       }
     }
+    config.plugins?.push(new VanillaExtractPlugin(), new MiniCssExtractPlugin())
     return config
   },
 }

@@ -1,6 +1,6 @@
 export type Level = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
 
-const breakpoints: Record<Level, number> = {
+export const breakpoints: Record<Level, number> = {
   xs: 480,
   sm: 640,
   md: 768,
