@@ -36,7 +36,7 @@ import {
   filterByBlockType,
   getLinkFieldURL,
 } from '@/services/storyblok/Storyblok.helpers'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { ButtonBlockProps } from './ButtonBlock'
 
@@ -112,7 +112,7 @@ type ProductNavContainerBlockProps = SbBaseBlockProps<{
 type ProductNavItem = { name: string; url: string; image?: string; label?: string }
 
 export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps) => {
-  const { routingLocale } = useCurrentLocale()
+  const locale = useRoutingLocale()
   const { t } = useTranslation()
   const productMetadata = useProductMetadata()
   const filteredNavItems = filterByBlockType(blok.navItems, NavItemBlock.blockName)
@@ -158,7 +158,7 @@ export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps
           </ProductNavigationList>
         </NavigationMenuPrimitive.Sub>
         <ButtonNextLinkFullWidth
-          href={PageLink.store({ locale: routingLocale })}
+          href={PageLink.store({ locale })}
           variant="secondary"
           size="medium"
         >
@@ -176,9 +176,7 @@ export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps
         <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
           <Space y={{ base: 1.5, lg: 0 }}>
             <DesktopOnly>
-              <NavigationTrigger href={PageLink.store({ locale: routingLocale })}>
-                {blok.name}
-              </NavigationTrigger>
+              <NavigationTrigger href={PageLink.store({ locale })}>{blok.name}</NavigationTrigger>
             </DesktopOnly>
             <NavigationMenuPrimitiveContent>{content}</NavigationMenuPrimitiveContent>
           </Space>

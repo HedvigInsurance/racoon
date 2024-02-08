@@ -30,7 +30,7 @@ import {
 } from '@/services/graphql/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { FormElement, QueryParam } from './CheckoutPage.constants'
 import { CheckoutPageProps } from './CheckoutPage.types'
@@ -49,7 +49,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   } = props
   const { t } = useTranslation('checkout')
 
-  const { routingLocale } = useCurrentLocale()
+  const locale = useRoutingLocale()
   const [showSignError, setShowSignError] = useState(false)
   const { reset: resetShopSession } = useShopSession()
   const router = useRouter()
@@ -202,7 +202,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                           size="xs"
                           align="center"
                           balance={true}
-                          href={PageLink.privacyPolicy({ locale: routingLocale })}
+                          href={PageLink.privacyPolicy({ locale })}
                           target="_blank"
                         >
                           {t('SIGN_DISCLAIMER')}
