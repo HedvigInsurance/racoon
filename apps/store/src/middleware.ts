@@ -1,10 +1,9 @@
 import { get as getFromConfig } from '@vercel/edge-config'
-import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
 import { experimentMiddleware } from '@/services/Tracking/experimentMiddleware'
-import { countries } from '@/utils/l10n/countries'
-import { LOCALE_COOKIE_KEY } from '@/utils/l10n/locales'
-import { toRoutingLocale } from '@/utils/l10n/localeUtils'
+import { FALLBACK_LOCALE, LOCALE_COOKIE_KEY, locales } from '@/utils/l10n/locales'
+import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 
 export const config = {
   matcher: [
@@ -22,30 +21,34 @@ export const config = {
 }
 
 export async function middleware(req: NextRequest) {
-  if (req.nextUrl.locale === 'default') {
-    return localeMiddleware(req)
-  } else {
-    const redirectResponse = await redirectMiddleware(req)
-    if (redirectResponse) return redirectResponse
+  const localeRedirect = localeMiddleware(req)
+  if (localeRedirect) return localeRedirect
 
-    return experimentMiddleware(req)
-  }
+  const configRedirect = await redirectMiddleware(req)
+  if (configRedirect) return configRedirect
+
+  return experimentMiddleware(req)
 }
 
-const localeMiddleware = (req: NextRequest): NextResponse => {
-  const nextURL = req.nextUrl.clone()
-  const cookiePath = req.cookies.get(LOCALE_COOKIE_KEY)
+const localeMiddleware = (req: NextRequest): NextResponse | undefined => {
+  const url = new URL(req.url)
+  const firstSegment = url.pathname.split('/')[1]
+  if (isRoutingLocale(firstSegment)) return
 
-  if (cookiePath) {
-    nextURL.locale = cookiePath.value
-    console.info(`Found user preference in cookies: ${cookiePath.value}, redirecting`)
-    return NextResponse.redirect(nextURL)
+  const redirectToLocale = (locale: string) => {
+    const targetUrl = req.nextUrl.clone()
+    targetUrl.pathname = `/${locale}${targetUrl.pathname}`
+    return NextResponse.redirect(targetUrl)
   }
 
-  // Default routing to /se
-  nextURL.locale = toRoutingLocale(countries.SE.defaultLocale)
-  console.info(`Routing visitor from ${req.url} to ${nextURL}`)
-  return NextResponse.redirect(nextURL, 308)
+  const cookieLocale = req.cookies.get(LOCALE_COOKIE_KEY)?.value
+  if (cookieLocale) {
+    console.info(`Found user preference in cookies: ${cookieLocale}, redirecting`)
+    return redirectToLocale(cookieLocale)
+  }
+
+  console.info(`Routing visitor from ${req.url} to default locale`)
+  return redirectToLocale(locales[FALLBACK_LOCALE].routingLocale)
 }
 
 type Redirect = {
@@ -71,7 +74,6 @@ const redirectMiddleware = async (req: NextRequest): Promise<NextResponse | unde
       warnOnce(`Invalid URL in redirect ${JSON.stringify(redirect)}`)
       continue
     }
-    // Cannot use req.nextUrl, it removes locale prefix
     const reqUrl = new URL(req.url)
     if (reqUrl.pathname === redirect.from) {
       console.log(
@@ -80,7 +82,7 @@ const redirectMiddleware = async (req: NextRequest): Promise<NextResponse | unde
         }`,
       )
 
-      const redirectUrl = new URL(redirect.to, req.nextUrl)
+      const redirectUrl = new URL(redirect.to, reqUrl.origin)
       const serachParams = new URLSearchParams([
         ...Array.from(reqUrl.searchParams.entries()),
         ...Array.from(redirectUrl.searchParams.entries()),

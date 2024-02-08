@@ -1,6 +1,6 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
-import nextI18nextConfig from '../next-i18next.config.js'
+import nextI18nextConfig from '../next-i18next.config.cjs'
 
 const requireTranslationsBackend = {
   type: 'backend',

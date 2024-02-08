@@ -1,8 +1,8 @@
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { useState, useMemo } from 'react'
-import { Space, Button, Text, BankIdIcon, CheckIcon, theme } from 'ui'
+import { useMemo, useState } from 'react'
+import { BankIdIcon, Button, CheckIcon, Space, Text, theme } from 'ui'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -13,7 +13,7 @@ import {
   ShopSessionFragment,
 } from '@/services/graphql/generated'
 import { convertToDate } from '@/utils/date'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
 import { type TrialContract } from './carDealership.types'
@@ -37,7 +37,7 @@ export const TrialExtensionForm = ({
   requirePaymentConnection,
 }: Props) => {
   const { t } = useTranslation(['carDealership', 'checkout'])
-  const { routingLocale } = useCurrentLocale()
+  const locale = useRoutingLocale()
   const formatter = useFormatter()
   const [acceptExtension, loading] = useAcceptExtension({
     shopSession: shopSession,
@@ -163,7 +163,7 @@ export const TrialExtensionForm = ({
             align="center"
             balance={true}
             color="textSecondary"
-            href={PageLink.privacyPolicy({ locale: routingLocale })}
+            href={PageLink.privacyPolicy({ locale })}
             target="_blank"
           >
             {t('checkout:SIGN_DISCLAIMER')}

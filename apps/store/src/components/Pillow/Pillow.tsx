@@ -7,6 +7,7 @@ type PillowProps = {
   src?: string
   alt?: string | null
   priority?: boolean
+  className?: string
 }
 
 export const Pillow = ({ alt, src, priority, ...props }: PillowProps) => {

@@ -3,7 +3,7 @@ import { Button } from 'ui'
 import { Layout } from '@/components/PaymentConnectPage/Layout'
 import { useAdyenTranslations } from '@/services/adyen/useAdyenTranslations'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 }
 
 const Page = (props: Props) => {
-  const { routingLocale: locale } = useCurrentLocale()
+  const locale = useRoutingLocale()
   const { title, startButton } = useAdyenTranslations()
 
   const nextUrl = PageLink.paymentConnectLegacy({ locale }).pathname

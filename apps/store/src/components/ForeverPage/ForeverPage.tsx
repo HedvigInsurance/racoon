@@ -2,14 +2,14 @@ import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { FormEventHandler, useState } from 'react'
-import { Button, Space, mq, theme } from 'ui'
+import { Button, mq, Space, theme } from 'ui'
 import { useGlobalBanner } from '@/components/GlobalBanner/useGlobalBanner'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
-import { HEADER_HEIGHT_MOBILE, HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header'
+import { HEADER_HEIGHT_DESKTOP, HEADER_HEIGHT_MOBILE } from '@/components/Header/Header'
 import { TextField } from '@/components/TextField/TextField'
 import { TextWithLink } from '@/components/TextWithLink'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useRedeemCampaign } from '@/utils/useCampaign'
 import { usePrintTextEffect } from './usePrintTextEffect'
@@ -24,9 +24,9 @@ export const ForeverPage = ({ code: initialCode }: Props) => {
   usePrintTextEffect({ value: initialCode, onValueChange: setCode })
 
   const { shopSession } = useShopSession()
-  const { routingLocale } = useCurrentLocale()
+  const locale = useRoutingLocale()
   const { addBanner } = useGlobalBanner()
-  const redirectUrl = PageLink.store({ locale: routingLocale })
+  const redirectUrl = PageLink.store({ locale })
   const [addCampaign, { errorMessage, loading, called }] = useRedeemCampaign({
     shopSessionId: shopSession?.id ?? '',
     async onCompleted() {

@@ -75,10 +75,11 @@ export const useBankIdLoginApi = ({ dispatch }: HookOptions) => {
             nextOperationState: apiStatusToBankIdState(statusResponse.status),
           })
 
-          if (statusResponse.seBankidLiveQrCodeData) {
+          if (statusResponse.seBankidLiveQrCodeData || statusResponse.seBankidAutoStartToken) {
             dispatch({
-              type: 'qrCodeDataUpdate',
+              type: 'propertiesUpdate',
               qrCodeData: statusResponse.seBankidLiveQrCodeData,
+              autoStartToken: statusResponse.seBankidAutoStartToken,
             })
           }
 

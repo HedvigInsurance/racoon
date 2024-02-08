@@ -6,7 +6,7 @@ export type BankIdAction =
   | ShowLoginPromptAction
   | StartLoginAction
   | StartSignAction
-  | QrCodeDataUpdateAction
+  | PropertiesUpdateAction
   | FinalAction
   | OperationStateChangeAction
   | ErrorAction
@@ -24,9 +24,10 @@ type StartSignAction = {
   ssn: string
   customerAuthenticationStatus: ShopSessionAuthenticationStatus
 }
-type QrCodeDataUpdateAction = {
-  type: 'qrCodeDataUpdate'
-  qrCodeData: string
+type PropertiesUpdateAction = {
+  type: 'propertiesUpdate'
+  qrCodeData?: string
+  autoStartToken?: string
 }
 type FinalAction = {
   type: 'cancel' | 'success'
@@ -81,7 +82,7 @@ export const bankIdReducer = (
         },
       }
     }
-    case 'qrCodeDataUpdate': {
+    case 'propertiesUpdate': {
       if (!state.currentOperation) {
         break
       }
@@ -90,6 +91,7 @@ export const bankIdReducer = (
         currentOperation: {
           ...state.currentOperation,
           qrCodeData: action.qrCodeData,
+          autoStartToken: action.autoStartToken,
         },
       }
     }
