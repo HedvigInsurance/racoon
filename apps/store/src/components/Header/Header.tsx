@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { motion, Transition } from 'framer-motion'
+import { bodyBgColor, headerBgTransparentColor } from 'ui/src/theme/vars.css'
 import { mq, theme } from 'ui'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { useScrollState } from '@/utils/useScrollState'
@@ -44,7 +45,7 @@ export const Header = (props: HeaderProps) => {
   const scrollState = useScrollState({ threshold: MENU_BAR_HEIGHT_PX * 2 })
 
   const initialStyles = {
-    backgroundColor: opaque ? 'var(--body-bg-color)' : 'var(--header-bg-transparent-color)',
+    backgroundColor: opaque ? bodyBgColor : headerBgTransparentColor,
   }
 
   let animate: AnimationVariant = scrollState === 'SCROLL_UP' ? 'SLIDE_IN' : undefined
@@ -79,7 +80,7 @@ const GhostWrapper = styled.div<{ overlay: boolean }>(({ overlay }) => ({
   height: 'var(--height)',
   // Using negative margin to pull page's content bellow the menu causing the desired
   // 'menu overlay' behaviour. Before that was being implemented by removing the header
-  // from doc's flow with absolute positioning. However that solution doesn't play well
+  // from doc's flow with absolute positioning. However, that solution doesn't play well
   // if we have banners/announcements on the screen.
   marginBottom: overlay ? 'calc(-1 * var(--height))' : 'initial',
   zIndex: zIndexes.header,

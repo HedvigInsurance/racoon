@@ -11353,6 +11353,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vanilla-extract/dynamic@npm:2.1.0":
+  version: 2.1.0
+  resolution: "@vanilla-extract/dynamic@npm:2.1.0"
+  dependencies:
+    "@vanilla-extract/private": "npm:^1.0.3"
+  checksum: 10c0/dcb8149bd815c4be75184f90e350750b6bc16ffdb5841f62f7211385478589dc0a0b261a442011149c2edbdbd83a956a425eec94f6c735f269a1cdb310541a66
+  languageName: node
+  linkType: hard
+
 "@vanilla-extract/integration@npm:^6.4.0":
   version: 6.4.0
   resolution: "@vanilla-extract/integration@npm:6.4.0"
@@ -25204,6 +25213,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:6.20.0"
     "@typescript-eslint/parser": "npm:6.20.0"
     "@vanilla-extract/css": "npm:1.14.1"
+    "@vanilla-extract/dynamic": "npm:2.1.0"
     "@vanilla-extract/next-plugin": "npm:2.3.5"
     "@vanilla-extract/webpack-plugin": "npm:2.3.4"
     "@vercel/edge-config": "npm:0.4.1"
@@ -25213,6 +25223,7 @@ __metadata:
     apollo-link-timeout: "npm:4.0.0"
     babel-loader: "npm:9.1.3"
     clone-deep: "npm:4.0.1"
+    clsx: "npm:2.1.0"
     cookies-next: "npm:4.1.1"
     date-fns: "npm:3.3.1"
     dotenv: "npm:16.4.1"
