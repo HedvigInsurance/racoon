@@ -3,7 +3,7 @@ import { apiPlugin, storyblokInit } from '@storyblok/js'
 import experimentJson from './experiment.json' assert { type: 'json' }
 
 import { SiteCsp, StoryblokCsp } from './next-csp.config.mjs'
-import i18nConfig from './next-i18next.config.js'
+import i18nConfig from './next-i18next.config.cjs'
 
 /** @type {import('next').NextConfig} */
 const config = {
