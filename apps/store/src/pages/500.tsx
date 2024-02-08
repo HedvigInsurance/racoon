@@ -2,11 +2,11 @@ import { GetStaticProps, NextPageWithLayout } from 'next'
 import { useTranslation } from 'next-i18next'
 import { Heading } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
-import { errorPageWrapper } from '@/components/errorPage.css'
 import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
 import { FALLBACK_LOCALE } from '@/utils/l10n/locales'
 import { toRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
+import { errorPageWrapper } from '../components/errorPage.css'
 
 const NextPage: NextPageWithLayout = () => {
   const { t } = useTranslation()
