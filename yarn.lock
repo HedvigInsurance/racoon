@@ -20828,9 +20828,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"msw@npm:2.1.5":
-  version: 2.1.5
-  resolution: "msw@npm:2.1.5"
+"msw@npm:2.1.6":
+  version: 2.1.6
+  resolution: "msw@npm:2.1.6"
   dependencies:
     "@bundled-es-modules/cookie": "npm:^2.0.0"
     "@bundled-es-modules/statuses": "npm:^1.0.1"
@@ -20857,7 +20857,7 @@ __metadata:
       optional: true
   bin:
     msw: cli/index.js
-  checksum: 10c0/ed1be6ee2863a5ff598f8fcd6f6497b1ba8c1310083afc220eca46b29b22bbfcd848f421cfbaac7aa7ff5f11fb2eaeae00f0a0fb4c3b912a1477c50e74e92e9f
+  checksum: 10c0/f52db08cbca7cda39a0987cb3a894758c27f8f36230a13dd5abb48ba4a28831e18f2c14691e42b66bfca606af35700515aa9a5b35d922cc353b27cdca7a30d0b
   languageName: node
   linkType: hard
 
@@ -24598,7 +24598,7 @@ __metadata:
     jotai: "npm:2.6.4"
     jwt-decode: "npm:4.0.0"
     md5: "npm:2.3.0"
-    msw: "npm:2.1.5"
+    msw: "npm:2.1.6"
     next: "npm:14.1.0"
     next-i18next: "npm:15.2.0"
     next-router-mock: "npm:0.9.11"
