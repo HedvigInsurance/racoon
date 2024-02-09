@@ -22,6 +22,7 @@ import {
 import { CountryLabel, IsoLocale, Language } from '@/utils/l10n/types'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
+import { disclaimerStyle, wrapperStyle } from './FooterBlock.css'
 
 const COUNTRY_SELECTOR_ENABLED = Features.enabled('COUNTRY_SELECTOR')
 const ENGLISH_LANGUAGE_ENABLED = Features.enabled('ENGLISH_LANGUAGE')
@@ -106,7 +107,7 @@ export const FooterBlock = ({ blok, onLocaleChange }: FooterBlockProps) => {
 
   const footerSections = filterByBlockType(blok.sections, FooterSection.blockName)
   return (
-    <Wrapper>
+    <div className={wrapperStyle}>
       <RootLayout>
         {footerSections.map((nestedBlok) => (
           <Column key={nestedBlok._uid}>
@@ -133,7 +134,7 @@ export const FooterBlock = ({ blok, onLocaleChange }: FooterBlockProps) => {
           )}
         </LocaleForm>
 
-        <Disclaimer>
+        <div className={disclaimerStyle}>
           <Text color="textSecondary" size="sm">
             © 2023 {organization.name} AB
             <br />
@@ -144,20 +145,12 @@ export const FooterBlock = ({ blok, onLocaleChange }: FooterBlockProps) => {
             <br />
             Org.nr. {BUSINESS_REGISTRATION_NUMBER}
           </Text>
-        </Disclaimer>
+        </div>
       </RootLayout>
-    </Wrapper>
+    </div>
   )
 }
 FooterBlock.blockName = 'footer' as const
-
-const Wrapper = styled.footer({
-  backgroundColor: theme.colors.gray100,
-  paddingTop: theme.space.xxl,
-
-  // Clear floating price calculator button
-  paddingBottom: theme.space[10],
-})
 
 const RootLayout = styled(GridLayout.Root)({
   rowGap: theme.space.xxl,
@@ -185,19 +178,6 @@ const LocaleForm = styled.div({
     gridColumn: '7 / -1',
   },
   [mq.xxl]: { gridColumn: '7 / span 4' },
-})
-
-const Disclaimer = styled.div({
-  gridColumn: '1 / -1',
-  textAlign: 'center',
-
-  [mq.md]: {
-    gridRow: 2,
-    gridColumn: 'span 6',
-    textAlign: 'left',
-  },
-
-  [mq.xxl]: { gridColumn: '3 / span 2' },
 })
 
 const StyledAnchor = styled.a(linkStyles, { textDecorationColor: 'transparent', display: 'block' })
