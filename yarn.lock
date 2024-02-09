@@ -11383,14 +11383,35 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/next-plugin@npm:2.3.5":
-  version: 2.3.5
-  resolution: "@vanilla-extract/next-plugin@npm:2.3.5"
+"@vanilla-extract/integration@npm:^7.0.0":
+  version: 7.1.0
+  resolution: "@vanilla-extract/integration@npm:7.1.0"
   dependencies:
-    "@vanilla-extract/webpack-plugin": "npm:^2.3.4"
+    "@babel/core": "npm:^7.20.7"
+    "@babel/plugin-syntax-typescript": "npm:^7.20.0"
+    "@vanilla-extract/babel-plugin-debug-ids": "npm:^1.0.4"
+    "@vanilla-extract/css": "npm:^1.14.0"
+    esbuild: "npm:esbuild@~0.17.6 || ~0.18.0 || ~0.19.0"
+    eval: "npm:0.1.8"
+    find-up: "npm:^5.0.0"
+    javascript-stringify: "npm:^2.0.1"
+    lodash: "npm:^4.17.21"
+    mlly: "npm:^1.4.2"
+    outdent: "npm:^0.8.0"
+    vite: "npm:^5.0.11"
+    vite-node: "npm:^1.2.0"
+  checksum: 10c0/a264b8d816fec8e2fc5974bd81fa24f21f8b4529bb9ebefe67c271831db7e2fcc2c3ae1bbf74b8170583da270bbbcca04061d0358426962bfcf3f11e2acad11c
+  languageName: node
+  linkType: hard
+
+"@vanilla-extract/next-plugin@npm:2.3.6":
+  version: 2.3.6
+  resolution: "@vanilla-extract/next-plugin@npm:2.3.6"
+  dependencies:
+    "@vanilla-extract/webpack-plugin": "npm:^2.3.5"
   peerDependencies:
     next: ">=12.1.7"
-  checksum: 10c0/698e9f34f289b01a2e5255a13871733b029bf1247939d673b24b8c184e86d9aa0d45bcef525046c9a692e2e8b937dbfc46c0a9fd85b8de9a927fa3e2617f7e5e
+  checksum: 10c0/a9431b99f6a3177eb63f5318310b6648c047b08b08c5c313855cae72b112ea0926b79bd6dd09fe98feb30e689af6a7be7324375032b5c31436bef2d9a7860d34
   languageName: node
   linkType: hard
 
@@ -11401,7 +11422,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/webpack-plugin@npm:2.3.4, @vanilla-extract/webpack-plugin@npm:^2.3.4":
+"@vanilla-extract/webpack-plugin@npm:2.3.4":
   version: 2.3.4
   resolution: "@vanilla-extract/webpack-plugin@npm:2.3.4"
   dependencies:
@@ -11412,6 +11433,20 @@ __metadata:
   peerDependencies:
     webpack: ^4.30.0 || ^5.20.2
   checksum: 10c0/2b0e9838621666cca5b4992c1736b8d3b1460ac41d22fbe6d7696947dbd508599872f2a7cc01beb90ee365acc69de23390fc41c11c609a161762b39355de540b
+  languageName: node
+  linkType: hard
+
+"@vanilla-extract/webpack-plugin@npm:^2.3.5":
+  version: 2.3.6
+  resolution: "@vanilla-extract/webpack-plugin@npm:2.3.6"
+  dependencies:
+    "@vanilla-extract/integration": "npm:^7.0.0"
+    chalk: "npm:^4.1.1"
+    debug: "npm:^4.3.1"
+    loader-utils: "npm:^2.0.0"
+  peerDependencies:
+    webpack: ^4.30.0 || ^5.20.2
+  checksum: 10c0/ec3a31bf42ad7884cef4294c70411ef2f26362d2fd3f6a159a8bf1d661eb988f330c7043b33ce2013999e13b6cbaa42aa59054d966c8a9f73e25e6d0f4bcfd5f
   languageName: node
   linkType: hard
 
@@ -25214,7 +25249,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:6.20.0"
     "@vanilla-extract/css": "npm:1.14.1"
     "@vanilla-extract/dynamic": "npm:2.1.0"
-    "@vanilla-extract/next-plugin": "npm:2.3.5"
+    "@vanilla-extract/next-plugin": "npm:2.3.6"
     "@vanilla-extract/webpack-plugin": "npm:2.3.4"
     "@vercel/edge-config": "npm:0.4.1"
     "@vercel/kv": "npm:1.0.1"
