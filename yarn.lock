@@ -11362,27 +11362,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/integration@npm:^6.4.0":
-  version: 6.4.0
-  resolution: "@vanilla-extract/integration@npm:6.4.0"
-  dependencies:
-    "@babel/core": "npm:^7.20.7"
-    "@babel/plugin-syntax-typescript": "npm:^7.20.0"
-    "@vanilla-extract/babel-plugin-debug-ids": "npm:^1.0.4"
-    "@vanilla-extract/css": "npm:^1.14.0"
-    esbuild: "npm:esbuild@~0.17.6 || ~0.18.0 || ~0.19.0"
-    eval: "npm:0.1.8"
-    find-up: "npm:^5.0.0"
-    javascript-stringify: "npm:^2.0.1"
-    lodash: "npm:^4.17.21"
-    mlly: "npm:^1.4.2"
-    outdent: "npm:^0.8.0"
-    vite: "npm:^5.0.11"
-    vite-node: "npm:^1.2.0"
-  checksum: 10c0/e88ee674c291f08046ba47a12f053a0aa70499db4e77720337d44972313b9528b5e44db3184de64bda3e8db8e99c217bc154196d983ef0e4eb9c18a79a1621cd
-  languageName: node
-  linkType: hard
-
 "@vanilla-extract/integration@npm:^7.0.0":
   version: 7.1.0
   resolution: "@vanilla-extract/integration@npm:7.1.0"
@@ -11422,21 +11401,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/webpack-plugin@npm:2.3.4":
-  version: 2.3.4
-  resolution: "@vanilla-extract/webpack-plugin@npm:2.3.4"
-  dependencies:
-    "@vanilla-extract/integration": "npm:^6.4.0"
-    chalk: "npm:^4.1.1"
-    debug: "npm:^4.3.1"
-    loader-utils: "npm:^2.0.0"
-  peerDependencies:
-    webpack: ^4.30.0 || ^5.20.2
-  checksum: 10c0/2b0e9838621666cca5b4992c1736b8d3b1460ac41d22fbe6d7696947dbd508599872f2a7cc01beb90ee365acc69de23390fc41c11c609a161762b39355de540b
-  languageName: node
-  linkType: hard
-
-"@vanilla-extract/webpack-plugin@npm:^2.3.5":
+"@vanilla-extract/webpack-plugin@npm:2.3.6, @vanilla-extract/webpack-plugin@npm:^2.3.5":
   version: 2.3.6
   resolution: "@vanilla-extract/webpack-plugin@npm:2.3.6"
   dependencies:
@@ -25250,7 +25215,7 @@ __metadata:
     "@vanilla-extract/css": "npm:1.14.1"
     "@vanilla-extract/dynamic": "npm:2.1.0"
     "@vanilla-extract/next-plugin": "npm:2.3.6"
-    "@vanilla-extract/webpack-plugin": "npm:2.3.4"
+    "@vanilla-extract/webpack-plugin": "npm:2.3.6"
     "@vercel/edge-config": "npm:0.4.1"
     "@vercel/kv": "npm:1.0.1"
     "@vercel/otel": "npm:1.2.1"
