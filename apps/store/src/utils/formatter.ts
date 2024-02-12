@@ -26,7 +26,6 @@ const formatMonthlyPrice = (
   const displayAmount = formatMoney(price, options)
   return options.t('MONTHLY_PRICE', {
     displayAmount,
-    lng: options.locale,
     defaultValue: `MONTHLY_PRICE ${displayAmount}`,
   })
 }

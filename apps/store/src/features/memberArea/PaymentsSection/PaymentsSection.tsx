@@ -37,7 +37,7 @@ export const PaymentsSection = () => {
       )}
 
       {/* NOTE that URL is locale-specific */}
-      <ButtonNextLink href={'/se-en/help/faq'} locale={false} size="small" variant="secondary">
+      <ButtonNextLink href={'/se-en/help/faq'} size="small" variant="secondary">
         Payments FAQ
       </ButtonNextLink>
       <GeneralInfo />

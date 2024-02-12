@@ -1,4 +1,5 @@
 import { type NextApiRequest, type NextApiResponse } from 'next'
+import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
 import { resetSessionServerSide } from '@/utils/resetSessionServerSide'
 
@@ -8,12 +9,13 @@ import { resetSessionServerSide } from '@/utils/resetSessionServerSide'
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await resetSessionServerSide(req, res)
 
+  const { routingLocale: defaultLocale } = getLocaleOrFallback()
   const nextQueryParam = req.query['next']
   let nextURL = new URL(ORIGIN_URL)
   if (typeof nextQueryParam === 'string') {
     nextURL = new URL(nextQueryParam, nextURL)
   } else {
-    nextURL = new URL(PageLink.home(), nextURL)
+    nextURL = new URL(PageLink.home({ locale: defaultLocale }), nextURL)
   }
 
   const destination = nextURL.toString()

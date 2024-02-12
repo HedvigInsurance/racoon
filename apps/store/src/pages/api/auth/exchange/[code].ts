@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
 import { saveAuthTokens } from '@/services/authApi/persist'
+import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
 import { resetSessionServerSide } from '@/utils/resetSessionServerSide'
 
@@ -14,7 +15,8 @@ enum QueryParam {
  */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { url } = req
-  const fallbackRedirect: [number, string] = [307, PageLink.home().toString()]
+  const locale = getLocaleOrFallback().routingLocale
+  const fallbackRedirect: [number, string] = [307, PageLink.home({ locale }).toString()]
 
   if (url === undefined) {
     console.error('Missing url: ', url)

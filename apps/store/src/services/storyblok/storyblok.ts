@@ -2,11 +2,11 @@ import * as process from 'process'
 import {
   apiPlugin,
   getStoryblokApi,
-  SbBlokData,
-  storyblokInit,
-  ISbStoryData,
   ISbStoriesParams,
+  ISbStoryData,
+  SbBlokData,
   StoryblokClient,
+  storyblokInit,
 } from '@storyblok/react'
 import { AccordionBlock } from '@/blocks/AccordionBlock'
 import { AccordionItemBlock } from '@/blocks/AccordionItemBlock'
@@ -72,7 +72,7 @@ import { TrustpilotReviewsBlock } from '@/blocks/TrustpilotReviewsBlock'
 import { USPBlock, USPBlockItem } from '@/blocks/USPBlock'
 import { VideoBlock } from '@/blocks/VideoBlock'
 import { WidgetFlowBlock } from '@/blocks/WidgetFlowBlock'
-import { type ContentWidth, type ContentAlignment } from '@/components/GridLayout/GridLayout.helper'
+import { type ContentAlignment, type ContentWidth } from '@/components/GridLayout/GridLayout.helper'
 import { BLOG_ARTICLE_CONTENT_TYPE } from '@/features/blog/blog.constants'
 import { blogBlocks } from '@/features/blog/blogBlocks'
 // TODO: get rid of this import, services should avoid feature-imports
@@ -98,6 +98,7 @@ export type ExpectedBlockType<T> = [T] extends [{ blok: SbBlokData }]
 
 export type StoryblokQueryParams = {
   slug: Array<string>
+  locale: string
 }
 
 export type StoryblokPageProps = {

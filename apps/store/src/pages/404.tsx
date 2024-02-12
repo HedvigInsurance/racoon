@@ -6,12 +6,15 @@ import { ErrorPage } from '@/components/ErrorPage/ErrorPage'
 import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { isRoutingLocale } from '@/utils/l10n/localeUtils'
+import { FALLBACK_LOCALE } from '@/utils/l10n/locales'
+import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 import { RoutingLocale } from '@/utils/l10n/types'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 
 const NextPage: NextPageWithLayout = () => {
   const { t } = useTranslation()
+  const locale = useRoutingLocale()
 
   return (
     <ErrorPage>
@@ -23,7 +26,7 @@ const NextPage: NextPageWithLayout = () => {
         <ButtonNextLink
           variant="primary"
           size={{ base: 'small', lg: 'medium' }}
-          href={PageLink.home().pathname}
+          href={PageLink.home({ locale }).pathname}
         >
           {t('404_PAGE_BUTTON')}
         </ButtonNextLink>
@@ -33,9 +36,9 @@ const NextPage: NextPageWithLayout = () => {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const rawLocale = context.locale ?? context.defaultLocale
-  // TODO: Remove this when we have a global 404 page
-  const locale: RoutingLocale = isRoutingLocale(rawLocale) ? rawLocale : 'se-en'
+  // Impossible to determine locale at build time anymore, so let's use default
+  // To be fixed with app router 404 implementation
+  const locale: RoutingLocale = getLocaleOrFallback(FALLBACK_LOCALE).routingLocale
   context.locale = locale
 
   const props = await getLayoutWithMenuProps(context)

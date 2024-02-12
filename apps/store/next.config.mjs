@@ -4,7 +4,6 @@ import experimentJson from './experiment.json' assert { type: 'json' }
 import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin'
 
 import { SiteCsp, StoryblokCsp } from './next-csp.config.mjs'
-import i18nConfig from './next-i18next.config.cjs'
 
 /** @type {import('next').NextConfig} */
 const config = {
@@ -35,7 +34,6 @@ const config = {
     ],
   },
   productionBrowserSourceMaps: true,
-  i18n: i18nConfig.i18n,
   transpilePackages: ['ui', 'i18next'],
   // Docs: https://nextjs.org/docs/advanced-features/security-headers
   async headers() {
@@ -76,25 +74,21 @@ const config = {
         source: '/no/((?!hjelp/kundeservice|payment/connect-legacy).*)',
         destination: '/no',
         permanent: true,
-        locale: false,
       },
       {
         source: '/no-en/((?!help/customer-service|payment/connect-legacy).*)',
         destination: '/no-en',
         permanent: true,
-        locale: false,
       },
       {
         source: '/dk/((?!hjaelp/kundeservice|payment/connect-legacy).*)',
         destination: '/dk',
         permanent: true,
-        locale: false,
       },
       {
         source: '/dk-en/((?!help/customer-service|payment/connect-legacy).*)',
         destination: '/dk-en',
         permanent: true,
-        locale: false,
       },
     ]
 
@@ -104,28 +98,27 @@ const config = {
         source: '/new-member(.*)',
         destination: '/se/forsakringar',
         permanent: true,
-        locale: false,
       },
       {
         source: '/se/new-member(.*)',
         destination: '/se/forsakringar',
         permanent: true,
-        locale: false,
       },
       {
         source: '/se-en/new-member(.*)',
         destination: '/se-en/insurances',
         permanent: true,
-        locale: false,
       },
     ]
 
     let memberAreaDefault = []
     if (process.env.NEXT_PUBLIC_FEATURE_MEMBER_AREA === 'true') {
+      // GOTCHA: Cannot use nested capture groups, NextJs restriction
+      const localeSegment = ':locale(\\w{2}|\\w{2}-\\w{2})'
       memberAreaDefault = [
         {
-          source: '/member',
-          destination: '/member/insurances',
+          source: `/${localeSegment}/member`,
+          destination: '/:locale/member/insurances',
           permanent: false,
         },
       ]
@@ -179,7 +172,6 @@ const getExperimentVariantRedirects = () => {
       source: [experimentJson.slug, variantSlug].join(''),
       destination: experimentJson.slug,
       permanent: false,
-      locale: false,
     },
   ]
 }
@@ -211,7 +203,6 @@ const getStoryblokRedirects = async () => {
       source: entry.name,
       destination: entry.value,
       permanent: true,
-      locale: false,
     }))
 
     return redirects

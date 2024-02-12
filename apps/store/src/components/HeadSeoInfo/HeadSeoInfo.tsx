@@ -20,9 +20,9 @@ export const HeadSeoInfo = ({ story, robots }: Props) => {
   // Make it possible to override robots value for A/B test cases
   const robotsContent = robots ?? story.content.robots
 
-  const router = useRouter()
+  const { asPath } = useRouter()
   // remove trailing slash
-  const pathname = `${router.locale}${router.asPath}`.replace(/\/$/, '')
+  const pathname = asPath.replace(/\/$/, '')
   const pageURL = new URL(pathname, ORIGIN_URL)
 
   return (

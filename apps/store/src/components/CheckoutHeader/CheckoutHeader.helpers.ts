@@ -41,13 +41,13 @@ export const fetchCheckoutSteps = async ({ apolloClient, req, res }: Params) => 
 type GetCheckoutStepLinkParams = {
   step: CheckoutStep
   shopSessionId: string
-  locale?: RoutingLocale
+  locale: RoutingLocale
 }
 
 export const getCheckoutStepLink = ({ step, shopSessionId, locale }: GetCheckoutStepLinkParams) => {
   switch (step) {
     case CheckoutStep.Checkout:
-      return PageLink.checkout().href
+      return PageLink.checkout({ locale }).href
     case CheckoutStep.Payment:
       return PageLink.checkoutPaymentTrustly({ locale, shopSessionId }).href
     case CheckoutStep.Confirmation:

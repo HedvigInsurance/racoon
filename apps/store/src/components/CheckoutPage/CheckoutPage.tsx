@@ -75,7 +75,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
       const checkoutStepIndex = checkoutSteps.findIndex((item) => item === CheckoutStep.Checkout)
       const nextCheckoutStep = checkoutSteps[checkoutStepIndex + 1]
       await router.push(
-        getCheckoutStepLink({ step: nextCheckoutStep, shopSessionId: shopSession.id }),
+        getCheckoutStepLink({ locale, step: nextCheckoutStep, shopSessionId: shopSession.id }),
       )
     },
     onError() {
@@ -85,7 +85,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
 
   const handleRemoveCartEntry = (cart: CartFragmentFragment) => {
     if (cart.entries.length === 0) {
-      router.push(PageLink.cart().pathname)
+      router.push(PageLink.cart({ locale }).pathname)
     }
   }
 
@@ -97,7 +97,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
     <>
       <Space y={{ base: 2.5 }}>
         <CheckoutHeader steps={checkoutSteps} activeStep={CheckoutStep.Checkout}>
-          <TextLink href={PageLink.cart().pathname}>{t('BACK_BUTTON')}</TextLink>
+          <TextLink href={PageLink.cart({ locale }).pathname}>{t('BACK_BUTTON')}</TextLink>
         </CheckoutHeader>
         <Layout>
           <Content y={{ base: 2.5, md: 3.5 }}>

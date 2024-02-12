@@ -9,7 +9,7 @@ import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSe
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { getPathnameFromUrl } from '@/utils/getPathnameFromUrl'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
-import { getUrlLocale } from '@/utils/l10n/localeUtils'
+import { getLocaleOrFallback, getUrlLocale } from '@/utils/l10n/localeUtils'
 import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
 
 enum QueryParam {
@@ -22,7 +22,11 @@ enum QueryParam {
  */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { query, url } = req
-  const fallbackRedirect: [number, string] = [307, PageLink.home().toString()]
+  const { routingLocale: defaultLocale } = getLocaleOrFallback()
+  const fallbackRedirect: [number, string] = [
+    307,
+    PageLink.home({ locale: defaultLocale }).toString(),
+  ]
 
   if (url === undefined) {
     console.error('Missing url: ', url)

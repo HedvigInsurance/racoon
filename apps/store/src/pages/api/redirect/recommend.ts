@@ -49,7 +49,8 @@ const recommendHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.redirect(307, targetUrl.toString())
   } catch (err) {
     console.log('Error when handling recommend redirect, redirecting to index page', err)
-    return res.redirect(307, PageLink.home().toString())
+    const locale = getUrlLocale(String(req.query.next))
+    return res.redirect(307, PageLink.home({ locale }).toString())
   }
 }
 

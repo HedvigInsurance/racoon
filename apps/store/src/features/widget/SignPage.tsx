@@ -80,8 +80,16 @@ export const SignPage = (props: Props) => {
 
       const nextUrl =
         paymentStatus === MemberPaymentConnectionStatus.NeedsSetup
-          ? PageLink.widgetPayment({ flow: props.flow, shopSessionId: props.shopSession.id })
-          : PageLink.widgetConfirmation({ flow: props.flow, shopSessionId: props.shopSession.id })
+          ? PageLink.widgetPayment({
+              locale,
+              flow: props.flow,
+              shopSessionId: props.shopSession.id,
+            })
+          : PageLink.widgetConfirmation({
+              locale,
+              flow: props.flow,
+              shopSessionId: props.shopSession.id,
+            })
 
       await router.push(nextUrl)
     },
@@ -149,6 +157,7 @@ export const SignPage = (props: Props) => {
                         variant="secondary"
                         size="medium"
                         href={PageLink.widgetCalculatePrice({
+                          locale,
                           flow: props.flow,
                           shopSessionId: props.shopSession.id,
                           priceIntentId: props.priceIntentId,

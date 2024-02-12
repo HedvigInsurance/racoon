@@ -19,6 +19,7 @@ import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { getOffersByPrice } from '@/utils/getOffersByPrice'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useAddToCart } from '@/utils/useAddToCart'
 import { useGetDiscountExplanation } from '@/utils/useDiscountExplanation'
@@ -52,6 +53,7 @@ export const OfferPresenter = (props: Props) => {
   const { t } = useTranslation('purchase-form')
   const formatter = useFormatter()
   const [addToCartRedirect, setAddToCartRedirect] = useState<AddToCartRedirect | null>(null)
+  const locale = useRoutingLocale()
 
   const handleOfferChange = (offerId: string) => {
     const offer = priceIntent.offers.find((offer) => offer.id === offerId)
@@ -88,7 +90,7 @@ export const OfferPresenter = (props: Props) => {
       tracking.reportAddToCart(addedProductOffer, 'store')
       if (addToCartRedirect === AddToCartRedirect.Checkout) {
         tracking.reportBeginCheckout(shopSession.cart)
-        nextUrl = PageLink.checkout({ expandCart: true }).toRelative()
+        nextUrl = PageLink.checkout({ locale, expandCart: true }).toRelative()
       }
 
       const isBankSignering =

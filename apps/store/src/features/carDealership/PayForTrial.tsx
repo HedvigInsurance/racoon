@@ -6,6 +6,7 @@ import { useGlobalBanner } from '@/components/GlobalBanner/useGlobalBanner'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { ProductOfferFragment } from '@/services/graphql/generated'
 import { convertToDate } from '@/utils/date'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
 import { type TrialContract } from './carDealership.types'
@@ -25,6 +26,7 @@ export const PayForTrial = ({ trialContract, shopSessionId, defaultOffer, ssn }:
   const router = useRouter()
   const { t } = useTranslation('carDealership')
   const formatter = useFormatter()
+  const locale = useRoutingLocale()
   const { dismissBanner } = useGlobalBanner()
   const { startLogin } = useBankIdContext()
   const handleConfirmPay = () => {
@@ -39,11 +41,12 @@ export const PayForTrial = ({ trialContract, shopSessionId, defaultOffer, ssn }:
       async onSuccess() {
         console.log('Car dealership | BankID login success')
         const nextUrl = PageLink.carDealershipConfirmation({
+          locale,
           contractId: trialContract.id,
         }).pathname
         dismissBanner()
         await router.push(
-          PageLink.checkoutPaymentTrustly({ shopSessionId: shopSessionId, nextUrl }),
+          PageLink.checkoutPaymentTrustly({ locale, shopSessionId: shopSessionId, nextUrl }),
         )
       },
     })

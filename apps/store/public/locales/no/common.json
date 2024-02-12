@@ -6,5 +6,7 @@
   "LANGUAGE_LABEL_da": "Dansk",
   "LANGUAGE_LABEL_en": "Engelsk",
   "LANGUAGE_LABEL_no": "Norsk",
-  "MONTHLY_PRICE": "{{displayAmount}}/mnd"
+  "MONTHLY_PRICE": "{{displayAmount}}/mnd",
+  "NAV_MENU_DIALOG_OPEN": "Menu",
+  "NAV_MENU_DIALOG_CLOSE": "Lukk"
 }

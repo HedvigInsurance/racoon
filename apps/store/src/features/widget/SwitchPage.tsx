@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useMemo } from 'react'
-import { Space, Heading, mq, theme, Text } from 'ui'
+import { Heading, mq, Space, Text, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
@@ -9,11 +9,12 @@ import { Pillow } from '@/components/Pillow/Pillow'
 import { DiscountTooltip } from '@/components/ProductPage/PurchaseForm/DiscountTooltip/DiscountTooltip'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import {
-  type WidgetPriceIntentFragment,
   type ProductOfferFragment,
   type RedeemedCampaignFragment,
+  type WidgetPriceIntentFragment,
 } from '@/services/graphql/generated'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useGetDiscountExplanation } from '@/utils/useDiscountExplanation'
 import { useFormatter } from '@/utils/useFormatter'
@@ -35,6 +36,8 @@ export const SwitchPage = (props: Props) => {
     if (!cartOffer) throw new Error('SwitchPage | Missing cart offer')
     return cartOffer
   }, [props.priceIntent.offers, props.shopSession.cart.entries])
+
+  const locale = useRoutingLocale()
 
   return (
     <Wrapper y={3}>
@@ -59,6 +62,7 @@ export const SwitchPage = (props: Props) => {
                 <CancellationForm priceIntentId={props.priceIntent.id} offer={offer} />
                 <ButtonNextLink
                   href={PageLink.widgetSign({
+                    locale,
                     flow: props.flow,
                     shopSessionId: props.shopSession.id,
                     priceIntentId: props.priceIntent.id,

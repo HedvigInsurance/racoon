@@ -6,12 +6,14 @@ import { getAccessToken } from '@/services/authApi/persist'
 import { Features } from '@/utils/Features'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { ORIGIN_URL } from '@/utils/PageLink'
+import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
 
 // Add props here when they appear
 type PageProps = {
   [key: string]: unknown
 }
 export const protectedPageServerSideProps: GetServerSideProps<PageProps> = async (context) => {
+  patchNextI18nContext(context)
   const { locale, req, res } = context
 
   if (!Features.enabled('MEMBER_AREA')) return { notFound: true }
@@ -20,9 +22,10 @@ export const protectedPageServerSideProps: GetServerSideProps<PageProps> = async
   const accessToken = getAccessToken({ req, res })
   if (!accessToken) {
     console.log('Not authenticated, redirecting to login page')
-    const redirectTarget = new URL(`${locale}/${context.resolvedUrl}`, ORIGIN_URL)
+    const redirectTarget = new URL(context.resolvedUrl, ORIGIN_URL)
     redirectTarget.searchParams.set('next', redirectTarget.pathname)
     redirectTarget.pathname = `${locale}/member/login`
+    console.log('r', redirectTarget.toString())
     return { redirect: { destination: redirectTarget.toString(), permanent: false } }
   }
 

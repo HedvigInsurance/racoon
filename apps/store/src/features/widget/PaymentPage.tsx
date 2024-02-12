@@ -2,9 +2,10 @@ import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { Heading, Space, Text, mq, theme } from 'ui'
+import { Heading, mq, Space, Text, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { TrustlyIframe } from '@/services/trustly/TrustlyIframe'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { Header } from './Header'
 import { publishWidgetEvent } from './publishWidgetEvent'
@@ -20,7 +21,9 @@ type Props = {
 export const PaymentPage = (props: Props) => {
   const { t } = useTranslation(['widget', 'checkout'])
   const router = useRouter()
+  const locale = useRoutingLocale()
   const nextUrl = PageLink.widgetConfirmation({
+    locale,
     flow: props.flow,
     shopSessionId: props.shopSessionId,
   })

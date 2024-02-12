@@ -4,6 +4,7 @@ import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { Meta, StoryFn } from '@storybook/react'
 import Link from 'next/link'
 import { theme } from 'ui'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { Header, Wrapper as MockedHeaderWrapper } from './Header'
 import {
@@ -35,9 +36,11 @@ const StyledLink = styled(Link)({
 })
 
 export const MockedShoppingCartMenuItem = ({ count = 0 }) => {
+  const locale = useRoutingLocale()
+
   return (
     <ShoppingCartMenuItemWrapper>
-      <StyledLink href={PageLink.cart()} tabIndex={0} aria-label="shopping cart">
+      <StyledLink href={PageLink.cart({ locale })} tabIndex={0} aria-label="shopping cart">
         <ShoppingBagIcon count={count} />
       </StyledLink>
     </ShoppingCartMenuItemWrapper>

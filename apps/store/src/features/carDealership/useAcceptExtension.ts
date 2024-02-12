@@ -11,6 +11,7 @@ import {
   useCarDealershipRemoveAddMutation,
   useCurrentMemberLazyQuery,
 } from '@/services/graphql/generated'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 
 const LOGGER = datadogLogs.createLogger('car-dealership')
@@ -27,6 +28,7 @@ export const useAcceptExtension = (params: Params) => {
   const { dismissBanner } = useGlobalBanner()
   const { showError } = useAppErrorHandleContext()
   const [getCurrentMember] = useCurrentMemberLazyQuery()
+  const locale = useRoutingLocale()
 
   useEffect(() => {
     const error = currentOperation?.error
@@ -58,6 +60,7 @@ export const useAcceptExtension = (params: Params) => {
         }
 
         const nextUrl = PageLink.carDealershipConfirmation({
+          locale,
           contractId: params.trialContractId,
         }).pathname
 
@@ -69,7 +72,11 @@ export const useAcceptExtension = (params: Params) => {
           })
           dismissBanner()
           await router.push(
-            PageLink.checkoutPaymentTrustly({ shopSessionId: params.shopSession.id, nextUrl }),
+            PageLink.checkoutPaymentTrustly({
+              locale,
+              shopSessionId: params.shopSession.id,
+              nextUrl,
+            }),
           )
         } else {
           LOGGER.info('Member has active payment connection', {

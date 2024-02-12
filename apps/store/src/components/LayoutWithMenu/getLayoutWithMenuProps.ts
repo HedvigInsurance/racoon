@@ -1,13 +1,13 @@
 import { ApolloClient } from '@apollo/client'
-import { type GetStaticPropsContext, type GetServerSidePropsContext } from 'next'
+import { type GetServerSidePropsContext, type GetStaticPropsContext } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { initializeApollo, initializeApolloServerSide } from '@/services/apollo/client'
 import { getGlobalStory } from '@/services/storyblok/storyblok'
 import { GLOBAL_STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import {
-  GLOBAL_PRODUCT_METADATA_PROP_NAME,
   fetchGlobalProductMetadata,
+  GLOBAL_PRODUCT_METADATA_PROP_NAME,
 } from './fetchProductMetadata'
 
 export const getLayoutWithMenuProps = async (

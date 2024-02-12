@@ -71,7 +71,7 @@ export const ForeverPage = ({ code: initialCode }: Props) => {
             size="xs"
             align="center"
             balance={true}
-            href={PageLink.home().pathname}
+            href={PageLink.home({ locale }).pathname}
           >
             {t('FOREVER_PAGE_FOOTER_TEXT')}
           </TextWithLink>

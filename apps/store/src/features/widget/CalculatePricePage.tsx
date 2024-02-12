@@ -3,12 +3,12 @@ import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { useRef, useState } from 'react'
-import { Space, Heading, mq, theme } from 'ui'
+import { Heading, mq, Space, theme } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
-import { PriceLoader, completePriceLoader } from '@/components/PriceLoader'
+import { completePriceLoader, PriceLoader } from '@/components/PriceLoader'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import {
@@ -20,6 +20,7 @@ import { type Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { Features } from '@/utils/Features'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useAddToCart } from '@/utils/useAddToCart'
 import { Header } from './Header'
@@ -39,6 +40,7 @@ export const CalculatePricePage = (props: Props) => {
   const { showError } = useAppErrorHandleContext()
   const priceLoaderPromise = useRef<Promise<void> | null>(null)
 
+  const locale = useRoutingLocale()
   const router = useRouter()
   const tracking = useTracking()
   const entryToReplace = props.shopSession.cart.entries.find(
@@ -64,6 +66,7 @@ export const CalculatePricePage = (props: Props) => {
       ) {
         await router.push(
           PageLink.widgetSign({
+            locale,
             flow: props.flow,
             shopSessionId: props.shopSession.id,
             priceIntentId: props.priceIntent.id,
@@ -72,6 +75,7 @@ export const CalculatePricePage = (props: Props) => {
       } else {
         await router.push(
           PageLink.widgetSwitch({
+            locale,
             flow: props.flow,
             shopSessionId: props.shopSession.id,
             priceIntentId: props.priceIntent.id,
