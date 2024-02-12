@@ -2,9 +2,6 @@ const path = require('path')
 
 const englishFallback = ['en']
 
-// TODO: Remove the feature, we always support English since after its first launch
-const englishLanguageEnabled = process.env.NEXT_PUBLIC_FEATURE_ENGLISH_LANGUAGE === 'true'
-
 // GOTCHA: This file has to stay .js or next-i18next will fail during Vercel build
 /**
  * @type {import('next-i18next').UserConfig}
@@ -21,8 +18,11 @@ module.exports = {
   // - Dictionaries download script
   i18n: {
     locales: [
-      // Generic English with optional country-specific variants (generally should be empty)
-      ...(englishLanguageEnabled ? ['en', 'dk-en', 'no-en', 'se-en'] : []),
+      // Generic English with optional country-specific variants (those generally should be empty)
+      'en',
+      'dk-en',
+      'no-en',
+      'se-en',
 
       // Swedish, see note in fallbackLng
       'se',

@@ -1,10 +1,9 @@
-import { ISbAlternateObject, ISbStoryData } from '@storyblok/react'
+import { ISbStoryData } from '@storyblok/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { SEOData } from '@/services/storyblok/storyblok'
 import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 import { isBrowser } from '@/utils/env'
-import { Features } from '@/utils/Features'
 import { organization } from '@/utils/jsonSchema'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
 import { getLocaleOrFallback, isRoutingLocale } from '@/utils/l10n/localeUtils'
@@ -64,20 +63,15 @@ export const HeadSeoInfo = ({ story, robots }: Props) => {
 }
 
 const AlternateLinks = ({ story }: { story: ISbStoryData<SEOData> }) => {
-  const alternates = story.alternates.filter(isVisibleAlternate)
-
   return (
     <>
       <AlternateLink fullSlug={story.full_slug} />
-      {alternates.map((alternate) => (
+      {story.alternates.map((alternate) => (
         <AlternateLink key={alternate.id} fullSlug={alternate.full_slug} />
       ))}
     </>
   )
 }
-
-const isVisibleAlternate = (alternate: ISbAlternateObject) =>
-  Features.enabled('ENGLISH_LANGUAGE') || !getHrefLang(alternate.full_slug).startsWith('en-')
 
 const AlternateLink = ({ fullSlug }: { fullSlug: string }) => {
   return (

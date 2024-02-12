@@ -25,7 +25,6 @@ import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { disclaimerStyle, wrapperStyle } from './FooterBlock.css'
 
 const COUNTRY_SELECTOR_ENABLED = Features.enabled('COUNTRY_SELECTOR')
-const ENGLISH_LANGUAGE_ENABLED = Features.enabled('ENGLISH_LANGUAGE')
 
 type FooterLinkProps = SbBaseBlockProps<{
   link: LinkField
@@ -124,14 +123,12 @@ export const FooterBlock = ({ blok, onLocaleChange }: FooterBlockProps) => {
               options={countryList}
             />
           )}
-          {ENGLISH_LANGUAGE_ENABLED && (
-            <StyledInputSelect
-              name={LocaleField.Language}
-              onChange={handleChangeLanguage}
-              defaultValue={currentLanguage}
-              options={languageList}
-            />
-          )}
+          <StyledInputSelect
+            name={LocaleField.Language}
+            onChange={handleChangeLanguage}
+            defaultValue={currentLanguage}
+            options={languageList}
+          />
         </LocaleForm>
 
         <div className={disclaimerStyle}>
@@ -168,7 +165,7 @@ const Column = styled.div({
 
 const LocaleForm = styled.div({
   display: 'grid',
-  gridTemplateColumns: ENGLISH_LANGUAGE_ENABLED ? 'repeat(2, 1fr)' : '1fr',
+  gridTemplateColumns: 'repeat(2, 1fr)',
   gap: theme.space.md,
 
   gridColumn: '1 / -1',
