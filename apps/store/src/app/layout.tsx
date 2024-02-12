@@ -5,9 +5,7 @@
 import { type PropsWithChildren } from 'react'
 import { NextAppDirEmotionCacheProvider } from 'tss-react/next/appDir'
 import globalCss from 'ui/src/global.css'
-import { theme } from 'ui'
 import { ApolloWrapper } from '@/services/apollo/app-router/ApolloWrapper'
-import { contentFontClassName } from '@/utils/fonts'
 import { ORIGIN_URL } from '@/utils/PageLink'
 
 // Trick compiler into thinking we need global.css import for anything other than side effects
@@ -17,17 +15,9 @@ noop(globalCss)
 
 const Layout = ({ children }: PropsWithChildren) => {
   return (
-    <html lang="en">
-      {/* head-tag needed, even if empty: https://docs.tss-react.dev/ssr/next.js */}
-      <head>
-        <meta name="theme-color" content={theme.colors.light} />
-      </head>
-      <body className={contentFontClassName}>
-        <NextAppDirEmotionCacheProvider options={{ key: 'css' }}>
-          <ApolloWrapper>{children}</ApolloWrapper>
-        </NextAppDirEmotionCacheProvider>
-      </body>
-    </html>
+    <NextAppDirEmotionCacheProvider options={{ key: 'css' }}>
+      <ApolloWrapper>{children}</ApolloWrapper>
+    </NextAppDirEmotionCacheProvider>
   )
 }
 
