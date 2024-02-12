@@ -81,8 +81,7 @@ import { STORYBLOK_MANYPETS_FOLDER_SLUG } from '@/features/manyPets/manyPets.con
 import { manyPetsBlocks } from '@/features/manyPets/manyPetsBlocks'
 import { STORYBLOK_WIDGET_FOLDER_SLUG } from '@/features/widget/widget.constants'
 import { isBrowser } from '@/utils/env'
-import { Features } from '@/utils/Features'
-import { getLocaleOrFallback, isRoutingLocale } from '@/utils/l10n/localeUtils'
+import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { Language, RoutingLocale } from '@/utils/l10n/types'
 import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from './Storyblok.constant'
 
@@ -398,9 +397,6 @@ export const getPageLinks = async (params?: GetPageLinksParams): Promise<Array<P
     }
     const [locale, ...slugParts] = link.slug.split('/')
     if (!isRoutingLocale(locale)) return
-
-    const { language } = getLocaleOrFallback(locale)
-    if (language === Language.En && !Features.enabled('ENGLISH_LANGUAGE')) return
 
     if (slugParts[0] === 'global') return
     pageLinks.push({

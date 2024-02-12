@@ -1,6 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
-import { useState, useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { mq, Text, theme } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
 import { PerilFragment } from '@/services/graphql/generated'
@@ -192,7 +192,6 @@ const titleToColor = (title: string) => {
       return theme.colors.blue500
     case 'Storms':
     case 'Oväder':
-      // TODO: double-check english title
       return theme.colors.blue700
     case 'Burglary':
     case 'Inbrott':
