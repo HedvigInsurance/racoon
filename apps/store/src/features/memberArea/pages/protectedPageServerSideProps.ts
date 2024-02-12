@@ -25,7 +25,6 @@ export const protectedPageServerSideProps: GetServerSideProps<PageProps> = async
     const redirectTarget = new URL(context.resolvedUrl, ORIGIN_URL)
     redirectTarget.searchParams.set('next', redirectTarget.pathname)
     redirectTarget.pathname = `${locale}/member/login`
-    console.log('r', redirectTarget.toString())
     return { redirect: { destination: redirectTarget.toString(), permanent: false } }
   }
 
