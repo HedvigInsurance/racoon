@@ -15,7 +15,7 @@ const ANIMATION_VARIANTS = {
   SLIDE_IN: {
     y: 0,
     position: 'fixed',
-    backgroundColor: 'var(--body-bg-color)',
+    backgroundColor: bodyBgColor,
     boxShadow: 'rgba(0, 0, 0, 0.06) 0px 2px 12px',
   },
   SLIDE_OUT: {
