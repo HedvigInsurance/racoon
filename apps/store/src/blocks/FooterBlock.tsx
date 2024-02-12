@@ -9,22 +9,14 @@ import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { linkStyles } from '@/components/RichText/RichText.styles'
 import { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
-import { Features } from '@/utils/Features'
 import { BUSINESS_REGISTRATION_NUMBER, organization } from '@/utils/jsonSchema'
-import { countries } from '@/utils/l10n/countries'
 import { getCountryLocale } from '@/utils/l10n/countryUtils'
 import { LocaleField } from '@/utils/l10n/locales'
-import {
-  getLocaleOrFallback,
-  translateCountryName,
-  translateLanguageName,
-} from '@/utils/l10n/localeUtils'
-import { CountryLabel, IsoLocale, Language } from '@/utils/l10n/types'
+import { getLocaleOrFallback, translateLanguageName } from '@/utils/l10n/localeUtils'
+import { IsoLocale, Language } from '@/utils/l10n/types'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { disclaimerStyle, wrapperStyle } from './FooterBlock.css'
-
-const COUNTRY_SELECTOR_ENABLED = Features.enabled('COUNTRY_SELECTOR')
 
 type FooterLinkProps = SbBaseBlockProps<{
   link: LinkField
@@ -79,11 +71,6 @@ export const FooterBlock = ({ blok, onLocaleChange }: FooterBlockProps) => {
   const currentCountry = useCurrentCountry()
   const { t } = useTranslation()
 
-  const countryList = Object.keys(countries).map((country) => ({
-    name: translateCountryName(country as CountryLabel, t),
-    value: country,
-  }))
-
   const languageList = currentCountry.locales.map((locale) => {
     const { language } = getLocaleOrFallback(locale)
     return {
@@ -91,12 +78,6 @@ export const FooterBlock = ({ blok, onLocaleChange }: FooterBlockProps) => {
       value: language,
     }
   })
-
-  const handleChangeCountry: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    const newCountry = event.target.value as CountryLabel
-    const newLocale = getCountryLocale(newCountry, currentLanguage)
-    onLocaleChange(newLocale)
-  }
 
   const handleChangeLanguage: ChangeEventHandler<HTMLSelectElement> = (event) => {
     const newLanguage = event.target.value as Language
@@ -115,14 +96,6 @@ export const FooterBlock = ({ blok, onLocaleChange }: FooterBlockProps) => {
         ))}
 
         <LocaleForm>
-          {COUNTRY_SELECTOR_ENABLED && (
-            <StyledInputSelect
-              name={LocaleField.Country}
-              onChange={handleChangeCountry}
-              defaultValue={currentCountry.id}
-              options={countryList}
-            />
-          )}
           <StyledInputSelect
             name={LocaleField.Language}
             onChange={handleChangeLanguage}
