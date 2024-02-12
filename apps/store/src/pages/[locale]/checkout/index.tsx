@@ -43,10 +43,6 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
   const { req, res, locale } = context
   if (!isRoutingLocale(locale)) return { notFound: true }
 
-  if (Math.E > 0) {
-    throw new Error('Show me HTTP 500')
-  }
-
   const fallbackRedirect = {
     redirect: { destination: PageLink.home({ locale }).toString(), permanent: false },
   } as const
