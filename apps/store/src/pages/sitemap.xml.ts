@@ -1,11 +1,13 @@
+import { ISbStoryData } from '@storyblok/js'
+import { GetServerSideProps } from 'next'
 import { getStoryblokApi } from '@/services/storyblok/api'
 import { ORIGIN_URL } from '@/utils/PageLink'
 
-const removeTrailingSlash = (url) => {
+const removeTrailingSlash = (url: string) => {
   return url.endsWith('/') ? url.slice(0, -1) : url
 }
 
-const generateSiteMap = (pages) => {
+const generateSiteMap = (pages: Array<ISbStoryData>) => {
   return `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
      ${pages
@@ -39,8 +41,9 @@ const getFilteredPages = async () => {
   const isCacheVersionValid = !isNaN(cacheVersion)
   const cv = isCacheVersionValid ? cacheVersion : undefined
 
-  const filteredPages = await getStoryblokApi().getAll('cdn/stories', {
+  const filteredPages: Array<ISbStoryData> = await getStoryblokApi().getAll('cdn/stories', {
     excluding_slugs: `*/reusable-blocks/*, */product-metadata/*, */manypets/*, */widget/*`,
+    // @ts-expect-error - ignore filter_query type error
     'filter_query[robots][not_in]': 'noindex',
     cv,
   })
@@ -48,7 +51,7 @@ const getFilteredPages = async () => {
   return filteredPages
 }
 
-export const getServerSideProps = async ({ res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   const pageLinks = await getFilteredPages()
   const sitemap = generateSiteMap(pageLinks)
 
