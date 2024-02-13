@@ -1,5 +1,6 @@
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { makeAbsolute } from '@/services/storyblok/Storyblok.helpers'
 import { ArticleCategoryList } from './ArticleCategoryList/ArticleCategoryList'
 import { BLOG_ARTICLE_CATEGORY_LIST_BLOCK } from './blog.constants'
 import { useBlogArticleCategories } from './useBlog'
@@ -22,7 +23,7 @@ export const BlogArticleCategoryListBlock = (props: Props) => {
                 {item.name}
               </ArticleCategoryList.ActiveItem>
             ) : (
-              <ArticleCategoryList.Item key={item.id} href={item.href}>
+              <ArticleCategoryList.Item key={item.id} href={makeAbsolute(item.href)}>
                 {item.name}
               </ArticleCategoryList.Item>
             ),
