@@ -6,7 +6,7 @@
 // Remove all the styles of the "User-Agent-Stylesheet", except for the 'display' property
 import { globalStyle } from '@vanilla-extract/css'
 import { animationAllowed, colors } from './theme'
-import { bodyBgColor, bodyTextColor } from './theme/vars.css'
+import { bodyBgColor, bodyTextColor, headerBgTransparentColor } from './theme/vars.css'
 
 globalStyle('*:where(:not(iframe, canvas, img, svg, video):not(svg *))', {
   all: 'unset',
@@ -32,6 +32,7 @@ globalStyle('body', {
   vars: {
     [bodyBgColor]: colors.backgroundStandard,
     [bodyTextColor]: colors.textPrimary,
+    [headerBgTransparentColor]: colors.grayTranslucentDark1000,
   },
   WebkitFontSmoothing: 'antialiased',
   MozOsxFontSmoothing: 'grayscale',
