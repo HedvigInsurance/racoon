@@ -1,4 +1,4 @@
-import { type SbBlokData, type ISbStoryData } from '@storyblok/react'
+import { type ISbStoryData, type SbBlokData } from '@storyblok/react'
 import { Features } from '@/utils/Features'
 import { LinkField, ProductStory, WidgetFlowStory } from './storyblok'
 
@@ -43,7 +43,7 @@ export const getLinkFieldURL = (link: LinkField, linkText?: string) => {
   return makeAbsolute(appendAnchor(link.cached_url, link.anchor))
 }
 
-const makeAbsolute = (url: string) => {
+export const makeAbsolute = (url: string) => {
   if (/^(\/|https?:\/\/|\/\/)/.test(url)) {
     return url
   }
