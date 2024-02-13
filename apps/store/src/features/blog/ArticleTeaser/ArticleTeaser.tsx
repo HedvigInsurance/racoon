@@ -3,6 +3,7 @@ import NextImage, { type ImageProps } from 'next/image'
 import Link from 'next/link'
 import { type ReactNode } from 'react'
 import { Heading, Space, Text, theme } from 'ui'
+import { makeAbsolute } from '@/services/storyblok/Storyblok.helpers'
 
 type Props = {
   children: ReactNode
@@ -26,7 +27,7 @@ const Root = (props: Props) => {
       <ContentWrapper>
         <ClampedText>
           <Space y={0.25}>
-            <ExtendedLink href={props.href} style={{ display: 'block' }}>
+            <ExtendedLink href={makeAbsolute(props.href)} style={{ display: 'block' }}>
               <Heading as="h3" variant="standard.20">
                 {props.title}
               </Heading>
