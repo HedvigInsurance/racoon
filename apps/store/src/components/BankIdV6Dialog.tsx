@@ -164,6 +164,19 @@ export const BankIdV6Dialog = () => {
   )
 }
 
+const getBankIdUrl = (autoStartToken: string) => {
+  // https://www.bankid.com/en/utvecklare/guider/teknisk-integrationsguide/programstart
+  const bankidUrl = new URL('bankid:///')
+  bankidUrl.searchParams.append('autostarttoken', autoStartToken)
+  // 'null' means the BankID app will redirect back to the calling app.
+  // It's recommended to set redirect to null when possible.
+  // For IOS though, 'redirect' must have a value. '#bankid-auth' is a 'hack'
+  // for returning to the same safari tab.
+  bankidUrl.searchParams.append('redirect', isIOS ? `${window.location.href}#bankid-auth` : 'null')
+
+  return bankidUrl.toString()
+}
+
 const useTriggerBankIdOnSameDevice = (bankIdOperation: BankIdOperation | null) => {
   // Avoids triggering BankID app opening multiple times
   const launchedRef = useRef(false)
@@ -176,16 +189,8 @@ const useTriggerBankIdOnSameDevice = (bankIdOperation: BankIdOperation | null) =
       bankIdOperation?.state === BankIdState.Pending
 
     if (authenticationInProgress && bankIdOperation.autoStartToken && !launchedRef.current) {
-      // https://www.bankid.com/en/utvecklare/guider/teknisk-integrationsguide/programstart
-      const bankidUrl = new URL('https://app.bankid.com')
-      bankidUrl.searchParams.append('autostarttoken', bankIdOperation.autoStartToken)
-      // 'null' means the BankID app will redirect back to the calling app.
-      // It's recommended to set redirect to null when possible.
-      // For IOS though, 'redirect' must have a value.
-      bankidUrl.searchParams.append('redirect', isIOS ? `${window.location.href}#bankid` : 'null')
-
+      window.open(getBankIdUrl(bankIdOperation.autoStartToken), '_self')
       launchedRef.current = true
-      window.location.href = bankidUrl.toString()
     } else {
       launchedRef.current = false
     }
