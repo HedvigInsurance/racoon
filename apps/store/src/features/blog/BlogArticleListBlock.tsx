@@ -6,7 +6,7 @@ import { Space, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
-import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
+import { getImgSrc, makeAbsolute } from '@/services/storyblok/Storyblok.helpers'
 import { useFormatter } from '@/utils/useFormatter'
 import { ArticleTeaser } from './ArticleTeaser/ArticleTeaser'
 import { BLOG_ARTICLE_LIST_BLOCK } from './blog.constants'
@@ -50,7 +50,7 @@ export const BlogArticleListBlock = (props: Props) => {
             {visibleTeaserList.map((item, index) => (
               <ArticleTeaser.Root
                 key={item.id}
-                href={item.href}
+                href={makeAbsolute(item.href)}
                 title={item.heading}
                 ingress={item.text}
                 date={formatter.dateFull(new Date(item.date))}
