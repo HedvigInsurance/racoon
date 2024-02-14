@@ -1,19 +1,9 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { QRCodeSVG } from 'qrcode.react'
-import { useEffect, type ReactNode, useRef } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 import { isMobile, isIOS } from 'react-device-detect'
-import {
-  Button,
-  Text,
-  Space,
-  CheckIcon,
-  BankIdIcon,
-  WarningTriangleIcon,
-  CrossIcon,
-  theme,
-  mq,
-} from 'ui'
+import { Button, Text, Space, CheckIcon, BankIdIcon, WarningTriangleIcon, theme } from 'ui'
 import { BankIdLoginForm } from '@/components/BankIdLoginForm'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { Skeleton } from '@/components/Skeleton'
@@ -49,7 +39,6 @@ export const BankIdV6Dialog = () => {
   }
 
   let Content: ReactNode = null
-  let Header: ReactNode = null
   let Footer: ReactNode = null
 
   const { ssn } = currentOperation ?? {}
@@ -61,14 +50,13 @@ export const BankIdV6Dialog = () => {
           break
         }
 
-        Header = undefined
         Content = (
-          <>
+          <ContentWrapper maxWidth="35rem">
             <Text align="center">{t('LOGIN_BANKID')}</Text>
-            <Text align="center" color="textSecondary">
+            <Text align="center" color="textSecondary" balance={true}>
               {t('LOGIN_BANKID_EXPLANATION')}
             </Text>
-          </>
+          </ContentWrapper>
         )
         Footer = (
           <>
@@ -87,43 +75,37 @@ export const BankIdV6Dialog = () => {
 
       case BankIdState.Starting:
       case BankIdState.Pending: {
-        Header = null
         Content = (
-          <Wrapper y={2}>
-            <CloseButton>
-              <CrossIcon size="1rem" />
-            </CloseButton>
-
+          <ContentWrapper y={2}>
             <BankIdIcon color="blue900" size="4rem" />
 
             {currentOperation.qrCodeData ? (
-              <QRCode size={200} value={currentOperation.qrCodeData} level="M" />
+              <QRCode size={200} value={currentOperation.qrCodeData} />
             ) : (
               <QRCodeSkeleton />
             )}
 
-            <Space y={6.5}>
-              <div>
-                <Text color="textPrimary" align="center">
-                  {t('LOGIN_BANKID')}
-                </Text>
-                <Text as="p" color="textSecondary" align="center">
-                  {t('LOGIN_BANKID_AUTHENTICATION_STEPS')}
-                </Text>
-              </div>
-
-              <FullscreenDialog.Close asChild>
-                <Button variant="ghost">{t('LOGIN_BANKID_CANCEL')}</Button>
-              </FullscreenDialog.Close>
-            </Space>
-          </Wrapper>
+            <div>
+              <Text color="textPrimary" align="center">
+                {t('LOGIN_BANKID')}
+              </Text>
+              <Text color="textSecondary" align="center">
+                {isMobile
+                  ? t('LOGIN_BANKID_AUTHENTICATION_STEPS_MOBILE')
+                  : t('LOGIN_BANKID_AUTHENTICATION_STEPS_DESKTOP')}
+              </Text>
+            </div>
+          </ContentWrapper>
         )
-        Footer = null
+        Footer = (
+          <FullscreenDialog.Close asChild>
+            <Button variant="ghost">{t('LOGIN_BANKID_CANCEL')}</Button>
+          </FullscreenDialog.Close>
+        )
         break
       }
 
       case BankIdState.Success: {
-        Header = undefined
         Content = (
           <IconWithText>
             <CheckIcon size="1rem" color={theme.colors.signalGreenElement} />
@@ -142,14 +124,33 @@ export const BankIdV6Dialog = () => {
           break
         }
 
-        Header = undefined
         Content = (
-          <IconWithText>
-            <WarningTriangleIcon size="1em" color={theme.colors.amber600} />
-            <Text align="center">{t('LOGIN_BANKID_ERROR')}</Text>
-          </IconWithText>
+          <ContentWrapper y={1}>
+            <WarningTriangleIcon size="1.5rem" color={theme.colors.amber600} />
+
+            <div>
+              <Text color="textPrimary" align="center">
+                {t('LOGIN_BANKID_FAIL_TITLE')}
+              </Text>
+              <Text color="textSecondary" align="center">
+                {t('LOGIN_BANKID_FAIL_DESCRIPTION')}
+              </Text>
+            </div>
+
+            <Button
+              variant="primary"
+              size="medium"
+              onClick={() => startLogin({ ssn: currentOperation.ssn })}
+            >
+              {t('LOGIN_BANKID_TRY_AGAIN')}
+            </Button>
+          </ContentWrapper>
         )
-        Footer = null
+        Footer = (
+          <FullscreenDialog.Close asChild>
+            <Button variant="ghost">{t('LOGIN_BANKID_CANCEL')}</Button>
+          </FullscreenDialog.Close>
+        )
         break
       }
     }
@@ -157,7 +158,7 @@ export const BankIdV6Dialog = () => {
 
   return (
     <FullscreenDialog.Root open={isOpen} onOpenChange={handleOpenChange}>
-      <FullscreenDialog.Modal center={true} Footer={Footer} Header={Header}>
+      <FullscreenDialog.Modal center={true} Footer={Footer}>
         {Content}
       </FullscreenDialog.Modal>
     </FullscreenDialog.Root>
@@ -204,54 +205,18 @@ const IconWithText = styled(Text)({
   alignItems: 'center',
 })
 
-const Wrapper = styled(Space)({
-  position: 'relative',
+const ContentWrapper = styled(Space)(({ maxWidth = '24rem' }: { maxWidth?: string }) => ({
   display: 'grid',
   justifyItems: 'center',
-  width: '100%',
-  height: '100%',
-  paddingInline: theme.space.md,
-
-  [mq.md]: {
-    width: 'min(35.5rem, 100%)',
-    paddingBlock: theme.space.xxl,
-    paddingInline: theme.space[9],
-    marginInline: 'auto',
-    border: `1px solid ${theme.colors.borderTranslucent1}`,
-    borderRadius: theme.radius.lg,
-    boxShadow: theme.shadow.default,
-    backgroundColor: theme.colors.backgroundStandard,
-  },
-})
-
-const CloseButton = styled(FullscreenDialog.Close)({
-  // Hide it on mobile
-  display: 'none',
-
-  [mq.md]: {
-    display: 'rever',
-    position: 'absolute',
-    borderRadius: '50%',
-    padding: theme.space.xs,
-    backgroundColor: theme.colors.translucent1,
-    backdropFilter: 'blur(30px)',
-    cursor: 'pointer',
-    zIndex: 1,
-    top: theme.space.lg,
-    right: theme.space.lg,
-  },
-
-  '@media (hover: hover)': {
-    ':hover': {
-      backgroundColor: theme.colors.translucent2,
-    },
-  },
-})
+  width: `min(${maxWidth}, 100%)`,
+  marginInline: 'auto',
+}))
 
 const QRCode = styled(QRCodeSVG)({
   padding: theme.space.md,
   borderRadius: theme.radius.md,
   border: `1px solid ${theme.colors.grayTranslucent200}`,
+  backgroundColor: theme.colors.white,
 })
 
 const QRCodeSkeleton = styled(Skeleton)({
