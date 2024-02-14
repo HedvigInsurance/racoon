@@ -10,6 +10,7 @@ import { Skeleton } from '@/components/Skeleton'
 import { BankIdOperation, BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { ShopSessionAuthenticationStatus } from '@/services/graphql/generated'
+import { wait } from '@/utils/wait'
 
 export const BankIdV6Dialog = () => {
   const { t } = useTranslation('bankid')
@@ -63,7 +64,13 @@ export const BankIdV6Dialog = () => {
             <BankIdLoginForm
               state={currentOperation.state}
               title={t('LOGIN_BUTTON_TEXT', { ns: 'common' })}
-              onLoginStart={() => startLogin({ ssn })}
+              onLoginStart={() =>
+                startLogin({
+                  ssn,
+                  // So use can see sucess screen
+                  onSuccess: () => wait(1500),
+                })
+              }
             />
             <Button variant="ghost" onClick={cancelLogin}>
               {t('LOGIN_BANKID_SKIP')}
