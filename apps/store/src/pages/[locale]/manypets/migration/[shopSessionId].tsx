@@ -96,18 +96,65 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   const slug = `${STORYBLOK_MANYPETS_FOLDER_SLUG}/migration`
   const apolloClient = await initializeApolloServerSide({ req, res, locale })
 
-  const [shopSession, pageStory, translations] = await Promise.all([
-    fetchMigrationSession(apolloClient, shopSessionId),
-    getStoryBySlug<ManyPetsMigrationStory>(slug, {
-      locale,
-      // Uncomment for local debug
-      // version: 'draft',
-    }),
-    serverSideTranslations(locale),
-  ]).catch((error) => {
-    throw new Error(`Failed to fetch data for ${slug}: ${error.message}`, { cause: error })
+  try {
+    const [shopSession, migrationOffers, pageStory, translations] = await Promise.all([
+      fetchMigrationSession(apolloClient, shopSessionId),
+      fetchMigrationOffers(apolloClient, shopSessionId),
+      getStoryBySlug<ManyPetsMigrationStory>(slug, {
+        locale,
+        // Uncomment for local debug
+        // version: 'draft',
+      }),
+      serverSideTranslations(locale),
+    ])
+
+    // It should not be possible to get any other offers that are not pet related here, but we're
+    // filtering them just to be safe.
+    const offers = migrationOffers.filter(isPetRelatedOffer)
+    // Since it shouldn't be possible to have offers with different tier levels, like SE_DOG_BASIC and SE_DOG_STANDARD,
+    // any offer can be used to determine the tier level and therefore get the appropriate comparison table data.
+    const baseOffer = offers[0]
+    // We can't use shopSession.cart.cost here because at this point the offers aren't added to the cart yet, so
+    // we need to calculate the total price on the FE.
+    const totalCost: Money = {
+      amount: offers.reduce((sum, offer) => sum + offer.cost.net.amount, 0),
+      currencyCode: baseOffer.cost.net.currencyCode,
+    }
+    const offersWithStartDate = offers.filter((offer) => offer.startDate !== undefined)
+    const latestAdoptionDate = offersWithStartDate.sort(sortByStartDate)[0].startDate
+    const comparisonTableData = getComparisonTableData(baseOffer)
+
+    return addApolloState(apolloClient, {
+      props: {
+        migrationSessionId: shopSession.id,
+        [STORY_PROP_NAME]: pageStory,
+        offers,
+        totalCost,
+        latestAdoptionDate,
+        comparisonTableData,
+        ...translations,
+      },
+    })
+  } catch (error) {
+    console.error(`Failed to fetch data for ${slug}`, { cause: error })
+    return { notFound: true }
+  }
+}
+
+const fetchMigrationSession = async (apolloClient: ApolloClient<any>, shopSessionId: string) => {
+  const { data, errors } = await apolloClient.query<ShopSessionQuery, ShopSessionQueryVariables>({
+    query: ShopSessionDocument,
+    variables: { shopSessionId },
   })
 
+  if (errors) {
+    throw new Error(`Failed to fetch shop session ${shopSessionId}`, { cause: errors })
+  }
+
+  return data.shopSession
+}
+
+const fetchMigrationOffers = async (apolloClient: ApolloClient<any>, shopSessionId: string) => {
   const { data, errors } = await apolloClient.query<
     ManyPetsMigrationOffersQuery,
     ManyPetsMigrationOffersQueryVariables
@@ -117,45 +164,12 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   })
 
   if (errors) {
-    console.error(`Failed to fetch shopsession ${shopSessionId}`, { cause: errors })
-    return { notFound: true }
+    throw new Error(`Failed to fetch migration offers for shop session ${shopSessionId}`, {
+      cause: errors,
+    })
   }
 
-  // It should not be possible to get any other offers that are not pet related here, but we're
-  // filtering them just to be safe.
-  const offers = data.petMigrationOffers.filter(isPetRelatedOffer)
-  // Since it shouldn't be possible to have offers with different tier levels, like SE_DOG_BASIC and SE_DOG_STANDARD,
-  // any offer can be used to determine the tier level and therefore get the appropriate comparison table data.
-  const baseOffer = offers[0]
-  // We can't use shopSession.cart.cost here because at this point the offers aren't added to the cart yet, so
-  // we need to calculate the total price on the FE.
-  const totalCost: Money = {
-    amount: offers.reduce((sum, offer) => sum + offer.cost.net.amount, 0),
-    currencyCode: baseOffer.cost.net.currencyCode,
-  }
-  const offersWithStartDate = offers.filter((offer) => offer.startDate !== undefined)
-  const latestAdoptionDate = offersWithStartDate.sort(sortByStartDate)[0].startDate
-  const comparisonTableData = getComparisonTableData(baseOffer)
-
-  return addApolloState(apolloClient, {
-    props: {
-      migrationSessionId: shopSession.id,
-      [STORY_PROP_NAME]: pageStory,
-      offers,
-      totalCost,
-      latestAdoptionDate,
-      comparisonTableData,
-      ...translations,
-    },
-  })
-}
-
-const fetchMigrationSession = async (apolloClient: ApolloClient<any>, shopSessionId: string) => {
-  const { data } = await apolloClient.query<ShopSessionQuery, ShopSessionQueryVariables>({
-    query: ShopSessionDocument,
-    variables: { shopSessionId },
-  })
-  return data.shopSession
+  return data.petMigrationOffers
 }
 
 export default NextManyPetsMigrationPage
