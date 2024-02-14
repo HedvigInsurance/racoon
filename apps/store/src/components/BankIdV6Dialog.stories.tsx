@@ -4,7 +4,7 @@ import { BankIdContext, type BankIdContextValue } from '@/services/bankId/BankId
 import { BankIdV6Dialog } from './BankIdV6Dialog'
 
 export default {
-  title: 'BankIdV6Dialog',
+  title: 'components/BankIdV6Dialog',
   component: BankIdV6Dialog,
   parameters: {
     layout: 'fullscreen',
