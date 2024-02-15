@@ -73,7 +73,7 @@
     "react-day-picker": "8.10.0",
     "react-device-detect": "2.2.3",
     "react-dom": "18.2.0",
-    "react-i18next": "14.0.3",
+    "react-i18next": "14.0.5",
     "react-wrap-balancer": "1.1.0",
     "storyblok-rich-text-react-renderer": "2.9.1",
     "tss-react": "4.9.4",
