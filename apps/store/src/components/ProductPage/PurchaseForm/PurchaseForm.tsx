@@ -21,10 +21,7 @@ import {
   useIsPriceCalculatorExpanded,
   useOpenPriceCalculatorQueryParam,
 } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
-import {
-  ProductAverageRating,
-  type AverageRatingSource,
-} from '@/components/ProductReviews/ProductAverageRating'
+import { ProductAverageRating } from '@/components/ProductReviews/ProductAverageRating'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { BankSigneringEvent } from '@/services/bankSignering'
 import {
@@ -49,7 +46,6 @@ import { useSelectedOffer } from './useSelectedOffer'
 
 export type PurchaseFormProps = {
   showAverageRating?: boolean
-  averageRatingSource?: AverageRatingSource
 }
 
 export const PurchaseForm = (props: PurchaseFormProps) => {
@@ -248,13 +244,7 @@ export const PurchaseForm = (props: PurchaseFormProps) => {
           )
         }
 
-        return (
-          <IdleState
-            onClick={handleOpen}
-            showAverageRating={props.showAverageRating}
-            averageRatingSource={props.averageRatingSource}
-          />
-        )
+        return <IdleState onClick={handleOpen} showAverageRating={props.showAverageRating} />
       }}
     </Layout>
   )
@@ -304,12 +294,9 @@ const ProductHeroContainer = (props: ProductHeroContainerProps) => {
   )
 }
 
-type IdleStateProps = { onClick: () => void } & Pick<
-  PurchaseFormProps,
-  'showAverageRating' | 'averageRatingSource'
->
+type IdleStateProps = { onClick: () => void } & Pick<PurchaseFormProps, 'showAverageRating'>
 
-const IdleState = ({ onClick, showAverageRating, averageRatingSource }: IdleStateProps) => {
+const IdleState = ({ onClick, showAverageRating }: IdleStateProps) => {
   const ref = useRef<HTMLDivElement>(null)
   const { t } = useTranslation('purchase-form')
 
@@ -319,9 +306,7 @@ const IdleState = ({ onClick, showAverageRating, averageRatingSource }: IdleStat
         <ProductHeroContainer size="large">
           <Space y={1}>
             <Button onClick={onClick}>{t('OPEN_PRICE_CALCULATOR_BUTTON')}</Button>
-            {showAverageRating && (
-              <ProductAverageRating averageRatingSource={averageRatingSource} />
-            )}
+            {showAverageRating && <ProductAverageRating />}
           </Space>
         </ProductHeroContainer>
       </div>

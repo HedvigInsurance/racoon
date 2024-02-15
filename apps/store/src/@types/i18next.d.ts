@@ -15,6 +15,7 @@ import type common from '../../public/locales/en/common.json'
 import type contactUs from '../../public/locales/en/contact-us.json'
 import type memberArea from '../../public/locales/en/memberArea.json'
 import type purchaseForm from '../../public/locales/en/purchase-form.json'
+import type reviews from '../../public/locales/en/reviews.json'
 import type widget from '../../public/locales/en/widget.json'
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
@@ -28,6 +29,7 @@ interface I18nNamespaces {
   memberArea: typeof memberArea
   'contact-us': typeof contactUs
   widget: typeof widget
+  reviews: typeof reviews
 }
 
 declare module 'i18next' {

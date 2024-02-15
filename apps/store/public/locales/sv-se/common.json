@@ -56,6 +56,5 @@
   "TRUSTPILOT_REVIEWS_TAB_LABEL": "Trustpilot ({{score}})",
   "TRUSTPILOT_SCORE": "{{score}} av 5",
   "UNKNOWN_ERROR_MESSAGE": "Något gick fel, försök igen.",
-  "VERIFIED_CUSTOMER_LABEL": "Verifierad kund",
-  "VIEW_REVIEWS_LABEL": "Visa omdömen"
+  "VERIFIED_CUSTOMER_LABEL": "Verifierad kund"
 }

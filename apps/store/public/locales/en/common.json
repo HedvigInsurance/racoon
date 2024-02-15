@@ -59,6 +59,5 @@
   "TRUSTPILOT_REVIEWS_TAB_LABEL": "Trustpilot ({{score}})",
   "TRUSTPILOT_SCORE": "{{score}} of 5",
   "UNKNOWN_ERROR_MESSAGE": "Something went wrong, please try again.",
-  "VERIFIED_CUSTOMER_LABEL": "Verified customer",
-  "VIEW_REVIEWS_LABEL": "View reviews"
+  "VERIFIED_CUSTOMER_LABEL": "Verified customer"
 }

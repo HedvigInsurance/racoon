@@ -1,0 +1,5 @@
+{
+  "REVIEWS_DISCLAIMER_one": "Visar genomsnittet av {{reviewsCount}} omdöme från våra kunder. Alla som haft en skada blir inbjuden till att lämna ett omdöme.",
+  "REVIEWS_DISCLAIMER_other": "Visar genomsnittet av {{reviewsCount}} omdömen från våra kunder. Alla som haft en skada blir inbjuden till att lämna ett omdöme.",
+  "VIEW_REVIEWS_LABEL": "Visa omdömen"
+}

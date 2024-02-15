@@ -5,60 +5,62 @@ import type {
   Review,
   ReviewsDistribution,
 } from '@/features/memberReviews/memberReviews.types'
-import { useProuctReviewsDataContext } from '@/features/memberReviews/ProductReviewsDataProvider'
-import { useTrustpilotData } from '@/features/memberReviews/TrustpilotDataProvider'
-import { TABS, type Tab } from './ReviewTabs'
+import {
+  ProductReviewsData,
+  useProuctReviewsDataContext,
+} from '@/features/memberReviews/ProductReviewsDataProvider'
 
-export const useReviews = (initialSelectedTab: Tab = TABS.PRODUCT) => {
+export const useReviews = () => {
   const productReviewsData = useProuctReviewsDataContext()
-  const trustpilotData = useTrustpilotData()
 
-  const [selectedScore, setSelectedScore] = useState<Score>(() => {
-    const defaultScore: Score = 5
+  const [selectedScore, setSelectedScore] = useState<Score>(() =>
+    getInitialSelectedScore(productReviewsData),
+  )
 
-    const scores: Array<Score> = [5, 4, 3, 2, 1]
-    const initialSelectedScore = productReviewsData
-      ? scores.find((score) => productReviewsData.reviewsByScore[score].reviews.length)
-      : undefined
-
-    return initialSelectedScore ?? defaultScore
-  })
-  const [selectedTab, setSelectedTab] = useState<Tab>(initialSelectedTab)
-
-  let rating: Rating | null = null
-  let reviews: Array<Review> = []
-  let reviewsDistribution: ReviewsDistribution = []
-  if (selectedTab === TABS.PRODUCT) {
-    rating = productReviewsData?.averageRating
-      ? {
-          score: productReviewsData.averageRating.score,
-          totalOfReviews: productReviewsData.averageRating.totalOfReviews,
-        }
-      : null
-    reviews = productReviewsData?.reviewsByScore
-      ? productReviewsData.reviewsByScore[selectedScore].reviews
-      : []
-    reviewsDistribution = productReviewsData?.reviewsDistribution
-      ? productReviewsData.reviewsDistribution
-      : []
-  } else {
-    rating = trustpilotData?.averageRating
-      ? {
-          score: trustpilotData.averageRating.score,
-          totalOfReviews: trustpilotData.averageRating.totalOfReviews,
-        }
-      : null
-    reviews = trustpilotData?.reviews ? trustpilotData.reviews : []
-    reviewsDistribution = []
-  }
+  const rating = getRating(productReviewsData)
+  const reviews = getReviews(productReviewsData, selectedScore)
+  const reviewsDistribution = getReviewsDistribution(productReviewsData)
 
   return {
     selectedScore,
     setSelectedScore,
-    selectedTab,
-    setSelectedTab,
     rating,
     reviews,
     reviewsDistribution,
   }
+}
+
+const getInitialSelectedScore = (productReviewsData: ProductReviewsData | null): Score => {
+  const defaultScore: Score = 5
+
+  const scores: Array<Score> = [5, 4, 3, 2, 1]
+  const initialSelectedScore = productReviewsData
+    ? scores.find((score) => productReviewsData.reviewsByScore[score].reviews.length)
+    : undefined
+
+  return initialSelectedScore ?? defaultScore
+}
+
+const getRating = (productReviewsData: ProductReviewsData | null): Rating | null => {
+  return productReviewsData?.averageRating
+    ? {
+        score: productReviewsData.averageRating.score,
+        totalOfReviews: productReviewsData.averageRating.totalOfReviews,
+      }
+    : null
+}
+
+const getReviews = (
+  productReviewsData: ProductReviewsData | null,
+  selectedScore: Score,
+): Array<Review> => {
+  return productReviewsData?.reviewsByScore
+    ? productReviewsData.reviewsByScore[selectedScore].reviews
+    : []
+}
+
+const getReviewsDistribution = (
+  productReviewsData: ProductReviewsData | null,
+): ReviewsDistribution => {
+  return productReviewsData?.reviewsDistribution ? productReviewsData.reviewsDistribution : []
 }
