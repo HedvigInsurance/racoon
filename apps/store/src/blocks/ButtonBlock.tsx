@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import { useRouter } from 'next/router'
+import { useSearchParams } from 'next/navigation'
 import { type ComponentProps, useMemo, useState } from 'react'
 import { Button, ConditionalWrapper, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
@@ -19,14 +19,14 @@ export type ButtonBlockProps = SbBaseBlockProps<{
 
 export const ButtonBlock = ({ blok, nested }: ButtonBlockProps) => {
   const [loading, setLoading] = useState(false)
-  const router = useRouter()
+  const searchParams = useSearchParams()
   const href = useMemo(() => {
     if (blok.forwardQueryString) {
-      return mergeSearchParams(getLinkFieldURL(blok.link, blok.text), router.query)
+      return mergeSearchParams(getLinkFieldURL(blok.link, blok.text), searchParams)
     }
 
     return getLinkFieldURL(blok.link, blok.text)
-  }, [router.query, blok.forwardQueryString, blok.link, blok.text])
+  }, [searchParams, blok.forwardQueryString, blok.link, blok.text])
 
   return (
     <ConditionalWrapper condition={!nested} wrapWith={(children) => <Wrapper>{children}</Wrapper>}>
