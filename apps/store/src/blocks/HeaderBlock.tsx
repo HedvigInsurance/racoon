@@ -24,7 +24,7 @@ import {
 } from '@/components/Header/NavigationLink'
 import { TopMenuDesktop } from '@/components/Header/TopMenuDesktop/TopMenuDesktop'
 import { TopMenuMobile } from '@/components/Header/TopMenuMobile/TopMenuMobile'
-import { useProductMetadata } from '@/components/LayoutWithMenu/ProductMetadataContext'
+import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
 import {
   ExpectedBlockType,
   LinkField,

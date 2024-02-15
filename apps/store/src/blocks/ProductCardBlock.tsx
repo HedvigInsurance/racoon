@@ -1,7 +1,7 @@
 import { storyblokEditable } from '@storyblok/react'
-import { useProductMetadata } from '@/components/LayoutWithMenu/ProductMetadataContext'
-import { ProductCard, type LinkType } from '@/components/ProductCard/ProductCard'
-import { SbBaseBlockProps, LinkField, StoryblokAsset } from '@/services/storyblok/storyblok'
+import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
+import { type LinkType, ProductCard } from '@/components/ProductCard/ProductCard'
+import { LinkField, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { getImgSrc, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 
 export type ImageSize = {

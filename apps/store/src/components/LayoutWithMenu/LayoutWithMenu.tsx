@@ -11,7 +11,7 @@ import { filterByBlockType, isProductStory } from '@/services/storyblok/Storyblo
 import { useChangeLocale } from '@/utils/l10n/useChangeLocale'
 import { BreadcrumbList, BreadcrumbListItem } from './BreadcrumbList'
 import { GLOBAL_PRODUCT_METADATA_PROP_NAME, GlobalProductMetadata } from './fetchProductMetadata'
-import { useHydrateProductMetadata } from './ProductMetadataContext'
+import { useHydrateProductMetadata } from './productMetadataHooks'
 
 type LayoutWithMenuProps = {
   children: ReactElement<{

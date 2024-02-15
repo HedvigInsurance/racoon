@@ -2,11 +2,12 @@
 // next.config.js - { compiler: { emotion: true } }
 /** @jsxImportSource react */
 
+import { Provider as JotaiProvider } from 'jotai'
 import { type PropsWithChildren } from 'react'
 import { NextAppDirEmotionCacheProvider } from 'tss-react/next/appDir'
 import globalCss from 'ui/src/global.css'
-import { ApolloWrapper } from '@/services/apollo/app-router/ApolloWrapper'
 import { ORIGIN_URL } from '@/utils/PageLink'
+import { ApolloProvider } from './[locale]/ApolloProvider'
 
 // Trick compiler into thinking we need global.css import for anything other than side effects
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -16,7 +17,9 @@ noop(globalCss)
 const Layout = ({ children }: PropsWithChildren) => {
   return (
     <NextAppDirEmotionCacheProvider options={{ key: 'css' }}>
-      <ApolloWrapper>{children}</ApolloWrapper>
+      <ApolloProvider>
+        <JotaiProvider>{children}</JotaiProvider>
+      </ApolloProvider>
     </NextAppDirEmotionCacheProvider>
   )
 }

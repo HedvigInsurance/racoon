@@ -3,15 +3,15 @@
 import { ApolloLink } from '@apollo/client'
 import {
   ApolloNextAppProvider,
-  NextSSRInMemoryCache,
   NextSSRApolloClient,
+  NextSSRInMemoryCache,
 } from '@apollo/experimental-nextjs-app-support/ssr'
 import { type PropsWithChildren } from 'react'
-import { createHeadersLink } from '../createHeadersLink'
-import { errorLink } from '../errorLink'
-import { httpLink } from '../httpLink'
-import { languageLink } from '../languageLink'
-import { userErrorLink } from '../userErrorLink'
+import { createHeadersLink } from '@/services/apollo/createHeadersLink'
+import { errorLink } from '@/services/apollo/errorLink'
+import { httpLink } from '@/services/apollo/httpLink'
+import { languageLink } from '@/services/apollo/languageLink'
+import { userErrorLink } from '@/services/apollo/userErrorLink'
 
 const makeClient = () => {
   const headersLink = createHeadersLink()
@@ -35,6 +35,6 @@ const makeClient = () => {
   })
 }
 
-export const ApolloWrapper = ({ children }: PropsWithChildren) => {
+export const ApolloProvider = ({ children }: PropsWithChildren) => {
   return <ApolloNextAppProvider makeClient={makeClient}>{children}</ApolloNextAppProvider>
 }

@@ -3,16 +3,16 @@ import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { useState, useMemo, type FormEventHandler } from 'react'
+import { type FormEventHandler, useMemo, useState } from 'react'
 import { theme } from 'ui'
-import { useProductMetadata } from '@/components/LayoutWithMenu/ProductMetadataContext'
+import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import {
-  QuickPurchaseForm,
-  ProductOption,
   FormError,
-  SSN_FIELDNAME,
   PRODUCT_FIELDNAME,
+  ProductOption,
+  QuickPurchaseForm,
+  SSN_FIELDNAME,
 } from '@/components/QuickPurchaseForm/QuickPurchaseForm'
 import {
   useRedeemCampaignMutation,
