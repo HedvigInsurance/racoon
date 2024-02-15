@@ -3,6 +3,16 @@ import './i18next'
 import { Preview } from '@storybook/react'
 import { gridDecorator, themeDecorator } from './decorators'
 import { theme } from 'ui'
+import globalCss from 'ui/src/global.css'
+
+// GOTCHA: Here we need to trick compiler into thinking we need global.css import
+// for anything other than side effects
+// Would've been easier if we just imported module without using it, but this leads to
+// styles never appearing in resulting HTML. I guess tree shaking or similar optimization
+// is the reason
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const noop = (val: any) => {}
+noop(globalCss)
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
