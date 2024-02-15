@@ -1,4 +1,4 @@
-import styled from '@emotion/styled'
+import { assignInlineVars } from '@vanilla-extract/dynamic'
 import { useTranslation } from 'next-i18next'
 import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useRef, type ReactNode } from 'react'
@@ -11,6 +11,13 @@ import { BankIdOperation, BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { ShopSessionAuthenticationStatus } from '@/services/graphql/generated'
 import { wait } from '@/utils/wait'
+import {
+  qrCode,
+  qrCodeSkeleton,
+  iconWithText,
+  contentWrapper,
+  contentWrapperMaxWidth,
+} from './BankIdV6Dialog.css'
 
 export const BankIdV6Dialog = () => {
   const { t } = useTranslation('bankid')
@@ -52,12 +59,17 @@ export const BankIdV6Dialog = () => {
         }
 
         Content = (
-          <ContentWrapper maxWidth="35rem">
+          <div
+            className={contentWrapper}
+            style={assignInlineVars({
+              [contentWrapperMaxWidth]: '35rem',
+            })}
+          >
             <Text align="center">{t('LOGIN_BANKID')}</Text>
             <Text align="center" color="textSecondary" balance={true}>
               {t('LOGIN_BANKID_EXPLANATION')}
             </Text>
-          </ContentWrapper>
+          </div>
         )
         Footer = (
           <>
@@ -83,13 +95,13 @@ export const BankIdV6Dialog = () => {
       case BankIdState.Starting:
       case BankIdState.Pending: {
         Content = (
-          <ContentWrapper y={2}>
+          <Space className={contentWrapper} y={2}>
             <BankIdIcon color="blue900" size="4rem" />
 
             {currentOperation.qrCodeData ? (
-              <QRCode size={200} value={currentOperation.qrCodeData} />
+              <QRCodeSVG className={qrCode} size={200} value={currentOperation.qrCodeData} />
             ) : (
-              <QRCodeSkeleton />
+              <Skeleton className={qrCodeSkeleton} />
             )}
 
             <div>
@@ -102,7 +114,7 @@ export const BankIdV6Dialog = () => {
                   : t('LOGIN_BANKID_AUTHENTICATION_STEPS_DESKTOP')}
               </Text>
             </div>
-          </ContentWrapper>
+          </Space>
         )
         Footer = (
           <FullscreenDialog.Close asChild>
@@ -114,12 +126,12 @@ export const BankIdV6Dialog = () => {
 
       case BankIdState.Success: {
         Content = (
-          <IconWithText>
+          <Text className={iconWithText}>
             <CheckIcon size="1rem" color={theme.colors.signalGreenElement} />
             {currentOperation.type === 'login'
               ? t('LOGIN_BANKID_SUCCESS')
               : t('BANKID_MODAL_SUCCESS_PROMPT')}
-          </IconWithText>
+          </Text>
         )
         Footer = null
         break
@@ -132,7 +144,7 @@ export const BankIdV6Dialog = () => {
         }
 
         Content = (
-          <ContentWrapper y={1}>
+          <Space className={contentWrapper} y={1}>
             <WarningTriangleIcon size="1.5rem" color={theme.colors.amber600} />
 
             <div>
@@ -151,7 +163,7 @@ export const BankIdV6Dialog = () => {
             >
               {t('LOGIN_BANKID_TRY_AGAIN')}
             </Button>
-          </ContentWrapper>
+          </Space>
         )
         Footer = (
           <FullscreenDialog.Close asChild>
@@ -204,29 +216,3 @@ const useTriggerBankIdOnSameDevice = (bankIdOperation: BankIdOperation | null) =
     }
   }, [bankIdOperation?.state, bankIdOperation?.autoStartToken])
 }
-
-const IconWithText = styled(Text)({
-  gap: theme.space.xs,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-})
-
-const ContentWrapper = styled(Space)(({ maxWidth = '24rem' }: { maxWidth?: string }) => ({
-  display: 'grid',
-  justifyItems: 'center',
-  width: `min(${maxWidth}, 100%)`,
-  marginInline: 'auto',
-}))
-
-const QRCode = styled(QRCodeSVG)({
-  padding: theme.space.md,
-  borderRadius: theme.radius.md,
-  border: `1px solid ${theme.colors.grayTranslucent200}`,
-  backgroundColor: theme.colors.white,
-})
-
-const QRCodeSkeleton = styled(Skeleton)({
-  width: 200,
-  aspectRatio: '1 / 1',
-})
