@@ -7,7 +7,8 @@ import { UiLocale } from '@/utils/l10n/types'
 
 export default class MyDocument extends Document {
   lang() {
-    return getLocaleOrFallback(this.props.locale as UiLocale).htmlLang
+    const { locale } = this.props.__NEXT_DATA__.query
+    return getLocaleOrFallback(locale as UiLocale).htmlLang
   }
 
   render() {
