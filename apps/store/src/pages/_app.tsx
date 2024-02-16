@@ -32,7 +32,6 @@ import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { trackPageViews } from '@/services/Tracking/trackPageViews'
 import { Features } from '@/utils/Features'
 import { contentFontClassName } from '@/utils/fonts'
-import { globalStore } from '@/utils/globalStore'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 import { UiLocale } from '@/utils/l10n/types'
@@ -111,7 +110,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
         <GlobalLinkStyles />
         <OneTrustStyles />
         <PageTransitionProgressBar />
-        <JotaiProvider store={globalStore}>
+        <JotaiProvider>
           <ShopSessionProvider shopSessionId={pageProps[SHOP_SESSION_PROP_NAME]}>
             <ShopSessionTrackingProvider>
               <BankIdContextProvider>
