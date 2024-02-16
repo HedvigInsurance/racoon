@@ -1,37 +1,28 @@
-import styled from '@emotion/styled'
-import { StarIcon, theme, mq } from 'ui'
-import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
+import clsx from 'clsx'
+import { StarIcon, theme } from 'ui'
+import { wrapper } from './Stars.css'
 
 type Props = {
   score: number
+  size?: string
+  className?: string
 }
 
-export const Stars = (props: Props) => {
+export const Stars = ({ score, size, className }: Props) => {
   return (
-    <Wrapper>
+    <div className={clsx(wrapper, className)}>
       {Array.from({ length: 5 }).map((_, index) => (
-        <Star key={index} filled={index < Math.trunc(props.score)} />
+        <Star key={index} filled={index < Math.trunc(score)} size={size} />
       ))}
-    </Wrapper>
+    </div>
   )
 }
 
-const Wrapper = styled.div({
-  display: 'flex',
-  gap: theme.space.xxxs,
-
-  [mq.md]: {
-    gap: theme.space.xxs,
-  },
-})
-
-const Star = ({ filled }: { filled: boolean }) => {
-  const isDesktop = useBreakpoint('md')
-
+const Star = ({ filled, size = '1.5rem' }: { filled: boolean; size?: string }) => {
   return (
     <StarIcon
       color={filled ? theme.colors.textTranslucentPrimary : theme.colors.textTranslucentTertiary}
-      size={isDesktop ? '1.5rem' : '1rem'}
+      size={size}
     />
   )
 }
