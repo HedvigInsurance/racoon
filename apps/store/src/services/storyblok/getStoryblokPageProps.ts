@@ -30,7 +30,7 @@ export const getStoryblokPageProps = async ({
   const [layoutWithMenuProps, breadcrumbs, trustpilotData] = await Promise.all([
     getLayoutWithMenuProps(context, apolloClient),
     fetchBreadcrumbs(slug, { version, locale }),
-    fetchTrustpilotData(locale),
+    fetchTrustpilotData(),
   ]).catch((error) => {
     throw new Error(`Failed to fetch data for ${slug}: ${error.message}`, { cause: error })
   })

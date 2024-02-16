@@ -116,7 +116,6 @@ const parseReviewsByScore = (
         total: commentsByScore.total,
         reviews: commentsByScore.latestComments.map((comment) => ({
           id: comment.id,
-          type: 'product',
           date: comment.date,
           score: comment.score,
           content: comment.content,

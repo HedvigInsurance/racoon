@@ -60,7 +60,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
       apolloClient: initializeApollo({ locale }),
       productName: EXAMPLE_PRODUCT_NAME,
     }),
-    fetchTrustpilotData(locale),
+    fetchTrustpilotData(),
   ])
 
   if (!isWidgetFlowStory(story)) throw new Error(`Invalid story type: ${story.slug}.`)

@@ -7,7 +7,6 @@ export type Rating = {
 
 export type Review = {
   id: string
-  type: 'company' | 'product'
   score: number
   date: string
   content: string
