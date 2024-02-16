@@ -61,7 +61,7 @@ export const QuickAddOfferContainer = (props: Props) => {
           Body={
             // Assume Accident insurance
             <>
-              <Text as="p" color="textTranslucentSecondary">
+              <Text as="p" color="textTranslucentSecondary" size={{ _: 'sm', md: 'lg' }}>
                 {t('ACCIDENT_OFFER_DESCRIPTION_BUNDLE')}
                 <QuickAddInfoDialog
                   Header={

@@ -1,61 +1,67 @@
-import isPropValid from '@emotion/is-prop-valid'
-import styled from '@emotion/styled'
+import clsx from 'clsx'
 import { ReactNode } from 'react'
 import Balancer from 'react-wrap-balancer'
-import { FontSizeProps, getFontSize, theme, UIColors } from '../../theme'
-import { Space } from '../Space'
+import { FontSizeProps } from '../../theme'
+import {
+  textBase,
+  textSprinkles,
+  textStrikethrough,
+  textUppercase,
+  type TextSprinkles,
+} from './Text.css'
 
-type TextColor = Pick<
-  UIColors,
-  | 'textPrimary'
-  | 'textSecondary'
-  | 'textSecondaryOnGray'
-  | 'textTertiary'
-  | 'textTranslucentPrimary'
-  | 'textTranslucentSecondary'
-  | 'textTranslucentTertiary'
-  | 'textDisabled'
-  | 'textNegative'
-  | 'textGreen'
-  | 'textAmber'
-  | 'textRed'
-  | 'signalBlueText'
-  | 'signalRedText'
-  | 'signalGreenText'
-  | 'signalAmberText'
->
+type TextStyleProps = {
+  align?: TextSprinkles['textAlign']
+  balance?: boolean
+  className?: string
+  color?: TextSprinkles['color']
+  size?: FontSizeProps
+  strikethrough?: boolean
+  uppercase?: boolean
+}
 
 export type TextProps = {
   as?: 'p' | 'span' | 'div'
-  align?: 'center' | 'left' | 'right'
-  balance?: boolean
-  color?: keyof TextColor
-  size?: FontSizeProps
   children?: ReactNode
-  className?: string
-  uppercase?: boolean
-  strikethrough?: boolean
   title?: string
+} & TextStyleProps
+
+export const getTextStyles = ({
+  align,
+  color,
+  size,
+  strikethrough,
+  uppercase,
+  className,
+}: TextStyleProps) => {
+  return clsx(
+    textBase,
+    textSprinkles({ color: color, textAlign: align, fontSize: size }),
+    strikethrough && textStrikethrough,
+    uppercase && textUppercase,
+    className,
+  )
 }
 
-const elementConfig = {
-  shouldForwardProp: (prop: string) => isPropValid(prop) && prop !== 'color',
+export const Text = ({
+  as,
+  balance,
+  align,
+  color,
+  children,
+  size,
+  strikethrough,
+  uppercase,
+  className,
+  ...rest
+}: TextProps) => {
+  const Component = as ?? 'p'
+  return (
+    <Component
+      className={getTextStyles({ align, color, size, strikethrough, uppercase, className })}
+      {...rest}
+    >
+      {!balance ? children : <Balancer>{children}</Balancer>}
+    </Component>
+  )
 }
-
-export const TextBase = styled(
-  Space,
-  elementConfig,
-)<TextProps>(({ align, color, size = 'md', uppercase = false, strikethrough = false }) => ({
-  color: color ? theme.colors[color] : 'inherit',
-  whiteSpace: 'pre-wrap',
-  ...getFontSize(size),
-  ...(align && { textAlign: align }),
-  ...(uppercase && { textTransform: 'uppercase' }),
-  ...(strikethrough && { textDecorationLine: 'line-through' }),
-}))
-
-export const Text = ({ as = 'p', balance, children, className, ...rest }: TextProps) => (
-  <TextBase as={as} className={className} {...rest}>
-    {!balance ? children : <Balancer>{children}</Balancer>}
-  </TextBase>
-)
