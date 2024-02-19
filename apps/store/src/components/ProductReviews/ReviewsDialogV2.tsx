@@ -1,14 +1,8 @@
 import { useTranslation } from 'next-i18next'
-import { type ReactNode } from 'react'
+import { type ReactElement, type ReactNode } from 'react'
 import { Dialog, Text, Space, CrossIcon } from 'ui'
-import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
 import type { Score } from '@/features/memberReviews/memberReviews.types'
-import type {
-  Review,
-  Rating,
-  ReviewsDistribution,
-} from '@/features/memberReviews/memberReviews.types'
-import { AverageRatingV2 } from './AverageRatingV2'
+import type { Review, ReviewsDistribution } from '@/features/memberReviews/memberReviews.types'
 import { ReviewCommentV2 } from './ReviewCommentV2'
 import {
   closeBtn,
@@ -18,27 +12,26 @@ import {
   latestReviewsLabel,
   noReviewsLabel,
 } from './ReviewsDialogV2.css'
-import { ReviewsDiclaimer } from './ReviewsDisclaimer'
 import { ReviewsFilter } from './ReviewsFilter'
 
 type Props = {
   children: ReactNode
   reviews: Array<Review>
-  rating: Rating
   reviewsDistribution: ReviewsDistribution
-  onClose?: () => void
   selectedScore: Score
   onSelectedScoreChange: (score: Score) => void
+  Header?: ReactElement
+  onClose?: () => void
 }
 
 export const ReviewsDialogV2 = ({
   children,
   reviews,
-  rating,
   reviewsDistribution,
-  onClose,
   selectedScore,
   onSelectedScoreChange,
+  Header,
+  onClose,
 }: Props) => {
   const { t } = useTranslation('common')
 
@@ -52,11 +45,8 @@ export const ReviewsDialogV2 = ({
         </Dialog.Close>
 
         <Dialog.Window className={dialogWindow}>
-          <Space y={1.5}>
-            <section>
-              <AverageRatingV2 size={{ _: 9, sm: 11 }} score={rating.score} maxScore={MAX_SCORE} />
-              <ReviewsDiclaimer size={{ _: 'xs', sm: 'md' }} reviewsCount={rating.totalOfReviews} />
-            </section>
+          <Space y={2}>
+            {Header}
 
             <Space y={1}>
               <ReviewsFilter

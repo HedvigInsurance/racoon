@@ -1,4 +1,7 @@
 {
+  "RATING_SCORE_LABEL": "{{score}} of {{maxScore}}",
+  "REVIEWS_COUNT_LABEL_one": "{{reviewsCount}} review",
+  "REVIEWS_COUNT_LABEL_other": "{{reviewsCount}} reviews",
   "REVIEWS_DISCLAIMER_one": "Shows the average of {{reviewsCount}} review from our customers. Anyone who has had an injury is invited to leave a review.",
   "REVIEWS_DISCLAIMER_other": "Shows the average of {{reviewsCount}} reviews from our customers. Anyone who has had an injury is invited to leave a review.",
   "VIEW_REVIEWS_LABEL": "View reviews"

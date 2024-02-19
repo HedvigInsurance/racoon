@@ -13,6 +13,8 @@ import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
 import { useProuctReviewsDataContext } from '@/features/memberReviews/ProductReviewsDataProvider'
 import { sendDialogEvent } from '@/utils/dialogEvent'
 import { useFormatter } from '@/utils/useFormatter'
+import { AverageRatingV2 } from './AverageRatingV2'
+import { ReviewsDiclaimer } from './ReviewsDisclaimer'
 
 export const ProductAverageRatingV2 = () => {
   const { t } = useTranslation('common')
@@ -21,6 +23,7 @@ export const ProductAverageRatingV2 = () => {
   const productData = useProductData()
 
   const openDialog = () => {
+    // Notify that all playing media should be paused as a result of the dialog being opened
     sendDialogEvent('open')
   }
 
@@ -84,6 +87,7 @@ const Dialog = (props: DialogProps) => {
   const { rating, reviews, reviewsDistribution, selectedScore, setSelectedScore } = useReviewsV2()
 
   const closeDialog = () => {
+    // Notify that all media paused as a result of the dialog being opened should be resumed
     sendDialogEvent('close')
   }
 
@@ -91,7 +95,12 @@ const Dialog = (props: DialogProps) => {
 
   return (
     <ReviewsDialogV2
-      rating={rating}
+      Header={
+        <section>
+          <AverageRatingV2 size={{ _: 9, sm: 11 }} score={rating.score} maxScore={MAX_SCORE} />
+          <ReviewsDiclaimer size={{ _: 'xs', sm: 'md' }} reviewsCount={rating.totalOfReviews} />
+        </section>
+      }
       reviews={reviews}
       reviewsDistribution={reviewsDistribution}
       selectedScore={selectedScore}
