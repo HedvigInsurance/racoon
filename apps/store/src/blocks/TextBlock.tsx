@@ -14,7 +14,7 @@ export type TextBlockProps = SbBaseBlockProps<{
   color?: TextColor
   fontSize?: FontSizes
   fontSizeDesktop?: FontSizes
-  textAlignment?: 'left' | 'center' | 'right'
+  textAlignment?: 'left' | 'center' | 'right' | ''
 }>
 
 export const TextBlock = ({ blok }: TextBlockProps) => {
@@ -27,7 +27,7 @@ export const TextBlock = ({ blok }: TextBlockProps) => {
     <StyledText
       {...storyblokEditable(blok)}
       as="div"
-      align={blok.textAlignment}
+      align={blok.textAlignment === '' ? undefined : blok.textAlignment}
       balance={blok.balance}
       color={blok.color ?? 'textPrimary'}
       size={fontSizes}
