@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { storyblokEditable } from '@storyblok/react'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import { useMemo, useState } from 'react'
 import { mq, Space, theme } from 'ui'
@@ -229,7 +229,7 @@ export type HeaderBlockProps = SbBaseBlockProps<{
 }
 
 export const HeaderBlock = ({ blok, ...headerProps }: HeaderBlockProps) => {
-  const router = useRouter()
+  const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
 
   const productNavItem = useMemo(
@@ -244,7 +244,7 @@ export const HeaderBlock = ({ blok, ...headerProps }: HeaderBlockProps) => {
   )
 
   return (
-    <Header key={router.asPath} {...storyblokEditable(blok)} opaque={isOpen} {...headerProps}>
+    <Header key={pathname} {...storyblokEditable(blok)} opaque={isOpen} {...headerProps}>
       <TopMenuDesktop>{blok.navMenuContainer.map(NestedNavigationBlock)}</TopMenuDesktop>
       <TopMenuMobile isOpen={isOpen} setIsOpen={setIsOpen} defaultValue={productNavItem}>
         {blok.navMenuContainer.map(NestedNavigationBlock)}
