@@ -2,12 +2,19 @@ import { ReactNode } from 'react'
 import { theme } from 'ui'
 import { fetchGlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
+import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
+import { GlobalStory } from '@/services/storyblok/storyblok'
+import {
+  fetchStoryblokCacheVersion,
+  getStoryBySlug,
+} from '@/services/storyblok/storyblok.serverOnly'
 import { contentFontClassName } from '@/utils/fonts'
 import { locales } from '@/utils/l10n/locales'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 import { RoutingLocale } from '@/utils/l10n/types'
 import { initTranslationsServerSide } from './i18n'
 import { ProductMetadataProvider } from './ProductMetadataProvider'
+import { StoryblokLayout } from './StoryblokLayout'
 import { TranslationsProvider } from './TranslationsProvider'
 
 export type LocalizedLayoutProps<P = unknown> = P & {
@@ -16,10 +23,12 @@ export type LocalizedLayoutProps<P = unknown> = P & {
 }
 
 const Layout = async ({ children, params: { locale } }: LocalizedLayoutProps) => {
-  const { resources } = await initTranslationsServerSide(locale)
-  // This is how you get GraphQL data in server components. Caching/deduplication is automatic
   const apolloClient = getApolloClient({ locale })
-  const productMetadata = await fetchGlobalProductMetadata({ apolloClient })
+  const [{ resources }, productMetadata, globalStory] = await Promise.all([
+    initTranslationsServerSide(locale),
+    fetchGlobalProductMetadata({ apolloClient }),
+    initCacheVersionAndFetchGlobalStory(locale),
+  ])
 
   return (
     <html lang={getLocaleOrFallback(locale).htmlLang}>
@@ -29,7 +38,9 @@ const Layout = async ({ children, params: { locale } }: LocalizedLayoutProps) =>
       <body className={contentFontClassName}>
         <TranslationsProvider locale={locale} resources={resources}>
           <ProductMetadataProvider productMetadata={productMetadata}>
-            {children}
+            <ShopSessionProvider>
+              <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
+            </ShopSessionProvider>
           </ProductMetadataProvider>
         </TranslationsProvider>
       </body>
@@ -42,3 +53,9 @@ export const generateStaticParams = () => {
 }
 
 export default Layout
+
+const initCacheVersionAndFetchGlobalStory = async (locale: RoutingLocale) => {
+  // Not using the result, all we need is to put storyblok cache version into NextJs cache
+  fetchStoryblokCacheVersion({ cache: 'force-cache' })
+  return getStoryBySlug<GlobalStory>('global', { version: 'published', locale })
+}
