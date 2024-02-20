@@ -1,14 +1,28 @@
-import { Provider, atom, createStore, useAtom, useAtomValue } from 'jotai'
-import { useHydrateAtoms } from 'jotai/utils'
-import { ReactNode, useMemo } from 'react'
-import { ProductData } from './ProductData.types'
+import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { atomFamily, useHydrateAtoms } from 'jotai/utils'
+import { ReactNode, useEffect } from 'react'
+import { RoutingLocale } from '@/utils/l10n/types'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
+import type { ProductData } from './ProductData.types'
 
-const PRODUCT_DATA_ATOM = atom<ProductData | null>(null)
-const SELECTED_TYPE_OF_CONTRACT_ATOM = atom<string | undefined>(undefined)
+// As an alternative, we could use {locale, productId} as key and provide deepEquals as custom equality function
+// Using string key seems simpler
+const productKey = (productId: string, locale: RoutingLocale) => `${locale}/${productId}`
 
-const SELECTED_PRODUCT_VARIANT_ATOM = atom((get) => {
-  const productData = get(PRODUCT_DATA_ATOM)
-  const typeOfContract = get(SELECTED_TYPE_OF_CONTRACT_ATOM)
+const currentProductAtom = atom<string | null>(null)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const productDataAtomFamily = atomFamily((_key) => atom<ProductData | null>(null))
+const productDataAtom = atom<ProductData | null>((get) => {
+  const key = get(currentProductAtom)
+  if (key == null) return null
+  const productData = get(productDataAtomFamily(key))
+  return productData
+})
+
+const selectedTypeOfContractAtom = atom<string | undefined>(undefined)
+const selectedProductVariantItem = atom((get) => {
+  const productData = get(productDataAtom)
+  const typeOfContract = get(selectedTypeOfContractAtom)
   return productData?.variants.find((item) => item.typeOfContract === typeOfContract)
 })
 
@@ -19,45 +33,36 @@ type Props = {
 }
 
 export const ProductDataProvider = (props: Props) => {
-  const store = useMemo(createStore, [props.productData.id])
+  const locale = useRoutingLocale()
+  const key = productKey(props.productData.id, locale)
+  useHydrateAtoms([
+    [currentProductAtom, key],
+    [productDataAtomFamily(key), props.productData],
+    [selectedTypeOfContractAtom, props.selectedTypeOfContract],
+  ])
+  // Hydration only happens on very first render, effects below take care of navigation after that
+  const setCurrentProduct = useSetAtom(currentProductAtom)
+  useEffect(() => {
+    setCurrentProduct(key)
+  }, [key, setCurrentProduct])
+  const setSelectedTypeOfContract = useSetAtom(selectedTypeOfContractAtom)
+  useEffect(() => {
+    setSelectedTypeOfContract(props.selectedTypeOfContract)
+  }, [props.selectedTypeOfContract, setSelectedTypeOfContract])
 
-  return (
-    <Provider store={store}>
-      <HydrateData
-        store={store}
-        productData={props.productData}
-        selectedTypeOfContract={props.selectedTypeOfContract}
-      />
-      {props.children}
-    </Provider>
-  )
-}
-
-type HydrateDataProps = Pick<Props, 'productData' | 'selectedTypeOfContract'> & {
-  store: ReturnType<typeof createStore>
-}
-
-const HydrateData = (props: HydrateDataProps) => {
-  useHydrateAtoms(
-    [
-      [PRODUCT_DATA_ATOM, props.productData],
-      [SELECTED_TYPE_OF_CONTRACT_ATOM, props.selectedTypeOfContract],
-    ],
-    { store: props.store },
-  )
-  return null
+  return props.children
 }
 
 export const useProductData = () => {
-  const value = useAtomValue(PRODUCT_DATA_ATOM)
+  const value = useAtomValue(productDataAtom)
   if (value === null) throw new Error('ProductData accessed without hydrating')
   return value
 }
 
 export const useSelectedTypeOfContract = () => {
-  return useAtom(SELECTED_TYPE_OF_CONTRACT_ATOM)
+  return useAtom(selectedTypeOfContractAtom)
 }
 
 export const useSelectedProductVariant = () => {
-  return useAtomValue(SELECTED_PRODUCT_VARIANT_ATOM)
+  return useAtomValue(selectedProductVariantItem)
 }
