@@ -19,11 +19,10 @@ globalStyle('*, *::before, *::after', {
 })
 
 globalStyle('html', {
-  scrollBehavior: 'smooth',
   WebkitTapHighlightColor: 'transparent',
   '@media': {
     [animationAllowed]: {
-      scrollBehavior: 'auto',
+      scrollBehavior: 'smooth',
     },
   },
 })
