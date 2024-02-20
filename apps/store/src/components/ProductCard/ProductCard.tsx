@@ -1,7 +1,7 @@
 import { UrlObject } from 'url'
 import styled from '@emotion/styled'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
 import { Button, mq, Space, theme } from 'ui'
