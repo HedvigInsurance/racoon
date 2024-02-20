@@ -1,7 +1,7 @@
 import { useApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
 import { ISbStoryData } from '@storyblok/react'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 import { CookiePersister } from '@/services/persister/CookiePersister'
 import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
@@ -40,7 +40,7 @@ export const useChangeLocale = (currentPageStory: ISbStoryData | undefined) => {
         window.location.pathname = url
       } catch (error) {
         datadogLogs.logger.error('Failed to change locale', { error, newLocale })
-        router.reload()
+        router.refresh()
       }
     },
     [apolloClient, currentCountry, currentPageStory, router],

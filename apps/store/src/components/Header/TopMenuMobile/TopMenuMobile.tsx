@@ -1,13 +1,13 @@
 import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { AndroidIcon, AppleIcon, Button, mq, theme } from 'ui'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
+import { useOnPathnameChange } from '@/utils/useOnPathnameChange'
 import { LogoWrapper } from '../Header'
 import {
   focusableStyles,
@@ -55,15 +55,10 @@ export type TopMenuMobileProps = {
 
 export const TopMenuMobile = (props: TopMenuMobileProps) => {
   const { children, isOpen, setIsOpen, defaultValue } = props
-  const router = useRouter()
   const { t } = useTranslation('common')
   const locale = useRoutingLocale()
 
-  useEffect(() => {
-    const closeDialog = () => setIsOpen(false)
-    router.events.on('routeChangeStart', closeDialog)
-    return () => router.events.off('routeChangeStart', closeDialog)
-  }, [router.events, setIsOpen])
+  useOnPathnameChange(() => setIsOpen(false))
 
   return (
     <>

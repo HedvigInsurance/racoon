@@ -1,3 +1,5 @@
+'use client'
+
 import { useApolloClient } from '@apollo/client'
 import {
   createContext,

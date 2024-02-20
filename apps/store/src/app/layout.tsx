@@ -8,6 +8,7 @@ import { NextAppDirEmotionCacheProvider } from 'tss-react/next/appDir'
 import globalCss from 'ui/src/global.css'
 import { ApolloWrapper } from '@/services/apollo/app-router/ApolloWrapper'
 import { ORIGIN_URL } from '@/utils/PageLink'
+import StoryblokProvider from './StoryblokProvider'
 
 // Trick compiler into thinking we need global.css import for anything other than side effects
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -18,8 +19,11 @@ const Layout = ({ children }: PropsWithChildren) => {
   return (
     <NextAppDirEmotionCacheProvider options={{ key: 'css' }}>
       <ApolloWrapper>
+        <StoryblokProvider>
         <JotaiProvider>{children}</JotaiProvider>
-      </ApolloWrapper>
+        </StoryblokProvider>
+
+        </ApolloWrapper>
     </NextAppDirEmotionCacheProvider>
   )
 }
