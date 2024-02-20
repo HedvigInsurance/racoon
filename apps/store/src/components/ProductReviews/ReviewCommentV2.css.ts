@@ -19,13 +19,28 @@ export const wrapper = style({
   },
 })
 
+export const reviewHeader = style({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  gap: theme.space.xs,
+})
+
 export const reviewContent = style({
   whiteSpace: 'normal',
 })
 
-export const footer = style({
+export const reviewFooter = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
   color: theme.colors.textTranslucentSecondary,
+})
+
+export const reviewTag = style({
+  fontSize: theme.fontSizes.xs,
+  paddingBlock: theme.space.xxs,
+  paddingInline: theme.space.xs,
+  borderRadius: theme.radius.xs,
+  backgroundColor: theme.colors.backgroundStandard,
 })

@@ -4,5 +4,14 @@
   "REVIEWS_COUNT_LABEL_other": "{{reviewsCount}} reviews",
   "REVIEWS_DISCLAIMER_one": "Shows the average of {{reviewsCount}} review from our customers. Anyone who has had an injury is invited to leave a review.",
   "REVIEWS_DISCLAIMER_other": "Shows the average of {{reviewsCount}} reviews from our customers. Anyone who has had an injury is invited to leave a review.",
+  "SE_ACCIDENT_REVIEW_COMMENT_TAG": "Accident",
+  "SE_APARTMENT_BRF_REVIEW_COMMENT_TAG": "Homeowner",
+  "SE_APARTMENT_RENT_REVIEW_COMMENT_TAG": "Rental",
+  "SE_APARTMENT_STUDENT_REVIEW_COMMENT_TAG": "Student",
+  "SE_CAR_REVIEW_COMMENT_TAG": "Car",
+  "SE_HOUSE_REVIEW_COMMENT_TAG": "House",
+  "SE_PET_CAT_REVIEW_COMMENT_TAG": "Cat",
+  "SE_PET_DOG_REVIEW_COMMENT_TAG": "Dog",
+  "VERIFIED_CUSTOMER_LABEL": "Verified customer",
   "VIEW_REVIEWS_LABEL": "View reviews"
 }
