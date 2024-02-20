@@ -11,9 +11,9 @@ import {
 import { type ProductReviewsData } from './ProductReviewsDataProvider'
 
 // Data format and used keys are defined in the cloud function:
-// https://console.cloud.google.com/functions/details/europe-north1/product_review_v2?env=gen2&cloudshell=false&project=hedvig-dagobah
-const KV_AVERAGE_RATINGS_KEY = 'averageRatings'
-const KV_REVIEW_COMMENTS_KEY = 'reviews'
+// https://shorturl.at/eoQRV
+const KV_AVERAGE_RATING_BY_PRODUCT_KEY = 'averageRatingByProduct'
+const KV_LATEST_REVIEWS_BY_PRODUCT_KEY = 'latestReviewsByProduct'
 
 type ProductAverageRatingResponse = z.infer<typeof averageRatingSchema>
 
@@ -31,12 +31,12 @@ export const fetchProductReviewsData = async (
 ): Promise<ProductReviewsData | null> => {
   try {
     const [averageRating, reviewsByScore] = await Promise.all([
-      fetchAverageRating(productId),
-      fetchReviewsByScore(productId),
+      fetchAverageRatingByProduct(productId),
+      fetchLatestReviewsByProduct(productId),
     ])
 
     if (!averageRating || !reviewsByScore) {
-      console.log(`Could not found product reviews data for product ${productId}`)
+      console.log(`Product Reviews | Could not found product reviews data for product ${productId}`)
       return null
     }
 
@@ -51,25 +51,29 @@ export const fetchProductReviewsData = async (
   }
 }
 
-const fetchAverageRating = async (
+const fetchAverageRatingByProduct = async (
   productId: string,
 ): Promise<ProductReviewsData['averageRating'] | null> => {
-  const averageRatings = await kv.get<AverageRatingsResponse>(KV_AVERAGE_RATINGS_KEY)
+  const averageRatingByProduct = await kv.get<AverageRatingsResponse>(
+    KV_AVERAGE_RATING_BY_PRODUCT_KEY,
+  )
 
-  if (!averageRatings) {
-    console.warn('Could not get average ratings')
+  if (!averageRatingByProduct) {
+    console.warn('Product Reviews | Could not get average ratings')
     return null
   }
 
-  const productAverageRating = averageRatings[productId]
+  const productAverageRating = averageRatingByProduct[productId]
   if (!productAverageRating) {
-    console.warn(`Could not found average ratings for product ${productId}`)
+    console.warn(`Product Reviews | Could not found average rating for product ${productId}`)
     return null
   }
 
   const validationResult = validateProductAverageRating(productAverageRating)
   if (!validationResult.success) {
-    console.warn(`productAverageRating | validation error: ${validationResult.error}`)
+    console.warn(
+      `Product Reviews | product average rating validation error: ${validationResult.error}`,
+    )
     return null
   }
 
@@ -79,29 +83,31 @@ const fetchAverageRating = async (
   }
 }
 
-const fetchReviewsByScore = async (
+const fetchLatestReviewsByProduct = async (
   productId: string,
 ): Promise<ProductReviewsData['reviewsByScore'] | null> => {
-  const reviewComments = await kv.get<ReviewCommentsResponse>(KV_REVIEW_COMMENTS_KEY)
+  const latestReviewsByProduct = await kv.get<ReviewCommentsResponse>(
+    KV_LATEST_REVIEWS_BY_PRODUCT_KEY,
+  )
 
-  if (!reviewComments) {
-    console.warn('Could not get review comments')
+  if (!latestReviewsByProduct) {
+    console.warn(' Product Reviews | Could not get review comments')
     return null
   }
 
-  const productReviewComments = reviewComments[productId]
-  if (!productReviewComments) {
-    console.warn(`Could not found review comments for product ${productId}`)
+  const latestProductReviews = latestReviewsByProduct[productId]
+  if (!latestProductReviews) {
+    console.warn(`Product Reviews | Could not found review comments for product ${productId}`)
     return null
   }
 
-  const validationResult = validateProductReviewsComments(productReviewComments)
+  const validationResult = validateProductReviewsComments(latestProductReviews)
   if (!validationResult.success) {
-    console.warn(`productReviewComments | validation error: ${validationResult.error}`)
+    console.warn(`Product Reviews |  validation error: ${validationResult.error}`)
     return null
   }
 
-  return parseReviewsByScore(productReviewComments)
+  return parseReviewsByScore(latestProductReviews)
 }
 
 const parseReviewsByScore = (
