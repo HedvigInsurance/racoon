@@ -41,9 +41,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:3.9.4":
-  version: 3.9.4
-  resolution: "@apollo/client@npm:3.9.4"
+"@apollo/client@npm:3.9.5":
+  version: 3.9.5
+  resolution: "@apollo/client@npm:3.9.5"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
     "@wry/caches": "npm:^1.0.0"
@@ -53,7 +53,7 @@ __metadata:
     hoist-non-react-statics: "npm:^3.3.2"
     optimism: "npm:^0.18.0"
     prop-types: "npm:^15.7.2"
-    rehackt: "npm:0.0.4"
+    rehackt: "npm:0.0.5"
     response-iterator: "npm:^0.2.6"
     symbol-observable: "npm:^4.0.0"
     ts-invariant: "npm:^0.10.3"
@@ -74,7 +74,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 10c0/c2c3756492eb9b4633efc91618860059e85e8ab94c54e09effea05d806cea64a8de5dad7dd89775e8969409be7d7fd1af77253069325056f6150e1142b401be5
+  checksum: 10c0/ede8ea975ba12cbf11d1b88074808ff7c8677321b5780c952c4b7d7672a4bdda24f27a6a1fed79cc6e6d9787b083f12afed0033c2fee06a2d226faadf3f44aec
   languageName: node
   linkType: hard
 
@@ -23554,9 +23554,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rehackt@npm:0.0.4":
-  version: 0.0.4
-  resolution: "rehackt@npm:0.0.4"
+"rehackt@npm:0.0.5":
+  version: 0.0.5
+  resolution: "rehackt@npm:0.0.5"
   peerDependencies:
     "@types/react": "*"
     react: "*"
@@ -23565,7 +23565,7 @@ __metadata:
       optional: true
     react:
       optional: true
-  checksum: 10c0/70c5146898396a3a06f3d4f5177c58ced1749e9e2f82ea41ea06a8c3e7e5b2491385f2635f4da30c6d1872ad693d33225277836c9332f0597f2c6e91462aa864
+  checksum: 10c0/6123188b6cae82441e2e670ec1dbd741a11874958479b44a69323429bc038398a0b431ffd845c69fc60cc0c0939252ffd2cb37255c314eda38f6a4072bf81b56
   languageName: node
   linkType: hard
 
@@ -24884,7 +24884,7 @@ __metadata:
   resolution: "store@workspace:apps/store"
   dependencies:
     "@adyen/adyen-web": "npm:3.23.0"
-    "@apollo/client": "npm:3.9.4"
+    "@apollo/client": "npm:3.9.5"
     "@apollo/experimental-nextjs-app-support": "npm:0.8.0"
     "@babel/core": "npm:7.23.9"
     "@babel/preset-env": "npm:7.23.9"
