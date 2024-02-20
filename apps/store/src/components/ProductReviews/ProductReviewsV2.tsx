@@ -2,7 +2,7 @@ import { useTranslation } from 'next-i18next'
 import { Space, Button } from 'ui'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
 import { AverageRatingV2 } from './AverageRatingV2'
-import { wrapper } from './ProductReviewsV2.css'
+import { wrapper, innerWrapper } from './ProductReviewsV2.css'
 import { ReviewsDialogV2 } from './ReviewsDialogV2'
 import { ReviewsDiclaimer } from './ReviewsDisclaimer'
 import { ReviewsDistributionByScore } from './ReviewsDistributionByScore'
@@ -24,7 +24,7 @@ export const ProductReviewsV2 = () => {
         <ReviewsDiclaimer reviewsCount={rating.totalOfReviews} />
       </section>
 
-      <Space y={1}>
+      <Space className={innerWrapper} y={{ base: 0, md: 1 }}>
         {reviewsDistribution.map(([score, percentage]) => (
           <ReviewsDistributionByScore key={score} score={score} percentage={percentage} />
         ))}
@@ -36,7 +36,9 @@ export const ProductReviewsV2 = () => {
           selectedScore={selectedScore}
           onSelectedScoreChange={setSelectedScore}
         >
-          <Button variant="ghost">{t('VIEW_REVIEWS_LABEL')}</Button>
+          <Button variant="primary-alt" size="medium">
+            {t('VIEW_REVIEWS_LABEL')}
+          </Button>
         </ReviewsDialogV2>
       </Space>
     </Space>

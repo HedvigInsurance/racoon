@@ -6,3 +6,9 @@ export const wrapper = style({
   marginInline: 'auto',
   paddingInline: theme.space.md,
 })
+
+export const innerWrapper = style({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+})
