@@ -9,7 +9,6 @@ const main = async () => {
   if (!storyblokApi) throw new Error('Storyblok API not initialized')
 
   const { data } = await storyblokApi.getStory('/se')
-  console.log(data.cv)
 }
 
 main()

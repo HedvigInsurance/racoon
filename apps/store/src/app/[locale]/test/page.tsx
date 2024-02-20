@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { fetchGlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { getClient } from '@/services/apollo/app-router/rscClient'
 import { RoutingLocale } from '@/utils/l10n/types'
@@ -22,7 +23,9 @@ const Page = async (props: LocalizedPageProps) => {
     <div className={wrapper}>
       <h1>Server-side translation: {t('404_PAGE_MESSAGE')}</h1>
       <br />
-      <ClientComponent />
+      <Suspense>
+        <ClientComponent />
+      </Suspense>
     </div>
   )
 }

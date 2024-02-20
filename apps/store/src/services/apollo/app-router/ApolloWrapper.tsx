@@ -3,8 +3,8 @@
 import { ApolloLink } from '@apollo/client'
 import {
   ApolloNextAppProvider,
-  NextSSRInMemoryCache,
   NextSSRApolloClient,
+  NextSSRInMemoryCache,
 } from '@apollo/experimental-nextjs-app-support/ssr'
 import { type PropsWithChildren } from 'react'
 import { createHeadersLink } from '../createHeadersLink'
