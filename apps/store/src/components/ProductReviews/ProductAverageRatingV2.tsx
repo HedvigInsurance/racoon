@@ -6,44 +6,25 @@ import { Text, StarIcon, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ProductData } from '@/components/ProductData/ProductData.types'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
-import { ReviewsDialog } from '@/components/ProductReviews/ReviewsDialog'
-import { useReviews } from '@/components/ProductReviews/useReviews'
+import { ReviewsDialogV2 } from '@/components/ProductReviews/ReviewsDialogV2'
+import { useReviewsV2 } from '@/components/ProductReviews/useReviewsV2'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
 import { useProuctReviewsDataContext } from '@/features/memberReviews/ProductReviewsDataProvider'
-import { useTrustpilotData } from '@/features/memberReviews/TrustpilotDataProvider'
 import { sendDialogEvent } from '@/utils/dialogEvent'
 import { useFormatter } from '@/utils/useFormatter'
-import { TABS, type Tab } from './ReviewTabs'
 
-export type AverageRatingSource = 'product' | 'trustpilot'
-
-type Props = {
-  averageRatingSource?: AverageRatingSource
-}
-
-export const ProductAverageRating = ({ averageRatingSource = 'product' }: Props) => {
+export const ProductAverageRatingV2 = () => {
   const { t } = useTranslation('common')
   const { numberGrouping } = useFormatter()
   const productReviewsData = useProuctReviewsDataContext()
-  const trustpilotData = useTrustpilotData()
   const productData = useProductData()
 
   const openDialog = () => {
     sendDialogEvent('open')
   }
 
-  if (!isAverageRatingSourceValid(averageRatingSource)) {
-    console.warn(
-      `ProductAverageRating | Invalid average rating source: ${averageRatingSource}. Using 'product' instead.`,
-    )
-    averageRatingSource = 'product'
-  }
-
-  const averageRating =
-    averageRatingSource === 'product'
-      ? productReviewsData?.averageRating
-      : trustpilotData?.averageRating
+  const averageRating = productReviewsData?.averageRating
   if (!averageRating) {
     console.log(`ProductAverageRating | No reviews data found for product ${productData.name}`)
     return null
@@ -51,19 +32,15 @@ export const ProductAverageRating = ({ averageRatingSource = 'product' }: Props)
 
   return (
     <>
-      {productReviewsData?.averageRating && (
-        <Head>
-          <script
-            key="product-structured-data"
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify(
-                getProductStructuredData(productData, productReviewsData.averageRating),
-              ),
-            }}
-          />
-        </Head>
-      )}
+      <Head>
+        <script
+          key="product-structured-data"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(getProductStructuredData(productData, averageRating)),
+          }}
+        />
+      </Head>
 
       <GridLayout.Root>
         <GridLayout.Content
@@ -83,11 +60,7 @@ export const ProductAverageRating = ({ averageRatingSource = 'product' }: Props)
                 ·
               </Text>
 
-              <Dialog
-                initialSelectedTab={
-                  averageRatingSource === 'product' ? TABS.PRODUCT : TABS.TRUSTPILOT
-                }
-              >
+              <Dialog>
                 <Trigger onClick={openDialog}>
                   {t('REVIEWS_COUNT_LABEL', {
                     count: averageRating.totalOfReviews,
@@ -103,25 +76,12 @@ export const ProductAverageRating = ({ averageRatingSource = 'product' }: Props)
   )
 }
 
-const isAverageRatingSourceValid = (source: string): source is AverageRatingSource =>
-  ['product', 'trustpilot'].includes(source)
-
 type DialogProps = {
   children: ReactNode
-  initialSelectedTab?: Tab
 }
 
 const Dialog = (props: DialogProps) => {
-  const { t } = useTranslation('common')
-  const {
-    rating,
-    reviews,
-    reviewsDistribution,
-    selectedTab,
-    setSelectedTab,
-    selectedScore,
-    setSelectedScore,
-  } = useReviews(props.initialSelectedTab)
+  const { rating, reviews, reviewsDistribution, selectedScore, setSelectedScore } = useReviewsV2()
 
   const closeDialog = () => {
     sendDialogEvent('close')
@@ -129,23 +89,17 @@ const Dialog = (props: DialogProps) => {
 
   if (!rating) return null
 
-  const tooltipText =
-    selectedTab === 'product' ? t('PRODUCT_REVIEWS_DISCLAIMER') : t('TRUSTPILOT_REVIEWS_DISCLAIMER')
-
   return (
-    <ReviewsDialog
+    <ReviewsDialogV2
       rating={rating}
       reviews={reviews}
       reviewsDistribution={reviewsDistribution}
-      selectedTab={selectedTab}
-      onSelectedTabChange={setSelectedTab}
       selectedScore={selectedScore}
       onSelectedScoreChange={setSelectedScore}
-      tooltipText={tooltipText}
       onClose={closeDialog}
     >
       {props.children}
-    </ReviewsDialog>
+    </ReviewsDialogV2>
   )
 }
 

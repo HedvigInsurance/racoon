@@ -1,18 +1,56 @@
+import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { ComponentProps } from 'react'
-import { Text } from 'ui'
+import { Text, InfoIcon, theme } from 'ui'
+import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { Tooltip } from '@/components/Tooltip/Tooltip'
+import { useFormatter } from '@/utils/useFormatter'
 
 type Props = {
   score: number
   maxScore: number
-} & Partial<Omit<ComponentProps<typeof Text>, 'children'>>
+  reviewsCount: number
+  explanation?: string
+}
 
-export const AverageRating = ({ score, maxScore, ...others }: Props) => {
+export const AverageRating = (props: Props) => {
   const { t } = useTranslation('common')
+  const { numberGrouping } = useFormatter()
 
   return (
-    <Text size={10} color="textPrimary" align="center" {...others}>
-      {t('RATING_SCORE_LABEL', { score, maxScore })}
-    </Text>
+    <Wrapper>
+      <Text
+        as="span"
+        color="textPrimary"
+        size={{
+          _: 10,
+          md: 11,
+        }}
+      >
+        {t('RATING_SCORE_LABEL', { score: props.score, maxScore: props.maxScore })}
+      </Text>
+
+      <SpaceFlex direction="horizontal" space={0.25} align="center">
+        <Text as="span" color="textSecondary">
+          {t('REVIEWS_COUNT_BASED_ON_LABEL', {
+            count: props.reviewsCount,
+            reviewsCount: numberGrouping(props.reviewsCount),
+          })}
+        </Text>
+
+        {props.explanation && (
+          <Tooltip message={props.explanation}>
+            <button style={{ marginBottom: -2 }}>
+              <InfoIcon color={theme.colors.textSecondary} />
+            </button>
+          </Tooltip>
+        )}
+      </SpaceFlex>
+    </Wrapper>
   )
 }
+
+const Wrapper = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+})
