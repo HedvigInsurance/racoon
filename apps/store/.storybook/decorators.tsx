@@ -3,6 +3,8 @@ import { Global } from '@emotion/react'
 import { ThemeProvider } from 'ui'
 import { storybookFontStyles } from 'ui/src/theme/storybookFontStyles'
 import { GridLayout } from '../src/components/GridLayout/GridLayout'
+import { ApolloProvider } from '@apollo/client'
+import { initializeApollo } from '../src/services/apollo/client'
 
 export const themeDecorator: Decorator = (Story) => (
   <>
@@ -31,5 +33,14 @@ export const gridDecorator: Decorator = (Story, options) => {
         <Story />
       </GridLayout.Content>
     </GridLayout.Root>
+  )
+}
+
+export const apolloDecorator: Decorator = (Story) => {
+  const apolloClient = initializeApollo()
+  return (
+    <ApolloProvider client={apolloClient}>
+      <Story />
+    </ApolloProvider>
   )
 }

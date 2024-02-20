@@ -1,4 +1,5 @@
 import { ApolloClient, ApolloLink, InMemoryCache, type NormalizedCacheObject } from '@apollo/client'
+import { loadDevMessages, loadErrorMessages } from '@apollo/client/dev'
 import { mergeDeep } from '@apollo/client/utilities'
 import { type GetServerSidePropsContext } from 'next'
 import { type AppInitialProps } from 'next/app'
@@ -18,6 +19,12 @@ import { userErrorLink } from './userErrorLink'
 const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
+
+if (process.env.NODE_ENV !== 'production') {
+  // Adds messages only in a dev environment
+  loadDevMessages()
+  loadErrorMessages()
+}
 
 const createApolloClient = (defaultHeaders?: Record<string, string>) => {
   const headersLink = createHeadersLink(defaultHeaders)
