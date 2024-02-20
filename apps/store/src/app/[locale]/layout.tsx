@@ -1,4 +1,11 @@
-import { ReactNode } from 'react'
+// Workaround to make app dir work with emotion compiler enabled
+// next.config.js - { compiler: { emotion: true } }
+/** @jsxImportSource react */
+
+import { Provider as JotaiProvider } from 'jotai'
+import { ReactNode, Suspense } from 'react'
+import { NextAppDirEmotionCacheProvider } from 'tss-react/next/appDir'
+import globalCss from 'ui/src/global.css'
 import { theme } from 'ui'
 import { fetchGlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
@@ -12,10 +19,19 @@ import { contentFontClassName } from '@/utils/fonts'
 import { locales } from '@/utils/l10n/locales'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 import { RoutingLocale } from '@/utils/l10n/types'
+import { ORIGIN_URL } from '@/utils/PageLink'
+import { DebugError } from './DebugError'
 import { initTranslationsServerSide } from './i18n'
 import { ProductMetadataProvider } from './ProductMetadataProvider'
 import { StoryblokLayout } from './StoryblokLayout'
+import StoryblokProvider from './StoryblokProvider'
 import { TranslationsProvider } from './TranslationsProvider'
+import { ApolloProvider } from './ApolloProvider'
+
+// Trick compiler into thinking we need global.css import for anything other than side effects
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const noop = (val: any) => {}
+noop(globalCss)
 
 export type LocalizedLayoutProps<P = unknown> = P & {
   children: ReactNode
@@ -36,13 +52,24 @@ const Layout = async ({ children, params: { locale } }: LocalizedLayoutProps) =>
         <meta name="theme-color" content={theme.colors.light} />
       </head>
       <body className={contentFontClassName}>
-        <TranslationsProvider locale={locale} resources={resources}>
-          <ProductMetadataProvider productMetadata={productMetadata}>
-            <ShopSessionProvider>
-              <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
-            </ShopSessionProvider>
-          </ProductMetadataProvider>
-        </TranslationsProvider>
+        <NextAppDirEmotionCacheProvider options={{ key: 'css' }}>
+          <Suspense>
+            <DebugError />
+          </Suspense>
+          <ApolloProvider>
+            <StoryblokProvider>
+              <JotaiProvider>
+                <TranslationsProvider locale={locale} resources={resources}>
+                  <ProductMetadataProvider productMetadata={productMetadata}>
+                    <ShopSessionProvider>
+                      <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
+                    </ShopSessionProvider>
+                  </ProductMetadataProvider>
+                </TranslationsProvider>
+              </JotaiProvider>
+            </StoryblokProvider>
+          </ApolloProvider>
+        </NextAppDirEmotionCacheProvider>
       </body>
     </html>
   )
@@ -53,6 +80,32 @@ export const generateStaticParams = () => {
 }
 
 export default Layout
+
+export const metadata = {
+  metadataBase: new URL(ORIGIN_URL),
+  twitter: { site: '@hedvigapp', card: 'summary_large_image' },
+  icons: [
+    { rel: 'apple-touch-icon', sizes: '76x76', url: '/apple-touch-icon.png' },
+    {
+      rel: 'icon',
+      type: 'image/png',
+      sizes: '32x32',
+      url: '/favicon-32x32.png',
+    },
+    {
+      rel: 'icon',
+      type: 'image/png',
+      sizes: '16x16',
+      url: '/favicon-16x16.png',
+    },
+    {
+      rel: 'mask-icon',
+      url: '/safari-pinned-tab.svg',
+      color: theme.colors.gray1000,
+    },
+  ],
+  manifest: '/site.webmanifest',
+}
 
 const initCacheVersionAndFetchGlobalStory = async (locale: RoutingLocale) => {
   // Not using the result, all we need is to put storyblok cache version into NextJs cache
