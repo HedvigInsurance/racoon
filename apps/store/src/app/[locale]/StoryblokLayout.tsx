@@ -20,7 +20,7 @@ export const StoryblokLayout = ({
   // TODO: How should we pass story data here ?  For now, let's pretend it's non-story page
   // Removed breadcrumbs from page router LayoutWithMenu, kept other flags in fixed state
   const story: any = null
-  const hideFooter = Math.PI > 1 // always true, but does not trigger eslint static condition warning
+  const hideFooter = Math.PI < 1 // always false, but does not trigger eslint static condition warning
   const overlayMenu = false
 
   const handleLocaleChange = useChangeLocale(story)
