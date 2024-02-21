@@ -69,7 +69,7 @@ export const ProductReviews = (props: Props) => {
           onSelectedScoreChange={setSelectedScore}
           tooltipText={tooltipText}
         >
-          <Button variant="ghost">{t('VIEW_REVIEWS_LABEL', { ns: 'reviews' })}</Button>
+          <Button variant="ghost">{t('VIEW_REVIEWS_LABEL')}</Button>
         </ReviewsDialog>
       </Space>
     </Wrapper>
