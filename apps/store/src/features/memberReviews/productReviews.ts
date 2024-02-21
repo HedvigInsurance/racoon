@@ -120,6 +120,7 @@ const parseReviewsByScore = (
           date: comment.date,
           score: comment.score,
           content: comment.content,
+          tag: reviewComments.tag,
         })),
       },
     }),

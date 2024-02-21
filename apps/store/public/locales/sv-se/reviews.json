@@ -4,5 +4,14 @@
   "REVIEWS_COUNT_LABEL_other": "{{reviewsCount}} omdömen",
   "REVIEWS_DISCLAIMER_one": "Visar genomsnittet av {{reviewsCount}} omdöme från våra kunder. Alla som haft en skada blir inbjuden till att lämna ett omdöme.",
   "REVIEWS_DISCLAIMER_other": "Visar genomsnittet av {{reviewsCount}} omdömen från våra kunder. Alla som haft en skada blir inbjuden till att lämna ett omdöme.",
+  "SE_ACCIDENT_REVIEW_COMMENT_TAG": "Olycksfall",
+  "SE_APARTMENT_BRF_REVIEW_COMMENT_TAG": "Bostadsrätt",
+  "SE_APARTMENT_RENT_REVIEW_COMMENT_TAG": "Hyresrätt",
+  "SE_APARTMENT_STUDENT_REVIEW_COMMENT_TAG": "Student",
+  "SE_CAR_REVIEW_COMMENT_TAG": "Bil",
+  "SE_HOUSE_REVIEW_COMMENT_TAG": "Villa",
+  "SE_PET_CAT_REVIEW_COMMENT_TAG": "Katt",
+  "SE_PET_DOG_REVIEW_COMMENT_TAG": "Hund",
+  "VERIFIED_CUSTOMER_LABEL": "Verifierad kund",
   "VIEW_REVIEWS_LABEL": "Visa omdömen"
 }

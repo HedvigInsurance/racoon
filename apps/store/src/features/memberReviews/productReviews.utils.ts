@@ -19,6 +19,7 @@ const commentsByScoreSchema = z.object({
 })
 
 export const reviewCommentsSchema = z.object({
+  tag: z.string(),
   commentsByScore: z.object({
     5: commentsByScoreSchema,
     4: commentsByScoreSchema,

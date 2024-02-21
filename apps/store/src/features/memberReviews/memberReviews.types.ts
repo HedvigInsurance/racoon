@@ -11,6 +11,7 @@ export type Review = {
   score: number
   date: string
   content: string
+  tag?: string
 }
 
 export type ScoreDistributionTuple = [Score, number]
