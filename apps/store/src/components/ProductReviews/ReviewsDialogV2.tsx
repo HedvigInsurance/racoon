@@ -9,7 +9,7 @@ import type {
   ReviewsDistribution,
 } from '@/features/memberReviews/memberReviews.types'
 import { AverageRatingV2 } from './AverageRatingV2'
-import { ReviewComment } from './ReviewComment'
+import { ReviewCommentV2 } from './ReviewCommentV2'
 import {
   closeBtn,
   dialogContent,
@@ -68,7 +68,7 @@ export const ReviewsDialogV2 = ({
               {reviews.length > 0 ? (
                 <Space y={{ base: 0.5, md: 1 }}>
                   {reviews.map((review) => (
-                    <ReviewComment key={review.id} className={reviewComment} {...review} />
+                    <ReviewCommentV2 key={review.id} className={reviewComment} {...review} />
                   ))}
 
                   <Text
