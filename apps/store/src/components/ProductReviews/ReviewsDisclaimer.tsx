@@ -12,7 +12,7 @@ export const ReviewsDiclaimer = ({ reviewsCount, ...others }: Props) => {
   const { numberGrouping } = useFormatter()
 
   return (
-    <Text color="textSecondary" align="center" {...others}>
+    <Text color="textSecondary" size="md" align="center" {...others}>
       {t('REVIEWS_DISCLAIMER', {
         count: reviewsCount,
         reviewsCount: numberGrouping(reviewsCount),
