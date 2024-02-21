@@ -64,7 +64,9 @@ type DialogProps = {
 }
 
 const Dialog = (props: DialogProps) => {
-  const { rating, reviews, reviewsDistribution, selectedScore, setSelectedScore } = useReviewsV2()
+  const productReviewsData = useProuctReviewsDataContext()
+  const { rating, reviews, reviewsDistribution, selectedScore, setSelectedScore } =
+    useReviewsV2(productReviewsData)
 
   const closeDialog = () => {
     // Notify that all media paused as a result of the dialog being opened should be resumed

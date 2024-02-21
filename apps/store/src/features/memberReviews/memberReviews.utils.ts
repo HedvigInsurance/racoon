@@ -11,26 +11,33 @@ export const reviewSchema = z.object({
   score: z.number(),
   content: z.string(),
   author: z.string(),
+  tag: z.string().optional(),
 })
 
-const commentsByScoreSchema = z.object({
+const commentByScoreValueSchema = z.object({
   total: z.number(),
   latestComments: z.array(reviewSchema),
 })
 
-export const reviewCommentsSchema = z.object({
-  tag: z.string(),
-  commentsByScore: z.object({
-    5: commentsByScoreSchema,
-    4: commentsByScoreSchema,
-    3: commentsByScoreSchema,
-    2: commentsByScoreSchema,
-    1: commentsByScoreSchema,
-  }),
+export const commentByScoreSchema = z.object({
+  5: commentByScoreValueSchema,
+  4: commentByScoreValueSchema,
+  3: commentByScoreValueSchema,
+  2: commentByScoreValueSchema,
+  1: commentByScoreValueSchema,
 })
 
-export const validateProductAverageRating = (data: unknown) => {
+export const reviewCommentsSchema = z.object({
+  tag: z.string(),
+  commentsByScore: commentByScoreSchema,
+})
+
+export const validateAverageRating = (data: unknown) => {
   return averageRatingSchema.safeParse(data)
+}
+
+export const validateLatestReviews = (data: unknown) => {
+  return commentByScoreSchema.safeParse(data)
 }
 
 export const validateProductReviewsComments = (data: unknown) => {

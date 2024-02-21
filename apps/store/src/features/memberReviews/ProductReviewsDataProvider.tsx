@@ -1,23 +1,9 @@
 import { createContext, useContext, type PropsWithChildren } from 'react'
-import type { Score, Rating, Review, ReviewsDistribution } from './memberReviews.types'
+import type { ReviewsData } from './memberReviews.types'
 
-type ReviewsByScore = Record<
-  Score,
-  {
-    total: number
-    reviews: Array<Review>
-  }
->
+const ProductReviewsDataContext = createContext<ReviewsData | null>(null)
 
-export type ProductReviewsData = {
-  averageRating: Rating
-  reviewsByScore: ReviewsByScore
-  reviewsDistribution: ReviewsDistribution
-}
-
-const ProductReviewsDataContext = createContext<ProductReviewsData | null>(null)
-
-type Props = PropsWithChildren<{ productReviewsData: ProductReviewsData | null }>
+type Props = PropsWithChildren<{ productReviewsData: ReviewsData | null }>
 
 export const ProductReviewsDataProvider = ({ children, productReviewsData }: Props) => {
   return (

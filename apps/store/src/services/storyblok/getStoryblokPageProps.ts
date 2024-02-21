@@ -1,6 +1,7 @@
 import { type GetServerSidePropsContext, type GetStaticPropsContext } from 'next'
 import { fetchBreadcrumbs } from '@/components/LayoutWithMenu/fetchBreadcrumbs'
 import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
+import { fetchCompanyReviewsData } from '@/features/memberReviews/memberReviews'
 import { fetchTrustpilotData } from '@/features/memberReviews/trustpilot'
 import { type RoutingLocale } from '@/utils/l10n/types'
 import { initializeApollo } from '../apollo/client'
@@ -27,10 +28,11 @@ export const getStoryblokPageProps = async ({
 
   const timerName = `Get Storyblok page props for ${locale}/${slug} ${draftMode ? '(draft)' : ''}`
   console.time(timerName)
-  const [layoutWithMenuProps, breadcrumbs, trustpilotData] = await Promise.all([
+  const [layoutWithMenuProps, breadcrumbs, trustpilotData, companyReviewsData] = await Promise.all([
     getLayoutWithMenuProps(context, apolloClient),
     fetchBreadcrumbs(slug, { version, locale }),
     fetchTrustpilotData(locale),
+    fetchCompanyReviewsData(),
   ]).catch((error) => {
     throw new Error(`Failed to fetch data for ${slug}: ${error.message}`, { cause: error })
   })
@@ -50,5 +52,6 @@ export const getStoryblokPageProps = async ({
     [STORY_PROP_NAME]: story,
     breadcrumbs,
     trustpilotData,
+    companyReviewsData,
   }
 }
