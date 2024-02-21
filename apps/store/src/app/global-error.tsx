@@ -21,8 +21,9 @@ const headerStyle = {
   fontSize: '1.75rem',
 }
 
-// No i18n since rendering needs to be sync
-// No components that depend on emotion styles
+// No i18n since rendering needs to be sync and it takes no props
+// - No components that depend on emotion styles
+// - Hardcoded strings
 export default function GlobalErrorPage() {
   const locale = getLocaleOrFallback(FALLBACK_LOCALE).routingLocale
   return (

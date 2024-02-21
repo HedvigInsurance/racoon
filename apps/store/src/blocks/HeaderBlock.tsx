@@ -3,7 +3,7 @@ import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { storyblokEditable } from '@storyblok/react'
 import { usePathname } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { mq, Space, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { Header } from '@/components/Header/Header'
@@ -231,6 +231,9 @@ export type HeaderBlockProps = SbBaseBlockProps<{
 export const HeaderBlock = ({ blok, ...headerProps }: HeaderBlockProps) => {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
+  useEffect(() => {
+    setIsOpen(false)
+  }, [pathname])
 
   const productNavItem = useMemo(
     () =>

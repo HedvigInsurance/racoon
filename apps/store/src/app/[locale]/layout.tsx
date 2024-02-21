@@ -2,10 +2,7 @@
 // next.config.js - { compiler: { emotion: true } }
 /** @jsxImportSource react */
 
-import { Provider as JotaiProvider } from 'jotai'
-import { ReactNode, Suspense } from 'react'
-import { NextAppDirEmotionCacheProvider } from 'tss-react/next/appDir'
-import globalCss from 'ui/src/global.css'
+import { ReactNode } from 'react'
 import { theme } from 'ui'
 import { fetchGlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
@@ -15,23 +12,14 @@ import {
   fetchStoryblokCacheVersion,
   getStoryBySlug,
 } from '@/services/storyblok/storyblok.serverOnly'
-import { contentFontClassName } from '@/utils/fonts'
 import { locales } from '@/utils/l10n/locales'
-import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 import { RoutingLocale } from '@/utils/l10n/types'
 import { ORIGIN_URL } from '@/utils/PageLink'
-import { DebugError } from './DebugError'
 import { initTranslationsServerSide } from './i18n'
 import { ProductMetadataProvider } from './ProductMetadataProvider'
+import { RootLayout } from './RootLayout'
 import { StoryblokLayout } from './StoryblokLayout'
-import StoryblokProvider from './StoryblokProvider'
 import { TranslationsProvider } from './TranslationsProvider'
-import { ApolloProvider } from './ApolloProvider'
-
-// Trick compiler into thinking we need global.css import for anything other than side effects
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const noop = (val: any) => {}
-noop(globalCss)
 
 export type LocalizedLayoutProps<P = unknown> = P & {
   children: ReactNode
@@ -47,37 +35,23 @@ const Layout = async ({ children, params: { locale } }: LocalizedLayoutProps) =>
   ])
 
   return (
-    <html lang={getLocaleOrFallback(locale).htmlLang}>
-      <head>
-        <meta name="theme-color" content={theme.colors.light} />
-      </head>
-      <body className={contentFontClassName}>
-        <NextAppDirEmotionCacheProvider options={{ key: 'css' }}>
-          <Suspense>
-            <DebugError />
-          </Suspense>
-          <ApolloProvider>
-            <StoryblokProvider>
-              <JotaiProvider>
-                <TranslationsProvider locale={locale} resources={resources}>
-                  <ProductMetadataProvider productMetadata={productMetadata}>
-                    <ShopSessionProvider>
-                      <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
-                    </ShopSessionProvider>
-                  </ProductMetadataProvider>
-                </TranslationsProvider>
-              </JotaiProvider>
-            </StoryblokProvider>
-          </ApolloProvider>
-        </NextAppDirEmotionCacheProvider>
-      </body>
-    </html>
+    <RootLayout locale={locale}>
+      <TranslationsProvider locale={locale} resources={resources}>
+        <ProductMetadataProvider productMetadata={productMetadata}>
+          <ShopSessionProvider>
+            <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
+          </ShopSessionProvider>
+        </ProductMetadataProvider>
+      </TranslationsProvider>
+    </RootLayout>
   )
 }
 
 export const generateStaticParams = () => {
   return Object.values(locales).map(({ routingLocale }) => ({ locale: routingLocale }))
 }
+
+export const dynamicParams = false
 
 export default Layout
 
