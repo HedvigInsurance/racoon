@@ -1,0 +1,150 @@
+import styled from '@emotion/styled'
+import Head from 'next/head'
+import { useTranslation } from 'next-i18next'
+import { type ReactNode } from 'react'
+import { Text, StarIcon, theme } from 'ui'
+import { GridLayout } from '@/components/GridLayout/GridLayout'
+import { ProductData } from '@/components/ProductData/ProductData.types'
+import { useProductData } from '@/components/ProductData/ProductDataProvider'
+import { ReviewsDialogV2 } from '@/components/ProductReviews/ReviewsDialogV2'
+import { useReviewsV2 } from '@/components/ProductReviews/useReviewsV2'
+import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
+import { useProuctReviewsDataContext } from '@/features/memberReviews/ProductReviewsDataProvider'
+import { sendDialogEvent } from '@/utils/dialogEvent'
+import { useFormatter } from '@/utils/useFormatter'
+
+export const ProductAverageRatingV2 = () => {
+  const { t } = useTranslation('common')
+  const { numberGrouping } = useFormatter()
+  const productReviewsData = useProuctReviewsDataContext()
+  const productData = useProductData()
+
+  const openDialog = () => {
+    sendDialogEvent('open')
+  }
+
+  const averageRating = productReviewsData?.averageRating
+  if (!averageRating) {
+    console.log(`ProductAverageRating | No reviews data found for product ${productData.name}`)
+    return null
+  }
+
+  return (
+    <>
+      <Head>
+        <script
+          key="product-structured-data"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(getProductStructuredData(productData, averageRating)),
+          }}
+        />
+      </Head>
+
+      <GridLayout.Root>
+        <GridLayout.Content
+          width={{
+            base: '1',
+          }}
+        >
+          <Wrapper>
+            <StarIcon size="1rem" />
+
+            <SpaceFlex direction="horizontal" space={0.2} align="center">
+              <Text as="span" color="textSecondary" size={{ _: 'xs' }}>
+                {t('RATING_SCORE_LABEL', { score: averageRating.score, maxScore: MAX_SCORE })}
+              </Text>
+
+              <Text as="span" color="textSecondary" size={{ _: 'xs' }}>
+                ·
+              </Text>
+
+              <Dialog>
+                <Trigger onClick={openDialog}>
+                  {t('REVIEWS_COUNT_LABEL', {
+                    count: averageRating.totalOfReviews,
+                    reviewsCount: numberGrouping(averageRating.totalOfReviews),
+                  })}
+                </Trigger>
+              </Dialog>
+            </SpaceFlex>
+          </Wrapper>
+        </GridLayout.Content>
+      </GridLayout.Root>
+    </>
+  )
+}
+
+type DialogProps = {
+  children: ReactNode
+}
+
+const Dialog = (props: DialogProps) => {
+  const { rating, reviews, reviewsDistribution, selectedScore, setSelectedScore } = useReviewsV2()
+
+  const closeDialog = () => {
+    sendDialogEvent('close')
+  }
+
+  if (!rating) return null
+
+  return (
+    <ReviewsDialogV2
+      rating={rating}
+      reviews={reviews}
+      reviewsDistribution={reviewsDistribution}
+      selectedScore={selectedScore}
+      onSelectedScoreChange={setSelectedScore}
+      onClose={closeDialog}
+    >
+      {props.children}
+    </ReviewsDialogV2>
+  )
+}
+
+const Wrapper = styled.div({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: theme.space.xxs,
+  flexWrap: 'wrap',
+})
+
+const Trigger = styled.button({
+  color: theme.colors.textSecondary,
+  fontSize: theme.fontSizes.xs,
+  textDecoration: 'underline',
+  cursor: 'pointer',
+
+  ':focus-visible': {
+    boxShadow: theme.shadow.focus,
+  },
+
+  '@media (hover: hover)': {
+    ':hover': {
+      color: theme.colors.textPrimary,
+    },
+  },
+})
+
+type AverageRating = NonNullable<ReturnType<typeof useProuctReviewsDataContext>>['averageRating']
+
+const getProductStructuredData = (product: ProductData, averageRating: AverageRating) => {
+  return {
+    '@context': 'https://schema.org/',
+    '@type': 'Product',
+    name: product.displayNameFull,
+    description: product.tagline,
+    brand: {
+      '@type': 'Brand',
+      name: 'Hedvig',
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: averageRating.score,
+      bestRating: MAX_SCORE,
+      reviewCount: averageRating.totalOfReviews,
+    },
+  }
+}
