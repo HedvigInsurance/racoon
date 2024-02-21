@@ -17,8 +17,6 @@ const Page = async (props: LocalizedPageProps) => {
   const productMetadata = await fetchGlobalProductMetadata({ apolloClient })
 
   console.log('productMetadata@page, items:', productMetadata.length)
-  // const atom = productsMetadataAtom(props.params.locale)
-  // console.log('atom', atom)
   return (
     <div className={wrapper}>
       <h1>Server-side translation: {t('404_PAGE_MESSAGE')}</h1>

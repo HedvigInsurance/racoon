@@ -14,10 +14,6 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   if (!Features.enabled('MEMBER_AREA')) return { notFound: true }
   if (!isRoutingLocale(locale)) return { notFound: true }
 
-  if (process.env.VERCEL_ENV !== 'production' && context.query.error != null) {
-    throw new Error('test')
-  }
-
   const isAuthenticated = getAccessToken({ req, res })
   if (isAuthenticated) {
     const redirectTarget = new URL(resolvedUrl, ORIGIN_URL)

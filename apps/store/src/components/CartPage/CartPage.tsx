@@ -32,10 +32,6 @@ export const CartPage = () => {
   const { productRecommendations, offerRecommendation } = useProductRecommendations()
   const tracking = useTracking()
 
-  if (process.env.VERCEL_ENV !== 'production' && router.query.error != null) {
-    throw new Error('test')
-  }
-
   useTrackViewCartEffect()
 
   if (!shopSession || !router.isReady) return <LoadingState />

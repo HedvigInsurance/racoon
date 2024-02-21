@@ -43,10 +43,6 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
   const { req, res, locale } = context
   if (!isRoutingLocale(locale)) return { notFound: true }
 
-  if (process.env.VERCEL_ENV !== 'production' && context.query.error != null) {
-    throw new Error('test')
-  }
-
   const fallbackRedirect = {
     redirect: { destination: PageLink.home({ locale }).toString(), permanent: false },
   } as const
