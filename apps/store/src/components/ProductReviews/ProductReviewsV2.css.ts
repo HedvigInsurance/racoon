@@ -12,3 +12,11 @@ export const innerWrapper = style({
   flexDirection: 'column',
   alignItems: 'center',
 })
+
+export const dialogHeader = style({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: theme.space.md,
+  marginBottom: theme.space.xxxl,
+})
