@@ -24,8 +24,10 @@ export const PillowHeader = ({ title, score, reviewsCount, pillow, className }: 
       <Pillow size="xlarge" {...pillow} />
 
       <div>
-        <Text align="center">{title}</Text>
-        <Text align="center" color="textSecondary">
+        <Text size="md" align="center">
+          {title}
+        </Text>
+        <Text size="md" align="center" color="textSecondary">
           {t('RATING_SCORE_LABEL', { score: score, maxScore: MAX_SCORE })}
           {' · '}
           {t('REVIEWS_COUNT_LABEL', {
