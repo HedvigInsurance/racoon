@@ -15,7 +15,12 @@ export const disclaimerText = style({
   paddingBottom: theme.space.xs,
 })
 
-export const dialogTrigger = style({
+export const reviewsDistributionSection = style({
   display: 'flex',
-  marginInline: 'auto',
+  flexDirection: 'column',
+  alignItems: 'center',
+})
+
+export const reviewsDistributionWrapper = style({
+  alignSelf: 'stretch',
 })

@@ -5,7 +5,12 @@ import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
 import { useProuctReviewsDataContext } from '@/features/memberReviews/ProductReviewsDataProvider'
 import { AverageRatingV2 } from './AverageRatingV2'
 import { PillowHeader } from './PillowHeader'
-import { wrapper, disclaimerText, dialogTrigger } from './ProductReviewsV2.css'
+import {
+  wrapper,
+  disclaimerText,
+  reviewsDistributionSection,
+  reviewsDistributionWrapper,
+} from './ProductReviewsV2.css'
 import { ReviewsDialogV2 } from './ReviewsDialogV2'
 import { ReviewsDiclaimer } from './ReviewsDisclaimer'
 import { ReviewsDistributionByScore } from './ReviewsDistributionByScore'
@@ -35,8 +40,8 @@ export const ProductReviewsV2 = () => {
         />
       </section>
 
-      <Space y={2}>
-        <div>
+      <Space className={reviewsDistributionSection} y={2}>
+        <div className={reviewsDistributionWrapper}>
           {reviewsDistribution.map(([score, percentage]) => (
             <ReviewsDistributionByScore key={score} score={score} percentage={percentage} />
           ))}
@@ -56,7 +61,7 @@ export const ProductReviewsV2 = () => {
           selectedScore={selectedScore}
           onSelectedScoreChange={setSelectedScore}
         >
-          <Button className={dialogTrigger} variant="primary-alt" size="medium">
+          <Button variant="primary-alt" size="medium">
             {t('VIEW_REVIEWS_LABEL')}
           </Button>
         </ReviewsDialogV2>
