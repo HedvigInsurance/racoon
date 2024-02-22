@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { useTranslation } from 'next-i18next'
 import { type ReactNode } from 'react'
-import { InfoIcon } from 'ui'
+import { CertifiedIcon } from 'ui'
 import { ProductData } from '@/components/ProductData/ProductData.types'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { ReviewsDialogV2 } from '@/components/ProductReviews/ReviewsDialogV2'
@@ -44,7 +44,7 @@ export const ProductAverageRatingV2 = () => {
       </Head>
 
       <div className={wrapper}>
-        <InfoIcon size="1rem" />
+        <CertifiedIcon size="1rem" />
 
         <Dialog>
           <button className={trigger} onClick={openDialog}>
