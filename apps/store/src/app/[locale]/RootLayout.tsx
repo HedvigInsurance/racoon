@@ -2,7 +2,6 @@ import { Provider as JotaiProvider } from 'jotai'
 import { PropsWithChildren, Suspense } from 'react'
 import { NextAppDirEmotionCacheProvider } from 'tss-react/next/appDir'
 import globalCss from 'ui/src/global.css'
-import { theme } from 'ui/src/theme'
 import { contentFontClassName } from '@/utils/fonts'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 import { RoutingLocale } from '@/utils/l10n/types'
@@ -18,9 +17,6 @@ noop(globalCss)
 export const RootLayout = ({ locale, children }: PropsWithChildren<{ locale: RoutingLocale }>) => {
   return (
     <html lang={getLocaleOrFallback(locale).htmlLang}>
-      <head>
-        <meta name="theme-color" content={theme.colors.light} />
-      </head>
       <body className={contentFontClassName}>
         <NextAppDirEmotionCacheProvider options={{ key: 'css' }}>
           <Suspense>

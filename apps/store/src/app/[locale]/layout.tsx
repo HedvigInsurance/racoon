@@ -3,7 +3,6 @@
 /** @jsxImportSource react */
 
 import { ReactNode } from 'react'
-import { theme } from 'ui'
 import { fetchGlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
@@ -14,7 +13,6 @@ import {
 } from '@/services/storyblok/storyblok.serverOnly'
 import { locales } from '@/utils/l10n/locales'
 import { RoutingLocale } from '@/utils/l10n/types'
-import { ORIGIN_URL } from '@/utils/PageLink'
 import { initTranslationsServerSide } from './i18n'
 import { ProductMetadataProvider } from './ProductMetadataProvider'
 import { RootLayout } from './RootLayout'
@@ -54,32 +52,6 @@ export const generateStaticParams = () => {
 export const dynamicParams = false
 
 export default Layout
-
-export const metadata = {
-  metadataBase: new URL(ORIGIN_URL),
-  twitter: { site: '@hedvigapp', card: 'summary_large_image' },
-  icons: [
-    { rel: 'apple-touch-icon', sizes: '76x76', url: '/apple-touch-icon.png' },
-    {
-      rel: 'icon',
-      type: 'image/png',
-      sizes: '32x32',
-      url: '/favicon-32x32.png',
-    },
-    {
-      rel: 'icon',
-      type: 'image/png',
-      sizes: '16x16',
-      url: '/favicon-16x16.png',
-    },
-    {
-      rel: 'mask-icon',
-      url: '/safari-pinned-tab.svg',
-      color: theme.colors.gray1000,
-    },
-  ],
-  manifest: '/site.webmanifest',
-}
 
 const initCacheVersionAndFetchGlobalStory = async (locale: RoutingLocale) => {
   // Not using the result, all we need is to put storyblok cache version into NextJs cache
