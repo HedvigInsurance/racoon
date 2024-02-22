@@ -1,5 +1,5 @@
 import type { ProductData } from '@/components/ProductData/ProductData.types'
-import { type ProductReviewsData } from '@/features/memberReviews/ProductReviewsDataProvider'
+import type { ReviewsData } from '@/features/memberReviews/memberReviews.types'
 import type { TrustpilotData } from '@/features/memberReviews/TrustpilotDataProvider'
 import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { ProductStory, StoryblokPageProps } from '@/services/storyblok/storyblok'
@@ -10,5 +10,5 @@ export type ProductPageProps = StoryblokPageProps & {
   productData: ProductData
   initialSelectedTypeOfContract?: string
   trustpilotData: TrustpilotData | null
-  productReviewsData: ProductReviewsData | null
+  productReviewsData: ReviewsData | null
 }

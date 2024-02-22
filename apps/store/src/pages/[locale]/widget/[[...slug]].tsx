@@ -4,6 +4,9 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { HedvigLogo } from 'ui'
 import { DefaultDebugDialog } from '@/components/DebugDialog/DefaultDebugDialog'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
+import { CompanyReviewsDataProvider } from '@/features/memberReviews/CompanyReviewsDataProvider'
+import { fetchCompanyReviewsData } from '@/features/memberReviews/memberReviews'
+import { ReviewsData } from '@/features/memberReviews/memberReviews.types'
 import { fetchTrustpilotData } from '@/features/memberReviews/trustpilot'
 import type { TrustpilotData } from '@/features/memberReviews/TrustpilotDataProvider'
 import { TrustpilotDataProvider } from '@/features/memberReviews/TrustpilotDataProvider'
@@ -22,7 +25,10 @@ import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
 
-type PageProps = Pick<StoryblokPageProps, 'story'> & { trustpilotData: TrustpilotData | null }
+type PageProps = Pick<StoryblokPageProps, 'story'> & {
+  trustpilotData: TrustpilotData | null
+  companyReviewsData: ReviewsData | null
+}
 
 const NextPage: NextPageWithLayout<PageProps> = (props) => {
   const story = useStoryblokState(props.story)
@@ -43,7 +49,9 @@ const NextPage: NextPageWithLayout<PageProps> = (props) => {
         </LogoArea>
       </HeaderFrame>
       <TrustpilotDataProvider trustpilotData={props.trustpilotData}>
-        <StoryblokComponent blok={story.content} />
+        <CompanyReviewsDataProvider companyReviewsData={props.companyReviewsData}>
+          <StoryblokComponent blok={story.content} />
+        </CompanyReviewsDataProvider>
       </TrustpilotDataProvider>
       <DefaultDebugDialog />
     </>
@@ -75,6 +83,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
       ...hideChatOnPage(story.content.hideChat ?? false),
       [STORY_PROP_NAME]: story,
       trustpilotData: await fetchTrustpilotData(context.locale),
+      companyReviewsData: await fetchCompanyReviewsData(),
     },
     revalidate: getRevalidate(),
   }

@@ -17,3 +17,9 @@ export type Review = {
 export type ScoreDistributionTuple = [Score, number]
 
 export type ReviewsDistribution = Array<ScoreDistributionTuple>
+
+export type ReviewsData = {
+  averageRating: Rating
+  reviewsByScore: Record<Score, { total: number; reviews: Array<Review> }>
+  reviewsDistribution: ReviewsDistribution
+}

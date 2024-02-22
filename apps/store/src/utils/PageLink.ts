@@ -178,6 +178,15 @@ export const PageLink = {
     return url
   },
 
+  reviews: ({ locale }: BaseParams) => {
+    const url = REVIEWS_URL[locale]
+    if (!url) {
+      datadogLogs.logger.error('Missing reviews link for locale', { locale })
+      return PageLink.home({ locale })
+    }
+    return url
+  },
+
   apiSessionReset: ({ next }: { next?: string } = {}) => {
     const url = new URL('/api/session/reset', ORIGIN_URL)
 
@@ -334,4 +343,9 @@ const DEDUCTIBLE_HELP_URL: Partial<Record<RoutingLocale, URL>> = {
 const PRIVACY_POLICY_URL: Partial<Record<RoutingLocale, URL>> = {
   se: new URL('/se/hedvig/personuppgifter', ORIGIN_URL),
   'se-en': new URL('/se-en/hedvig/privacy-policy', ORIGIN_URL),
+}
+
+const REVIEWS_URL: Partial<Record<RoutingLocale, URL>> = {
+  se: new URL('/se/hedvig/omdomen', ORIGIN_URL),
+  'se-en': new URL('/se-en/hedvig/reviews', ORIGIN_URL),
 }

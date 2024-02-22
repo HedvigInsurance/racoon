@@ -4,6 +4,9 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import type { ProductData } from '@/components/ProductData/ProductData.types'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
+import { CompanyReviewsDataProvider } from '@/features/memberReviews/CompanyReviewsDataProvider'
+import { fetchCompanyReviewsData } from '@/features/memberReviews/memberReviews'
+import { ReviewsData } from '@/features/memberReviews/memberReviews.types'
 import { fetchTrustpilotData } from '@/features/memberReviews/trustpilot'
 import {
   type TrustpilotData,
@@ -27,6 +30,7 @@ type PageProps = {
   story: WidgetFlowStory
   productData: ProductData
   trustpilotData: TrustpilotData | null
+  companyReviewsData: ReviewsData | null
 }
 
 const WidgetCmsPage = (props: PageProps) => {
@@ -37,7 +41,9 @@ const WidgetCmsPage = (props: PageProps) => {
   return (
     <ProductDataProvider productData={props.productData}>
       <TrustpilotDataProvider trustpilotData={props.trustpilotData}>
-        <StoryblokComponent blok={story.content} />
+        <CompanyReviewsDataProvider companyReviewsData={props.companyReviewsData}>
+          <StoryblokComponent blok={story.content} />
+        </CompanyReviewsDataProvider>
       </TrustpilotDataProvider>
     </ProductDataProvider>
   )
@@ -53,7 +59,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
   const slug = `${STORYBLOK_WIDGET_FOLDER_SLUG}/flows/${params.slug.join('/')}`
   const version = draftMode ? 'draft' : undefined
 
-  const [story, translations, productData, trustpilotData] = await Promise.all([
+  const [story, translations, productData, trustpilotData, companyReviewsData] = await Promise.all([
     getStoryBySlug(slug, { version, locale }),
     serverSideTranslations(locale),
     fetchProductData({
@@ -61,12 +67,13 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
       productName: EXAMPLE_PRODUCT_NAME,
     }),
     fetchTrustpilotData(locale),
+    fetchCompanyReviewsData(),
   ])
 
   if (!isWidgetFlowStory(story)) throw new Error(`Invalid story type: ${story.slug}.`)
 
   return {
-    props: { ...translations, story, productData, trustpilotData },
+    props: { ...translations, story, productData, trustpilotData, companyReviewsData },
     revalidate: getRevalidate(),
   }
 }

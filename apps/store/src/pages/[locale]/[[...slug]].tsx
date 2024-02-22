@@ -8,7 +8,9 @@ import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { type ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { fetchBlogPageProps } from '@/features/blog/fetchBlogPageProps'
 import { BlogContext, parseBlogContext } from '@/features/blog/useBlog'
-import { fetchProductReviewsData } from '@/features/memberReviews/productReviews'
+import { CompanyReviewsDataProvider } from '@/features/memberReviews/CompanyReviewsDataProvider'
+import { fetchProductReviewsData } from '@/features/memberReviews/memberReviews'
+import type { ReviewsData } from '@/features/memberReviews/memberReviews.types'
 import type { TrustpilotData } from '@/features/memberReviews/TrustpilotDataProvider'
 import { TrustpilotDataProvider } from '@/features/memberReviews/TrustpilotDataProvider'
 import { initializeApollo } from '@/services/apollo/client'
@@ -28,6 +30,7 @@ import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
 type NextContentPageProps = StoryblokPageProps & {
   type: 'content'
   trustpilotData: TrustpilotData | null
+  companyReviewsData: ReviewsData | null
 }
 type NextProductPageProps = ProductPageProps & { type: 'product' }
 
@@ -48,14 +51,16 @@ const NextStoryblokPage = (props: NextContentPageProps) => {
   return (
     <BlogContext.Provider value={parseBlogContext(props)}>
       <TrustpilotDataProvider trustpilotData={props.trustpilotData}>
-        <HeadSeoInfo
-          // Gotcha:  Sometimes Storyblok returns "" for PageStory pages that doesn't get 'abTestOrigin' configured
-          // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-          story={abTestOriginStory || story}
-          robots={robots}
-        />
-        <StoryblokComponent blok={story.content} />
-        <DefaultDebugDialog />
+        <CompanyReviewsDataProvider companyReviewsData={props.companyReviewsData}>
+          <HeadSeoInfo
+            // Gotcha:  Sometimes Storyblok returns "" for PageStory pages that doesn't get 'abTestOrigin' configured
+            // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+            story={abTestOriginStory || story}
+            robots={robots}
+          />
+          <StoryblokComponent blok={story.content} />
+          <DefaultDebugDialog />
+        </CompanyReviewsDataProvider>
       </TrustpilotDataProvider>
     </BlogContext.Provider>
   )

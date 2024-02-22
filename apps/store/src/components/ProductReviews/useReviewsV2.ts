@@ -1,25 +1,20 @@
 import { useState } from 'react'
 import type {
   Score,
-  Rating,
   Review,
+  Rating,
   ReviewsDistribution,
+  ReviewsData,
 } from '@/features/memberReviews/memberReviews.types'
-import {
-  ProductReviewsData,
-  useProuctReviewsDataContext,
-} from '@/features/memberReviews/ProductReviewsDataProvider'
 
-export const useReviewsV2 = () => {
-  const productReviewsData = useProuctReviewsDataContext()
-
+export const useReviewsV2 = (reviewsData: ReviewsData | null) => {
   const [selectedScore, setSelectedScore] = useState<Score>(() =>
-    getInitialSelectedScore(productReviewsData),
+    getInitialSelectedScore(reviewsData),
   )
 
-  const rating = getRating(productReviewsData)
-  const reviews = getReviews(productReviewsData, selectedScore)
-  const reviewsDistribution = getReviewsDistribution(productReviewsData)
+  const rating = getRating(reviewsData)
+  const reviews = getReviews(reviewsData, selectedScore)
+  const reviewsDistribution = getReviewsDistribution(reviewsData)
 
   return {
     selectedScore,
@@ -30,7 +25,7 @@ export const useReviewsV2 = () => {
   }
 }
 
-const getInitialSelectedScore = (productReviewsData: ProductReviewsData | null): Score => {
+const getInitialSelectedScore = (productReviewsData: ReviewsData | null): Score => {
   const defaultScore: Score = 5
 
   const scores: Array<Score> = [5, 4, 3, 2, 1]
@@ -41,7 +36,7 @@ const getInitialSelectedScore = (productReviewsData: ProductReviewsData | null):
   return initialSelectedScore ?? defaultScore
 }
 
-const getRating = (productReviewsData: ProductReviewsData | null): Rating | null => {
+const getRating = (productReviewsData: ReviewsData | null): Rating | null => {
   return productReviewsData?.averageRating
     ? {
         score: productReviewsData.averageRating.score,
@@ -51,7 +46,7 @@ const getRating = (productReviewsData: ProductReviewsData | null): Rating | null
 }
 
 const getReviews = (
-  productReviewsData: ProductReviewsData | null,
+  productReviewsData: ReviewsData | null,
   selectedScore: Score,
 ): Array<Review> => {
   return productReviewsData?.reviewsByScore
@@ -59,8 +54,6 @@ const getReviews = (
     : []
 }
 
-const getReviewsDistribution = (
-  productReviewsData: ProductReviewsData | null,
-): ReviewsDistribution => {
+const getReviewsDistribution = (productReviewsData: ReviewsData | null): ReviewsDistribution => {
   return productReviewsData?.reviewsDistribution ? productReviewsData.reviewsDistribution : []
 }
