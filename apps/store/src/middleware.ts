@@ -38,7 +38,7 @@ const localeMiddleware = (req: NextRequest): NextResponse | undefined => {
   const redirectToLocale = (locale: string) => {
     const targetUrl = req.nextUrl.clone()
     targetUrl.pathname = `/${locale}${targetUrl.pathname}`
-    return NextResponse.redirect(targetUrl)
+    return NextResponse.redirect(targetUrl, 308)
   }
 
   const cookieLocale = req.cookies.get(LOCALE_COOKIE_KEY)?.value
