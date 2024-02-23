@@ -7,6 +7,8 @@
   "EXTENSION_COST_EXPLANATION": "gäller från {{date}}",
   "EXTENSION_TITLE": "Förlängning",
   "INITIAL_OFFER_HEADING": "Ditt starterbjudande",
+  "MY_MONEY_CONSENT_HEADING": "Kontakta mig om bilfinansiering",
+  "MY_MONEY_CONSENT_BODY": "Jag samtycker till att Hedvig AB delar mina kontaktuppgifter (namn,  e-post, adress och telefonnummer) med MyMoney Europe AB så att MyMoney kan kontakta mig med erbjudanden om deras tjänster, exempelvis bilfinansiering. Du kan när som helst återkalla ditt samtycke. Information om hur du återkallar ditt samtycke hittar du  i Hedvigs personuppgiftspolicy.",
   "NOTICE_TOAST_CONTENT": "Vill du inte ta del av starterbjudandet? [[Avsluta erbjudandet här]].",
   "PAY_WITHOUT_EXTENSION_DIALOG_CANCEL": "Avbryt",
   "PAY_WITHOUT_EXTENSION_DIALOG_CONFIRM": "Ja, fortsätt",
