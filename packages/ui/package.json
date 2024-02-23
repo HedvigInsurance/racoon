@@ -24,7 +24,7 @@
     "@babel/preset-typescript": "7.23.3",
     "@emotion/babel-plugin": "11.11.0",
     "@emotion/jest": "11.11.0",
-    "@storybook/react": "7.6.16",
+    "@storybook/react": "7.6.17",
     "@testing-library/dom": "9.3.4",
     "@testing-library/jest-dom": "6.4.2",
     "@testing-library/react": "14.2.1",
