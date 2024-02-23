@@ -46,19 +46,19 @@ const ButtonWrapper = styled.div({
 
 export type TopMenuMobileProps = {
   isOpen: boolean
-  setIsOpen: (isOpen: boolean) => void
+  onOpenChange: (isOpen: boolean) => void
   defaultValue?: string
   children: React.ReactNode
 }
 
 export const TopMenuMobile = (props: TopMenuMobileProps) => {
-  const { children, isOpen, setIsOpen, defaultValue } = props
+  const { children, isOpen, onOpenChange, defaultValue } = props
   const { t } = useTranslation('common')
   const locale = useRoutingLocale()
 
   return (
     <>
-      <DialogPrimitive.Root open={isOpen} onOpenChange={setIsOpen}>
+      <DialogPrimitive.Root open={isOpen} onOpenChange={onOpenChange}>
         <DialogTrigger>{t('NAV_MENU_DIALOG_OPEN')}</DialogTrigger>
         <DialogContent>
           <Wrapper>

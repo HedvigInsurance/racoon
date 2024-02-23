@@ -3,7 +3,7 @@ import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { storyblokEditable } from '@storyblok/react'
 import { usePathname } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
-import { useEffect, useMemo, useState } from 'react'
+import { startTransition, useCallback, useEffect, useMemo, useState } from 'react'
 import { mq, Space, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { Header } from '@/components/Header/Header'
@@ -234,6 +234,10 @@ export const HeaderBlock = ({ blok, ...headerProps }: HeaderBlockProps) => {
   useEffect(() => {
     setIsOpen(false)
   }, [pathname])
+  const handleOpenChange = useCallback(
+    (newValue: boolean) => startTransition(() => setIsOpen(newValue)),
+    [],
+  )
 
   const productNavItem = useMemo(
     () =>
@@ -249,7 +253,7 @@ export const HeaderBlock = ({ blok, ...headerProps }: HeaderBlockProps) => {
   return (
     <Header key={pathname} {...storyblokEditable(blok)} opaque={isOpen} {...headerProps}>
       <TopMenuDesktop>{blok.navMenuContainer.map(NestedNavigationBlock)}</TopMenuDesktop>
-      <TopMenuMobile isOpen={isOpen} setIsOpen={setIsOpen} defaultValue={productNavItem}>
+      <TopMenuMobile isOpen={isOpen} onOpenChange={handleOpenChange} defaultValue={productNavItem}>
         {blok.navMenuContainer.map(NestedNavigationBlock)}
       </TopMenuMobile>
     </Header>
