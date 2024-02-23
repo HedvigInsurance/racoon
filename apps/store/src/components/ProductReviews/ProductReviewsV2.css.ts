@@ -12,7 +12,7 @@ export const wrapper = style({
 
 export const disclaimerText = style({
   paddingInline: theme.space.md,
-  paddingBottom: theme.space.xs,
+  paddingBottom: theme.space.md,
 })
 
 export const reviewsDistributionSection = style({

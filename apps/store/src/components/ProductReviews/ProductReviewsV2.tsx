@@ -32,7 +32,7 @@ export const ProductReviewsV2 = () => {
   return (
     <div className={wrapper}>
       <section>
-        <AverageRatingV2 score={rating.score} maxScore={MAX_SCORE} />
+        <AverageRatingV2 size={{ _: 9, sm: 11 }} score={rating.score} maxScore={MAX_SCORE} />
         <ReviewsDiclaimer
           className={disclaimerText}
           size={{ _: 'xs', sm: 'md' }}
