@@ -30,7 +30,9 @@ export const ReviewCommentV2 = ({ score, date, tag, content, className }: Props)
         {tag && <span className={reviewTag}>{t(tag)}</span>}
       </div>
 
-      <Text className={reviewContent}>{content}</Text>
+      <Text className={reviewContent} size="md">
+        {content}
+      </Text>
 
       <div className={reviewFooter}>
         <SpaceFlex direction="horizontal" align="center" space={0.25}>
