@@ -29,7 +29,7 @@ export const wrapper = style({
 
 export const averageRatingLabel = style({
   fontSize: 'clamp(5.5rem, 20vw + 1.2rem, 13rem)',
-  lineHeight: 1,
+  lineHeight: 1.125,
 })
 
 export const disclaimerLabel = style({
