@@ -26617,6 +26617,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:7.0.2"
     "@typescript-eslint/parser": "npm:7.0.2"
     "@vanilla-extract/css": "npm:1.14.1"
+    "@vanilla-extract/dynamic": "npm:2.1.0"
     "@vanilla-extract/sprinkles": "npm:1.6.1"
     babel-jest: "npm:29.7.0"
     babel-loader: "npm:9.1.3"
