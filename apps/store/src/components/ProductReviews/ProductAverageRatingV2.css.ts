@@ -26,3 +26,8 @@ export const trigger = style({
     },
   },
 })
+
+export const certifiedIcon = style({
+  // Optically align the icon with the text
+  marginTop: 1,
+})

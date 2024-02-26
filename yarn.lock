@@ -11475,9 +11475,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vercel/otel@npm:1.3.0":
-  version: 1.3.0
-  resolution: "@vercel/otel@npm:1.3.0"
+"@vercel/otel@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@vercel/otel@npm:1.4.0"
   dependencies:
     "@opentelemetry/context-async-hooks": "npm:^1.19.0"
     "@opentelemetry/core": "npm:^1.19.0"
@@ -11495,7 +11495,7 @@ __metadata:
   peerDependencies:
     "@opentelemetry/api": ^1.7.0
     "@opentelemetry/api-logs": ^0.46.0
-  checksum: 10c0/17cc0afaa6960be402ab8f1a8c8d6872ca070168b606432cd09b764b36f6c8c588166e92f6688f9a12e48479e529324f81d6c2f03f31a7623a79cb7f71ad80d6
+  checksum: 10c0/ed461b5984286ea7e02d920af55d839cc0a47f106754fc55f71c3c97466234db91f9fc4d56ee55a2fea1ac3eb1726fd608372c5a30e629438646993cd35de815
   languageName: node
   linkType: hard
 
@@ -19905,9 +19905,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jotai@npm:2.6.4":
-  version: 2.6.4
-  resolution: "jotai@npm:2.6.4"
+"jotai@npm:2.6.5":
+  version: 2.6.5
+  resolution: "jotai@npm:2.6.5"
   peerDependencies:
     "@types/react": ">=17.0.0"
     react: ">=17.0.0"
@@ -19916,7 +19916,7 @@ __metadata:
       optional: true
     react:
       optional: true
-  checksum: 10c0/2cda03cccff7f6509d5733412194543634dc496a01a88da4e81d6bf1c46c27383833e8bd9462ecbcd4b745316b54edf5aa403b42c098900561cc08a0f5fcaa54
+  checksum: 10c0/f2a6ca96d6d318942b7dbcbd9eae8b9b224dbc1d348672dad97aa064450cdec5cc7bebffb67e7ea9b1c392e876c63c4978b9ce2f57a58eb725568f7c3e9fbe1d
   languageName: node
   linkType: hard
 
@@ -25087,7 +25087,7 @@ __metadata:
     "@vanilla-extract/webpack-plugin": "npm:2.3.6"
     "@vercel/edge-config": "npm:0.4.1"
     "@vercel/kv": "npm:1.0.1"
-    "@vercel/otel": "npm:1.3.0"
+    "@vercel/otel": "npm:1.4.0"
     ajv: "npm:8.12.0"
     apollo-link-timeout: "npm:4.0.0"
     babel-loader: "npm:9.1.3"
@@ -25110,7 +25110,7 @@ __metadata:
     i18next-parser: "npm:8.12.0"
     jest: "npm:29.7.0"
     jest-environment-jsdom: "npm:29.7.0"
-    jotai: "npm:2.6.4"
+    jotai: "npm:2.6.5"
     jwt-decode: "npm:4.0.0"
     md5: "npm:2.3.0"
     mini-css-extract-plugin: "npm:2.8.0"
@@ -26617,6 +26617,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:7.0.2"
     "@typescript-eslint/parser": "npm:7.0.2"
     "@vanilla-extract/css": "npm:1.14.1"
+    "@vanilla-extract/dynamic": "npm:2.1.0"
     "@vanilla-extract/sprinkles": "npm:1.6.1"
     babel-jest: "npm:29.7.0"
     babel-loader: "npm:9.1.3"
