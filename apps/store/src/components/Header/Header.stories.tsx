@@ -92,7 +92,7 @@ const Template: StoryFn<TopMenuProps> = (props) => {
           <MockedNavItems />
         </TopMenuDesktop>
 
-        <TopMenuMobile isOpen={props.isOpen} setIsOpen={() => {}}>
+        <TopMenuMobile isOpen={props.isOpen} onOpenChange={() => {}}>
           <MockedNavItems />
         </TopMenuMobile>
 
