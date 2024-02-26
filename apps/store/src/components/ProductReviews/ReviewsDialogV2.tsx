@@ -33,7 +33,7 @@ export const ReviewsDialogV2 = ({
   Header,
   onClose,
 }: Props) => {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation('reviews')
 
   return (
     <Dialog.Root>

@@ -97,7 +97,6 @@ const transformCompanyReviews = (
           total: data.total,
           reviews: data.latestComments.map((comment) => ({
             id: comment.id,
-            type: 'company',
             date: comment.date,
             score: comment.score,
             content: comment.content,
@@ -209,7 +208,6 @@ const transformProductReviews = (
         total: commentsByScore.total,
         reviews: commentsByScore.latestComments.map((comment) => ({
           id: comment.id,
-          type: 'product',
           date: comment.date,
           score: comment.score,
           content: comment.content,
