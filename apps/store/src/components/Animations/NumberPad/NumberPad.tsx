@@ -1,8 +1,7 @@
-import dynamic from 'next/dynamic'
-import animationData from './numberPad.json'
+import { LottieAnimation } from '../LottieAnimation'
 
-const LottieAnimation = dynamic(() => import('../Root').then((mod) => mod.LottieAnimation))
+const importSrc = () => import('./numberPad.json')
 
 export const NumberPad = () => {
-  return <LottieAnimation autoplay loop src={animationData} />
+  return <LottieAnimation autoplay loop importSrc={importSrc} />
 }
