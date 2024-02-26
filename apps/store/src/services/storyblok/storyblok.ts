@@ -68,8 +68,6 @@ import TickerBlock from '@/blocks/TickerBlock'
 import { TimelineBlock } from '@/blocks/TimelineBlock'
 import { TimelineItemBlock } from '@/blocks/TimelineItemBlock'
 import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
-import { TrustpilotBlock } from '@/blocks/TrustpilotBlock'
-import { TrustpilotReviewsBlock } from '@/blocks/TrustpilotReviewsBlock'
 import { USPBlock, USPBlockItem } from '@/blocks/USPBlock'
 import { VideoBlock } from '@/blocks/VideoBlock'
 import { WidgetFlowBlock } from '@/blocks/WidgetFlowBlock'
@@ -301,9 +299,7 @@ export const initStoryblok = () => {
     TextBlock,
     TextContentBlock,
     TopPickCardBlock,
-    TrustpilotBlock,
     AverageRatingBanner,
-    TrustpilotReviewsBlock,
     VideoBlock,
     WidgetFlowBlock,
     ProductNavContainerBlock,

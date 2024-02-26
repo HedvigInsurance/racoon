@@ -7,9 +7,6 @@ import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
 import { CompanyReviewsDataProvider } from '@/features/memberReviews/CompanyReviewsDataProvider'
 import { fetchCompanyReviewsData } from '@/features/memberReviews/memberReviews'
 import { ReviewsData } from '@/features/memberReviews/memberReviews.types'
-import { fetchTrustpilotData } from '@/features/memberReviews/trustpilot'
-import type { TrustpilotData } from '@/features/memberReviews/TrustpilotDataProvider'
-import { TrustpilotDataProvider } from '@/features/memberReviews/TrustpilotDataProvider'
 import { HeaderFrame, LogoArea } from '@/features/widget/Header'
 import { STORYBLOK_WIDGET_FOLDER_SLUG } from '@/features/widget/widget.constants'
 import { hideChatOnPage } from '@/services/CustomerFirst'
@@ -26,7 +23,6 @@ import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
 
 type PageProps = Pick<StoryblokPageProps, 'story'> & {
-  trustpilotData: TrustpilotData | null
   companyReviewsData: ReviewsData | null
 }
 
@@ -48,11 +44,9 @@ const NextPage: NextPageWithLayout<PageProps> = (props) => {
           <HedvigLogo />
         </LogoArea>
       </HeaderFrame>
-      <TrustpilotDataProvider trustpilotData={props.trustpilotData}>
-        <CompanyReviewsDataProvider companyReviewsData={props.companyReviewsData}>
-          <StoryblokComponent blok={story.content} />
-        </CompanyReviewsDataProvider>
-      </TrustpilotDataProvider>
+      <CompanyReviewsDataProvider companyReviewsData={props.companyReviewsData}>
+        <StoryblokComponent blok={story.content} />
+      </CompanyReviewsDataProvider>
       <DefaultDebugDialog />
     </>
   )
@@ -82,7 +76,6 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
       ...(await serverSideTranslations(context.locale)),
       ...hideChatOnPage(story.content.hideChat ?? false),
       [STORY_PROP_NAME]: story,
-      trustpilotData: await fetchTrustpilotData(context.locale),
       companyReviewsData: await fetchCompanyReviewsData(),
     },
     revalidate: getRevalidate(),

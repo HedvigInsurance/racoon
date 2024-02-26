@@ -7,11 +7,6 @@ import { ProductDataProvider } from '@/components/ProductData/ProductDataProvide
 import { CompanyReviewsDataProvider } from '@/features/memberReviews/CompanyReviewsDataProvider'
 import { fetchCompanyReviewsData } from '@/features/memberReviews/memberReviews'
 import { ReviewsData } from '@/features/memberReviews/memberReviews.types'
-import { fetchTrustpilotData } from '@/features/memberReviews/trustpilot'
-import {
-  type TrustpilotData,
-  TrustpilotDataProvider,
-} from '@/features/memberReviews/TrustpilotDataProvider'
 import { STORYBLOK_WIDGET_FOLDER_SLUG } from '@/features/widget/widget.constants'
 import { initializeApollo } from '@/services/apollo/client'
 import {
@@ -29,7 +24,6 @@ const EXAMPLE_PRODUCT_NAME = 'SE_APARTMENT_RENT'
 type PageProps = {
   story: WidgetFlowStory
   productData: ProductData
-  trustpilotData: TrustpilotData | null
   companyReviewsData: ReviewsData | null
 }
 
@@ -40,11 +34,9 @@ const WidgetCmsPage = (props: PageProps) => {
 
   return (
     <ProductDataProvider productData={props.productData}>
-      <TrustpilotDataProvider trustpilotData={props.trustpilotData}>
-        <CompanyReviewsDataProvider companyReviewsData={props.companyReviewsData}>
-          <StoryblokComponent blok={story.content} />
-        </CompanyReviewsDataProvider>
-      </TrustpilotDataProvider>
+      <CompanyReviewsDataProvider companyReviewsData={props.companyReviewsData}>
+        <StoryblokComponent blok={story.content} />
+      </CompanyReviewsDataProvider>
     </ProductDataProvider>
   )
 }
@@ -59,21 +51,20 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
   const slug = `${STORYBLOK_WIDGET_FOLDER_SLUG}/flows/${params.slug.join('/')}`
   const version = draftMode ? 'draft' : undefined
 
-  const [story, translations, productData, trustpilotData, companyReviewsData] = await Promise.all([
+  const [story, translations, productData, companyReviewsData] = await Promise.all([
     getStoryBySlug(slug, { version, locale }),
     serverSideTranslations(locale),
     fetchProductData({
       apolloClient: initializeApollo({ locale }),
       productName: EXAMPLE_PRODUCT_NAME,
     }),
-    fetchTrustpilotData(locale),
     fetchCompanyReviewsData(),
   ])
 
   if (!isWidgetFlowStory(story)) throw new Error(`Invalid story type: ${story.slug}.`)
 
   return {
-    props: { ...translations, story, productData, trustpilotData, companyReviewsData },
+    props: { ...translations, story, productData, companyReviewsData },
     revalidate: getRevalidate(),
   }
 }
