@@ -3,26 +3,26 @@ import { Button, Space } from 'ui'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
 import { useProuctReviewsDataContext } from '@/features/memberReviews/ProductReviewsDataProvider'
-import { AverageRatingV2 } from './AverageRatingV2'
+import { AverageRating } from './AverageRating'
 import { PillowHeader } from './PillowHeader'
 import {
   wrapper,
   disclaimerText,
   reviewsDistributionSection,
   reviewsDistributionWrapper,
-} from './ProductReviewsV2.css'
-import { ReviewsDialogV2 } from './ReviewsDialogV2'
+} from './ProductReviews.css'
+import { ReviewsDialog } from './ReviewsDialog'
 import { ReviewsDiclaimer } from './ReviewsDisclaimer'
 import { ReviewsDistributionByScore } from './ReviewsDistributionByScore'
-import { useReviewsV2 } from './useReviewsV2'
+import { useReviews } from './useReviews'
 
-export const ProductReviewsV2 = () => {
+export const ProductReviews = () => {
   const { t } = useTranslation('reviews')
 
   const { displayNameFull: productName, pillowImage } = useProductData()
   const productReviewsData = useProuctReviewsDataContext()
   const { rating, reviews, reviewsDistribution, setSelectedScore, selectedScore } =
-    useReviewsV2(productReviewsData)
+    useReviews(productReviewsData)
 
   if (!rating) {
     console.warn('ProductReviews | No rating data available')
@@ -32,7 +32,7 @@ export const ProductReviewsV2 = () => {
   return (
     <div className={wrapper}>
       <section>
-        <AverageRatingV2 size={{ _: 9, sm: 11 }} score={rating.score} maxScore={MAX_SCORE} />
+        <AverageRating size={{ _: 9, sm: 11 }} score={rating.score} maxScore={MAX_SCORE} />
         <ReviewsDiclaimer
           className={disclaimerText}
           size={{ _: 'xs', sm: 'md' }}
@@ -47,7 +47,7 @@ export const ProductReviewsV2 = () => {
           ))}
         </div>
 
-        <ReviewsDialogV2
+        <ReviewsDialog
           Header={
             <PillowHeader
               title={productName}
@@ -64,7 +64,7 @@ export const ProductReviewsV2 = () => {
           <Button variant="primary-alt" size="medium">
             {t('VIEW_REVIEWS_LABEL')}
           </Button>
-        </ReviewsDialogV2>
+        </ReviewsDialog>
       </Space>
     </div>
   )

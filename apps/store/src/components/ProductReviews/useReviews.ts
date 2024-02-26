@@ -7,7 +7,7 @@ import type {
   ReviewsData,
 } from '@/features/memberReviews/memberReviews.types'
 
-export const useReviewsV2 = (reviewsData: ReviewsData | null) => {
+export const useReviews = (reviewsData: ReviewsData | null) => {
   const [selectedScore, setSelectedScore] = useState<Score>(() =>
     getInitialSelectedScore(reviewsData),
   )

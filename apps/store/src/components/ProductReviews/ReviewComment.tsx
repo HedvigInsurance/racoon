@@ -4,13 +4,7 @@ import { Text } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Review } from '@/features/memberReviews/memberReviews.types'
 import { useFormatter } from '@/utils/useFormatter'
-import {
-  wrapper,
-  reviewHeader,
-  reviewTag,
-  reviewContent,
-  reviewFooter,
-} from './ReviewCommentV2.css'
+import { wrapper, reviewHeader, reviewTag, reviewContent, reviewFooter } from './ReviewComment.css'
 import { Stars } from './Stars'
 import { VerifiedIcon } from './VerifiedIcon'
 
@@ -18,7 +12,7 @@ type Props = Review & {
   className?: string
 }
 
-export const ReviewCommentV2 = ({ score, date, tag, content, className }: Props) => {
+export const ReviewComment = ({ score, date, tag, content, className }: Props) => {
   const { t } = useTranslation('reviews')
   const formatter = useFormatter()
 

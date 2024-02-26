@@ -1,7 +1,7 @@
-import { ProductReviewsV2 } from '@/components/ProductReviews/ProductReviewsV2'
+import { ProductReviews } from '@/components/ProductReviews/ProductReviews'
 
 export const ProductReviewsBlock = () => {
-  return <ProductReviewsV2 />
+  return <ProductReviews />
 }
 
 ProductReviewsBlock.blockName = 'productReviews'

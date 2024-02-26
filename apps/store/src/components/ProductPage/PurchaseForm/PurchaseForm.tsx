@@ -21,7 +21,7 @@ import {
   useIsPriceCalculatorExpanded,
   useOpenPriceCalculatorQueryParam,
 } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
-import { ProductAverageRatingV2 } from '@/components/ProductReviews/ProductAverageRatingV2'
+import { ProductAverageRating } from '@/components/ProductReviews/ProductAverageRating'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { BankSigneringEvent } from '@/services/bankSignering'
 import {
@@ -244,12 +244,7 @@ export const PurchaseForm = (props: PurchaseFormProps) => {
           )
         }
 
-        return (
-          <IdleState
-            onClick={handleOpen}
-            showAverageRating={props.showAverageRating}
-          />
-        )
+        return <IdleState onClick={handleOpen} showAverageRating={props.showAverageRating} />
       }}
     </Layout>
   )
@@ -311,7 +306,7 @@ const IdleState = ({ onClick, showAverageRating }: IdleStateProps) => {
         <ProductHeroContainer size="large">
           <Space y={1}>
             <Button onClick={onClick}>{t('OPEN_PRICE_CALCULATOR_BUTTON')}</Button>
-            {showAverageRating && <ProductAverageRatingV2 />}
+            {showAverageRating && <ProductAverageRating />}
           </Space>
         </ProductHeroContainer>
       </div>
