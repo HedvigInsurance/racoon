@@ -11,7 +11,7 @@ import { useProuctReviewsDataContext } from '@/features/memberReviews/ProductRev
 import { sendDialogEvent } from '@/utils/dialogEvent'
 import { useFormatter } from '@/utils/useFormatter'
 import { AverageRatingV2 } from './AverageRatingV2'
-import { wrapper, trigger } from './ProductAverageRatingV2.css'
+import { wrapper, trigger, certifiedIcon } from './ProductAverageRatingV2.css'
 import { ReviewsDiclaimer } from './ReviewsDisclaimer'
 
 export const ProductAverageRatingV2 = () => {
@@ -44,7 +44,7 @@ export const ProductAverageRatingV2 = () => {
       </Head>
 
       <div className={wrapper}>
-        <CertifiedIcon size="1rem" />
+        <CertifiedIcon className={certifiedIcon} size="1rem" />
 
         <Dialog>
           <button className={trigger} onClick={openDialog}>

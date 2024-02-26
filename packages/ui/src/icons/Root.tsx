@@ -1,25 +1,20 @@
-import isPropValid from '@emotion/is-prop-valid'
-import styled from '@emotion/styled'
+import { assignInlineVars } from '@vanilla-extract/dynamic'
+import { clsx } from 'clsx'
+import { ComponentPropsWithoutRef } from 'react'
+import { iconRoot, iconSize, iconColor } from './Root.css'
 
-export type IconRootProps = {
-  className?: string
+export type IconRootProps = ComponentPropsWithoutRef<'svg'> & {
   color?: string
   size?: string
-  transform?: string
 }
 
-const elementConfig = {
-  shouldForwardProp: (prop: string) => isPropValid(prop) && prop !== 'width' && prop !== 'height',
-}
-export const IconRoot = styled(
-  'svg',
-  elementConfig,
-)<IconRootProps>(({ size, color, transform }) => ({
-  width: size ? size : '1rem',
-  height: size ? size : '1rem',
-  fill: color ? color : 'currentColor',
-  color: color ? color : 'currentColor',
-
-  transform,
-  transition: transform ? 'transform 250ms' : undefined,
-}))
+export const IconRoot = ({ className, size, color, ...props }: IconRootProps) => (
+  <svg
+    className={clsx(iconRoot, className)}
+    style={assignInlineVars({
+      [iconSize]: size,
+      [iconColor]: color,
+    })}
+    {...props}
+  />
+)
