@@ -1,10 +1,10 @@
 import { useTranslation } from 'next-i18next'
 import { Button } from 'ui'
-import { AverageRatingV2 } from '@/components/ProductReviews/AverageRatingV2'
+import { AverageRating } from '@/components/ProductReviews/AverageRating'
 import { PillowHeader } from '@/components/ProductReviews/PillowHeader'
-import { ReviewsDialogV2 } from '@/components/ProductReviews/ReviewsDialogV2'
+import { ReviewsDialog } from '@/components/ProductReviews/ReviewsDialog'
 import { ReviewsDiclaimer } from '@/components/ProductReviews/ReviewsDisclaimer'
-import { useReviewsV2 } from '@/components/ProductReviews/useReviewsV2'
+import { useReviews } from '@/components/ProductReviews/useReviews'
 import { useCompanyReviewsDataContext } from '@/features/memberReviews/CompanyReviewsDataProvider'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
 import { wrapper, averageRatingLabel, disclaimerLabel } from './AverageRatingBanner.css'
@@ -17,7 +17,7 @@ export const AverageRatingBanner = () => {
 
   const companyReviewsData = useCompanyReviewsDataContext()
   const { rating, reviews, reviewsDistribution, selectedScore, setSelectedScore } =
-    useReviewsV2(companyReviewsData)
+    useReviews(companyReviewsData)
 
   if (!rating) {
     console.log('AverageRatingBanner | No rating data available')
@@ -27,7 +27,7 @@ export const AverageRatingBanner = () => {
   return (
     <div className={wrapper}>
       <div>
-        <AverageRatingV2 className={averageRatingLabel} score={rating.score} maxScore={MAX_SCORE} />
+        <AverageRating className={averageRatingLabel} score={rating.score} maxScore={MAX_SCORE} />
         <ReviewsDiclaimer
           className={disclaimerLabel}
           size={{ _: 'xs', sm: 'md' }}
@@ -35,7 +35,7 @@ export const AverageRatingBanner = () => {
         />
       </div>
 
-      <ReviewsDialogV2
+      <ReviewsDialog
         Header={
           <PillowHeader
             title="Hedvig"
@@ -54,7 +54,7 @@ export const AverageRatingBanner = () => {
         <Button variant="primary" size="medium">
           {t('VIEW_REVIEWS_LABEL')}
         </Button>
-      </ReviewsDialogV2>
+      </ReviewsDialog>
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { type ReactElement, type ReactNode } from 'react'
 import { Dialog, Text, Space, CrossIcon } from 'ui'
 import type { Score } from '@/features/memberReviews/memberReviews.types'
 import type { Review, ReviewsDistribution } from '@/features/memberReviews/memberReviews.types'
-import { ReviewCommentV2 } from './ReviewCommentV2'
+import { ReviewComment } from './ReviewComment'
 import {
   closeBtn,
   dialogContent,
@@ -11,7 +11,7 @@ import {
   reviewComment,
   latestReviewsLabel,
   noReviewsLabel,
-} from './ReviewsDialogV2.css'
+} from './ReviewsDialog.css'
 import { ReviewsFilter } from './ReviewsFilter'
 
 type Props = {
@@ -24,7 +24,7 @@ type Props = {
   onClose?: () => void
 }
 
-export const ReviewsDialogV2 = ({
+export const ReviewsDialog = ({
   children,
   reviews,
   reviewsDistribution,
@@ -58,7 +58,7 @@ export const ReviewsDialogV2 = ({
               {reviews.length > 0 ? (
                 <Space y={{ base: 0.5, md: 1 }}>
                   {reviews.map((review) => (
-                    <ReviewCommentV2 key={review.id} className={reviewComment} {...review} />
+                    <ReviewComment key={review.id} className={reviewComment} {...review} />
                   ))}
 
                   <Text

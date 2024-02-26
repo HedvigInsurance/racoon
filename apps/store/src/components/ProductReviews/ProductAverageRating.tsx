@@ -4,17 +4,17 @@ import { type ReactNode } from 'react'
 import { CertifiedIcon } from 'ui'
 import { ProductData } from '@/components/ProductData/ProductData.types'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
-import { ReviewsDialogV2 } from '@/components/ProductReviews/ReviewsDialogV2'
-import { useReviewsV2 } from '@/components/ProductReviews/useReviewsV2'
+import { ReviewsDialog } from '@/components/ProductReviews/ReviewsDialog'
+import { useReviews } from '@/components/ProductReviews/useReviews'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
 import { useProuctReviewsDataContext } from '@/features/memberReviews/ProductReviewsDataProvider'
 import { sendDialogEvent } from '@/utils/dialogEvent'
 import { useFormatter } from '@/utils/useFormatter'
-import { AverageRatingV2 } from './AverageRatingV2'
-import { wrapper, trigger, certifiedIcon } from './ProductAverageRatingV2.css'
+import { AverageRating } from './AverageRating'
+import { wrapper, trigger, certifiedIcon } from './ProductAverageRating.css'
 import { ReviewsDiclaimer } from './ReviewsDisclaimer'
 
-export const ProductAverageRatingV2 = () => {
+export const ProductAverageRating = () => {
   const { t } = useTranslation('reviews')
   const { numberGrouping } = useFormatter()
   const productReviewsData = useProuctReviewsDataContext()
@@ -66,7 +66,7 @@ type DialogProps = {
 const Dialog = (props: DialogProps) => {
   const productReviewsData = useProuctReviewsDataContext()
   const { rating, reviews, reviewsDistribution, selectedScore, setSelectedScore } =
-    useReviewsV2(productReviewsData)
+    useReviews(productReviewsData)
 
   const closeDialog = () => {
     // Notify that all media paused as a result of the dialog being opened should be resumed
@@ -76,10 +76,10 @@ const Dialog = (props: DialogProps) => {
   if (!rating) return null
 
   return (
-    <ReviewsDialogV2
+    <ReviewsDialog
       Header={
         <section>
-          <AverageRatingV2 size={{ _: 9, sm: 11 }} score={rating.score} maxScore={MAX_SCORE} />
+          <AverageRating size={{ _: 9, sm: 11 }} score={rating.score} maxScore={MAX_SCORE} />
           <ReviewsDiclaimer size={{ _: 'xs', sm: 'md' }} reviewsCount={rating.totalOfReviews} />
         </section>
       }
@@ -90,7 +90,7 @@ const Dialog = (props: DialogProps) => {
       onClose={closeDialog}
     >
       {props.children}
-    </ReviewsDialogV2>
+    </ReviewsDialog>
   )
 }
 
