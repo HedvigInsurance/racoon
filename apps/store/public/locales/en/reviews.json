@@ -1,4 +1,6 @@
 {
+  "LATEST_REVIEWS_WITH_COMMENTS_LABEL": "Shows comments from the latest reviews. All customer who have had a claim is invited to leave a review.",
+  "NO_REVIEWS_LABEL": "No comments have been left",
   "RATING_SCORE_LABEL": "{{score}} of {{maxScore}}",
   "REVIEWS_COUNT_LABEL_one": "{{reviewsCount}} review",
   "REVIEWS_COUNT_LABEL_other": "{{reviewsCount}} reviews",

@@ -15,7 +15,7 @@ import { wrapper, trigger, certifiedIcon } from './ProductAverageRatingV2.css'
 import { ReviewsDiclaimer } from './ReviewsDisclaimer'
 
 export const ProductAverageRatingV2 = () => {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation('reviews')
   const { numberGrouping } = useFormatter()
   const productReviewsData = useProuctReviewsDataContext()
   const productData = useProductData()

@@ -21,10 +21,6 @@ import {
   useIsPriceCalculatorExpanded,
   useOpenPriceCalculatorQueryParam,
 } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
-import {
-  ProductAverageRating,
-  type AverageRatingSource,
-} from '@/components/ProductReviews/ProductAverageRating'
 import { ProductAverageRatingV2 } from '@/components/ProductReviews/ProductAverageRatingV2'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { BankSigneringEvent } from '@/services/bankSignering'
@@ -39,7 +35,6 @@ import { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { sendDialogEvent } from '@/utils/dialogEvent'
-import { Features } from '@/utils/Features'
 import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
 import { useFormatter } from '@/utils/useFormatter'
 import { ScrollPast } from '../ScrollPast/ScrollPast'
@@ -51,7 +46,6 @@ import { useSelectedOffer } from './useSelectedOffer'
 
 export type PurchaseFormProps = {
   showAverageRating?: boolean
-  averageRatingSource?: AverageRatingSource
 }
 
 export const PurchaseForm = (props: PurchaseFormProps) => {
@@ -254,7 +248,6 @@ export const PurchaseForm = (props: PurchaseFormProps) => {
           <IdleState
             onClick={handleOpen}
             showAverageRating={props.showAverageRating}
-            averageRatingSource={props.averageRatingSource}
           />
         )
       }}
@@ -306,12 +299,9 @@ const ProductHeroContainer = (props: ProductHeroContainerProps) => {
   )
 }
 
-type IdleStateProps = { onClick: () => void } & Pick<
-  PurchaseFormProps,
-  'showAverageRating' | 'averageRatingSource'
->
+type IdleStateProps = { onClick: () => void } & Pick<PurchaseFormProps, 'showAverageRating'>
 
-const IdleState = ({ onClick, showAverageRating, averageRatingSource }: IdleStateProps) => {
+const IdleState = ({ onClick, showAverageRating }: IdleStateProps) => {
   const ref = useRef<HTMLDivElement>(null)
   const { t } = useTranslation('purchase-form')
 
@@ -321,12 +311,7 @@ const IdleState = ({ onClick, showAverageRating, averageRatingSource }: IdleStat
         <ProductHeroContainer size="large">
           <Space y={1}>
             <Button onClick={onClick}>{t('OPEN_PRICE_CALCULATOR_BUTTON')}</Button>
-            {showAverageRating &&
-              (Features.enabled('PRODUCT_REVIEWS_V2') ? (
-                <ProductAverageRatingV2 />
-              ) : (
-                <ProductAverageRating averageRatingSource={averageRatingSource} />
-              ))}
+            {showAverageRating && <ProductAverageRatingV2 />}
           </Space>
         </ProductHeroContainer>
       </div>

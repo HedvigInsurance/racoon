@@ -1,4 +1,6 @@
 {
+  "LATEST_REVIEWS_WITH_COMMENTS_LABEL": "Visar kommentarer från senaste omdömen. Alla kunder som haft ett skadeärende blir inbjuden till att lämna ett omdöme.",
+  "NO_REVIEWS_LABEL": "Inga kommentarer har lämnats",
   "RATING_SCORE_LABEL": "{{score}} av {{maxScore}}",
   "REVIEWS_COUNT_LABEL_one": "{{reviewsCount}} omdöme",
   "REVIEWS_COUNT_LABEL_other": "{{reviewsCount}} omdömen",

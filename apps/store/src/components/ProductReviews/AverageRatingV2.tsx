@@ -8,7 +8,7 @@ type Props = {
 } & Partial<Omit<ComponentProps<typeof Text>, 'children'>>
 
 export const AverageRatingV2 = ({ score, maxScore, ...others }: Props) => {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation('reviews')
 
   return (
     <Text size={11} color="textPrimary" align="center" {...others}>
