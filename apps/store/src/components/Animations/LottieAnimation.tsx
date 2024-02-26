@@ -1,6 +1,7 @@
 import type { IPlayerProps } from '@lottiefiles/react-lottie-player'
 import { useInView } from 'framer-motion'
-import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import dynamic from 'next/dynamic'
+import { useEffect, useRef, useState } from 'react'
 import { animationWrapper } from './LottieAnimation.css'
 
 type Props = Omit<IPlayerProps, 'src'> & {
@@ -23,12 +24,12 @@ export const LottieAnimation = ({ importSrc, ...playerProps }: Props) => {
   const ready = isInView && src != null
   return (
     <div ref={wrapperRef} className={animationWrapper}>
-      <Suspense>{ready && <LazyPlayer src={src} {...playerProps} />}</Suspense>
+      {ready && <PlayerDynamic src={src} {...playerProps} />}
     </div>
   )
 }
 
-const LazyPlayer = lazy(async () => {
+const PlayerDynamic = dynamic(async () => {
   const { Player } = await import('@lottiefiles/react-lottie-player')
   return { default: Player }
 })
