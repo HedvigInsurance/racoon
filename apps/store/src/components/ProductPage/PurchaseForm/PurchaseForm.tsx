@@ -6,13 +6,13 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { ReactNode, useCallback, useRef, useState } from 'react'
 import { Balancer } from 'react-wrap-balancer'
-import { Button, Heading, Space, mq, Text, theme, WarningTriangleIcon } from 'ui'
+import { Button, Heading, mq, Space, Text, theme, WarningTriangleIcon } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { ProductItemProps } from '@/components/CartNotification/ProductItem'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { Pillow } from '@/components/Pillow/Pillow'
-import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
+import { PriceCalculatorDynamic } from '@/components/PriceCalculator/PriceCalculatorDynamic'
 import { completePriceLoader, PriceLoader } from '@/components/PriceLoader'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { usePriceIntent } from '@/components/ProductPage/PriceIntentContext'
@@ -380,7 +380,7 @@ const EditingState = (props: EditingStateProps) => {
     </PriceLoaderWrapper>
   ) : (
     <PriceCalculatorWrapper>
-      <PriceCalculator
+      <PriceCalculatorDynamic
         key={priceIntent.id}
         priceIntent={priceIntent}
         shopSession={shopSession}

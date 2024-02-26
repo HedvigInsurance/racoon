@@ -7,7 +7,7 @@ import { Heading, mq, Space, theme } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { Pillow } from '@/components/Pillow/Pillow'
-import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
+import { PriceCalculatorDynamic } from '@/components/PriceCalculator/PriceCalculatorDynamic'
 import { completePriceLoader, PriceLoader } from '@/components/PriceLoader'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
@@ -128,7 +128,7 @@ export const CalculatePricePage = (props: Props) => {
 
         <GridLayout.Root>
           <GridLayout.Content width="1/3" align="center">
-            <PriceCalculator
+            <PriceCalculatorDynamic
               shopSession={props.shopSession}
               priceIntent={props.priceIntent}
               priceTemplate={props.priceTemplate}
