@@ -2,6 +2,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { ReactNode, useCallback, useRef, useState } from 'react'
@@ -38,7 +39,6 @@ import { sendDialogEvent } from '@/utils/dialogEvent'
 import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
 import { useFormatter } from '@/utils/useFormatter'
 import { ScrollPast } from '../ScrollPast/ScrollPast'
-import { OfferPresenter } from './OfferPresenter'
 import { PriceCalculatorDialog } from './PriceCalculatorDialog'
 import { ProductHero } from './ProductHero/ProductHero'
 import { usePurchaseFormState } from './usePurchaseFormState'
@@ -411,7 +411,7 @@ const ShowOfferState = (props: ShowOfferStateProps) => {
 
   return (
     <SectionWrapper ref={scrollPastRef}>
-      <OfferPresenter
+      <OfferPresenterDynamic
         priceIntent={priceIntent}
         shopSession={shopSession}
         scrollPastRef={scrollPastRef}
@@ -422,6 +422,11 @@ const ShowOfferState = (props: ShowOfferStateProps) => {
     </SectionWrapper>
   )
 }
+
+const OfferPresenterDynamic = dynamic(async () => {
+  const { OfferPresenter } = await import('./OfferPresenter')
+  return OfferPresenter
+})
 
 const PURCHASE_FORM_MAX_WIDTH = '21rem'
 
