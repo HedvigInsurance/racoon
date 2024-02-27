@@ -8,17 +8,24 @@ type PageBlockProps = SbBaseBlockProps<{
 }>
 
 export const PageBlock = ({ blok }: PageBlockProps) => {
-  useDiscountBanner()
   return (
-    <Main {...storyblokEditable(blok)}>
-      {blok.body.map((nestedBlock) => (
-        <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
-      ))}
-    </Main>
+    <>
+      <Main {...storyblokEditable(blok)}>
+        {blok.body.map((nestedBlock) => (
+          <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
+        ))}
+      </Main>
+      <DiscountBannerTrigger />
+    </>
   )
 }
-
 PageBlock.blockName = 'page'
+
+// Optimization - this effect should run in component without children to avoid rerenders
+const DiscountBannerTrigger = () => {
+  useDiscountBanner()
+  return null
+}
 
 const Main = styled.main({
   width: '100%',
