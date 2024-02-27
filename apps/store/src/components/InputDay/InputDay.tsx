@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import * as Popover from '@radix-ui/react-popover'
 import { sv } from 'date-fns/locale'
 import { useTranslation } from 'next-i18next'
-import { useId, useState } from 'react'
+import { startTransition, useId, useState } from 'react'
 import { useInput, DayPicker, type SelectSingleEventHandler } from 'react-day-picker'
 import { ChevronIcon, theme, Text, LockIcon } from 'ui'
 import { LoadingDots } from '@/components/LoadingDots/LoadingDots'
@@ -67,7 +67,9 @@ export const InputDay = (props: Props) => {
 
   const handleOpenChange = (open: boolean) => {
     if (open && (props.disabled || props.loading)) return
-    setOpen(open)
+    startTransition(() => {
+      setOpen(open)
+    })
   }
 
   const dateValue = props.selected ?? convertToDate(inputProps.value)
