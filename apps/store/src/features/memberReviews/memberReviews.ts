@@ -24,7 +24,7 @@ export const fetchCompanyReviewsMetadata = async (): Promise<ReviewsMetadata | n
   try {
     const [averageRating, reviewsByScore] = await Promise.all([
       fetchCompanyAverageRating(),
-      fetchCompanyLatestReviews(),
+      fetchCompanyReviewsByScore(),
     ])
 
     if (!averageRating || !reviewsByScore) {
@@ -37,6 +37,32 @@ export const fetchCompanyReviewsMetadata = async (): Promise<ReviewsMetadata | n
     }
   } catch (error) {
     console.log('Failed to fetch company reviews metadata', error)
+    return null
+  }
+}
+
+export const fetchProductReviewsMetadata = async (
+  productId: string,
+): Promise<ReviewsMetadata | null> => {
+  try {
+    const [averageRating, reviewsByScore] = await Promise.all([
+      fetchProductAverageRating(productId),
+      fetchProductReviewsByScore(productId),
+    ])
+
+    if (!averageRating || !reviewsByScore) {
+      console.log(
+        `Member Reviews | Could not found product reviews metadata for product ${productId}`,
+      )
+      return null
+    }
+
+    return {
+      averageRating,
+      reviewsDistribution: generateReviewsDistribution(reviewsByScore),
+    }
+  } catch (error) {
+    console.log(`Failed to fetch product reviews metadata for product ${productId}`, error)
     return null
   }
 }
@@ -65,7 +91,7 @@ const fetchCompanyAverageRating = async (): Promise<ReviewsMetadata['averageRati
 
 type CompanyLatestReviewsResponse = { updatedAt: string } & z.infer<typeof commentByScoreSchema>
 
-const fetchCompanyLatestReviews = async (): Promise<ReviewsByScore | null> => {
+export const fetchCompanyReviewsByScore = async (): Promise<ReviewsByScore | null> => {
   const latestReviews = await kv.get<CompanyLatestReviewsResponse>(KV_KEY.LATEST_REVIEWS)
 
   if (!latestReviews) {
@@ -80,32 +106,6 @@ const fetchCompanyLatestReviews = async (): Promise<ReviewsByScore | null> => {
   }
 
   return transformReviews(latestReviews)
-}
-
-export const fetchProductReviewsMetadata = async (
-  productId: string,
-): Promise<ReviewsMetadata | null> => {
-  try {
-    const [averageRating, reviewsByScore] = await Promise.all([
-      fetchProductAverageRating(productId),
-      fetchProductLatestReviews(productId),
-    ])
-
-    if (!averageRating || !reviewsByScore) {
-      console.log(
-        `Member Reviews | Could not found product reviews metadata for product ${productId}`,
-      )
-      return null
-    }
-
-    return {
-      averageRating,
-      reviewsDistribution: generateReviewsDistribution(reviewsByScore),
-    }
-  } catch (error) {
-    console.log(`Failed to fetch product reviews metadata for product ${productId}`, error)
-    return null
-  }
 }
 
 type AverageRatingsResponse = { updatedAt: string } & Record<
@@ -147,7 +147,9 @@ const fetchProductAverageRating = async (
 
 type ReviewCommentsResponse = Record<string, z.infer<typeof reviewCommentsSchema> | undefined>
 
-const fetchProductLatestReviews = async (productId: string): Promise<ReviewsByScore | null> => {
+export const fetchProductReviewsByScore = async (
+  productId: string,
+): Promise<ReviewsByScore | null> => {
   const latestReviewsByProduct = await kv.get<ReviewCommentsResponse>(
     KV_KEY.LATEST_REVIEWS_BY_PRODUCT,
   )

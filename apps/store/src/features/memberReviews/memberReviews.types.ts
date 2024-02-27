@@ -10,9 +10,9 @@ export type Rating = {
 
 export type Review = z.infer<typeof reviewSchema>
 
-export type ScoreDistributionTuple = [Score, number]
-
 export type ReviewsByScore = Record<Score, { total: number; reviews: Array<Review> }>
+
+export type ScoreDistributionTuple = [Score, number]
 
 export type ReviewsDistribution = Array<ScoreDistributionTuple>
 
