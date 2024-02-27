@@ -38,50 +38,12 @@ import { PageDebugDialog } from './PageDebugDialog'
 import { useHandleSubmitCheckout } from './useHandleSubmitCheckout'
 
 const CheckoutPage = (props: CheckoutPageProps) => {
-  const {
-    ssn,
-    shouldCollectEmail,
-    suggestedEmail,
-    shouldCollectName,
-    customerAuthenticationStatus,
-    checkoutSteps,
-    shopSession,
-  } = props
+  const { checkoutSteps, shopSession } = props
   const { t } = useTranslation('checkout')
 
   const locale = useRoutingLocale()
   const [showSignError, setShowSignError] = useState(false)
-  const { reset: resetShopSession } = useShopSession()
   const router = useRouter()
-  const apolloClient = useApolloClient()
-  const tracking = useTracking()
-  const [handleSubmitSign, { loading, userError }] = useHandleSubmitCheckout({
-    shopSessionId: shopSession.id,
-    ssn,
-    customerAuthenticationStatus,
-    async onSuccess() {
-      const { data } = await apolloClient.query<CurrentMemberQuery, CurrentMemberQueryVariables>({
-        query: CurrentMemberDocument,
-      })
-      const memberId = data.currentMember.id
-
-      tracking.reportPurchase(
-        shopSession.cart,
-        memberId,
-        customerAuthenticationStatus === ShopSessionAuthenticationStatus.None,
-      )
-      resetShopSession()
-
-      const checkoutStepIndex = checkoutSteps.findIndex((item) => item === CheckoutStep.Checkout)
-      const nextCheckoutStep = checkoutSteps[checkoutStepIndex + 1]
-      await router.push(
-        getCheckoutStepLink({ locale, step: nextCheckoutStep, shopSessionId: shopSession.id }),
-      )
-    },
-    onError() {
-      setShowSignError(true)
-    },
-  })
 
   const handleRemoveCartEntry = (cart: CartFragmentFragment) => {
     if (cart.entries.length === 0) {
@@ -90,8 +52,6 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   }
 
   const { offerRecommendation } = useProductRecommendations()
-
-  const userErrorMessage = userError?.message
 
   return (
     <>
@@ -149,68 +109,8 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                     {...offerRecommendation}
                   />
                 )}
-                <form onSubmit={handleSubmitSign}>
-                  <Space y={0.25}>
-                    <PersonalNumberField
-                      label={t('FIELD_PERSONAL_NUMBER_SE_LABEL')}
-                      value={ssn}
-                      readOnly
-                      disabled
-                    />
-                    {shouldCollectName && (
-                      <>
-                        <TextField
-                          type="text"
-                          label={t('FORM_FIRST_NAME_LABEL')}
-                          name={FormElement.FirstName}
-                          required
-                        />
-                        <TextField
-                          type="text"
-                          label={t('FORM_LAST_NAME_LABEL')}
-                          name={FormElement.LastName}
-                          required
-                        />
-                      </>
-                    )}
-                    {shouldCollectEmail && (
-                      <TextField
-                        type="email"
-                        label={t('FORM_EMAIL_LABEL')}
-                        name={FormElement.Email}
-                        defaultValue={suggestedEmail}
-                        required
-                      />
-                    )}
-                    <Space y={0.5}>
-                      <SignButton
-                        loading={loading}
-                        showBankIdIcon={
-                          customerAuthenticationStatus !==
-                          ShopSessionAuthenticationStatus.Authenticated
-                        }
-                      >
-                        {t('SIGN_BUTTON', { count: shopSession.cart.entries.length })}
-                      </SignButton>
-                      {userErrorMessage ? (
-                        <Text as="p" size="xs" color="textSecondary" align="center">
-                          {userErrorMessage}
-                        </Text>
-                      ) : (
-                        <TextWithLink
-                          as="p"
-                          size="xs"
-                          align="center"
-                          balance={true}
-                          href={PageLink.privacyPolicy({ locale })}
-                          target="_blank"
-                        >
-                          {t('SIGN_DISCLAIMER')}
-                        </TextWithLink>
-                      )}
-                    </Space>
-                  </Space>
-                </form>
+
+                <CheckoutForm {...props} onSignError={() => setShowSignError(true)} />
               </Space>
             </Space>
           </Content>
@@ -236,6 +136,131 @@ const CheckoutPage = (props: CheckoutPageProps) => {
 
       <PageDebugDialog />
     </>
+  )
+}
+
+type CheckoutFormProps = Pick<
+  CheckoutPageProps,
+  | 'checkoutSteps'
+  | 'customerAuthenticationStatus'
+  | 'shopSession'
+  | 'shouldCollectEmail'
+  | 'shouldCollectName'
+  | 'ssn'
+  | 'suggestedEmail'
+> & { onSignError: () => void }
+
+// Optimization: separated from page component to avoid rerendering full page when checkout status changes
+// Prop-drilling so many props is awkward, consider refactoring to group them somehow
+const CheckoutForm = ({
+  checkoutSteps,
+  customerAuthenticationStatus,
+  onSignError,
+  shopSession,
+  ssn,
+  shouldCollectEmail,
+  suggestedEmail,
+  shouldCollectName,
+}: CheckoutFormProps) => {
+  const { t } = useTranslation('checkout')
+  const router = useRouter()
+  const { reset: resetShopSession } = useShopSession()
+  const apolloClient = useApolloClient()
+  const tracking = useTracking()
+  const locale = useRoutingLocale()
+
+  const [handleSubmitSign, { loading, userError }] = useHandleSubmitCheckout({
+    shopSessionId: shopSession.id,
+    ssn,
+    customerAuthenticationStatus,
+    async onSuccess() {
+      const { data } = await apolloClient.query<CurrentMemberQuery, CurrentMemberQueryVariables>({
+        query: CurrentMemberDocument,
+      })
+      const memberId = data.currentMember.id
+
+      tracking.reportPurchase(
+        shopSession.cart,
+        memberId,
+        customerAuthenticationStatus === ShopSessionAuthenticationStatus.None,
+      )
+      resetShopSession()
+
+      const checkoutStepIndex = checkoutSteps.findIndex((item) => item === CheckoutStep.Checkout)
+      const nextCheckoutStep = checkoutSteps[checkoutStepIndex + 1]
+      await router.push(
+        getCheckoutStepLink({ locale, step: nextCheckoutStep, shopSessionId: shopSession.id }),
+      )
+    },
+    onError() {
+      onSignError()
+    },
+  })
+
+  const userErrorMessage = userError?.message
+
+  return (
+    <form onSubmit={handleSubmitSign}>
+      <Space y={0.25}>
+        <PersonalNumberField
+          label={t('FIELD_PERSONAL_NUMBER_SE_LABEL')}
+          value={ssn}
+          readOnly
+          disabled
+        />
+        {shouldCollectName && (
+          <>
+            <TextField
+              type="text"
+              label={t('FORM_FIRST_NAME_LABEL')}
+              name={FormElement.FirstName}
+              required
+            />
+            <TextField
+              type="text"
+              label={t('FORM_LAST_NAME_LABEL')}
+              name={FormElement.LastName}
+              required
+            />
+          </>
+        )}
+        {shouldCollectEmail && (
+          <TextField
+            type="email"
+            label={t('FORM_EMAIL_LABEL')}
+            name={FormElement.Email}
+            defaultValue={suggestedEmail}
+            required
+          />
+        )}
+        <Space y={0.5}>
+          <SignButton
+            loading={loading}
+            showBankIdIcon={
+              customerAuthenticationStatus !== ShopSessionAuthenticationStatus.Authenticated
+            }
+          >
+            {t('SIGN_BUTTON', { count: shopSession.cart.entries.length })}
+          </SignButton>
+          {userErrorMessage ? (
+            <Text as="p" size="xs" color="textSecondary" align="center">
+              {userErrorMessage}
+            </Text>
+          ) : (
+            <TextWithLink
+              as="p"
+              size="xs"
+              align="center"
+              balance={true}
+              href={PageLink.privacyPolicy({ locale })}
+              target="_blank"
+            >
+              {t('SIGN_DISCLAIMER')}
+            </TextWithLink>
+          )}
+        </Space>
+      </Space>
+    </form>
   )
 }
 
