@@ -4,9 +4,9 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import type { ProductData } from '@/components/ProductData/ProductData.types'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
-import { CompanyReviewsDataProvider } from '@/features/memberReviews/CompanyReviewsDataProvider'
-import { fetchCompanyReviewsData } from '@/features/memberReviews/memberReviews'
-import { ReviewsData } from '@/features/memberReviews/memberReviews.types'
+import { CompanyReviewsMetadataProvider } from '@/features/memberReviews/CompanyReviewsMetadataProvider'
+import { fetchCompanyReviewsMetadata } from '@/features/memberReviews/memberReviews'
+import { ReviewsMetadata } from '@/features/memberReviews/memberReviews.types'
 import { STORYBLOK_WIDGET_FOLDER_SLUG } from '@/features/widget/widget.constants'
 import { initializeApollo } from '@/services/apollo/client'
 import {
@@ -24,7 +24,7 @@ const EXAMPLE_PRODUCT_NAME = 'SE_APARTMENT_RENT'
 type PageProps = {
   story: WidgetFlowStory
   productData: ProductData
-  companyReviewsData: ReviewsData | null
+  companyReviewsMetadata: ReviewsMetadata | null
 }
 
 const WidgetCmsPage = (props: PageProps) => {
@@ -34,9 +34,9 @@ const WidgetCmsPage = (props: PageProps) => {
 
   return (
     <ProductDataProvider productData={props.productData}>
-      <CompanyReviewsDataProvider companyReviewsData={props.companyReviewsData}>
+      <CompanyReviewsMetadataProvider companyReviewsMetadata={props.companyReviewsMetadata}>
         <StoryblokComponent blok={story.content} />
-      </CompanyReviewsDataProvider>
+      </CompanyReviewsMetadataProvider>
     </ProductDataProvider>
   )
 }
@@ -51,20 +51,20 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
   const slug = `${STORYBLOK_WIDGET_FOLDER_SLUG}/flows/${params.slug.join('/')}`
   const version = draftMode ? 'draft' : undefined
 
-  const [story, translations, productData, companyReviewsData] = await Promise.all([
+  const [story, translations, productData, companyReviewsMetadata] = await Promise.all([
     getStoryBySlug(slug, { version, locale }),
     serverSideTranslations(locale),
     fetchProductData({
       apolloClient: initializeApollo({ locale }),
       productName: EXAMPLE_PRODUCT_NAME,
     }),
-    fetchCompanyReviewsData(),
+    fetchCompanyReviewsMetadata(),
   ])
 
   if (!isWidgetFlowStory(story)) throw new Error(`Invalid story type: ${story.slug}.`)
 
   return {
-    props: { ...translations, story, productData, companyReviewsData },
+    props: { ...translations, story, productData, companyReviewsMetadata },
     revalidate: getRevalidate(),
   }
 }

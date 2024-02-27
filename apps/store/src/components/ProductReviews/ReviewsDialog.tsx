@@ -1,5 +1,5 @@
 import { useTranslation } from 'next-i18next'
-import { type ReactElement, type ReactNode } from 'react'
+import { useState, type ReactElement, type ReactNode } from 'react'
 import { Dialog, Text, Space, CrossIcon } from 'ui'
 import type { Score } from '@/features/memberReviews/memberReviews.types'
 import type { Review, ReviewsDistribution } from '@/features/memberReviews/memberReviews.types'
@@ -16,24 +16,15 @@ import { ReviewsFilter } from './ReviewsFilter'
 
 type Props = {
   children: ReactNode
-  reviews: Array<Review>
   reviewsDistribution: ReviewsDistribution
-  selectedScore: Score
-  onSelectedScoreChange: (score: Score) => void
   Header?: ReactElement
   onClose?: () => void
 }
 
-export const ReviewsDialog = ({
-  children,
-  reviews,
-  reviewsDistribution,
-  selectedScore,
-  onSelectedScoreChange,
-  Header,
-  onClose,
-}: Props) => {
+export const ReviewsDialog = ({ children, reviewsDistribution, Header, onClose }: Props) => {
   const { t } = useTranslation('reviews')
+
+  const { reviews, selectedScore, setSelectedScore } = useReviewsDialog()
 
   return (
     <Dialog.Root>
@@ -52,7 +43,7 @@ export const ReviewsDialog = ({
               <ReviewsFilter
                 reviewsDistribution={reviewsDistribution}
                 selectedScore={selectedScore}
-                onSelectedScoreChange={onSelectedScoreChange}
+                onSelectedScoreChange={setSelectedScore}
               />
 
               {reviews.length > 0 ? (
@@ -88,4 +79,16 @@ export const ReviewsDialog = ({
       </Dialog.Content>
     </Dialog.Root>
   )
+}
+
+// TODO: Implement client side reviews fetching and additional state management
+const useReviewsDialog = () => {
+  const [selectedScore, setSelectedScore] = useState<Score>(5)
+  const [reviews] = useState<Array<Review>>([])
+
+  return {
+    reviews,
+    selectedScore,
+    setSelectedScore,
+  }
 }

@@ -1,13 +1,11 @@
 import Head from 'next/head'
 import { useTranslation } from 'next-i18next'
-import { type ReactNode } from 'react'
 import { CertifiedIcon } from 'ui'
 import { ProductData } from '@/components/ProductData/ProductData.types'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { ReviewsDialog } from '@/components/ProductReviews/ReviewsDialog'
-import { useReviews } from '@/components/ProductReviews/useReviews'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
-import { useProuctReviewsDataContext } from '@/features/memberReviews/ProductReviewsDataProvider'
+import { useProuctReviewsMetadata } from '@/features/memberReviews/ProductReviewsMetadataProvider'
 import { sendDialogEvent } from '@/utils/dialogEvent'
 import { useFormatter } from '@/utils/useFormatter'
 import { AverageRating } from './AverageRating'
@@ -17,19 +15,27 @@ import { ReviewsDiclaimer } from './ReviewsDisclaimer'
 export const ProductAverageRating = () => {
   const { t } = useTranslation('reviews')
   const { numberGrouping } = useFormatter()
-  const productReviewsData = useProuctReviewsDataContext()
   const productData = useProductData()
+  const productReviewsMetadata = useProuctReviewsMetadata()
+
+  if (!productReviewsMetadata) {
+    console.log(
+      `ProductAverageRating | No product reviews metadata found for product ${productData.name}`,
+    )
+    return null
+  }
 
   const openDialog = () => {
     // Notify that playing media should be paused as a result of the dialog being opened
     sendDialogEvent('open')
   }
 
-  const averageRating = productReviewsData?.averageRating
-  if (!averageRating) {
-    console.log(`ProductAverageRating | No reviews data found for product ${productData.name}`)
-    return null
+  const closeDialog = () => {
+    // Notify that all media paused as a result of the dialog being opened should be resumed
+    sendDialogEvent('close')
   }
+
+  const { averageRating, reviewsDistribution } = productReviewsMetadata
 
   return (
     <>
@@ -46,59 +52,37 @@ export const ProductAverageRating = () => {
       <div className={wrapper}>
         <CertifiedIcon className={certifiedIcon} size="1.15rem" />
 
-        <Dialog>
+        <ReviewsDialog
+          Header={
+            <section>
+              <AverageRating
+                size={{ _: 9, sm: 11 }}
+                score={averageRating.score}
+                maxScore={MAX_SCORE}
+              />
+              <ReviewsDiclaimer
+                className={disclaimerText}
+                size={{ _: 'xs', sm: 'md' }}
+                reviewsCount={averageRating.totalOfReviews}
+              />
+            </section>
+          }
+          reviewsDistribution={reviewsDistribution}
+          onClose={closeDialog}
+        >
           <button className={trigger} onClick={openDialog}>
             {t('REVIEWS_COUNT_LABEL', {
               count: averageRating.totalOfReviews,
               reviewsCount: numberGrouping(averageRating.totalOfReviews),
             })}
           </button>
-        </Dialog>
+        </ReviewsDialog>
       </div>
     </>
   )
 }
 
-type DialogProps = {
-  children: ReactNode
-}
-
-const Dialog = (props: DialogProps) => {
-  const productReviewsData = useProuctReviewsDataContext()
-  const { rating, reviews, reviewsDistribution, selectedScore, setSelectedScore } =
-    useReviews(productReviewsData)
-
-  const closeDialog = () => {
-    // Notify that all media paused as a result of the dialog being opened should be resumed
-    sendDialogEvent('close')
-  }
-
-  if (!rating) return null
-
-  return (
-    <ReviewsDialog
-      Header={
-        <section>
-          <AverageRating size={{ _: 9, sm: 11 }} score={rating.score} maxScore={MAX_SCORE} />
-          <ReviewsDiclaimer
-            className={disclaimerText}
-            size={{ _: 'xs', sm: 'md' }}
-            reviewsCount={rating.totalOfReviews}
-          />
-        </section>
-      }
-      reviews={reviews}
-      reviewsDistribution={reviewsDistribution}
-      selectedScore={selectedScore}
-      onSelectedScoreChange={setSelectedScore}
-      onClose={closeDialog}
-    >
-      {props.children}
-    </ReviewsDialog>
-  )
-}
-
-type AverageRating = NonNullable<ReturnType<typeof useProuctReviewsDataContext>>['averageRating']
+type AverageRating = NonNullable<ReturnType<typeof useProuctReviewsMetadata>>['averageRating']
 
 const getProductStructuredData = (product: ProductData, averageRating: AverageRating) => {
   return {

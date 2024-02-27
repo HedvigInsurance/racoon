@@ -4,9 +4,9 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { HedvigLogo } from 'ui'
 import { DefaultDebugDialog } from '@/components/DebugDialog/DefaultDebugDialog'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
-import { CompanyReviewsDataProvider } from '@/features/memberReviews/CompanyReviewsDataProvider'
-import { fetchCompanyReviewsData } from '@/features/memberReviews/memberReviews'
-import { ReviewsData } from '@/features/memberReviews/memberReviews.types'
+import { CompanyReviewsMetadataProvider } from '@/features/memberReviews/CompanyReviewsMetadataProvider'
+import { fetchCompanyReviewsMetadata } from '@/features/memberReviews/memberReviews'
+import { ReviewsMetadata } from '@/features/memberReviews/memberReviews.types'
 import { HeaderFrame, LogoArea } from '@/features/widget/Header'
 import { STORYBLOK_WIDGET_FOLDER_SLUG } from '@/features/widget/widget.constants'
 import { hideChatOnPage } from '@/services/CustomerFirst'
@@ -23,7 +23,7 @@ import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
 
 type PageProps = Pick<StoryblokPageProps, 'story'> & {
-  companyReviewsData: ReviewsData | null
+  companyReviewsMetadata: ReviewsMetadata | null
 }
 
 const NextPage: NextPageWithLayout<PageProps> = (props) => {
@@ -44,9 +44,9 @@ const NextPage: NextPageWithLayout<PageProps> = (props) => {
           <HedvigLogo />
         </LogoArea>
       </HeaderFrame>
-      <CompanyReviewsDataProvider companyReviewsData={props.companyReviewsData}>
+      <CompanyReviewsMetadataProvider companyReviewsMetadata={props.companyReviewsMetadata}>
         <StoryblokComponent blok={story.content} />
-      </CompanyReviewsDataProvider>
+      </CompanyReviewsMetadataProvider>
       <DefaultDebugDialog />
     </>
   )
@@ -76,7 +76,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
       ...(await serverSideTranslations(context.locale)),
       ...hideChatOnPage(story.content.hideChat ?? false),
       [STORY_PROP_NAME]: story,
-      companyReviewsData: await fetchCompanyReviewsData(),
+      companyReviewsMetadata: await fetchCompanyReviewsMetadata(),
     },
     revalidate: getRevalidate(),
   }

@@ -8,9 +8,9 @@ import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { type ProductPageProps } from '@/components/ProductPage/ProductPage.types'
 import { fetchBlogPageProps } from '@/features/blog/fetchBlogPageProps'
 import { BlogContext, parseBlogContext } from '@/features/blog/useBlog'
-import { CompanyReviewsDataProvider } from '@/features/memberReviews/CompanyReviewsDataProvider'
-import { fetchProductReviewsData } from '@/features/memberReviews/memberReviews'
-import type { ReviewsData } from '@/features/memberReviews/memberReviews.types'
+import { CompanyReviewsMetadataProvider } from '@/features/memberReviews/CompanyReviewsMetadataProvider'
+import { fetchProductReviewsMetadata } from '@/features/memberReviews/memberReviews'
+import type { ReviewsMetadata } from '@/features/memberReviews/memberReviews.types'
 import { initializeApollo } from '@/services/apollo/client'
 import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { getStoryblokPageProps } from '@/services/storyblok/getStoryblokPageProps'
@@ -27,7 +27,7 @@ import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
 
 type NextContentPageProps = StoryblokPageProps & {
   type: 'content'
-  companyReviewsData: ReviewsData | null
+  companyReviewsMetadata: ReviewsMetadata | null
 }
 type NextProductPageProps = ProductPageProps & { type: 'product' }
 
@@ -47,7 +47,7 @@ const NextStoryblokPage = (props: NextContentPageProps) => {
 
   return (
     <BlogContext.Provider value={parseBlogContext(props)}>
-      <CompanyReviewsDataProvider companyReviewsData={props.companyReviewsData}>
+      <CompanyReviewsMetadataProvider companyReviewsMetadata={props.companyReviewsMetadata}>
         <HeadSeoInfo
           // Gotcha:  Sometimes Storyblok returns "" for PageStory pages that doesn't get 'abTestOrigin' configured
           // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
@@ -56,7 +56,7 @@ const NextStoryblokPage = (props: NextContentPageProps) => {
         />
         <StoryblokComponent blok={story.content} />
         <DefaultDebugDialog />
-      </CompanyReviewsDataProvider>
+      </CompanyReviewsMetadataProvider>
     </BlogContext.Provider>
   )
 }
@@ -104,7 +104,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
       )
       const initialSelectedTypeOfContract = initialSelectedVariant?.typeOfContract
 
-      const productReviewsData = await fetchProductReviewsData(productData.name)
+      const productReviewsMetadata = await fetchProductReviewsMetadata(productData.name)
 
       return {
         props: {
@@ -112,7 +112,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
           ...props,
           [STORY_PROP_NAME]: props.story,
           productData,
-          productReviewsData,
+          productReviewsMetadata,
           priceTemplate,
           ...(initialSelectedTypeOfContract && { initialSelectedTypeOfContract }),
         },
