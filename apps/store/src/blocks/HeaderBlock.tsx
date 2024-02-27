@@ -228,15 +228,25 @@ export type HeaderBlockProps = SbBaseBlockProps<{
   static?: boolean
 }
 
+// Performance considerations
+// - this block is important for site-wide INP since it's present on most pages and is used often
+// - we render both desktop and mobile menu to allow CSS-only switch between them when window is resized
+// - desktop menu is memoized to avoid rerendering when mobile menu state changes
 export const HeaderBlock = ({ blok, ...headerProps }: HeaderBlockProps) => {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
+  // close on navigation
   useEffect(() => {
     setIsOpen(false)
   }, [pathname])
   const handleOpenChange = useCallback(
     (newValue: boolean) => startTransition(() => setIsOpen(newValue)),
     [],
+  )
+
+  const desktopMenu = useMemo(
+    () => <TopMenuDesktop>{blok.navMenuContainer.map(NestedNavigationBlock)}</TopMenuDesktop>,
+    [blok.navMenuContainer],
   )
 
   const productNavItem = useMemo(
@@ -252,7 +262,7 @@ export const HeaderBlock = ({ blok, ...headerProps }: HeaderBlockProps) => {
 
   return (
     <Header key={pathname} {...storyblokEditable(blok)} opaque={isOpen} {...headerProps}>
-      <TopMenuDesktop>{blok.navMenuContainer.map(NestedNavigationBlock)}</TopMenuDesktop>
+      {desktopMenu}
       <TopMenuMobile isOpen={isOpen} onOpenChange={handleOpenChange} defaultValue={productNavItem}>
         {blok.navMenuContainer.map(NestedNavigationBlock)}
       </TopMenuMobile>
