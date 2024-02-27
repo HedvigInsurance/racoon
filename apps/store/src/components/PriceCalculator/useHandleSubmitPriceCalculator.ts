@@ -1,5 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useTranslation } from 'next-i18next'
+import { startTransition } from 'react'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { usePriceIntentDataUpdateMutation } from '@/services/graphql/generated'
 import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
@@ -59,12 +60,14 @@ export const useHandleSubmitPriceCalculator = (params: Params) => {
     const [customerData, priceIntentData] = separateCustomerData(data)
 
     if (priceIntentData) {
-      updateData({
-        variables: {
-          priceIntentId: params.priceIntent.id,
-          data: priceIntentData,
-          customer: { shopSessionId: params.shopSession.id, ...customerData },
-        },
+      startTransition(() => {
+        updateData({
+          variables: {
+            priceIntentId: params.priceIntent.id,
+            data: priceIntentData,
+            customer: { shopSessionId: params.shopSession.id, ...customerData },
+          },
+        })
       })
     }
   }

@@ -28,11 +28,7 @@ export const CartPage = () => {
   const { t } = useTranslation('cart')
   const { shopSession } = useShopSession()
   const router = useRouter()
-  const locale = useRoutingLocale()
   const { productRecommendations, offerRecommendation } = useProductRecommendations()
-  const tracking = useTracking()
-
-  useTrackViewCartEffect()
 
   if (!shopSession || !router.isReady) return <LoadingState />
 
@@ -42,10 +38,6 @@ export const CartPage = () => {
 
   if (shopSession.cart.entries.length === 0) {
     return <EmptyState shopSession={shopSession}>{productRecommendationList}</EmptyState>
-  }
-
-  const handleClickCheckout = () => {
-    tracking.reportBeginCheckout(shopSession.cart)
   }
 
   return (
@@ -86,13 +78,7 @@ export const CartPage = () => {
                   {...offerRecommendation}
                 />
               )}
-
-              <ButtonNextLink
-                href={PageLink.checkout({ locale, expandCart: true }).toRelative()}
-                onClick={handleClickCheckout}
-              >
-                {t('CHECKOUT_BUTTON')}
-              </ButtonNextLink>
+              <CheckoutButton />
             </Space>
           </GridLayout.Content>
         </GridLayout.Root>
@@ -101,11 +87,32 @@ export const CartPage = () => {
       </Space>
 
       <PageDebugDialog />
+      <ViewCartTrackTrigger />
     </PageWrapper>
   )
 }
 
-const useTrackViewCartEffect = () => {
+const CheckoutButton = () => {
+  const { t } = useTranslation('cart')
+  const locale = useRoutingLocale()
+  const tracking = useTracking()
+  const { shopSession } = useShopSession()
+  const handleClickCheckout = () => {
+    tracking.reportBeginCheckout(shopSession!.cart)
+  }
+
+  return (
+    <ButtonNextLink
+      href={PageLink.checkout({ locale, expandCart: true }).toRelative()}
+      onClick={handleClickCheckout}
+    >
+      {t('CHECKOUT_BUTTON')}
+    </ButtonNextLink>
+  )
+}
+
+// Optimization - track in component without children
+const ViewCartTrackTrigger = () => {
   const { onReady } = useShopSession()
   const tracking = useTracking()
 
@@ -122,6 +129,7 @@ const useTrackViewCartEffect = () => {
       }),
     [onReady, tracking],
   )
+  return null
 }
 
 const PageWrapper = styled.div({
