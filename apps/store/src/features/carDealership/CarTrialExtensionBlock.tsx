@@ -8,7 +8,7 @@ import { useCallback, useMemo } from 'react'
 import { Space } from 'ui'
 import { useGlobalBanner } from '@/components/GlobalBanner/useGlobalBanner'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
-import { useCarTrialExtensionQuery } from '@/services/graphql/generated'
+import { useCarTrialExtensionQuery, useUpdateConsentMutation } from '@/services/graphql/generated'
 import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { Features } from '@/utils/Features'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
@@ -37,6 +37,15 @@ export const CarTrialExtensionBlock = (props: Props) => {
     },
   })
 
+  const [updateMyMoneyConsent] = useUpdateConsentMutation({
+    onCompleted() {
+      datadogLogs.logger.info('Car Trial | MyMoney consent updated')
+    },
+    onError() {
+      datadogLogs.logger.error('Car Trial | Failed to update MyMoney consent')
+    },
+  })
+
   const trialContact: TrialContract | null = useMemo(() => {
     if (data?.carTrial) {
       return {
@@ -47,6 +56,20 @@ export const CarTrialExtensionBlock = (props: Props) => {
 
     return null
   }, [data])
+
+  const handleMyMoneyConsent = useCallback(
+    (consentGiven: boolean) => {
+      if (data?.carTrial) {
+        updateMyMoneyConsent({
+          variables: {
+            trialId: data.carTrial.id,
+            consentGiven: consentGiven,
+          },
+        })
+      }
+    },
+    [updateMyMoneyConsent, data?.carTrial],
+  )
 
   return (
     <GridLayout.Root>
@@ -65,6 +88,7 @@ export const CarTrialExtensionBlock = (props: Props) => {
                 {...(Features.enabled('MYMONEY') && {
                   collectConsent: data.carTrial.collectConsent,
                   consentGiven: data.carTrial.consentGiven,
+                  onConsentChange: handleMyMoneyConsent,
                 })}
               />
             ) : (
@@ -76,6 +100,7 @@ export const CarTrialExtensionBlock = (props: Props) => {
                 {...(Features.enabled('MYMONEY') && {
                   collectConsent: data.carTrial.collectConsent,
                   consentGiven: data.carTrial.consentGiven,
+                  onConsentChange: handleMyMoneyConsent,
                 })}
               />
             )}

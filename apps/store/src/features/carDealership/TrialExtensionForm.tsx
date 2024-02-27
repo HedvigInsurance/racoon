@@ -27,6 +27,7 @@ import { useAcceptExtension } from './useAcceptExtension'
 export type MyMoneyConsentProps = {
   collectConsent?: boolean
   consentGiven?: boolean
+  onConsentChange?: (consentGiven: boolean) => void
 }
 
 type Props = {
@@ -42,6 +43,8 @@ export const TrialExtensionForm = ({
   shopSession,
   requirePaymentConnection,
   collectConsent,
+  consentGiven,
+  onConsentChange,
 }: Props) => {
   const { t } = useTranslation(['carDealership', 'checkout'])
   const locale = useRoutingLocale()
@@ -152,7 +155,9 @@ export const TrialExtensionForm = ({
           />
         )}
 
-        {collectConsent && <MyMoneyConsent />}
+        {collectConsent && (
+          <MyMoneyConsent consentGiven={consentGiven} onConsentChange={onConsentChange} />
+        )}
 
         <Space y={1}>
           <Button onClick={handleClickSign} loading={loading}>

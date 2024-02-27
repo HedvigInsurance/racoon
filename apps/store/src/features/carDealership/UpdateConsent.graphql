@@ -1,0 +1,5 @@
+mutation UpdateConsent($trialId: UUID!, $consentGiven: Boolean!) {
+  updateConsent(trialId: $trialId, consentGiven: $consentGiven) {
+    consentGiven
+  }
+}
