@@ -1,7 +1,7 @@
+import { NotFoundPageContent } from '@/appComponents/RootLayout/NotFoundPageContent' // Fallback to se/not-found
 import { FALLBACK_LOCALE } from '@/utils/l10n/locales'
 import { toRoutingLocale } from '@/utils/l10n/localeUtils'
 import LocaleLayout from './[locale]/layout'
-import { NotFoundPageContent } from './[locale]/NotFoundPageContent' // Fallback to se/not-found
 
 // Global fallback, has to be located at the top of app dir
 // Hence manual import and usage of layout

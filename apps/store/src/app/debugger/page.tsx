@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { RootLayout } from '../[locale]/RootLayout'
+import { RootLayout } from '@/appComponents/RootLayout/RootLayout'
 import { CreateSessionForm } from './CreateSessionForm'
 
 const Page = () => {
