@@ -1,3 +1,4 @@
+'use client'
 import { createContext, PropsWithChildren, useContext, useMemo } from 'react'
 import { useProductData } from '../ProductData/ProductDataProvider'
 import { ProductPageProps } from './ProductPage.types'

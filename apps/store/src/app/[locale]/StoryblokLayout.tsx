@@ -10,6 +10,7 @@ import { filterByBlockType, isProductStory } from '@/services/storyblok/Storyblo
 import { useChangeLocale } from '@/utils/l10n/useChangeLocale'
 import { dark, wrapper } from './StoryblokLayout.css'
 
+// TODO: Render layout and page server-side
 export const StoryblokLayout = ({
   children,
   globalStory,

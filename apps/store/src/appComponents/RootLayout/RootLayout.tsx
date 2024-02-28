@@ -1,4 +1,6 @@
+import { Provider as JotaiProvider } from 'jotai'
 import { PropsWithChildren, Suspense } from 'react'
+import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import globalCss from 'ui/src/global.css'
 import { TranslationsProvider } from '@/appComponents/providers/TranslationsProvider'
 import { contentFontClassName } from '@/utils/fonts'
@@ -26,7 +28,9 @@ export async function RootLayout({
         </Suspense>
 
         <TranslationsProvider locale={locale} resources={resources}>
-          {children}
+          <JotaiProvider>
+            <BalancerProvider>{children}</BalancerProvider>
+          </JotaiProvider>
         </TranslationsProvider>
       </body>
     </html>

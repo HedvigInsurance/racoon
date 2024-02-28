@@ -1,3 +1,4 @@
+'use client'
 import { datadogRum } from '@datadog/browser-rum'
 import { assignInlineVars } from '@vanilla-extract/dynamic'
 import Link from 'next/link'

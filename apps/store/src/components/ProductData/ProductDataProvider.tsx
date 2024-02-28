@@ -1,3 +1,4 @@
+'use client'
 import { atom, useAtom, useAtomValue, useStore } from 'jotai'
 import { atomFamily } from 'jotai/utils'
 import { ReactNode } from 'react'

@@ -1,3 +1,4 @@
+'use client'
 import { createContext, PropsWithChildren, useContext, useMemo, useReducer } from 'react'
 import { CheckoutSignOptions, LoginPromptOptions, StartLoginOptions } from './bankId.types'
 import { BankIdDispatch, bankIdReducer, BankIdReducerState } from './bankIdReducer'

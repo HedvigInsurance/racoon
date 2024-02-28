@@ -1,3 +1,4 @@
+'use client'
 import { atom, useAtomValue } from 'jotai'
 import { useHydrateAtoms } from 'jotai/utils'
 import { type PropsWithChildren } from 'react'

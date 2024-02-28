@@ -1,5 +1,5 @@
 import { datadogRum } from '@datadog/browser-rum'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { type ReactNode, useCallback, useState } from 'react'
 import { SsnSeSection } from '@/components/PriceCalculator/SsnSeSection'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
@@ -49,7 +49,7 @@ export const PriceCalculatorAccordion = ({
     onActiveSectionChange(form.sections[nextSectionIndex].id)
   }, [form.sections, onActiveSectionChange])
 
-  const handleAcceptChangeSsn = useCallback(async () => {
+  const handleAcceptChangeSsn = useCallback(() => {
     datadogRum.addAction('Cleared shopSession to change SSN in price calculator', {
       shopSessionId: shopSession.id,
     })
@@ -59,7 +59,7 @@ export const PriceCalculatorAccordion = ({
       url.searchParams.set(OPEN_PRICE_CALCULATOR_QUERY_PARAM, '1')
     }
 
-    await router.replace(url)
+    router.replace(url.toString())
     setShowChangeSsnDialog(false)
   }, [shopSession, router])
 

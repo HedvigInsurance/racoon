@@ -1,7 +1,6 @@
 import { ApolloProvider } from '@apollo/client'
 import { Provider as JotaiProvider } from 'jotai'
 import type { AppPropsWithLayout } from 'next/app'
-import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Router from 'next/router'
 import { appWithTranslation } from 'next-i18next'
@@ -14,6 +13,7 @@ import { BankIdDialogDynamic } from '@/components/BankIdDialogDynamic'
 import { BankIdV6DialogDynamic } from '@/components/BankIdV6Dialog/BankIdV6DialogDynamic'
 import { ContactUs } from '@/components/ContactUs/ContactUs'
 import { CookieConsentLoader } from '@/components/CookieConsentLoader'
+import { GlobalBannerDynamic } from '@/components/GlobalBanner/GlobalBannerDynamic'
 import { GlobalLinkStyles } from '@/components/RichText/RichText.styles'
 import { usePublishWidgetInitEvent } from '@/features/widget/usePublishWidgetInitEvent'
 import { useApollo } from '@/services/apollo/client'
@@ -50,10 +50,6 @@ import { useReloadOnCountryChange } from '@/utils/useReloadOnCountryChange'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const noop = (val: any) => {}
 noop(globalCss)
-
-const DynamicGlobalBanner = dynamic(() => import('@/components/GlobalBanner/GlobalBanner'), {
-  ssr: false,
-})
 
 // Enable API mocking
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
@@ -115,7 +111,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
                 <BalancerProvider>
                   <AppErrorProvider>
                     <AppErrorDialog />
-                    <DynamicGlobalBanner />
+                    <GlobalBannerDynamic />
                     {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
                   </AppErrorProvider>
                 </BalancerProvider>
