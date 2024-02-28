@@ -1,25 +1,25 @@
 import * as Checkbox from '@radix-ui/react-checkbox'
+import { useAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import React from 'react'
 import { CheckIcon, Text } from 'ui'
 import { checkboxIndicator, checkboxRoot, consentBody, consentWrapper } from './MyMoneyConsent.css'
+import { concentAcceptedAtom } from './MyMoneyConsentAtom'
 
-type Props = {
-  consentGiven?: boolean
-  onConsentChange?: (consentGiven: boolean) => void
-}
-
-export const MyMoneyConsent = ({ consentGiven, onConsentChange }: Props) => {
+export const MyMoneyConsent = () => {
   const { t } = useTranslation('carDealership')
+  const [concentAccepted, setConsentAccepted] = useAtom(concentAcceptedAtom)
+
   const handleCheckedChange = (checked: boolean) => {
-    onConsentChange?.(checked)
+    setConsentAccepted(checked)
   }
+
   return (
     <div className={consentWrapper}>
       <Checkbox.Root
         className={checkboxRoot}
         id="myMoneyConsent"
-        defaultChecked={consentGiven}
+        checked={concentAccepted}
         onCheckedChange={handleCheckedChange}
       >
         <Checkbox.Indicator className={checkboxIndicator}>
