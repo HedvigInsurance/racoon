@@ -3,6 +3,7 @@
 /** @jsxImportSource react */
 
 import { ReactNode } from 'react'
+import { RootLayout } from '@/appComponents/RootLayout/RootLayout'
 import { fetchGlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
@@ -15,7 +16,6 @@ import { locales } from '@/utils/l10n/locales'
 import { RoutingLocale } from '@/utils/l10n/types'
 import { initTranslationsServerSide } from './i18n'
 import { ProductMetadataProvider } from './ProductMetadataProvider'
-import { RootLayout } from './RootLayout'
 import { StoryblokLayout } from './StoryblokLayout'
 import { TranslationsProvider } from './TranslationsProvider'
 
