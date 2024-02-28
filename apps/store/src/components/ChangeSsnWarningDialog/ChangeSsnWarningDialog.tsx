@@ -1,10 +1,10 @@
-import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useState, useCallback } from 'react'
 import { Button, Text, WarningTriangleIcon, theme } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { resetAuthTokens } from '@/services/authApi/persist'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { title } from './ChangeSsnWarningDialog.css'
 
 type Props = {
   open: boolean
@@ -45,10 +45,10 @@ export const ChangeSsnWarningDialog = ({ open, onAccept, onDecline }: Props) => 
           </>
         }
       >
-        <IconWithText>
+        <Text className={title}>
           <WarningTriangleIcon size="1em" color={theme.colors.amber600} />
-          <Text align="center">{t('CHANGE_SSN_TITLE')}</Text>
-        </IconWithText>
+          {t('CHANGE_SSN_TITLE')}
+        </Text>
         <Text color="textSecondary" align="center">
           {t('CHANGE_SSN_DESCRIPTION')}
         </Text>
@@ -56,10 +56,3 @@ export const ChangeSsnWarningDialog = ({ open, onAccept, onDecline }: Props) => 
     </FullscreenDialog.Root>
   )
 }
-
-const IconWithText = styled(Text)({
-  gap: theme.space.xs,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-})
