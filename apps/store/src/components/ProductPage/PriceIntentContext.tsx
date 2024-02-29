@@ -102,7 +102,7 @@ const usePriceIntentContextValue = () => {
   }, [shopSession, updatePriceIntent, priceIntentId])
 
   // Fallback for initial opening of product page where we're getting shopSession as the last piece of data
-  // Everything else is created server-side and statically, shopSession synamically client-side in this scenario
+  // Everything else is created server-side and statically, shopSession dynamically client-side in this scenario
   useEffect(
     () =>
       onReady((shopSession) => {
