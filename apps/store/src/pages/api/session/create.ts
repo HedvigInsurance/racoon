@@ -11,7 +11,7 @@ import {
   ShopSessionCustomerUpdateMutationVariables,
 } from '@/services/graphql/generated'
 import { CountryCode } from '@/services/graphql/generated'
-import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
+import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import {
   PriceIntentService,
   priceIntentServiceInitServerSide,
@@ -91,7 +91,7 @@ const addProduct = async ({
   apolloClient,
 }: AddProductParams) => {
   console.log(`Adding product to cart: ${productName}`)
-  const priceTemplate = fetchPriceTemplate(productName)
+  const priceTemplate = getPriceTemplate(productName)
   if (!priceTemplate) {
     throw new Error(`Price template not found: ${productName}`)
   }

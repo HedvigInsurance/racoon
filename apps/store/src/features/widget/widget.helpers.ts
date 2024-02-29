@@ -1,4 +1,4 @@
-import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
+import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { PriceIntentService } from '@/services/priceIntent/PriceIntentService'
@@ -13,9 +13,9 @@ const widgetPriceTemplateName = (product: string, compare: boolean): string | un
   }
 }
 
-export const getPriceTemplate = (product: string, compare: boolean): Template => {
+export const getWidgetPriceTemplate = (product: string, compare: boolean): Template => {
   const templateName = widgetPriceTemplateName(product, compare)
-  const template = fetchPriceTemplate(templateName || product)
+  const template = getPriceTemplate(templateName || product)
   if (!template) throw new Error(`No template found for product ${product}`)
   return template
 }

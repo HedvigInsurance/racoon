@@ -8,7 +8,7 @@ import { type ComponentProps } from 'react'
 import { fetchFlowProducts } from '@/features/widget/fetchFlowProducts'
 import { parseProductNameSearchParams } from '@/features/widget/parseSearchParams'
 import { SelectProductPage } from '@/features/widget/SelectProductPage'
-import { createPriceIntent, getPriceTemplate } from '@/features/widget/widget.helpers'
+import { createPriceIntent, getWidgetPriceTemplate } from '@/features/widget/widget.helpers'
 import { initializeApolloServerSide } from '@/services/apollo/client'
 import { hideChatOnPage } from '@/services/CustomerFirst'
 import { useShopSessionQuery } from '@/services/graphql/generated'
@@ -64,7 +64,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
         locale: context.locale,
         flow: context.params.flow,
         searchParams,
-        priceTemplate: getPriceTemplate(productName, compareInsurance),
+        priceTemplate: getWidgetPriceTemplate(productName, compareInsurance),
       }),
     }
   }
@@ -83,7 +83,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
           locale: context.locale,
           flow: context.params.flow,
           searchParams: updatedSearchParams,
-          priceTemplate: getPriceTemplate(preSelectedProductName, compareInsurance),
+          priceTemplate: getWidgetPriceTemplate(preSelectedProductName, compareInsurance),
         }),
       }
     } else {

@@ -5,7 +5,7 @@ import {
   RedeemCampaignMutation,
   RedeemCampaignMutationVariables,
 } from '@/services/graphql/generated'
-import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
+import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { ShopSession } from '@/services/shopSession/ShopSession.types'
@@ -61,7 +61,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       const priceIntentService = priceIntentServiceInitServerSide({ apolloClient, req, res })
       const priceIntent = await priceIntentService.get(priceIntentId)
       if (priceIntent) {
-        const templateName = fetchPriceTemplate(priceIntent.product.name)?.name
+        const templateName = getPriceTemplate(priceIntent.product.name)?.name
 
         if (templateName) {
           priceIntentService.save({ shopSessionId, priceIntentId, templateName })

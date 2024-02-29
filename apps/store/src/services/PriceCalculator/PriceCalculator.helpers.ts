@@ -26,7 +26,7 @@ const TEMPLATES: Record<string, Template | undefined> = {
   SE_WIDGET_APARTMENT_NO_COMPARE,
 }
 
-export const fetchPriceTemplate = (id: string) => {
+export const getPriceTemplate = (id: string) => {
   return TEMPLATES[id]
 }
 
