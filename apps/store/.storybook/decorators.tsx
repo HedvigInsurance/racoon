@@ -1,10 +1,11 @@
 import { type Decorator } from '@storybook/react'
 import { Global } from '@emotion/react'
+import { ApolloProvider } from '@apollo/client'
 import { ThemeProvider } from 'ui'
 import { storybookFontStyles } from 'ui/src/theme/storybookFontStyles'
 import { GridLayout } from '../src/components/GridLayout/GridLayout'
-import { ApolloProvider } from '@apollo/client'
 import { initializeApollo } from '../src/services/apollo/client'
+import { AppErrorProvider } from '../src/services/appErrors/AppErrorContext'
 
 export const themeDecorator: Decorator = (Story) => (
   <>
@@ -36,11 +37,13 @@ export const gridDecorator: Decorator = (Story, options) => {
   )
 }
 
-export const apolloDecorator: Decorator = (Story) => {
+export const appProvidersDecorator: Decorator = (Story) => {
   const apolloClient = initializeApollo()
   return (
     <ApolloProvider client={apolloClient}>
-      <Story />
+      <AppErrorProvider>
+        <Story />
+      </AppErrorProvider>
     </ApolloProvider>
   )
 }

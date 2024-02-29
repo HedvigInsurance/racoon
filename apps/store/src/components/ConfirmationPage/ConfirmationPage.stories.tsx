@@ -1,5 +1,4 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
 import { CurrencyCode, ExternalInsuranceCancellationOption } from '@/services/graphql/generated'
 import { ShopSessionOutcomeDocument } from '@/services/graphql/generated'
 import { ConfirmationStory } from '@/services/storyblok/storyblok'
@@ -16,11 +15,7 @@ export default meta
 type Story = StoryObj<typeof ConfirmationPage>
 
 const Template: Story = {
-  render: (args) => (
-    <AppErrorProvider>
-      <ConfirmationPage {...args} />
-    </AppErrorProvider>
-  ),
+  render: (args) => <ConfirmationPage {...args} />,
 }
 
 const storyblokStory = {

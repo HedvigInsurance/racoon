@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
+import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
 import { productData } from '@/mocks/productData'
-import { globalStory, productStoryBRF } from '@/mocks/storyblok'
+import { productStoryBRF } from '@/mocks/storyblok'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
 import { PriceIntentCreateDocument, ShopSessionCreateDocument } from '@/services/graphql/generated'
 import { SE_APARTMENT_BRF } from '@/services/PriceCalculator/data/SE_APARTMENT_BRF'
@@ -19,26 +20,27 @@ type Story = StoryObj<typeof PurchaseForm>
 const Template: Story = {
   render: () => (
     <ShopSessionProvider shopSessionId="1e517b18-fd77-4384-aee1-17481da3781a">
-      <ProductPageContextProvider {...props} story={productStoryBRF}>
-        <PriceIntentContextProvider>
-          <BankIdContextProvider>
-            <PurchaseForm />
-          </BankIdContextProvider>
-        </PriceIntentContextProvider>
-      </ProductPageContextProvider>
+      <ProductDataProvider productData={props.productData}>
+        <ProductPageContextProvider priceTemplate={props.priceTemplate} story={productStoryBRF}>
+          <PriceIntentContextProvider>
+            <BankIdContextProvider>
+              <PurchaseForm />
+            </BankIdContextProvider>
+          </PriceIntentContextProvider>
+        </ProductPageContextProvider>
+      </ProductDataProvider>
     </ShopSessionProvider>
   ),
 }
 
 const props = {
   priceTemplate: SE_APARTMENT_BRF,
-  productData: productData,
+  productData,
   averageRating: {
     score: 5,
     reviewCount: 1000,
   },
   reviewComments: null,
-  globalStory: globalStory,
   trustpilot: null,
 }
 
