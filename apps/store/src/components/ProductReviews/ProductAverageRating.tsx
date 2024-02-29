@@ -11,7 +11,7 @@ import { useProuctReviewsDataContext } from '@/features/memberReviews/ProductRev
 import { sendDialogEvent } from '@/utils/dialogEvent'
 import { useFormatter } from '@/utils/useFormatter'
 import { AverageRating } from './AverageRating'
-import { wrapper, trigger, certifiedIcon } from './ProductAverageRating.css'
+import { wrapper, trigger, certifiedIcon, disclaimerText } from './ProductAverageRating.css'
 import { ReviewsDiclaimer } from './ReviewsDisclaimer'
 
 export const ProductAverageRating = () => {
@@ -44,7 +44,7 @@ export const ProductAverageRating = () => {
       </Head>
 
       <div className={wrapper}>
-        <CertifiedIcon className={certifiedIcon} size="1rem" />
+        <CertifiedIcon className={certifiedIcon} size="1.15rem" />
 
         <Dialog>
           <button className={trigger} onClick={openDialog}>
@@ -80,7 +80,11 @@ const Dialog = (props: DialogProps) => {
       Header={
         <section>
           <AverageRating size={{ _: 9, sm: 11 }} score={rating.score} maxScore={MAX_SCORE} />
-          <ReviewsDiclaimer size={{ _: 'xs', sm: 'md' }} reviewsCount={rating.totalOfReviews} />
+          <ReviewsDiclaimer
+            className={disclaimerText}
+            size={{ _: 'xs', sm: 'md' }}
+            reviewsCount={rating.totalOfReviews}
+          />
         </section>
       }
       reviews={reviews}

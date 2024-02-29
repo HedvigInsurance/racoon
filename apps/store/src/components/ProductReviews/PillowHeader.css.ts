@@ -6,5 +6,9 @@ export const wrapper = style({
   flexDirection: 'column',
   alignItems: 'center',
   gap: theme.space.md,
-  marginBottom: theme.space.xxl,
+  marginBottom: theme.space.xl,
+})
+
+export const disclaimerText = style({
+  paddingInline: theme.space.md,
 })

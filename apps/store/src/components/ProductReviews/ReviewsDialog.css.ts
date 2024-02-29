@@ -31,8 +31,7 @@ export const dialogContent = style({
   display: 'flex',
   flexDirection: 'column',
   width: `min(35.5rem, calc(100% - ${theme.space.xs} * 2))`,
-  maxHeight: `calc(100% - ${theme.space.md} * 2)`,
-  border: `1px solid ${theme.colors.borderTranslucent1}`,
+  maxHeight: `min(calc(100% - ${theme.space.md} * 2), 56rem)`,
   borderRadius: theme.radius.lg,
   backgroundColor: theme.colors.backgroundStandard,
   boxShadow: theme.shadow.default,
@@ -41,7 +40,7 @@ export const dialogContent = style({
 
   '@media': {
     [minWidth.md]: {
-      maxHeight: `calc(100% - ${theme.space[10]} * 2)`,
+      maxHeight: `min(calc(100% - ${theme.space.xl} * 2), 56rem)`,
     },
   },
 })
@@ -49,8 +48,9 @@ export const dialogContent = style({
 const dialogWindowPaddingBlock = createVar()
 export const dialogWindow = style({
   vars: {
-    '--scrollbar-thumb-color': theme.colors.gray500,
-    '--scrollbar-thumb-color-hover': theme.colors.gray600,
+    '--scrollbar-thumb-color': theme.colors.gray600,
+    '--scrollbar-thumb-color-hover': theme.colors.gray300,
+    '--scrollbar-track-color': theme.colors.white,
     '--scrollbar-track-width': '8px',
     [dialogWindowPaddingBlock]: theme.space.xxxl,
   },
@@ -62,7 +62,7 @@ export const dialogWindow = style({
   '@media': {
     [minWidth.sm]: {
       // Firefox
-      scrollbarColor: 'var(--scrollbar-thumb-color)',
+      scrollbarColor: 'var(--scrollbar-thumb-color) var(--scrollbar-track-color)',
       scrollbarWidth: 'thin',
 
       // Webkit based browsers
@@ -91,11 +91,9 @@ export const reviewComment = style({
 })
 
 export const latestReviewsLabel = style({
-  paddingTop: theme.space.md,
   paddingInline: theme.space.md,
-  marginBottom: `calc(${dialogWindowPaddingBlock} / 2 * -1)`,
 })
 
 export const noReviewsLabel = style({
-  padding: theme.space.md,
+  paddingInline: theme.space.md,
 })

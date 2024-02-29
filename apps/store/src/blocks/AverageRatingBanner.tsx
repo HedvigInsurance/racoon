@@ -7,10 +7,10 @@ import { ReviewsDiclaimer } from '@/components/ProductReviews/ReviewsDisclaimer'
 import { useReviews } from '@/components/ProductReviews/useReviews'
 import { useCompanyReviewsDataContext } from '@/features/memberReviews/CompanyReviewsDataProvider'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
-import { wrapper, averageRatingLabel, disclaimerLabel } from './AverageRatingBanner.css'
+import { wrapper, averageRatingLabel, disclaimerLabel, trigger } from './AverageRatingBanner.css'
 
 const HEDVIG_PILLOW_URL =
-  'https://a.storyblok.com/f/165473/850x850/16587635ce/hedvig-pillows-hedvig.png'
+  'https://a.storyblok.com/f/165473/450x450/4b792f1052/hedvig-pillows-icon.png'
 
 export const AverageRatingBanner = () => {
   const { t } = useTranslation('reviews')
@@ -51,7 +51,7 @@ export const AverageRatingBanner = () => {
         selectedScore={selectedScore}
         onSelectedScoreChange={setSelectedScore}
       >
-        <Button variant="primary" size="medium">
+        <Button className={trigger} variant="primary" size="medium">
           {t('VIEW_REVIEWS_LABEL')}
         </Button>
       </ReviewsDialog>
