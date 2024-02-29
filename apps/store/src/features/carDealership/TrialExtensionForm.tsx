@@ -1,5 +1,6 @@
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
+import { useAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { useMemo, useState } from 'react'
 import { BankIdIcon, Button, CheckIcon, Space, Text, theme } from 'ui'
@@ -20,13 +21,13 @@ import { type TrialContract } from './carDealership.types'
 import { EditActionButton } from './EditActionButton'
 import { ExtensionOfferToggle } from './ExtensionOfferToggle'
 import { MyMoneyConsent } from './MyMoneyConsent/MyMoneyConsent'
+import { concentAcceptedAtom } from './MyMoneyConsent/MyMoneyConsentAtom'
 import { PriceBreakdown } from './PriceBreakdown'
 import { ProductItemContractContainerCar } from './ProductItemContractContainer'
 import { useAcceptExtension } from './useAcceptExtension'
 
 export type MyMoneyConsentProps = {
   collectConsent?: boolean
-  consentGiven?: boolean
   onConsentChange?: (consentGiven: boolean) => void
 }
 
@@ -43,12 +44,12 @@ export const TrialExtensionForm = ({
   shopSession,
   requirePaymentConnection,
   collectConsent,
-  consentGiven,
   onConsentChange,
 }: Props) => {
   const { t } = useTranslation(['carDealership', 'checkout'])
   const locale = useRoutingLocale()
   const formatter = useFormatter()
+  const [concentAccepted] = useAtom(concentAcceptedAtom)
 
   const [acceptExtension, loading] = useAcceptExtension({
     shopSession: shopSession,
@@ -90,6 +91,8 @@ export const TrialExtensionForm = ({
   const handleClickSign = () => {
     datadogRum.addAction('Car dealership | Click Sign')
     acceptExtension(selectedOffer.id)
+    // Send MyMoney consent state
+    onConsentChange?.(concentAccepted)
   }
 
   return (
@@ -155,9 +158,7 @@ export const TrialExtensionForm = ({
           />
         )}
 
-        {collectConsent && (
-          <MyMoneyConsent consentGiven={consentGiven} onConsentChange={onConsentChange} />
-        )}
+        {collectConsent && <MyMoneyConsent />}
 
         <Space y={1}>
           <Button onClick={handleClickSign} loading={loading}>

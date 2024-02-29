@@ -1,4 +1,5 @@
 import { datadogRum } from '@datadog/browser-rum'
+import { useAtom } from 'jotai'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { Space } from 'ui'
@@ -13,6 +14,7 @@ import { type TrialContract } from './carDealership.types'
 import { ConfirmPayWithoutExtensionButton } from './ConfirmPayWithoutExtensionButton'
 import { ExtensionOfferToggle } from './ExtensionOfferToggle'
 import { MyMoneyConsent } from './MyMoneyConsent/MyMoneyConsent'
+import { concentAcceptedAtom } from './MyMoneyConsent/MyMoneyConsentAtom'
 import { PriceBreakdown } from './PriceBreakdown'
 import { ProductItemContractContainerCar } from './ProductItemContractContainer'
 import { type MyMoneyConsentProps } from './TrialExtensionForm'
@@ -30,7 +32,6 @@ export const PayForTrial = ({
   defaultOffer,
   ssn,
   collectConsent,
-  consentGiven,
   onConsentChange,
 }: Props) => {
   const router = useRouter()
@@ -39,12 +40,17 @@ export const PayForTrial = ({
   const locale = useRoutingLocale()
   const { dismissBanner } = useGlobalBanner()
   const { startLogin } = useBankIdContext()
+  const [concentAccepted] = useAtom(concentAcceptedAtom)
+
   const handleConfirmPay = () => {
     datadogRum.addAction('Car dealership | Decline extension offer')
 
     if (!ssn) {
       throw new Error('Must have customer ssn')
     }
+
+    // Send MyMoney consent state
+    onConsentChange?.(concentAccepted)
 
     startLogin({
       ssn,
@@ -92,9 +98,7 @@ export const PayForTrial = ({
         })}
       />
 
-      {collectConsent && (
-        <MyMoneyConsent consentGiven={consentGiven} onConsentChange={onConsentChange} />
-      )}
+      {collectConsent && <MyMoneyConsent />}
 
       <ConfirmPayWithoutExtensionButton onConfirm={handleConfirmPay} />
     </Space>

@@ -87,7 +87,6 @@ export const CarTrialExtensionBlock = (props: Props) => {
                 requirePaymentConnection={props.blok.requirePaymentConnection ?? false}
                 {...(Features.enabled('MYMONEY') && {
                   collectConsent: data.carTrial.collectConsent,
-                  consentGiven: data.carTrial.consentGiven,
                   onConsentChange: handleMyMoneyConsent,
                 })}
               />
@@ -99,7 +98,6 @@ export const CarTrialExtensionBlock = (props: Props) => {
                 ssn={data.carTrial.shopSession.customer?.ssn ?? undefined}
                 {...(Features.enabled('MYMONEY') && {
                   collectConsent: data.carTrial.collectConsent,
-                  consentGiven: data.carTrial.consentGiven,
                   onConsentChange: handleMyMoneyConsent,
                 })}
               />
