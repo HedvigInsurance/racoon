@@ -2,7 +2,6 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
-import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { ReactNode, useCallback, useRef, useState } from 'react'
@@ -39,6 +38,7 @@ import { sendDialogEvent } from '@/utils/dialogEvent'
 import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
 import { useFormatter } from '@/utils/useFormatter'
 import { ScrollPast } from '../ScrollPast/ScrollPast'
+import { OfferPresenterDynamic, loadOfferPresenter } from './OfferPresenterDynamic'
 import { PriceCalculatorDialog } from './PriceCalculatorDialog'
 import { ProductHero } from './ProductHero/ProductHero'
 import { usePurchaseFormState } from './usePurchaseFormState'
@@ -331,7 +331,7 @@ const EditingState = (props: EditingStateProps) => {
   const { t } = useTranslation('purchase-form')
   const tracking = useTracking()
 
-  const priceLoaderPromise = useRef<Promise<void> | null>(null)
+  const priceLoaderPromise = useRef<Promise<unknown> | null>(null)
   const [confirmPriceIntent, result] = usePriceIntentConfirmMutation({
     variables: { priceIntentId: priceIntent.id },
     onError(error) {
@@ -371,7 +371,11 @@ const EditingState = (props: EditingStateProps) => {
   const handleConfirm = () => {
     setIsLoadingPrice(true)
     confirmPriceIntent()
-    priceLoaderPromise.current = completePriceLoader()
+    priceLoaderPromise.current = Promise.all([
+      completePriceLoader(),
+      // Make sure we finish loading next step's UI before hiding loading indicator
+      loadOfferPresenter(),
+    ])
   }
 
   return isLoadingPrice ? (
@@ -422,11 +426,6 @@ const ShowOfferState = (props: ShowOfferStateProps) => {
     </SectionWrapper>
   )
 }
-
-const OfferPresenterDynamic = dynamic(async () => {
-  const { OfferPresenter } = await import('./OfferPresenter')
-  return OfferPresenter
-})
 
 const PURCHASE_FORM_MAX_WIDTH = '21rem'
 
