@@ -12,7 +12,7 @@ import { CompanyReviewsDataProvider } from '@/features/memberReviews/CompanyRevi
 import { fetchProductReviewsData } from '@/features/memberReviews/memberReviews'
 import type { ReviewsData } from '@/features/memberReviews/memberReviews.types'
 import { initializeApollo } from '@/services/apollo/client'
-import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
+import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { getStoryblokPageProps } from '@/services/storyblok/getStoryblokPageProps'
 import {
   getFilteredPageLinks,
@@ -88,7 +88,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
     const props = await getStoryblokPageProps({ context, slug, locale, draftMode })
 
     if (isProductStory(props.story)) {
-      const priceTemplate = fetchPriceTemplate(props.story.content.priceFormTemplateId)
+      const priceTemplate = getPriceTemplate(props.story.content.priceFormTemplateId)
       if (priceTemplate === undefined) {
         throw new Error(`Unknown price template: ${props.story.content.priceFormTemplateId}`)
       }

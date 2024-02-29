@@ -13,7 +13,7 @@ import { useTracking } from '@/services/Tracking/useTracking'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { Header } from './Header'
-import { createPriceIntent, getPriceTemplate } from './widget.helpers'
+import { createPriceIntent, getWidgetPriceTemplate } from './widget.helpers'
 
 type Props = {
   flow: string
@@ -50,7 +50,7 @@ export const SelectProductPage = (props: Props) => {
       shopSessionId: props.shopSessionId,
       productName: product.name,
       searchParams,
-      priceTemplate: getPriceTemplate(product.name, props.compareInsurance),
+      priceTemplate: getWidgetPriceTemplate(product.name, props.compareInsurance),
     })
 
     datadogRum.setGlobalContextProperty('priceIntentId', priceIntent.id)

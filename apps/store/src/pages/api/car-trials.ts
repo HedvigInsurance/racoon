@@ -6,7 +6,7 @@ import {
   type StartDateUpdateMutation,
   type StartDateUpdateMutationVariables,
 } from '@/services/graphql/generated'
-import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
+import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { ORIGIN_URL } from '@/utils/PageLink'
@@ -26,7 +26,7 @@ const handler: NextApiHandler = async (req, res) => {
 
   const priceIntentService = priceIntentServiceInitServerSide({ req, res, apolloClient })
 
-  const priceTemplate = fetchPriceTemplate(PRODUCT_NAME_CAR)
+  const priceTemplate = getPriceTemplate(PRODUCT_NAME_CAR)
   if (!priceTemplate) {
     throw new Error(`Could not find price template for product ${PRODUCT_NAME_CAR}`)
   }

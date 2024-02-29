@@ -6,7 +6,7 @@ import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataH
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import { PRELOADED_PRICE_INTENT_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/usePreloadedPriceIntentId'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
-import { fetchPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
+import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 
 type State = 'idle' | 'loading' | 'error'
@@ -40,7 +40,7 @@ export const useEditProductOffer = () => {
     }
 
     const priceIntentService = priceIntentServiceInitClientSide(apolloClient)
-    const priceTemplate = fetchPriceTemplate(params.productName)
+    const priceTemplate = getPriceTemplate(params.productName)
     if (!priceTemplate) {
       setState('error')
       datadogLogs.logger.error('Price template not found', { productName: params.productName })

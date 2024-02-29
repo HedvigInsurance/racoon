@@ -5,7 +5,7 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { ComponentPropsWithoutRef } from 'react'
 import { CalculatePricePage } from '@/features/widget/CalculatePricePage'
-import { fetchFlowStory, getPriceTemplate } from '@/features/widget/widget.helpers'
+import { fetchFlowStory, getWidgetPriceTemplate } from '@/features/widget/widget.helpers'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import { hideChatOnPage } from '@/services/CustomerFirst'
 import {
@@ -56,7 +56,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 
     const compareInsurance = story.content.compareInsurance ?? false
     const partner = story.content.partner
-    const priceTemplate = getPriceTemplate(priceIntent.product.name, compareInsurance)
+    const priceTemplate = getWidgetPriceTemplate(priceIntent.product.name, compareInsurance)
 
     console.info(`Widget | Calculate Price: ${priceIntent.product.name}/${priceTemplate.name}`)
     console.info(`Widget | Compare insurance: ${compareInsurance}`)
