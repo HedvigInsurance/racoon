@@ -48,7 +48,7 @@ export const ReviewsDialog = ({
           <Space y={2}>
             {Header}
 
-            <Space y={1}>
+            <Space y={2}>
               <ReviewsFilter
                 reviewsDistribution={reviewsDistribution}
                 selectedScore={selectedScore}
@@ -56,22 +56,29 @@ export const ReviewsDialog = ({
               />
 
               {reviews.length > 0 ? (
-                <Space y={{ base: 0.5, md: 1 }}>
-                  {reviews.map((review) => (
-                    <ReviewComment key={review.id} className={reviewComment} {...review} />
-                  ))}
-
+                <>
                   <Text
                     className={latestReviewsLabel}
-                    size="xs"
+                    size={{ _: 'xs', sm: 'md' }}
                     align="center"
                     color="textSecondary"
                   >
                     {t('LATEST_REVIEWS_WITH_COMMENTS_LABEL')}
                   </Text>
-                </Space>
+
+                  <Space y={{ base: 0.5, md: 1 }}>
+                    {reviews.map((review) => (
+                      <ReviewComment key={review.id} className={reviewComment} {...review} />
+                    ))}
+                  </Space>
+                </>
               ) : (
-                <Text className={noReviewsLabel} align="center" color="textSecondary">
+                <Text
+                  className={noReviewsLabel}
+                  size={{ _: 'xs', sm: 'md' }}
+                  align="center"
+                  color="textSecondary"
+                >
                   {t('NO_REVIEWS_LABEL')}
                 </Text>
               )}

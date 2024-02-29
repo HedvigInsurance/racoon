@@ -36,3 +36,8 @@ export const disclaimerLabel = style({
   maxWidth: '36rem',
   marginInline: 'auto',
 })
+
+export const trigger = style({
+  // Fix an issue on safari where the button get's too small when used in a flex context
+  flexShrink: 0,
+})

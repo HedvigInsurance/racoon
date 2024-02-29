@@ -31,3 +31,7 @@ export const certifiedIcon = style({
   // Optically align the icon with the text
   marginTop: 1,
 })
+
+export const disclaimerText = style({
+  paddingInline: theme.space.md,
+})
