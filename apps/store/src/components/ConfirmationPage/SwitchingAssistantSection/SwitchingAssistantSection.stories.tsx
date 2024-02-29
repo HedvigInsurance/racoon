@@ -1,6 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
-import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
 import {
   ContractExternalInsuranceCancellationStatus,
   ShopSessionOutcomeDocument,
@@ -19,13 +18,11 @@ type Story = StoryObj<typeof SwitchingAssistantSection>
 
 const Template: Story = {
   render: (args) => (
-    <AppErrorProvider>
-      <GridLayout.Root>
-        <GridLayout.Content width="1/3" align="center">
-          <SwitchingAssistantSection {...args} />
-        </GridLayout.Content>
-      </GridLayout.Root>
-    </AppErrorProvider>
+    <GridLayout.Root>
+      <GridLayout.Content width="1/3" align="center">
+        <SwitchingAssistantSection {...args} />
+      </GridLayout.Content>
+    </GridLayout.Root>
   ),
 }
 

@@ -1,5 +1,4 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { CAR_TRIAL_DATA_QUERY } from './carDealershipFixtures'
@@ -18,13 +17,11 @@ const meta: Meta<typeof TrialExtensionForm> = {
 const Template: Story = {
   render(args) {
     return (
-      <AppErrorProvider>
-        <BankIdContextProvider>
-          <ShopSessionProvider>
-            <TrialExtensionForm {...args} />
-          </ShopSessionProvider>
-        </BankIdContextProvider>
-      </AppErrorProvider>
+      <BankIdContextProvider>
+        <ShopSessionProvider>
+          <TrialExtensionForm {...args} />
+        </ShopSessionProvider>
+      </BankIdContextProvider>
     )
   },
 }

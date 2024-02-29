@@ -1,4 +1,5 @@
 import { createContext, PropsWithChildren, useContext, useMemo } from 'react'
+import { useProductData } from '../ProductData/ProductDataProvider'
 import { ProductPageProps } from './ProductPage.types'
 
 type ProductPageContextData = Pick<ProductPageProps, 'priceTemplate'> & {
@@ -13,14 +14,10 @@ type ProductPageContextData = Pick<ProductPageProps, 'priceTemplate'> & {
 
 const ProductPageContext = createContext<ProductPageContextData | null>(null)
 
-type Props = PropsWithChildren<Pick<ProductPageProps, 'priceTemplate' | 'story' | 'productData'>>
+type Props = PropsWithChildren<Pick<ProductPageProps, 'priceTemplate' | 'story'>>
 
-export const ProductPageContextProvider = ({
-  children,
-  story,
-  productData,
-  priceTemplate,
-}: Props) => {
+export const ProductPageContextProvider = ({ children, story, priceTemplate }: Props) => {
+  const productData = useProductData()
   const contextValue = useMemo(
     () => ({
       priceTemplate,
