@@ -1,6 +1,5 @@
 import { useApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
-import { useRouter } from 'next/router'
 import {
   createContext,
   PropsWithChildren,
@@ -53,6 +52,10 @@ const usePriceIntentContextValue = () => {
   const updatePriceIntent = useCallback(
     async (shopSession: ShopSession) => {
       const service = priceIntentServiceInitClientSide(apolloClient)
+      // TODO: We have potential data source conflict here - priceTemplate updates immediately on client-side navigation,
+      // productData is somewhat delayed due to useEffect logic in ProductDataProvider
+      // This is currently solved by eventually stabilizing, but ideally we should not be relying
+      // on delayed effects to bring those 2 in sync
       const priceIntent = await service.getOrCreate({
         priceTemplate,
         productName: productData.name,
@@ -92,19 +95,14 @@ const usePriceIntentContextValue = () => {
     [apolloClient, priceTemplate.name, updatePriceIntent, setSelectedOffer],
   )
 
-  const router = useRouter()
+  // Sync with current product page (if any)
   useEffect(() => {
-    const handleRouteChangeComplete = () => {
-      if (!shopSession) return
-      updatePriceIntent(shopSession)
-    }
+    if (!shopSession) return
+    updatePriceIntent(shopSession)
+  }, [shopSession, updatePriceIntent, priceIntentId])
 
-    router.events.on('routeChangeComplete', handleRouteChangeComplete)
-    return () => {
-      router.events.off('routeChangeComplete', handleRouteChangeComplete)
-    }
-  }, [router, shopSession, updatePriceIntent, priceIntentId])
-
+  // Fallback for initial opening of product page where we're getting shopSession as the last piece of data
+  // Everything else is created server-side and statically, shopSession synamically client-side in this scenario
   useEffect(
     () =>
       onReady((shopSession) => {
