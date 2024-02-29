@@ -61,12 +61,13 @@ Success.args = {
   },
 }
 
-export const Error = Template.bind({})
-Error.args = {
+export const SessionTimedOutError = Template.bind({})
+SessionTimedOutError.args = {
   ...defaultContextValue,
   currentOperation: {
     type: 'login',
     state: BankIdState.Error,
     ssn: '111122334455',
+    error: 'Your BankID session timed out.\n Please try again.',
   },
 }
