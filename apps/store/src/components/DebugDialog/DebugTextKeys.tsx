@@ -1,11 +1,12 @@
-import { useRouter } from 'next/router'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { ORIGIN_URL } from '@/utils/PageLink'
 
 export const DebugTextKeys = () => {
-  const router = useRouter()
-  const debugUrl = new URL(router.asPath, ORIGIN_URL)
-  const isDebugTextkeys = debugUrl.searchParams.get('debug') === 'textkeys'
+  const pathname = usePathname()
+  const debugUrl = new URL(pathname ?? '', ORIGIN_URL)
+  const searchParams = useSearchParams()
+  const isDebugTextkeys = searchParams?.get('debug') === 'textkeys'
   debugUrl.searchParams.set('debug', isDebugTextkeys ? 'none' : 'textkeys')
 
   return (
