@@ -56,7 +56,7 @@ export const PriceCalculatorAccordion = ({
 
     const url = new URL(window.location.href)
     if (!url.searchParams.has(OPEN_PRICE_CALCULATOR_QUERY_PARAM)) {
-      url.searchParams.append(OPEN_PRICE_CALCULATOR_QUERY_PARAM, '1')
+      url.searchParams.set(OPEN_PRICE_CALCULATOR_QUERY_PARAM, '1')
     }
 
     await router.replace(url)
