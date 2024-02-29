@@ -1,6 +1,8 @@
 query CarTrialExtension($contractId: UUID!) {
   carTrial(contractId: $contractId) {
     id
+    collectConsent
+    consentGiven
     priceIntent {
       ...PriceIntentCarTrialExtension
     }

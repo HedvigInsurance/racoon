@@ -10,6 +10,7 @@ import { useGlobalBanner } from '@/components/GlobalBanner/useGlobalBanner'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { useCarTrialExtensionQuery } from '@/services/graphql/generated'
 import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { Features } from '@/utils/Features'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
@@ -61,6 +62,10 @@ export const CarTrialExtensionBlock = (props: Props) => {
                 priceIntent={data.carTrial.priceIntent}
                 shopSession={data.carTrial.shopSession}
                 requirePaymentConnection={props.blok.requirePaymentConnection ?? false}
+                {...(Features.enabled('MYMONEY') && {
+                  collectConsent: data.carTrial.collectConsent,
+                  consentGiven: data.carTrial.consentGiven,
+                })}
               />
             ) : (
               <PayForTrial
@@ -68,6 +73,10 @@ export const CarTrialExtensionBlock = (props: Props) => {
                 shopSessionId={data.carTrial.shopSession.id}
                 defaultOffer={data.carTrial.priceIntent.defaultOffer ?? undefined}
                 ssn={data.carTrial.shopSession.customer?.ssn ?? undefined}
+                {...(Features.enabled('MYMONEY') && {
+                  collectConsent: data.carTrial.collectConsent,
+                  consentGiven: data.carTrial.consentGiven,
+                })}
               />
             )}
           </Space>

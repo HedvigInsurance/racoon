@@ -12,17 +12,25 @@ import { useFormatter } from '@/utils/useFormatter'
 import { type TrialContract } from './carDealership.types'
 import { ConfirmPayWithoutExtensionButton } from './ConfirmPayWithoutExtensionButton'
 import { ExtensionOfferToggle } from './ExtensionOfferToggle'
+import { MyMoneyConsent } from './MyMoneyConsent/MyMoneyConsent'
 import { PriceBreakdown } from './PriceBreakdown'
 import { ProductItemContractContainerCar } from './ProductItemContractContainer'
+import { type MyMoneyConsentProps } from './TrialExtensionForm'
 
 type Props = {
   trialContract: TrialContract
   shopSessionId: string
   defaultOffer?: ProductOfferFragment
   ssn?: string
-}
+} & MyMoneyConsentProps
 
-export const PayForTrial = ({ trialContract, shopSessionId, defaultOffer, ssn }: Props) => {
+export const PayForTrial = ({
+  collectConsent,
+  trialContract,
+  shopSessionId,
+  defaultOffer,
+  ssn,
+}: Props) => {
   const router = useRouter()
   const { t } = useTranslation('carDealership')
   const formatter = useFormatter()
@@ -81,6 +89,8 @@ export const PayForTrial = ({ trialContract, shopSessionId, defaultOffer, ssn }:
           }),
         })}
       />
+
+      {collectConsent && <MyMoneyConsent />}
 
       <ConfirmPayWithoutExtensionButton onConfirm={handleConfirmPay} />
     </Space>

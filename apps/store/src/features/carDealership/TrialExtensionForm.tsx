@@ -19,26 +19,34 @@ import { useFormatter } from '@/utils/useFormatter'
 import { type TrialContract } from './carDealership.types'
 import { EditActionButton } from './EditActionButton'
 import { ExtensionOfferToggle } from './ExtensionOfferToggle'
+import { MyMoneyConsent } from './MyMoneyConsent/MyMoneyConsent'
 import { PriceBreakdown } from './PriceBreakdown'
 import { ProductItemContractContainerCar } from './ProductItemContractContainer'
 import { useAcceptExtension } from './useAcceptExtension'
+
+export type MyMoneyConsentProps = {
+  collectConsent?: boolean
+  consentGiven?: boolean
+}
 
 type Props = {
   trialContract: TrialContract
   priceIntent: PriceIntentCarTrialExtensionFragment
   shopSession: ShopSessionFragment
   requirePaymentConnection: boolean
-}
+} & MyMoneyConsentProps
 
 export const TrialExtensionForm = ({
   trialContract,
   priceIntent,
   shopSession,
   requirePaymentConnection,
+  collectConsent,
 }: Props) => {
   const { t } = useTranslation(['carDealership', 'checkout'])
   const locale = useRoutingLocale()
   const formatter = useFormatter()
+
   const [acceptExtension, loading] = useAcceptExtension({
     shopSession: shopSession,
     trialContractId: trialContract.id,
@@ -143,6 +151,8 @@ export const TrialExtensionForm = ({
             currencyCode={selectedOffer.cost.net.currencyCode}
           />
         )}
+
+        {collectConsent && <MyMoneyConsent />}
 
         <Space y={1}>
           <Button onClick={handleClickSign} loading={loading}>
