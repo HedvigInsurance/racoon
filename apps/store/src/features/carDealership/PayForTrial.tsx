@@ -25,11 +25,13 @@ type Props = {
 } & MyMoneyConsentProps
 
 export const PayForTrial = ({
-  collectConsent,
   trialContract,
   shopSessionId,
   defaultOffer,
   ssn,
+  collectConsent,
+  consentGiven,
+  onConsentChange,
 }: Props) => {
   const router = useRouter()
   const { t } = useTranslation('carDealership')
@@ -90,7 +92,9 @@ export const PayForTrial = ({
         })}
       />
 
-      {collectConsent && <MyMoneyConsent />}
+      {collectConsent && (
+        <MyMoneyConsent consentGiven={consentGiven} onConsentChange={onConsentChange} />
+      )}
 
       <ConfirmPayWithoutExtensionButton onConfirm={handleConfirmPay} />
     </Space>
