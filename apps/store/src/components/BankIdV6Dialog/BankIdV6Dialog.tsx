@@ -27,12 +27,11 @@ export const BankIdV6Dialog = () => {
 
   let isOpen = !!currentOperation
   if (currentOperation?.type === 'sign') {
-    // In some cases we show error and progress on signing page, not in dialog
+    // In some cases we show progress on signing page, not in dialog
     const isSigningAuthenticatedMember =
       currentOperation.customerAuthenticationStatus ===
       ShopSessionAuthenticationStatus.Authenticated
-    const hasError = currentOperation.state === BankIdState.Error
-    if (isSigningAuthenticatedMember || hasError) {
+    if (isSigningAuthenticatedMember) {
       isOpen = false
     }
   }
@@ -151,23 +150,19 @@ export const BankIdV6Dialog = () => {
       }
 
       case BankIdState.Error: {
-        // Sign errors are shown elsewhere
-        if (currentOperation.type !== 'login') {
-          break
-        }
-
         Content = (
           <Space className={contentWrapper} y={1}>
             <WarningTriangleIcon size="1.5rem" color={theme.colors.amber600} />
 
-            <div>
-              <Text color="textPrimary" align="center">
-                {t('LOGIN_BANKID_FAIL_TITLE')}
+            {currentOperation.error ? (
+              <Text align="center" size="md">
+                {currentOperation.error}
               </Text>
-              <Text color="textSecondary" align="center">
-                {t('LOGIN_BANKID_FAIL_DESCRIPTION')}
+            ) : (
+              <Text align="center" size="md">
+                {t('LOGIN_BANKID_ERROR')}
               </Text>
-            </div>
+            )}
 
             <Button
               variant="primary"
