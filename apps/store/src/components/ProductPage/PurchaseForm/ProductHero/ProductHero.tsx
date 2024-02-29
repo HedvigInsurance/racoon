@@ -1,7 +1,7 @@
-import styled from '@emotion/styled'
 import { Heading, Space, Text } from 'ui'
-import { Pillow as BasePillow } from '@/components/Pillow/Pillow'
+import { Pillow } from '@/components/Pillow/Pillow'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { pillow } from './ProductHero.css'
 
 type Props = {
   name: string
@@ -13,7 +13,12 @@ type Props = {
 export const ProductHero = (props: Props) => {
   return (
     <SpaceFlex space={1} direction="vertical" align="center">
-      <CenteredPillow size={props.size === 'small' ? 'large' : 'xxlarge'} {...props.pillow} />
+      <Pillow
+        className={pillow}
+        size={props.size === 'small' ? 'large' : 'xxlarge'}
+        {...props.pillow}
+        priority={true}
+      />
 
       <Space y={0.75}>
         <Heading as="h1" variant="standard.24" align="center">
@@ -26,5 +31,3 @@ export const ProductHero = (props: Props) => {
     </SpaceFlex>
   )
 }
-
-const CenteredPillow = styled(BasePillow)({ marginInline: 'auto' })
