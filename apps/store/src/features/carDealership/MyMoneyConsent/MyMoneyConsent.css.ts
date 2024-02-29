@@ -17,6 +17,19 @@ export const consentBody = style({
   gridColumn: '2',
 })
 
+export const trigger = style({
+  marginLeft: theme.space.xxs,
+  textDecoration: 'underline',
+  textDecorationThickness: '1px',
+  textUnderlineOffset: '1.5px',
+
+  selectors: {
+    '[data-state="open"] &': {
+      display: 'none',
+    },
+  },
+})
+
 export const checkboxRoot = style({
   display: 'flex',
   placeContent: 'center',
