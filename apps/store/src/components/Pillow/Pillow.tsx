@@ -21,6 +21,7 @@ export const Pillow = ({ alt, src, priority, ...props }: PillowProps) => {
       height={208}
       decoding="sync"
       priority={priority}
+      quality={70}
     />
   )
 }
