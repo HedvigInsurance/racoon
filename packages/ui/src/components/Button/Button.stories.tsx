@@ -84,6 +84,12 @@ Small.args = {
   size: 'small',
 }
 
+export const Responsive = Template.bind({})
+Responsive.args = {
+  children: 'Button label',
+  size: { base: 'small', lg: 'large' },
+}
+
 export const WithIcon = Template.bind({})
 WithIcon.args = {
   children: 'Button label',

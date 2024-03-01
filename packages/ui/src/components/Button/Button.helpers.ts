@@ -1,54 +1,19 @@
-import { type CSSObject } from '@emotion/styled'
-import { type Level, mq, theme } from '../../theme'
-
-const HEIGHT = {
-  large: '3.5rem',
-  medium: '2.5rem',
-  small: '2rem',
-}
+import { buttonSizeBase, buttonSizeLarge } from './Button.css'
 
 type ButtonSizeVariant = 'small' | 'medium' | 'large'
+type ButtonLevels = 'base' | 'lg'
 
-export type ButtonSize = ButtonSizeVariant | Partial<Record<Level | 'base', ButtonSizeVariant>>
+export type ButtonSize = ButtonSizeVariant | Record<ButtonLevels, ButtonSizeVariant>
 
-export const getButtonSizeStyles = (size: ButtonSize) => {
-  if (typeof size !== 'object') {
-    return SIZE_STYLES[size]
+export const getButtonSizeStyles = (buttonSize: ButtonSize) => {
+  if (typeof buttonSize !== 'object') {
+    return buttonSizeBase[buttonSize]
   }
 
-  const styles = Object.entries(size).reduce((acc, [level, variant]) => {
-    if (level === 'base') return { ...acc, ...SIZE_STYLES[variant] }
+  const responsiveStyles = Object.entries(buttonSize).map(([level, size]) => {
+    if (level === 'base') return buttonSizeBase[size]
+    if (level === 'lg') return buttonSizeLarge[size]
+  })
 
-    return {
-      ...acc,
-      [mq[level as Level]]: {
-        ...SIZE_STYLES[variant],
-      },
-    }
-  }, {} as CSSObject)
-
-  return styles
+  return responsiveStyles
 }
-
-const SIZE_STYLES = {
-  small: {
-    height: HEIGHT.small,
-    paddingInline: theme.space.md,
-    fontSize: theme.fontSizes.xs,
-    borderRadius: theme.radius.xs,
-  },
-  medium: {
-    height: HEIGHT.medium,
-    paddingInline: theme.space.md,
-    fontSize: theme.fontSizes.md,
-    borderRadius: theme.radius.sm,
-  },
-  large: {
-    height: HEIGHT.large,
-    width: '100%',
-    paddingInline: theme.space.xl,
-    fontSize: theme.fontSizes.md,
-    textAlign: 'center',
-    borderRadius: theme.radius.md,
-  },
-} as const
