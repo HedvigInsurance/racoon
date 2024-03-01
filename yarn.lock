@@ -4156,14 +4156,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/react@npm:11.11.1":
-  version: 11.11.1
-  resolution: "@emotion/react@npm:11.11.1"
+"@emotion/react@npm:11.11.3":
+  version: 11.11.3
+  resolution: "@emotion/react@npm:11.11.3"
   dependencies:
     "@babel/runtime": "npm:^7.18.3"
     "@emotion/babel-plugin": "npm:^11.11.0"
     "@emotion/cache": "npm:^11.11.0"
-    "@emotion/serialize": "npm:^1.1.2"
+    "@emotion/serialize": "npm:^1.1.3"
     "@emotion/use-insertion-effect-with-fallbacks": "npm:^1.0.1"
     "@emotion/utils": "npm:^1.2.1"
     "@emotion/weak-memoize": "npm:^0.3.1"
@@ -4173,7 +4173,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10c0/1aea4d735b537fbfbeda828bbf929488a7e1b5b7d131f14aeede8737e92bb3b611e15fec353e97f85aed7a65a1c86a695a04ba6e9be905231beef6bd624cb705
+  checksum: 10c0/ce995395b8714343715284beb8478afdfa72b89ed83981a15a170ca0f4a2f77d7a4a198fd50c1f9c6efcd0535768d168ff88c5921dc5f90bb33134c7a75f9455
   languageName: node
   linkType: hard
 
@@ -4187,6 +4187,19 @@ __metadata:
     "@emotion/utils": "npm:^1.2.1"
     csstype: "npm:^3.0.2"
   checksum: 10c0/d243e0e5abce8d2183d25a32ec89bf650ee741ebadb29e6405abde05d4e2ed446ba5b3f725a29833ad709d0d08f0a5c8d0532fdcd43f4b23d931d8b6d4f218c1
+  languageName: node
+  linkType: hard
+
+"@emotion/serialize@npm:^1.1.3":
+  version: 1.1.3
+  resolution: "@emotion/serialize@npm:1.1.3"
+  dependencies:
+    "@emotion/hash": "npm:^0.9.1"
+    "@emotion/memoize": "npm:^0.8.1"
+    "@emotion/unitless": "npm:^0.8.1"
+    "@emotion/utils": "npm:^1.2.1"
+    csstype: "npm:^3.0.2"
+  checksum: 10c0/875241eafaa30e7d3b7cf9b585d8c1f224cbf627a674e87eb1d7662dafa76a8c8d67f14a79dbf7d1eaa017e9f68389962990fbcc699d5ad65035a1a047432a3f
   languageName: node
   linkType: hard
 
@@ -25049,7 +25062,7 @@ __metadata:
     "@datadog/datadog-ci": "npm:2.31.1"
     "@emotion/babel-plugin": "npm:11.11.0"
     "@emotion/is-prop-valid": "npm:1.2.1"
-    "@emotion/react": "npm:11.11.1"
+    "@emotion/react": "npm:11.11.3"
     "@emotion/styled": "npm:11.11.0"
     "@graphql-codegen/cli": "npm:5.0.2"
     "@graphql-codegen/client-preset": "npm:4.2.4"
@@ -26632,7 +26645,7 @@ __metadata:
     "@emotion/babel-plugin": "npm:11.11.0"
     "@emotion/is-prop-valid": "npm:1.2.1"
     "@emotion/jest": "npm:11.11.0"
-    "@emotion/react": "npm:11.11.1"
+    "@emotion/react": "npm:11.11.3"
     "@emotion/styled": "npm:11.11.0"
     "@radix-ui/react-dialog": "npm:1.0.5"
     "@storybook/react": "npm:7.6.17"
