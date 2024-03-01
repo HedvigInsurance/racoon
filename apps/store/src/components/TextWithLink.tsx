@@ -25,7 +25,12 @@ export const WithLink = (props: WithLinkProps) => {
   const [beforeLink, rest] = props.children.split('[[', 2)
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (rest === undefined) return <>props.children</>
+  if (rest === undefined) {
+    console.log(
+      'TextWithLink | no link placeholder found in text. Consider using a regular Text component instead.',
+    )
+    return <>{props.children}</>
+  }
 
   const [linkText, afterLink] = rest.split(']]', 2)
 
