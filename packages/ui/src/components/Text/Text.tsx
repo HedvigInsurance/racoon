@@ -29,7 +29,7 @@ export type TextProps = {
 export const getTextStyles = ({
   align,
   color,
-  size,
+  size = 'md',
   strikethrough,
   uppercase,
   className,
