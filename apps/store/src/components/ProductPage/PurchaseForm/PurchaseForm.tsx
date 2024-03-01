@@ -5,12 +5,9 @@ import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { ReactNode, useCallback, useRef, useState } from 'react'
-import { Balancer } from 'react-wrap-balancer'
-import { Button, Heading, mq, Space, Text, theme, WarningTriangleIcon } from 'ui'
+import { Button, Heading, mq, Space, theme } from 'ui'
 import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { ProductItemProps } from '@/components/CartNotification/ProductItem'
-import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceCalculatorDynamic } from '@/components/PriceCalculator/PriceCalculatorDynamic'
 import { completePriceLoader, PriceLoader } from '@/components/PriceLoader'
@@ -38,9 +35,10 @@ import { sendDialogEvent } from '@/utils/dialogEvent'
 import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
 import { useFormatter } from '@/utils/useFormatter'
 import { ScrollPast } from '../ScrollPast/ScrollPast'
-import { OfferPresenterDynamic, loadOfferPresenter } from './OfferPresenterDynamic'
+import { loadOfferPresenter, OfferPresenterDynamic } from './OfferPresenterDynamic'
 import { PriceCalculatorDialog } from './PriceCalculatorDialog'
 import { ProductHero } from './ProductHero/ProductHero'
+import { PurchaseFormErrorDialog } from './PurchaseFormErrorDialog'
 import { usePurchaseFormState } from './usePurchaseFormState'
 import { useSelectedOffer } from './useSelectedOffer'
 
@@ -101,150 +99,109 @@ export const PurchaseForm = (props: PurchaseFormProps) => {
   return (
     <Layout>
       {(notifyProductAdded) => {
-        if (!shopSession || !priceIntent)
-          return (
-            <ProductHeroContainer size="large">
-              <Button loading={true} />
-            </ProductHeroContainer>
-          )
-
-        if (formState.state !== 'IDLE') {
-          const editingStateForm = (
-            <EditingState
-              shopSession={shopSession}
-              priceIntent={priceIntent}
-              priceTemplate={priceTemplate}
-              onComplete={handleComplete}
-            />
-          )
-
-          const editor = isLarge ? (
-            <motion.div
-              initial={{ opacity: 0, y: '1vh' }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, ...theme.transitions.framer.easeInOutCubic }}
-            >
-              <ProductHeroContainer size="small" compact={true}>
-                {editingStateForm}
-              </ProductHeroContainer>
-            </motion.div>
-          ) : (
-            <PriceCalculatorDialog
-              isOpen
-              toggleDialog={() => setFormState('IDLE')}
-              header={
-                <SpaceFlex direction="vertical" align="center" space={0.5}>
-                  <Pillow size="large" {...productData.pillowImage} />
-                  <Heading as="h2" variant="standard.18">
-                    {productData.displayNameShort}
-                  </Heading>
-                </SpaceFlex>
+        const isReady = !!(shopSession && priceIntent)
+        if (!isReady) {
+          return <IdleState loading={true} showAverageRating={props.showAverageRating} />
+        } else if (formState.state === 'IDLE') {
+          if (selectedOffer == null) {
+            return <IdleState onClick={handleOpen} showAverageRating={props.showAverageRating} />
+          } else {
+            const handleAddedToCart = async (item: ProductOfferFragment, nextUrl?: string) => {
+              try {
+                await createNewPriceIntent(shopSession)
+              } catch (error) {
+                datadogLogs.logger.error('Failed to create new price intent', {
+                  error,
+                  priceTemplate: priceTemplate.name,
+                  shopSessionId: shopSession.id,
+                })
+                console.error('Failed to create new price intent', error)
               }
-            >
-              {editingStateForm}
-            </PriceCalculatorDialog>
-          )
 
-          return (
-            <>
-              {formState.state === 'ERROR' ? null : editor}
+              if (nextUrl) {
+                return await router.push(nextUrl)
+              }
 
-              <FullscreenDialog.Root
-                open={formState.state === 'ERROR'}
-                onOpenChange={() => {
-                  setFormState('IDLE')
-                }}
-              >
-                <FullscreenDialog.Modal
-                  center={true}
-                  Footer={
-                    <>
-                      <Button type="button" onClick={editForm}>
-                        {t('GENERAL_ERROR_DIALOG_PRIMARY_BUTTON')}
-                      </Button>
-                      <FullscreenDialog.Close asChild={true}>
-                        <Button type="button" variant="ghost">
-                          {t('DIALOG_BUTTON_CANCEL', { ns: 'common' })}
-                        </Button>
-                      </FullscreenDialog.Close>
-                    </>
-                  }
-                >
-                  <GridLayout.Root>
-                    <GridLayout.Content width="1/3" align="center">
-                      <SpaceFlex direction="vertical" align="center" space={0}>
-                        <Text size={{ _: 'lg', lg: 'xl' }}>
-                          <SpaceFlex space={0.25} align="center">
-                            <WarningTriangleIcon
-                              size="1em"
-                              color={theme.colors.signalAmberElement}
-                            />
-                            {t('GENERAL_ERROR_DIALOG_TITLE', { ns: 'common' })}
-                          </SpaceFlex>
-                        </Text>
-                        <Balancer ratio={0.5}>
-                          <Text size={{ _: 'lg', lg: 'xl' }} align="center" color="textSecondary">
-                            {formState.state === 'ERROR' && formState.errorMsg
-                              ? formState.errorMsg
-                              : t('GENERAL_ERROR_DIALOG_PROMPT')}
-                          </Text>
-                        </Balancer>
-                      </SpaceFlex>
-                    </GridLayout.Content>
-                  </GridLayout.Root>
-                </FullscreenDialog.Modal>
-              </FullscreenDialog.Root>
-            </>
-          )
-        }
-
-        if (selectedOffer) {
-          const handleAddedToCart = async (item: ProductOfferFragment, nextUrl?: string) => {
-            try {
-              await createNewPriceIntent(shopSession)
-            } catch (error) {
-              datadogLogs.logger.error('Failed to create new price intent', {
-                error,
-                priceTemplate: priceTemplate.name,
-                shopSessionId: shopSession.id,
+              notifyProductAdded({
+                name: productData.displayNameFull,
+                price: formatter.monthlyPrice(item.cost.net),
+                pillowSrc: productData.pillowImage.src,
+                description:
+                  !item.cancellation.requested ||
+                  item.cancellation.option ===
+                    ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate
+                    ? t('CART_ENTRY_DATE_LABEL', {
+                        date: formatter.fromNow(new Date(item.startDate)),
+                        ns: 'cart',
+                      })
+                    : t('CART_ENTRY_AUTO_SWITCH', { ns: 'cart' }),
               })
-              console.error('Failed to create new price intent', error)
             }
 
-            if (nextUrl) {
-              return await router.push(nextUrl)
-            }
-
-            notifyProductAdded({
-              name: productData.displayNameFull,
-              price: formatter.monthlyPrice(item.cost.net),
-              pillowSrc: productData.pillowImage.src,
-              description:
-                !item.cancellation.requested ||
-                item.cancellation.option ===
-                  ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate
-                  ? t('CART_ENTRY_DATE_LABEL', {
-                      date: formatter.fromNow(new Date(item.startDate)),
-                      ns: 'cart',
-                    })
-                  : t('CART_ENTRY_AUTO_SWITCH', { ns: 'cart' }),
-            })
+            return (
+              <ProductHeroContainer size="large" compact={true}>
+                <ShowOfferState
+                  shopSession={shopSession}
+                  priceIntent={priceIntent}
+                  onAddedToCart={handleAddedToCart}
+                  onClickEdit={editForm}
+                  selectedOffer={selectedOffer}
+                />
+              </ProductHeroContainer>
+            )
           }
-
-          return (
-            <ProductHeroContainer size="large" compact={true}>
-              <ShowOfferState
-                shopSession={shopSession}
-                priceIntent={priceIntent}
-                onAddedToCart={handleAddedToCart}
-                onClickEdit={editForm}
-                selectedOffer={selectedOffer}
-              />
-            </ProductHeroContainer>
-          )
         }
 
-        return <IdleState onClick={handleOpen} showAverageRating={props.showAverageRating} />
+        const editingStateForm = (
+          <EditingState
+            shopSession={shopSession}
+            priceIntent={priceIntent}
+            priceTemplate={priceTemplate}
+            onComplete={handleComplete}
+          />
+        )
+
+        const editor = isLarge ? (
+          <motion.div
+            initial={{ opacity: 0, y: '1vh' }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ...theme.transitions.framer.easeInOutCubic }}
+          >
+            <ProductHeroContainer size="small" compact={true}>
+              {editingStateForm}
+            </ProductHeroContainer>
+          </motion.div>
+        ) : (
+          <PriceCalculatorDialog
+            isOpen
+            toggleDialog={() => setFormState('IDLE')}
+            header={
+              <SpaceFlex direction="vertical" align="center" space={0.5}>
+                <Pillow size="large" {...productData.pillowImage} />
+                <Heading as="h2" variant="standard.18">
+                  {productData.displayNameShort}
+                </Heading>
+              </SpaceFlex>
+            }
+          >
+            {editingStateForm}
+          </PriceCalculatorDialog>
+        )
+
+        return (
+          <>
+            {formState.state !== 'ERROR' && editor}
+
+            <PurchaseFormErrorDialog
+              open={formState.state === 'ERROR'}
+              onOpenChange={() => {
+                setFormState('IDLE')
+              }}
+              onEditClick={editForm}
+              errorMessage={formState.errorMsg}
+            />
+          </>
+        )
       }}
     </Layout>
   )
@@ -294,9 +251,12 @@ const ProductHeroContainer = (props: ProductHeroContainerProps) => {
   )
 }
 
-type IdleStateProps = { onClick: () => void } & Pick<PurchaseFormProps, 'showAverageRating'>
+type IdleStateProps = { loading?: boolean; onClick?: () => void } & Pick<
+  PurchaseFormProps,
+  'showAverageRating'
+>
 
-const IdleState = ({ onClick, showAverageRating }: IdleStateProps) => {
+const IdleState = ({ loading, onClick, showAverageRating }: IdleStateProps) => {
   const ref = useRef<HTMLDivElement>(null)
   const { t } = useTranslation('purchase-form')
 
@@ -305,7 +265,9 @@ const IdleState = ({ onClick, showAverageRating }: IdleStateProps) => {
       <div ref={ref}>
         <ProductHeroContainer size="large">
           <Space y={1}>
-            <Button onClick={onClick}>{t('OPEN_PRICE_CALCULATOR_BUTTON')}</Button>
+            <Button loading={loading} onClick={onClick}>
+              {t('OPEN_PRICE_CALCULATOR_BUTTON')}
+            </Button>
             {showAverageRating && <ProductAverageRating />}
           </Space>
         </ProductHeroContainer>

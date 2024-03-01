@@ -20,7 +20,7 @@ export const LottieAnimation = ({ importSrc, ...playerProps }: Props) => {
       import('@lottiefiles/react-lottie-player')
       importSrc().then(setSrc)
     }
-  }, [isInView])
+  }, [importSrc, isInView])
   const ready = isInView && src != null
   return (
     <div ref={wrapperRef} className={animationWrapper}>
