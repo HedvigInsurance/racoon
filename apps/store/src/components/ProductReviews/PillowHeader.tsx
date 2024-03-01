@@ -3,10 +3,7 @@ import { useTranslation } from 'next-i18next'
 import { type ComponentProps } from 'react'
 import { Text, Space } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
-import { TextWithLink } from '@/components/TextWithLink'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
-import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
-import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
 import { wrapper, disclaimerText } from './PillowHeader.css'
 
@@ -21,7 +18,6 @@ type Props = {
 export const PillowHeader = ({ title, score, reviewsCount, pillow, className }: Props) => {
   const { numberGrouping } = useFormatter()
   const { t } = useTranslation('reviews')
-  const locale = useRoutingLocale()
 
   return (
     <div className={clsx(wrapper, className)}>
@@ -41,15 +37,14 @@ export const PillowHeader = ({ title, score, reviewsCount, pillow, className }: 
             })}
           </Text>
         </div>
-        <TextWithLink
+        <Text
           className={disclaimerText}
-          href={PageLink.reviews({ locale })}
           size={{ _: 'xs', sm: 'md' }}
           align="center"
           color="textSecondary"
         >
           {t('PILLOW_HEADER_REVIEWS_DISCLAIMER')}
-        </TextWithLink>
+        </Text>
       </Space>
     </div>
   )
