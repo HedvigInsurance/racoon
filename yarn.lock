@@ -21273,9 +21273,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"msw@npm:2.2.1":
-  version: 2.2.1
-  resolution: "msw@npm:2.2.1"
+"msw@npm:2.2.2":
+  version: 2.2.2
+  resolution: "msw@npm:2.2.2"
   dependencies:
     "@bundled-es-modules/cookie": "npm:^2.0.0"
     "@bundled-es-modules/statuses": "npm:^1.0.1"
@@ -21301,7 +21301,7 @@ __metadata:
       optional: true
   bin:
     msw: cli/index.js
-  checksum: 10c0/03edf048400493811648b40acef8125768061c8d7ecc43c0dad45b25c9f743f036008753eb8372cb55abc0de8d5842c77004ae9b8bedd358eb0b18992cd578ac
+  checksum: 10c0/b4cb5fd5f8ce9e20473bb4698d12dda4f15e075fde5d041fd6c632a5264a3cf4ee84763f3e1195b83ee361480ab2b614af784916a18cf80c16cd4eb9464d5d04
   languageName: node
   linkType: hard
 
@@ -25131,7 +25131,7 @@ __metadata:
     jwt-decode: "npm:4.0.0"
     md5: "npm:2.3.0"
     mini-css-extract-plugin: "npm:2.8.1"
-    msw: "npm:2.2.1"
+    msw: "npm:2.2.2"
     next: "npm:14.1.0"
     next-i18next: "npm:15.2.0"
     next-router-mock: "npm:0.9.12"
