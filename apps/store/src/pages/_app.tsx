@@ -13,13 +13,13 @@ import { AppErrorDialog } from '@/components/AppErrorDialog'
 import { BankIdDialog } from '@/components/BankIdDialog'
 import { BankIdV6Dialog } from '@/components/BankIdV6Dialog/BankIdV6Dialog'
 import { ContactUs } from '@/components/ContactUs/ContactUs'
+import { CookieConsentLoader } from '@/components/CookieConsentLoader'
 import { GlobalLinkStyles } from '@/components/RichText/RichText.styles'
 import { usePublishWidgetInitEvent } from '@/features/widget/usePublishWidgetInitEvent'
 import { useApollo } from '@/services/apollo/client'
 import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
 import { CustomerFirstScript, hasHiddenChat } from '@/services/CustomerFirst'
-import { GTMAppScript } from '@/services/gtm'
 import { initDatadog } from '@/services/logger/client'
 import { PageTransitionProgressBar } from '@/services/nprogress/pageTransition'
 import { OneTrustStyles } from '@/services/OneTrust'
@@ -103,13 +103,11 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       <Head>
         <meta key="viewport" name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-
-      <GTMAppScript />
-
+      <CookieConsentLoader />
+      <GlobalLinkStyles />
+      <OneTrustStyles />
+      <PageTransitionProgressBar />
       <ApolloProvider client={apolloClient}>
-        <GlobalLinkStyles />
-        <OneTrustStyles />
-        <PageTransitionProgressBar />
         <JotaiProvider>
           <ShopSessionProvider shopSessionId={pageProps[SHOP_SESSION_PROP_NAME]}>
             <ShopSessionTrackingProvider>
