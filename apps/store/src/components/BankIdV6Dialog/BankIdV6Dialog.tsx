@@ -1,4 +1,5 @@
 import { assignInlineVars } from '@vanilla-extract/dynamic'
+import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useRef, type ReactNode } from 'react'
@@ -27,6 +28,8 @@ import {
   iconWithText,
   contentWrapper,
   contentWrapperMaxWidth,
+  qrOnAnotherDeviceFooter,
+  qrOnAnotherDeviceLink,
 } from './BankIdV6Dialog.css'
 
 export const BankIdV6Dialog = () => {
@@ -114,36 +117,50 @@ export const BankIdV6Dialog = () => {
               <Skeleton className={qrCodeSkeleton} />
             )}
 
-            <div>
-              {currentOperation.bankidAppOpened ? (
-                <>
-                  <Text color="textPrimary" align="center">
-                    {t('QR_CODE_READ_TITLE')}
-                  </Text>
-                  <Text color="textSecondary" align="center">
-                    {t('QR_CODE_READ_SUBTITLE')}
-                  </Text>
-                </>
-              ) : (
-                <>
-                  <Text color="textPrimary" align="center">
-                    {t('LOGIN_BANKID')}
-                  </Text>
-                  <Text color="textSecondary" align="center">
-                    {isMobile
-                      ? t('LOGIN_BANKID_AUTHENTICATION_STEPS_MOBILE')
-                      : t('LOGIN_BANKID_AUTHENTICATION_STEPS_DESKTOP')}
-                  </Text>
-                </>
-              )}
-            </div>
+            <Space y={1.5}>
+              <div>
+                {currentOperation.bankidAppOpened ? (
+                  <>
+                    <Text color="textPrimary" align="center">
+                      {t('QR_CODE_READ_TITLE')}
+                    </Text>
+                    <Text color="textSecondary" align="center">
+                      {t('QR_CODE_READ_SUBTITLE')}
+                    </Text>
+                  </>
+                ) : (
+                  <>
+                    <Text color="textPrimary" align="center">
+                      {t('LOGIN_BANKID')}
+                    </Text>
+                    <Text color="textSecondary" align="center">
+                      {isMobile
+                        ? t('LOGIN_BANKID_AUTHENTICATION_STEPS_MOBILE')
+                        : t('LOGIN_BANKID_AUTHENTICATION_STEPS_DESKTOP')}
+                    </Text>
+                  </>
+                )}
+              </div>
+
+              <FullscreenDialog.Close asChild>
+                <Button variant="ghost">{t('BANKID_CANCEL')}</Button>
+              </FullscreenDialog.Close>
+            </Space>
           </Space>
         )
-        Footer = (
-          <FullscreenDialog.Close asChild>
-            <Button variant="ghost">{t('LOGIN_BANKID_CANCEL')}</Button>
-          </FullscreenDialog.Close>
-        )
+        Footer =
+          !isMobile && currentOperation.autoStartToken ? (
+            <div className={qrOnAnotherDeviceFooter}>
+              <Text>{t('NO_MOBILE_BANKID_TITLE')}</Text>
+              <Link
+                className={qrOnAnotherDeviceLink}
+                href={getBankIdUrl(currentOperation.autoStartToken)}
+                target="_self"
+              >
+                {t('NO_MOBILE_BANKID_LINK_LABEL')}
+              </Link>
+            </div>
+          ) : null
         break
       }
 
@@ -182,7 +199,7 @@ export const BankIdV6Dialog = () => {
         )
         Footer = (
           <FullscreenDialog.Close asChild>
-            <Button variant="ghost">{t('LOGIN_BANKID_CANCEL')}</Button>
+            <Button variant="ghost">{t('BANKID_CANCEL')}</Button>
           </FullscreenDialog.Close>
         )
         break
