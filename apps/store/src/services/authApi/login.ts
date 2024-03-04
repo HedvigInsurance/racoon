@@ -1,5 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { Observable } from 'zen-observable-ts'
+import { Features } from '@/utils/Features'
 import { AuthEndpoint } from './authEndpoint'
 import { fetchJson, ServerError } from './fetchJson'
 
@@ -21,14 +22,14 @@ export const loginMemberSeBankId = (ssn: string): Observable<MemberLoginStatusRe
         if (result.status === 'COMPLETED') {
           subscriber.complete()
         } else if (result.status === 'FAILED') {
-          subscriber.error(new Error('Login failed: ' + result.statusText))
+          subscriber.error(result.statusText)
         }
       } catch (error) {
         if (error instanceof ServerError) {
-          subscriber.error(error)
+          subscriber.error(error.message)
         } else {
           datadogLogs.logger.warn('LoginMemberSeBankId | Network error', {
-            error: (error as Error).message,
+            error,
           })
         }
       }
@@ -40,7 +41,9 @@ export const loginMemberSeBankId = (ssn: string): Observable<MemberLoginStatusRe
       .then(({ statusUrl, seBankIdProperties }) =>
         poll(seBankIdProperties.autoStartToken, AuthEndpoint.LOGIN_STATUS(statusUrl)),
       )
-      .catch((err) => subscriber.error(err))
+      .catch((err?: Error) => {
+        subscriber.error(err?.message)
+      })
 
     return () => clearTimeout(pollTimeoutId)
   })
@@ -93,7 +96,10 @@ const memberLoginCreateSE = async (personalNumber: string) => {
   })
 
   if (data.result === 'error') {
-    throw new Error('Failed to login: ' + data.reason)
+    const errorMessage = Features.enabled('BANKID_V6')
+      ? data.reason
+      : `Failed to login: ${data.reason}`
+    throw new Error(errorMessage)
   }
 
   return data
