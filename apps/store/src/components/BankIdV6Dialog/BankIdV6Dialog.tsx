@@ -3,10 +3,20 @@ import { useTranslation } from 'next-i18next'
 import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useRef, type ReactNode } from 'react'
 import { isMobile, isIOS } from 'react-device-detect'
-import { Button, Text, Space, CheckIcon, BankIdIcon, WarningTriangleIcon, theme } from 'ui'
+import {
+  Button,
+  type ButtonProps,
+  Text,
+  Space,
+  CheckIcon,
+  BankIdIcon,
+  WarningTriangleIcon,
+  theme,
+} from 'ui'
 import { BankIdLoginForm } from '@/components/BankIdLoginForm'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { Skeleton } from '@/components/Skeleton'
+import { SIGN_FORM_ID } from '@/constants/sign.constants'
 import { BankIdOperation, BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { ShopSessionAuthenticationStatus } from '@/services/graphql/generated'
@@ -24,6 +34,7 @@ export const BankIdV6Dialog = () => {
   const { startLogin, cancelLogin, cancelCheckoutSign, currentOperation } = useBankIdContext()
 
   useTriggerBankIdOnSameDevice(currentOperation)
+  const tryAgainButtonProps = useTryAgainButtonProps(currentOperation)
 
   let isOpen = !!currentOperation
   if (currentOperation?.type === 'sign') {
@@ -164,11 +175,7 @@ export const BankIdV6Dialog = () => {
               </Text>
             )}
 
-            <Button
-              variant="primary"
-              size="medium"
-              onClick={() => startLogin({ ssn: currentOperation.ssn })}
-            >
+            <Button variant="primary" size="medium" {...tryAgainButtonProps}>
               {t('LOGIN_BANKID_TRY_AGAIN')}
             </Button>
           </Space>
@@ -203,6 +210,24 @@ const getBankIdUrl = (autoStartToken: string) => {
   bankidUrl.searchParams.append('redirect', isIOS ? `${window.location.href}#bankid-auth` : 'null')
 
   return bankidUrl.toString()
+}
+
+const useTryAgainButtonProps = (bankIdOperation: BankIdOperation | null): Partial<ButtonProps> => {
+  const { startLogin } = useBankIdContext()
+
+  switch (bankIdOperation?.type) {
+    case 'sign':
+      return {
+        type: 'submit',
+        form: SIGN_FORM_ID,
+      }
+    case 'login':
+      return {
+        onClick: () => startLogin({ ssn: bankIdOperation.ssn }),
+      }
+    default:
+      return {}
+  }
 }
 
 const useTriggerBankIdOnSameDevice = (bankIdOperation: BankIdOperation | null) => {

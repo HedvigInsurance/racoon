@@ -1,9 +1,15 @@
 fragment ShopSessionSigning on ShopSessionSigning {
   id
   status
-  seBankidLiveQrCodeData
-  seBankidAutoStartToken
+  seBankidProperties {
+    autoStartToken
+    liveQrCodeData
+    bankidAppOpened
+  }
   completion {
     authorizationCode
+  }
+  userError {
+    message
   }
 }
