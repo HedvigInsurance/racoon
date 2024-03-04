@@ -1,5 +1,5 @@
 {
-  "LATEST_REVIEWS_WITH_COMMENTS_LABEL": "Senaste kommentarer från omdömen",
+  "LATEST_REVIEWS_WITH_COMMENTS_LABEL": "Visar senaste kommentarer för varje betygsskala",
   "NO_REVIEWS_LABEL": "Inga kommentarer har lämnats",
   "PILLOW_HEADER_REVIEWS_DISCLAIMER": "Visar genomsnittet av omdömen från våra kunder. Alla som haft en skada får en inbjudan via mejl till att lämna ett omdöme.",
   "RATING_SCORE_LABEL": "{{score}} av {{maxScore}}",
