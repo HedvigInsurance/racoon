@@ -138,6 +138,7 @@ export class PriceIntentService {
   }
 
   public clear(templateName: string, shopSessionId: string) {
+    this.createParams = null
     this.persister.reset(this.getPriceIntentKey(templateName, shopSessionId))
   }
 
