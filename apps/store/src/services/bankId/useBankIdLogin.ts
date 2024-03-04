@@ -95,7 +95,7 @@ export const useBankIdLoginApi = ({ dispatch }: HookOptions) => {
         complete() {
           subscriptionRef.current = null
         },
-        error(error: unknown) {
+        error(error?: string) {
           subscriptionRef.current = null
           dispatch({ type: 'error', error })
         },

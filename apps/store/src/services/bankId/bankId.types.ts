@@ -13,7 +13,7 @@ type BankIdLoginOperation = {
   type: 'login'
   ssn: string
   state: BankIdState
-  error?: unknown
+  error?: string
   qrCodeData?: string
   autoStartToken?: string
 }
@@ -23,7 +23,7 @@ type BankIdSignOperation = {
   ssn: string
   customerAuthenticationStatus: ShopSessionAuthenticationStatus
   state: BankIdState
-  error?: unknown
+  error?: string
   qrCodeData?: string
   autoStartToken?: string
 }

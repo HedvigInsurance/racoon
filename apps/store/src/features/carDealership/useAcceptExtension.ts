@@ -32,8 +32,8 @@ export const useAcceptExtension = (params: Params) => {
 
   useEffect(() => {
     const error = currentOperation?.error
-    if (error instanceof Error) {
-      showError(error)
+    if (error) {
+      showError(new Error(error))
     }
   }, [showError, currentOperation])
 

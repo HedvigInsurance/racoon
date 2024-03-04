@@ -38,7 +38,7 @@ type OperationStateChangeAction = {
 }
 type ErrorAction = {
   type: 'error'
-  error: unknown
+  error?: string
 }
 
 export type BankIdReducerState = {
