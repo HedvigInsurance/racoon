@@ -1,5 +1,5 @@
 {
-  "LATEST_REVIEWS_WITH_COMMENTS_LABEL": "Shows comments from latest reviews",
+  "LATEST_REVIEWS_WITH_COMMENTS_LABEL": "Shows latest comments for each rating scale",
   "NO_REVIEWS_LABEL": "No comments have been left",
   "PILLOW_HEADER_REVIEWS_DISCLAIMER": "Our average customer ratings. Anyone who's had a claim is invited by email to leave reviews.",
   "RATING_SCORE_LABEL": "{{score}} of {{maxScore}}",
