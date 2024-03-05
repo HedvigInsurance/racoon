@@ -224,15 +224,14 @@ const CheckoutForm = ({
             />
           </>
         )}
-        {shouldCollectEmail && (
-          <TextField
-            type="email"
-            label={t('FORM_EMAIL_LABEL')}
-            name={FormElement.Email}
-            defaultValue={suggestedEmail}
-            required
-          />
-        )}
+        <TextField
+          type="email"
+          label={t('FORM_EMAIL_LABEL')}
+          name={FormElement.Email}
+          defaultValue={suggestedEmail}
+          required
+          hidden={!shouldCollectEmail}
+        />
         <Space y={0.5}>
           <SignButton
             loading={loading}
