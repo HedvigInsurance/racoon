@@ -1,5 +1,6 @@
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
+import type { TextSprinkles } from 'ui/src/components/Text/Text.css'
 import { Button, Heading, HedvigLogo, Space, Text, mq, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { HEADER_HEIGHT_DESKTOP, HEADER_HEIGHT_MOBILE } from '@/components/Header/Header'
@@ -8,6 +9,7 @@ import { InputCarRegistrationNumber } from '@/components/InputCarRegistrationNum
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { TextField } from '@/components/TextField/TextField'
+import { Money } from '@/utils/formatter'
 import {
   Field,
   useCarBuyerValidationPageState,
@@ -15,14 +17,6 @@ import {
 } from './CarBuyerValidationPage.helpers'
 
 type Props = { dealerId: string }
-
-type ValidationError = { code: string; message: string }
-
-type Result = {
-  ssn: string
-  registrationNumber: string
-  error?: ValidationError
-}
 
 const TIER_OPTIONS = [
   { name: 'Halvförsäkring', value: '1' },
@@ -49,13 +43,18 @@ export const CarBuyerValidationPage = (props: Props) => {
       const result = await validateCarTrial({ ...parameters, dealerId: props.dealerId })
       setState({
         type: 'IDLE',
-        result: { ...parameters, error: result.error },
+        parameters,
+        result,
       })
     } catch (error) {
-      const unknownError = { code: 'OKÄNT_FEL', message: 'Något gick fel. Försök igen senare.' }
       setState({
         type: 'IDLE',
-        result: { ...parameters, error: unknownError },
+        parameters,
+        result: {
+          type: 'error',
+          errorCode: 'OKÄNT_FEL',
+          errorMessage: 'Något gick fel. Försök igen senare.',
+        },
       })
     }
   }
@@ -109,20 +108,22 @@ export const CarBuyerValidationPage = (props: Props) => {
                 </Space>
               </form>
 
-              {state.result && (
+              {state.parameters && state.result && (
                 <div style={{ opacity: state.type === 'LOADING' ? 0.5 : 1 }}>
-                  {!state.result.error && (
-                    <SuccesCard
-                      ssn={state.result.ssn}
-                      registrationNumber={state.result.registrationNumber}
+                  {state.result.type === 'success' && (
+                    <SuccessCard
+                      ssn={state.parameters.ssn}
+                      registrationNumber={state.parameters.registrationNumber}
+                      trialPrice={state.result.trialPrice}
                     />
                   )}
 
-                  {state.result.error && (
+                  {state.result.type === 'error' && (
                     <ErrorCard
-                      ssn={state.result.ssn}
-                      registrationNumber={state.result.registrationNumber}
-                      error={state.result.error}
+                      ssn={state.parameters.ssn}
+                      registrationNumber={state.parameters.registrationNumber}
+                      errorCode={state.result.errorCode}
+                      errorMessage={state.result.errorMessage}
                     />
                   )}
                 </div>
@@ -135,36 +136,50 @@ export const CarBuyerValidationPage = (props: Props) => {
   )
 }
 
-const SuccesCard = (props: Result) => (
-  <CampaignCard>
-    <Space y={0.5} style={{ width: '100%' }}>
-      <ResultRow>
-        <Text as="p" color="textTranslucentPrimary">
-          Validering godkänd
-        </Text>
-      </ResultRow>
-      <ResultRow>
-        <Text as="p" color="signalGreenText">
-          Personnummer:
-        </Text>
-        <Text as="p" color="signalGreenText">
-          {props.ssn}
-        </Text>
-      </ResultRow>
+function DisplayRow(props: { title: string; displayValue: string; color: TextSprinkles['color'] }) {
+  return (
+    <ResultRow>
+      <Text as="p" color={props.color}>
+        {props.title}
+      </Text>
+      <Text as="p" color={props.color}>
+        {props.displayValue}
+      </Text>
+    </ResultRow>
+  )
+}
 
-      <ResultRow>
-        <Text as="p" color="signalGreenText">
-          Registreringsnummer:
-        </Text>
-        <Text as="p" color="signalGreenText">
-          {props.registrationNumber}
-        </Text>
-      </ResultRow>
-    </Space>
-  </CampaignCard>
-)
+const SuccessCard = (props: { ssn: string; registrationNumber: string; trialPrice: Money }) => {
+  return (
+    <CampaignCard>
+      <Space y={0.5} style={{ width: '100%' }}>
+        <ResultRow>
+          <Text as="p" color="textTranslucentPrimary">
+            Validering godkänd
+          </Text>
+        </ResultRow>
+        <DisplayRow title="Personnummer:" displayValue={props.ssn} color="signalGreenText" />
+        <DisplayRow
+          title="Registreringsnummer:"
+          displayValue={props.registrationNumber}
+          color="signalGreenText"
+        />
+        <DisplayRow
+          title="Månadspris första 60 dagarna:"
+          displayValue={`${props.trialPrice.amount} ${props.trialPrice.currencyCode} / må`}
+          color="signalGreenText"
+        />
+      </Space>
+    </CampaignCard>
+  )
+}
 
-const ErrorCard = (props: Result) => (
+const ErrorCard = (props: {
+  ssn: string
+  registrationNumber: string
+  errorCode: string
+  errorMessage: string
+}) => (
   <AttentionCard>
     <Space y={0.5} style={{ width: '100%' }}>
       <ResultRow>
@@ -172,39 +187,16 @@ const ErrorCard = (props: Result) => (
           Validering ej godkänd
         </Text>
       </ResultRow>
-      <ResultRow>
-        <Text as="p" color="signalAmberText">
-          Personnummer:
-        </Text>
-        <Text as="p" color="signalAmberText">
-          {props.ssn}
-        </Text>
-      </ResultRow>
-
-      <ResultRow>
-        <Text as="p" color="signalAmberText">
-          Registreringsnummer:
-        </Text>
-        <Text as="p" color="signalAmberText">
-          {props.registrationNumber}
-        </Text>
-      </ResultRow>
-
-      {props.error && (
-        <>
-          <ResultRow>
-            <Text as="p" color="signalAmberText">
-              Felkod:
-            </Text>
-            <Text as="p" color="signalAmberText">
-              {props.error.code}
-            </Text>
-          </ResultRow>
-          <Text as="p" color="signalAmberText">
-            {props.error.message}
-          </Text>
-        </>
-      )}
+      <DisplayRow title="Personnummer:" displayValue={props.ssn} color="signalAmberText" />
+      <DisplayRow
+        title="Registreringsnummer:"
+        displayValue={props.registrationNumber}
+        color="signalAmberText"
+      />
+      <DisplayRow title="Felkod:" displayValue={props.errorCode} color="signalAmberText" />
+      <Text as="p" color="signalAmberText">
+        {props.errorMessage}
+      </Text>
     </Space>
   </AttentionCard>
 )

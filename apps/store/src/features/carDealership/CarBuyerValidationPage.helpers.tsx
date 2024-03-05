@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ValidateCarTrialParams } from './validateCarDealershipTrial'
+import { CarTrialValidationResult, ValidateCarTrialParams } from './validateCarDealershipTrial'
 
 export enum Field {
   SSN = 'ssn',
@@ -7,29 +7,34 @@ export enum Field {
   Tier = 'vtrCoverageCode',
 }
 
-type ValidationError = { code: string; message: string }
-
-type Result = {
-  ssn: string
-  registrationNumber: string
-  error?: ValidationError
+export type CartTrialValidationState = {
+  type: 'IDLE' | 'LOADING'
+  result: CarTrialValidationResult | null
+  parameters: {
+    [Field.SSN]: string
+    [Field.RegistrationNumber]: string
+  } | null
 }
 
-type State = { type: 'IDLE'; result: Result | null } | { type: 'LOADING'; result: Result | null }
-
 export const useCarBuyerValidationPageState = () => {
-  const [state, setState] = useState<State>({ type: 'IDLE', result: null })
+  const [state, setState] = useState<CartTrialValidationState>({
+    type: 'IDLE',
+    result: null,
+    parameters: null,
+  })
   return [state, setState] as const
 }
 
-type ValidatationResponse = { ok: boolean; error: ValidationError }
-
-export const validateCarTrial = async ({ dealerId, ...params }: ValidateCarTrialParams) => {
+export const validateCarTrial = async ({
+  dealerId,
+  ...params
+}: ValidateCarTrialParams): Promise<CarTrialValidationResult> => {
   const actionUrl = `/api/car-buyer/validation/${dealerId}`
   const response = await fetch(actionUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(params),
   })
-  return (await response.json()) as ValidatationResponse
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return await response.json()
 }
