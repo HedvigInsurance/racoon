@@ -42,15 +42,15 @@ const config = {
         source: '/:path*',
         headers: securityHeaders,
       },
-      {
-        source: '/editor(.*)',
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: StoryblokCsp,
-          },
-        ],
-      },
+      // {
+      //   source: '/editor(.*)',
+      //   headers: [
+      //     {
+      //       key: 'Content-Security-Policy',
+      //       value: StoryblokCsp,
+      //     },
+      //   ],
+      // },
     ]
   },
   webpack(config) {
@@ -147,10 +147,10 @@ const securityHeaders = [
     value: 'on',
   },
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
-  {
-    key: 'Content-Security-Policy',
-    value: SiteCsp,
-  },
+  // {
+  //   key: 'Content-Security-Policy',
+  //   value: SiteCsp,
+  // },
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
   {
     key: 'Referrer-Policy',
