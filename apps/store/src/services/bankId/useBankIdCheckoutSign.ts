@@ -1,4 +1,5 @@
 import { type ApolloError } from '@apollo/client'
+import { useTranslation } from 'next-i18next'
 import { useCallback, useRef } from 'react'
 import { Observable, Subscription } from 'zen-observable-ts'
 import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
@@ -9,7 +10,7 @@ import {
   useShopSessionSigningLazyQuery,
   useShopSessionStartSignMutation,
 } from '@/services/graphql/generated'
-import { BankIdState, CheckoutSignOptions } from './bankId.types'
+import type { BankIdState, BankIdSignOperation, CheckoutSignOptions } from './bankId.types'
 import { apiStatusToBankIdState, bankIdLogger } from './bankId.utils'
 import { BankIdDispatch } from './bankIdReducer'
 import { useBankIdLoginApi } from './useBankIdLogin'
@@ -76,7 +77,8 @@ type SignOptions = {
   onError?: (error: ApolloError | Error) => void
 }
 
-export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
+const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
+  const { t } = useTranslation('checkout')
   const [fetchSigning, signingResult] = useShopSessionSigningLazyQuery({})
 
   const [startSignMutate] = useShopSessionStartSignMutation()
@@ -86,8 +88,9 @@ export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
     ({ shopSessionId, onSuccess, onError }: SignOptions) => {
       subscriptionRef.current = new Observable<{
         nextOperationState: BankIdState
-        qrCodeData?: string
-        autoStartToken?: string
+        qrCodeData: BankIdSignOperation['qrCodeData']
+        autoStartToken: BankIdSignOperation['autoStartToken']
+        bankidAppOpened: BankIdSignOperation['bankidAppOpened']
       }>((subscriber) => {
         const startPolling = (shopSessionSigningId: string) => {
           fetchSigning({
@@ -98,12 +101,12 @@ export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
             notifyOnNetworkStatusChange: true,
             async onCompleted(data) {
               if (subscriber.closed) return
-              const { status, completion, seBankidLiveQrCodeData, seBankidAutoStartToken } =
-                data.shopSessionSigning
+              const { status, completion, seBankidProperties, userError } = data.shopSessionSigning
               subscriber.next({
                 nextOperationState: apiStatusToBankIdState(status),
-                qrCodeData: seBankidLiveQrCodeData ?? undefined,
-                autoStartToken: seBankidAutoStartToken ?? undefined,
+                qrCodeData: seBankidProperties?.liveQrCodeData,
+                autoStartToken: seBankidProperties?.autoStartToken,
+                bankidAppOpened: seBankidProperties?.bankidAppOpened,
               })
               if (status === ShopSessionSigningStatus.Signed && completion) {
                 signingResult.stopPolling()
@@ -117,16 +120,17 @@ export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
               } else if (status === ShopSessionSigningStatus.Failed) {
                 signingResult.stopPolling()
                 bankIdLogger.info('Signing failed')
-                // TODO: figure it what error to show here. Maybe exposing something from ShopsessionSigningQuery
-                subscriber.error(new Error('Signing failed'))
+                subscriber.error(userError?.message ?? t('ERROR_GENERAL_DIALOG_PROMPT'))
               }
             },
             onError(error) {
+              signingResult.stopPolling()
               if (error.networkError) {
                 bankIdLogger.warn('SigningQuery | Network error', { error: error.message })
+                subscriber.error(t('ERROR_GENERAL_DIALOG_PROMPT'))
               } else {
                 bankIdLogger.warn('SigningQuery | Failed to sign', { error: error.message })
-                subscriber.error(error)
+                subscriber.error(error.message)
               }
             },
           })
@@ -139,23 +143,26 @@ export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
             const { signing, userError } = data.shopSessionStartSign
             if (userError) {
               bankIdLogger.warn('StartSign | Failed to sign', { error: userError })
-              subscriber.error(userError)
+              subscriber.error(userError.message ?? t('ERROR_GENERAL_DIALOG_PROMPT'))
             } else if (signing) {
               bankIdLogger.info('Signing started')
               startPolling(signing.id)
             }
           },
           onError(error) {
-            bankIdLogger.warn('StartSign | Failed to sign', { error })
-            subscriber.error(error)
+            if (error.networkError) {
+              bankIdLogger.warn('StartSign | Network error', { error: error.message })
+              subscriber.error(t('ERROR_GENERAL_DIALOG_PROMPT'))
+            } else {
+              bankIdLogger.warn('StartSign | Failed to sign', { error })
+              subscriber.error(error.message)
+            }
           },
         })
       }).subscribe({
-        next({ nextOperationState, qrCodeData, autoStartToken }) {
+        next({ nextOperationState, qrCodeData, autoStartToken, bankidAppOpened }) {
           dispatch({ type: 'operationStateChange', nextOperationState })
-          if (qrCodeData || autoStartToken) {
-            dispatch({ type: 'propertiesUpdate', qrCodeData, autoStartToken })
-          }
+          dispatch({ type: 'propertiesUpdate', qrCodeData, autoStartToken, bankidAppOpened })
         },
         complete() {
           onSuccess()
@@ -168,7 +175,7 @@ export const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
         },
       })
     },
-    [dispatch, fetchSigning, signingResult, startSignMutate],
+    [dispatch, fetchSigning, signingResult, startSignMutate, t],
   )
   const cancelSign = () => {
     signingResult.stopPolling()
