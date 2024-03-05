@@ -40,7 +40,7 @@ export const VideoBlock = ({ className, blok, nested = false }: VideoBlockProps)
       condition={!(blok.fullBleed || nested)}
       wrapWith={(children) => <Wrapper className={className}>{children}</Wrapper>}
     >
-      <img src="https://placehold.co/549x549" fetchPriority="high" hidden />
+      <img src={posterUrl} fetchPriority="high" hidden />
 
       {/* <Video
         sources={videoSources}
