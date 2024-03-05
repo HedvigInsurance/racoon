@@ -28,19 +28,23 @@ export const VideoBlock = ({ className, blok, nested = false }: VideoBlockProps)
     { url: blok.videoUrl },
   ]
   const posterImg = blok.poster?.filename
+
   const posterUrl = posterImg
     ? getOptimizedImageUrl(getImgSrc(posterImg), {
         maxWidth: getMediaQueryBreakpoint('lg'),
       })
     : undefined
+
   return (
     <ConditionalWrapper
       condition={!(blok.fullBleed || nested)}
       wrapWith={(children) => <Wrapper className={className}>{children}</Wrapper>}
     >
-      <Video
+      <img src="https://placehold.co/549x549" fetchPriority="high" hidden />
+
+      {/* <Video
         sources={videoSources}
-        poster={posterUrl}
+        poster="https://placehold.co/549x549"
         autoPlay={blok.autoPlay}
         aspectRatioLandscape={blok.aspectRatioLandscape}
         aspectRatioPortrait={blok.aspectRatioPortrait}
@@ -49,7 +53,7 @@ export const VideoBlock = ({ className, blok, nested = false }: VideoBlockProps)
         roundedCorners={!blok.fullBleed}
         showControls={blok.controls}
         hideSoundControl={blok.hideSoundControl}
-      />
+      /> */}
     </ConditionalWrapper>
   )
 }
