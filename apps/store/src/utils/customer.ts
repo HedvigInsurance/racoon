@@ -4,8 +4,7 @@ const isNewMember = (customer: ShopSessionCustomer) =>
   customer.authenticationStatus === ShopSessionAuthenticationStatus.None
 
 export const getShouldCollectEmail = (customer?: ShopSessionCustomer | null) => {
-  // Collect emails of new customers as well as returning customers with no email
-  return !customer?.email
+  return !customer || customer.authenticationStatus === ShopSessionAuthenticationStatus.None
 }
 
 export const getShouldCollectName = (customer: ShopSessionCustomer) => {
