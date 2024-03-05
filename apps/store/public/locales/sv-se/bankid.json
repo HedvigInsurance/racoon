@@ -13,5 +13,7 @@
   "LOGIN_BANKID_SKIP": "Hoppa över",
   "LOGIN_BANKID_SUCCESS": "Identifierad framgångsrikt",
   "LOGIN_BANKID_TRY_AGAIN": "Försök igen",
-  "LOGIN_BANKID_WAITING": "Väntar på BankID..."
+  "LOGIN_BANKID_WAITING": "Väntar på BankID...",
+  "QR_CODE_READ_SUBTITLE": "Följ instruktionerna i BankID-appen",
+  "QR_CODE_READ_TITLE": "Fyll i din säkerhetskod"
 }

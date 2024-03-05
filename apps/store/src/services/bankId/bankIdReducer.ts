@@ -28,6 +28,7 @@ type PropertiesUpdateAction = {
   type: 'propertiesUpdate'
   qrCodeData?: string
   autoStartToken?: string
+  bankidAppOpened?: boolean
 }
 type FinalAction = {
   type: 'cancel' | 'success'
@@ -92,6 +93,7 @@ export const bankIdReducer = (
           ...state.currentOperation,
           qrCodeData: action.qrCodeData,
           autoStartToken: action.autoStartToken,
+          bankidAppOpened: action.bankidAppOpened,
         },
       }
     }

@@ -16,6 +16,7 @@ type BankIdLoginOperation = {
   error?: string
   qrCodeData?: string
   autoStartToken?: string
+  bankidAppOpened?: boolean
 }
 
 type BankIdSignOperation = {
@@ -26,6 +27,7 @@ type BankIdSignOperation = {
   error?: string
   qrCodeData?: string
   autoStartToken?: string
+  bankidAppOpened?: boolean
 }
 
 export type BankIdOperation = BankIdLoginOperation | BankIdSignOperation

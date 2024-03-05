@@ -13,5 +13,7 @@
   "LOGIN_BANKID_SKIP": "Skip",
   "LOGIN_BANKID_SUCCESS": "Identified successfully",
   "LOGIN_BANKID_TRY_AGAIN": "Try again",
-  "LOGIN_BANKID_WAITING": "Waiting for BankID..."
+  "LOGIN_BANKID_WAITING": "Waiting for BankID...",
+  "QR_CODE_READ_SUBTITLE": "Follow the instructions in the BankID app",
+  "QR_CODE_READ_TITLE": "Enter your security code"
 }

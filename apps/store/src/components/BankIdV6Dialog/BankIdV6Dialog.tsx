@@ -104,14 +104,27 @@ export const BankIdV6Dialog = () => {
             )}
 
             <div>
-              <Text color="textPrimary" align="center">
-                {t('LOGIN_BANKID')}
-              </Text>
-              <Text color="textSecondary" align="center">
-                {isMobile
-                  ? t('LOGIN_BANKID_AUTHENTICATION_STEPS_MOBILE')
-                  : t('LOGIN_BANKID_AUTHENTICATION_STEPS_DESKTOP')}
-              </Text>
+              {currentOperation.bankidAppOpened ? (
+                <>
+                  <Text color="textPrimary" align="center">
+                    {t('QR_CODE_READ_TITLE')}
+                  </Text>
+                  <Text color="textSecondary" align="center">
+                    {t('QR_CODE_READ_SUBTITLE')}
+                  </Text>
+                </>
+              ) : (
+                <>
+                  <Text color="textPrimary" align="center">
+                    {t('LOGIN_BANKID')}
+                  </Text>
+                  <Text color="textSecondary" align="center">
+                    {isMobile
+                      ? t('LOGIN_BANKID_AUTHENTICATION_STEPS_MOBILE')
+                      : t('LOGIN_BANKID_AUTHENTICATION_STEPS_DESKTOP')}
+                  </Text>
+                </>
+              )}
             </div>
           </Space>
         )

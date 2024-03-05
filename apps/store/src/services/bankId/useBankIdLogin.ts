@@ -75,15 +75,16 @@ export const useBankIdLoginApi = ({ dispatch }: HookOptions) => {
             nextOperationState: apiStatusToBankIdState(statusResponse.status),
           })
 
-          if (statusResponse.seBankidLiveQrCodeData || statusResponse.seBankidAutoStartToken) {
-            dispatch({
-              type: 'propertiesUpdate',
-              qrCodeData: statusResponse.seBankidLiveQrCodeData,
-              autoStartToken: statusResponse.seBankidAutoStartToken,
-            })
-          }
+          const { liveQrCodeData, autoStartToken, bankidAppOpened } =
+            statusResponse.seBankIdProperties
+          dispatch({
+            type: 'propertiesUpdate',
+            qrCodeData: liveQrCodeData,
+            autoStartToken,
+            bankidAppOpened,
+          })
 
-          if (statusResponse.status === 'COMPLETED') {
+          if (statusResponse.status === 'COMPLETED' && statusResponse.authorizationCode) {
             const { accessToken, refreshToken } = await exchangeAuthorizationCode(
               statusResponse.authorizationCode,
             )
