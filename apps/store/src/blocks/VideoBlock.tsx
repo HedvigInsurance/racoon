@@ -43,6 +43,9 @@ export const VideoBlock = ({ className, blok, nested = false }: VideoBlockProps)
     >
       <Head>
         <link rel="preload" href={posterUrl} as="image" />
+        {videoSources.map((source) => (
+          <link rel="preload" href={source.url} as="video" key={source.url} />
+        ))}
       </Head>
 
       <Video
