@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useTranslation } from 'next-i18next'
-import { AndroidIcon, AppleIcon, Button, mq, theme } from 'ui'
+import { AndroidIcon, AppleIcon, Button, theme } from 'ui'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
@@ -22,10 +22,6 @@ const triggerStyles = {
 
   ':active': {
     color: theme.colors.textSecondary,
-  },
-
-  [mq.lg]: {
-    display: 'none',
   },
 }
 

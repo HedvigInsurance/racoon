@@ -1,7 +1,5 @@
-import styled from '@emotion/styled'
 import { usePathname } from 'next/navigation'
 import React, { useEffect } from 'react'
-import { mq } from 'ui'
 import { Navigation, NavigationPrimaryList } from '../HeaderStyles'
 
 export type TopMenuDesktopProps = {
@@ -16,18 +14,8 @@ export const TopMenuDesktop = ({ children }: TopMenuDesktopProps) => {
   }, [pathname])
 
   return (
-    <Wrapper>
-      <Navigation value={activeItem} onValueChange={setActiveItem}>
-        <NavigationPrimaryList>{children}</NavigationPrimaryList>
-      </Navigation>
-    </Wrapper>
+    <Navigation value={activeItem} onValueChange={setActiveItem}>
+      <NavigationPrimaryList>{children}</NavigationPrimaryList>
+    </Navigation>
   )
 }
-
-const Wrapper = styled.div({
-  display: 'none',
-
-  [mq.lg]: {
-    display: 'block',
-  },
-})

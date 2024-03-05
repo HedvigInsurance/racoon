@@ -38,6 +38,7 @@ import {
 } from '@/services/storyblok/Storyblok.helpers'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
+import { useResponsiveVariant } from '@/utils/useResponsiveVariant'
 import { ButtonBlockProps } from './ButtonBlock'
 
 type NavItemBlockProps = SbBaseBlockProps<{
@@ -244,10 +245,7 @@ export const HeaderBlock = ({ blok, ...headerProps }: HeaderBlockProps) => {
     [],
   )
 
-  const desktopMenu = useMemo(
-    () => <TopMenuDesktop>{blok.navMenuContainer.map(NestedNavigationBlock)}</TopMenuDesktop>,
-    [blok.navMenuContainer],
-  )
+  const variant = useResponsiveVariant('lg')
 
   const productNavItem = useMemo(
     () =>
@@ -262,10 +260,18 @@ export const HeaderBlock = ({ blok, ...headerProps }: HeaderBlockProps) => {
 
   return (
     <Header key={pathname} {...storyblokEditable(blok)} opaque={isOpen} {...headerProps}>
-      {desktopMenu}
-      <TopMenuMobile isOpen={isOpen} onOpenChange={handleOpenChange} defaultValue={productNavItem}>
-        {blok.navMenuContainer.map(NestedNavigationBlock)}
-      </TopMenuMobile>
+      {variant === 'desktop' && (
+        <TopMenuDesktop>{blok.navMenuContainer.map(NestedNavigationBlock)}</TopMenuDesktop>
+      )}
+      {variant === 'mobile' && (
+        <TopMenuMobile
+          isOpen={isOpen}
+          onOpenChange={handleOpenChange}
+          defaultValue={productNavItem}
+        >
+          {blok.navMenuContainer.map(NestedNavigationBlock)}
+        </TopMenuMobile>
+      )}
     </Header>
   )
 }
