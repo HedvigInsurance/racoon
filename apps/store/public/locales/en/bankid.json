@@ -1,10 +1,10 @@
 {
+  "BANKID_CANCEL": "Cancel",
   "BANKID_MODAL_CANCEL": "Cancel",
   "BANKID_MODAL_SUCCESS_PROMPT": "Signing approved",
   "LOGIN_BANKID": "Log in with BankID",
   "LOGIN_BANKID_AUTHENTICATION_STEPS_DESKTOP": "Open the BankID app on your phone and tap Scan QR Code. Point the camera at the QR code to log in.",
   "LOGIN_BANKID_AUTHENTICATION_STEPS_MOBILE": "Open the BankID app on your phone and enter your security code.",
-  "LOGIN_BANKID_CANCEL": "Cancel login",
   "LOGIN_BANKID_ERROR": "Failed to log in",
   "LOGIN_BANKID_EXPLANATION": "If you have or had insurance with us, you can log in, and we will retrieve your data automatically.",
   "LOGIN_BANKID_FAIL_DESCRIPTION": "We could not log you in right now",
@@ -14,6 +14,8 @@
   "LOGIN_BANKID_SUCCESS": "Identified successfully",
   "LOGIN_BANKID_TRY_AGAIN": "Try again",
   "LOGIN_BANKID_WAITING": "Waiting for BankID...",
+  "NO_MOBILE_BANKID_LINK_LABEL": "Open BankID on this device",
+  "NO_MOBILE_BANKID_TITLE": "Don't have Mobile BankID?",
   "QR_CODE_READ_SUBTITLE": "Follow the instructions in the BankID app",
   "QR_CODE_READ_TITLE": "Enter your security code"
 }
