@@ -16,38 +16,23 @@ This document contains guidelines for how we write, organize and collaborate on 
 
 ## Web standards and Accessibility
 
-One of our design principles is "Be inclusive". This means we should build accessible web sites. The easiest way to achieve this is to stay close to standards and write semantic HTML.
+One of our design principles is "Be inclusive". This means we should build accessible websites. The easiest way to achieve this is to stay close to standards and write semantic HTML.
 
 No matter what, the end goal is **predictable web behaviour**. It should not matter which device, input method, or assistive technology a user uses to access our sites.
-
-## Solving problems
-
-There's no platform we would rather develop for than the web. Therefore we approach problems using this approach:
-
-1. Use built-in web/browser solutions. How far can we get? (`<select>`, `<form>`)
-
-1. Use custom but W3C/WCAG compliant (probably 3rd party) solution (`<form>` + `event.preventDefault()`)
-
-1. Explore a custom solution (Embark)
 
 ## File and Directory structure
 
 The general [code organization guidelines](https://www.notion.so/hedviginsurance/Code-organization-ac87b6ec9ec5401aafb387a566dfeb86?pvs=4) are documented in Notion. We've taken some inspiration from Josh Comeau's [Delightful File/Directory Structure](https://www.joshwcomeau.com/react/file-structure), however, we have made quite a few changes to fit our needs.
 
-### Next.js-layer
+### NextJs pages router
 
-Aim to contain all Next.js specific logic under the `/pages` folder. This means that we should build things under e.g. `/components` in a way so they could be copied over to a non-Next.js based project without major changes.
+Keep as little code as possible under `src/pages` - most things should be in `src/components`
 
-Examples:
+### NextJs app router
 
-- Handle `req`, `res`, `context` objects directly inside `/pages`
-- Manage cookies inside `/pages`
-- Manage `<Head>` and meta-tags inside `/pages`
-- Style components inside `/components`
+Singe-use modules should be co-located at their use site inside `src/app` (https://nextjs.org/docs/app/building-your-application/routing/colocation#split-project-files-by-feature-or-route)
 
-Exceptions:
-
-- `useRouter`, `<Image>`, and other are used throughout the project.
+Reused components should be located in `src/appComponents`
 
 ## Commits and Branches
 
@@ -124,35 +109,6 @@ const DynamicComponent = () => {
 export default DynamicComponent
 ```
 
-### Imports
-
-We don't import types directly from `'react'` - i.e. we don't desctructure them in the import statement.
-The reason for this is that the types from React are not always named in a way that makes super clear that's where they come from.
-
-```tsx
-// Do:
-
-import React, { useState, useEffect } from 'react'
-
-/* ... */
-
-export const DoSomething: React.ReactNode = () => {
-  /* ... */
-}
-```
-
-```tsx
-// Don't:
-
-import React, { useState, useEffect, ReactNode } from 'react'
-
-/* ... */
-
-export const DoSomething: ReactNode = () => {
-  /* ... */
-}
-```
-
 ### Components
 
 #### Components in files
@@ -164,12 +120,23 @@ Exception: co-locating small inner components in the same module is fine as long
 
 #### Declaring components
 
-When declaring components we use anonymous arrow functions, and not the `function` keyword.
+When declaring components we use `function` keyword. Function hoisting allows to consistently
+structure modules top-to-bottom, even where components are referenced from the top level of the module
 
 ```tsx
 // Do:
 
-export const Component = () => {
+export function List({ items }) {
+  return (
+    <div className={wrapper}>
+      {items.map((item) => (
+        <Item key={item.id} {...item} />
+      ))}
+    </div>
+  )
+}
+
+function Item() {
   // ...
 }
 ```
@@ -177,10 +144,22 @@ export const Component = () => {
 ```tsx
 // Don't:
 
-export function Component() {
+const Item = () => {
   // ...
 }
+
+export const List = () => {
+  return (
+    <div className={wrapper}>
+      {items.map((item) => (
+        <Item key={item.id} {...item} />
+      ))}
+    </div>
+  )
+}
 ```
+
+For non-component functions we use arrow form everywhere
 
 #### Component size
 
@@ -418,7 +397,17 @@ interface Props {
 
 ### Styling
 
-We use [Emotion](https://emotion.sh/docs/introduction) to style our components, which is pretty much like [Styled Components](https://styled-components.com/) with one difference being that you get types out of the box.
+#### vanilla-extract
+
+New code should use vanilla-extract `*.css.ts` files for styles
+
+- Use variants and sprinkles to organize styles where needed
+- Use `clsx` to apply styles conditionally and/or merge classes passed through props
+- There's no consistent way to merge emotion and vanilla styles on the same element - don't do this
+
+#### Emotion
+
+Older code uses e [Emotion](https://emotion.sh/docs/introduction) to style our components, which is pretty much like [Styled Components](https://styled-components.com/) with one difference being that you get types out of the box.
 
 ```tsx
 import styled from '@emotion/styled'
@@ -456,10 +445,11 @@ const AnotherNotCoolDiv = styled.div`
 
 - We try to reuse design tokens from our theme for things like colors, paddings, text size, etc
 - Theme should be treated as compile-time constant. Just import values from it instead of using dynamic theme API
+- Rare cases when you need dynamic colors should be handled via CSS variables
 
 ### Responsive design
 
-Customizing markup for different viewports often causes issues with SSR and re-hydration. Therefore, we render all markup needed (sometimes duplicate) and hide/show relevant content using CSS.
+Customizing markup for different viewports often causes issues with SSR and hydration. Use `useResponsiveVariant` for cases when rendering client-side only is OK. Otherwise, we render all markup needed (sometimes duplicate) and hide/show relevant content using CSS.
 
 ## Storyblok
 
