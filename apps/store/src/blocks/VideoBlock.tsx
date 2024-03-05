@@ -42,9 +42,9 @@ export const VideoBlock = ({ className, blok, nested = false }: VideoBlockProps)
     >
       <img src={posterUrl} fetchPriority="high" hidden />
 
-      {/* <Video
+      <Video
         sources={videoSources}
-        poster="https://placehold.co/549x549"
+        poster={posterUrl}
         autoPlay={blok.autoPlay}
         aspectRatioLandscape={blok.aspectRatioLandscape}
         aspectRatioPortrait={blok.aspectRatioPortrait}
@@ -53,7 +53,7 @@ export const VideoBlock = ({ className, blok, nested = false }: VideoBlockProps)
         roundedCorners={!blok.fullBleed}
         showControls={blok.controls}
         hideSoundControl={blok.hideSoundControl}
-      /> */}
+      />
     </ConditionalWrapper>
   )
 }
