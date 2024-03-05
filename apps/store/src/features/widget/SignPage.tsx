@@ -223,15 +223,14 @@ export const SignPage = (props: Props) => {
                       </>
                     )}
 
-                    {props.shouldCollectEmail && (
-                      <TextField
-                        type="email"
-                        label={t('checkout:FORM_EMAIL_LABEL')}
-                        name={FormElement.Email}
-                        defaultValue={props.suggestedEmail}
-                        required
-                      />
-                    )}
+                    <TextField
+                      type="email"
+                      label={t('checkout:FORM_EMAIL_LABEL')}
+                      name={FormElement.Email}
+                      defaultValue={props.suggestedEmail}
+                      required
+                      hidden={!props.shouldCollectEmail}
+                    />
 
                     <Space y={1}>
                       <SignButton loading={loading} showBankIdIcon={true}>

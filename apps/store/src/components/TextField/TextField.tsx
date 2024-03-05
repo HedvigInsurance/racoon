@@ -76,6 +76,7 @@ export const TextField = (props: Props) => {
         data-active={!!inputValue || !!inputProps.placeholder}
         data-warning={warning}
         data-readonly={inputProps.readOnly ? '' : undefined}
+        data-hidden={inputProps.hidden ?? undefined}
         onClick={handleClickWrapper}
       >
         <Label htmlFor={identifier} data-disabled={inputProps.disabled} data-variant={variant}>
@@ -154,6 +155,10 @@ const BaseWrapper = styled.div({
   backgroundColor: theme.colors.translucent1,
   width: '100%',
   cursor: 'text',
+
+  '&[data-hidden=true]': {
+    display: 'none',
+  },
 
   '&[data-warning=true]': {
     animation: `${warningAnimation} 1.5s cubic-bezier(0.2, -2, 0.8, 2) 1`,
