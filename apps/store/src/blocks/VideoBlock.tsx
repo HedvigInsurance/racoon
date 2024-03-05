@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import Image from 'next/image'
 import { ConditionalWrapper, getMediaQueryBreakpoint, mq, theme } from 'ui'
 import { Video, VideoProps } from '@/components/Video/Video'
 import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
@@ -41,7 +42,7 @@ export const VideoBlock = ({ className, blok, nested = false }: VideoBlockProps)
       wrapWith={(children) => <Wrapper className={className}>{children}</Wrapper>}
     >
       <div style={{ display: 'none' }}>
-        <img src={posterUrl} fetchPriority="high" />
+        {posterUrl && <Image src={posterUrl} priority alt="" />}
       </div>
 
       <Video
