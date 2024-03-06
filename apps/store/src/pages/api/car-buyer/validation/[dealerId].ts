@@ -3,11 +3,11 @@ import { validateCarDealershipTrial } from '@/features/carDealership/validateCar
 
 const handler: NextApiHandler = async (req, res) => {
   try {
-    const error = await validateCarDealershipTrial({
+    const result = await validateCarDealershipTrial({
       ...req.body,
       dealerId: req.query.dealerId as string,
     })
-    res.status(200).json({ ok: error === null, error })
+    res.status(200).json(result)
   } catch (error) {
     res.status(500).send(error instanceof Error ? error.message : 'Unknown error')
   }
