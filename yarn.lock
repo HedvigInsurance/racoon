@@ -11569,9 +11569,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vercel/edge-config@npm:1.0.2":
-  version: 1.0.2
-  resolution: "@vercel/edge-config@npm:1.0.2"
+"@vercel/edge-config@npm:1.1.0":
+  version: 1.1.0
+  resolution: "@vercel/edge-config@npm:1.1.0"
   dependencies:
     "@vercel/edge-config-fs": "npm:0.1.0"
     ts-essentials: "npm:9.4.1"
@@ -11580,7 +11580,7 @@ __metadata:
   peerDependenciesMeta:
     "@opentelemetry/api":
       optional: true
-  checksum: 10c0/25a0c1c950e4d0b67c7874008cc67989121daffa387b49a6e509ad519f6f312a5c68bde6019b20aacbb557be70d5471b41ba7b88564be061a179b64f831adc50
+  checksum: 10c0/066b254b503091adeb0669fd55d41e220fe4282debd2ac33c8d74ac15a5bfb08e92ff129e99173bd9c1dc0b593c151c6b416e958bf6d7b615d0206a765d4a66e
   languageName: node
   linkType: hard
 
@@ -25207,7 +25207,7 @@ __metadata:
     "@vanilla-extract/next-plugin": "npm:2.3.6"
     "@vanilla-extract/sprinkles": "npm:1.6.1"
     "@vanilla-extract/webpack-plugin": "npm:2.3.6"
-    "@vercel/edge-config": "npm:1.0.2"
+    "@vercel/edge-config": "npm:1.1.0"
     "@vercel/kv": "npm:1.0.1"
     "@vercel/otel": "npm:1.4.0"
     ajv: "npm:8.12.0"
