@@ -1,8 +1,10 @@
 import styled from '@emotion/styled'
+import Head from 'next/head'
+import { getImageProps } from 'next/image'
 import { ConditionalWrapper, getMediaQueryBreakpoint, mq, theme } from 'ui'
 import { Video, VideoProps } from '@/components/Video/Video'
 import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
-import { getImgSrc, getOptimizedImageUrl } from '@/services/storyblok/Storyblok.helpers'
+import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 
 export type VideoBlockProps = SbBaseBlockProps<
   {
@@ -29,15 +31,21 @@ export const VideoBlock = ({ className, blok, nested = false }: VideoBlockProps)
   ]
   const posterImg = blok.poster?.filename
   const posterUrl = posterImg
-    ? getOptimizedImageUrl(getImgSrc(posterImg), {
-        maxWidth: getMediaQueryBreakpoint('lg'),
-      })
+    ? getImageProps({
+        src: getImgSrc(posterImg),
+        width: getMediaQueryBreakpoint('lg'),
+        alt: '',
+      }).props.src
     : undefined
   return (
     <ConditionalWrapper
       condition={!(blok.fullBleed || nested)}
       wrapWith={(children) => <Wrapper className={className}>{children}</Wrapper>}
     >
+      <Head>
+        <link rel="preload" href={posterUrl} as="image" />
+      </Head>
+
       <Video
         sources={videoSources}
         poster={posterUrl}
