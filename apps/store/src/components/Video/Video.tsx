@@ -381,14 +381,6 @@ const useLazyLoadVideoPoster = (videoElement: HTMLVideoElement | null) => {
   useEffect(() => {
     if (!videoElement) return
 
-    const isAutoPlayEnabled = videoElement.getAttribute('autoplay') != null
-
-    if (isAutoPlayEnabled) {
-      return datadogLogs.logger.info(
-        'Autoplayed videos should have their poster fetched right away. Skipping lazy loading for video poster',
-      )
-    }
-
     if (!('IntersectionObserver' in window)) {
       const poster = videoElement.getAttribute('data-poster')
       if (poster) {
