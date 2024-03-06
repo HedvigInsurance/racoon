@@ -1,5 +1,6 @@
 import { datadogLogs, LogsInitConfiguration } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
+import { useEffect, useRef } from 'react'
 import { Tracking } from '@/services/Tracking/Tracking'
 
 const env = process.env.NEXT_PUBLIC_DATADOG_ENV || 'local'
@@ -20,8 +21,10 @@ const CLIENT_CONFIG = {
 const applicationId = process.env.NEXT_PUBLIC_DATADOG_APPLICATION_ID
 const clientToken = process.env.NEXT_PUBLIC_DATADOG_CLIENT_TOKEN
 
-export const initDatadog = () => {
+const initDatadog = () => {
   if (!applicationId || !clientToken) return
+
+  window.performance.mark('initDatadog')
 
   const datadogLogsConfig: LogsInitConfiguration = {
     ...CLIENT_CONFIG,
@@ -59,4 +62,16 @@ export const initDatadog = () => {
       : undefined,
   })
   datadogRum.startSessionReplayRecording()
+}
+
+// Should be used in top-level app component
+export const useInitDatadogAfterInteractive = () => {
+  const initRef = useRef(false)
+  useEffect(() => {
+    if (!initRef.current) {
+      initRef.current = true
+      // It's safe to use datadog before init, so we want to delay initialization until after page is interactive
+      requestIdleCallback(initDatadog)
+    }
+  }, [])
 }

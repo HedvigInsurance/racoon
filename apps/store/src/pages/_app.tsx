@@ -20,7 +20,7 @@ import { useApollo } from '@/services/apollo/client'
 import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
 import { CustomerFirstScript, hasHiddenChat } from '@/services/CustomerFirst'
-import { initDatadog } from '@/services/logger/client'
+import { useInitDatadogAfterInteractive } from '@/services/logger/client'
 import { PageTransitionProgressBar } from '@/services/nprogress/pageTransition'
 import { OneTrustStyles } from '@/services/OneTrust'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
@@ -70,8 +70,6 @@ if (typeof window !== 'undefined') {
     )
   }
 
-  initDatadog()
-
   Router.ready(() => {
     const { routingLocale } = getLocaleOrFallback(Router.query.locale as UiLocale)
     const { countryCode } = getCountryByLocale(routingLocale)
@@ -89,6 +87,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   // Override to correct html lang set by i18next
   useForceHtmlLangAttribute()
   usePublishWidgetInitEvent()
+  useInitDatadogAfterInteractive()
 
   const apolloClient = useApollo(pageProps)
   const getLayout = Component.getLayout ?? ((page) => page)
