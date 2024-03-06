@@ -10,8 +10,8 @@ import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import globalCss from 'ui/src/global.css'
 import { theme } from 'ui'
 import { AppErrorDialog } from '@/components/AppErrorDialog'
-import { BankIdDialog } from '@/components/BankIdDialog'
-import { BankIdV6Dialog } from '@/components/BankIdV6Dialog/BankIdV6Dialog'
+import { BankIdDialogDynamic } from '@/components/BankIdDialogDynamic'
+import { BankIdV6DialogDynamic } from '@/components/BankIdV6Dialog/BankIdV6DialogDynamic'
 import { ContactUs } from '@/components/ContactUs/ContactUs'
 import { CookieConsentLoader } from '@/components/CookieConsentLoader'
 import { GlobalLinkStyles } from '@/components/RichText/RichText.styles'
@@ -119,7 +119,11 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
                     {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
                   </AppErrorProvider>
                 </BalancerProvider>
-                {Features.enabled('BANKID_V6') ? <BankIdV6Dialog /> : <BankIdDialog />}
+                {Features.enabled('BANKID_V6') ? (
+                  <BankIdV6DialogDynamic />
+                ) : (
+                  <BankIdDialogDynamic />
+                )}
               </BankIdContextProvider>
             </ShopSessionTrackingProvider>
           </ShopSessionProvider>
