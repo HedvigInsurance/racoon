@@ -42,9 +42,11 @@ export const VideoBlock = ({ className, blok, nested = false }: VideoBlockProps)
       condition={!(blok.fullBleed || nested)}
       wrapWith={(children) => <Wrapper className={className}>{children}</Wrapper>}
     >
-      <Head>
-        <link rel="preload" href={posterUrl} as="image" />
-      </Head>
+      {blok.autoPlay && (
+        <Head>
+          <link rel="preload" href={posterUrl} as="image" />
+        </Head>
+      )}
 
       <Video
         sources={videoSources}
