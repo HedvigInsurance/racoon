@@ -180,6 +180,7 @@ export const Video = ({
       <StyledVideo
         ref={videoRef}
         data-poster={poster}
+        poster={delegated.autoPlay ? poster : undefined}
         playsInline
         preload="metadata"
         aspectRatioLandscape={aspectRatioLandscape}
@@ -381,12 +382,8 @@ const useLazyLoadVideoPoster = (videoElement: HTMLVideoElement | null) => {
     if (!videoElement) return
 
     const isAutoPlayEnabled = videoElement.getAttribute('autoplay') != null
-    if (isAutoPlayEnabled) {
-      const poster = videoElement.getAttribute('data-poster')
-      if (poster) {
-        videoElement.setAttribute('poster', poster)
-      }
 
+    if (isAutoPlayEnabled) {
       return datadogLogs.logger.info(
         'Autoplayed videos should have their poster fetched right away. Skipping lazy loading for video poster',
       )
