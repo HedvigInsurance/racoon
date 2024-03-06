@@ -103,7 +103,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       <Head>
         <meta key="viewport" name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <CookieConsentLoader />
+      {Features.enabled('COOKIE_BANNER') && <CookieConsentLoader />}
       <GlobalLinkStyles />
       <OneTrustStyles />
       <PageTransitionProgressBar />

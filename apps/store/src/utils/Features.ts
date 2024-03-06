@@ -7,6 +7,7 @@ export const Features = {
 }
 
 const config = {
+  COOKIE_BANNER: process.env.NEXT_PUBLIC_FEATURE_COOKIE_BANNER === 'true',
   INSURELY: process.env.NEXT_PUBLIC_FEATURE_INSURELY === 'true',
   MANYPETS_MIGRATION: process.env.NEXT_PUBLIC_FEATURE_MANYPETS_MIGRATION === 'true',
   MEMBER_AREA: process.env.NEXT_PUBLIC_FEATURE_MEMBER_AREA === 'true',
