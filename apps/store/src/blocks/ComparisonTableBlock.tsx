@@ -6,7 +6,7 @@ import { MobileComparisonTable } from '@/components/ComparisonTable/MobileCompar
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { ContentAlignment, ContentWidth } from '@/components/GridLayout/GridLayout.helper'
 import { type StoryblokTableField, type SbBaseBlockProps } from '@/services/storyblok/storyblok'
-import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
+import { useResponsiveVariant } from '@/utils/useResponsiveVariant'
 
 type Props = SbBaseBlockProps<{
   table: StoryblokTableField
@@ -17,7 +17,7 @@ type Props = SbBaseBlockProps<{
 }>
 
 export const ComparisonTableBlock = ({ blok }: Props) => {
-  const matchesMdAndUp = useBreakpoint('md')
+  const variant = useResponsiveVariant('md')
 
   const table = useMemo<Table>(
     () => ({
@@ -33,11 +33,10 @@ export const ComparisonTableBlock = ({ blok }: Props) => {
         width={blok.layout?.widths ?? { base: '1' }}
         align={blok.layout?.alignment ?? 'center'}
       >
-        {matchesMdAndUp ? (
+        {variant === 'desktop' && (
           <DesktopComparisonTable {...table} {...storyblokEditable(blok)} />
-        ) : (
-          <MobileComparisonTable {...table} {...storyblokEditable(blok)} />
         )}
+        {variant === 'mobile' && <MobileComparisonTable {...table} {...storyblokEditable(blok)} />}
       </GridLayout.Content>
     </GridLayout.Root>
   )

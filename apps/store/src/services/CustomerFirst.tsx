@@ -3,7 +3,7 @@ import { atom, useAtom } from 'jotai'
 import Script from 'next/script'
 import { useCallback, useEffect } from 'react'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
-import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
+import { useResponsiveVariant } from '@/utils/useResponsiveVariant'
 
 const HIDE_CHAT_PAGE_PROP = '_hideChat'
 
@@ -13,13 +13,13 @@ export const hasHiddenChat = (props: Record<string, unknown>) => Boolean(props[H
 const OPEN_ATOM = atom(false)
 
 export const CustomerFirstScript = () => {
-  const isDesktop = useBreakpoint('lg')
+  const variant = useResponsiveVariant('lg')
   const { chatWidgetSrc } = useCurrentLocale()
   const { open } = useCustomerFirst()
 
   if (!chatWidgetSrc) return null
 
-  const showLauncher = isDesktop || open
+  const showLauncher = variant === 'desktop' || open
   return (
     <>
       <Global styles={{ '#chat-iframe': { display: showLauncher ? 'initial' : 'none' } }} />

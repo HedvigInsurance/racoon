@@ -11,7 +11,7 @@ import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { ProductOfferFragment } from '@/services/graphql/generated'
 import { sendDialogEvent } from '@/utils/dialogEvent'
-import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
+import { useResponsiveVariant } from '@/utils/useResponsiveVariant'
 
 type Props = {
   tiers: Array<ProductOfferFragment>
@@ -20,7 +20,7 @@ type Props = {
 
 export const ComparisonTableModal = ({ tiers, selectedTierId }: Props) => {
   const { t } = useTranslation('purchase-form')
-  const matchesMdAndUp = useBreakpoint('md')
+  const variant = useResponsiveVariant('md')
   const { table, selectedTierDisplayName } = useTableData(tiers, selectedTierId)
 
   const handleOpenChange = (open: boolean) => {
@@ -53,10 +53,10 @@ export const ComparisonTableModal = ({ tiers, selectedTierId }: Props) => {
       >
         <Grid>
           <GridLayout.Content align="center" width={{ md: '2/3', xl: '1/2', xxl: '1/3' }}>
-            {!matchesMdAndUp && (
+            {variant === 'mobile' && (
               <MobileComparisonTable {...table} defaultSelectedColumn={selectedTierDisplayName} />
             )}
-            {matchesMdAndUp && (
+            {variant === 'desktop' && (
               <DesktopComparisonTable {...table} selectedColumn={selectedTierDisplayName} />
             )}
           </GridLayout.Content>

@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import * as Popover from '@radix-ui/react-popover'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import {
   AndroidIcon,
   AppleIcon,
@@ -18,7 +18,7 @@ import {
 import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
-import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
+import { useResponsiveVariant } from '@/utils/useResponsiveVariant'
 import { zIndexes } from '@/utils/zIndex'
 
 const scaleIn = keyframes({
@@ -44,14 +44,12 @@ const scaleOut = keyframes({
 })
 
 export const ContactUs = () => {
-  const hasMounted = useHasMounted()
-  const isDesktop = useBreakpoint('lg')
+  const variant = useResponsiveVariant('lg')
   const { t } = useTranslation('contact-us')
   const locale = useRoutingLocale()
   const [open, setOpen] = useState(false)
 
-  // There's no way to determine how this component should look on the server
-  if (!hasMounted || !isDesktop) return null
+  if (variant !== 'desktop') return null
 
   return (
     <Popover.Root open={open} onOpenChange={setOpen}>
@@ -146,16 +144,6 @@ export const ContactUs = () => {
       </Popover.Portal>
     </Popover.Root>
   )
-}
-
-const useHasMounted = () => {
-  const [hasMounted, setHasMounted] = useState(false)
-
-  useEffect(() => {
-    setHasMounted(true)
-  }, [])
-
-  return hasMounted
 }
 
 const ContactUsButton = styled(Button)({
