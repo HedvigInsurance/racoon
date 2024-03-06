@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { storyblokEditable, StoryblokComponent, SbBlokData } from '@storyblok/react'
-import { motion, useScroll } from 'framer-motion'
+import { motion, useInView, useScroll } from 'framer-motion'
 import { useState, useEffect, useRef, ReactNode } from 'react'
 import { theme, mq } from 'ui'
 import { GridLayout, MAX_WIDTH } from '@/components/GridLayout/GridLayout'
@@ -77,11 +77,7 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
         </OverviewGridArea>
 
         <GridLayout.Content width="1" align="center">
-          <section id="coverage">
-            {blok.coverage.map((nestedBlock) => (
-              <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
-            ))}
-          </section>
+          <CoverageSection blocks={blok.coverage} />
         </GridLayout.Content>
       </Grid>
 
@@ -257,4 +253,19 @@ const useActiveSectionChangeListener = (
 
     return () => observer.disconnect()
   }, [sectionsId, callback])
+}
+
+// Optimization:
+// Perils list could be hundreds of DOM elements (400+ for Apartment rent) and if we lazy-render it, page load time of product pages improves
+const CoverageSection = (props: { blocks: Array<SbBlokData> }) => {
+  const ref = useRef(null)
+  const cameIntoView = useInView(ref, { once: true })
+  return (
+    <section id="coverage" ref={ref}>
+      {cameIntoView &&
+        props.blocks.map((nestedBlock) => (
+          <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
+        ))}
+    </section>
+  )
 }
