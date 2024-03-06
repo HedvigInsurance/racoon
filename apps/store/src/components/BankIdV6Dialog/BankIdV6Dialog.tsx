@@ -1,12 +1,23 @@
 import { assignInlineVars } from '@vanilla-extract/dynamic'
+import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useRef, type ReactNode } from 'react'
 import { isMobile, isIOS } from 'react-device-detect'
-import { Button, Text, Space, CheckIcon, BankIdIcon, WarningTriangleIcon, theme } from 'ui'
+import {
+  Button,
+  type ButtonProps,
+  Text,
+  Space,
+  CheckIcon,
+  BankIdIcon,
+  WarningTriangleIcon,
+  theme,
+} from 'ui'
 import { BankIdLoginForm } from '@/components/BankIdLoginForm'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { Skeleton } from '@/components/Skeleton'
+import { SIGN_FORM_ID } from '@/constants/sign.constants'
 import { BankIdOperation, BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { ShopSessionAuthenticationStatus } from '@/services/graphql/generated'
@@ -17,6 +28,8 @@ import {
   iconWithText,
   contentWrapper,
   contentWrapperMaxWidth,
+  qrOnAnotherDeviceFooter,
+  qrOnAnotherDeviceLink,
 } from './BankIdV6Dialog.css'
 
 export const BankIdV6Dialog = () => {
@@ -24,6 +37,7 @@ export const BankIdV6Dialog = () => {
   const { startLogin, cancelLogin, cancelCheckoutSign, currentOperation } = useBankIdContext()
 
   useTriggerBankIdOnSameDevice(currentOperation)
+  const tryAgainButtonProps = useTryAgainButtonProps(currentOperation)
 
   let isOpen = !!currentOperation
   if (currentOperation?.type === 'sign') {
@@ -103,36 +117,50 @@ export const BankIdV6Dialog = () => {
               <Skeleton className={qrCodeSkeleton} />
             )}
 
-            <div>
-              {currentOperation.bankidAppOpened ? (
-                <>
-                  <Text color="textPrimary" align="center">
-                    {t('QR_CODE_READ_TITLE')}
-                  </Text>
-                  <Text color="textSecondary" align="center">
-                    {t('QR_CODE_READ_SUBTITLE')}
-                  </Text>
-                </>
-              ) : (
-                <>
-                  <Text color="textPrimary" align="center">
-                    {t('LOGIN_BANKID')}
-                  </Text>
-                  <Text color="textSecondary" align="center">
-                    {isMobile
-                      ? t('LOGIN_BANKID_AUTHENTICATION_STEPS_MOBILE')
-                      : t('LOGIN_BANKID_AUTHENTICATION_STEPS_DESKTOP')}
-                  </Text>
-                </>
-              )}
-            </div>
+            <Space y={1.5}>
+              <div>
+                {currentOperation.bankidAppOpened ? (
+                  <>
+                    <Text color="textPrimary" align="center">
+                      {t('QR_CODE_READ_TITLE')}
+                    </Text>
+                    <Text color="textSecondary" align="center">
+                      {t('QR_CODE_READ_SUBTITLE')}
+                    </Text>
+                  </>
+                ) : (
+                  <>
+                    <Text color="textPrimary" align="center">
+                      {t('LOGIN_BANKID')}
+                    </Text>
+                    <Text color="textSecondary" align="center">
+                      {isMobile
+                        ? t('LOGIN_BANKID_AUTHENTICATION_STEPS_MOBILE')
+                        : t('LOGIN_BANKID_AUTHENTICATION_STEPS_DESKTOP')}
+                    </Text>
+                  </>
+                )}
+              </div>
+
+              <FullscreenDialog.Close asChild>
+                <Button variant="ghost">{t('BANKID_CANCEL')}</Button>
+              </FullscreenDialog.Close>
+            </Space>
           </Space>
         )
-        Footer = (
-          <FullscreenDialog.Close asChild>
-            <Button variant="ghost">{t('LOGIN_BANKID_CANCEL')}</Button>
-          </FullscreenDialog.Close>
-        )
+        Footer =
+          !isMobile && currentOperation.autoStartToken ? (
+            <div className={qrOnAnotherDeviceFooter}>
+              <Text>{t('NO_MOBILE_BANKID_TITLE')}</Text>
+              <Link
+                className={qrOnAnotherDeviceLink}
+                href={getBankIdUrl(currentOperation.autoStartToken)}
+                target="_self"
+              >
+                {t('NO_MOBILE_BANKID_LINK_LABEL')}
+              </Link>
+            </div>
+          ) : null
         break
       }
 
@@ -164,18 +192,14 @@ export const BankIdV6Dialog = () => {
               </Text>
             )}
 
-            <Button
-              variant="primary"
-              size="medium"
-              onClick={() => startLogin({ ssn: currentOperation.ssn })}
-            >
+            <Button variant="primary" size="medium" {...tryAgainButtonProps}>
               {t('LOGIN_BANKID_TRY_AGAIN')}
             </Button>
           </Space>
         )
         Footer = (
           <FullscreenDialog.Close asChild>
-            <Button variant="ghost">{t('LOGIN_BANKID_CANCEL')}</Button>
+            <Button variant="ghost">{t('BANKID_CANCEL')}</Button>
           </FullscreenDialog.Close>
         )
         break
@@ -203,6 +227,24 @@ const getBankIdUrl = (autoStartToken: string) => {
   bankidUrl.searchParams.append('redirect', isIOS ? `${window.location.href}#bankid-auth` : 'null')
 
   return bankidUrl.toString()
+}
+
+const useTryAgainButtonProps = (bankIdOperation: BankIdOperation | null): Partial<ButtonProps> => {
+  const { startLogin } = useBankIdContext()
+
+  switch (bankIdOperation?.type) {
+    case 'sign':
+      return {
+        type: 'submit',
+        form: SIGN_FORM_ID,
+      }
+    case 'login':
+      return {
+        onClick: () => startLogin({ ssn: bankIdOperation.ssn }),
+      }
+    default:
+      return {}
+  }
 }
 
 const useTriggerBankIdOnSameDevice = (bankIdOperation: BankIdOperation | null) => {

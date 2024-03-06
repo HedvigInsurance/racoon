@@ -30,3 +30,24 @@ export const contentWrapper = style({
     [contentWrapperMaxWidth]: '24rem',
   },
 })
+
+export const qrOnAnotherDeviceFooter = style({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+})
+
+export const qrOnAnotherDeviceLink = style({
+  fontSize: theme.fontSizes.md,
+  color: theme.colors.textSecondary,
+  textDecoration: 'underline',
+  textUnderlineOffset: 5,
+  textDecorationThickness: 1,
+  textDecorationColor: 'currentcolor',
+  ':hover': {
+    color: theme.colors.textPrimary,
+  },
+  ':focus-visible': {
+    outline: `2px solid ${theme.colors.gray900}`,
+  },
+})

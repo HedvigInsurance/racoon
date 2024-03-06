@@ -30,8 +30,10 @@ import {
 } from '@/services/graphql/generated'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'
+import { Features } from '@/utils/Features'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
+import { SIGN_FORM_ID } from 'constants/sign.constants'
 import { Header } from './Header'
 import { ProductItemContainer } from './ProductItemContainer'
 
@@ -197,7 +199,7 @@ export const SignPage = (props: Props) => {
                   />
                 )}
 
-                <form onSubmit={handleSubmit}>
+                <form id={SIGN_FORM_ID} onSubmit={handleSubmit}>
                   <Space y={0.25}>
                     <PersonalNumberField
                       label={t('checkout:FIELD_PERSONAL_NUMBER_SE_LABEL')}
@@ -278,22 +280,24 @@ export const SignPage = (props: Props) => {
         </div>
       </Wrapper>
 
-      <FullscreenDialog.Root open={showSignError} onOpenChange={setShowSignError}>
-        <FullscreenDialog.Modal
-          center={true}
-          Footer={
-            <FullscreenDialog.Close asChild>
-              <Button type="button" variant="primary">
-                {t('checkout:ERROR_GENERAL_DIALOG_ACTION_TRY_AGAIN')}
-              </Button>
-            </FullscreenDialog.Close>
-          }
-        >
-          <ErrorPrompt size={{ _: 'md', lg: 'lg' }} align="center">
-            {t('checkout:ERROR_GENERAL_DIALOG_PROMPT')}
-          </ErrorPrompt>
-        </FullscreenDialog.Modal>
-      </FullscreenDialog.Root>
+      {!Features.enabled('BANKID_V6') && (
+        <FullscreenDialog.Root open={showSignError} onOpenChange={setShowSignError}>
+          <FullscreenDialog.Modal
+            center={true}
+            Footer={
+              <FullscreenDialog.Close asChild>
+                <Button type="button" variant="primary">
+                  {t('checkout:ERROR_GENERAL_DIALOG_ACTION_TRY_AGAIN')}
+                </Button>
+              </FullscreenDialog.Close>
+            }
+          >
+            <ErrorPrompt size={{ _: 'md', lg: 'lg' }} align="center">
+              {t('checkout:ERROR_GENERAL_DIALOG_PROMPT')}
+            </ErrorPrompt>
+          </FullscreenDialog.Modal>
+        </FullscreenDialog.Root>
+      )}
     </>
   )
 }

@@ -9,7 +9,7 @@ export enum BankIdState {
   Error = 'Error',
 }
 
-type BankIdLoginOperation = {
+export type BankIdLoginOperation = {
   type: 'login'
   ssn: string
   state: BankIdState
@@ -19,7 +19,7 @@ type BankIdLoginOperation = {
   bankidAppOpened?: boolean
 }
 
-type BankIdSignOperation = {
+export type BankIdSignOperation = {
   type: 'sign'
   ssn: string
   customerAuthenticationStatus: ShopSessionAuthenticationStatus

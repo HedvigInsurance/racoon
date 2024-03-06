@@ -30,8 +30,10 @@ import {
 } from '@/services/graphql/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
+import { Features } from '@/utils/Features'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
+import { SIGN_FORM_ID } from 'constants/sign.constants'
 import { FormElement, QueryParam } from './CheckoutPage.constants'
 import { CheckoutPageProps } from './CheckoutPage.types'
 import { PageDebugDialog } from './PageDebugDialog'
@@ -117,22 +119,24 @@ const CheckoutPage = (props: CheckoutPageProps) => {
         </Layout>
       </Space>
 
-      <FullscreenDialog.Root open={showSignError} onOpenChange={setShowSignError}>
-        <FullscreenDialog.Modal
-          center={true}
-          Footer={
-            <FullscreenDialog.Close asChild>
-              <Button type="button" variant="primary">
-                {t('ERROR_GENERAL_DIALOG_ACTION_TRY_AGAIN')}
-              </Button>
-            </FullscreenDialog.Close>
-          }
-        >
-          <ErrorPrompt size={{ _: 'md', lg: 'lg' }} align="center">
-            {t('ERROR_GENERAL_DIALOG_PROMPT')}
-          </ErrorPrompt>
-        </FullscreenDialog.Modal>
-      </FullscreenDialog.Root>
+      {!Features.enabled('BANKID_V6') && (
+        <FullscreenDialog.Root open={showSignError} onOpenChange={setShowSignError}>
+          <FullscreenDialog.Modal
+            center={true}
+            Footer={
+              <FullscreenDialog.Close asChild>
+                <Button type="button" variant="primary">
+                  {t('ERROR_GENERAL_DIALOG_ACTION_TRY_AGAIN')}
+                </Button>
+              </FullscreenDialog.Close>
+            }
+          >
+            <ErrorPrompt size={{ _: 'md', lg: 'lg' }} align="center">
+              {t('ERROR_GENERAL_DIALOG_PROMPT')}
+            </ErrorPrompt>
+          </FullscreenDialog.Modal>
+        </FullscreenDialog.Root>
+      )}
 
       <PageDebugDialog />
     </>
@@ -200,7 +204,7 @@ const CheckoutForm = ({
   const userErrorMessage = userError?.message
 
   return (
-    <form onSubmit={handleSubmitSign}>
+    <form id={SIGN_FORM_ID} onSubmit={handleSubmitSign}>
       <Space y={0.25}>
         <PersonalNumberField
           label={t('FIELD_PERSONAL_NUMBER_SE_LABEL')}
