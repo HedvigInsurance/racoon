@@ -1,6 +1,13 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { clsx } from 'clsx'
-import { forwardRef, PropsWithChildren, ReactNode } from 'react'
+import {
+  ComponentProps,
+  forwardRef,
+  PropsWithChildren,
+  ReactNode,
+  startTransition,
+  useCallback,
+} from 'react'
 import { contentWrapper, dialogWindow, overlay } from './Dialog.css'
 
 type ContentProps = {
@@ -41,7 +48,22 @@ const Overlay = forwardRef<HTMLDivElement, OverlayProps>(({ frosted }, ref) => {
 })
 Overlay.displayName = 'Overlay'
 
-export const Root = DialogPrimitive.Root
+export const Root = ({
+  onOpenChange,
+  ...forwardedProps
+}: ComponentProps<typeof DialogPrimitive.Root>) => {
+  // Optimization: dialogs can get quite large, so it's good idea to treat opening/closing as transition
+  const handleOpenChange = useCallback(
+    (newValue: boolean) => {
+      startTransition(() => {
+        onOpenChange?.(newValue)
+      })
+    },
+    [onOpenChange],
+  )
+  return <DialogPrimitive.Root {...forwardedProps} onOpenChange={handleOpenChange} />
+}
+
 export const Trigger = DialogPrimitive.Trigger
 export const Close = DialogPrimitive.Close
 
