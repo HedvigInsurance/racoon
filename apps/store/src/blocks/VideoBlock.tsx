@@ -34,6 +34,7 @@ export const VideoBlock = ({ className, blok, nested = false }: VideoBlockProps)
     ? getImageProps({
         src: getImgSrc(posterImg),
         width: getMediaQueryBreakpoint('lg'),
+        height: getMediaQueryBreakpoint('lg'),
         alt: '',
       }).props.src
     : undefined
