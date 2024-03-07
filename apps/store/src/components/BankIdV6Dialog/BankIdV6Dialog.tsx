@@ -32,23 +32,12 @@ import {
   qrOnAnotherDeviceLink,
 } from './BankIdV6Dialog.css'
 
-export const BankIdV6Dialog = () => {
+export function BankIdV6Dialog() {
   const { t } = useTranslation('bankid')
   const { startLogin, cancelLogin, cancelCheckoutSign, currentOperation } = useBankIdContext()
 
   useTriggerBankIdOnSameDevice(currentOperation)
   const tryAgainButtonProps = useTryAgainButtonProps(currentOperation)
-
-  let isOpen = !!currentOperation
-  if (currentOperation?.type === 'sign') {
-    // In some cases we show progress on signing page, not in dialog
-    const isSigningAuthenticatedMember =
-      currentOperation.customerAuthenticationStatus ===
-      ShopSessionAuthenticationStatus.Authenticated
-    if (isSigningAuthenticatedMember) {
-      isOpen = false
-    }
-  }
 
   const handleOpenChange = (open: boolean) => {
     if (!open && currentOperation) {
@@ -208,12 +197,30 @@ export const BankIdV6Dialog = () => {
   }
 
   return (
-    <FullscreenDialog.Root open={isOpen} onOpenChange={handleOpenChange}>
+    <FullscreenDialog.Root
+      open={shouldOpenDialog(currentOperation)}
+      onOpenChange={handleOpenChange}
+    >
       <FullscreenDialog.Modal center={true} Footer={Footer}>
         {Content}
       </FullscreenDialog.Modal>
     </FullscreenDialog.Root>
   )
+}
+
+export function shouldOpenDialog(currentOperation: BankIdOperation | null) {
+  let shouldOpenDialog = !!currentOperation
+  if (currentOperation?.type === 'sign') {
+    // In some cases we show progress on signing page, not in dialog
+    const isSigningAuthenticatedMember =
+      currentOperation.customerAuthenticationStatus ===
+      ShopSessionAuthenticationStatus.Authenticated
+    if (isSigningAuthenticatedMember) {
+      shouldOpenDialog = false
+    }
+  }
+
+  return shouldOpenDialog
 }
 
 const getBankIdUrl = (autoStartToken: string) => {
