@@ -71,7 +71,10 @@ export const useInitDatadogAfterInteractive = () => {
     if (!initRef.current) {
       initRef.current = true
       // It's safe to use datadog before init, so we want to delay initialization until after page is interactive
-      requestIdleCallback(initDatadog)
+      // Ensure it works in Safari (no requestIdleCallback)
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      const delay = window.requestIdleCallback ?? window.setTimeout
+      delay(initDatadog)
     }
   }, [])
 }
