@@ -20,6 +20,7 @@ import { useApollo } from '@/services/apollo/client'
 import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
 import { CustomerFirstScript, hasHiddenChat } from '@/services/CustomerFirst'
+import { GTMAppScript } from '@/services/gtm'
 import { useInitDatadogAfterInteractive } from '@/services/logger/client'
 import { PageTransitionProgressBar } from '@/services/nprogress/pageTransition'
 import { OneTrustStyles } from '@/services/OneTrust'
@@ -102,7 +103,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       <Head>
         <meta key="viewport" name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      {Features.enabled('COOKIE_BANNER') && <CookieConsentLoader />}
+      <GTMLoader />
       <GlobalLinkStyles />
       <OneTrustStyles />
       <PageTransitionProgressBar />
@@ -137,5 +138,10 @@ const ShopSessionTrackingProvider = (props: { children: ReactNode }) => {
   const { shopSession } = useShopSession()
   return <TrackingProvider shopSession={shopSession}>{props.children}</TrackingProvider>
 }
+
+// When cookie consent is enabled we need to wait until consent value is available before loading GTM
+// See logic inside CookieConsentLoader
+const GTMLoader = () =>
+  Features.enabled('COOKIE_BANNER') ? <CookieConsentLoader /> : <GTMAppScript />
 
 export default appWithTranslation(MyApp)
