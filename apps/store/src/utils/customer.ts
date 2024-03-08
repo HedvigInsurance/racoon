@@ -1,13 +1,15 @@
-import { ShopSessionAuthenticationStatus, ShopSessionCustomer } from '@/services/graphql/generated'
+import {
+  ShopSessionCustomerFragment,
+  ShopSessionCustomerMissingField,
+} from '@/services/graphql/generated'
 
-const isNewMember = (customer: ShopSessionCustomer) =>
-  customer.authenticationStatus === ShopSessionAuthenticationStatus.None
-
-export const getShouldCollectEmail = (customer?: ShopSessionCustomer | null) => {
-  // Collect emails of new customers as well as returning customers with no email
-  return !customer?.email
+export const getShouldCollectEmail = (customer?: ShopSessionCustomerFragment | null) => {
+  return customer == null || customer.missingFields.includes(ShopSessionCustomerMissingField.Email)
 }
 
-export const getShouldCollectName = (customer: ShopSessionCustomer) => {
-  return isNewMember(customer) && !(customer.firstName && customer.lastName)
+export const getShouldCollectName = (customer: ShopSessionCustomerFragment) => {
+  return (
+    customer.missingFields.includes(ShopSessionCustomerMissingField.FirstName) ||
+    customer.missingFields.includes(ShopSessionCustomerMissingField.LastName)
+  )
 }

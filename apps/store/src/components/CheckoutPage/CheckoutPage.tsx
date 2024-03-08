@@ -151,7 +151,6 @@ type CheckoutFormProps = Pick<
   | 'shouldCollectEmail'
   | 'shouldCollectName'
   | 'ssn'
-  | 'suggestedEmail'
 > & { onSignError: () => void }
 
 // Optimization: separated from page component to avoid rerendering full page when checkout status changes
@@ -163,7 +162,6 @@ const CheckoutForm = ({
   shopSession,
   ssn,
   shouldCollectEmail,
-  suggestedEmail,
   shouldCollectName,
 }: CheckoutFormProps) => {
   const { t } = useTranslation('checkout')
@@ -228,14 +226,9 @@ const CheckoutForm = ({
             />
           </>
         )}
-        <TextField
-          type="email"
-          label={t('FORM_EMAIL_LABEL')}
-          name={FormElement.Email}
-          defaultValue={suggestedEmail}
-          required
-          hidden={!shouldCollectEmail}
-        />
+        {shouldCollectEmail && (
+          <TextField type="email" label={t('FORM_EMAIL_LABEL')} name={FormElement.Email} required />
+        )}
         <Space y={0.5}>
           <SignButton
             loading={loading}

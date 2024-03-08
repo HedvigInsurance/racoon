@@ -1,6 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useShopSessionCustomerUpdateMutation } from '@/services/graphql/generated'
-import { getOrThrowFormValue } from '@/utils/getOrThrowFormValue'
 import { useGetMutationError } from '@/utils/useGetMutationError'
 import { FormElement } from './CheckoutPage.constants'
 
@@ -24,7 +23,7 @@ export const useUpdateCustomer = ({ shopSessionId, onSuccess }: Params) => {
 
   const handleSubmit = (formData: FormData) => {
     datadogLogs.logger.debug('Checkout | Submit contact details')
-    const email = getOrThrowFormValue(formData, FormElement.Email)
+    const email = formData.get(FormElement.Email) as string | null
     const firstName = formData.get(FormElement.FirstName) as string | null
     const lastName = formData.get(FormElement.LastName) as string | null
     return updateCustomer({
