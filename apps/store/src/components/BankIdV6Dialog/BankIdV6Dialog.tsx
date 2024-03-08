@@ -1,5 +1,6 @@
 import { assignInlineVars } from '@vanilla-extract/dynamic'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useRef, type ReactNode } from 'react'
@@ -34,6 +35,7 @@ import {
 
 export const BankIdV6Dialog = () => {
   const { t } = useTranslation('bankid')
+  const bankIdRedirectQueryParam = useBankIdRedirectQueryParam()
   const { startLogin, cancelLogin, cancelCheckoutSign, currentOperation } = useBankIdContext()
 
   useTriggerBankIdOnSameDevice(currentOperation)
@@ -154,7 +156,7 @@ export const BankIdV6Dialog = () => {
               <Text>{t('NO_MOBILE_BANKID_TITLE')}</Text>
               <Link
                 className={qrOnAnotherDeviceLink}
-                href={getBankIdUrl(currentOperation.autoStartToken)}
+                href={getBankIdUrl(currentOperation.autoStartToken, bankIdRedirectQueryParam)}
                 target="_self"
               >
                 {t('NO_MOBILE_BANKID_LINK_LABEL')}
@@ -216,20 +218,21 @@ export const BankIdV6Dialog = () => {
   )
 }
 
-const getBankIdUrl = (autoStartToken: string) => {
-  // https://www.bankid.com/en/utvecklare/guider/teknisk-integrationsguide/programstart
-  const bankidUrl = new URL('bankid:///')
-  bankidUrl.searchParams.append('autostarttoken', autoStartToken)
-  // 'null' means the BankID app will redirect back to the calling app.
-  // It's recommended to set redirect to null when possible.
-  // For IOS though, 'redirect' must have a value. '#bankid-auth' is a 'hack'
-  // for returning to the same safari tab.
-  bankidUrl.searchParams.append('redirect', isIOS ? `${window.location.href}#bankid-auth` : 'null')
+function useBankIdRedirectQueryParam() {
+  // That's used by hedvig app to redirect from bankid to the hedvig app as they use a
+  // hedvig-com in a webview for signing process.
+  const REDIRECT_QUERY_PARAM = 'bankidRedirect'
+  const router = useRouter()
 
-  return bankidUrl.toString()
+  const redirectUrl = router.query[REDIRECT_QUERY_PARAM]
+  if (typeof redirectUrl === 'string') {
+    return redirectUrl
+  }
+
+  return undefined
 }
 
-const useTryAgainButtonProps = (bankIdOperation: BankIdOperation | null): Partial<ButtonProps> => {
+function useTryAgainButtonProps(bankIdOperation: BankIdOperation | null): Partial<ButtonProps> {
   const { startLogin } = useBankIdContext()
 
   switch (bankIdOperation?.type) {
@@ -247,7 +250,8 @@ const useTryAgainButtonProps = (bankIdOperation: BankIdOperation | null): Partia
   }
 }
 
-const useTriggerBankIdOnSameDevice = (bankIdOperation: BankIdOperation | null) => {
+function useTriggerBankIdOnSameDevice(bankIdOperation: BankIdOperation | null) {
+  const redirectUrl = useBankIdRedirectQueryParam()
   // Avoids triggering BankID app opening multiple times
   const launchedRef = useRef(false)
 
@@ -259,10 +263,30 @@ const useTriggerBankIdOnSameDevice = (bankIdOperation: BankIdOperation | null) =
       bankIdOperation?.state === BankIdState.Pending
 
     if (authenticationInProgress && bankIdOperation.autoStartToken && !launchedRef.current) {
-      window.open(getBankIdUrl(bankIdOperation.autoStartToken), '_self')
+      window.open(getBankIdUrl(bankIdOperation.autoStartToken, redirectUrl), '_self')
       launchedRef.current = true
     } else {
       launchedRef.current = false
     }
-  }, [bankIdOperation?.state, bankIdOperation?.autoStartToken])
+  }, [bankIdOperation?.state, bankIdOperation?.autoStartToken, redirectUrl])
+}
+
+function getBankIdUrl(autoStartToken: string, redirectUrl?: string) {
+  // https://www.bankid.com/en/utvecklare/guider/teknisk-integrationsguide/programstart
+  const bankidUrl = new URL('bankid:///')
+  bankidUrl.searchParams.append('autostarttoken', autoStartToken)
+  // 'null' means the BankID app will redirect back to the calling app.
+  // It's recommended to set redirect to null when possible.
+  // For IOS though, 'redirect' must have a value. '#bankid-auth' is a 'hack'
+  // for returning to the same safari tab.
+  if (redirectUrl) {
+    bankidUrl.searchParams.append('redirect', redirectUrl)
+  } else {
+    bankidUrl.searchParams.append(
+      'redirect',
+      isIOS ? `${window.location.href}#bankid-auth` : 'null',
+    )
+  }
+
+  return bankidUrl.toString()
 }
