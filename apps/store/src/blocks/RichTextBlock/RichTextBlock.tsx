@@ -6,7 +6,6 @@ import {
   render,
   type RenderOptions,
   MARK_LINK,
-  MARK_TEXT_STYLE,
 } from 'storyblok-rich-text-react-renderer'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { RichText } from '@/components/RichText/RichText'
@@ -82,12 +81,6 @@ const RENDER_OPTIONS: RenderOptions = {
 
       // Internal links
       return <Link {...linkProps} />
-    },
-    [MARK_TEXT_STYLE]: (children, { color }) => {
-      // Avoids hydration errors when 'color' is not valid: nullish or empty string
-      const props = color ? { style: { color } } : {}
-
-      return <span {...props}>{children}</span>
     },
   },
 }
