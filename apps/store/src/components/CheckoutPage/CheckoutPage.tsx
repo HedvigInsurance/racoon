@@ -21,6 +21,7 @@ import { Divider, ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
 import { TextField } from '@/components/TextField/TextField'
 import { TextWithLink } from '@/components/TextWithLink'
+import { SIGN_FORM_ID } from '@/constants/sign.constants'
 import {
   CartFragmentFragment,
   CurrentMemberDocument,
@@ -33,7 +34,6 @@ import { useTracking } from '@/services/Tracking/useTracking'
 import { Features } from '@/utils/Features'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
-import { SIGN_FORM_ID } from 'constants/sign.constants'
 import { FormElement, QueryParam } from './CheckoutPage.constants'
 import { CheckoutPageProps } from './CheckoutPage.types'
 import { PageDebugDialog } from './PageDebugDialog'
@@ -181,11 +181,12 @@ const CheckoutForm = ({
       })
       const memberId = data.currentMember.id
 
-      tracking.reportPurchase(
-        shopSession.cart,
+      tracking.reportPurchase({
+        cart: shopSession.cart,
         memberId,
-        customerAuthenticationStatus === ShopSessionAuthenticationStatus.None,
-      )
+        isNewMember: customerAuthenticationStatus === ShopSessionAuthenticationStatus.None,
+        customer: data.currentMember,
+      })
       resetShopSession()
 
       const checkoutStepIndex = checkoutSteps.findIndex((item) => item === CheckoutStep.Checkout)

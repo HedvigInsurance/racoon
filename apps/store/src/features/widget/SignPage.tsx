@@ -21,6 +21,7 @@ import { Divider, ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
 import { TextField } from '@/components/TextField/TextField'
 import { TextWithLink } from '@/components/TextWithLink'
+import { SIGN_FORM_ID } from '@/constants/sign.constants'
 import {
   MemberPaymentConnectionStatus,
   type ProductOfferFragment,
@@ -33,7 +34,6 @@ import { useTracking } from '@/services/Tracking/useTracking'
 import { Features } from '@/utils/Features'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
-import { SIGN_FORM_ID } from 'constants/sign.constants'
 import { Header } from './Header'
 import { ProductItemContainer } from './ProductItemContainer'
 
@@ -71,11 +71,12 @@ export const SignPage = (props: Props) => {
       const { data } = await fetchCurrentMember()
       if (!data) throw new Error('Widget Sign | Missing current member')
 
-      tracking.reportPurchase(
-        props.shopSession.cart,
-        data.currentMember.id,
-        props.customerAuthenticationStatus === ShopSessionAuthenticationStatus.None,
-      )
+      tracking.reportPurchase({
+        cart: props.shopSession.cart,
+        memberId: data.currentMember.id,
+        isNewMember: props.customerAuthenticationStatus === ShopSessionAuthenticationStatus.None,
+        customer: data.currentMember,
+      })
 
       const paymentStatus = data.currentMember.paymentInformation.status
       datadogLogs.logger.info('Widget Sign | Purchase Complete', { paymentStatus })

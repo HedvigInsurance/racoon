@@ -1,5 +1,6 @@
 fragment Member on Member {
   id
+  email
   paymentInformation {
     status
   }

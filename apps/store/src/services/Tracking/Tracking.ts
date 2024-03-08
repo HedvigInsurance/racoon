@@ -34,12 +34,10 @@ export enum TrackingEvent {
   BeginCheckout = 'begin_checkout',
   DeleteFromCart = 'delete_from_cart',
   ExperimentImpression = 'experiment_impression',
-  OfferCreated = 'offer_created',
   OpenPriceCalculator = 'open_price_calculator',
   PageView = 'virtual_page_view',
   Purchase = 'purchase',
   SelectItem = 'select_item',
-  SignedCustomer = 'signed_customer',
   ViewCart = 'view_cart',
   ViewItem = 'view_item',
   InsurelyPrompted = 'insurely_prompted',
@@ -50,9 +48,6 @@ export enum TrackingEvent {
 type TrackingContext = Partial<{
   city: string
   countryCode: CountryCode
-  customerFirstName: string
-  customerLastName: string
-  customerEmail: string
   numberOfPeople: number
   shopSessionId: string
   zipCode: string
@@ -101,94 +96,40 @@ export class Tracking {
     this.reportSelectItem(productData, 'store')
   }
 
-  public async reportSelectItem(productData: TrackingProductData, itemListId: string) {
-    const event = await productDataToEcommerceEvent(
-      TrackingEvent.SelectItem,
-      productData,
-      this.context,
-    )
+  public reportSelectItem(productData: TrackingProductData, itemListId: string) {
+    const event = productDataToEcommerceEvent(TrackingEvent.SelectItem, productData, this.context)
     Object.assign(event.ecommerce, { item_list_id: itemListId })
     this.reportEcommerceEvent(event)
   }
 
-  public async reportOpenPriceCalculator(productData: TrackingProductData) {
+  public reportOpenPriceCalculator(productData: TrackingProductData) {
     this.reportEcommerceEvent(
-      await productDataToEcommerceEvent(
-        TrackingEvent.OpenPriceCalculator,
-        productData,
-        this.context,
-      ),
+      productDataToEcommerceEvent(TrackingEvent.OpenPriceCalculator, productData, this.context),
     )
   }
 
-  // Legacy event in market-web format
-  public async reportOfferCreated(offer: ProductOfferFragment) {
-    const event = TrackingEvent.OfferCreated
-    const userData = await getLegacyUserData(this.context)
-    const eventData = {
-      offerData: {
-        insurance_price: offer.cost.gross.amount,
-        currency: offer.cost.gross.currencyCode as string,
-
-        insurance_type: offer.variant.typeOfContract,
-        flow_type: offer.product.name,
-        ...getLegacyEventFlags([offer.variant.typeOfContract]),
-      },
-      userData,
-      ...this.shopSessionData(),
-      ...this.sessionData(),
-    }
-    this.logger.log(event, eventData)
-    pushToGTMDataLayer({ event, ...eventData })
-  }
-
-  // Legacy event in market-web format
-  public async reportSignedCustomer(cart: CartFragmentFragment, memberId: string) {
-    const event = TrackingEvent.SignedCustomer
-    const userData = await getLegacyUserData(this.context)
-
-    const eventData = {
-      offerData: {
-        quote_cart_id: cart.id,
-        transaction_id: cart.id,
-        discounted_premium: cart.cost.net.amount,
-        insurance_price: cart.cost.gross.amount,
-        currency: cart.cost.net.currencyCode as string,
-
-        insurance_type: cart.entries[0].variant.typeOfContract,
-        flow_type: cart.entries[0].product.name,
-        memberId: memberId,
-        ...getLegacyEventFlags(cart.entries.map((entry) => entry.variant.typeOfContract)),
-      },
-      ...this.shopSessionData(),
-      userData,
-    }
-    this.logger.log(event, eventData)
-    pushToGTMDataLayer({ event, ...eventData })
-  }
-
-  public reportAdtractionEvent(cart: CartFragmentFragment, context: TrackingContext) {
+  public reportAdtractionEvent(cart: CartFragmentFragment, customerEmail: string) {
     const event = TrackingEvent.Adtraction
     // We currently only support 1 campaign code
     const campaignCode = cart.redeemedCampaign?.code
     const productCategories = getAdtractionProductCategories(cart)
     const eventData = {
       adtraction: {
+        md5: md5(customerEmail),
         transactionId: cart.id,
         // Our Adtraction program isn't based on order amount, total should be set to 0
         transactionTotal: 0,
         transactionProductCategories: productCategories,
         ...(campaignCode && { transactionPromoCode: campaignCode }),
-        ...(context.customerEmail && { md5: md5(context.customerEmail) }),
       },
     }
     this.logger.log(event, eventData)
     pushToGTMDataLayer({ event, ...eventData })
   }
 
-  public async reportViewItem(offer: TrackingOffer, source: ItemListSource) {
+  public reportViewItem(offer: TrackingOffer, source: ItemListSource) {
     this.reportEcommerceEvent(
-      await offerToEcommerceEvent({
+      offerToEcommerceEvent({
         event: TrackingEvent.ViewItem,
         offer,
         context: this.context,
@@ -197,9 +138,9 @@ export class Tracking {
     )
   }
 
-  public async reportAddToCart(offer: TrackingOffer, source: ItemListSource) {
+  public reportAddToCart(offer: TrackingOffer, source: ItemListSource) {
     this.reportEcommerceEvent(
-      await offerToEcommerceEvent({
+      offerToEcommerceEvent({
         event: TrackingEvent.AddToCart,
         offer,
         context: this.context,
@@ -208,9 +149,9 @@ export class Tracking {
     )
   }
 
-  public async reportDeleteFromCart(offer: TrackingOffer) {
+  public reportDeleteFromCart(offer: TrackingOffer) {
     this.reportEcommerceEvent(
-      await offerToEcommerceEvent({
+      offerToEcommerceEvent({
         event: TrackingEvent.DeleteFromCart,
         offer,
         context: this.context,
@@ -218,29 +159,37 @@ export class Tracking {
     )
   }
 
-  public async reportViewCart(cart: CartFragmentFragment) {
-    this.reportEcommerceEvent(
-      await cartToEcommerceEvent(TrackingEvent.ViewCart, cart, this.context),
-    )
+  public reportViewCart(cart: CartFragmentFragment) {
+    this.reportEcommerceEvent(cartToEcommerceEvent(TrackingEvent.ViewCart, cart, this.context))
   }
 
-  public async reportBeginCheckout(cart: CartFragmentFragment) {
-    this.reportEcommerceEvent(
-      await cartToEcommerceEvent(TrackingEvent.BeginCheckout, cart, this.context),
-    )
+  public reportBeginCheckout(cart: CartFragmentFragment) {
+    this.reportEcommerceEvent(cartToEcommerceEvent(TrackingEvent.BeginCheckout, cart, this.context))
   }
 
-  public async reportPurchase(cart: CartFragmentFragment, memberId: string, isNewMember: boolean) {
+  public async reportPurchase({
+    cart,
+    memberId,
+    isNewMember,
+    customer,
+  }: {
+    cart: CartFragmentFragment
+    memberId: string
+    isNewMember: boolean
+    customer: {
+      email: string
+      firstName?: string
+      lastName?: string
+    }
+  }) {
     setUserId(memberId)
-
-    const event = await cartToEcommerceEvent(TrackingEvent.Purchase, cart, this.context)
+    const event = cartToEcommerceEvent(TrackingEvent.Purchase, cart, this.context)
+    const userData = await getLegacyUserData(this.context, customer)
+    event.ecommerce.userData = userData
     event.ecommerce.transaction_id = cart.id
     event.new_customer = isNewMember
     this.reportEcommerceEvent(event)
-
-    // Also report in web-onboarding format
-    this.reportSignedCustomer(cart, memberId)
-    this.reportAdtractionEvent(cart, this.context)
+    this.reportAdtractionEvent(cart, customer.email)
   }
 
   private productData(): TrackingProductData {
@@ -267,12 +216,6 @@ export class Tracking {
     }
   }
 
-  static async userData(context: TrackingContext) {
-    return {
-      userData: await getLegacyUserData(context),
-    }
-  }
-
   private shopSessionData() {
     return Tracking.shopSessionData(this.context)
   }
@@ -281,29 +224,21 @@ export class Tracking {
     return Tracking.sessionData(this.context)
   }
 
-  public async reportInsurelyPrompted() {
+  public reportInsurelyPrompted() {
     this.reportEcommerceEvent(
-      await productDataToEcommerceEvent(
-        TrackingEvent.InsurelyPrompted,
-        this.productData(),
-        this.context,
-      ),
+      productDataToEcommerceEvent(TrackingEvent.InsurelyPrompted, this.productData(), this.context),
     )
   }
 
-  public async reportInsurelyAccepted() {
+  public reportInsurelyAccepted() {
     this.reportEcommerceEvent(
-      await productDataToEcommerceEvent(
-        TrackingEvent.InsurelyAccepted,
-        this.productData(),
-        this.context,
-      ),
+      productDataToEcommerceEvent(TrackingEvent.InsurelyAccepted, this.productData(), this.context),
     )
   }
 
-  public async reportInsurelyCorrectlyFetched() {
+  public reportInsurelyCorrectlyFetched() {
     this.reportEcommerceEvent(
-      await productDataToEcommerceEvent(
+      productDataToEcommerceEvent(
         TrackingEvent.InsurelyCorrectlyFetched,
         this.productData(),
         this.context,
@@ -330,12 +265,12 @@ type OfferToEcommerseEventParams = {
   source?: ItemListSource
 }
 
-const offerToEcommerceEvent = async ({
+const offerToEcommerceEvent = ({
   event,
   offer,
   context,
   source,
-}: OfferToEcommerseEventParams): Promise<EcommerceEvent> => {
+}: OfferToEcommerseEventParams): EcommerceEvent => {
   return {
     event,
     ecommerce: {
@@ -351,23 +286,22 @@ const offerToEcommerceEvent = async ({
         },
       ],
     },
-    ...Tracking.shopSessionData(context),
-    ...Tracking.sessionData(context),
-    ...(await Tracking.userData(context)),
     price_match: {
       exposure_matched: !!offer.priceMatch,
       price_matched: !!offer.priceMatch && offer.priceMatch.priceReduction.amount > 0,
     },
+    ...Tracking.shopSessionData(context),
+    ...Tracking.sessionData(context),
   } as const
 }
 
 // NOTE: Intentionally not adding coupon field, there's no good mapping between our model and analytics
 // Let's figure it out later when/if it becomes a priority
-const cartToEcommerceEvent = async (
+const cartToEcommerceEvent = (
   event: TrackingEvent,
   cart: CartFragmentFragment,
   context: TrackingContext,
-): Promise<EcommerceEvent> => {
+): EcommerceEvent => {
   return {
     event,
     ecommerce: {
@@ -382,15 +316,14 @@ const cartToEcommerceEvent = async (
     },
     ...Tracking.shopSessionData(context),
     ...Tracking.sessionData(context),
-    ...(await Tracking.userData(context)),
   } as const
 }
 
-const productDataToEcommerceEvent = async (
+const productDataToEcommerceEvent = (
   event: TrackingEvent,
   productData: TrackingProductData,
   context: TrackingContext,
-): Promise<EcommerceEvent> => {
+): EcommerceEvent => {
   return {
     event,
     ecommerce: {
@@ -403,36 +336,27 @@ const productDataToEcommerceEvent = async (
     },
     ...Tracking.shopSessionData(context),
     ...Tracking.sessionData(context),
-    ...(await Tracking.userData(context)),
-  } as const
-}
-
-// TODO: Decide what do to with
-// ownership_type - maybe expose though API?
-// number_of_people - get from offer, tricky for cart
-const getLegacyEventFlags = (typesOfContract: Array<string>) => {
-  return {
-    has_home: typesOfContract.some((type) => type.includes('_APARTMENT')),
-    has_house: typesOfContract.some((type) => type.includes('_HOUSE')),
-    has_car: typesOfContract.some((type) => type.includes('_CAR_')),
-    has_accident: typesOfContract.some((type) => type.includes('_ACCIDENT')),
-    is_student: typesOfContract.some((type) => type.includes('STUDENT')),
-    car_sub_type: typesOfContract.find((type) => type.includes('_CAR_')),
   } as const
 }
 
 // Retargeting info for web-onboarding compatibility
 // Reference for formatting user data
 // https://developers.facebook.com/docs/marketing-api/conversions-api/parameters/customer-information-parameters
-const getLegacyUserData = async (context: TrackingContext) => {
-  if (!context.customerFirstName || !context.customerLastName || !context.customerEmail) return {}
+const getLegacyUserData = async (
+  context: TrackingContext,
+  customerData: { email: string; firstName?: string; lastName?: string },
+) => {
+  if (!customerData.email) return {}
+  const email = await hashValue(normalizeUserValue(customerData.email))
+  const firstName = await hashValue(normalizeUserValue(customerData.firstName))
+  const lastName = await hashValue(normalizeUserValue(customerData.lastName))
   const zipCode = await hashValue(normalizeUserValue(context.zipCode))
   const city = await hashValue(normalizeUserValue(context.city))
   const country = await hashValue(normalizeUserValue(context.countryCode))
   return {
-    fn: await hashValue(normalizeUserValue(context.customerFirstName)),
-    ln: await hashValue(normalizeUserValue(context.customerLastName)),
-    em: await hashValue(normalizeUserValue(context.customerEmail)),
+    em: email,
+    fn: firstName,
+    ln: lastName,
     ad: {
       zp: zipCode,
       ct: city,
