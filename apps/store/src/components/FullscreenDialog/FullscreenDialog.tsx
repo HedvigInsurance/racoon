@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { motion, type Transition } from 'framer-motion'
-import React, { type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import { CrossIcon, Dialog, mq, theme } from 'ui'
 
 type Props = {
