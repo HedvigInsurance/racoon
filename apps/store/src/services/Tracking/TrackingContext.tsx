@@ -21,7 +21,6 @@ export const TrackingProvider = (props: Props) => {
   const data = useMemo<Tracking['context']>(() => {
     return {
       shopSessionId: props.shopSession?.id,
-      ...parseCustomerData(props.shopSession?.customer),
       ...parsePriceIntentData(props.priceIntent?.data ?? {}),
       ...(props.productData && parseProductData(props.productData)),
       partner: props.partner,
@@ -29,7 +28,6 @@ export const TrackingProvider = (props: Props) => {
     }
   }, [
     props.shopSession?.id,
-    props.shopSession?.customer,
     props.priceIntent?.data,
     props.productData,
     props.partner,
@@ -38,12 +36,6 @@ export const TrackingProvider = (props: Props) => {
 
   return <TrackingContext.Provider value={data}>{props.children}</TrackingContext.Provider>
 }
-
-const parseCustomerData = (data: ShopSession['customer']): Tracking['context'] => ({
-  customerFirstName: data?.firstName ?? undefined,
-  customerLastName: data?.lastName ?? undefined,
-  customerEmail: data?.email ?? undefined,
-})
 
 const parsePriceIntentData = (data: Record<string, unknown>): Tracking['context'] => {
   const numberCoInsured = parseNumber(data.numberCoInsured)

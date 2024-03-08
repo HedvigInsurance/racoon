@@ -3,11 +3,7 @@ fragment ShopSession on ShopSession {
   countryCode
   currencyCode
   customer {
-    authenticationStatus
-    email
-    firstName
-    lastName
-    ssn
+    ...ShopSessionCustomer
   }
   cart {
     ...CartFragment

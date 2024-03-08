@@ -8,7 +8,6 @@ export type CheckoutPageProps = {
   shopSessionSigningId: string | null
   ssn: string
   shouldCollectEmail: boolean
-  suggestedEmail?: string
   shouldCollectName: boolean
   checkoutSteps: Array<CheckoutStep>
   shopSession: ShopSession

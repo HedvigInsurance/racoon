@@ -86,7 +86,6 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     [SHOP_SESSION_PROP_NAME]: shopSession.id,
     ssn: customer.ssn,
     shouldCollectEmail: getShouldCollectEmail(customer),
-    ...(customer.email && { suggestedEmail: customer.email }),
     shouldCollectName: getShouldCollectName(customer),
     shopSessionSigningId: shopSessionSigning?.id ?? null,
     checkoutSteps,
