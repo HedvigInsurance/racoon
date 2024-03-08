@@ -78,7 +78,7 @@
     "react-i18next": "14.0.5",
     "react-wrap-balancer": "1.1.0",
     "server-only": "0.0.1",
-    "storyblok-rich-text-react-renderer": "2.9.1",
+    "storyblok-rich-text-react-renderer": "2.9.2",
     "tss-react": "4.9.4",
     "ui": "workspace:",
     "uuid": "9.0.1",
