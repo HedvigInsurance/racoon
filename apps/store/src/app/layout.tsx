@@ -1,39 +1,22 @@
+import { Provider as JotaiProvider } from 'jotai'
 import { Metadata, Viewport } from 'next'
 import { ReactNode } from 'react'
 import { theme } from 'ui'
-import { RootLayout } from '@/appComponents/RootLayout/RootLayout'
-import { fetchGlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
-import { getApolloClient } from '@/services/apollo/app-router/rscClient'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
-import { RoutingLocale } from '@/utils/l10n/types'
 import { ORIGIN_URL } from '@/utils/PageLink'
-import { initTranslationsServerSide } from './i18n'
-import { ProductMetadataProvider } from './providers/ProductMetadataProvider'
-import { TranslationsProvider } from './providers/TranslationsProvider'
+import { ApolloProvider } from './providers/ApolloProvider'
 
-export type LocalizedLayoutProps<P = unknown> = P & {
+type Props = {
   children: ReactNode
-  params: { locale: RoutingLocale }
 }
 
-export default async function RootAppLayout({
-  children,
-  params: { locale },
-}: LocalizedLayoutProps) {
-  const apolloClient = getApolloClient({ locale })
-  const [{ resources }, productMetadata] = await Promise.all([
-    initTranslationsServerSide(locale),
-    fetchGlobalProductMetadata({ apolloClient }),
-  ])
-
+export default function RootAppLayout({ children }: Props) {
   return (
-    <RootLayout locale={locale}>
-      <TranslationsProvider locale={locale} resources={resources}>
-        <ProductMetadataProvider productMetadata={productMetadata}>
-          <ShopSessionProvider>{children}</ShopSessionProvider>
-        </ProductMetadataProvider>
-      </TranslationsProvider>
-    </RootLayout>
+    <ApolloProvider>
+      <ShopSessionProvider>
+        <JotaiProvider>{children}</JotaiProvider>
+      </ShopSessionProvider>
+    </ApolloProvider>
   )
 }
 

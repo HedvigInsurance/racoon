@@ -1,8 +1,6 @@
-// Workaround to make app dir work with emotion compiler enabled
-// next.config.js - { compiler: { emotion: true } }
-/** @jsxImportSource react */
-
+import StoryblokProvider from 'app/providers/StoryblokProvider'
 import { ReactNode } from 'react'
+import { RootLayout } from '@/appComponents/RootLayout/RootLayout'
 import { GlobalStory } from '@/services/storyblok/storyblok'
 import {
   fetchStoryblokCacheVersion,
@@ -19,7 +17,13 @@ export type LocalizedLayoutProps<P = unknown> = P & {
 const Layout = async ({ children, params: { locale } }: LocalizedLayoutProps) => {
   const globalStory = await initCacheVersionAndFetchGlobalStory(locale)
 
-  return <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
+  return (
+    <RootLayout locale={locale}>
+      <StoryblokProvider>
+        <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
+      </StoryblokProvider>
+    </RootLayout>
+  )
 }
 
 export const dynamicParams = false
