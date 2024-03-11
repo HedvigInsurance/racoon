@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { theme, mq } from 'ui'
+import { theme, vanillaMQ } from 'ui'
 import { focusableStyles } from '../Header.css'
 
 export const navigationLink = style([
@@ -8,15 +8,13 @@ export const navigationLink = style([
     display: 'block',
     paddingBlock: theme.space.lg,
 
-    [mq.lg]: {
+    [vanillaMQ.lg]: {
       paddingBlock: theme.space.xs,
       paddingInline: theme.space.md,
-
       borderRadius: theme.radius.sm,
-      '@media (hover: hover)': {
-        '&:hover': {
-          backgroundColor: theme.colors.grayTranslucent100,
-        },
+
+      ':hover': {
+        backgroundColor: theme.colors.grayTranslucent100,
       },
     },
   },
@@ -32,13 +30,13 @@ export const productNavigationLinkCard = style([
     paddingBlock: theme.space.xs,
     position: 'relative',
 
-    [mq.lg]: {
-      columnGap: theme.space.xs,
-      paddingInline: theme.space.xs,
-      borderRadius: theme.radius.sm,
+    '@media': {
+      [vanillaMQ.lg]: {
+        columnGap: theme.space.xs,
+        paddingInline: theme.space.xs,
+        borderRadius: theme.radius.sm,
 
-      '@media (hover: hover)': {
-        '&:hover': {
+        ':hover': {
           backgroundColor: theme.colors.grayTranslucent100,
         },
       },
