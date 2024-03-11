@@ -1,4 +1,4 @@
-import type { CSSObject } from '@emotion/react'
+import { type CSSObject } from '@emotion/styled'
 import styled from '@emotion/styled'
 import { Level, mq } from '../theme'
 

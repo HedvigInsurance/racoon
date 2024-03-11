@@ -1,4 +1,4 @@
-import type { CSSObject } from '@emotion/react'
+import { type CSSObject } from '@emotion/styled'
 import { Level, mq } from './media-query'
 
 export enum HedvigFont {

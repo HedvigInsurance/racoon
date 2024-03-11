@@ -1,4 +1,4 @@
-import { CSSObject } from '@emotion/react'
+import { type CSSObject } from '@emotion/styled'
 import { type Level, mq, theme } from '../../theme'
 
 const HEIGHT = {

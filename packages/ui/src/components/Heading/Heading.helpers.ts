@@ -1,4 +1,4 @@
-import { CSSObject } from '@emotion/react'
+import { type CSSObject } from '@emotion/styled'
 import { type Level, mq, theme } from '../../theme'
 
 type StandardHeadingSize = '18' | '20' | '24' | '32' | '40' | '48' | '56' | '72' | '96'
