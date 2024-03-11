@@ -5,7 +5,7 @@ import { mq, theme } from 'ui'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { useScrollState } from '@/utils/useScrollState'
 import { zIndexes } from '@/utils/zIndex'
-import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE, MENU_BAR_HEIGHT_PX } from './HeaderStyles'
+import { MENU_BAR_HEIGHT_MOBILE, MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_PX } from './constants'
 import { ShoppingCartMenuItem } from './ShoppingCartMenuItem'
 
 export const HEADER_HEIGHT_MOBILE = `calc(${MENU_BAR_HEIGHT_MOBILE} + ${theme.space.xs})`

@@ -6,13 +6,9 @@ import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
+import { MENU_BAR_HEIGHT_MOBILE } from '../constants'
 import { LogoWrapper } from '../Header'
-import {
-  focusableStyles,
-  MENU_BAR_HEIGHT_MOBILE,
-  Navigation,
-  NavigationPrimaryList,
-} from '../HeaderStyles'
+import { focusableStyles, Navigation, NavigationPrimaryList } from '../HeaderStyles'
 import { ShoppingCartMenuItem } from '../ShoppingCartMenuItem'
 
 const triggerStyles = {

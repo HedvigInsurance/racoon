@@ -6,9 +6,9 @@ import { useTranslation } from 'next-i18next'
 import { forwardRef, useImperativeHandle, useState } from 'react'
 import { Button, mq, Space, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
-import { MENU_BAR_HEIGHT_DESKTOP } from '@/components/Header/HeaderStyles'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
+import { MENU_BAR_HEIGHT_DESKTOP } from '../Header/constants'
 import { ProductItem, ProductItemProps } from './ProductItem'
 
 export type CartToastAttributes = {
