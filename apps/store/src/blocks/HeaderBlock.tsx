@@ -21,7 +21,7 @@ import {
   NavigationLink,
   ProductNavigationLink,
   SecondaryNavigationLink,
-} from '@/components/Header/NavigationLink'
+} from '@/components/Header/NavigationLink/NavigationLink'
 import { TopMenuDesktop } from '@/components/Header/TopMenuDesktop/TopMenuDesktop'
 import { TopMenuMobile } from '@/components/Header/TopMenuMobile/TopMenuMobile'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'

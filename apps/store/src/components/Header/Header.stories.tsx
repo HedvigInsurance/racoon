@@ -14,7 +14,7 @@ import {
   NavigationTrigger,
   ProductNavigationList,
 } from './HeaderStyles'
-import { NavigationLink, ProductNavigationLink } from './NavigationLink'
+import { NavigationLink, ProductNavigationLink } from './NavigationLink/NavigationLink'
 import { ShoppingBagIcon } from './ShoppingBagIcon'
 import { TopMenuDesktop } from './TopMenuDesktop/TopMenuDesktop'
 import { TopMenuMobile } from './TopMenuMobile/TopMenuMobile'
