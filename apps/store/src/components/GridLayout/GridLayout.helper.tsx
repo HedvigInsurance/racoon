@@ -1,4 +1,4 @@
-import { CSSObject } from '@emotion/react'
+import { CSSObject } from '@emotion/styled'
 import { mq, Level } from 'ui'
 
 type PartialRecord<K extends keyof any, T> = Partial<Record<K, T>>
