@@ -1,5 +1,6 @@
 import { type QueryHookOptions } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
+import { datadogRum } from '@datadog/browser-rum'
 import { storyblokEditable } from '@storyblok/react'
 import { addDays } from 'date-fns'
 import { useRouter } from 'next/router'
@@ -66,6 +67,7 @@ export const CarTrialExtensionBlock = (props: Props) => {
             consentGiven: consentGiven,
           },
         })
+        datadogRum.addAction('MyMoney Consent | consent given', { value: consentGiven })
       }
     },
     [updateMyMoneyConsent, data?.carTrial],
