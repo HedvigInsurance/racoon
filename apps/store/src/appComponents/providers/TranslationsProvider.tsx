@@ -1,11 +1,11 @@
 'use client'
 
+import { initTranslations } from 'app/i18n'
 import { createInstance, Resource } from 'i18next'
 import { I18n } from 'next-i18next'
 import { ReactNode, useRef } from 'react'
 import { I18nextProvider } from 'react-i18next'
 import { RoutingLocale } from '@/utils/l10n/types'
-import { initTranslations } from '../i18n'
 
 type Props = {
   children: ReactNode

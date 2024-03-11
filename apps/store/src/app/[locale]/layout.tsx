@@ -1,5 +1,5 @@
-import StoryblokProvider from 'app/providers/StoryblokProvider'
 import { ReactNode } from 'react'
+import StoryblokProvider from '@/appComponents/providers/StoryblokProvider'
 import { RootLayout } from '@/appComponents/RootLayout/RootLayout'
 import { GlobalStory } from '@/services/storyblok/storyblok'
 import {

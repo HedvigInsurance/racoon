@@ -2,9 +2,9 @@ import { Provider as JotaiProvider } from 'jotai'
 import { Metadata, Viewport } from 'next'
 import { ReactNode } from 'react'
 import { theme } from 'ui'
+import { ApolloProvider } from '@/appComponents/providers/ApolloProvider'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { ORIGIN_URL } from '@/utils/PageLink'
-import { ApolloProvider } from './providers/ApolloProvider'
 
 type Props = {
   children: ReactNode

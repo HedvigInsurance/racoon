@@ -7,13 +7,16 @@ import { Button, Heading, Space, Text, mq, theme } from 'ui'
 import { CardSkeleton, ContractCard } from '@/components/ConfirmationPage/ContractCard'
 import { convertToBankSigneringContract } from '@/components/ConfirmationPage/useSwitchingContracts'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
+import {
+  MENU_BAR_HEIGHT_MOBILE,
+  MENU_BAR_HEIGHT_DESKTOP,
+} from '@/components/Header/Header.constants'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { getAccessToken } from '@/services/authApi/persist'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { useContractQuery } from '@/services/graphql/generated'
-import { MENU_BAR_HEIGHT_MOBILE, MENU_BAR_HEIGHT_DESKTOP } from '../Header/constants'
 
 const SSN_FIELD_NAME = 'ssn'
 

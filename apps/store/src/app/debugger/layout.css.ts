@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 import { theme } from 'ui'
-import { MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/constants'
+import { MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/Header.constants'
 
 export const header = style({
   display: 'flex',

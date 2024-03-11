@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import Link, { LinkProps } from 'next/link'
 import { mq, theme } from 'ui'
-import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from './constants'
+import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from './Header.constants'
 
 export const focusableStyles = {
   cursor: 'pointer',
