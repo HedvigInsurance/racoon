@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react'
 import { LogoHomeLink } from '@/appComponents/LogoHomeLink/LogoHomeLink'
+import { header } from './layout.css'
 
 type Props = {
   children: ReactNode
@@ -8,7 +9,7 @@ type Props = {
 const Layout = ({ children }: Props) => {
   return (
     <>
-      <div>
+      <div className={header}>
         <LogoHomeLink />
       </div>
 
