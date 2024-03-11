@@ -1,3 +1,4 @@
+import { datadogRum } from '@datadog/browser-rum'
 import * as Checkbox from '@radix-ui/react-checkbox'
 import { useAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
@@ -20,6 +21,7 @@ export const MyMoneyConsent = () => {
 
   const handleCheckedChange = (checked: boolean) => {
     setConsentAccepted(checked)
+    datadogRum.addAction('MyMoney Consent | checkbox toggled', { value: checked })
   }
 
   return (
