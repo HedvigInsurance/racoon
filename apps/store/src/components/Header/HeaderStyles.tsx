@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
-import Link, { LinkProps } from 'next/link'
 import { mq, theme } from 'ui'
 import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from './Header.constants'
 
@@ -10,56 +9,6 @@ export const focusableStyles = {
     outline: `2px solid ${theme.colors.gray900}`,
   },
 }
-
-export const Navigation = styled(NavigationMenuPrimitive.Root)({
-  fontSize: theme.fontSizes.xl,
-
-  [mq.lg]: {
-    fontSize: theme.fontSizes.md,
-    top: 0,
-  },
-})
-
-export const NavigationMenuPrimitiveItem = styled(NavigationMenuPrimitive.Item)({
-  ':not(:last-child)': {
-    borderBottom: `1px solid ${theme.colors.borderOpaque1}`,
-  },
-
-  [mq.lg]: { '&&': { borderBottom: 'unset' } },
-})
-
-export const NavigationTrigger = (props: LinkProps & { children: string }) => {
-  return (
-    <NavigationMenuPrimitive.Trigger asChild>
-      <NavigationTriggerLink {...props} />
-    </NavigationMenuPrimitive.Trigger>
-  )
-}
-
-const NavigationTriggerLink = styled(Link)({
-  paddingBlock: theme.space.lg,
-  display: 'flex',
-  alignItems: 'center',
-  gap: theme.space.xs,
-  whiteSpace: 'nowrap',
-  ...focusableStyles,
-
-  [mq.lg]: {
-    paddingBlock: theme.space.xs,
-    paddingInline: theme.space.md,
-
-    borderRadius: theme.radius.sm,
-    '@media (hover: hover)': {
-      '&:hover': {
-        backgroundColor: theme.colors.grayTranslucent100,
-      },
-    },
-
-    '&[data-state="open"]': {
-      backgroundColor: theme.colors.grayTranslucent100,
-    },
-  },
-})
 
 export const NavigationMenuSecondaryItem = styled(NavigationMenuPrimitive.Item)({
   padding: `${theme.space.md} ${theme.space.md} `,

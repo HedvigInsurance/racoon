@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
+import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { useTranslation } from 'next-i18next'
 import { AndroidIcon, AppleIcon, Button, theme } from 'ui'
 import { MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/Header.constants'
@@ -8,7 +9,8 @@ import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { LogoWrapper } from '../Header'
-import { focusableStyles, Navigation, NavigationPrimaryList } from '../HeaderStyles'
+import { navigation } from '../Header.css'
+import { focusableStyles, NavigationPrimaryList } from '../HeaderStyles'
 import { ShoppingCartMenuItem } from '../ShoppingCartMenuItem'
 
 const triggerStyles = {
@@ -61,7 +63,7 @@ export const TopMenuMobile = (props: TopMenuMobileProps) => {
               <DialogClose>{t('NAV_MENU_DIALOG_CLOSE')}</DialogClose>
               <ShoppingCartMenuItem />
             </TopMenuHeader>
-            <Navigation defaultValue={defaultValue}>
+            <NavigationMenuPrimitive.Root className={navigation} defaultValue={defaultValue}>
               <NavigationPrimaryList>
                 <div>{children}</div>
                 <ButtonWrapper>
@@ -91,7 +93,7 @@ export const TopMenuMobile = (props: TopMenuMobileProps) => {
                   </Button>
                 </ButtonWrapper>
               </NavigationPrimaryList>
-            </Navigation>
+            </NavigationMenuPrimitive.Root>
           </Wrapper>
         </DialogContent>
       </DialogPrimitive.Root>

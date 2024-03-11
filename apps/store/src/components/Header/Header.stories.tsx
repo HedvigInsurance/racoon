@@ -7,14 +7,14 @@ import { theme } from 'ui'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { Header, Wrapper as MockedHeaderWrapper } from './Header'
+import { navigationItem } from './Header.css'
 import {
   NavigationMenuPrimitiveContent,
-  NavigationMenuPrimitiveItem,
   NavigationMenuProductItem,
-  NavigationTrigger,
   ProductNavigationList,
 } from './HeaderStyles'
 import { NavigationLink, ProductNavigationLink } from './NavigationLink/NavigationLink'
+import { NavigationTrigger } from './NavigationTrigger'
 import { ShoppingBagIcon } from './ShoppingBagIcon'
 import { TopMenuDesktop } from './TopMenuDesktop/TopMenuDesktop'
 import { TopMenuMobile } from './TopMenuMobile/TopMenuMobile'
@@ -50,7 +50,7 @@ export const MockedShoppingCartMenuItem = ({ count = 0 }) => {
 const MockedNavItems = () => {
   return (
     <>
-      <NavigationMenuPrimitiveItem value="Insurances">
+      <NavigationMenuPrimitive.Item className={navigationItem} value="Insurances">
         <NavigationTrigger href="#">Insurances</NavigationTrigger>
         <NavigationMenuPrimitiveContent>
           <NavigationMenuPrimitive.Sub defaultValue="Insurances">
@@ -67,13 +67,13 @@ const MockedNavItems = () => {
             </ProductNavigationList>
           </NavigationMenuPrimitive.Sub>
         </NavigationMenuPrimitiveContent>
-      </NavigationMenuPrimitiveItem>
-      <NavigationMenuPrimitiveItem value="Support">
+      </NavigationMenuPrimitive.Item>
+      <NavigationMenuPrimitive.Item className={navigationItem} value="Support">
         <NavigationLink href="#">Support</NavigationLink>
-      </NavigationMenuPrimitiveItem>
-      <NavigationMenuPrimitiveItem value="Why Hedvig?">
+      </NavigationMenuPrimitive.Item>
+      <NavigationMenuPrimitive.Item className={navigationItem} value="Why Hedvig?">
         <NavigationLink href="#">About Hedvig</NavigationLink>
-      </NavigationMenuPrimitiveItem>
+      </NavigationMenuPrimitive.Item>
     </>
   )
 }

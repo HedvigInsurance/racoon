@@ -7,14 +7,13 @@ import { startTransition, useCallback, useEffect, useMemo, useState } from 'reac
 import { mq, Space, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { Header } from '@/components/Header/Header'
+import { navigationItem } from '@/components/Header/Header.css'
 import {
   NavigationMenuListWrapper,
   NavigationMenuPrimitiveContent,
-  NavigationMenuPrimitiveItem,
   NavigationMenuProductItem,
   NavigationMenuSecondaryItem,
   NavigationSecondaryList,
-  NavigationTrigger,
   ProductNavigationList,
 } from '@/components/Header/HeaderStyles'
 import {
@@ -22,6 +21,7 @@ import {
   ProductNavigationLink,
   SecondaryNavigationLink,
 } from '@/components/Header/NavigationLink/NavigationLink'
+import { NavigationTrigger } from '@/components/Header/NavigationTrigger'
 import { TopMenuDesktop } from '@/components/Header/TopMenuDesktop/TopMenuDesktop'
 import { TopMenuMobile } from '@/components/Header/TopMenuMobile/TopMenuMobile'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
@@ -50,9 +50,13 @@ type NavItemBlockProps = SbBaseBlockProps<{
 
 export const NavItemBlock = ({ blok }: NavItemBlockProps) => {
   return (
-    <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
+    <NavigationMenuPrimitive.Item
+      className={navigationItem}
+      value={blok.name}
+      {...storyblokEditable(blok)}
+    >
       <NavigationLink href={getLinkFieldURL(blok.link, blok.name)}>{blok.name}</NavigationLink>
-    </NavigationMenuPrimitiveItem>
+    </NavigationMenuPrimitive.Item>
   )
 }
 NavItemBlock.blockName = 'navItem'
@@ -73,7 +77,11 @@ export const NestedNavContainerBlock = ({ blok }: NestedNavContainerBlockProps) 
   const firstNavItem = filteredNavItems[0]
 
   return (
-    <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
+    <NavigationMenuPrimitive.Item
+      className={navigationItem}
+      value={blok.name}
+      {...storyblokEditable(blok)}
+    >
       <NavigationTrigger href={getLinkFieldURL(firstNavItem.link, firstNavItem.name)}>
         {blok.name}
       </NavigationTrigger>
@@ -98,7 +106,7 @@ export const NestedNavContainerBlock = ({ blok }: NestedNavContainerBlockProps) 
           </NavigationMenuPrimitive.Sub>
         </NavigationMenuListWrapper>
       </NavigationMenuPrimitiveContent>
-    </NavigationMenuPrimitiveItem>
+    </NavigationMenuPrimitive.Item>
   )
 }
 NestedNavContainerBlock.blockName = 'nestedNavContainer'
@@ -174,14 +182,18 @@ export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps
       <MobileWrapper>{content}</MobileWrapper>
 
       <DesktopOnly>
-        <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
+        <NavigationMenuPrimitive.Item
+          className={navigationItem}
+          value={blok.name}
+          {...storyblokEditable(blok)}
+        >
           <Space y={{ base: 1.5, lg: 0 }}>
             <DesktopOnly>
               <NavigationTrigger href={PageLink.store({ locale })}>{blok.name}</NavigationTrigger>
             </DesktopOnly>
             <NavigationMenuPrimitiveContent>{content}</NavigationMenuPrimitiveContent>
           </Space>
-        </NavigationMenuPrimitiveItem>
+        </NavigationMenuPrimitive.Item>
       </DesktopOnly>
     </>
   )
