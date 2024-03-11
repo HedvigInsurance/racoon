@@ -3,7 +3,8 @@ import { ShopSessionSigningStatus } from '@/services/graphql/generated'
 import { BankIdState } from './bankId.types'
 
 const stateMapping = {
-  CREATING: BankIdState.Starting, // ShopSessionSigningStatus only
+  // That status is used in ShopSessionSigningStatus when signig after a login (unauthenticated returning member)
+  CREATING: BankIdState.Success, // ShopSessionSigningStatus only
   PENDING: BankIdState.Pending,
   COMPLETED: BankIdState.Success, // Auth API only
   SIGNED: BankIdState.Success, // ShopSessionSigningStatus only
