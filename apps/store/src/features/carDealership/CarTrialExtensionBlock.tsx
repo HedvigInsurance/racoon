@@ -1,3 +1,5 @@
+'use client'
+
 import { type QueryHookOptions } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
@@ -110,7 +112,6 @@ export const CarTrialExtensionBlock = (props: Props) => {
     </GridLayout.Root>
   )
 }
-CarTrialExtensionBlock.blockName = 'carTrialExtension'
 
 type UseCarTrialQueryParams = Pick<QueryHookOptions<NonNullable<CarTrialExtension>>, 'onCompleted'>
 

@@ -1,3 +1,5 @@
+'use client'
+
 import styled from '@emotion/styled'
 import { theme } from 'ui'
 import { Ticker, TickerItem } from '@/components/Ticker/Ticker'
@@ -8,7 +10,7 @@ type Props = SbBaseBlockProps<{
   uspText?: string
 }>
 
-const TickerBlock = (props: Props) => {
+export const TickerBlock = (props: Props) => {
   const uspList = props.blok.uspText?.split('\n') ?? []
 
   return (
@@ -22,8 +24,5 @@ const TickerBlock = (props: Props) => {
     </>
   )
 }
-TickerBlock.blockName = 'ticker'
 
 const Spacer = styled.div({ height: theme.space.xs })
-
-export default TickerBlock

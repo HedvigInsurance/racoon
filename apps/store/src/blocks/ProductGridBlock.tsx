@@ -1,3 +1,5 @@
+'use client'
+
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
@@ -24,7 +26,6 @@ export const ProductGridBlock = ({ blok }: ProductGridBlockProps) => {
     </Wrapper>
   )
 }
-ProductGridBlock.blockName = 'productGrid'
 
 const Wrapper = styled.div({
   paddingInline: theme.space.xs,

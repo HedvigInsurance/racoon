@@ -1,3 +1,5 @@
+'use client'
+
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import Link from 'next/link'

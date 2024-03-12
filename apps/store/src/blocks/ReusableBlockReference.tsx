@@ -1,3 +1,5 @@
+'use client'
+
 import { StoryblokComponent } from '@storyblok/react'
 import { ReusableStory, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 

@@ -1,3 +1,4 @@
+'use client'
 import { TimelineItemBlock, TimelineItemBlockProps } from '@/blocks/TimelineItemBlock'
 import * as Timeline from '@/components//Timeline/Timeline'
 import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
@@ -26,4 +27,3 @@ export const TimelineBlock = ({ blok }: Props) => {
     </Timeline.Root>
   )
 }
-TimelineBlock.blockName = 'timeline'

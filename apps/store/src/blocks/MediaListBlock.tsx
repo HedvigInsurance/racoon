@@ -1,3 +1,4 @@
+'use client'
 import styled from '@emotion/styled'
 import { StoryblokComponent, storyblokEditable } from '@storyblok/react'
 import { mq } from 'ui'
@@ -43,7 +44,6 @@ export const MediaListBlock = ({ blok }: MediaListBlockProps) => {
     </Slideshow>
   )
 }
-MediaListBlock.blockName = 'mediaList'
 
 const Wrapper = styled.div({
   paddingInline: 0,

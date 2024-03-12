@@ -1,3 +1,5 @@
+'use client'
+
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { mq } from 'ui'
@@ -46,5 +48,3 @@ const StyledSelectInsuranceGrid = styled(SelectInsuranceGrid)({
     },
   },
 })
-
-SelectInsuranceGridBlock.blockName = 'selectInsuranceGrid'

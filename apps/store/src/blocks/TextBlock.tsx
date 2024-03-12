@@ -1,3 +1,5 @@
+'use client'
+
 import styled from '@emotion/styled'
 import { ISbRichtext, storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'

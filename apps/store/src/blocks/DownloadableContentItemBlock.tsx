@@ -1,4 +1,4 @@
-import React from 'react'
+'use client'
 import { DownloadableContentItem } from '@/components/DownloadableContentItem/DownloadableContentItem'
 import { LinkField, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 
@@ -10,5 +10,3 @@ export type DownloadableContentItemBlockProps = SbBaseBlockProps<{
 export const DownloadableContentItemBlock = ({ blok }: DownloadableContentItemBlockProps) => {
   return <DownloadableContentItem thumbnail={blok.thumbnail} url={blok.fileLink.url} />
 }
-
-DownloadableContentItemBlock.blockName = 'downloadableContentItem'

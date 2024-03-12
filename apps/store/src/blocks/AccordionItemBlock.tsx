@@ -1,3 +1,4 @@
+'use client'
 import { storyblokEditable, type ISbRichtext } from '@storyblok/react'
 import { useId, useMemo } from 'react'
 import { Text } from 'ui'

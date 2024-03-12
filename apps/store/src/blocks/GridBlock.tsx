@@ -1,3 +1,4 @@
+'use client'
 import styled, { CSSObject } from '@emotion/styled'
 import { StoryblokComponent, storyblokEditable } from '@storyblok/react'
 import { mq, theme } from 'ui'

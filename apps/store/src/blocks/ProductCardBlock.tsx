@@ -1,3 +1,4 @@
+'use client'
 import { storyblokEditable } from '@storyblok/react'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
 import { type LinkType, ProductCard } from '@/components/ProductCard/ProductCard'
@@ -40,7 +41,6 @@ export const ProductCardBlock = ({ blok }: ProductCardBlockProps) => {
     />
   )
 }
-ProductCardBlock.blockName = 'productCard'
 
 // Make sure /se-en/products/home == se-en/products/home
 const isSameLink = (a: string, b: string) => {

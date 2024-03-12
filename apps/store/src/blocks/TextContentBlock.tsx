@@ -1,3 +1,5 @@
+'use client'
+
 import styled from '@emotion/styled'
 import { StoryblokComponent, storyblokEditable } from '@storyblok/react'
 import { theme } from 'ui'

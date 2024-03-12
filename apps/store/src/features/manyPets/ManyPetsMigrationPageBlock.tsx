@@ -1,3 +1,5 @@
+'use client'
+
 import { StoryblokComponent } from '@storyblok/react'
 import { CurrencyCode } from '@/services/graphql/generated'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
@@ -29,5 +31,3 @@ export const ManyPetsMigrationPageBlock = ({ blok }: Props) => {
     />
   )
 }
-
-ManyPetsMigrationPageBlock.blockName = 'ManypetsMigrationPage'

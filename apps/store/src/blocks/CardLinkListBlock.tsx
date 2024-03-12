@@ -1,3 +1,4 @@
+'use client'
 import styled from '@emotion/styled'
 import { theme, mq } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
@@ -19,7 +20,6 @@ export const CardLinkListBlock = ({ blok }: CardLinkListBlockProps) => {
     </Grid>
   )
 }
-CardLinkListBlock.blockName = 'cardLinkList'
 
 export const Grid = styled(GridLayout.Root)({
   gap: theme.space.xs,

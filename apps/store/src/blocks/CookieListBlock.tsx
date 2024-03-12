@@ -1,3 +1,4 @@
+'use client'
 import styled from '@emotion/styled'
 import { mq, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
@@ -130,5 +131,3 @@ const OneTrustCookieInfo = styled.div`
     }
   }
 `
-
-CookieListBlock.blockName = 'cookieList'

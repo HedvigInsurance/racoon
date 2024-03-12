@@ -1,3 +1,4 @@
+'use client'
 import styled from '@emotion/styled'
 import { storyblokEditable, StoryblokComponent, SbBlokData } from '@storyblok/react'
 import { motion, useInView, useScroll } from 'framer-motion'
@@ -87,7 +88,6 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
     </main>
   )
 }
-ProductPageBlock.blockName = 'product'
 
 const StickyHeader = ({ children }: { children: ReactNode }) => {
   const { scrollY } = useScroll()

@@ -1,3 +1,4 @@
+'use client'
 import styled from '@emotion/styled'
 import { ArrowForwardIcon, theme, mq } from 'ui'
 import { SbBaseBlockProps, LinkField } from '@/services/storyblok/storyblok'
@@ -24,7 +25,6 @@ export const CardLinkBlock = ({ blok }: CardLinkBlockProps) => {
     </Card>
   )
 }
-CardLinkBlock.blockName = 'cardLink'
 
 const Card = styled.a({
   display: 'inline-flex',

@@ -1,3 +1,4 @@
+'use client'
 import styled from '@emotion/styled'
 import { SbBlokData, storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
@@ -26,7 +27,6 @@ export const CheckListBlock = ({ blok }: CheckListBlockProps) => {
     </Wrapper>
   )
 }
-CheckListBlock.blockName = 'checkList'
 
 const isTextBlock = (blok: SbBlokData): blok is TextBlockProps['blok'] => {
   return blok.component === TextBlock.blockName

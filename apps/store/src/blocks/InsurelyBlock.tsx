@@ -1,3 +1,4 @@
+'use client'
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'

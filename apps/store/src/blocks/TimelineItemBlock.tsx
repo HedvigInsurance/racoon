@@ -1,3 +1,5 @@
+'use client'
+
 import styled from '@emotion/styled'
 import { ISbRichtext, renderRichText } from '@storyblok/react'
 import { Heading, theme } from 'ui'

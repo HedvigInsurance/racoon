@@ -1,3 +1,5 @@
+'use client'
+
 import { type ComponentProps } from 'react'
 import { PageBlock } from '@/blocks/PageBlock'
 import { BLOG_ARTICLE_CATEGORY_CONTENT_TYPE } from './blog.constants'

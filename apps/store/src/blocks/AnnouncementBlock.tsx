@@ -1,3 +1,4 @@
+'use client'
 import styled from '@emotion/styled'
 import { storyblokEditable, renderRichText, type ISbRichtext } from '@storyblok/react'
 import { atom, useAtom, useSetAtom } from 'jotai'
@@ -41,8 +42,6 @@ export const AnnouncementBlock = ({ blok }: AnnouncementBlockProps) => {
     </Banner>
   )
 }
-
-AnnouncementBlock.blockName = 'announcement'
 
 const Content = styled.span({
   a: {

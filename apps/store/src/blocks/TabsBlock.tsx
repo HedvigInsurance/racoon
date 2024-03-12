@@ -1,3 +1,5 @@
+'use client'
+
 import styled from '@emotion/styled'
 import * as RadixTabs from '@radix-ui/react-tabs'
 import { SbBlokData, StoryblokComponent, storyblokEditable } from '@storyblok/react'
@@ -54,7 +56,6 @@ export const TabsBlock = ({ blok }: TabsBlockProps) => {
     </Wrapper>
   )
 }
-TabsBlock.blockName = 'tabs'
 
 const TabBlock = ({ blok }: TabBlockProps) => {
   return (

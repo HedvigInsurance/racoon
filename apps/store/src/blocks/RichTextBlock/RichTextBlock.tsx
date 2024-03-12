@@ -1,12 +1,9 @@
+'use client'
 import styled from '@emotion/styled'
 import { type ISbRichtext, storyblokEditable } from '@storyblok/react'
 import Link from 'next/link'
 import { useMemo, type ReactNode } from 'react'
-import {
-  render,
-  type RenderOptions,
-  MARK_LINK,
-} from 'storyblok-rich-text-react-renderer'
+import { render, type RenderOptions, MARK_LINK } from 'storyblok-rich-text-react-renderer'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { RichText } from '@/components/RichText/RichText'
 import { type GridColumnsField, type SbBaseBlockProps } from '@/services/storyblok/storyblok'

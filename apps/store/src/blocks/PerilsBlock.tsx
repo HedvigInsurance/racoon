@@ -1,3 +1,4 @@
+'use client'
 import { storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
 import { Badge, Space } from 'ui'
@@ -47,5 +48,3 @@ export const PerilsBlock = ({ blok }: PerilsBlockProps) => {
     </GridLayout.Root>
   )
 }
-
-PerilsBlock.blockName = 'perils'

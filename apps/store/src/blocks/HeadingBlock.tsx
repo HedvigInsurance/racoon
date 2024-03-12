@@ -1,3 +1,4 @@
+'use client'
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { ConditionalWrapper, Heading, HeadingProps, PossibleHeadingVariant, theme } from 'ui'
