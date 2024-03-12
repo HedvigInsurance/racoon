@@ -1,20 +1,10 @@
-import styled from '@emotion/styled'
 import { motion, Transition } from 'framer-motion'
 import { bodyBgColor, headerBgTransparentColor } from 'ui/src/theme/vars.css'
-import { mq, theme } from 'ui'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { useScrollState } from '@/utils/useScrollState'
-import { zIndexes } from '@/utils/zIndex'
-import {
-  MENU_BAR_HEIGHT_MOBILE,
-  MENU_BAR_HEIGHT_DESKTOP,
-  MENU_BAR_HEIGHT_PX,
-} from './Header.constants'
-import { contentWrapper, logoWrapper } from './Header.css'
+import { MENU_BAR_HEIGHT_PX } from './Header.constants'
+import { contentWrapper, ghostWrapper, logoWrapper, wrapper } from './Header.css'
 import { ShoppingCartMenuItem } from './ShoppingCartMenuItem'
-
-export const HEADER_HEIGHT_MOBILE = `calc(${MENU_BAR_HEIGHT_MOBILE} + ${theme.space.xs})`
-export const HEADER_HEIGHT_DESKTOP = `calc(${MENU_BAR_HEIGHT_DESKTOP} + ${theme.space.xs})`
 
 const ANIMATION_VARIANTS = {
   SLIDE_IN: {
@@ -59,8 +49,9 @@ export const Header = (props: HeaderProps) => {
   animate = staticPosition ? undefined : animate
 
   return (
-    <GhostWrapper style={initialStyles} overlay={overlay}>
-      <Wrapper
+    <div style={initialStyles} className={ghostWrapper({ overlay })}>
+      <motion.header
+        className={wrapper}
         initial={initialStyles}
         variants={ANIMATION_VARIANTS}
         animate={animate}
@@ -73,39 +64,7 @@ export const Header = (props: HeaderProps) => {
           {children}
           <ShoppingCartMenuItem />
         </div>
-      </Wrapper>
-    </GhostWrapper>
+      </motion.header>
+    </div>
   )
 }
-
-const GhostWrapper = styled.div<{ overlay: boolean }>(({ overlay }) => ({
-  '--height': HEADER_HEIGHT_MOBILE,
-
-  position: 'relative',
-  height: 'var(--height)',
-  // Using negative margin to pull page's content bellow the menu causing the desired
-  // 'menu overlay' behaviour. Before that was being implemented by removing the header
-  // from doc's flow with absolute positioning. However, that solution doesn't play well
-  // if we have banners/announcements on the screen.
-  marginBottom: overlay ? 'calc(-1 * var(--height))' : 'initial',
-  zIndex: zIndexes.header,
-
-  [mq.lg]: { '--height': HEADER_HEIGHT_DESKTOP },
-}))
-
-export const Wrapper = styled(motion.header)({
-  width: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-
-  top: 0,
-  zIndex: zIndexes.header,
-
-  height: MENU_BAR_HEIGHT_MOBILE,
-  paddingInline: theme.space.md,
-  [mq.lg]: {
-    height: MENU_BAR_HEIGHT_DESKTOP,
-    paddingInline: theme.space.xl,
-  },
-})

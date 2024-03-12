@@ -49,6 +49,7 @@
     "@types/uuid": "9.0.8",
     "@vanilla-extract/css": "1.14.1",
     "@vanilla-extract/dynamic": "2.1.0",
+    "@vanilla-extract/recipes": "0.5.2",
     "@vanilla-extract/sprinkles": "1.6.1",
     "@vercel/edge-config": "1.1.0",
     "@vercel/kv": "1.0.1",

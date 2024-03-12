@@ -1,6 +1,13 @@
-import { style } from '@vanilla-extract/css'
+import { createVar, style } from '@vanilla-extract/css'
+import { recipe } from '@vanilla-extract/recipes'
 import { minWidth, theme } from 'ui'
-import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from './Header.constants'
+import { zIndexes } from '@/utils/zIndex'
+import {
+  HEADER_HEIGHT_DESKTOP,
+  HEADER_HEIGHT_MOBILE,
+  MENU_BAR_HEIGHT_DESKTOP,
+  MENU_BAR_HEIGHT_MOBILE,
+} from './Header.constants'
 
 export const rawFocusableStyles = {
   cursor: 'pointer',
@@ -14,6 +21,61 @@ export const focusableStyles = style({
 
   ':focus-visible': {
     outline: `2px solid ${theme.colors.gray900}`,
+  },
+})
+
+const ghostWrapperHeight = createVar()
+
+export const ghostWrapper = recipe({
+  base: {
+    vars: {
+      [ghostWrapperHeight]: HEADER_HEIGHT_MOBILE,
+    },
+
+    position: 'relative',
+    height: ghostWrapperHeight,
+
+    zIndex: zIndexes.header,
+
+    '@media': {
+      [minWidth.lg]: {
+        vars: {
+          [ghostWrapperHeight]: HEADER_HEIGHT_DESKTOP,
+        },
+      },
+    },
+  },
+
+  variants: {
+    overlay: {
+      true: {
+        // Using negative margin to pull page's content bellow the menu causing the desired
+        // 'menu overlay' behaviour. Before that was being implemented by removing the header
+        // from doc's flow with absolute positioning. However, that solution doesn't play well
+        // if we have banners/announcements on the screen.
+        marginBottom: `calc(-1 * ${ghostWrapperHeight})`,
+      },
+    },
+  },
+})
+
+export const wrapper = style({
+  width: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+
+  top: 0,
+  zIndex: zIndexes.header,
+
+  height: MENU_BAR_HEIGHT_MOBILE,
+  paddingInline: theme.space.md,
+
+  '@media': {
+    [minWidth.lg]: {
+      height: MENU_BAR_HEIGHT_DESKTOP,
+      paddingInline: theme.space.xl,
+    },
   },
 })
 

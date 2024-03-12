@@ -2,12 +2,13 @@ import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { Meta, StoryFn } from '@storybook/react'
+import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { theme } from 'ui'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
-import { Header, Wrapper as MockedHeaderWrapper } from './Header'
-import { navigationItem, navigationProductList } from './Header.css'
+import { Header } from './Header'
+import { navigationItem, navigationProductList, wrapper } from './Header.css'
 import { NavigationLink, ProductNavigationLink } from './NavigationLink/NavigationLink'
 import { NavigationTrigger } from './NavigationTrigger'
 import { ShoppingBagIcon } from './ShoppingBagIcon'
@@ -82,7 +83,7 @@ export type TopMenuProps = {
 const Template: StoryFn<TopMenuProps> = (props) => {
   return (
     <>
-      <MockedHeaderWrapper>
+      <motion.header className={wrapper}>
         <TopMenuDesktop>
           <MockedNavItems />
         </TopMenuDesktop>
@@ -92,7 +93,7 @@ const Template: StoryFn<TopMenuProps> = (props) => {
         </TopMenuMobile>
 
         <MockedShoppingCartMenuItem count={props.count} />
-      </MockedHeaderWrapper>
+      </motion.header>
     </>
   )
 }

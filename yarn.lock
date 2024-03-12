@@ -11568,6 +11568,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vanilla-extract/recipes@npm:0.5.2":
+  version: 0.5.2
+  resolution: "@vanilla-extract/recipes@npm:0.5.2"
+  peerDependencies:
+    "@vanilla-extract/css": ^1.0.0
+  checksum: 10c0/0ec9965ec731a90624c911763afba8a94f631e33d3444b1b403047e8c6009bb83e3201f848c029c9642408653aa50369432016800b53f6865296dcb7e24de7d7
+  languageName: node
+  linkType: hard
+
 "@vanilla-extract/sprinkles@npm:1.6.1":
   version: 1.6.1
   resolution: "@vanilla-extract/sprinkles@npm:1.6.1"
@@ -25234,6 +25243,7 @@ __metadata:
     "@vanilla-extract/css": "npm:1.14.1"
     "@vanilla-extract/dynamic": "npm:2.1.0"
     "@vanilla-extract/next-plugin": "npm:2.3.6"
+    "@vanilla-extract/recipes": "npm:0.5.2"
     "@vanilla-extract/sprinkles": "npm:1.6.1"
     "@vanilla-extract/webpack-plugin": "npm:2.3.6"
     "@vercel/edge-config": "npm:1.1.0"
