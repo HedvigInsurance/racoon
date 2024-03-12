@@ -4,7 +4,7 @@ import { motion, useInView, useScroll } from 'framer-motion'
 import { useState, useEffect, useRef, ReactNode } from 'react'
 import { theme, mq } from 'ui'
 import { GridLayout, MAX_WIDTH } from '@/components/GridLayout/GridLayout'
-import { HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header'
+import { HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header.constants'
 import {
   PurchaseForm,
   type PurchaseFormProps,

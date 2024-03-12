@@ -8,20 +8,19 @@ import { mq, Space, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { Header } from '@/components/Header/Header'
 import {
-  NavigationMenuListWrapper,
-  NavigationMenuPrimitiveContent,
-  NavigationMenuPrimitiveItem,
-  NavigationMenuProductItem,
-  NavigationMenuSecondaryItem,
-  NavigationSecondaryList,
-  NavigationTrigger,
-  ProductNavigationList,
-} from '@/components/Header/HeaderStyles'
+  navigationContent,
+  navigationItem,
+  navigationMenuWrapper,
+  navigationProductList,
+  navigationSecondaryItem,
+  navigationSecondaryList,
+} from '@/components/Header/Header.css'
 import {
   NavigationLink,
   ProductNavigationLink,
   SecondaryNavigationLink,
 } from '@/components/Header/NavigationLink/NavigationLink'
+import { NavigationTrigger } from '@/components/Header/NavigationTrigger'
 import { TopMenuDesktop } from '@/components/Header/TopMenuDesktop/TopMenuDesktop'
 import { TopMenuMobile } from '@/components/Header/TopMenuMobile/TopMenuMobile'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
@@ -50,9 +49,13 @@ type NavItemBlockProps = SbBaseBlockProps<{
 
 export const NavItemBlock = ({ blok }: NavItemBlockProps) => {
   return (
-    <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
+    <NavigationMenuPrimitive.Item
+      className={navigationItem}
+      value={blok.name}
+      {...storyblokEditable(blok)}
+    >
       <NavigationLink href={getLinkFieldURL(blok.link, blok.name)}>{blok.name}</NavigationLink>
-    </NavigationMenuPrimitiveItem>
+    </NavigationMenuPrimitive.Item>
   )
 }
 NavItemBlock.blockName = 'navItem'
@@ -73,32 +76,37 @@ export const NestedNavContainerBlock = ({ blok }: NestedNavContainerBlockProps) 
   const firstNavItem = filteredNavItems[0]
 
   return (
-    <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
+    <NavigationMenuPrimitive.Item
+      className={navigationItem}
+      value={blok.name}
+      {...storyblokEditable(blok)}
+    >
       <NavigationTrigger href={getLinkFieldURL(firstNavItem.link, firstNavItem.name)}>
         {blok.name}
       </NavigationTrigger>
-      <NavigationMenuPrimitiveContent>
-        <NavigationMenuListWrapper>
+      <NavigationMenuPrimitive.Content className={navigationContent}>
+        <div className={navigationMenuWrapper}>
           <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
-            <NavigationSecondaryList>
+            <NavigationMenuPrimitive.List className={navigationSecondaryList}>
               {filteredNavItems.map((nestedBlock) => (
                 <SecondaryNavigationLink
                   key={nestedBlock._uid}
                   href={getLinkFieldURL(nestedBlock.link, nestedBlock.name)}
                 >
-                  <NavigationMenuSecondaryItem
+                  <NavigationMenuPrimitive.Item
+                    className={navigationSecondaryItem}
                     value={nestedBlock.name}
                     {...storyblokEditable(nestedBlock)}
                   >
                     {nestedBlock.name}
-                  </NavigationMenuSecondaryItem>
+                  </NavigationMenuPrimitive.Item>
                 </SecondaryNavigationLink>
               ))}
-            </NavigationSecondaryList>
+            </NavigationMenuPrimitive.List>
           </NavigationMenuPrimitive.Sub>
-        </NavigationMenuListWrapper>
-      </NavigationMenuPrimitiveContent>
-    </NavigationMenuPrimitiveItem>
+        </div>
+      </NavigationMenuPrimitive.Content>
+    </NavigationMenuPrimitive.Item>
   )
 }
 NestedNavContainerBlock.blockName = 'nestedNavContainer'
@@ -141,12 +149,12 @@ export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps
   })
 
   const content = (
-    <NavigationMenuListWrapper>
+    <div className={navigationMenuWrapper}>
       <Space y={{ base: 1.5, lg: 1 }}>
         <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
-          <ProductNavigationList>
+          <NavigationMenuPrimitive.List className={navigationProductList}>
             {productNavItems.map((item) => (
-              <NavigationMenuProductItem key={item.name} value={item.name}>
+              <NavigationMenuPrimitive.Item key={item.name} value={item.name}>
                 <ProductNavigationLink
                   href={item.url}
                   pillowImageSrc={item.image}
@@ -154,9 +162,9 @@ export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps
                 >
                   {item.name}
                 </ProductNavigationLink>
-              </NavigationMenuProductItem>
+              </NavigationMenuPrimitive.Item>
             ))}
-          </ProductNavigationList>
+          </NavigationMenuPrimitive.List>
         </NavigationMenuPrimitive.Sub>
         <ButtonNextLinkFullWidth
           href={PageLink.store({ locale })}
@@ -166,7 +174,7 @@ export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps
           {t('NAVIGATION_STORE_LINK')}
         </ButtonNextLinkFullWidth>
       </Space>
-    </NavigationMenuListWrapper>
+    </div>
   )
 
   return (
@@ -174,14 +182,20 @@ export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps
       <MobileWrapper>{content}</MobileWrapper>
 
       <DesktopOnly>
-        <NavigationMenuPrimitiveItem value={blok.name} {...storyblokEditable(blok)}>
+        <NavigationMenuPrimitive.Item
+          className={navigationItem}
+          value={blok.name}
+          {...storyblokEditable(blok)}
+        >
           <Space y={{ base: 1.5, lg: 0 }}>
             <DesktopOnly>
               <NavigationTrigger href={PageLink.store({ locale })}>{blok.name}</NavigationTrigger>
             </DesktopOnly>
-            <NavigationMenuPrimitiveContent>{content}</NavigationMenuPrimitiveContent>
+            <NavigationMenuPrimitive.Content className={navigationContent}>
+              {content}
+            </NavigationMenuPrimitive.Content>
           </Space>
-        </NavigationMenuPrimitiveItem>
+        </NavigationMenuPrimitive.Item>
       </DesktopOnly>
     </>
   )

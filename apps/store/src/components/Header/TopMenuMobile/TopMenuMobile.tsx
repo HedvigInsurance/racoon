@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
+import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { useTranslation } from 'next-i18next'
 import { AndroidIcon, AppleIcon, Button, theme } from 'ui'
 import { MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/Header.constants'
@@ -7,12 +8,11 @@ import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
-import { LogoWrapper } from '../Header'
-import { focusableStyles, Navigation, NavigationPrimaryList } from '../HeaderStyles'
+import { logoWrapper, navigation, navigationPrimaryList, rawFocusableStyles } from '../Header.css'
 import { ShoppingCartMenuItem } from '../ShoppingCartMenuItem'
 
 const triggerStyles = {
-  ...focusableStyles,
+  ...rawFocusableStyles,
   fontSize: theme.fontSizes.md,
   marginRight: theme.space.md,
 
@@ -55,14 +55,14 @@ export const TopMenuMobile = (props: TopMenuMobileProps) => {
         <DialogContent>
           <Wrapper>
             <TopMenuHeader>
-              <LogoWrapper>
+              <div className={logoWrapper}>
                 <LogoHomeLink />
-              </LogoWrapper>
+              </div>
               <DialogClose>{t('NAV_MENU_DIALOG_CLOSE')}</DialogClose>
               <ShoppingCartMenuItem />
             </TopMenuHeader>
-            <Navigation defaultValue={defaultValue}>
-              <NavigationPrimaryList>
+            <NavigationMenuPrimitive.Root className={navigation} defaultValue={defaultValue}>
+              <NavigationMenuPrimitive.List className={navigationPrimaryList}>
                 <div>{children}</div>
                 <ButtonWrapper>
                   <Button
@@ -90,8 +90,8 @@ export const TopMenuMobile = (props: TopMenuMobileProps) => {
                     </SpaceFlex>
                   </Button>
                 </ButtonWrapper>
-              </NavigationPrimaryList>
-            </Navigation>
+              </NavigationMenuPrimitive.List>
+            </NavigationMenuPrimitive.Root>
           </Wrapper>
         </DialogContent>
       </DialogPrimitive.Root>
