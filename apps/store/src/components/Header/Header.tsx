@@ -1,10 +1,11 @@
+'use client'
+
 import { motion, Transition } from 'framer-motion'
 import { bodyBgColor, headerBgTransparentColor } from 'ui/src/theme/vars.css'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { useScrollState } from '@/utils/useScrollState'
 import { MENU_BAR_HEIGHT_PX } from './Header.constants'
 import { contentWrapper, ghostWrapper, logoWrapper, wrapper } from './Header.css'
-import { ShoppingCartMenuItem } from './ShoppingCartMenuItem'
 
 const ANIMATION_VARIANTS = {
   SLIDE_IN: {
@@ -60,10 +61,7 @@ export const Header = (props: HeaderProps) => {
         <div className={logoWrapper}>
           <LogoHomeLink />
         </div>
-        <div className={contentWrapper}>
-          {children}
-          <ShoppingCartMenuItem />
-        </div>
+        <div className={contentWrapper}>{children}</div>
       </motion.header>
     </div>
   )

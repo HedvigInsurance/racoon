@@ -1,7 +1,8 @@
 import { type ReactNode } from 'react'
-import { LogoHomeLink } from '@/appComponents/LogoHomeLink/LogoHomeLink'
+import { Spacer } from 'ui'
+import { DebuggerMenu } from '@/appComponents/DebuggerMenu/DebuggerMenu'
 import { RootLayout } from '@/appComponents/RootLayout/RootLayout'
-import { header } from './layout.css'
+import { Header } from '@/components/Header/Header'
 
 type Props = {
   children: ReactNode
@@ -10,11 +11,12 @@ type Props = {
 const Layout = ({ children }: Props) => {
   return (
     <RootLayout>
-      <div className={header}>
-        <LogoHomeLink />
-      </div>
+      <Header>
+        <DebuggerMenu />
+      </Header>
+      <Spacer />
 
-      {children}
+      <main>{children}</main>
     </RootLayout>
   )
 }
