@@ -9,12 +9,11 @@ import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { LogoWrapper } from '../Header'
-import { navigation } from '../Header.css'
-import { focusableStyles, NavigationPrimaryList } from '../HeaderStyles'
+import { navigation, navigationPrimaryList, rawFocusableStyles } from '../Header.css'
 import { ShoppingCartMenuItem } from '../ShoppingCartMenuItem'
 
 const triggerStyles = {
-  ...focusableStyles,
+  ...rawFocusableStyles,
   fontSize: theme.fontSizes.md,
   marginRight: theme.space.md,
 
@@ -64,7 +63,7 @@ export const TopMenuMobile = (props: TopMenuMobileProps) => {
               <ShoppingCartMenuItem />
             </TopMenuHeader>
             <NavigationMenuPrimitive.Root className={navigation} defaultValue={defaultValue}>
-              <NavigationPrimaryList>
+              <NavigationMenuPrimitive.List className={navigationPrimaryList}>
                 <div>{children}</div>
                 <ButtonWrapper>
                   <Button
@@ -92,7 +91,7 @@ export const TopMenuMobile = (props: TopMenuMobileProps) => {
                     </SpaceFlex>
                   </Button>
                 </ButtonWrapper>
-              </NavigationPrimaryList>
+              </NavigationMenuPrimitive.List>
             </NavigationMenuPrimitive.Root>
           </Wrapper>
         </DialogContent>

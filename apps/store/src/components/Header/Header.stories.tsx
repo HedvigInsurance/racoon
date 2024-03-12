@@ -7,12 +7,7 @@ import { theme } from 'ui'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { Header, Wrapper as MockedHeaderWrapper } from './Header'
-import { navigationItem } from './Header.css'
-import {
-  NavigationMenuPrimitiveContent,
-  NavigationMenuProductItem,
-  ProductNavigationList,
-} from './HeaderStyles'
+import { navigationItem, navigationProductList } from './Header.css'
 import { NavigationLink, ProductNavigationLink } from './NavigationLink/NavigationLink'
 import { NavigationTrigger } from './NavigationTrigger'
 import { ShoppingBagIcon } from './ShoppingBagIcon'
@@ -52,21 +47,21 @@ const MockedNavItems = () => {
     <>
       <NavigationMenuPrimitive.Item className={navigationItem} value="Insurances">
         <NavigationTrigger href="#">Insurances</NavigationTrigger>
-        <NavigationMenuPrimitiveContent>
+        <NavigationMenuPrimitive.Content>
           <NavigationMenuPrimitive.Sub defaultValue="Insurances">
-            <ProductNavigationList>
-              <NavigationMenuProductItem key="1" value="Browse all">
+            <NavigationMenuPrimitive.List className={navigationProductList}>
+              <NavigationMenuPrimitive.Item key="1" value="Browse all">
                 <ProductNavigationLink href="#">Browse all</ProductNavigationLink>
-              </NavigationMenuProductItem>
-              <NavigationMenuProductItem key="2" value="Hedvig Home">
+              </NavigationMenuPrimitive.Item>
+              <NavigationMenuPrimitive.Item key="2" value="Hedvig Home">
                 <ProductNavigationLink href="#">Hedvig Home</ProductNavigationLink>
-              </NavigationMenuProductItem>
-              <NavigationMenuProductItem key="3" value="Hedvig Accident">
+              </NavigationMenuPrimitive.Item>
+              <NavigationMenuPrimitive.Item key="3" value="Hedvig Accident">
                 <ProductNavigationLink href="#">Hedvig Accident</ProductNavigationLink>
-              </NavigationMenuProductItem>
-            </ProductNavigationList>
+              </NavigationMenuPrimitive.Item>
+            </NavigationMenuPrimitive.List>
           </NavigationMenuPrimitive.Sub>
-        </NavigationMenuPrimitiveContent>
+        </NavigationMenuPrimitive.Content>
       </NavigationMenuPrimitive.Item>
       <NavigationMenuPrimitive.Item className={navigationItem} value="Support">
         <NavigationLink href="#">Support</NavigationLink>
