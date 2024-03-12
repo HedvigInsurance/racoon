@@ -1,10 +1,10 @@
-import { initTranslationsServerSide } from 'app/i18n'
 import { PropsWithChildren, Suspense } from 'react'
 import globalCss from 'ui/src/global.css'
 import { TranslationsProvider } from '@/appComponents/providers/TranslationsProvider'
 import { contentFontClassName } from '@/utils/fonts'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 import { RoutingLocale } from '@/utils/l10n/types'
+import { initTranslationsServerSide } from 'app/i18n'
 import { DebugError } from './DebugError'
 
 // Trick compiler into thinking we need global.css import for anything other than side effects

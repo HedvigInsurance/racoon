@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { theme } from 'ui'
+import { minWidth, theme } from 'ui'
 import { MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/Header.constants'
 
 export const header = style({
@@ -9,7 +9,7 @@ export const header = style({
   height: MENU_BAR_HEIGHT_MOBILE,
 
   '@media': {
-    'screen and (min-width: 768px)': {
+    [minWidth.lg]: {
       paddingInline: theme.space.xl,
     },
   },

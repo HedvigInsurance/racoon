@@ -1,8 +1,8 @@
-import { initTranslationsServerSide } from 'app/i18n'
 import Link from 'next/link'
 import { HedvigLogo } from 'ui'
 import { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
+import { initTranslationsServerSide } from 'app/i18n'
 import { logoStyle } from './LogoHomeLink.css'
 
 type Props = {
