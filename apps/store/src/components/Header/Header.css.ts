@@ -17,6 +17,27 @@ export const focusableStyles = style({
   },
 })
 
+export const logoWrapper = style({
+  // Fix to make sure line-height doesn't affect wrapper height
+  fontSize: 0,
+  flex: 1,
+})
+
+export const contentWrapper = style({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'flex-end',
+  alignItems: 'center',
+  flex: 1,
+  gap: theme.space.xs,
+
+  '@media': {
+    [minWidth.lg]: {
+      justifyContent: 'space-between',
+    },
+  },
+})
+
 export const navigation = style({
   fontSize: theme.fontSizes.xl,
 

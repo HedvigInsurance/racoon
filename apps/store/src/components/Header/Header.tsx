@@ -10,6 +10,7 @@ import {
   MENU_BAR_HEIGHT_DESKTOP,
   MENU_BAR_HEIGHT_PX,
 } from './Header.constants'
+import { contentWrapper, logoWrapper } from './Header.css'
 import { ShoppingCartMenuItem } from './ShoppingCartMenuItem'
 
 export const HEADER_HEIGHT_MOBILE = `calc(${MENU_BAR_HEIGHT_MOBILE} + ${theme.space.xs})`
@@ -65,13 +66,13 @@ export const Header = (props: HeaderProps) => {
         animate={animate}
         transition={TRANSITION}
       >
-        <LogoWrapper>
+        <div className={logoWrapper}>
           <LogoHomeLink />
-        </LogoWrapper>
-        <ContentWrapper>
+        </div>
+        <div className={contentWrapper}>
           {children}
           <ShoppingCartMenuItem />
-        </ContentWrapper>
+        </div>
       </Wrapper>
     </GhostWrapper>
   )
@@ -106,24 +107,5 @@ export const Wrapper = styled(motion.header)({
   [mq.lg]: {
     height: MENU_BAR_HEIGHT_DESKTOP,
     paddingInline: theme.space.xl,
-  },
-})
-
-export const LogoWrapper = styled.div({
-  // Fix to make sure line-height doesn't affect wrapper height
-  fontSize: 0,
-  flex: 1,
-})
-
-const ContentWrapper = styled.div({
-  display: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'flex-end',
-  alignItems: 'center',
-  flex: 1,
-  gap: theme.space.xs,
-
-  [mq.lg]: {
-    justifyContent: 'space-between',
   },
 })

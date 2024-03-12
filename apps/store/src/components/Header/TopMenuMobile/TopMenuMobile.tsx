@@ -8,8 +8,7 @@ import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
-import { LogoWrapper } from '../Header'
-import { navigation, navigationPrimaryList, rawFocusableStyles } from '../Header.css'
+import { logoWrapper, navigation, navigationPrimaryList, rawFocusableStyles } from '../Header.css'
 import { ShoppingCartMenuItem } from '../ShoppingCartMenuItem'
 
 const triggerStyles = {
@@ -56,9 +55,9 @@ export const TopMenuMobile = (props: TopMenuMobileProps) => {
         <DialogContent>
           <Wrapper>
             <TopMenuHeader>
-              <LogoWrapper>
+              <div className={logoWrapper}>
                 <LogoHomeLink />
-              </LogoWrapper>
+              </div>
               <DialogClose>{t('NAV_MENU_DIALOG_CLOSE')}</DialogClose>
               <ShoppingCartMenuItem />
             </TopMenuHeader>

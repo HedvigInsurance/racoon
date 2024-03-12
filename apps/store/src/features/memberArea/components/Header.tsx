@@ -1,17 +1,17 @@
 import styled from '@emotion/styled'
 import { mq, theme } from 'ui'
-import { LogoWrapper } from '@/components/Header/Header'
 import {
   MENU_BAR_HEIGHT_MOBILE,
   MENU_BAR_HEIGHT_DESKTOP,
 } from '@/components/Header/Header.constants'
+import { logoWrapper } from '@/components/Header/Header.css'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
 
 export const Header = () => (
   <HeaderWrapper>
-    <LogoWrapper>
+    <div className={logoWrapper}>
       <LogoHomeLink />
-    </LogoWrapper>
+    </div>
   </HeaderWrapper>
 )
 
