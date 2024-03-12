@@ -11,7 +11,7 @@ export const breakpoints: Record<Level, number> = {
 
 export const mq = Object.fromEntries(
   Object.entries(breakpoints).map(([name, width]) => {
-    return [name, `@media (min-width: ${width}px)`]
+    return [name, `@media screen and (min-width: ${width}px)`]
   }),
 )
 
