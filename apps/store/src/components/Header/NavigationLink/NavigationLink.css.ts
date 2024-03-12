@@ -8,13 +8,15 @@ export const navigationLink = style([
     display: 'block',
     paddingBlock: theme.space.lg,
 
-    [minWidth.lg]: {
-      paddingBlock: theme.space.xs,
-      paddingInline: theme.space.md,
-      borderRadius: theme.radius.sm,
+    '@media': {
+      [minWidth.lg]: {
+        paddingBlock: theme.space.xs,
+        paddingInline: theme.space.md,
+        borderRadius: theme.radius.sm,
 
-      ':hover': {
-        backgroundColor: theme.colors.grayTranslucent100,
+        ':hover': {
+          backgroundColor: theme.colors.grayTranslucent100,
+        },
       },
     },
   },
