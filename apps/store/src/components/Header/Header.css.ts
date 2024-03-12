@@ -158,7 +158,7 @@ export const navigationTriggerLink = style([
 ])
 
 export const navigationSecondaryItem = style({
-  padding: `${theme.space.md} ${theme.space.md} `,
+  padding: theme.space.md,
   marginLeft: theme.space.md,
   color: theme.colors.textPrimary,
 
