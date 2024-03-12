@@ -121,7 +121,7 @@
     "@types/react-dom": "18.2.21",
     "@typescript-eslint/eslint-plugin": "7.1.1",
     "@typescript-eslint/parser": "7.1.1",
-    "@vanilla-extract/next-plugin": "2.3.6",
+    "@vanilla-extract/next-plugin": "2.3.7",
     "@vanilla-extract/webpack-plugin": "2.3.6",
     "babel-loader": "9.1.3",
     "dotenv": "16.4.5",
