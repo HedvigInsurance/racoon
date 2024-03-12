@@ -1,11 +1,24 @@
+import { Provider as JotaiProvider } from 'jotai'
 import { Metadata, Viewport } from 'next'
-import { PropsWithChildren } from 'react'
+import { ReactNode } from 'react'
 import { theme } from 'ui'
+import { ApolloProvider } from '@/appComponents/providers/ApolloProvider'
+import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { ORIGIN_URL } from '@/utils/PageLink'
 
-// Everything interesting is in [locale]/layout, but we must provide root layout anyway
-const RootLayout = ({ children }: PropsWithChildren) => children
-export default RootLayout
+type Props = {
+  children: ReactNode
+}
+
+export default function RootAppLayout({ children }: Props) {
+  return (
+    <ApolloProvider>
+      <ShopSessionProvider>
+        <JotaiProvider>{children}</JotaiProvider>
+      </ShopSessionProvider>
+    </ApolloProvider>
+  )
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(ORIGIN_URL),

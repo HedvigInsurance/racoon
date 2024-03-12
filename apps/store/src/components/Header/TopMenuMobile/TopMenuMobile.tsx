@@ -2,17 +2,13 @@ import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useTranslation } from 'next-i18next'
 import { AndroidIcon, AppleIcon, Button, theme } from 'ui'
+import { MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/Header.constants'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { LogoWrapper } from '../Header'
-import {
-  focusableStyles,
-  MENU_BAR_HEIGHT_MOBILE,
-  Navigation,
-  NavigationPrimaryList,
-} from '../HeaderStyles'
+import { focusableStyles, Navigation, NavigationPrimaryList } from '../HeaderStyles'
 import { ShoppingCartMenuItem } from '../ShoppingCartMenuItem'
 
 const triggerStyles = {

@@ -1,7 +1,7 @@
 import { BackendModule, CallbackError, createInstance, InitOptions, Resource } from 'i18next'
 import { I18n } from 'next-i18next'
 import { initReactI18next } from 'react-i18next/initReactI18next'
-import nextI18nextConfig from '../../../next-i18next.config.cjs'
+import nextI18nextConfig from '../../next-i18next.config.cjs'
 
 // Every i18n namespace must be added here in order to preload translations
 // We may consider having multiple TranslationsProvider instances each with its own namespaces
@@ -60,7 +60,7 @@ const requireTranslationsBackend: BackendModule = {
   type: 'backend',
   async read(language, namespace, callback) {
     try {
-      const resource = await import(`../../../public/locales/${language}/${namespace}.json`)
+      const resource = await import(`../../public/locales/${language}/${namespace}.json`)
       callback(null, resource)
     } catch (err: unknown) {
       callback(err as CallbackError, null)

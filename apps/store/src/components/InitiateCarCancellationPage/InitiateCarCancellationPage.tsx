@@ -7,7 +7,10 @@ import { Button, Heading, Space, Text, mq, theme } from 'ui'
 import { CardSkeleton, ContractCard } from '@/components/ConfirmationPage/ContractCard'
 import { convertToBankSigneringContract } from '@/components/ConfirmationPage/useSwitchingContracts'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
-import { MENU_BAR_HEIGHT_DESKTOP, MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/HeaderStyles'
+import {
+  MENU_BAR_HEIGHT_MOBILE,
+  MENU_BAR_HEIGHT_DESKTOP,
+} from '@/components/Header/Header.constants'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'

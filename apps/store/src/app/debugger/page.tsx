@@ -1,17 +1,14 @@
 import Head from 'next/head'
-import { RootLayout } from '@/appComponents/RootLayout/RootLayout'
 import { CreateSessionForm } from './CreateSessionForm'
 
 const Page = () => {
   return (
-    <RootLayout locale={'se-en'}>
-      <div style={wrapperStyle}>
-        <Head>
-          <meta name="robots" content="noindex,nofollow" />
-        </Head>
-        <CreateSessionForm />
-      </div>
-    </RootLayout>
+    <div style={wrapperStyle}>
+      <Head>
+        <meta name="robots" content="noindex,nofollow" />
+      </Head>
+      <CreateSessionForm />
+    </div>
   )
 }
 

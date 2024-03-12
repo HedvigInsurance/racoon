@@ -2,7 +2,10 @@ import styled from '@emotion/styled'
 import type { ReactNode } from 'react'
 import { mq, theme } from 'ui'
 import { GridLayout } from '@/components/GridLayout/GridLayout'
-import { MENU_BAR_HEIGHT_MOBILE, MENU_BAR_HEIGHT_DESKTOP } from '@/components/Header/HeaderStyles'
+import {
+  MENU_BAR_HEIGHT_MOBILE,
+  MENU_BAR_HEIGHT_DESKTOP,
+} from '@/components/Header/Header.constants'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { Breadcrumbs, BreadcrumbsProps } from './Breadcrumbs'
 
