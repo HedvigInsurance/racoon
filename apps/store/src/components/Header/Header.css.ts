@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { theme, vanillaMQ } from 'ui'
+import { minWidth, theme } from 'ui'
 
 export const focusableStyles = style({
   cursor: 'pointer',
@@ -13,7 +13,7 @@ export const navigation = style({
   fontSize: theme.fontSizes.xl,
 
   '@media': {
-    [vanillaMQ.lg]: {
+    [minWidth.lg]: {
       fontSize: theme.fontSizes.md,
       top: 0,
     },
@@ -28,7 +28,7 @@ export const navigationItem = style({
   },
 
   '@media': {
-    [vanillaMQ.lg]: {
+    [minWidth.lg]: {
       selectors: {
         '&&': { borderBottom: 'unset' },
       },
@@ -46,7 +46,7 @@ export const navigationTriggerLink = style([
     whiteSpace: 'nowrap',
 
     '@media': {
-      [vanillaMQ.lg]: {
+      [minWidth.lg]: {
         paddingBlock: theme.space.xs,
         paddingInline: theme.space.md,
 
