@@ -15,12 +15,6 @@ export const mq = Object.fromEntries(
   }),
 )
 
-export const vanillaMQ = Object.fromEntries(
-  Object.entries(breakpoints).map(([name, width]) => {
-    return [name, `screen and (min-width: ${width}px)`]
-  }),
-)
-
 export const getMediaQueryBreakpoint = (level: Level) => {
   const breakpointWidth = breakpoints[level]
   if (!breakpointWidth) throw new Error(`Unknown breakpoint ${level}`)

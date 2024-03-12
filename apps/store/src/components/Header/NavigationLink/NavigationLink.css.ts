@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { theme, vanillaMQ } from 'ui'
+import { theme, minWidth } from 'ui'
 import { focusableStyles } from '../Header.css'
 
 export const navigationLink = style([
@@ -8,7 +8,7 @@ export const navigationLink = style([
     display: 'block',
     paddingBlock: theme.space.lg,
 
-    [vanillaMQ.lg]: {
+    [minWidth.lg]: {
       paddingBlock: theme.space.xs,
       paddingInline: theme.space.md,
       borderRadius: theme.radius.sm,
@@ -31,7 +31,7 @@ export const productNavigationLinkCard = style([
     position: 'relative',
 
     '@media': {
-      [vanillaMQ.lg]: {
+      [minWidth.lg]: {
         columnGap: theme.space.xs,
         paddingInline: theme.space.xs,
         borderRadius: theme.radius.sm,
