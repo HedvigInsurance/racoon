@@ -15,6 +15,10 @@ export function DebuggerMenu() {
         <NavigationMenuPrimitive.Item className={navigationItem}>
           <NavigationLink href="/debugger/events">Events debugger</NavigationLink>
         </NavigationMenuPrimitive.Item>
+
+        <NavigationMenuPrimitive.Item className={navigationItem}>
+          <NavigationLink href="/debugger/trial">Trial debugger</NavigationLink>
+        </NavigationMenuPrimitive.Item>
       </NavigationMenuPrimitive.List>
     </NavigationMenuPrimitive.Root>
   )
