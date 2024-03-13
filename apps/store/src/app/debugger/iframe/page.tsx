@@ -1,7 +1,7 @@
 import { Button, Space } from 'ui'
 import { TextField } from '@/components/TextField/TextField'
 import MessageLogger from './components/MessageLogger/MessageLogger'
-import { iframe, sidebar, wrapper } from './events.css'
+import { iframe, sidebar, wrapper } from './iframeDebugger.css'
 
 type Props = {
   searchParams: {
@@ -9,7 +9,7 @@ type Props = {
   }
 }
 
-function EventsDebuggerPage({ searchParams }: Props) {
+function IFrameDebuggerPage({ searchParams }: Props) {
   const { url } = getDebugURL(searchParams.url)
 
   if (!url) {
@@ -55,4 +55,4 @@ const getDebugURL = (url: string = DEFAULT_URL) => {
   }
 }
 
-export default EventsDebuggerPage
+export default IFrameDebuggerPage
