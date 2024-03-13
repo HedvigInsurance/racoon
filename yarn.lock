@@ -11586,21 +11586,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/webpack-plugin@npm:2.3.6":
-  version: 2.3.6
-  resolution: "@vanilla-extract/webpack-plugin@npm:2.3.6"
-  dependencies:
-    "@vanilla-extract/integration": "npm:^7.0.0"
-    chalk: "npm:^4.1.1"
-    debug: "npm:^4.3.1"
-    loader-utils: "npm:^2.0.0"
-  peerDependencies:
-    webpack: ^4.30.0 || ^5.20.2
-  checksum: 10c0/ec3a31bf42ad7884cef4294c70411ef2f26362d2fd3f6a159a8bf1d661eb988f330c7043b33ce2013999e13b6cbaa42aa59054d966c8a9f73e25e6d0f4bcfd5f
-  languageName: node
-  linkType: hard
-
-"@vanilla-extract/webpack-plugin@npm:^2.3.7":
+"@vanilla-extract/webpack-plugin@npm:2.3.7, @vanilla-extract/webpack-plugin@npm:^2.3.7":
   version: 2.3.7
   resolution: "@vanilla-extract/webpack-plugin@npm:2.3.7"
   dependencies:
@@ -25259,7 +25245,7 @@ __metadata:
     "@vanilla-extract/next-plugin": "npm:2.3.7"
     "@vanilla-extract/recipes": "npm:0.5.2"
     "@vanilla-extract/sprinkles": "npm:1.6.1"
-    "@vanilla-extract/webpack-plugin": "npm:2.3.6"
+    "@vanilla-extract/webpack-plugin": "npm:2.3.7"
     "@vercel/edge-config": "npm:1.1.0"
     "@vercel/kv": "npm:1.0.1"
     "@vercel/otel": "npm:1.5.0"
