@@ -1,8 +1,8 @@
 import { type ReactNode } from 'react'
-import { Spacer } from 'ui'
 import { DebuggerMenu } from '@/appComponents/DebuggerMenu/DebuggerMenu'
 import { RootLayout } from '@/appComponents/RootLayout/RootLayout'
 import { Header } from '@/components/Header/Header'
+import { contentWrapper } from './debugger.css'
 
 type Props = {
   children: ReactNode
@@ -14,9 +14,8 @@ const Layout = ({ children }: Props) => {
       <Header>
         <DebuggerMenu />
       </Header>
-      <Spacer />
 
-      <main>{children}</main>
+      <main className={contentWrapper}>{children}</main>
     </RootLayout>
   )
 }
