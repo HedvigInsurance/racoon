@@ -1,6 +1,6 @@
 import { Button, Space } from 'ui'
 import { TextField } from '@/components/TextField/TextField'
-import MessageLogger from './components/MessageLogger/MessageLogger'
+import { MessageLogger } from './components/MessageLogger/MessageLogger'
 import { iframe, sidebar, wrapper } from './iframeDebugger.css'
 
 type Props = {

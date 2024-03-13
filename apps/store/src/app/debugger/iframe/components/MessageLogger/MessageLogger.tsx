@@ -5,7 +5,7 @@ import { Text } from 'ui'
 import { WidgetEvent, isWidgetEvent } from '@/features/widget/publishWidgetEvent'
 import { messageLog, wrapper } from './MessageLogger.css'
 
-export default function MessageLogger() {
+export function MessageLogger() {
   const [messages, setMessages] = useState<Array<WidgetEvent>>([])
 
   useEffect(() => {
