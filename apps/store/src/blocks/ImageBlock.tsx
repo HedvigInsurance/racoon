@@ -6,7 +6,7 @@ import { storyblokEditable } from '@storyblok/react'
 import { ImageProps } from 'next/image'
 import { ConditionalWrapper, mq, theme, DEFAULT_IMAGE_QUALITY } from 'ui'
 import { HeadingBlock, HeadingBlockProps } from '@/blocks/HeadingBlock'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
+import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWithPlaceholder'
 import {
   type ExpectedBlockType,

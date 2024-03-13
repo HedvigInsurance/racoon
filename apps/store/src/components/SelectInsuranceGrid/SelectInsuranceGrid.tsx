@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { Heading, Space, mq, theme } from 'ui'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
+import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { ProductItem } from '@/components/SelectInsuranceGrid/ProductItem'
 import { Product as APIProduct } from '@/services/graphql/generated'
 

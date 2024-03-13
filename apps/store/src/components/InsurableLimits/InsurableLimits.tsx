@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import React from 'react'
 import Balancer from 'react-wrap-balancer'
 import { Badge, Text, theme } from 'ui'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
+import * as GridLayout from '@/components/GridLayout/GridLayout'
 
 type InsurableLimit = {
   label: string

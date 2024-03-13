@@ -1,7 +1,7 @@
 'use client'
 import styled from '@emotion/styled'
 import { theme, mq } from 'ui'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
+import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { CardLinkBlock, CardLinkBlockProps } from './CardLinkBlock'
 

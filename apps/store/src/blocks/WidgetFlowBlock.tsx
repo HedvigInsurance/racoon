@@ -3,7 +3,7 @@
 import styled from '@emotion/styled'
 import { StoryblokComponent, storyblokEditable, type SbBlokData } from '@storyblok/react'
 import { Space } from 'ui'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
+import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { ProductItemSkeleton } from '@/components/ProductItem/ProductItem'
 import { Skeleton } from '@/components/Skeleton'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'

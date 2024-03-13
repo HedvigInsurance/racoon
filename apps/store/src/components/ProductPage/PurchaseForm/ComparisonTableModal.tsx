@@ -7,7 +7,7 @@ import { TableMarkers } from '@/components/ComparisonTable/ComparisonTable.types
 import { DesktopComparisonTable } from '@/components/ComparisonTable/DesktopComparisonTable'
 import { MobileComparisonTable } from '@/components/ComparisonTable/MobileComparisonTable'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
+import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { ProductOfferFragment } from '@/services/graphql/generated'
 import { sendDialogEvent } from '@/utils/dialogEvent'

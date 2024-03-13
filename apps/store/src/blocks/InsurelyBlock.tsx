@@ -5,7 +5,7 @@ import { storyblokEditable } from '@storyblok/react'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { theme } from 'ui'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
+import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { InsurelyIframe, setInsurelyConfig } from '@/services/Insurely/Insurely'
 import {
   INSURELY_IFRAME_MAX_HEIGHT,

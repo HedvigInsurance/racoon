@@ -3,7 +3,7 @@
 import styled from '@emotion/styled'
 import { SbBlokData, StoryblokComponent } from '@storyblok/react'
 import { ConditionalWrapper, mq, theme } from 'ui'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
+import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { SbBaseBlockProps, ExpectedBlockType } from '@/services/storyblok/storyblok'
 import { ImageBlockProps } from './ImageBlock'
 import { VideoBlockProps } from './VideoBlock'

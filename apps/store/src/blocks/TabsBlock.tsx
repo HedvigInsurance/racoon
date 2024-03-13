@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import * as RadixTabs from '@radix-ui/react-tabs'
 import { SbBlokData, StoryblokComponent, storyblokEditable } from '@storyblok/react'
 import { Heading, mq, theme } from 'ui'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
+import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { SbBaseBlockProps, ExpectedBlockType } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 

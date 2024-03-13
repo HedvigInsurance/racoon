@@ -1,8 +1,9 @@
 import styled from '@emotion/styled'
 import { Heading, mq, Space, Text, theme } from 'ui'
-import { GridLayout, TEXT_CONTENT_MAX_WIDTH } from '@/components/GridLayout/GridLayout'
+import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { InsuranceDocumentLink } from '@/components/InsuranceDocumentLink'
 import { InsuranceDocumentFragment } from '@/services/graphql/generated'
+import { TEXT_CONTENT_MAX_WIDTH } from '../GridLayout/GridLayout.constants'
 
 type Props = {
   heading: string

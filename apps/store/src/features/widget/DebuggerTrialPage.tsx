@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { Button, Heading, Space, theme } from 'ui'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
+import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import * as InputRadio from '@/components/PriceCalculator/InputRadio'

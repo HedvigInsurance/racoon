@@ -6,7 +6,7 @@ import { useMemo, type FormEventHandler, ReactNode, useState } from 'react'
 import { Button, Heading, Space, Text, mq, theme } from 'ui'
 import { CardSkeleton, ContractCard } from '@/components/ConfirmationPage/ContractCard'
 import { convertToBankSigneringContract } from '@/components/ConfirmationPage/useSwitchingContracts'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
+import * as GridLayout from '@/components/GridLayout/GridLayout'
 import {
   MENU_BAR_HEIGHT_MOBILE,
   MENU_BAR_HEIGHT_DESKTOP,
