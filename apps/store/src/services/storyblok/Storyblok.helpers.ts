@@ -1,5 +1,4 @@
 import { type ISbStoryData, type SbBlokData } from '@storyblok/react'
-import { Features } from '@/utils/Features'
 import { LinkField, ProductStory, WidgetFlowStory } from './storyblok'
 
 export const filterByBlockType = <BlockData extends SbBlokData>(
@@ -70,9 +69,6 @@ export const getStoryblokImageSize = (filename: string) => {
 
 // Replace domain for Storyblok assets
 export const getImgSrc = (src: string) => {
-  if (!Features.enabled('CUSTOM_ASSET_DOMAIN')) {
-    return src
-  }
   return (src || '').replace('//a.storyblok.com', '//assets.hedvig.com')
 }
 
