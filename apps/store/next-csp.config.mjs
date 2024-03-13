@@ -141,9 +141,6 @@ const connectSrc = [
   ...adyenOrigins,
   ...gtmInjectedOrigins,
 
-  // OLD market web
-  'https://api.storyblok.com',
-
   // Affiliate tracking
   'https://addrevenue.io',
 

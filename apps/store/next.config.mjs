@@ -127,6 +127,7 @@ const config = {
     let storyblokRedirects = []
     if (process.env.NEXT_PUBLIC_FEATURE_STORYBLOK_REDIRECTS === 'true') {
       storyblokRedirects = await getStoryblokRedirects()
+      console.log(`Loaded ${storyblokRedirects.length} redirects from storyblok`)
     }
 
     return [
@@ -187,16 +188,11 @@ const getStoryblokRedirects = async () => {
 
   if (!storyblokApi) throw new Error('Storyblok API not initialized')
 
-  const cacheVersion = process.env.STORYBLOK_CACHE_VERSION
-    ? parseInt(process.env.STORYBLOK_CACHE_VERSION)
-    : NaN
-  const isCacheVersionValid = !isNaN(cacheVersion)
-  const cv = isCacheVersionValid ? cacheVersion : undefined
-
+  const cacheVersion = parseInt(process.env.STORYBLOK_CACHE_VERSION, 10)
   try {
     const repsonse = await storyblokApi.getAll('cdn/datasource_entries', {
       datasource: 'permanent-redirects',
-      cv,
+      ...(!isNaN(cacheVersion) ? { cv: cacheVersion } : {}),
     })
 
     const redirects = repsonse.map((entry) => ({
