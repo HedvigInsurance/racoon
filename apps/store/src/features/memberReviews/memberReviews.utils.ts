@@ -11,7 +11,7 @@ export const reviewSchema = z.object({
   score: z.number(),
   content: z.string(),
   author: z.string(),
-  tag: z.string().optional(),
+  attributedTo: z.string(),
 })
 
 const commentByScoreValueSchema = z.object({
