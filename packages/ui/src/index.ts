@@ -1,7 +1,6 @@
 export { HedvigLogo } from './components/HedvigLogo/HedvigLogo'
 export { HedvigSymbol } from './components/HedvigSymbol/HedvigSymbol'
 export { Space } from './components/Space'
-export { Spacer } from './components/Spacer/Spacer'
 export { Button, type Props as ButtonProps } from './components/Button/Button'
 export { InputBase } from './components/InputBase'
 export type { InputBaseProps } from './components/InputBase'
