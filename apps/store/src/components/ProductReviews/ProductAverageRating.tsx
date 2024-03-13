@@ -53,6 +53,7 @@ export const ProductAverageRating = () => {
         <CertifiedIcon className={certifiedIcon} size="1.15rem" />
 
         <ReviewsDialog
+          productIds={[productData.name]}
           Header={
             <section>
               <AverageRating

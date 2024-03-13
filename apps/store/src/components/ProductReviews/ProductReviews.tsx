@@ -18,7 +18,7 @@ import { ReviewsDistributionByScore } from './ReviewsDistributionByScore'
 export const ProductReviews = () => {
   const { t } = useTranslation('reviews')
 
-  const { displayNameFull: productName, pillowImage } = useProductData()
+  const { name: productId, displayNameFull: productName, pillowImage } = useProductData()
   const productReviewsMetadata = useProuctReviewsMetadata()
 
   if (!productReviewsMetadata) {
@@ -47,6 +47,7 @@ export const ProductReviews = () => {
         </div>
 
         <ReviewsDialog
+          productIds={[productId]}
           Header={
             <PillowHeader
               title={productName}
