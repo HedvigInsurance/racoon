@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react'
 import { Space } from 'ui'
+import { SubmitButton } from '@/appComponents/SubmitButton'
 import { TextField } from '@/components/TextField/TextField'
 import { create } from '../../actions'
 import { wrapper } from './CreateSessionForm.css'
-import { SubmitButton } from './SubmitButton'
 
 const HEDVIG_DEBUGGER_SSN = 'hedvig:debugger-ssn'
 
@@ -29,7 +29,7 @@ export const CreateSessionForm = () => {
             required
             name="ssn"
           />
-          <SubmitButton />
+          <SubmitButton>Create session</SubmitButton>
         </Space>
       </form>
     </div>

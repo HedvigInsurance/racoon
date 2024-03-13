@@ -1,10 +1,12 @@
-import { Button, Heading, Space } from 'ui'
+import { Heading, Space } from 'ui'
+import { SubmitButton } from '@/appComponents/SubmitButton'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import * as InputRadio from '@/components/PriceCalculator/InputRadio'
 import { TextField } from '@/components/TextField/TextField'
 import { Field } from '@/features/widget/debuggerTrial.types'
+import { setupTrialContract } from './actions'
 import { CoInsuredCount } from './components/CoInsuredCount'
 
 function TrialDebuggerPage() {
@@ -29,7 +31,7 @@ function TrialDebuggerPage() {
             Trial Contract Debugger
           </Heading>
 
-          <form method="POST" action="/api/debugger/trial">
+          <form action={setupTrialContract}>
             <Space y={0.25}>
               <InputSelect
                 name={Field.partner}
@@ -105,7 +107,7 @@ function TrialDebuggerPage() {
                 <InputRadio.HorizontalItem label="Not student" value="false" />
               </InputRadio.HorizontalRoot>
 
-              <Button type="submit">Create trial contract</Button>
+              <SubmitButton>Create trial contract</SubmitButton>
             </Space>
           </form>
         </Space>
