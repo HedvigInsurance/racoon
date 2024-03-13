@@ -1,7 +1,7 @@
 import { kv } from '@vercel/kv'
 import { z } from 'zod'
 import { getReviewsDistribution, type ReviewsCountByScore } from './getReviewsDistribution'
-import type { Score, ReviewsData } from './memberReviews.types'
+import type { Score, ReviewsMetadata, ReviewsByScore } from './memberReviews.types'
 import {
   averageRatingSchema,
   reviewCommentsSchema,
@@ -20,7 +20,7 @@ const KV_KEY = {
   LATEST_REVIEWS_BY_PRODUCT: 'latestReviewsByProduct',
 }
 
-export const fetchCompanyReviewsData = async (): Promise<ReviewsData | null> => {
+export const fetchCompanyReviewsMetadata = async (): Promise<ReviewsMetadata | null> => {
   try {
     const [averageRating, reviewsByScore] = await Promise.all([
       fetchCompanyAverageRating(),
@@ -33,16 +33,15 @@ export const fetchCompanyReviewsData = async (): Promise<ReviewsData | null> => 
 
     return {
       averageRating,
-      reviewsByScore,
       reviewsDistribution: generateReviewsDistribution(reviewsByScore),
     }
   } catch (error) {
-    console.log('Failed to fetch company reviews data', error)
+    console.log('Failed to fetch company reviews metadata', error)
     return null
   }
 }
 
-const fetchCompanyAverageRating = async (): Promise<ReviewsData['averageRating'] | null> => {
+const fetchCompanyAverageRating = async (): Promise<ReviewsMetadata['averageRating'] | null> => {
   const averageRating = await kv.get<z.infer<typeof averageRatingSchema>>(KV_KEY.AVRAGE_RATING)
 
   if (!averageRating) {
@@ -66,7 +65,7 @@ const fetchCompanyAverageRating = async (): Promise<ReviewsData['averageRating']
 
 type CompanyLatestReviewsResponse = { updatedAt: string } & z.infer<typeof commentByScoreSchema>
 
-const fetchCompanyLatestReviews = async (): Promise<ReviewsData['reviewsByScore'] | null> => {
+const fetchCompanyLatestReviews = async (): Promise<ReviewsByScore | null> => {
   const latestReviews = await kv.get<CompanyLatestReviewsResponse>(KV_KEY.LATEST_REVIEWS)
 
   if (!latestReviews) {
@@ -80,36 +79,12 @@ const fetchCompanyLatestReviews = async (): Promise<ReviewsData['reviewsByScore'
     return null
   }
 
-  return transformCompanyReviews(latestReviews)
+  return transformReviews(latestReviews)
 }
 
-const transformCompanyReviews = (
-  reviewComments: CompanyLatestReviewsResponse,
-): ReviewsData['reviewsByScore'] => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { updatedAt, ...commentsByScore } = reviewComments
-
-  return Object.entries(commentsByScore).reduce(
-    (acc, [score, data]) => {
-      return {
-        ...acc,
-        [score]: {
-          total: data.total,
-          reviews: data.latestComments.map((comment) => ({
-            id: comment.id,
-            date: comment.date,
-            score: comment.score,
-            content: comment.content,
-            tag: comment.tag,
-          })),
-        },
-      }
-    },
-    {} as ReviewsData['reviewsByScore'],
-  )
-}
-
-export const fetchProductReviewsData = async (productId: string): Promise<ReviewsData | null> => {
+export const fetchProductReviewsMetadata = async (
+  productId: string,
+): Promise<ReviewsMetadata | null> => {
   try {
     const [averageRating, reviewsByScore] = await Promise.all([
       fetchProductAverageRating(productId),
@@ -117,17 +92,18 @@ export const fetchProductReviewsData = async (productId: string): Promise<Review
     ])
 
     if (!averageRating || !reviewsByScore) {
-      console.log(`Member Reviews | Could not found product reviews data for product ${productId}`)
+      console.log(
+        `Member Reviews | Could not found product reviews metadata for product ${productId}`,
+      )
       return null
     }
 
     return {
       averageRating,
-      reviewsByScore,
       reviewsDistribution: generateReviewsDistribution(reviewsByScore),
     }
   } catch (error) {
-    console.log(`Failed to fetch product reviews data for product ${productId}`, error)
+    console.log(`Failed to fetch product reviews metadata for product ${productId}`, error)
     return null
   }
 }
@@ -139,7 +115,7 @@ type AverageRatingsResponse = { updatedAt: string } & Record<
 
 const fetchProductAverageRating = async (
   productId: string,
-): Promise<ReviewsData['averageRating'] | null> => {
+): Promise<ReviewsMetadata['averageRating'] | null> => {
   const averageRatingByProduct = await kv.get<AverageRatingsResponse>(
     KV_KEY.AVRAGE_RATING_BY_PRODUCT,
   )
@@ -171,9 +147,7 @@ const fetchProductAverageRating = async (
 
 type ReviewCommentsResponse = Record<string, z.infer<typeof reviewCommentsSchema> | undefined>
 
-const fetchProductLatestReviews = async (
-  productId: string,
-): Promise<ReviewsData['reviewsByScore'] | null> => {
+const fetchProductLatestReviews = async (productId: string): Promise<ReviewsByScore | null> => {
   const latestReviewsByProduct = await kv.get<ReviewCommentsResponse>(
     KV_KEY.LATEST_REVIEWS_BY_PRODUCT,
   )
@@ -195,33 +169,28 @@ const fetchProductLatestReviews = async (
     return null
   }
 
-  return transformProductReviews(latestProductReviews)
+  return transformReviews(latestProductReviews.commentsByScore)
 }
 
-const transformProductReviews = (
-  reviewComments: z.infer<typeof reviewCommentsSchema>,
-): ReviewsData['reviewsByScore'] => {
-  return Object.entries(reviewComments.commentsByScore).reduce<ReviewsData['reviewsByScore']>(
-    (acc, [score, commentsByScore]) => ({
-      ...acc,
-      [score]: {
-        total: commentsByScore.total,
-        reviews: commentsByScore.latestComments.map((comment) => ({
-          id: comment.id,
-          date: comment.date,
-          score: comment.score,
-          content: comment.content,
-          tag: reviewComments.tag,
-        })),
-      },
+const transformReviews = (data: z.infer<typeof commentByScoreSchema>): ReviewsByScore => {
+  const reviewsByScore = Object.fromEntries(
+    Object.entries(data).map(([score, { total, latestComments }]) => {
+      return [
+        score,
+        {
+          total,
+          reviews: latestComments,
+        },
+      ]
     }),
-    {} as ReviewsData['reviewsByScore'],
-  )
+  ) as ReviewsByScore
+
+  return reviewsByScore
 }
 
 const generateReviewsDistribution = (
-  reviewsByScore: ReviewsData['reviewsByScore'],
-): ReviewsData['reviewsDistribution'] => {
+  reviewsByScore: ReviewsByScore,
+): ReviewsMetadata['reviewsDistribution'] => {
   const scores: Array<Score> = [5, 4, 3, 2, 1]
   const reviewsCountByScore: ReviewsCountByScore = scores.map((score) => {
     const total = reviewsByScore[score].total

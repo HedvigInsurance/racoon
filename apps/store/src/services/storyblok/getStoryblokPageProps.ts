@@ -1,7 +1,7 @@
 import { type GetServerSidePropsContext, type GetStaticPropsContext } from 'next'
 import { fetchBreadcrumbs } from '@/components/LayoutWithMenu/fetchBreadcrumbs'
 import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
-import { fetchCompanyReviewsData } from '@/features/memberReviews/memberReviews'
+import { fetchCompanyReviewsMetadata } from '@/features/memberReviews/memberReviews'
 import { type RoutingLocale } from '@/utils/l10n/types'
 import { initializeApollo } from '../apollo/client'
 import { hideChatOnPage } from '../CustomerFirst'
@@ -27,10 +27,10 @@ export const getStoryblokPageProps = async ({
 
   const timerName = `Get Storyblok page props for ${locale}/${slug} ${draftMode ? '(draft)' : ''}`
   console.time(timerName)
-  const [layoutWithMenuProps, breadcrumbs, companyReviewsData] = await Promise.all([
+  const [layoutWithMenuProps, breadcrumbs, companyReviewsMetadata] = await Promise.all([
     getLayoutWithMenuProps(context, apolloClient),
     fetchBreadcrumbs(slug, { version, locale }),
-    fetchCompanyReviewsData(),
+    fetchCompanyReviewsMetadata(),
   ]).catch((error) => {
     throw new Error(`Failed to fetch data for ${slug}: ${error.message}`, { cause: error })
   })
@@ -49,6 +49,6 @@ export const getStoryblokPageProps = async ({
     ...hideChatOnPage(story.content.hideChat ?? false),
     [STORY_PROP_NAME]: story,
     breadcrumbs,
-    companyReviewsData,
+    companyReviewsMetadata,
   }
 }

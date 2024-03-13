@@ -1,3 +1,6 @@
+import { z } from 'zod'
+import { reviewSchema } from './memberReviews.utils'
+
 export type Score = 5 | 4 | 3 | 2 | 1
 
 export type Rating = {
@@ -5,20 +8,15 @@ export type Rating = {
   totalOfReviews: number
 }
 
-export type Review = {
-  id: string
-  score: number
-  date: string
-  content: string
-  tag?: string
-}
+export type Review = z.infer<typeof reviewSchema>
 
 export type ScoreDistributionTuple = [Score, number]
 
+export type ReviewsByScore = Record<Score, { total: number; reviews: Array<Review> }>
+
 export type ReviewsDistribution = Array<ScoreDistributionTuple>
 
-export type ReviewsData = {
+export type ReviewsMetadata = {
   averageRating: Rating
-  reviewsByScore: Record<Score, { total: number; reviews: Array<Review> }>
   reviewsDistribution: ReviewsDistribution
 }

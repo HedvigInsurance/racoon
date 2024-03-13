@@ -6,7 +6,7 @@ import {
   PriceIntentContextProvider,
   usePriceIntent,
 } from '@/components/ProductPage/PriceIntentContext'
-import { ProductReviewsDataProvider } from '@/features/memberReviews/ProductReviewsDataProvider'
+import { ProductReviewsMetadataProvider } from '@/features/memberReviews/ProductReviewsMetadataProvider'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { useTracking } from '@/services/Tracking/useTracking'
@@ -24,12 +24,12 @@ export const ProductPage = ({ story, ...props }: ProductPageProps) => {
       <ProductPageContextProvider {...props} story={story}>
         <PriceIntentContextProvider>
           <ProductPageTrackingProvider>
-            <ProductReviewsDataProvider productReviewsData={props.productReviewsData}>
+            <ProductReviewsMetadataProvider productReviewsMetadata={props.productReviewsMetadata}>
               <StoryblokComponent blok={story.content} />
               <PageDebugDialog />
               <ProductPageViewTracker />
               <DiscountBannerTrigger />
-            </ProductReviewsDataProvider>
+            </ProductReviewsMetadataProvider>
           </ProductPageTrackingProvider>
         </PriceIntentContextProvider>
       </ProductPageContextProvider>
