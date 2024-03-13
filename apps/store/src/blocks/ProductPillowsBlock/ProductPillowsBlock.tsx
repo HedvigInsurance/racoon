@@ -1,3 +1,4 @@
+'use client'
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { mq, theme } from 'ui'
@@ -25,7 +26,6 @@ export const ProductPillowsBlock = ({ blok }: ProductPillowsBlockProps) => {
     </ProductPillowsWrapper>
   )
 }
-ProductPillowsBlock.blockName = 'productPillows'
 
 const PILLOW_HEIGHT = '10.75rem'
 

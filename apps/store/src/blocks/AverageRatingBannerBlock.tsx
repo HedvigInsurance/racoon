@@ -1,3 +1,4 @@
+'use client'
 import { useTranslation } from 'next-i18next'
 import { Button } from 'ui'
 import { AverageRating } from '@/components/ProductReviews/AverageRating'
@@ -12,7 +13,7 @@ import { wrapper, averageRatingLabel, disclaimerLabel, trigger } from './Average
 const HEDVIG_PILLOW_URL =
   'https://a.storyblok.com/f/165473/450x450/4b792f1052/hedvig-pillows-icon.png'
 
-export const AverageRatingBanner = () => {
+export const AverageRatingBannerBlock = () => {
   const { t } = useTranslation('reviews')
 
   const companyReviewsData = useCompanyReviewsDataContext()
@@ -58,5 +59,3 @@ export const AverageRatingBanner = () => {
     </div>
   )
 }
-
-AverageRatingBanner.blockName = 'averageRatingBanner'

@@ -1,3 +1,5 @@
+'use client'
+
 import styled from '@emotion/styled'
 import { SbBlokData, StoryblokComponent } from '@storyblok/react'
 import { ConditionalWrapper, mq, theme } from 'ui'

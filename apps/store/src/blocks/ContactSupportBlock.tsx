@@ -1,3 +1,5 @@
+'use client'
+
 import { storyblokEditable } from '@storyblok/react'
 import { ContactSupport, ContactSupportProps } from '@/components/ContactSupport/ContactSupport'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'

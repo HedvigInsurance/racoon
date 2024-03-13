@@ -1,3 +1,5 @@
+'use client'
+
 import styled from '@emotion/styled'
 import { SbBlokData, StoryblokComponent, storyblokEditable } from '@storyblok/react'
 import { ButtonBlock, ButtonBlockProps } from '@/blocks/ButtonBlock'
@@ -65,7 +67,6 @@ export const HeroBlock = ({ blok }: HeroBlockProps) => {
     </HeroSection>
   )
 }
-HeroBlock.blockName = 'hero'
 
 const HeroSection = styled.section(
   ({

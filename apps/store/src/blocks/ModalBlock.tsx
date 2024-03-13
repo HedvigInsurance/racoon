@@ -1,3 +1,4 @@
+'use client'
 import styled from '@emotion/styled'
 import { SbBlokData, StoryblokComponent, storyblokEditable } from '@storyblok/react'
 import { ComponentProps, useState } from 'react'
@@ -33,8 +34,6 @@ export const ModalBlock = ({ blok }: ModalBlockProps) => {
     </Wrapper>
   )
 }
-
-ModalBlock.blockName = 'modal'
 
 const Wrapper = styled.div({
   display: 'flex',

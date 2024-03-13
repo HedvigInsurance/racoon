@@ -1,3 +1,4 @@
+'use client'
 import { storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
 import { type Table } from '@/components/ComparisonTable/ComparisonTable.types'
@@ -41,5 +42,3 @@ export const ComparisonTableBlock = ({ blok }: Props) => {
     </GridLayout.Root>
   )
 }
-
-ComparisonTableBlock.blockName = 'comparisonTable'

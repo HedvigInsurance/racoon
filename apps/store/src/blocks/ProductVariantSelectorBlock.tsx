@@ -1,3 +1,5 @@
+'use client'
+
 import styled from '@emotion/styled'
 import { ConditionalWrapper, theme, mq } from 'ui'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
@@ -46,5 +48,3 @@ const StyledProductVariantSelector = styled(ProductVariantSelector)({
     backgroundColor: theme.colors.signalGreenHighlight,
   },
 })
-
-ProductVariantSelectorBlock.blockName = 'productVariantSelector'

@@ -1,3 +1,5 @@
+'use client'
+
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { theme } from 'ui'
@@ -24,7 +26,6 @@ export const ProductSlideshowBlock = ({ blok }: ProductSlideshowBlockProps) => {
     </Wrapper>
   )
 }
-ProductSlideshowBlock.blockName = 'productSlideshow'
 
 const Wrapper = styled.div({
   paddingLeft: theme.space.sm,

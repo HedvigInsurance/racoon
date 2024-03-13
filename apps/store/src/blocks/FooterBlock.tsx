@@ -1,3 +1,4 @@
+'use client'
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import Link from 'next/link'
@@ -23,7 +24,7 @@ type FooterLinkProps = SbBaseBlockProps<{
   linkText: string
 }>
 
-export const FooterLink = ({ blok }: FooterLinkProps) => {
+export const FooterLinkBlock = ({ blok }: FooterLinkProps) => {
   const Component = blok.link.linktype === 'url' ? StyledAnchor : StyledLink
 
   return (
@@ -37,15 +38,15 @@ export const FooterLink = ({ blok }: FooterLinkProps) => {
     </Component>
   )
 }
-FooterLink.blockName = 'footerLink' as const
+FooterLinkBlock.blockName = 'footerLink' as const
 
 type FooterSectionProps = SbBaseBlockProps<{
   footerLinks: ExpectedBlockType<FooterLinkProps>
   title: string
 }>
 
-export const FooterSection = ({ blok }: FooterSectionProps) => {
-  const filteredFooterLinks = filterByBlockType(blok.footerLinks, FooterLink.blockName)
+export const FooterSectionBlock = ({ blok }: FooterSectionProps) => {
+  const filteredFooterLinks = filterByBlockType(blok.footerLinks, FooterLinkBlock.blockName)
   return (
     <Space y={1.5} {...storyblokEditable(blok)}>
       <Text size="sm" color="textSecondary">
@@ -53,13 +54,13 @@ export const FooterSection = ({ blok }: FooterSectionProps) => {
       </Text>
       <Space y={0.5}>
         {filteredFooterLinks.map((nestedBlock) => (
-          <FooterLink key={nestedBlock._uid} blok={nestedBlock} />
+          <FooterLinkBlock key={nestedBlock._uid} blok={nestedBlock} />
         ))}
       </Space>
     </Space>
   )
 }
-FooterSection.blockName = 'footerSection' as const
+FooterSectionBlock.blockName = 'footerSection' as const
 
 export type FooterBlockProps = {
   onLocaleChange: (newLocale: IsoLocale) => void
@@ -85,13 +86,13 @@ export const FooterBlock = ({ blok, onLocaleChange }: FooterBlockProps) => {
     onLocaleChange(newLocale)
   }
 
-  const footerSections = filterByBlockType(blok.sections, FooterSection.blockName)
+  const footerSections = filterByBlockType(blok.sections, FooterSectionBlock.blockName)
   return (
     <div className={wrapperStyle}>
       <RootLayout>
         {footerSections.map((nestedBlok) => (
           <Column key={nestedBlok._uid}>
-            <FooterSection blok={nestedBlok} />
+            <FooterSectionBlock blok={nestedBlok} />
           </Column>
         ))}
 

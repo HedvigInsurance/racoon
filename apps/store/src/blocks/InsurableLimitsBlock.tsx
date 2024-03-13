@@ -1,3 +1,5 @@
+'use client'
+
 import { storyblokEditable } from '@storyblok/react'
 import { InsurableLimits } from '@/components/InsurableLimits/InsurableLimits'
 import {

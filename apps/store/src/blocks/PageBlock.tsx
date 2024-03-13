@@ -1,7 +1,7 @@
-import styled from '@emotion/styled'
-import { storyblokEditable, StoryblokComponent, SbBlokData } from '@storyblok/react'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
-import { useDiscountBanner } from '@/utils/useDiscountBanner'
+import { storyblokEditable, StoryblokComponent, SbBlokData } from '@storyblok/react/rsc'
+import { DiscountBannerTrigger } from '@/components/DiscountBannerTrigger'
+import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { main } from './PageBlock.css'
 
 type PageBlockProps = SbBaseBlockProps<{
   body: Array<SbBlokData>
@@ -10,23 +10,13 @@ type PageBlockProps = SbBaseBlockProps<{
 export const PageBlock = ({ blok }: PageBlockProps) => {
   return (
     <>
-      <Main {...storyblokEditable(blok)}>
+      <main className={main} {...storyblokEditable(blok)}>
         {blok.body.map((nestedBlock) => (
           <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
         ))}
-      </Main>
+      </main>
       <DiscountBannerTrigger />
     </>
   )
 }
 PageBlock.blockName = 'page'
-
-// Optimization - this effect should run in component without children to avoid rerenders
-const DiscountBannerTrigger = () => {
-  useDiscountBanner()
-  return null
-}
-
-const Main = styled.main({
-  width: '100%',
-})

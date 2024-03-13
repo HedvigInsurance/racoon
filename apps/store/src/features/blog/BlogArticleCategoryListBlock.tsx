@@ -1,3 +1,5 @@
+'use client'
+
 import { GridLayout } from '@/components/GridLayout/GridLayout'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { makeAbsolute } from '@/services/storyblok/Storyblok.helpers'

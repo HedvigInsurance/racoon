@@ -1,3 +1,4 @@
+'use client'
 import styled from '@emotion/styled'
 import { storyblokEditable, renderRichText } from '@storyblok/react'
 import Head from 'next/head'
@@ -91,7 +92,6 @@ export const AccordionBlock = ({ blok, nested }: Props) => {
     </>
   )
 }
-AccordionBlock.blockName = 'accordion'
 
 const AccodrionTitleDescription = ({ blok }: { blok: Props['blok'] }) => {
   return (

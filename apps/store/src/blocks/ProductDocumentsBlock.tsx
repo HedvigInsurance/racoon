@@ -1,3 +1,5 @@
+'use client'
+
 import { storyblokEditable } from '@storyblok/react'
 import {
   useProductData,
@@ -31,5 +33,3 @@ export const ProductDocumentsBlock = ({ blok }: Props) => {
     />
   )
 }
-
-ProductDocumentsBlock.blockName = 'productDocuments'

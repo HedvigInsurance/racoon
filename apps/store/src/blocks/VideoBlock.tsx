@@ -1,3 +1,5 @@
+'use client'
+
 import styled from '@emotion/styled'
 import Head from 'next/head'
 import { getImageProps } from 'next/image'
@@ -64,7 +66,6 @@ export const VideoBlock = ({ className, blok, nested = false }: VideoBlockProps)
     </ConditionalWrapper>
   )
 }
-VideoBlock.blockName = 'videoBlock'
 
 const Wrapper = styled.div({
   paddingInline: theme.space.xs,

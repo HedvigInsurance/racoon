@@ -1,3 +1,4 @@
+'use client'
 import styled from '@emotion/styled'
 import { ISbRichtext, renderRichText, storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
@@ -25,7 +26,6 @@ export const ContentBlock = ({ blok }: Props) => {
     </Wrapper>
   )
 }
-ContentBlock.blockName = 'content'
 
 const Wrapper = styled(Space)({
   maxWidth: '37.5rem',

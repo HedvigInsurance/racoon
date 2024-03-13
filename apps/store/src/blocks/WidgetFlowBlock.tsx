@@ -1,3 +1,5 @@
+'use client'
+
 import styled from '@emotion/styled'
 import { StoryblokComponent, storyblokEditable, type SbBlokData } from '@storyblok/react'
 import { Space } from 'ui'
@@ -26,7 +28,6 @@ export const WidgetFlowBlock = ({ blok }: Props) => {
     </GridLayout.Root>
   )
 }
-WidgetFlowBlock.blockName = 'widgetFlow'
 
 const RecommendationSkeleton = styled(Skeleton)({
   height: '16rem',

@@ -8,81 +8,19 @@ import {
   StoryblokClient,
   storyblokInit,
 } from '@storyblok/react'
-import { AccordionBlock } from '@/blocks/AccordionBlock'
-import { AccordionItemBlock } from '@/blocks/AccordionItemBlock'
-import { AnnouncementBlock } from '@/blocks/AnnouncementBlock'
-import { AverageRatingBanner } from '@/blocks/AverageRatingBanner'
-import { BannerBlock } from '@/blocks/BannerBlock'
-import { ButtonBlock } from '@/blocks/ButtonBlock'
-import { CardLinkBlock } from '@/blocks/CardLinkBlock'
-import { CardLinkListBlock } from '@/blocks/CardLinkListBlock'
-import { CheckListBlock } from '@/blocks/CheckListBlock'
-import { ComparisonTableBlock } from '@/blocks/ComparisonTableBlock'
-import { ConfirmationPageBlock } from '@/blocks/ConfirmationPageBlock'
-import { ContactSupportBlock } from '@/blocks/ContactSupportBlock'
-import { ContentBlock } from '@/blocks/ContentBlock'
-import { CookieListBlock } from '@/blocks/CookieListBlock'
-import { DownloadableContentItemBlock } from '@/blocks/DownloadableContentItemBlock'
-import { FooterBlock, FooterBlockProps, FooterLink, FooterSection } from '@/blocks/FooterBlock'
-import { GridBlock } from '@/blocks/GridBlock'
-import {
-  HeaderBlock,
-  HeaderBlockProps,
-  NavItemBlock,
-  NestedNavContainerBlock,
-  ProductNavContainerBlock,
-} from '@/blocks/HeaderBlock'
-import { HeadingBlock } from '@/blocks/HeadingBlock'
-import { HeadingLabelBlock } from '@/blocks/HeadingLabelBlock'
-import { HeroBlock } from '@/blocks/HeroBlock'
-import { ImageBlock } from '@/blocks/ImageBlock'
-import { ImageTextBlock } from '@/blocks/ImageTextBlock'
-import { InlineSpaceBlock } from '@/blocks/InlineSpaceBlock'
-import { InsurableLimitsBlock } from '@/blocks/InsurableLimitsBlock'
-import { InsurelyBlock } from '@/blocks/InsurelyBlock'
-import { MediaListBlock } from '@/blocks/MediaListBlock'
-import { ModalBlock } from '@/blocks/ModalBlock'
-import { PageBlock } from '@/blocks/PageBlock'
-import { PerilsBlock } from '@/blocks/PerilsBlock'
-import { ProductCardBlock } from '@/blocks/ProductCardBlock'
-import { ProductDocumentsBlock } from '@/blocks/ProductDocumentsBlock'
-import { ProductGridBlock } from '@/blocks/ProductGridBlock'
-import { ProductPageBlock } from '@/blocks/ProductPageBlock'
-import { ProductPillowBlock } from '@/blocks/ProductPillowsBlock/ProductPillowBlock'
-import { ProductPillowsBlock } from '@/blocks/ProductPillowsBlock/ProductPillowsBlock'
-import { ProductReviewsBlock } from '@/blocks/ProductReviewsBlock'
-import { ProductSlideshowBlock } from '@/blocks/ProductSlideshowBlock'
-import { ProductVariantSelectorBlock } from '@/blocks/ProductVariantSelectorBlock'
-import { QuickPurchaseBlock } from '@/blocks/QuickPurchaseBlock'
-import {
-  ReusableBlockReference,
-  ReusableBlockReferenceProps,
-} from '@/blocks/ReusableBlockReference'
-import { RichTextBlock } from '@/blocks/RichTextBlock/RichTextBlock'
-import { SelectInsuranceGridBlock } from '@/blocks/SelectInsuranceGridBlock'
-import { SpacerBlock } from '@/blocks/SpacerBlock'
-import { TabsBlock } from '@/blocks/TabsBlock'
-import { TextBlock } from '@/blocks/TextBlock'
-import { TextContentBlock } from '@/blocks/TextContentBlock'
-import TickerBlock from '@/blocks/TickerBlock'
-import { TimelineBlock } from '@/blocks/TimelineBlock'
-import { TimelineItemBlock } from '@/blocks/TimelineItemBlock'
-import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
-import { USPBlock, USPBlockItem } from '@/blocks/USPBlock'
-import { VideoBlock } from '@/blocks/VideoBlock'
-import { WidgetFlowBlock } from '@/blocks/WidgetFlowBlock'
+import { FooterBlockProps } from '@/blocks/FooterBlock'
+import { HeaderBlockProps } from '@/blocks/HeaderBlock'
+import { ReusableBlockReferenceProps } from '@/blocks/ReusableBlockReference'
 import { type ContentAlignment, type ContentWidth } from '@/components/GridLayout/GridLayout.helper'
 import { BLOG_ARTICLE_CONTENT_TYPE } from '@/features/blog/blog.constants'
-import { blogBlocks } from '@/features/blog/blogBlocks'
 // TODO: get rid of this import, services should avoid feature-imports
-import { carDealershipBlocks } from '@/features/carDealership/carDealershipBlocks'
 import { STORYBLOK_MANYPETS_FOLDER_SLUG } from '@/features/manyPets/manyPets.constants'
-import { manyPetsBlocks } from '@/features/manyPets/manyPetsBlocks'
 import { STORYBLOK_WIDGET_FOLDER_SLUG } from '@/features/widget/widget.constants'
 import { isBrowser } from '@/utils/env'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { Language, RoutingLocale } from '@/utils/l10n/types'
 import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from './Storyblok.constant'
+import { storyblokComponents } from './storyblokComponents'
 
 export type SbBaseBlockProps<T> = {
   blok: SbBlokData & T
@@ -245,85 +183,7 @@ type PageLink = {
   slugParts: Array<string>
 }
 
-type NamedBlock = {
-  blockName: string
-} & React.ElementType
-
 export const initStoryblok = () => {
-  const blockComponents: Array<NamedBlock> = [
-    AccordionBlock,
-    AccordionItemBlock,
-    AnnouncementBlock,
-    BannerBlock,
-    ButtonBlock,
-    CheckListBlock,
-    ContactSupportBlock,
-    ContentBlock,
-    ConfirmationPageBlock,
-    DownloadableContentItemBlock,
-    FooterBlock,
-    FooterLink,
-    FooterSection,
-    ReusableBlockReference,
-    // TODO: Header vs Heading is easy to confuse.  Discuss with team if we should rename one of these
-    GridBlock,
-    HeaderBlock,
-    HeadingBlock,
-    HeadingLabelBlock,
-    HeroBlock,
-    ImageBlock,
-    ImageTextBlock,
-    InlineSpaceBlock,
-    InsurableLimitsBlock,
-    CookieListBlock,
-    MediaListBlock,
-    ModalBlock,
-    NavItemBlock,
-    NestedNavContainerBlock,
-    PageBlock,
-    PerilsBlock,
-    ProductPageBlock,
-    ProductCardBlock,
-    ProductDocumentsBlock,
-    ProductGridBlock,
-    ProductPillowBlock,
-    ProductPillowsBlock,
-    ProductReviewsBlock,
-    ProductSlideshowBlock,
-    ProductVariantSelectorBlock,
-    RichTextBlock,
-    SpacerBlock,
-    TabsBlock,
-    TimelineBlock,
-    TimelineItemBlock,
-    TextBlock,
-    TextContentBlock,
-    TopPickCardBlock,
-    AverageRatingBanner,
-    VideoBlock,
-    WidgetFlowBlock,
-    ProductNavContainerBlock,
-    USPBlock,
-    USPBlockItem,
-    CardLinkBlock,
-    CardLinkListBlock,
-    SelectInsuranceGridBlock,
-    QuickPurchaseBlock,
-    ComparisonTableBlock,
-    InsurelyBlock,
-    TickerBlock,
-    ...blogBlocks,
-    ...manyPetsBlocks,
-    ...carDealershipBlocks,
-  ]
-  const blockAliases = { reusableBlock: PageBlock }
-  const components = {
-    ...Object.fromEntries(
-      blockComponents.map((blockComponent) => [blockComponent.blockName, blockComponent]),
-    ),
-    ...blockAliases,
-  }
-
   // https://github.com/storyblok/storyblok-react/issues/156#issuecomment-1197764828
   let shouldUseBridge = false
   if (isBrowser()) {
@@ -345,7 +205,7 @@ export const initStoryblok = () => {
     },
     use: [apiPlugin],
     bridge: shouldUseBridge,
-    components,
+    components: storyblokComponents,
   })
 }
 

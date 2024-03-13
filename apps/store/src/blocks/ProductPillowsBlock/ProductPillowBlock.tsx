@@ -1,3 +1,4 @@
+'use client'
 import { storyblokEditable } from '@storyblok/react'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
 import { ProductPillow } from '@/components/ProductPillow/ProductPillow'

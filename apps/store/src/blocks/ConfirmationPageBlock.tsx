@@ -1,3 +1,4 @@
+'use client'
 import { storyblokEditable, StoryblokComponent, SbBlokData } from '@storyblok/react'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
@@ -15,5 +16,3 @@ export const ConfirmationPageBlock = ({ blok }: ConfirmationPageBlockProps) => {
     </div>
   )
 }
-
-ConfirmationPageBlock.blockName = 'confirmation'

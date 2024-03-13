@@ -1,3 +1,4 @@
+'use client'
 import { useApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
@@ -181,7 +182,6 @@ export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) =>
     </Wrapper>
   )
 }
-QuickPurchaseBlock.blockName = 'quickPurchase'
 
 const Wrapper = styled.div({
   width: 'min(24rem, 100%)',

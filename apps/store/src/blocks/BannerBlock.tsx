@@ -1,3 +1,4 @@
+'use client'
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { Heading, Text, mq, theme } from 'ui'
@@ -45,7 +46,6 @@ export const BannerBlock = ({ blok }: BannerBlockProps) => {
     </Wrapper>
   )
 }
-BannerBlock.blockName = 'banner'
 
 const Wrapper = styled('div')<ImageSize>(({ aspectRatioLandscape, aspectRatioPortrait }) => ({
   position: 'relative',

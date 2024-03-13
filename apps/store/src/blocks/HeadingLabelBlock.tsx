@@ -1,3 +1,4 @@
+'use client'
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { ConditionalWrapper, Badge, BadgeProps, theme } from 'ui'
@@ -22,4 +23,3 @@ export const HeadingLabelBlock = ({ blok, nested }: HeadingLabelBlockProps) => {
     </ConditionalWrapper>
   )
 }
-HeadingLabelBlock.blockName = 'headingLabel'
