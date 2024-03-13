@@ -111,18 +111,15 @@ const config = {
       },
     ]
 
-    let memberAreaDefault = []
-    if (process.env.NEXT_PUBLIC_FEATURE_MEMBER_AREA === 'true') {
-      // GOTCHA: Cannot use nested capture groups, NextJs restriction
-      const localeSegment = ':locale(\\w{2}|\\w{2}-\\w{2})'
-      memberAreaDefault = [
-        {
-          source: `/${localeSegment}/member`,
-          destination: '/:locale/member/insurances',
-          permanent: false,
-        },
-      ]
-    }
+    // GOTCHA: Cannot use nested capture groups, NextJs restriction
+    const localeSegment = ':locale(\\w{2}|\\w{2}-\\w{2})'
+    const memberAreaDefault = [
+      {
+        source: `/${localeSegment}/member`,
+        destination: '/:locale/member/insurances',
+        permanent: false,
+      },
+    ]
 
     let storyblokRedirects = []
     if (process.env.NEXT_PUBLIC_FEATURE_STORYBLOK_REDIRECTS === 'true') {

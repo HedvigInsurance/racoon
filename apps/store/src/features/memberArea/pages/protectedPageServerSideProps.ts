@@ -3,7 +3,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import { getAccessToken } from '@/services/authApi/persist'
-import { Features } from '@/utils/Features'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { ORIGIN_URL } from '@/utils/PageLink'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
@@ -16,7 +15,6 @@ export const protectedPageServerSideProps: GetServerSideProps<PageProps> = async
   patchNextI18nContext(context)
   const { locale, req, res } = context
 
-  if (!Features.enabled('MEMBER_AREA')) return { notFound: true }
   if (!isRoutingLocale(locale)) return { notFound: true }
 
   const accessToken = getAccessToken({ req, res })
