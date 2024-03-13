@@ -21,6 +21,7 @@ import {
   SecondaryNavigationLink,
 } from '@/components/Header/NavigationLink/NavigationLink'
 import { NavigationTrigger } from '@/components/Header/NavigationTrigger'
+import { ShoppingCartMenuItem } from '@/components/Header/ShoppingCartMenuItem'
 import { TopMenuDesktop } from '@/components/Header/TopMenuDesktop/TopMenuDesktop'
 import { TopMenuMobile } from '@/components/Header/TopMenuMobile/TopMenuMobile'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
@@ -286,6 +287,7 @@ export const HeaderBlock = ({ blok, ...headerProps }: HeaderBlockProps) => {
           {blok.navMenuContainer.map(NestedNavigationBlock)}
         </TopMenuMobile>
       )}
+      <ShoppingCartMenuItem />
     </Header>
   )
 }
