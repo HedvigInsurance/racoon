@@ -57,6 +57,8 @@ type DataLayerObject = {
   user_id?: string
 }
 
+type DataLayerArray = Array<unknown>
+
 export type EcommerceEvent = {
   event: TrackingEvent
   ecommerce: GTMEcommerceData
@@ -70,14 +72,23 @@ export type EcommerceEvent = {
 }
 
 // Needed in case event is sent before GTM is loaded, see https://github.com/HedvigInsurance/racoon/commit/38dbb73d552a590f652bbbe537d4d8ed4b0399f8
-export const pushToGTMDataLayer = (obj: DataLayerObject) => {
+export const pushToGTMDataLayer = (obj: DataLayerObject | DataLayerArray) => {
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!window.dataLayer) window.dataLayer = []
   // Clear the previous ecommerce object
-  if (typeof obj.ecommerce !== 'undefined') {
+  if (!Array.isArray(obj) && typeof obj.ecommerce !== 'undefined') {
     window.dataLayer.push({ ecommerce: null })
   }
   window.dataLayer.push(obj)
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function gtmGtag(...args: Array<any>) {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (!window.dataLayer) window.dataLayer = []
+  // We need to forward arguments directly for it to work
+  // eslint-disable-next-line prefer-rest-params
+  window.dataLayer.push(arguments)
 }
 
 export const GTMAppScript = () => {
