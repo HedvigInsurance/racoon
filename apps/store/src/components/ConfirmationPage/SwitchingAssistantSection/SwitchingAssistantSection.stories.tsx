@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
+import * as GridLayout from '@/components/GridLayout/GridLayout'
 import {
   ContractExternalInsuranceCancellationStatus,
   ShopSessionOutcomeDocument,

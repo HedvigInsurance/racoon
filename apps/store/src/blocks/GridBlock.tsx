@@ -2,7 +2,7 @@
 import styled, { CSSObject } from '@emotion/styled'
 import { StoryblokComponent, storyblokEditable } from '@storyblok/react'
 import { mq, theme } from 'ui'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
+import * as GridLayout from '@/components/GridLayout/GridLayout'
 import {
   type ExpectedBlockType,
   type GridColumnsField,

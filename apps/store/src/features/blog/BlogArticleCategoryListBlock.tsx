@@ -1,6 +1,6 @@
 'use client'
 
-import { GridLayout } from '@/components/GridLayout/GridLayout'
+import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { makeAbsolute } from '@/services/storyblok/Storyblok.helpers'
 import { ArticleCategoryList } from './ArticleCategoryList/ArticleCategoryList'

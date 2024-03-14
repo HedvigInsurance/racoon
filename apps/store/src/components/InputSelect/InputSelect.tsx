@@ -1,3 +1,5 @@
+'use client'
+
 import isValidProp from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import { type ChangeEventHandler } from 'react'

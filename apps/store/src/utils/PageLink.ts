@@ -253,6 +253,11 @@ export const PageLink = {
   apiAppStoreRedirect: () => {
     return new URL(`/api/redirect/appstore`, ORIGIN_URL)
   },
+
+  apiCreateTrialContract: () => {
+    return new URL(`/api/debugger/trial`, ORIGIN_URL)
+  },
+
   fourOhFour: ({ locale }: BaseParams) => {
     return new URL(`${locale}/404`, ORIGIN_URL)
   },

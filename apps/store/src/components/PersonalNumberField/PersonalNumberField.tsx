@@ -1,3 +1,5 @@
+'use client'
+
 import Personnummer from 'personnummer'
 import { InputHTMLAttributes, useState } from 'react'
 import { TextField, Props as TextFieldProps } from '@/components/TextField/TextField'

@@ -4,7 +4,8 @@ import { storyblokEditable, StoryblokComponent, SbBlokData } from '@storyblok/re
 import { motion, useInView, useScroll } from 'framer-motion'
 import { useState, useEffect, useRef, ReactNode } from 'react'
 import { theme, mq } from 'ui'
-import { GridLayout, MAX_WIDTH } from '@/components/GridLayout/GridLayout'
+import * as GridLayout from '@/components/GridLayout/GridLayout'
+import { MAX_WIDTH } from '@/components/GridLayout/GridLayout.constants'
 import { HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header.constants'
 import {
   PurchaseForm,

@@ -3,7 +3,7 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { Badge, Text, theme, mq } from 'ui'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
+import * as GridLayout from '@/components/GridLayout/GridLayout'
 import {
   type SbBaseBlockProps,
   type ExpectedBlockType,

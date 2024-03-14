@@ -2,7 +2,7 @@ import { useTranslation } from 'next-i18next'
 import { Balancer } from 'react-wrap-balancer'
 import { Button, Text, theme, WarningTriangleIcon } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
+import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 
 type Props = {

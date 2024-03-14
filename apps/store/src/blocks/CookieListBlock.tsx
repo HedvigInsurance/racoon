@@ -1,7 +1,7 @@
 'use client'
 import styled from '@emotion/styled'
 import { mq, theme } from 'ui'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
+import * as GridLayout from '@/components/GridLayout/GridLayout'
 
 export const CookieListBlock = () => {
   return (

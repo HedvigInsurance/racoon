@@ -2,7 +2,7 @@
 import { storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
 import { Badge, Space } from 'ui'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
+import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { Perils } from '@/components/Perils/Perils'
 import {
   useProductData,

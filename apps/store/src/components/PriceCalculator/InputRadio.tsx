@@ -1,3 +1,5 @@
+'use client'
+
 import styled from '@emotion/styled'
 import * as RadioGroup from '@radix-ui/react-radio-group'
 import { type ComponentPropsWithoutRef, type MouseEventHandler } from 'react'

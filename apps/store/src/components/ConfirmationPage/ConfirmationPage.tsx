@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { Heading, mq, Space, theme } from 'ui'
-import { GridLayout } from '@/components/GridLayout/GridLayout'
+import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'

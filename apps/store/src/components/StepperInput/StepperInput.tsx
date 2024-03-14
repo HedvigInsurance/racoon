@@ -1,3 +1,5 @@
+'use client'
+
 import styled from '@emotion/styled'
 import { type ChangeEventHandler, type MouseEvent, type MouseEventHandler, useState } from 'react'
 import { MinusIcon, PlusIcon, theme } from 'ui'

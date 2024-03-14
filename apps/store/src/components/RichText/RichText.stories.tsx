@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { GridLayout } from '../GridLayout/GridLayout'
+import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { RichText } from './RichText'
 
 const meta: Meta<typeof RichText> = {

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { Fragment } from 'react'
 import { mq, Space, theme } from 'ui'
-import { MAX_WIDTH } from '@/components/GridLayout/GridLayout'
+import { MAX_WIDTH } from '../GridLayout/GridLayout.constants'
 
 export type ProductGridProps<Item> = {
   title?: string

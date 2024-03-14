@@ -1,3 +1,5 @@
+'use client'
+
 import { type KeyboardEvent, useCallback, useRef } from 'react'
 import { theme } from 'ui'
 
