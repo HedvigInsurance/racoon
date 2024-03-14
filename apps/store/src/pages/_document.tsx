@@ -1,5 +1,4 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document'
-import { theme } from 'ui'
 import { GTMBodyScript } from '@/services/gtm'
 import { contentFontClassName } from '@/utils/fonts'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
@@ -17,14 +16,14 @@ export default class MyDocument extends Document {
         <Head>
           <meta name="twitter:site" content="@hedvigapp" />
           <meta name="twitter:card" content="summary_large_image" />
-          <meta name="theme-color" content={theme.colors.light} />
-          <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon.png" />
-          <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-          <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-          <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+          {/* Favicon setup taken from https://dev.to/masakudamatsu/favicon-nightmare-how-to-maintain-sanity-3al7 */}
+          <link rel="icon" href="/favicon.ico" sizes="48x48" />
+          <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" />
+          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
           <link rel="manifest" href="/site.webmanifest" />
-          <link rel="mask-icon" href="/safari-pinned-tab.svg" color={theme.colors.gray1000} />
-          <meta name="msapplication-TileColor" content={theme.colors.gray1000} />
+          <meta name="theme-color" content="#fafafa" />
+          <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#121212" />
+          <meta name="msapplication-TileColor" content="#fafafa" />
         </Head>
         {/* Fallback for pages that don't pass className down to DOM */}
         <body className={contentFontClassName}>
