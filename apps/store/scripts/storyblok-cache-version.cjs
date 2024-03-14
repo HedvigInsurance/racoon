@@ -8,7 +8,9 @@ const main = async () => {
 
   if (!storyblokApi) throw new Error('Storyblok API not initialized')
 
-  const { data } = await storyblokApi.getStory('/se')
+  const { data } = await storyblokApi.getStory('/se', {})
+  const cacheVersion = data.cv
+  process.stdout.write(`${cacheVersion}\n`)
 }
 
 main()
