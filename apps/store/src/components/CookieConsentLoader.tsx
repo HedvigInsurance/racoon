@@ -1,7 +1,6 @@
 import Script from 'next/script'
-import { useEffect, useState } from 'react'
-import { GTMAppScript } from '@/services/gtm'
-/* eslint-disable @next/next/no-sync-scripts */
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { GTMAppScript, gtmGtag } from '@/services/gtm'
 
 const SCRIPT_ID = {
   // Could be useful for testing changes on OneTrust side
@@ -36,17 +35,43 @@ export function CookieConsentLoader() {
 // Potential optimization - don't load GTM if user only consented to required cookies
 const useIsConsentReady = () => {
   const [isConsentReady, setIsConsentReady] = useState(false)
+  const calledRef = useRef(false)
+  const saveConsent = useCallback(() => {
+    // Double invoke in dev mode is harmful, prevent it
+    if (calledRef.current) return
+
+    const activeGroups = (window as any).OnetrustActiveGroups
+    if (typeof activeGroups !== 'string') {
+      console.warn('Failed to read window.OnetrustActiveGroups')
+      return
+    }
+    const consentGroups = {
+      required: 'granted',
+      performance: activeGroups.includes(',C0002,') ? 'granted' : 'denied',
+      functional: activeGroups.includes(',C0003,') ? 'granted' : 'denied',
+      targeting: activeGroups.includes(',C0004,') ? 'granted' : 'denied',
+      social: activeGroups.includes(',C0005,') ? 'granted' : 'denied',
+    }
+    gtmGtag('consent', 'update', {
+      ad_storage: consentGroups.targeting,
+      ad_user_data: consentGroups.targeting,
+      ad_personalization: consentGroups.targeting,
+      analytics_storage: consentGroups.performance,
+      personalization_storage: consentGroups.required,
+      functionality_storage: consentGroups.required,
+      security_storage: consentGroups.required,
+    })
+    setIsConsentReady(true)
+  }, [])
   useEffect(() => {
     ;(window as any).OptanonWrapper = function () {
       const OneTrust = (window as any).OneTrust as OneTrustApi
       if (OneTrust.IsAlertBoxClosed()) {
-        setIsConsentReady(true)
+        saveConsent()
       } else {
-        OneTrust.OnConsentChanged(() => {
-          setIsConsentReady(true)
-        })
+        OneTrust.OnConsentChanged(saveConsent)
       }
     }
-  }, [])
+  }, [saveConsent])
   return isConsentReady
 }
