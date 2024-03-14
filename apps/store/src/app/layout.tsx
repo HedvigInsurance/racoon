@@ -26,24 +26,23 @@ export const metadata: Metadata = {
     type: 'website',
   },
   twitter: { site: '@hedvigapp', card: 'summary_large_image' },
+  // Favicon setup taken from https://dev.to/masakudamatsu/favicon-nightmare-how-to-maintain-sanity-3al7
   icons: [
-    { rel: 'apple-touch-icon', sizes: '76x76', url: '/apple-touch-icon.png' },
     {
       rel: 'icon',
-      type: 'image/png',
-      sizes: '32x32',
-      url: '/favicon-32x32.png',
+      url: '/favicon.ico',
     },
     {
       rel: 'icon',
-      type: 'image/png',
-      sizes: '16x16',
-      url: '/favicon-16x16.png',
+      sizes: 'any',
+      type: 'image/svg+xml',
+      url: '/favicon.svg',
     },
+    { rel: 'apple-touch-icon', url: '/apple-touch-icon.png' },
     {
       rel: 'mask-icon',
       url: '/safari-pinned-tab.svg',
-      color: theme.colors.gray1000,
+      color: '#121212',
     },
   ],
   manifest: '/site.webmanifest',
