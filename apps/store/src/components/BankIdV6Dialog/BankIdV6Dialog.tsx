@@ -1,3 +1,4 @@
+import { datadogRum } from '@datadog/browser-rum'
 import { assignInlineVars } from '@vanilla-extract/dynamic'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
@@ -237,6 +238,7 @@ const useTryAgainButtonProps = (bankIdOperation: BankIdOperation | null): Partia
       return {
         type: 'submit',
         form: SIGN_FORM_ID,
+        onClick: () => datadogRum.addAction('bankIdSign retry'),
       }
     case 'login':
       return {

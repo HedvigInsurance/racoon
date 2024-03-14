@@ -1,4 +1,5 @@
 import { type ApolloError } from '@apollo/client'
+import { datadogRum } from '@datadog/browser-rum'
 import { useTranslation } from 'next-i18next'
 import { useCallback, useRef } from 'react'
 import { Observable, Subscription } from 'zen-observable-ts'
@@ -37,12 +38,14 @@ export const useBankIdCheckoutSign = ({ dispatch }: Options) => {
         // Delay marking operation as success until handler resolves
         try {
           await onSuccess()
+          datadogRum.addAction('bankIdSign complete')
         } finally {
           dispatch({ type: 'success' })
         }
       }
 
       dispatch({ type: 'startCheckoutSign', ssn, customerAuthenticationStatus })
+      datadogRum.addAction('bankIdSign start')
 
       if (customerAuthenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired) {
         bankIdLogger.info('Authentication required for returning member')
