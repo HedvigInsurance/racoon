@@ -1,8 +1,9 @@
+'use client'
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import { ReactNode, useCallback, useRef, useState } from 'react'
 import { Button, Heading, mq, Space, theme } from 'ui'
@@ -119,7 +120,7 @@ export const PurchaseForm = (props: PurchaseFormProps) => {
               }
 
               if (nextUrl) {
-                return await router.push(nextUrl)
+                return router.push(nextUrl)
               }
 
               notifyProductAdded({

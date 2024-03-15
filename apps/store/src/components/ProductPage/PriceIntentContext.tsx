@@ -1,3 +1,4 @@
+'use client'
 import { useApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
 import {

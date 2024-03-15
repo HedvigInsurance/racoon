@@ -1,3 +1,4 @@
+'use client'
 import styled from '@emotion/styled'
 import { theme } from 'ui'
 import { Banner } from '@/components/Banner/Banner'

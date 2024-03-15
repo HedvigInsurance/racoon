@@ -6,11 +6,11 @@ import { initTranslationsServerSide } from '../../i18n'
 import { ClientComponent } from './ClientComponent'
 import { wrapper } from './styles.css'
 
-type LocalizedPageProps<P = unknown> = P & {
+type Props = {
   params: { locale: RoutingLocale }
 }
 
-const Page = async (props: LocalizedPageProps) => {
+const Page = async (props: Props) => {
   const { t } = await initTranslationsServerSide(props.params.locale)
   // Same graphql request as in layout, only one network request gets executed thanks to Apollo SSR cache
   const apolloClient = getApolloClient({ locale: props.params.locale })

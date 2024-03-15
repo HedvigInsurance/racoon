@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import { Button, theme } from 'ui'
 import { TextField } from '@/components/TextField/TextField'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
@@ -8,9 +8,9 @@ import { PageLink } from '@/utils/PageLink'
 
 const INPUT_NAME = 'shopSessionId'
 
-export const DebugResumeSessionSection = () => {
+export function DebugResumeSessionSection() {
   const { shopSession } = useShopSession()
-  const router = useRouter()
+  const pathname = usePathname()
   const locale = useRoutingLocale()
 
   if (!shopSession) return null
@@ -23,8 +23,9 @@ export const DebugResumeSessionSection = () => {
 
     if (typeof shopSessionId !== 'string') return
 
-    const redirect = PageLink.session({ locale, shopSessionId, next: router.asPath })
-    router.push(redirect)
+    const redirect = PageLink.session({ locale, shopSessionId, next: pathname! })
+    // We want hard navigation to work reliably in both pages and app routers
+    window.location.replace(redirect.toString())
   }
 
   return (
