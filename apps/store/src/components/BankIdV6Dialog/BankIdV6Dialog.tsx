@@ -135,7 +135,7 @@ export const BankIdV6Dialog = () => {
                     <Text color="textPrimary" align="center">
                       {currentOperation.type === 'login' ? t('LOGIN_BANKID') : t('SIGN_BANKID')}
                     </Text>
-                    <Text color="textSecondary" align="center">
+                    <Text color="textSecondary" align="center" balance={true}>
                       {isMobile
                         ? t('LOGIN_BANKID_AUTHENTICATION_STEPS_MOBILE')
                         : t('LOGIN_BANKID_AUTHENTICATION_STEPS_DESKTOP')}
