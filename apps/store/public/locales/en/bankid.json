@@ -17,5 +17,6 @@
   "NO_MOBILE_BANKID_LINK_LABEL": "Open BankID on this device",
   "NO_MOBILE_BANKID_TITLE": "Don't have Mobile BankID?",
   "QR_CODE_READ_SUBTITLE": "Follow the instructions in the BankID app",
-  "QR_CODE_READ_TITLE": "Enter your security code"
+  "QR_CODE_READ_TITLE": "Enter your security code",
+  "SIGN_BANKID": "Sign with BankID"
 }
