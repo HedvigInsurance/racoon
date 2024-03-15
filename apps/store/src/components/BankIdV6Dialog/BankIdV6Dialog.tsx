@@ -221,7 +221,8 @@ export const BankIdV6Dialog = () => {
 const getBankIdUrl = (autoStartToken: string) => {
   // https://www.bankid.com/en/utvecklare/guider/teknisk-integrationsguide/programstart
   const bankidUrl = new URL('bankid:///')
-  bankidUrl.searchParams.append('autostarttoken', autoStartToken)
+  // bankidUrl.searchParams.append('autostarttoken', autoStartToken)
+  bankidUrl.searchParams.append('autostarttoken', "c3f8ee34-8c42-460f-84d0-a115d407e8da")
   // 'null' means the BankID app will redirect back to the calling app.
   // It's recommended to set redirect to null when possible.
   // For IOS though, 'redirect' must have a value. '#bankid-auth' is a 'hack'
