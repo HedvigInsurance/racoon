@@ -1,10 +1,20 @@
 'use server'
 
+import { ApolloClient } from '@apollo/client'
 import { redirect } from 'next/navigation'
-import { addProduct, updateCustomer } from '@/pages/api/session/create'
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
+import {
+  CartEntryAddDocument,
+  CartEntryAddMutation,
+  CartEntryAddMutationVariables,
+  ShopSessionCustomerUpdateDocument,
+  ShopSessionCustomerUpdateMutation,
+  ShopSessionCustomerUpdateMutationVariables,
+} from '@/services/graphql/generated'
 import { CountryCode } from '@/services/graphql/graphql'
+import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { setupPriceIntentService } from '@/services/priceIntent/app-router/PriceIntentService.utils'
+import { PriceIntentService } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSession } from '@/services/shopSession/app-router/ShopSession.utils'
 import { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
@@ -66,4 +76,86 @@ export const createCustomerSession = async (formData: FormData) => {
   console.log(`Re-directing to destination: ${destination}`)
 
   redirect(destination)
+}
+
+type AddProductParams = {
+  productName: string
+  priceIntentService: PriceIntentService
+  shopSessionId: string
+  apolloClient: ApolloClient<unknown>
+}
+
+const addProduct = async ({
+  productName,
+  priceIntentService,
+  shopSessionId,
+  apolloClient,
+}: AddProductParams) => {
+  console.log(`Adding product to cart: ${productName}`)
+  const priceTemplate = getPriceTemplate(productName)
+  if (!priceTemplate) {
+    throw new Error(`Price template not found: ${productName}`)
+  }
+  const priceIntent = await priceIntentService.create({
+    shopSessionId: shopSessionId,
+    productName,
+    priceTemplate,
+  })
+
+  await priceIntentService.update({
+    priceIntentId: priceIntent.id,
+    data: {
+      street: 'Testgatan 1',
+      zipCode: '12345',
+      livingSpace: 50,
+      numberCoInsured: 0,
+    },
+    customer: { shopSessionId },
+  })
+
+  const updatedPriceIntent = await priceIntentService.confirm(priceIntent.id)
+
+  const results = await apolloClient.mutate<CartEntryAddMutation, CartEntryAddMutationVariables>({
+    mutation: CartEntryAddDocument,
+    variables: { shopSessionId, offerId: updatedPriceIntent.offers[0].id },
+  })
+  if (!results.data?.shopSessionCartEntriesAdd.shopSession) {
+    throw new Error(
+      `Unable to add cart entry, ${JSON.stringify({
+        priceIntentId: priceIntent.id,
+        shopSessionId,
+        productName,
+      })}`,
+    )
+  }
+}
+
+type UpdateCustomerParams = {
+  shopSessionId: string
+  ssn: string
+  emailAddress: string
+  apolloClient: ApolloClient<unknown>
+}
+
+const updateCustomer = async ({
+  apolloClient,
+  shopSessionId,
+  ssn,
+  emailAddress,
+}: UpdateCustomerParams) => {
+  const result = await apolloClient.mutate<
+    ShopSessionCustomerUpdateMutation,
+    ShopSessionCustomerUpdateMutationVariables
+  >({
+    mutation: ShopSessionCustomerUpdateDocument,
+    variables: {
+      input: { shopSessionId, ssn, email: emailAddress },
+    },
+  })
+
+  if (!result.data?.shopSessionCustomerUpdate.shopSession) {
+    throw new Error(
+      `Unable to update customer, ${JSON.stringify({ shopSessionId, ssn, emailAddress })}`,
+    )
+  }
 }
