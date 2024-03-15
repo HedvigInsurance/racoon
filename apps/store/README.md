@@ -103,10 +103,10 @@ If you want to reset the current shop session, you can do so by visiting the fol
 
 ## Create new Shop Session with entries
 
-If you want to create a new shop session with entries, you can do so by visiting the following URL:
+If you want to create a new shop session with entries, you can do so by using the following tool:
 
 ```html
-/api/session/create
+/debugger
 ```
 
 It will setup a shop session with two products: `SE_APARTMENT_RENT` and `SE_ACCIDENT`.
