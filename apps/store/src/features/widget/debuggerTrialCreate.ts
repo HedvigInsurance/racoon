@@ -56,38 +56,42 @@ export const createTrial = async (partner: string, data: RequestData): Promise<R
   return (await response.json()) as ResponseData
 }
 
-export const getTrialData = (body: Record<string, string | undefined>): RequestData => {
-  const birthDate = body[Field.birthDate]
-  const ssn = body[Field.ssn]
+export const getTrialData = (formData: FormData): RequestData => {
+  const birthDate = formData.get(Field.birthDate) as string
+  const ssn = formData.get(Field.ssn) as string
 
   return {
     requestId: Crypto.randomUUID(),
     trialData: {
       trialType: 'SWEDISH_GROUP_APARTMENT',
-      [Field.firstName]: getOrThrow(body, Field.firstName),
-      [Field.lastName]: getOrThrow(body, Field.lastName),
-      [Field.email]: body[Field.email] || getRandomEmailAddress(),
-      [Field.startDate]: getOrThrow(body, Field.startDate),
-      [Field.street]: getOrThrow(body, Field.street),
-      [Field.zipCode]: getOrThrow(body, Field.zipCode),
-      [Field.subType]: getOrThrow(body, Field.subType),
+      [Field.firstName]: getOrThrow(formData, Field.firstName),
+      [Field.lastName]: getOrThrow(formData, Field.lastName),
+      [Field.email]: (formData.get(Field.email) as string) || getRandomEmailAddress(),
+      [Field.startDate]: getOrThrow(formData, Field.startDate),
+      [Field.street]: getOrThrow(formData, Field.street),
+      [Field.zipCode]: getOrThrow(formData, Field.zipCode),
+      [Field.subType]: getOrThrow(formData, Field.subType),
       ...(birthDate && { [Field.birthDate]: birthDate }),
       ...(ssn && { [Field.ssn]: ssn }),
-      ...(body[Field.livingSpace] && { [Field.livingSpace]: Number(body[Field.livingSpace]) }),
-      ...(body[Field.numberCoInsured] && {
-        [Field.numberCoInsured]: Number(body[Field.numberCoInsured]),
+      ...(formData.get(Field.livingSpace) && {
+        [Field.livingSpace]: Number(formData.get(Field.livingSpace)),
       }),
-      ...(body[Field.isStudent] && { [Field.isStudent]: body[Field.isStudent] === 'true' }),
+      ...(formData.get(Field.numberCoInsured) && {
+        [Field.numberCoInsured]: Number(formData.get(Field.numberCoInsured)),
+      }),
+      ...(formData.get(Field.isStudent) && {
+        [Field.isStudent]: formData.get(Field.isStudent) === 'true',
+      }),
     },
   }
 }
 
-export const getPartner = (body: Record<string, string | undefined>): string => {
-  return getOrThrow(body, Field.partner)
+export const getPartner = (formData: FormData): string => {
+  return getOrThrow(formData, Field.partner)
 }
 
-const getOrThrow = (data: Record<string, unknown>, field: string): string => {
-  const value = data[field]
+const getOrThrow = (formData: FormData, field: string): string => {
+  const value = formData.get(field)
   if (typeof value !== 'string') throw new Error(`Missing field ${field}`)
   return value
 }
