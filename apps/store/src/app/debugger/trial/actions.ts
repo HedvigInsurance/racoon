@@ -10,7 +10,7 @@ export const setupTrialContract = async (formData: FormData) => {
   const partner = getPartner(formData)
   const data = getTrialData(formData)
 
-  let destination = ''
+  let destination: string
 
   try {
     const { fullUrl } = await createTrial(partner, data)
@@ -23,9 +23,10 @@ export const setupTrialContract = async (formData: FormData) => {
     destination = nextURL.toString()
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error'
-    console.log({ errorMessage })
     throw new Error(errorMessage)
-  } finally {
+  }
+
+  if (destination) {
     console.log(`Re-directing to destination: ${destination}`)
     redirect(destination)
   }
