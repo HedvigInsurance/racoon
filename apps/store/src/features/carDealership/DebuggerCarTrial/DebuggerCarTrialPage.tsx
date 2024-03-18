@@ -1,4 +1,3 @@
-import { notFound } from 'next/navigation'
 import type { TextSprinkles } from 'ui/src/components/Text/Text.css'
 import { Button, Heading, Space, Text, theme } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
@@ -15,8 +14,6 @@ const TIER_OPTIONS = [
 ]
 
 export const DebuggerCarTrialPage = () => {
-  if (process.env.VERCEL_ENV === 'production') throw notFound()
-
   const [state, setState] = useCarBuyerCreatePageState()
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
