@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useRef, type ReactNode } from 'react'
-import { isMobile, isIOS } from 'react-device-detect'
+import { isMobile, isIOS, isChrome, isFirefox, isOpera } from 'react-device-detect'
 import {
   Button,
   type ButtonProps,
@@ -34,7 +34,7 @@ import {
   qrOnAnotherDeviceLink,
 } from './BankIdV6Dialog.css'
 
-export const BankIdV6Dialog = () => {
+export function BankIdV6Dialog() {
   const { t } = useTranslation('bankid')
   const { startLogin, cancelLogin, cancelCheckoutSign, currentOperation } = useBankIdContext()
 
@@ -218,20 +218,31 @@ export const BankIdV6Dialog = () => {
   )
 }
 
-const getBankIdUrl = (autoStartToken: string) => {
+function getBankIdUrl(autoStartToken: string) {
   // https://www.bankid.com/en/utvecklare/guider/teknisk-integrationsguide/programstart
   const bankidUrl = new URL('bankid:///')
   bankidUrl.searchParams.append('autostarttoken', autoStartToken)
-  // 'null' means the BankID app will redirect back to the calling app.
-  // It's recommended to set redirect to null when possible.
-  // For IOS though, 'redirect' must have a value. '#bankid-auth' is a 'hack'
-  // for returning to the same safari tab.
-  bankidUrl.searchParams.append('redirect', isIOS ? `${window.location.href}#bankid-auth` : 'null')
+  bankidUrl.searchParams.append('redirect', getReturnURL())
 
   return bankidUrl.toString()
 }
 
-const useTryAgainButtonProps = (bankIdOperation: BankIdOperation | null): Partial<ButtonProps> => {
+function getReturnURL() {
+  // For IOS 'redirect' must have a value.
+  if (isIOS) {
+    if (isChrome) return 'googlechrome://'
+    if (isFirefox) return 'firefox://'
+    if (isOpera) return 'opera://'
+    // For Safari or other browsers we return 'null' as well, even though there will be no redirect
+    // for such cases. Instead user will have to manually go back to the app.
+  }
+
+  // In most cases 'null' means the BankID app will redirect back to the calling app.
+  // It's recommended to set redirect to null when possible.
+  return 'null'
+}
+
+function useTryAgainButtonProps(bankIdOperation: BankIdOperation | null): Partial<ButtonProps> {
   const { startLogin } = useBankIdContext()
 
   switch (bankIdOperation?.type) {
@@ -250,7 +261,7 @@ const useTryAgainButtonProps = (bankIdOperation: BankIdOperation | null): Partia
   }
 }
 
-const useTriggerBankIdOnSameDevice = (bankIdOperation: BankIdOperation | null) => {
+function useTriggerBankIdOnSameDevice(bankIdOperation: BankIdOperation | null) {
   // Avoids triggering BankID app opening multiple times
   const launchedRef = useRef(false)
 
