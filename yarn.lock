@@ -17090,9 +17090,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:11.0.13":
-  version: 11.0.13
-  resolution: "framer-motion@npm:11.0.13"
+"framer-motion@npm:11.0.14":
+  version: 11.0.14
+  resolution: "framer-motion@npm:11.0.14"
   dependencies:
     tslib: "npm:^2.4.0"
   peerDependencies:
@@ -17106,7 +17106,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 10c0/788d5c2a0d5e1e8739bfa66d19cb3a274a25f5c724111cc171ec2d2cde2873e43192ca390ce90b3cce28e29fdaa6c63ebf4b5e083f7c986d115b7f69f3149fbc
+  checksum: 10c0/ce54b8183f3924d3a0d09343b33feb89fba348910cea9fd459909da265279e680552e8cbe5594492b39bb53beefb028bd83681ba7319573d3470a0abc3b90a76
   languageName: node
   linkType: hard
 
@@ -25247,7 +25247,7 @@ __metadata:
     eslint-config-prettier: "npm:9.1.0"
     eslint-plugin-jest: "npm:27.9.0"
     eslint-plugin-testing-library: "npm:6.2.0"
-    framer-motion: "npm:11.0.13"
+    framer-motion: "npm:11.0.14"
     graphql: "npm:16.8.1"
     graphql-tag: "npm:2.12.6"
     i18next: "npm:23.10.1"
