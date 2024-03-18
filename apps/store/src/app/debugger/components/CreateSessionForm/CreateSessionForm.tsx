@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { Space } from 'ui'
 import { SubmitButton } from '@/appComponents/SubmitButton'
 import { TextField } from '@/components/TextField/TextField'
-import { create } from '../../actions'
+import { createCustomerSession } from 'app/debugger/actions'
 import { wrapper } from './CreateSessionForm.css'
 
 const HEDVIG_DEBUGGER_SSN = 'hedvig:debugger-ssn'
@@ -19,7 +19,7 @@ export const CreateSessionForm = () => {
 
   return (
     <div className={wrapper}>
-      <form action={create}>
+      <form action={createCustomerSession}>
         <Space y={0.25}>
           <TextField
             label="YYYYMMDDXXXX"

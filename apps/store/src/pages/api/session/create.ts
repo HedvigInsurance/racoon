@@ -84,7 +84,7 @@ type AddProductParams = {
   apolloClient: ApolloClient<unknown>
 }
 
-const addProduct = async ({
+export const addProduct = async ({
   productName,
   priceIntentService,
   shopSessionId,
@@ -136,7 +136,7 @@ type UpdateCustomerParams = {
   apolloClient: ApolloClient<unknown>
 }
 
-const updateCustomer = async ({
+export const updateCustomer = async ({
   apolloClient,
   shopSessionId,
   ssn,
