@@ -196,10 +196,6 @@ export const PageLink = {
 
     return url
   },
-  apiSessionCreate: (ssn: string) => {
-    return new URL(`/api/session/create/?ssn=${ssn}`, ORIGIN_URL)
-  },
-
   session: (params: SessionLink) => {
     const pathname = `${params.locale}/session/${params.shopSessionId}`
     const url = new URL(pathname, ORIGIN_URL)
