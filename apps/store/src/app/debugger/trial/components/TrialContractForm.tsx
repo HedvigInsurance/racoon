@@ -12,19 +12,19 @@ import { TextField } from '@/components/TextField/TextField'
 import { setupTrialContract } from '../actions'
 import { CoInsuredCount } from './CoInsuredCount'
 
+const partnerOptions = [
+  { name: 'Avy', value: 'AVY' },
+  { name: 'Stena Fastigheter', value: 'STENA_FASTIGHETER' },
+  { name: 'Byggvesta', value: 'BYGGVESTA' },
+  { name: 'Samtrygg', value: 'SAMTRYGG' },
+  { name: 'Hedvig', value: 'HEDVIG' },
+]
+
 export function TrialContractForm() {
   // 10 days from now
   const defaultStartDate = new Date(Date.now() + 10 * 24 * 60 * 60 * 1000)
     .toISOString()
     .split('T')[0]
-
-  const partnerOptions = [
-    { name: 'Avy', value: 'AVY' },
-    { name: 'Stena Fastigheter', value: 'STENA_FASTIGHETER' },
-    { name: 'Byggvesta', value: 'BYGGVESTA' },
-    { name: 'Samtrygg', value: 'SAMTRYGG' },
-    { name: 'Hedvig', value: 'HEDVIG' },
-  ]
 
   const [state, formAction] = useFormState(setupTrialContract, {
     fields: {
