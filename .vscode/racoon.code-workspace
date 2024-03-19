@@ -25,7 +25,7 @@
     "jest.disabledWorkspaceFolders": ["✨ ROOT", "📦 eslint-config-custom", "📦 tsconfig"],
     "jest.jestCommandLine": "yarn test",
     "eslint.nodePath": "../../.yarn/sdks",
-    "prettier.prettierPath": "../../.yarn/sdks/prettier/index.js",
+    "prettier.prettierPath": "../../.yarn/sdks/prettier/index.cjs",
     "typescript.tsdk": ".yarn/sdks/typescript/lib",
     "typescript.enablePromptUseWorkspaceTsdk": true,
     "search.exclude": {
