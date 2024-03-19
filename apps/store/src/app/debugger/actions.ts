@@ -21,7 +21,6 @@ import { PageLink } from '@/utils/PageLink'
 
 const DEFAULT_LOCALE: RoutingLocale = 'se-en'
 const DEFAULT_COUNTRY_CODE = CountryCode.Se
-const TEST_SSN = '199808302393'
 const productNames = ['SE_APARTMENT_RENT', 'SE_ACCIDENT'] as const
 
 const getRandomEmailAddress = () => {
@@ -29,12 +28,27 @@ const getRandomEmailAddress = () => {
   return `sven.svensson.${randomId}@hedvig.com`
 }
 
-export const createCustomerSession = async (formData: FormData) => {
-  try {
-    const ssn = formData.get('ssn') || TEST_SSN
+type CreateCustomerSessionFormState = null | {
+  errors?: {
+    fields?: Record<string, string>
+  }
+}
 
-    if (typeof ssn !== 'string') {
-      return
+export const createCustomerSession = async (
+  _: CreateCustomerSessionFormState,
+  formData: FormData,
+): Promise<CreateCustomerSessionFormState> => {
+  try {
+    const ssn = formData.get('ssn')
+
+    if (!ssn || typeof ssn !== 'string') {
+      return {
+        errors: {
+          fields: {
+            ssn: 'Valid SSN is required.',
+          },
+        },
+      }
     }
 
     const apolloClient = getApolloClient({ locale: DEFAULT_LOCALE })
