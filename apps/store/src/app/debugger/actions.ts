@@ -1,6 +1,7 @@
 'use server'
 
 import { ApolloClient } from '@apollo/client'
+import { FormStateWithErrors } from 'app/types/formStateTypes'
 import { redirect } from 'next/navigation'
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
 import {
@@ -28,16 +29,10 @@ const getRandomEmailAddress = () => {
   return `sven.svensson.${randomId}@hedvig.com`
 }
 
-type CreateCustomerSessionFormState = null | {
-  errors?: {
-    fields?: Record<string, string>
-  }
-}
-
 export const createCustomerSession = async (
-  _: CreateCustomerSessionFormState,
+  _: FormStateWithErrors,
   formData: FormData,
-): Promise<CreateCustomerSessionFormState> => {
+): Promise<FormStateWithErrors> => {
   try {
     const ssn = formData.get('ssn')
 
