@@ -18,6 +18,7 @@ import { PriceIntentService } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSession } from '@/services/shopSession/app-router/ShopSession.utils'
 import { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
+import { FormStateWithErrors } from 'app/types/formStateTypes'
 
 const DEFAULT_LOCALE: RoutingLocale = 'se-en'
 const DEFAULT_COUNTRY_CODE = CountryCode.Se
@@ -28,16 +29,10 @@ const getRandomEmailAddress = () => {
   return `sven.svensson.${randomId}@hedvig.com`
 }
 
-type CreateCustomerSessionFormState = null | {
-  errors?: {
-    fields?: Record<string, string>
-  }
-}
-
 export const createCustomerSession = async (
-  _: CreateCustomerSessionFormState,
+  _: FormStateWithErrors,
   formData: FormData,
-): Promise<CreateCustomerSessionFormState> => {
+): Promise<FormStateWithErrors> => {
   try {
     const ssn = formData.get('ssn')
 
