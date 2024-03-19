@@ -1,7 +1,6 @@
 'use server'
 
 import { ApolloClient } from '@apollo/client'
-import { FormStateWithErrors } from 'app/types/formStateTypes'
 import { redirect } from 'next/navigation'
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
 import {
@@ -19,6 +18,7 @@ import { PriceIntentService } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSession } from '@/services/shopSession/app-router/ShopSession.utils'
 import { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
+import { FormStateWithErrors } from 'app/types/formStateTypes'
 
 const DEFAULT_LOCALE: RoutingLocale = 'se-en'
 const DEFAULT_COUNTRY_CODE = CountryCode.Se
