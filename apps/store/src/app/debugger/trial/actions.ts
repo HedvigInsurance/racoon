@@ -1,18 +1,22 @@
 'use server'
 
 import { redirect } from 'next/navigation'
-import { createTrial, getPartner, getTrialData } from '@/features/widget/debuggerTrialCreate'
 import { ORIGIN_URL } from '@/utils/PageLink'
+import { createTrial, getPartner, getTrialData } from 'app/debugger/trial/debuggerTrial.utils'
+import { FormStateWithErrors } from 'app/types/formStateTypes'
 
 const LOCAL_URL = new URL(ORIGIN_URL)
 
-export const setupTrialContract = async (formData: FormData) => {
-  const partner = getPartner(formData)
-  const data = getTrialData(formData)
-
+export const setupTrialContract = async (
+  _: FormStateWithErrors,
+  formData: FormData,
+): Promise<FormStateWithErrors> => {
   let destination: string
 
   try {
+    const partner = getPartner(formData)
+    const data = getTrialData(formData)
+
     const { fullUrl } = await createTrial(partner, data)
 
     const nextURL = new URL(fullUrl)
@@ -23,7 +27,12 @@ export const setupTrialContract = async (formData: FormData) => {
     destination = nextURL.toString()
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error'
-    throw new Error(errorMessage)
+
+    return {
+      errors: {
+        generic: [errorMessage],
+      },
+    }
   }
 
   if (destination) {
