@@ -1,6 +1,5 @@
 'use client'
 
-import { Field } from 'app/debugger/trial/debuggerTrial.types'
 import { useFormState } from 'react-dom'
 import { Space } from 'ui'
 import { SubmitButton } from '@/appComponents/SubmitButton'
@@ -9,6 +8,7 @@ import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import * as InputRadio from '@/components/PriceCalculator/InputRadio'
 import { TextField } from '@/components/TextField/TextField'
+import { Field } from 'app/debugger/trial/debuggerTrial.types'
 import { setupTrialContract } from '../actions'
 import { CoInsuredCount } from './CoInsuredCount'
 
