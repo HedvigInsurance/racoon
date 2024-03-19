@@ -60,8 +60,8 @@ This step renders a custom "confirmation" page. This is the end of the flow.
 
 ## Testing
 
-- "Hedvig Embedded" can be tested in the [iframe simulator](http://localhost:8040/se/debugger/iframe). It runs the widget in an iframe while listing all the post messages sent to the parent window.
+- "Hedvig Embedded" can be tested in the [iframe simulator](http://localhost:8040/debugger/iframe). It runs the widget in an iframe while listing all the post messages sent to the parent window.
 
-- "Hedvig Included" can be tested by first visiting the [Trial Contract Debugger](http://localhost:8040/se/debugger/trial). After creating a trial contract, you will be redirected to the widget.
+- "Hedvig Included" can be tested by first visiting the [Trial Contract Debugger](http://localhost:8040/debugger/trial). After creating a trial contract, you will be redirected to the widget.
 
 - WebView embedding can be tested in the [WebViewTest](https://github.com/HedvigInsurance/WebViewTest) example iOS app.
