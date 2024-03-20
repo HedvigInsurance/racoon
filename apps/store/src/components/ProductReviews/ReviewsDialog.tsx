@@ -188,41 +188,35 @@ const reducer = (state: State, action: Action): State => {
 const useReviewsDialog = () => {
   const [state, dispatch] = useReducer(reducer, { status: 'initial' })
 
-  const fetchReviews = useCallback(
-    async (productIds: Array<string>) => {
-      try {
-        // Avoid refetching reviews when it's alreay cached
-        if (state.status === 'success') return
+  const fetchReviews = useCallback(async (productIds: Array<string>) => {
+    try {
+      dispatch({ type: 'LOAD_REVIEWS' })
 
-        dispatch({ type: 'LOAD_REVIEWS' })
+      const urlSearchParams = new URLSearchParams()
+      productIds.forEach((id) => urlSearchParams.append('productId', id))
 
-        const urlSearchParams = new URLSearchParams()
-        productIds.forEach((id) => urlSearchParams.append('productId', id))
+      const searchParams = urlSearchParams.toString() ? `?${urlSearchParams.toString()}` : ''
+      const response = await fetch(`/api/member-reviews${searchParams}`)
+      if (response.ok) {
+        const reviewsByScore = (await response.json()) as ReviewsByScore
+        const initialSelectedScore = getInitialSelectedScore(reviewsByScore)
 
-        const searchParams = urlSearchParams.toString() ? `?${urlSearchParams.toString()}` : ''
-        const response = await fetch(`/api/member-reviews${searchParams}`)
-        if (response.ok) {
-          const reviewsByScore = (await response.json()) as ReviewsByScore
-          const initialSelectedScore = getInitialSelectedScore(reviewsByScore)
-
-          dispatch({
-            type: 'SUCCESS',
-            payload: {
-              selectedScore: initialSelectedScore,
-              reviews: reviewsByScore[initialSelectedScore].reviews,
-              reviewsByScore,
-            },
-          })
-        } else {
-          dispatch({ type: 'ERROR', payload: { errorMsg: 'Failed to fetch reviews.' } })
-        }
-      } catch (error) {
-        console.log(error)
+        dispatch({
+          type: 'SUCCESS',
+          payload: {
+            selectedScore: initialSelectedScore,
+            reviews: reviewsByScore[initialSelectedScore].reviews,
+            reviewsByScore,
+          },
+        })
+      } else {
         dispatch({ type: 'ERROR', payload: { errorMsg: 'Failed to fetch reviews.' } })
       }
-    },
-    [state.status],
-  )
+    } catch (error) {
+      console.log(error)
+      dispatch({ type: 'ERROR', payload: { errorMsg: 'Failed to fetch reviews.' } })
+    }
+  }, [])
 
   const setSelectedScore = useCallback((score: Score) => {
     dispatch({ type: 'SELECT_SCORE', payload: { score } })
