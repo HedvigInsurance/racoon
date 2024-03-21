@@ -39,85 +39,87 @@ export function TrialContractForm() {
   })
 
   return (
-    <form action={formAction}>
-      <Space y={0.25}>
-        <InputSelect
-          name={Field.partner}
-          label="Select partner..."
-          options={partnerOptions}
-          defaultValue={state?.fields?.[Field.partner]}
-        />
+    <Space y={1}>
+      <form action={formAction}>
+        <Space y={0.25}>
+          <InputSelect
+            name={Field.partner}
+            label="Select partner..."
+            options={partnerOptions}
+            defaultValue={state?.fields?.[Field.partner]}
+          />
 
-        <TextField
-          label="First name"
-          name={Field.firstName}
-          required={true}
-          defaultValue={state?.fields?.[Field.firstName]}
-        />
-        <TextField
-          label="Last name"
-          name={Field.lastName}
-          required={true}
-          defaultValue={state?.fields?.[Field.lastName]}
-        />
-        <TextField
-          label="Start date (YYYY-MM-DD)"
-          name={Field.startDate}
-          required={true}
-          pattern="\d{4}-\d{2}-\d{2}"
-          defaultValue={state?.fields?.[Field.startDate]}
-        />
-        <TextField
-          label="Street"
-          name={Field.street}
-          required={true}
-          defaultValue={state?.fields?.[Field.street]}
-        />
-        <TextField
-          label="Zip Code"
-          name={Field.zipCode}
-          required={true}
-          pattern="\d{3} \d{2}"
-          defaultValue={state?.fields?.[Field.zipCode]}
-        />
-        <InputRadio.HorizontalRoot
-          name={Field.subType}
-          label="Sub Type"
-          required={true}
-          defaultValue={state?.fields?.[Field.subType]}
-        >
-          <InputRadio.HorizontalItem label="Rent" value="RENT" />
-          <InputRadio.HorizontalItem label="Own" value="BRF" />
-        </InputRadio.HorizontalRoot>
+          <TextField
+            label="First name"
+            name={Field.firstName}
+            required={true}
+            defaultValue={state?.fields?.[Field.firstName]}
+          />
+          <TextField
+            label="Last name"
+            name={Field.lastName}
+            required={true}
+            defaultValue={state?.fields?.[Field.lastName]}
+          />
+          <TextField
+            label="Start date (YYYY-MM-DD)"
+            name={Field.startDate}
+            required={true}
+            pattern="\d{4}-\d{2}-\d{2}"
+            defaultValue={state?.fields?.[Field.startDate]}
+          />
+          <TextField
+            label="Street"
+            name={Field.street}
+            required={true}
+            defaultValue={state?.fields?.[Field.street]}
+          />
+          <TextField
+            label="Zip Code"
+            name={Field.zipCode}
+            required={true}
+            pattern="\d{3} \d{2}"
+            defaultValue={state?.fields?.[Field.zipCode]}
+          />
+          <InputRadio.HorizontalRoot
+            name={Field.subType}
+            label="Sub Type"
+            required={true}
+            defaultValue={state?.fields?.[Field.subType]}
+          >
+            <InputRadio.HorizontalItem label="Rent" value="RENT" />
+            <InputRadio.HorizontalItem label="Own" value="BRF" />
+          </InputRadio.HorizontalRoot>
 
-        <TextField
-          type="email"
-          label="Email"
-          name={Field.email}
-          placeholder="Leave empty to randomize"
-        />
-        <PersonalNumberField label="Personal number" name={Field.ssn} />
-        <TextField
-          label="Birth date (YYYY-MM-DD)"
-          name={Field.birthDate}
-          pattern="\d{4}-\d{2}-\d{2}"
-        />
-        <CoInsuredCount />
-        <TextField
-          name={Field.livingSpace}
-          inputMode="numeric"
-          pattern="[0-9]*"
-          autoComplete="off"
-          label="Living space (m²)"
-        />
-        <InputRadio.HorizontalRoot name={Field.isStudent} label="Student?">
-          <InputRadio.HorizontalItem label="Student" value="true" />
-          <InputRadio.HorizontalItem label="Not student" value="false" />
-        </InputRadio.HorizontalRoot>
+          <TextField
+            type="email"
+            label="Email"
+            name={Field.email}
+            placeholder="Leave empty to randomize"
+          />
+          <PersonalNumberField label="Personal number" name={Field.ssn} />
+          <TextField
+            label="Birth date (YYYY-MM-DD)"
+            name={Field.birthDate}
+            pattern="\d{4}-\d{2}-\d{2}"
+          />
+          <CoInsuredCount />
+          <TextField
+            name={Field.livingSpace}
+            inputMode="numeric"
+            pattern="[0-9]*"
+            autoComplete="off"
+            label="Living space (m²)"
+          />
+          <InputRadio.HorizontalRoot name={Field.isStudent} label="Student?">
+            <InputRadio.HorizontalItem label="Student" value="true" />
+            <InputRadio.HorizontalItem label="Not student" value="false" />
+          </InputRadio.HorizontalRoot>
 
-        <SubmitButton>Create trial contract</SubmitButton>
-      </Space>
+          <SubmitButton>Create trial contract</SubmitButton>
+        </Space>
+      </form>
       <ErrorMessages errors={state?.errors?.generic} />
-    </form>
+    </Space>
   )
 }

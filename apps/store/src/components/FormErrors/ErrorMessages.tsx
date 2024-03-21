@@ -2,8 +2,8 @@
 
 import { useTranslation } from 'next-i18next'
 import { ComponentPropsWithoutRef } from 'react'
-import { Space, Text, WarningTriangleIcon, theme } from 'ui'
-import { header, heading, warningIcon } from './ErrorMessages.css'
+import { Space, Text } from 'ui'
+import { AttentionCard } from '../InfoCard/InfoCard'
 
 type Props = {
   errors?: Array<string>
@@ -18,19 +18,20 @@ export function ErrorMessages({ errors, ...props }: Props) {
 
   return (
     <div {...props}>
-      <div className={header}>
-        <WarningTriangleIcon size="1em" color={theme.colors.amber600} className={warningIcon} />
-        <Text className={heading} size={{ _: 'md', lg: 'lg' }}>
-          {t('GENERAL_ERROR_DIALOG_TITLE')}
-        </Text>
-      </div>
-      <Space y={0.125}>
-        {errors.map((error) => (
-          <Text size={{ _: 'md', lg: 'lg' }} color="textSecondary" balance={true} key={error}>
-            {error}
+      <AttentionCard>
+        <Space y={0.5} style={{ width: '100%' }}>
+          <Text as="p" size={{ _: 'md', lg: 'lg' }} color="signalAmberText">
+            {t('GENERAL_ERROR_DIALOG_TITLE')}
           </Text>
-        ))}
-      </Space>
+          <Space y={0.5}>
+            {errors.map((error) => (
+              <Text size={{ _: 'md', lg: 'lg' }} color="signalAmberText" balance={true} key={error}>
+                {error}
+              </Text>
+            ))}
+          </Space>
+        </Space>
+      </AttentionCard>
     </div>
   )
 }
