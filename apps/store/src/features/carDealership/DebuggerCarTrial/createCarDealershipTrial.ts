@@ -27,16 +27,10 @@ type ResponseDataTrialContract = {
 
 type ErrorData = { message: string; error: string }
 
-export type CarTrialResult =
-  | {
-      type: 'error'
-      errorCode: string
-      errorMessage: string
-    }
-  | {
-      type: 'success'
-      trialUrl: string
-    }
+export type CarTrialResult = {
+  type: 'success'
+  trialUrl: string
+}
 
 const getTrialContract = async (trialId: string, basicAuth: string): Promise<CarTrialResult> => {
   let retries = 5
@@ -69,73 +63,56 @@ const getTrialContract = async (trialId: string, basicAuth: string): Promise<Car
       await wait(1000)
     } catch (error) {
       console.warn('Failed to fetch trial contract', error)
-      return {
-        type: 'error',
-        errorCode: 'RETRIES_EXCEEDED',
-        errorMessage: 'Max retries exceeded, no trial contract',
-      }
+      throw new Error('RETRIES_EXCEEDED')
     }
   }
 
-  return {
-    type: 'error',
-    errorCode: 'UNKNOWN_ERROR',
-    errorMessage: 'Failed to fetch trial contract',
-  }
+  throw new Error('UNKNOWN_ERROR')
 }
 
 export const createCarDealershipTrial = async (
   params: CreateCarTrialParams,
 ): Promise<CarTrialResult> => {
-  try {
-    const url = new URL(API_ENDPOINT)
-    url.searchParams.append('validateOnly', 'false')
-    url.searchParams.append('initiatedFrom', params.dealerId)
+  const url = new URL(API_ENDPOINT)
+  url.searchParams.append('validateOnly', 'false')
+  url.searchParams.append('initiatedFrom', params.dealerId)
 
-    const username = process.env.RAPIO_USERNAME_CAR_TRIAL_DEBUGGER
-    const password = process.env.RAPIO_PASSWORD_CAR_TRIAL_DEBUGGER
-    const basicAuth = Buffer.from(`${username}:${password}`).toString('base64')
+  const username = process.env.RAPIO_USERNAME_CAR_TRIAL_DEBUGGER
+  const password = process.env.RAPIO_PASSWORD_CAR_TRIAL_DEBUGGER
+  const basicAuth = Buffer.from(`${username}:${password}`).toString('base64')
 
-    const body = {
-      dealerId: params.dealerId,
-      ssn: params.ssn,
-      registrationNumber: params.registrationNumber,
-      vtrCoverageCode: params.vtrCoverageCode,
-      ...getTrialDataPlaceholders(),
-    }
+  const body = {
+    dealerId: params.dealerId,
+    ssn: params.ssn,
+    registrationNumber: params.registrationNumber,
+    vtrCoverageCode: params.vtrCoverageCode,
+    ...getTrialDataPlaceholders(),
+  }
 
-    console.debug(`Car Dealership debugger | Creating car trial for ${params.registrationNumber}`)
-    console.table(body)
+  console.debug(`Car Dealership debugger | Creating car trial for ${params.registrationNumber}`)
+  console.table(body)
 
-    const response = await fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Basic ${basicAuth}`,
-      },
-    })
+  const response = await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(body),
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Basic ${basicAuth}`,
+    },
+  })
 
-    if (!response.ok) {
-      const json = (await response.json()) as ErrorData
-      throw new Error(json.error)
-    }
+  if (!response.ok) {
+    const json = (await response.json()) as ErrorData
+    throw new Error(`${json.error}: ${json.message}`)
+  }
 
-    const json = (await response.json()) as ResponseData
-    if (json.errorCode) {
-      return {
-        type: 'error',
-        errorCode: json.errorCode,
-        errorMessage: json.errorMessage ?? 'Unknown error',
-      }
-    } else {
-      const trialId = json.trialId!
-      const jsonTrialContract = await getTrialContract(trialId, basicAuth)
-      return jsonTrialContract
-    }
-  } catch (error) {
-    console.warn('Failed to create trial', error)
-    return { type: 'error', errorCode: 'UNKNOWN_ERROR', errorMessage: 'Unknown error' }
+  const json = (await response.json()) as ResponseData
+  if (json.errorCode) {
+    throw new Error(`${json.errorCode}: ${json.errorMessage ?? 'Unknown error'}`)
+  } else {
+    const trialId = json.trialId!
+    const jsonTrialContract = await getTrialContract(trialId, basicAuth)
+    return jsonTrialContract
   }
 }
 
