@@ -19,7 +19,7 @@ const Wrapper = styled.div({
 const RigidIconStyled = css({
   flexShrink: 0,
   // Optical alignment with text
-  marginTop: 1,
+  marginTop: 5,
 })
 
 export const InfoCard = (props: Props) => {
