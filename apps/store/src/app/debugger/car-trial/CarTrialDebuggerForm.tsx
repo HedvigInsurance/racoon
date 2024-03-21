@@ -7,18 +7,25 @@ import { AttentionCard } from '@/components/InfoCard/InfoCard'
 import { InputCarRegistrationNumber } from '@/components/InputCarRegistrationNumber/InputCarRegistrationNumber'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
+import * as InputRadio from '@/components/PriceCalculator/InputRadio'
 import { Field } from '@/features/carDealership/DebuggerCarTrial/debuggerCarTrial.types'
 import { createCarTrial } from './actions'
 
 const TIER_OPTIONS = [
-  { name: 'Half', value: '1' },
-  { name: 'Full', value: '2' },
+  { name: 'Half insurance', value: '1' },
+  { name: 'Full insurance', value: '2' },
+]
+
+const PRODUCT_OPTIONS = [
+  { name: 'Hedvig', value: 'HEDVIG' },
+  { name: 'My Money', value: 'MYMONEY' },
 ]
 
 export const CarTrialDebuggerForm = () => {
   const [state, formAction] = useFormState(createCarTrial, {
     fields: {
       [Field.Tier]: '1',
+      [Field.Product]: PRODUCT_OPTIONS[0].value,
     },
   })
 
@@ -39,6 +46,22 @@ export const CarTrialDebuggerForm = () => {
             defaultValue={state?.fields?.[Field.Tier]}
             options={TIER_OPTIONS}
           />
+
+          <InputRadio.Root
+            name={Field.Product}
+            label="Product"
+            defaultValue={state?.fields?.[Field.Product]}
+          >
+            {PRODUCT_OPTIONS.map((option) => (
+              <InputRadio.Item
+                key={option.value}
+                id={`Product-${option.value}`}
+                label={option.name}
+                value={option.value}
+              />
+            ))}
+          </InputRadio.Root>
+
           <Space y={0.5}>
             <SubmitButton>Create car trial</SubmitButton>
             <Text as="p" size="xs" align="center" color="textSecondary">

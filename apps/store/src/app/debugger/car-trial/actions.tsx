@@ -12,7 +12,15 @@ export const createCarTrial = async (
   const ssn = formData.get(Field.SSN) as string
   const registrationNumber = formData.get(Field.RegistrationNumber) as string
   const tier = formData.get(Field.Tier) as string
-  const parameters = { ssn, registrationNumber, vtrCoverageCode: tier, dealerId: 'MODERNA_BIL' }
+  const product = formData.get(Field.Product) as string
+
+  const parameters = {
+    ssn,
+    registrationNumber,
+    vtrCoverageCode: tier,
+    product: product,
+    dealerId: 'MODERNA_BIL',
+  }
   let destination: string
 
   try {
