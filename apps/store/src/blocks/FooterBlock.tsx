@@ -107,7 +107,7 @@ export const FooterBlock = ({ blok, onLocaleChange }: FooterBlockProps) => {
 
         <div className={disclaimerStyle}>
           <Text color="textSecondary" size="sm">
-            © 2023 {organization.name} AB
+            © {new Date().getFullYear()} {organization.name} AB
             <br />
             <br />
             {organization.address.streetAddress}
