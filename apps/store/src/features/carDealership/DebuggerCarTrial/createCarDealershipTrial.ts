@@ -8,6 +8,7 @@ export type CreateCarTrialParams = {
   ssn: string
   dealerId: string
   vtrCoverageCode: string
+  product: string
 }
 
 type ResponseData = {
@@ -86,6 +87,7 @@ export const createCarDealershipTrial = async (
     ssn: params.ssn,
     registrationNumber: params.registrationNumber,
     vtrCoverageCode: params.vtrCoverageCode,
+    product: params.product,
     ...getTrialDataPlaceholders(),
   }
 
