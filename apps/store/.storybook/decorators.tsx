@@ -3,7 +3,7 @@ import { Global } from '@emotion/react'
 import { ApolloProvider } from '@apollo/client'
 import { ThemeProvider } from 'ui'
 import { storybookFontStyles } from 'ui/src/theme/storybookFontStyles'
-import { GridLayout } from '../src/components/GridLayout/GridLayout'
+import * as GridLayout from '../src/components/GridLayout/GridLayout'
 import { initializeApollo } from '../src/services/apollo/client'
 import { AppErrorProvider } from '../src/services/appErrors/AppErrorContext'
 
