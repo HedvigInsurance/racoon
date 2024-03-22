@@ -1,3 +1,4 @@
+import { headers } from 'next/headers'
 import { Button, Space } from 'ui'
 import { TextField } from '@/components/TextField/TextField'
 import { MessageLogger } from './components/MessageLogger/MessageLogger'
@@ -41,9 +42,16 @@ function IFrameDebuggerPage({ searchParams }: Props) {
     </div>
   )
 }
-const DEFAULT_URL = 'http://localhost:8040/se/widget/flows/avy-offer'
 
-const getDebugURL = (url: string = DEFAULT_URL) => {
+const getDebugURL = (url?: string) => {
+  const headersList = headers()
+
+  const referer = headersList.get('referer')
+  const refererURL = new URL(referer || '')
+  const { origin } = refererURL
+
+  const debugURL = url || `${origin}/se/widget/flows/avy-offer`
+
   if (process.env.FEATURE_DEBUGGER !== 'true') {
     return {
       url: null,
@@ -51,7 +59,7 @@ const getDebugURL = (url: string = DEFAULT_URL) => {
   }
 
   return {
-    url,
+    url: debugURL,
   }
 }
 
