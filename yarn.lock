@@ -4186,9 +4186,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datadog/datadog-ci@npm:2.32.0":
-  version: 2.32.0
-  resolution: "@datadog/datadog-ci@npm:2.32.0"
+"@datadog/datadog-ci@npm:2.32.1":
+  version: 2.32.1
+  resolution: "@datadog/datadog-ci@npm:2.32.1"
   dependencies:
     "@aws-sdk/client-cloudwatch-logs": "npm:^3.454.0"
     "@aws-sdk/client-iam": "npm:^3.454.0"
@@ -4204,7 +4204,7 @@ __metadata:
     ajv: "npm:^8.12.0"
     ajv-formats: "npm:^2.1.1"
     async-retry: "npm:1.3.1"
-    axios: "npm:^1.6.5"
+    axios: "npm:^1.6.8"
     chalk: "npm:3.0.0"
     clipanion: "npm:^3.2.1"
     datadog-metrics: "npm:0.9.3"
@@ -4236,7 +4236,7 @@ __metadata:
     yamux-js: "npm:0.1.2"
   bin:
     datadog-ci: dist/cli.js
-  checksum: 10c0/23373feeb722331403c97f660d6b09b7db7daba087369460ce85c282457c52c164cbf466106caf68b829bc783bb43f4d8429f47bb2f82d1a25833b2c51efe511
+  checksum: 10c0/e4f2b19ba3975140b0d2f6f415b4b2f8a6d9f05953ac8de5ca927a34a0de62621a3e421bcde478982e4b7f06d730c6e87761f25a767e8d6225802737010517ca
   languageName: node
   linkType: hard
 
@@ -11972,14 +11972,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.6.5":
-  version: 1.6.5
-  resolution: "axios@npm:1.6.5"
+"axios@npm:^1.6.8":
+  version: 1.6.8
+  resolution: "axios@npm:1.6.8"
   dependencies:
-    follow-redirects: "npm:^1.15.4"
+    follow-redirects: "npm:^1.15.6"
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 10c0/aeb9acf87590d8aa67946072ced38e01ca71f5dfe043782c0ccea667e5dd5c45830c08afac9be3d7c894f09684b8ab2a458f497d197b73621233bcf202d9d468
+  checksum: 10c0/0f22da6f490335479a89878bc7d5a1419484fbb437b564a80c34888fc36759ae4f56ea28d55a191695e5ed327f0bad56e7ff60fb6770c14d1be6501505d47ab9
   languageName: node
   linkType: hard
 
@@ -16243,13 +16243,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.15.4":
-  version: 1.15.5
-  resolution: "follow-redirects@npm:1.15.5"
+"follow-redirects@npm:^1.15.6":
+  version: 1.15.6
+  resolution: "follow-redirects@npm:1.15.6"
   peerDependenciesMeta:
     debug:
       optional: true
-  checksum: 10c0/418d71688ceaf109dfd6f85f747a0c75de30afe43a294caa211def77f02ef19865b547dfb73fde82b751e1cc507c06c754120b848fe5a7400b0a669766df7615
+  checksum: 10c0/9ff767f0d7be6aa6870c82ac79cf0368cd73e01bbc00e9eb1c2a16fbb198ec105e3c9b6628bb98e9f3ac66fe29a957b9645bcb9a490bb7aa0d35f908b6b85071
   languageName: node
   linkType: hard
 
@@ -24229,7 +24229,7 @@ __metadata:
     "@babel/preset-typescript": "npm:7.23.3"
     "@datadog/browser-logs": "npm:5.11.0"
     "@datadog/browser-rum": "npm:5.11.0"
-    "@datadog/datadog-ci": "npm:2.32.0"
+    "@datadog/datadog-ci": "npm:2.32.1"
     "@emotion/babel-plugin": "npm:11.11.0"
     "@emotion/is-prop-valid": "npm:1.2.2"
     "@emotion/react": "npm:11.11.4"
