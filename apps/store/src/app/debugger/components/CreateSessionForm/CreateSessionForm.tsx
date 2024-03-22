@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useFormState } from 'react-dom'
 import { Space } from 'ui'
 import { SubmitButton } from '@/appComponents/SubmitButton'
-import { TextField } from '@/components/TextField/TextField'
+import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { createCustomerSession } from 'app/debugger/actions'
 import { wrapper } from './CreateSessionForm.css'
 
@@ -25,12 +25,13 @@ export const CreateSessionForm = () => {
     <div className={wrapper}>
       <form action={formAction}>
         <Space y={0.25}>
-          <TextField
-            label="YYYYMMDDXXXX"
-            key={defaultSSN}
+          <PersonalNumberField
             defaultValue={defaultSSN}
+            key={defaultSSN}
             autoFocus
             name="ssn"
+            label="SSN (YYMMDD-XXXX)"
+            required={true}
             warning={!!SSNError}
             message={SSNError}
           />
