@@ -47,8 +47,13 @@ const getDebugURL = (url?: string) => {
   const headersList = headers()
 
   const referer = headersList.get('referer')
-  const refererURL = new URL(referer || '')
-  const { origin } = refererURL
+
+  let origin = 'http://localhost:8040'
+
+  if (typeof referer === 'string') {
+    const refererURL = new URL(referer)
+    origin = refererURL.origin
+  }
 
   const debugURL = url || `${origin}/se/widget/flows/avy-offer`
 
