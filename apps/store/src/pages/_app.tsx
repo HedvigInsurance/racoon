@@ -12,15 +12,14 @@ import { AppErrorDialog } from '@/components/AppErrorDialog'
 import { BankIdDialogDynamic } from '@/components/BankIdDialogDynamic'
 import { BankIdV6DialogDynamic } from '@/components/BankIdV6Dialog/BankIdV6DialogDynamic'
 import { ContactUs } from '@/components/ContactUs/ContactUs'
-import { CookieConsentLoader } from '@/components/CookieConsentLoader'
 import { GlobalBannerDynamic } from '@/components/GlobalBanner/GlobalBannerDynamic'
+import { GTMLoader } from '@/components/GTMLoader'
 import { GlobalLinkStyles } from '@/components/RichText/RichText.styles'
 import { usePublishWidgetInitEvent } from '@/features/widget/usePublishWidgetInitEvent'
 import { useApollo } from '@/services/apollo/client'
 import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
 import { CustomerFirstScript, hasHiddenChat } from '@/services/CustomerFirst'
-import { GTMAppScript } from '@/services/gtm'
 import { useInitDatadogAfterInteractive } from '@/services/logger/client'
 import { PageTransitionProgressBar } from '@/services/nprogress/pageTransition'
 import { OneTrustStyles } from '@/services/OneTrust'
@@ -134,10 +133,5 @@ const ShopSessionTrackingProvider = (props: { children: ReactNode }) => {
   const { shopSession } = useShopSession()
   return <TrackingProvider shopSession={shopSession}>{props.children}</TrackingProvider>
 }
-
-// When cookie consent is enabled we need to wait until consent value is available before loading GTM
-// See logic inside CookieConsentLoader
-const GTMLoader = () =>
-  Features.enabled('COOKIE_BANNER') ? <CookieConsentLoader /> : <GTMAppScript />
 
 export default appWithTranslation(MyApp)

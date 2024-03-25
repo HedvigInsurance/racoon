@@ -1,8 +1,16 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document'
+import Script from 'next/script'
 import { GTMBodyScript } from '@/services/gtm'
+import { Features } from '@/utils/Features'
 import { contentFontClassName } from '@/utils/fonts'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 import { UiLocale } from '@/utils/l10n/types'
+
+const COOKIE_CONSENT_SCRIPT_ID = {
+  // Could be useful for testing changes on OneTrust side
+  TEST: '628f5fee-1891-418c-9ed2-f893b8a3998a-test',
+  PRODUCTION: '628f5fee-1891-418c-9ed2-f893b8a3998a',
+}
 
 export default class MyDocument extends Document {
   lang() {
@@ -27,9 +35,21 @@ export default class MyDocument extends Document {
         </Head>
         {/* Fallback for pages that don't pass className down to DOM */}
         <body className={contentFontClassName}>
-          <GTMBodyScript />
           <Main />
           <NextScript />
+          <GTMBodyScript />
+          {/* Cookie consent script */}
+          {Features.enabled('COOKIE_BANNER') && (
+            <Script
+              id="onetrust-loader"
+              src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"
+              data-document-language="true"
+              type="text/javascript"
+              data-domain-script={COOKIE_CONSENT_SCRIPT_ID.PRODUCTION}
+              // Load before any other script as recommended by Next (https://shorturl.at/hvO14)
+              strategy="beforeInteractive"
+            />
+          )}
         </body>
       </Html>
     )
