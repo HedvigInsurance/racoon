@@ -1,6 +1,6 @@
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
-import type { TextSprinkles } from 'ui/src/components/Text/Text.css'
+import { Sprinkles } from 'ui/src/theme/sprinkles.css'
 import { Button, Heading, HedvigLogo, Space, Text, mq, theme } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { HEADER_HEIGHT_MOBILE, HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header.constants'
@@ -136,7 +136,7 @@ export const CarBuyerValidationPage = (props: Props) => {
   )
 }
 
-function DisplayRow(props: { title: string; displayValue: string; color: TextSprinkles['color'] }) {
+function DisplayRow(props: { title: string; displayValue: string; color: Sprinkles['color'] }) {
   return (
     <ResultRow>
       <Text as="p" color={props.color}>
