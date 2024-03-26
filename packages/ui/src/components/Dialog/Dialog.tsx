@@ -29,7 +29,7 @@ export const Content = (props: ContentProps) => {
         <DialogPrimitive.Content
           className={props.className}
           onEscapeKeyDown={handleClose}
-          onInteractOutside={handleClose}
+          onInteractOutside={(e) => e.preventDefault()}
         >
           {props.children}
         </DialogPrimitive.Content>

@@ -2,19 +2,14 @@ import clsx from 'clsx'
 import { ReactNode } from 'react'
 import Balancer from 'react-wrap-balancer'
 import { FontSizeProps } from '../../theme'
-import {
-  textBase,
-  textSprinkles,
-  textStrikethrough,
-  textUppercase,
-  type TextSprinkles,
-} from './Text.css'
+import { type Sprinkles, sprinkles } from '../../theme/sprinkles.css'
+import { textBase, textStrikethrough, textUppercase } from './Text.css'
 
 type TextStyleProps = {
-  align?: TextSprinkles['textAlign']
+  align?: Sprinkles['textAlign']
   balance?: boolean
   className?: string
-  color?: TextSprinkles['color']
+  color?: Sprinkles['color']
   size?: FontSizeProps
   strikethrough?: boolean
   uppercase?: boolean
@@ -36,7 +31,7 @@ export const getTextStyles = ({
 }: TextStyleProps) => {
   return clsx(
     textBase,
-    textSprinkles({ color: color, textAlign: align, fontSize: size }),
+    sprinkles({ color: color, textAlign: align, fontSize: size }),
     strikethrough && textStrikethrough,
     uppercase && textUppercase,
     className,

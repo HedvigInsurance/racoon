@@ -7,3 +7,10 @@ export const minWidth = Object.fromEntries(
     return [name, `screen and (min-width: ${width}px)`]
   }),
 ) as Record<Level, string>
+
+// Media queries for use in sprinkles
+export const mediaQueries = Object.fromEntries(
+  Object.entries(breakpoints).map(([name, width]) => {
+    return [name, { '@media': `screen and (min-width: ${width}px)` }]
+  }),
+)
