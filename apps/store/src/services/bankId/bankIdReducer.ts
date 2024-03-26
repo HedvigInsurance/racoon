@@ -1,3 +1,4 @@
+import { datadogRum } from '@datadog/browser-rum'
 import { Dispatch } from 'react'
 import { ShopSessionAuthenticationStatus } from '@/services/graphql/generated'
 import { BankIdOperation, BankIdState } from './bankId.types'
@@ -86,6 +87,12 @@ export const bankIdReducer = (
     case 'propertiesUpdate': {
       if (!state.currentOperation) {
         break
+      }
+
+      const hasQRCodeBeenScanned = !state.currentOperation.bankidAppOpened && action.bankidAppOpened
+      if (hasQRCodeBeenScanned) {
+        const operation = state.currentOperation.type === 'login' ? 'bankIdLogin' : 'bankIdSign'
+        datadogRum.addAction(`${operation} qrCodeScanned`)
       }
 
       return {
