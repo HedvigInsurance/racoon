@@ -65,6 +65,7 @@ export function BankIdV6Dialog() {
 
   let Content: ReactNode = null
   let Footer: ReactNode = null
+  let Header: ReactNode = undefined
 
   const { ssn } = currentOperation ?? {}
   if (currentOperation !== null && ssn) {
@@ -169,6 +170,8 @@ export function BankIdV6Dialog() {
       }
 
       case BankIdState.Success: {
+        // Remove close button from header
+        Header = null
         Content = (
           <Text className={iconWithText}>
             <CheckIcon size="1rem" color={theme.colors.signalGreenElement} />
@@ -213,7 +216,7 @@ export function BankIdV6Dialog() {
 
   return (
     <FullscreenDialog.Root open={isOpen} onOpenChange={handleOpenChange}>
-      <FullscreenDialog.Modal center={true} Footer={Footer}>
+      <FullscreenDialog.Modal center={true} Header={Header} Footer={Footer}>
         {Content}
       </FullscreenDialog.Modal>
     </FullscreenDialog.Root>
