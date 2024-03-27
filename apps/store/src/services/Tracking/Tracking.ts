@@ -389,5 +389,19 @@ export const normalizeEmail = (value: unknown) => {
     throw new Error(`Unexpected type for email normalization ${typeof value}`)
   }
   const whitespaceRegex = /\s/g
-  return value?.toString().toLowerCase().trim().replace(whitespaceRegex, '') ?? undefined
+  let normalizedEmail = value?.toString().toLowerCase().trim().replace(whitespaceRegex, '')
+  if (!normalizedEmail) return undefined
+
+  // Remove all periods (.) that precede the domain name
+  // in gmail.com and googlemail.com email addresses
+  // https://developers.google.com/google-ads/api/docs/conversions/enhanced-conversions/web#python
+  const gmailRegex = /^(gmail|googlemail)\.com\s*/
+  const emailParts = normalizedEmail.split('@')
+  const isGmail = emailParts.length > 1 && gmailRegex.test(emailParts[1])
+  if (isGmail) {
+    emailParts[0] = emailParts[0].replace('.', '')
+    normalizedEmail = emailParts.join('@')
+  }
+
+  return normalizedEmail
 }
