@@ -81,7 +81,7 @@ export const Combobox = <Item,>({
     },
     inputValue,
     onInputValueChange({ inputValue: internalInputValue, selectedItem }) {
-      setInputValue(internalInputValue ?? '')
+      setInputValue(internalInputValue)
 
       // Set selectedItem to 'null' when clearing the input with delete/backspace
       // shorturl.at/f0158
