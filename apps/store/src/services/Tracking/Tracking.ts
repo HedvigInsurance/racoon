@@ -347,7 +347,7 @@ const getLegacyUserData = async (
   customerData: { email: string; firstName?: string; lastName?: string },
 ) => {
   if (!customerData.email) return {}
-  const email = await hashValue(normalizeUserValue(customerData.email))
+  const email = await hashValue(normalizeEmail(customerData.email))
   const firstName = await hashValue(normalizeUserValue(customerData.firstName))
   const lastName = await hashValue(normalizeUserValue(customerData.lastName))
   const zipCode = await hashValue(normalizeUserValue(context.zipCode))
@@ -374,7 +374,7 @@ export const hashValue = async (value?: string) => {
   return hashHex
 }
 
-const normalizeUserValue = (value: unknown) => {
+export const normalizeUserValue = (value: unknown) => {
   if (value && typeof value !== 'string' && typeof value !== 'number') {
     throw new Error(`Unexpected type for userData normalization ${typeof value}`)
   }
@@ -382,4 +382,12 @@ const normalizeUserValue = (value: unknown) => {
   return (
     value?.toString().toLowerCase().trim().replace(punctuationAndWhitespaceRegex, '') ?? undefined
   )
+}
+
+export const normalizeEmail = (value: unknown) => {
+  if (value && typeof value !== 'string') {
+    throw new Error(`Unexpected type for email normalization ${typeof value}`)
+  }
+  const whitespaceRegex = /\s/g
+  return value?.toString().toLowerCase().trim().replace(whitespaceRegex, '') ?? undefined
 }
