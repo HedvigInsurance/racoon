@@ -348,6 +348,9 @@ const getLegacyUserData = async (
 ) => {
   if (!customerData.email) return {}
   const email = await hashValue(normalizeEmail(customerData.email))
+  const gmail = isGmail(customerData.email)
+    ? await hashValue(normalizeGmail(customerData.email))
+    : undefined
   const firstName = await hashValue(normalizeUserValue(customerData.firstName))
   const lastName = await hashValue(normalizeUserValue(customerData.lastName))
   const zipCode = await hashValue(normalizeUserValue(context.zipCode))
@@ -355,6 +358,7 @@ const getLegacyUserData = async (
   const country = await hashValue(normalizeUserValue(context.countryCode))
   return {
     em: email,
+    ...(gmail && { gem: gmail }),
     fn: firstName,
     ln: lastName,
     ad: {
@@ -388,6 +392,29 @@ export const normalizeEmail = (value: unknown) => {
   if (value && typeof value !== 'string') {
     throw new Error(`Unexpected type for email normalization ${typeof value}`)
   }
+
   const whitespaceRegex = /\s/g
   return value?.toString().toLowerCase().trim().replace(whitespaceRegex, '') ?? undefined
+}
+
+export const normalizeGmail = (value: unknown) => {
+  const normalizedEmail = normalizeEmail(value)
+  if (!normalizedEmail) return undefined
+
+  // Remove all periods (.) that precede the domain name
+  // in gmail.com and googlemail.com email addresses
+  // https://developers.google.com/google-ads/api/docs/conversions/enhanced-conversions/web#python
+  const emailParts = normalizedEmail.split('@')
+  emailParts[0] = emailParts[0].replaceAll('.', '')
+  const normalizedGmail = emailParts.join('@')
+
+  return normalizedGmail
+}
+
+const isGmail = (email: string) => {
+  const normalizedEmail = normalizeEmail(email)
+  if (!normalizedEmail) return false
+  const gmailRegex = /^(gmail|googlemail)\.com\s*/
+  const emailParts = normalizedEmail.split('@')
+  return emailParts.length > 1 && gmailRegex.test(emailParts[1])
 }
