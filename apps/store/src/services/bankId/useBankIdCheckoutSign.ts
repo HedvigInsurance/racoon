@@ -96,6 +96,8 @@ const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
         bankidAppOpened: BankIdSignOperation['bankidAppOpened']
       }>((subscriber) => {
         const startPolling = (shopSessionSigningId: string) => {
+          bankIdLogger.setContextProperty('shopSessionId', shopSessionId)
+
           fetchSigning({
             variables: { shopSessionSigningId },
             pollInterval: 1000,
