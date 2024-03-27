@@ -89,11 +89,10 @@ const ButtonWrapper = styled.div({
   paddingBottom: theme.space.xl,
 })
 
-const LOREM_IPSUM =
-  `Laboris culpa consequat sint. Voluptate enim ad quis duis est. Anim ex do in labore duis cupidatat anim sit aute. Reprehenderit labore aliqua sint in tempor minim voluptate id amet commodo qui dolor. Officia magna minim esse. Voluptate duis consectetur ad ex est. 
+const LOREM_IPSUM = `Laboris culpa consequat sint. Voluptate enim ad quis duis est. Anim ex do in labore duis cupidatat anim sit aute. Reprehenderit labore aliqua sint in tempor minim voluptate id amet commodo qui dolor. Officia magna minim esse. Voluptate duis consectetur ad ex est. 
   Est velit fugiat incididunt reprehenderit in ad velit minim eiusmod. Anim exercitation dolor ipsum esse anim ad dolor ea. Dolor sunt minim ea labore labore qui. Consectetur do irure aute esse.
   Magna laboris nostrud qui ipsum velit sint consequat culpa et. Mollit nulla deserunt officia tempor nisi voluptate ex. Veniam proident ad ea consequat. In cillum officia dolor reprehenderit. Pariatur ut minim culpa. Occaecat minim dolore Lorem deserunt adipisicing 
-  in est officia sunt sit labore do. Consequat aliquip quis veniam ea voluptate laboris. Est aliqua veniam magna. Officia fugiat in velit.` as const
+  in est officia sunt sit labore do. Consequat aliquip quis veniam ea voluptate laboris. Est aliqua veniam magna. Officia fugiat in velit.`
 
 const perilTitles = [
   'Fire',
