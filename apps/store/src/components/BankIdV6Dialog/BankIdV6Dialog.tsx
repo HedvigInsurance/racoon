@@ -20,6 +20,7 @@ import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialo
 import { Skeleton } from '@/components/Skeleton'
 import { SIGN_FORM_ID } from '@/constants/sign.constants'
 import { BankIdOperation, BankIdState } from '@/services/bankId/bankId.types'
+import { bankIdLogger } from '@/services/bankId/bankId.utils'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { ShopSessionAuthenticationStatus } from '@/services/graphql/generated'
 import { wait } from '@/utils/wait'
@@ -55,8 +56,10 @@ export function BankIdV6Dialog() {
     if (!open && currentOperation) {
       const cancelCurrentOperation =
         currentOperation.type === 'login' ? cancelLogin : cancelCheckoutSign
-
       cancelCurrentOperation()
+
+      const logPrefix = currentOperation.type === 'login' ? 'Login' : 'Sign'
+      bankIdLogger.info(`${logPrefix} | Operation cancelled`)
     }
   }
 
