@@ -19,5 +19,5 @@
   "QR_CODE_READ_SUBTITLE": "Följ instruktionerna i BankID-appen",
   "QR_CODE_READ_TITLE": "Fyll i din säkerhetskod",
   "SIGN_BANKID": "Signera med BankID",
-  "SIGN_BANKID_ERROR": "Kunde inte sig"
+  "SIGN_BANKID_ERROR": "Kunde inte signera"
 }
