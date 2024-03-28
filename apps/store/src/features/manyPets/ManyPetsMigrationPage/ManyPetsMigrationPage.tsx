@@ -4,7 +4,7 @@ import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { FormEventHandler, ReactNode, useCallback, useEffect, useRef } from 'react'
+import { FormEventHandler, ReactNode, useCallback, useRef } from 'react'
 import { BankIdIcon, Button, Heading, HedvigLogo, mq, Space, theme } from 'ui'
 import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import {
@@ -298,13 +298,6 @@ const useSignMigration = (
     },
     [shopSession, startCheckoutSign, fillCart, offerIds, apolloClient, router, locale, showError],
   )
-
-  useEffect(() => {
-    if (currentOperation?.error) {
-      // Workaround for getting userError: {message: "Konflict."}} when trying to sign
-      showError(new Error('Signing failed'))
-    }
-  }, [currentOperation?.error, showError])
 
   let signLoading = false
   const { state: bankIdState } = currentOperation ?? {}
