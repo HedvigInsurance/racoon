@@ -198,7 +198,9 @@ export function BankIdV6Dialog() {
               </Text>
             ) : (
               <Text align="center" size="md">
-                {t('LOGIN_BANKID_ERROR')}
+                {currentOperation.type === 'login'
+                  ? t('LOGIN_BANKID_ERROR')
+                  : t('SIGN_BANKID_ERROR')}
               </Text>
             )}
 
