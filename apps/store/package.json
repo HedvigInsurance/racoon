@@ -137,7 +137,7 @@
     "jest-environment-jsdom": "29.7.0",
     "mini-css-extract-plugin": "2.8.1",
     "msw": "2.2.13",
-    "next-router-mock": "0.9.12",
+    "next-router-mock": "0.9.13",
     "path-browserify": "1.0.1",
     "prettier": "3.2.5",
     "storybook": "8.0.4",
