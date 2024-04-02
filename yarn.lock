@@ -11554,14 +11554,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/next-plugin@npm:2.3.7":
-  version: 2.3.7
-  resolution: "@vanilla-extract/next-plugin@npm:2.3.7"
+"@vanilla-extract/next-plugin@npm:2.4.0":
+  version: 2.4.0
+  resolution: "@vanilla-extract/next-plugin@npm:2.4.0"
   dependencies:
     "@vanilla-extract/webpack-plugin": "npm:^2.3.7"
   peerDependencies:
     next: ">=12.1.7"
-  checksum: 10c0/39727c869dda707bfa226018252b78acf5b83469ea33689b630898671541b2515cd1051390738bd2a511a30588fa721637d055b9bfd9b75b1e40b5791bfa97fd
+  checksum: 10c0/9a8e30607437769c215df3e13e2261976513d73b288f30408e03b16ac7cd2224eec2b47366159c18f4c44fdf7ef0534661071cd3adf4aef5f526a1881bc53124
   languageName: node
   linkType: hard
 
@@ -25001,7 +25001,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:7.4.0"
     "@vanilla-extract/css": "npm:1.14.2"
     "@vanilla-extract/dynamic": "npm:2.1.0"
-    "@vanilla-extract/next-plugin": "npm:2.3.7"
+    "@vanilla-extract/next-plugin": "npm:2.4.0"
     "@vanilla-extract/recipes": "npm:0.5.2"
     "@vanilla-extract/sprinkles": "npm:1.6.1"
     "@vanilla-extract/webpack-plugin": "npm:2.3.7"
