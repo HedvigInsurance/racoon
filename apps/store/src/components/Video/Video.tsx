@@ -251,7 +251,7 @@ const VideoWrapper = styled.div({
   position: 'relative',
 })
 
-const StyledVideo = styled.video(
+const StyledVideo = styled.video<Omit<VideoProps, 'sources'>>(
   ({
     poster,
     aspectRatioLandscape,
@@ -259,7 +259,7 @@ const StyledVideo = styled.video(
     maxHeightLandscape,
     maxHeightPortrait,
     roundedCorners,
-  }: Omit<VideoProps, 'sources'>) => ({
+  }) => ({
     width: '100%',
     objectFit: 'cover',
     ...(poster && {

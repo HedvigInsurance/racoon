@@ -241,11 +241,11 @@ const Label = styled.label({
   },
 })
 
-const StyledChevronIcon = styled(ChevronIcon)(() => ({
+const StyledChevronIcon = styled(ChevronIcon)({
   pointerEvents: 'none',
   transition: 'transform 200ms cubic-bezier(0.77,0,0.18,1)',
 
   [`${Wrapper}[data-state=open] &`]: {
     transform: 'rotate(180deg)',
   },
-}))
+})

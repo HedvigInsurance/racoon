@@ -11,8 +11,8 @@ type SpaceFlexProps = {
   wrap?: 'wrap' | 'nowrap' | 'wrap-reverse'
 }
 
-const SpaceFlexWrapper = styled('div', { shouldForwardProp: isPropValid })(
-  ({ space, direction, align, wrap }: SpaceFlexProps) => ({
+const SpaceFlexWrapper = styled('div', { shouldForwardProp: isPropValid })<SpaceFlexProps>(
+  ({ space, direction, align, wrap }) => ({
     display: 'flex',
     flexWrap: wrap,
     gap: `${space}rem`,
