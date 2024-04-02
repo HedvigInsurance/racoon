@@ -11482,7 +11482,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/css@npm:1.14.1, @vanilla-extract/css@npm:^1.14.0":
+"@vanilla-extract/css@npm:1.14.2":
+  version: 1.14.2
+  resolution: "@vanilla-extract/css@npm:1.14.2"
+  dependencies:
+    "@emotion/hash": "npm:^0.9.0"
+    "@vanilla-extract/private": "npm:^1.0.4"
+    chalk: "npm:^4.1.1"
+    css-what: "npm:^6.1.0"
+    cssesc: "npm:^3.0.0"
+    csstype: "npm:^3.0.7"
+    deep-object-diff: "npm:^1.1.9"
+    deepmerge: "npm:^4.2.2"
+    media-query-parser: "npm:^2.0.2"
+    modern-ahocorasick: "npm:^1.0.0"
+    outdent: "npm:^0.8.0"
+  checksum: 10c0/3a0d57815afbd8131b8235fc38a9f74413f7a0d46e5d59dc7aa404123e50168a646fbd765c4b55cdac0fc67f0c2695b1e6feecd16ac8d92887f3858ba273aa99
+  languageName: node
+  linkType: hard
+
+"@vanilla-extract/css@npm:^1.14.0":
   version: 1.14.1
   resolution: "@vanilla-extract/css@npm:1.14.1"
   dependencies:
@@ -11546,6 +11565,13 @@ __metadata:
   version: 1.0.3
   resolution: "@vanilla-extract/private@npm:1.0.3"
   checksum: 10c0/62a74cb4fce877debb8043cda8b9efb8ca142b56d6a64525929a16a6e6c4f9bc181a6ea099b5b6ed08d0c7b3e8389b7e05f7fe9b4b0fae6eb74c2a69cb6ee2f7
+  languageName: node
+  linkType: hard
+
+"@vanilla-extract/private@npm:^1.0.4":
+  version: 1.0.4
+  resolution: "@vanilla-extract/private@npm:1.0.4"
+  checksum: 10c0/d21d55a4892bc760cafdba7a4920a702a3fc29ed108977ad73ab0b92293c0b6bd55426a868d725eadda7b7b4ad8f44dadd7d6b28877c51421270b78bf53568b8
   languageName: node
   linkType: hard
 
@@ -24969,7 +24995,7 @@ __metadata:
     "@types/uuid": "npm:9.0.8"
     "@typescript-eslint/eslint-plugin": "npm:7.4.0"
     "@typescript-eslint/parser": "npm:7.4.0"
-    "@vanilla-extract/css": "npm:1.14.1"
+    "@vanilla-extract/css": "npm:1.14.2"
     "@vanilla-extract/dynamic": "npm:2.1.0"
     "@vanilla-extract/next-plugin": "npm:2.3.7"
     "@vanilla-extract/recipes": "npm:0.5.2"
@@ -26512,7 +26538,7 @@ __metadata:
     "@types/react-dom": "npm:18.2.23"
     "@typescript-eslint/eslint-plugin": "npm:7.4.0"
     "@typescript-eslint/parser": "npm:7.4.0"
-    "@vanilla-extract/css": "npm:1.14.1"
+    "@vanilla-extract/css": "npm:1.14.2"
     "@vanilla-extract/dynamic": "npm:2.1.0"
     "@vanilla-extract/sprinkles": "npm:1.6.1"
     babel-jest: "npm:29.7.0"
