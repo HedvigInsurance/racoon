@@ -6,7 +6,7 @@ import { InfoCard } from '@/components/InfoCard/InfoCard'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useMemberAreaInfo } from '@/features/memberArea/useMemberAreaInfo'
 import { MemberPaymentConnectionStatus } from '@/services/graphql/generated'
-import { CONTENT_WIDTH } from '../InsuranceSection/InsurancesSection'
+import { CONTENT_WIDTH } from '../InsuranceSection/InsuranceSection.constants'
 import { InsuranceCost } from './InsuranceCost'
 import { PaymentConnection } from './PaymentConnection'
 

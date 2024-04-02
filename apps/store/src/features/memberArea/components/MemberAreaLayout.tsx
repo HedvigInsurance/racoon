@@ -11,7 +11,7 @@ import { Skeleton } from '@/components/Skeleton'
 import { useMemberAreaMemberInfoQuery } from '@/services/graphql/generated'
 import { GlobalStory, PageStory } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
-import { CONTENT_WIDTH } from '../InsuranceSection/InsurancesSection'
+import { CONTENT_WIDTH } from '../InsuranceSection/InsuranceSection.constants'
 import { MenuLoadingState, Menu } from './Menu'
 
 type Props = {
