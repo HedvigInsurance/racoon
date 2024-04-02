@@ -27,7 +27,7 @@ const Wrapper = styled.div({
   borderRadius: theme.radius.md,
 })
 
-const AmountBar = styled.div(({ filledPortion }: { filledPortion: number }) => ({
+const AmountBar = styled.div<{ filledPortion: number }>(({ filledPortion }) => ({
   position: 'relative',
   flex: '1 1',
   height: '0.25rem',

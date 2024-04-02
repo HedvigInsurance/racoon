@@ -68,24 +68,21 @@ export const HeroBlock = ({ blok }: HeroBlockProps) => {
   )
 }
 
-const HeroSection = styled.section(
-  ({
-    heightPortrait,
-    heightLandscape,
-  }: Pick<HeroBlockProps['blok'], 'heightPortrait' | 'heightLandscape'>) => ({
-    position: 'relative',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
+const HeroSection = styled.section<
+  Pick<HeroBlockProps['blok'], 'heightPortrait' | 'heightLandscape'>
+>(({ heightPortrait, heightLandscape }) => ({
+  position: 'relative',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
 
-    ['@media (orientation: portrait)']: {
-      ...(heightPortrait && { minHeight: `${heightPortrait}vh` }),
-    },
-    ['@media (orientation: landscape)']: {
-      ...(heightLandscape && { minHeight: `${heightLandscape}vh` }),
-    },
-  }),
-)
+  ['@media (orientation: portrait)']: {
+    ...(heightPortrait && { minHeight: `${heightPortrait}vh` }),
+  },
+  ['@media (orientation: landscape)']: {
+    ...(heightLandscape && { minHeight: `${heightLandscape}vh` }),
+  },
+}))
 
 const HeroImageWrapper = styled.div({
   zIndex: '-1',
@@ -106,11 +103,10 @@ const HeroImageLandscape = styled(HeroImage)({
   ['@media (orientation: landscape)']: { display: 'block' },
 })
 
-const HeroContent = styled.div(
-  ({ verticalAlignment }: Pick<HeroBlockProps['blok'], 'verticalAlignment'>) => ({
+const HeroContent = styled.div<Pick<HeroBlockProps['blok'], 'verticalAlignment'>>(
+  ({ verticalAlignment }) => ({
     position: 'relative',
     display: 'flex',
-    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: getAlignmentStyles(verticalAlignment),
     flexGrow: 1,

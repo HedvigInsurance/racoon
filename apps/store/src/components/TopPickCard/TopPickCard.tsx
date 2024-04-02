@@ -41,11 +41,11 @@ const Wrapper = styled(Space)({
   width: PRODUCT_CARD_IMAGE_WIDTH_SMALL,
 })
 
-const ImageWrapper = styled.div(() => ({
+const ImageWrapper = styled.div({
   position: 'relative',
   height: PRODUCT_CARD_IMAGE_HEIGHT_SMALL,
   width: '100%',
-}))
+})
 
 const Image = styled(ImageWithPlaceholder)({
   objectFit: 'cover',
