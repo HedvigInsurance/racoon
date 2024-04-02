@@ -41,16 +41,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client-react-streaming@npm:0.9.0":
-  version: 0.9.0
-  resolution: "@apollo/client-react-streaming@npm:0.9.0"
+"@apollo/client-react-streaming@npm:0.9.1":
+  version: 0.9.1
+  resolution: "@apollo/client-react-streaming@npm:0.9.1"
   dependencies:
     superjson: "npm:^1.12.2 || ^2.0.0"
     ts-invariant: "npm:^0.10.3"
   peerDependencies:
     "@apollo/client": ^3.9.6
     react: ^18
-  checksum: 10c0/78c14e9e6c046a13cd811e18c0cc4485e0a07836caf4b35e9578688b06a11ebd7a0f160139334f3d741d282d5173bb562454fa3986160eba6953b6ed0c31f6c8
+  checksum: 10c0/18caaa83cee0a40043d3e555bdb35aea906ebd0b2d2195135c3bb015467a548a39b1f3acff6f88058ec4f2f868a26cc4979f83e162820955eafc3214238f98c7
   languageName: node
   linkType: hard
 
@@ -91,16 +91,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/experimental-nextjs-app-support@npm:0.9.0":
-  version: 0.9.0
-  resolution: "@apollo/experimental-nextjs-app-support@npm:0.9.0"
+"@apollo/experimental-nextjs-app-support@npm:0.9.1":
+  version: 0.9.1
+  resolution: "@apollo/experimental-nextjs-app-support@npm:0.9.1"
   dependencies:
-    "@apollo/client-react-streaming": "npm:0.9.0"
+    "@apollo/client-react-streaming": "npm:0.9.1"
   peerDependencies:
     "@apollo/client": ^3.9.6
     next: ^13.4.1 || ^14.0.0
     react: ^18
-  checksum: 10c0/2244327c2455dc312d5eeee47e7ceb0b66aba73deaba59085da335ffdf59c72cc6b9b5454b0025f0c92d5baee2ba1008611bf65782ee66c8b455e3cea443cbdc
+  checksum: 10c0/2dccbf09aa0fa8e6213f9319f76c44f8307a3b537ead35cf8abbc6e3c07ce724ccd6f770cd6b5ca49a633f4ec2d2abfc52cf5f68e343c9b328336952b247a61c
   languageName: node
   linkType: hard
 
@@ -24911,7 +24911,7 @@ __metadata:
   dependencies:
     "@adyen/adyen-web": "npm:3.23.0"
     "@apollo/client": "npm:3.9.9"
-    "@apollo/experimental-nextjs-app-support": "npm:0.9.0"
+    "@apollo/experimental-nextjs-app-support": "npm:0.9.1"
     "@babel/core": "npm:7.24.3"
     "@babel/preset-env": "npm:7.24.3"
     "@babel/preset-react": "npm:7.24.1"
