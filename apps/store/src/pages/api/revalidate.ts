@@ -19,10 +19,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(401).json({ message: 'Invalid token' })
   }
 
-  const { story_id } = req.body as Payload
+  const { story_id, action } = req.body as Payload
+  const version = action === 'unpublished' ? 'draft' : 'published'
 
   try {
-    const { data } = await getStoryblokApi().getStory(`${story_id}`, {})
+    const { data } = await getStoryblokApi().getStory(`${story_id}`, { version })
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     const route = SLUG_TO_ROUTE_MAP[data.story.full_slug] ?? data.story.full_slug
