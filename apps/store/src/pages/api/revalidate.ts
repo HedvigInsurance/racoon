@@ -33,7 +33,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.json({ revalidated: true })
   } catch (error) {
     console.error('Error revalidating', error)
-    return res.status(500).json('Error revalidating')
+    const status = (error as { status?: number }).status ?? 500
+    return res.status(status).json('Error revalidating')
   }
 }
 
