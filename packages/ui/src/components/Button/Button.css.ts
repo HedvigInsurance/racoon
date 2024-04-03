@@ -190,29 +190,30 @@ const SIZE_STYLES = {
   },
 } as const
 
-export const buttonSizeBase = styleVariants({
-  small: SIZE_STYLES.small,
-  medium: SIZE_STYLES.medium,
-  large: SIZE_STYLES.large,
-})
-
-export const buttonSizeLarge = styleVariants({
-  small: {
-    '@media': {
-      [minWidth.lg]: SIZE_STYLES.small,
-    },
+export const buttonSizeStyles = {
+  base: {
+    small: style(SIZE_STYLES.small),
+    medium: style(SIZE_STYLES.medium),
+    large: style(SIZE_STYLES.large),
   },
-  medium: {
-    '@media': {
-      [minWidth.lg]: SIZE_STYLES.medium,
-    },
+  lg: {
+    small: style({
+      '@media': {
+        [minWidth.lg]: SIZE_STYLES.small,
+      },
+    }),
+    medium: style({
+      '@media': {
+        [minWidth.lg]: SIZE_STYLES.medium,
+      },
+    }),
+    large: style({
+      '@media': {
+        [minWidth.lg]: SIZE_STYLES.large,
+      },
+    }),
   },
-  large: {
-    '@media': {
-      [minWidth.lg]: SIZE_STYLES.large,
-    },
-  },
-})
+}
 
 export const childrenWrapper = style({
   display: 'flex',
