@@ -24,6 +24,7 @@ export type Props = ButtonHTMLAttributes<HTMLButtonElement> & CustomButtonProps
 
 export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
   const {
+    className,
     variant = 'primary',
     size = 'large',
     fullWidth,
@@ -60,7 +61,12 @@ export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
     ...(title ? { title: title } : {}),
   } as const
   const sizeStyles = getButtonSizeStyles(size)
-  const classNames = clsx(buttonVariant[variant], sizeStyles, fullWidth && fullWidthStyles)
+  const classNames = clsx(
+    buttonVariant[variant],
+    sizeStyles,
+    fullWidth && fullWidthStyles,
+    className,
+  )
 
   return <button className={classNames} {...buttonProps} />
 })
