@@ -1,16 +1,13 @@
-import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
+import { useStoryblokState } from '@storyblok/react'
 import { type GetStaticPaths, type GetStaticProps, type NextPageWithLayout } from 'next'
-import { DefaultDebugDialog } from '@/components/DebugDialog/DefaultDebugDialog'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import { ProductPage } from '@/components/ProductPage/ProductPage'
 import { type ProductPageProps } from '@/components/ProductPage/ProductPage.types'
+import { StoryblokPage } from '@/components/StoryblokPage'
 import { fetchBlogPageProps } from '@/features/blog/fetchBlogPageProps'
-import { BlogContext, parseBlogContext } from '@/features/blog/useBlog'
-import { CompanyReviewsMetadataProvider } from '@/features/memberReviews/CompanyReviewsMetadataProvider'
 import { fetchProductReviewsMetadata } from '@/features/memberReviews/memberReviews'
-import type { ReviewsMetadata } from '@/features/memberReviews/memberReviews.types'
 import { initializeApollo } from '@/services/apollo/client'
 import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { getStoryblokPageProps } from '@/services/storyblok/getStoryblokPageProps'
@@ -25,40 +22,13 @@ import { isProductStory } from '@/services/storyblok/Storyblok.helpers'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
 
-type NextContentPageProps = StoryblokPageProps & {
-  type: 'content'
-  companyReviewsMetadata: ReviewsMetadata | null
-}
 type NextProductPageProps = ProductPageProps & { type: 'product' }
-
+type NextContentPageProps = StoryblokPageProps & { type: 'content' }
 type PageProps = NextContentPageProps | NextProductPageProps
 
 const NextCmsPage: NextPageWithLayout<PageProps> = (props) => {
   if (props.type === 'product') return <NextProductPage {...props} />
-  return <NextStoryblokPage {...props} />
-}
-
-const NextStoryblokPage = (props: NextContentPageProps) => {
-  const story = useStoryblokState(props.story)
-  if (!story) return null
-  const abTestOriginStory = story.content.abTestOrigin
-  // Always use robots value from the source page in A/B test cases
-  const robots = story.content.robots
-
-  return (
-    <BlogContext.Provider value={parseBlogContext(props)}>
-      <CompanyReviewsMetadataProvider companyReviewsMetadata={props.companyReviewsMetadata}>
-        <HeadSeoInfo
-          // Gotcha:  Sometimes Storyblok returns "" for PageStory pages that doesn't get 'abTestOrigin' configured
-          // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-          story={abTestOriginStory || story}
-          robots={robots}
-        />
-        <StoryblokComponent blok={story.content} />
-        <DefaultDebugDialog />
-      </CompanyReviewsMetadataProvider>
-    </BlogContext.Provider>
-  )
+  return <StoryblokPage {...props} />
 }
 
 const NextProductPage = (props: ProductPageProps) => {
