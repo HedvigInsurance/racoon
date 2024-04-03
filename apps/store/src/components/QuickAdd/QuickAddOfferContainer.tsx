@@ -1,18 +1,19 @@
 import { useTranslation } from 'next-i18next'
-import { Heading, Text, theme } from 'ui'
+import { Heading, Text, Space, theme } from 'ui'
 import { Perils } from '@/components/Perils/Perils'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Price } from '@/components/Price'
-import type {
-  CartFragmentFragment} from '@/services/graphql/generated';
+import type { CartFragmentFragment } from '@/services/graphql/generated'
 import {
   type OfferRecommendationFragment,
   type ProductRecommendationFragment,
 } from '@/services/graphql/generated'
+import { Features } from '@/utils/Features'
 import { getOfferPrice } from '@/utils/getOfferPrice'
 import { AddToCartButton } from './AddToCartButton'
 import { DismissButton } from './DismissButton'
 import { ProductUsp, QuickAddBundleView } from './QuickAddBundleView'
+import { QuickAddEditableView } from './QuickAddEditableView'
 import { QuickAddInfoDialog } from './QuickAddInfoDialog'
 import { useShowQuickAdd } from './useShowQuickAdd'
 
@@ -23,6 +24,7 @@ const HOME_INSURANCES = [
   'SE_APARTMENT_BRF',
   'SE_STUDENT_APARTMENT',
 ]
+const ACCIDENT_INSURANCE = 'SE_ACCIDENT'
 
 type Props = {
   shopSessionId: string
@@ -31,31 +33,41 @@ type Props = {
   product: ProductRecommendationFragment
 }
 
-export const QuickAddOfferContainer = (props: Props) => {
+export function QuickAddOfferContainer(props: Props) {
   const { t } = useTranslation('cart')
   const [show] = useShowQuickAdd()
 
+  // We only support cross-selling of Accident insurance at the moment
+  if (props.product.name !== ACCIDENT_INSURANCE) {
+    console.log(`Cross sell | Unsupported product: ${props.product.name}`)
+    return null
+  }
+
   if (!show) return null
 
-  // Assume Accident insurance
-  const householdSize = (parseInt(props.offer.priceIntentData[CO_INSURED_DATA_KEY]) || 0) + 1
-
-  // Only display "Home + Accident" and mainOfferPillow if Home insurance is in cart
   const homeInsuranceInCart =
     props.cart.entries.find((entry) => HOME_INSURANCES.includes(entry.product.name)) ?? null
+  if (!homeInsuranceInCart && Features.enabled('CROSS_SELL_CARD_V2')) {
+    return <QuickAddEditableView />
+  }
+
+  const householdSize = parseInt(props.offer.priceIntentData[CO_INSURED_DATA_KEY] || 0, 10) + 1
   const title = homeInsuranceInCart
     ? t('QUICK_ADD_TITLE', { product: props.product.displayNameShort })
     : props.product.displayNameFull
   const subtitle = t('QUICK_ADD_HOUSEHOLD_SIZE', { count: householdSize })
-
   const price = getOfferPrice(props.offer.cost)
+  const primaryPillow = homeInsuranceInCart
+    ? homeInsuranceInCart.product.pillowImage
+    : props.product.pillowImage
+  const secondaryPillow = homeInsuranceInCart ? props.product.pillowImage : undefined
 
   return (
     <QuickAddBundleView
       title={title}
       subtitle={subtitle}
-      pillow={props.product.pillowImage}
-      mainOfferPillow={homeInsuranceInCart?.product.pillowImage}
+      primaryPillow={primaryPillow}
+      secondaryPillow={secondaryPillow}
       href={props.product.pageLink}
       price={price}
       badge={{ children: t('QUICK_ADD_BADGE_LABEL') }}
@@ -85,15 +97,18 @@ export const QuickAddOfferContainer = (props: Props) => {
           </ul>
         </>
       }
-    >
-      <AddToCartButton
-        shopSessionId={props.shopSessionId}
-        productName={props.product.name}
-        offer={props.offer}
-      >
-        {t('QUICK_ADD_BUTTON_BUNDLE')}
-      </AddToCartButton>
-      <DismissButton />
-    </QuickAddBundleView>
+      Footer={
+        <Space y={0.5}>
+          <AddToCartButton
+            shopSessionId={props.shopSessionId}
+            productName={props.product.name}
+            offer={props.offer}
+          >
+            {t('QUICK_ADD_BUTTON_BUNDLE')}
+          </AddToCartButton>
+          <DismissButton />
+        </Space>
+      }
+    />
   )
 }
