@@ -3,8 +3,7 @@ import Link from 'next/link'
 import { Space } from 'ui'
 import { useMemberAreaInfo } from '../useMemberAreaInfo'
 import { InsuranceCard } from './InsuranceCard'
-
-export const CONTENT_WIDTH = '28.5rem'
+import { CONTENT_WIDTH } from './InsuranceSection.constants'
 
 export const Insurances = () => {
   const currentMember = useMemberAreaInfo()

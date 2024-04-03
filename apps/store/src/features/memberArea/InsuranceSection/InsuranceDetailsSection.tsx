@@ -1,4 +1,3 @@
-import styled from '@emotion/styled'
 import * as RadixTabs from '@radix-ui/react-tabs'
 import router, { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
@@ -10,7 +9,7 @@ import { MemberContractFragment } from '@/services/graphql/generated'
 import { singleQueryParam } from '@/utils/singleQueryParam'
 import { useMemberAreaInfo } from '../useMemberAreaInfo'
 import { InsuranceCard } from './InsuranceCard'
-import { CONTENT_WIDTH } from './InsurancesSection'
+import { tabList, tabButton, overview, documentsList, row } from './InsuranceDetailsSection.css'
 
 const SECTION_QUERY_PARAM = 'section'
 
@@ -22,12 +21,12 @@ export const InsuranceDetailsSection = () => {
   return (
     <>
       {contract && (
-        <Overview>
+        <div className={overview}>
           <Space y={2}>
             <InsuranceCard key={contract.id} contract={contract} />
             <InsuranceTabs contract={contract} />
           </Space>
-        </Overview>
+        </div>
       )}
     </>
   )
@@ -50,35 +49,35 @@ const InsuranceTabs = ({ contract }: InsuranceTabsProps) => {
       defaultValue={singleQueryParam(query, SECTION_QUERY_PARAM) ?? 'overview'}
       onValueChange={handleTabChange}
     >
-      <TabsList>
+      <RadixTabs.List className={tabList}>
         <RadixTabs.Trigger asChild={true} value="overview">
-          <TabButton variant="secondary" size="medium">
+          <Button className={tabButton} variant="secondary" size="medium">
             {t('INSURANCE_DETAILS_TAB_OVERVIEW')}
-          </TabButton>
+          </Button>
         </RadixTabs.Trigger>
         <RadixTabs.Trigger asChild={true} value="coverage">
-          <TabButton variant="secondary" size="medium">
+          <Button className={tabButton} variant="secondary" size="medium">
             {t('INSURANCE_DETAILS_TAB_COVERAGE')}
-          </TabButton>
+          </Button>
         </RadixTabs.Trigger>
         <RadixTabs.Trigger asChild={true} value="documents">
-          <TabButton variant="secondary" size="medium">
+          <Button className={tabButton} variant="secondary" size="medium">
             {t('INSURANCE_DETAILS_TAB_DOCUMENTS')}
-          </TabButton>
+          </Button>
         </RadixTabs.Trigger>
-      </TabsList>
+      </RadixTabs.List>
 
       <RadixTabs.TabsContent value="overview">
         <Heading as="h2" variant="standard.24" mt={theme.space.lg}>
           {t('INSURANCE_DETAILS_TAB_OVERVIEW')}
         </Heading>
         {contract.currentAgreement.displayItems.map((displayItem) => (
-          <Row key={displayItem.displayTitle}>
+          <div key={displayItem.displayTitle} className={row}>
             <Text size={{ _: 'sm', lg: 'md' }}>{displayItem.displayTitle}</Text>
             <Text color="textSecondary" size={{ _: 'sm', lg: 'md' }}>
               {displayItem.displayValue}
             </Text>
-          </Row>
+          </div>
         ))}
       </RadixTabs.TabsContent>
 
@@ -86,12 +85,12 @@ const InsuranceTabs = ({ contract }: InsuranceTabsProps) => {
         <Space y={1}>
           <div>
             {contract.currentAgreement.productVariant.insurableLimits.map((limit) => (
-              <Row key={limit.label}>
+              <div key={limit.label} className={row}>
                 <Text size={{ _: 'sm', lg: 'md' }}>{limit.label}</Text>
                 <Text color="textSecondary" size={{ _: 'sm', lg: 'md' }}>
                   {limit.limit}
                 </Text>
-              </Row>
+              </div>
             ))}
           </div>
           <Perils items={contract.currentAgreement.productVariant.perils} />
@@ -110,7 +109,7 @@ type Agreement = MemberContractFragment['currentAgreement']
 const Documents = ({ currentAgreement }: { currentAgreement: Agreement }) => {
   const { t } = useTranslation('memberArea')
   return (
-    <DocumentList>
+    <div className={documentsList}>
       {currentAgreement.certificateUrl && (
         <InsuranceDocumentLink
           displayName={t('INSURANCE_DETAILS_CERTIFICATE_BUTTON')}
@@ -124,39 +123,6 @@ const Documents = ({ currentAgreement }: { currentAgreement: Agreement }) => {
           displayName={document.displayName}
         />
       ))}
-    </DocumentList>
+    </div>
   )
 }
-
-const TabsList = styled(RadixTabs.List)({
-  display: 'flex',
-  gap: theme.space.xs,
-  marginBottom: theme.space.xs,
-})
-
-const TabButton = styled(Button)({
-  flex: 1,
-  '&[data-state=active]': {
-    backgroundColor: theme.colors.translucent2,
-  },
-})
-
-const Overview = styled.div({ width: `min(${CONTENT_WIDTH}, 100%)` })
-
-const DocumentList = styled.div({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: theme.space.md,
-  marginTop: theme.space.lg,
-})
-
-const Row = styled.div({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  height: '3rem',
-
-  ':not(:first-of-type)': {
-    borderTop: '1px solid hsla(0, 0%, 7%, 0.1)',
-  },
-})
