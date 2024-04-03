@@ -266,16 +266,18 @@ export const getPageLinks = async (params?: GetPageLinksParams): Promise<Array<P
   return pageLinks
 }
 
-const EXCLUDE_SLUGS = new Set([
+// NOTE: Excluding by content_type would be easier to support,
+// but according to the docs it's only possible to do if we fetch full stories, not links
+const EXCLUDE_FOLDERS = new Set([
   'reusable-blocks',
   'product-metadata',
+  'car-buyer',
   STORYBLOK_MANYPETS_FOLDER_SLUG,
   STORYBLOK_WIDGET_FOLDER_SLUG,
 ])
-// TODO: Consider filtering by content-type on CMS side to exclude things like reusable-blocks
 export const getFilteredPageLinks = async () => {
   const allLinks = await getPageLinks()
-  return allLinks.filter(({ slugParts }) => EXCLUDE_SLUGS.has(slugParts[0]) === false)
+  return allLinks.filter(({ slugParts }) => EXCLUDE_FOLDERS.has(slugParts[0]) === false)
 }
 
 export const getGlobalStory = (options: StoryOptions): Promise<GlobalStory> => {
