@@ -3,6 +3,7 @@ import { PropsWithChildren, Suspense } from 'react'
 import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import globalCss from 'ui/src/global.css'
 import { TranslationsProvider } from '@/appComponents/providers/TranslationsProvider'
+import { OrgStructuredData } from '@/appComponents/RootLayout/OrgStructuredData'
 import { contentFontClassName } from '@/utils/fonts'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 import { RoutingLocale } from '@/utils/l10n/types'
@@ -22,6 +23,11 @@ export async function RootLayout({
 
   return (
     <html lang={getLocaleOrFallback(locale).htmlLang}>
+      {/* False alert, next/head does now work with app router */}
+      {/* eslint-disable-next-line @next/next/no-head-element */}
+      <head>
+        <OrgStructuredData />
+      </head>
       <body className={contentFontClassName}>
         <Suspense>
           <DebugError />
