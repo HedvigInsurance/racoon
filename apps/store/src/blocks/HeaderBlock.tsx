@@ -241,7 +241,6 @@ export type HeaderBlockProps = SbBaseBlockProps<{
     NestedNavContainerBlockProps | NavItemBlockProps | ProductNavContainerBlockProps
   >
 }> & {
-  overlay?: boolean
   static?: boolean
 }
 

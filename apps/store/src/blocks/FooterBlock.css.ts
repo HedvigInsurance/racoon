@@ -1,8 +1,9 @@
 import { style } from '@vanilla-extract/css'
 import { minWidth, theme } from 'ui/src/theme'
+import { footerBgColor } from 'ui/src/theme/vars.css'
 
 export const wrapperStyle = style({
-  backgroundColor: theme.colors.gray100,
+  backgroundColor: footerBgColor,
   paddingTop: theme.space.xxl,
 
   // Clear floating price calculator button

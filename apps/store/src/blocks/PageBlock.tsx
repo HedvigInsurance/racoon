@@ -14,6 +14,9 @@ export const PageBlock = ({ blok }: PageBlockProps) => {
         className={main}
         {...storyblokEditable(blok)}
         data-hide-breadcrumbs={!!blok.hideBreadcrumbs}
+        data-dark-background={!!blok.darkBackground}
+        data-overlay-menu={!!blok.overlayMenu}
+        data-hide-chat={!!blok.hideChat}
       >
         {blok.body.map((nestedBlock) => (
           <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />

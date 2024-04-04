@@ -2,9 +2,9 @@
 const main = async () => {
   const stories = await readStoriesFromStdin()
   for (const story of stories) {
-    const { hideBreadcrumbs } = story.content
-    if (hideBreadcrumbs) {
-      console.log(story.full_slug, story.content.component, { hideBreadcrumbs })
+    const { darkBackground, overlayMenu } = story.content
+    if (darkBackground || overlayMenu) {
+      console.log(story.full_slug, story.content.component, { darkBackground, overlayMenu })
     }
   }
 }
