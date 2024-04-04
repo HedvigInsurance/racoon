@@ -47,7 +47,6 @@ export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
   const showMenuOverlay = story?.content.overlayMenu ?? props.overlayMenu
   const darkBackground = story?.content.darkBackground
 
-  const showBreadcrumbList = !story?.content.hideBreadcrumbs && breadcrumbs?.length !== 0 && story
   const breadcrumbItems = [...(breadcrumbs ?? []), ...(story ? [{ label: story.name }] : [])]
 
   return (
@@ -69,7 +68,7 @@ export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
         {!props.hideFooter &&
           footerBlock.map((nestedBlock) => (
             <Fragment key={nestedBlock._uid}>
-              {showBreadcrumbList && <BreadcrumbList items={breadcrumbItems} />}
+              <BreadcrumbList items={breadcrumbItems} />
 
               <FooterBlock
                 key={nestedBlock._uid}
