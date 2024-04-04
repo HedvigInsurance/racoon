@@ -23,6 +23,7 @@ type LayoutWithMenuProps = {
   }>
   overlayMenu?: boolean
   hideFooter?: boolean
+  hideMenu?: boolean
 }
 
 export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
@@ -36,16 +37,14 @@ export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
   if (!globalStory) return null
 
   // Announcements are added as reusable blocks for Page and ProductPage content types
-  const reusableBlock = filterByBlockType(
+  const announcementBlocks = filterByBlockType(
     story?.content.announcement,
     ReusableBlockReference.blockName,
   )
   const headerBlock = filterByBlockType(globalStory.content.header, HeaderBlock.blockName)
   const footerBlock = filterByBlockType(globalStory.content.footer, FooterBlock.blockName)
 
-  const showHeader = !story?.content.hideMenu
   const showMenuOverlay = story?.content.overlayMenu ?? props.overlayMenu
-  const showFooter = !props.hideFooter && !story?.content.hideFooter
   const darkBackground = story?.content.darkBackground
 
   const showBreadcrumbList = !story?.content.hideBreadcrumbs && breadcrumbs?.length !== 0 && story
@@ -54,10 +53,10 @@ export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
   return (
     <>
       <div className={clsx(wrapper, className, darkBackground && dark)}>
-        {reusableBlock.map((referencedBlok) => (
+        {announcementBlocks.map((referencedBlok) => (
           <StoryblokComponent key={referencedBlok._uid} blok={referencedBlok} />
         ))}
-        {showHeader &&
+        {!props.hideMenu &&
           headerBlock.map((nestedBlock) => (
             <HeaderBlock
               key={nestedBlock._uid}
@@ -67,7 +66,7 @@ export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
             />
           ))}
         {props.children}
-        {showFooter &&
+        {!props.hideFooter &&
           footerBlock.map((nestedBlock) => (
             <Fragment key={nestedBlock._uid}>
               {showBreadcrumbList && <BreadcrumbList items={breadcrumbItems} />}

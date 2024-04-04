@@ -1,5 +1,5 @@
 import { type GetServerSideProps } from 'next'
-import NextCmsPage from '@/pages/[locale]/[[...slug]]'
+import { CarBuyerCmsPage } from '@/features/carDealership/CarBuyerCmsPage'
 import { getStoryblokPageProps } from '@/services/storyblok/getStoryblokPageProps'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
@@ -30,4 +30,4 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   }
 }
 
-export default NextCmsPage
+export default CarBuyerCmsPage

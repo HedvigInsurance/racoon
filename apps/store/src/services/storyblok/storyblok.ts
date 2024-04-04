@@ -110,10 +110,8 @@ export type PageStory = ISbStoryData<
   {
     announcement?: ExpectedBlockType<ReusableBlockReferenceProps>
     body: Array<SbBlokData>
-    hideMenu?: boolean
     overlayMenu?: boolean
     darkBackground?: boolean
-    hideFooter?: boolean
     hideBreadcrumbs?: boolean
     hideChat?: boolean
   } & SEOData
