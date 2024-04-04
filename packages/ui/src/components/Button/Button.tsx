@@ -1,7 +1,13 @@
 'use client'
 
 import clsx from 'clsx'
-import { ButtonHTMLAttributes, forwardRef, type ReactNode } from 'react'
+import {
+  ButtonHTMLAttributes,
+  forwardRef,
+  type ForwardedRef,
+  type LegacyRef,
+  type ReactNode,
+} from 'react'
 import { buttonVariant, centered, childrenWrapper, fullWidthStyles } from './Button.css'
 import { ButtonSize, getButtonSizeStyles } from './Button.helpers'
 import { DotPulse } from './DotPulse'
@@ -20,15 +26,17 @@ type CustomButtonProps = {
   Icon?: ReactNode
 } & LinkProps
 
-export type Props = ButtonHTMLAttributes<HTMLButtonElement> & CustomButtonProps
+export type Props = ButtonHTMLAttributes<HTMLButtonElement | HTMLAnchorElement> & CustomButtonProps
+type Ref = HTMLButtonElement | HTMLAnchorElement
 
-export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
+export const Button = forwardRef<Ref, Props>((props, ref) => {
   const {
     className,
     variant = 'primary',
     size = 'large',
     fullWidth,
     loading,
+    href,
     children,
     target,
     title,
@@ -52,8 +60,6 @@ export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
   const buttonProps = {
     ...baseProps,
     children: buttonChildren,
-    as: props.href ? 'a' : 'button',
-    ref,
     disabled: props.disabled || loading,
     ...(loading && { 'data-loading': true }),
     ...(target === '_blank' && { target: '_blank', rel: 'noopener' }),
@@ -68,7 +74,20 @@ export const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
     className,
   )
 
-  return <button className={classNames} {...buttonProps} />
+  if (href) {
+    return (
+      <a
+        className={classNames}
+        href={href}
+        ref={ref as LegacyRef<HTMLAnchorElement>}
+        {...buttonProps}
+      />
+    )
+  }
+
+  return (
+    <button className={classNames} ref={ref as ForwardedRef<HTMLButtonElement>} {...buttonProps} />
+  )
 })
 
 Button.displayName = 'Button'
