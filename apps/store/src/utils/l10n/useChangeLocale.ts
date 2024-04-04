@@ -1,6 +1,5 @@
 import { useApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
-import { ISbStoryData } from '@storyblok/react'
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 import { CookiePersister } from '@/services/persister/CookiePersister'
@@ -11,7 +10,7 @@ import { toRoutingLocale } from '@/utils/l10n/localeUtils'
 import { IsoLocale } from '@/utils/l10n/types'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 
-export const useChangeLocale = (currentPageStory: ISbStoryData | undefined) => {
+export const useChangeLocale = () => {
   const router = useRouter()
   const currentCountry = useCurrentCountry()
   const apolloClient = useApolloClient()
@@ -33,16 +32,17 @@ export const useChangeLocale = (currentPageStory: ISbStoryData | undefined) => {
           return
         }
 
-        const targetAlternate = currentPageStory?.alternates.find((alternate) =>
-          alternate.full_slug.startsWith(routingLocale),
+        const targetAlternate = document.querySelector<HTMLLinkElement>(
+          `link[rel=alternate][hreflang=${newLocale}]`,
         )
-        const url = targetAlternate ? targetAlternate.full_slug : `/${routingLocale}`
-        window.location.pathname = url
+        const newPathname =
+          targetAlternate != null ? new URL(targetAlternate.href).pathname : `/${routingLocale}`
+        window.location.pathname = newPathname
       } catch (error) {
         datadogLogs.logger.error('Failed to change locale', { error, newLocale })
         router.refresh()
       }
     },
-    [apolloClient, currentCountry, currentPageStory, router],
+    [apolloClient, currentCountry, router],
   )
 }

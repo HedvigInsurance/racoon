@@ -14,7 +14,8 @@ import { BUSINESS_REGISTRATION_NUMBER, organization } from '@/utils/jsonSchema'
 import { getCountryLocale } from '@/utils/l10n/countryUtils'
 import { LocaleField } from '@/utils/l10n/locales'
 import { getLocaleOrFallback, translateLanguageName } from '@/utils/l10n/localeUtils'
-import { IsoLocale, Language } from '@/utils/l10n/types'
+import { Language } from '@/utils/l10n/types'
+import { useChangeLocale } from '@/utils/l10n/useChangeLocale'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { disclaimerStyle, wrapperStyle } from './FooterBlock.css'
@@ -62,15 +63,14 @@ export const FooterSectionBlock = ({ blok }: FooterSectionProps) => {
 }
 FooterSectionBlock.blockName = 'footerSection' as const
 
-export type FooterBlockProps = {
-  onLocaleChange: (newLocale: IsoLocale) => void
-} & SbBaseBlockProps<{
+export type FooterBlockProps = SbBaseBlockProps<{
   sections: ExpectedBlockType<FooterSectionProps>
 }>
-export const FooterBlock = ({ blok, onLocaleChange }: FooterBlockProps) => {
+export const FooterBlock = ({ blok }: FooterBlockProps) => {
   const { language: currentLanguage } = useCurrentLocale()
   const currentCountry = useCurrentCountry()
   const { t } = useTranslation()
+  const handleLocaleChange = useChangeLocale()
 
   const languageList = currentCountry.locales.map((locale) => {
     const { language } = getLocaleOrFallback(locale)
@@ -83,7 +83,7 @@ export const FooterBlock = ({ blok, onLocaleChange }: FooterBlockProps) => {
   const handleChangeLanguage: ChangeEventHandler<HTMLSelectElement> = (event) => {
     const newLanguage = event.target.value as Language
     const newLocale = getCountryLocale(currentCountry.id, newLanguage)
-    onLocaleChange(newLocale)
+    handleLocaleChange(newLocale)
   }
 
   const footerSections = filterByBlockType(blok.sections, FooterSectionBlock.blockName)

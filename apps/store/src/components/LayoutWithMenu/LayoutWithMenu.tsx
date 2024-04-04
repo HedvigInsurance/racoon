@@ -7,7 +7,6 @@ import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
 import { wrapper } from '@/components/LayoutWithMenu/LayoutWithMenu.css'
 import { GlobalStory, PageStory } from '@/services/storyblok/storyblok'
 import { filterByBlockType, isProductStory } from '@/services/storyblok/Storyblok.helpers'
-import { useChangeLocale } from '@/utils/l10n/useChangeLocale'
 import { BreadcrumbList, BreadcrumbListItem } from './BreadcrumbList'
 import { GLOBAL_PRODUCT_METADATA_PROP_NAME, GlobalProductMetadata } from './fetchProductMetadata'
 import { useHydrateProductMetadata } from './productMetadataHooks'
@@ -28,8 +27,6 @@ export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
   const { story, globalStory, className, breadcrumbs } = props.children.props
 
   useHydrateProductMetadata(props.children.props[GLOBAL_PRODUCT_METADATA_PROP_NAME])
-
-  const handleLocaleChange = useChangeLocale(story)
 
   // Happens for transitions from pages with layout to pages without layout
   if (!globalStory) return null
@@ -64,11 +61,7 @@ export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
             <Fragment key={nestedBlock._uid}>
               <BreadcrumbList items={breadcrumbItems} />
 
-              <FooterBlock
-                key={nestedBlock._uid}
-                blok={nestedBlock}
-                onLocaleChange={handleLocaleChange}
-              />
+              <FooterBlock key={nestedBlock._uid} blok={nestedBlock} />
             </Fragment>
           ))}
       </div>
