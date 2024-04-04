@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
-import { type ReactNode, type ComponentProps, type PropsWithChildren } from 'react'
-import { Badge, CheckIcon, Space, Text } from 'ui'
+import { type ReactNode, type ComponentProps } from 'react'
+import { Badge, Space, Text } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Price } from '@/components/Price'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -14,8 +14,6 @@ import {
   pillow,
   pillowWrapper,
   priceWrapper,
-  productDetail,
-  productUsp,
 } from './QuickAddBundleView.css'
 
 type Props = {
@@ -84,36 +82,5 @@ export function QuickAddBundleView(props: Props) {
         </div>
       </Space>
     </div>
-  )
-}
-
-type ProductDetailProps = {
-  children: string | ReactNode
-  value: string
-}
-
-export function ProductDetail(props: ProductDetailProps) {
-  return (
-    <li className={productDetail}>
-      {typeof props.children === 'string' ? (
-        <Text as="p" color="textSecondary">
-          {props.children}
-        </Text>
-      ) : (
-        props.children
-      )}
-      <Text as="p" color="textSecondary">
-        {props.value}
-      </Text>
-    </li>
-  )
-}
-
-export function ProductUsp({ children }: PropsWithChildren) {
-  return (
-    <li className={productUsp}>
-      <Text color="textTranslucentSecondary">{children}</Text>
-      <CheckIcon size="1rem" aria-label="Covered" />
-    </li>
   )
 }
