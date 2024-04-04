@@ -92,12 +92,6 @@ export const contentWrapper = style({
   alignItems: 'center',
   flex: 1,
   gap: theme.space.xs,
-
-  '@media': {
-    [minWidth.lg]: {
-      justifyContent: 'space-between',
-    },
-  },
 })
 
 export const navigation = style({
@@ -110,6 +104,14 @@ export const navigation = style({
     },
   },
 })
+
+export const topMenuDesktop = style([
+  navigation,
+  {
+    // Ensure menu is left-aligned while cart item is right-aligned
+    flexGrow: 1,
+  },
+])
 
 export const navigationItem = style({
   selectors: {

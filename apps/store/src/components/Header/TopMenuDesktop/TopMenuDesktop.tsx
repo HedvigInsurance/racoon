@@ -1,7 +1,7 @@
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { usePathname } from 'next/navigation'
 import React, { useEffect } from 'react'
-import { navigation, navigationPrimaryList } from '../Header.css'
+import { navigationPrimaryList, topMenuDesktop } from '../Header.css'
 
 export type TopMenuDesktopProps = {
   children: React.ReactNode
@@ -16,7 +16,7 @@ export const TopMenuDesktop = ({ children }: TopMenuDesktopProps) => {
 
   return (
     <NavigationMenuPrimitive.Root
-      className={navigation}
+      className={topMenuDesktop}
       value={activeItem}
       onValueChange={setActiveItem}
     >
