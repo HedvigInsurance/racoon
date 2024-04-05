@@ -184,7 +184,7 @@ export class Tracking {
   }) {
     setUserId(memberId)
     const event = cartToEcommerceEvent(TrackingEvent.Purchase, cart, this.context)
-    const userData = await getLegacyUserData(this.context, customer)
+    const userData = await getLegacyUserData(this.context, customer, cart)
     event.ecommerce.userData = userData
     event.ecommerce.transaction_id = cart.id
     event.new_customer = isNewMember
@@ -345,6 +345,7 @@ const productDataToEcommerceEvent = (
 const getLegacyUserData = async (
   context: TrackingContext,
   customerData: { email: string; firstName?: string; lastName?: string },
+  cart: CartFragmentFragment,
 ) => {
   if (!customerData.email) return {}
   const email = await hashValue(normalizeEmail(customerData.email))
@@ -353,8 +354,9 @@ const getLegacyUserData = async (
     : undefined
   const firstName = await hashValue(normalizeUserValue(customerData.firstName))
   const lastName = await hashValue(normalizeUserValue(customerData.lastName))
-  const zipCode = await hashValue(normalizeUserValue(context.zipCode))
-  const city = await hashValue(normalizeUserValue(context.city))
+  const zipCode = await hashValue(normalizeUserValue(cart.entries[0].priceIntentData.zipCode))
+  // We currently don't expose city in shopsession so leave empty for now
+  const city = ''
   const country = await hashValue(normalizeUserValue(context.countryCode))
   return {
     em: email,
