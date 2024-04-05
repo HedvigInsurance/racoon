@@ -1,53 +1,33 @@
-import styled from '@emotion/styled'
+import { clsx } from 'clsx'
 import Link from 'next/link'
-import { Children, type ReactNode } from 'react'
-import { Text, theme } from 'ui'
-import { linkStyles } from '@/components/RichText/RichText.styles'
+import { Children, ComponentProps, type ReactNode } from 'react'
+import { Text } from 'ui'
+import {
+  breadcrumbItem,
+  breadcrumbsLink,
+  breadcrumbsList,
+} from '@/components/LayoutWithMenu/Breadcumbs.css'
 
 const BreadcrumbList = ({ children }: { children: ReactNode }) => {
   const count = Children.count(children)
 
   return (
     <>
-      <StyledBreadcrumbList>
+      <ul className={breadcrumbsList}>
         {Children.map(children, (child, index) => (
-          <BreadcumbItem>
+          <li className={breadcrumbItem}>
             {child}
             {index < count - 1 && <Text color="textSecondaryOnGray">&middot;</Text>}
-          </BreadcumbItem>
+          </li>
         ))}
-      </StyledBreadcrumbList>
+      </ul>
     </>
   )
 }
 
-const StyledBreadcrumbList = styled.ul({
-  display: 'flex',
-  flexFlow: 'row nowrap',
-  gap: theme.space.xxs,
-  overflowX: 'auto',
-
-  padding: theme.space.sm,
-  backgroundColor: theme.colors.opaque2,
-
-  '::before, ::after': {
-    content: '""',
-    margin: 'auto',
-  },
-})
-
-const BreadcumbItem = styled.li({
-  display: 'flex',
-  alignItems: 'center',
-  gap: theme.space.xxs,
-  flexShrink: 0,
-})
-
-const BreadcrumbLink = styled(Link)(linkStyles, {
-  fontSize: theme.fontSizes.sm,
-  color: theme.colors.textPrimary,
-  textDecorationColor: 'transparent',
-})
+const BreadcrumbLink = ({ className, ...forwardedProps }: ComponentProps<typeof Link>) => (
+  <Link className={clsx(breadcrumbsLink, className)} {...forwardedProps} />
+)
 
 export const Breadcrumbs = {
   Root: BreadcrumbList,
