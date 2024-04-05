@@ -8,12 +8,15 @@ export const breadcrumbsList = style({
   overflowX: 'auto',
   padding: theme.space.sm,
   backgroundColor: theme.colors.opaque2,
-  // Almost the same as justifyContent: 'center',
-  // but keeps left alignment when shrunk smaller than content
   selectors: {
+    // Almost the same as justifyContent: 'center',
+    // but keeps left alignment when shrunk smaller than content
     '&::before, &::after': {
       content: '""',
       margin: 'auto',
+    },
+    [`main[data-hide-breadcrumbs=true] ~ &`]: {
+      display: 'none',
     },
   },
 })

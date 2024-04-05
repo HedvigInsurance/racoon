@@ -10,7 +10,11 @@ type PageBlockProps = SbBaseBlockProps<{
 export const PageBlock = ({ blok }: PageBlockProps) => {
   return (
     <>
-      <main className={main} {...storyblokEditable(blok)}>
+      <main
+        className={main}
+        {...storyblokEditable(blok)}
+        data-hide-breadcrumbs={!!blok.hideBreadcrumbs}
+      >
         {blok.body.map((nestedBlock) => (
           <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
         ))}

@@ -38,6 +38,7 @@ export const StoryblokLayout = ({
 
   return (
     <div className={clsx(wrapper, darkBackground && dark)}>
+      {/* TODO: Make announcement part of page rendering, same as breadcrumbs */}
       {reusableBlock.map((referencedBlok) => (
         <StoryblokComponent key={referencedBlok._uid} blok={referencedBlok} />
       ))}
@@ -50,6 +51,7 @@ export const StoryblokLayout = ({
         />
       ))}
       {children}
+      {/* TODO: Add breadcumbs, should be RSC to avoid loading storyblok data from client */}
       {footerBlock.map((nestedBlock) => (
         <Fragment key={nestedBlock._uid}>
           <FooterBlock
