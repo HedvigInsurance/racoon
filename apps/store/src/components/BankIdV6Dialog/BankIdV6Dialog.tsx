@@ -252,7 +252,9 @@ function getReturnURL() {
   return 'null'
 }
 
-function useTryAgainButtonProps(bankIdOperation: BankIdOperation | null): Partial<ButtonProps> {
+function useTryAgainButtonProps(
+  bankIdOperation: BankIdOperation | null,
+): Partial<ButtonProps<'button'>> {
   const { startLogin } = useBankIdContext()
 
   switch (bankIdOperation?.type) {

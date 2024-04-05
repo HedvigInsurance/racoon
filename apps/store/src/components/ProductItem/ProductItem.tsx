@@ -69,9 +69,11 @@ export const ProductItem = (props: Props) => {
   )
 }
 
-export const ActionButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
-  return <Button ref={ref} size="medium" variant="secondary-alt" {...props} />
-})
+export const ActionButton = forwardRef<HTMLButtonElement, ButtonProps<React.ElementType>>(
+  (props, ref) => {
+    return <Button ref={ref} size="medium" variant="secondary-alt" {...props} />
+  },
+)
 ActionButton.displayName = 'ActionButton'
 
 export const ProductItemSkeleton = styled(Skeleton)({ height: '13.5rem' })

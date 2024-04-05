@@ -15,62 +15,59 @@ type BaseProps = {
   Icon?: ReactNode
 }
 
-type Props<C extends React.ElementType> = PolymorphicComponentPropsWithRef<C, BaseProps>
+export type Props<C extends React.ElementType> = PolymorphicComponentPropsWithRef<C, BaseProps>
 
-export const Button = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    {
-      as,
-      variant = 'primary',
-      size = 'large',
-      className,
-      fullWidth,
-      loading,
-      disabled,
-      target,
-      rel,
-      children,
-      Icon,
-      ...props
-    }: Props<C>,
-    ref?: PolymorphicRef<C>,
-  ) => {
-    const sizeStyles = getButtonSizeStyles(size)
+type PolymorphicComponent = <C extends React.ElementType>(props: Props<C>) => ReactNode | null
 
-    const classNames = clsx(
-      buttonVariant[variant],
-      sizeStyles,
-      fullWidth && fullWidthStyles,
-      className,
-    )
+export const Button: PolymorphicComponent = forwardRef(function Button<
+  C extends React.ElementType = 'button',
+>(
+  {
+    as,
+    variant = 'primary',
+    size = 'large',
+    className,
+    fullWidth,
+    loading,
+    disabled,
+    target,
+    rel,
+    children,
+    ...props
+  }: Props<C>,
+  ref?: PolymorphicRef<C>,
+) {
+  const sizeStyles = getButtonSizeStyles(size)
 
-    const Component = as ?? 'button'
+  const classNames = clsx(
+    buttonVariant[variant],
+    sizeStyles,
+    fullWidth && fullWidthStyles,
+    className,
+  )
 
-    const isDisabled = disabled || loading
-    const componentRel = target === '_blank' ? 'noopener' : rel
+  const Component = as ?? 'button'
 
-    return (
-      <Component
-        className={classNames}
-        data-loading={loading}
-        disabled={isDisabled}
-        rel={componentRel}
-        ref={ref}
-        {...props}
-      >
-        <span className={childrenWrapper} style={{ opacity: loading ? 0 : 1 }}>
-          {Icon} {children}
+  const isDisabled = disabled || loading
+  const componentRel = target === '_blank' ? 'noopener' : rel
+
+  return (
+    <Component
+      className={classNames}
+      data-loading={loading}
+      disabled={isDisabled}
+      rel={componentRel}
+      ref={ref}
+      {...props}
+    >
+      <span className={childrenWrapper} style={{ opacity: loading ? 0 : 1 }}>
+        {props.Icon} {children}
+      </span>
+      {loading && (
+        <span className={centered}>
+          <DotPulse />
         </span>
-        {loading && (
-          <span className={centered}>
-            <DotPulse />
-          </span>
-        )}
-      </Component>
-    )
-  },
-)
-
-export type ButtonProps = React.ComponentPropsWithRef<typeof Button>
-
-Button.displayName = 'Button'
+      )}
+    </Component>
+  )
+})
