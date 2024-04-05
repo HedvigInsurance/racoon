@@ -35,9 +35,7 @@ export const InputSelect = ({
 }: InputSelectProps) => {
   const backgroundColor = _backgroundColor ? getColor(_backgroundColor) : undefined
 
-  const { highlight, animationProps } = useHighlightAnimation<HTMLSelectElement>({
-    ...(backgroundColor && { defaultColor: backgroundColor }),
-  })
+  const { highlight, animationProps } = useHighlightAnimation<HTMLSelectElement>()
 
   const handleChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
     onChange?.(event)

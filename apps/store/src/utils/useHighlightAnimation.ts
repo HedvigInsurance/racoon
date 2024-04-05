@@ -1,20 +1,22 @@
 'use client'
 
-import { type KeyboardEvent, useCallback, useRef } from 'react'
+import { type KeyboardEvent, useCallback, useRef, useState, useEffect } from 'react'
 import { theme } from 'ui'
 
 const SIGNAL_GREEN_FILL_HSLA = theme.colors.signalGreenFill
   .replace('hsl', 'hsla')
   .replace(')', ', 0.99)')
 
-type Params = {
-  defaultColor?: string
-}
-
-export const useHighlightAnimation = <Element extends HTMLElement>({
-  defaultColor = theme.colors.translucent1,
-}: Params = {}) => {
+export function useHighlightAnimation<Element extends HTMLElement>() {
   const ref = useRef<Element | null>(null)
+  const [backgroundColor, setBackgroundColor] = useState<string>(theme.colors.translucent1)
+
+  useEffect(() => {
+    if (!ref.current) return
+
+    const elementBackgroundColor = getComputedStyle(ref.current).backgroundColor
+    setBackgroundColor(elementBackgroundColor)
+  }, [])
 
   const highlight = useCallback(
     (event?: KeyboardEvent<Element>) => {
@@ -30,14 +32,14 @@ export const useHighlightAnimation = <Element extends HTMLElement>({
           {
             backgroundColor: SIGNAL_GREEN_FILL_HSLA,
           },
-          { backgroundColor: defaultColor, easing: 'ease-out' },
+          { backgroundColor, easing: 'ease-out' },
         ],
         {
           duration: 1200,
         },
       )
     },
-    [ref, defaultColor],
+    [ref, backgroundColor],
   )
 
   return { highlight, animationProps: { ref } } as const

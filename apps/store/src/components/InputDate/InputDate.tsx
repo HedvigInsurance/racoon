@@ -27,9 +27,7 @@ export const InputDate = (props: Props) => {
       ? theme.colors.backgroundFrostedGlass
       : theme.colors.translucent1
   const identifier = useId()
-  const { highlight, animationProps } = useHighlightAnimation<HTMLDivElement>({
-    defaultColor: backgroundColor,
-  })
+  const { highlight, animationProps } = useHighlightAnimation<HTMLDivElement>()
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setInternalValue(event.target.value)
