@@ -1,7 +1,6 @@
 import { StoryblokComponent } from '@storyblok/react'
 import { clsx } from 'clsx'
 import { Fragment, type ReactElement } from 'react'
-import { dark } from 'ui/src/theme/dark.css'
 import { FooterBlock } from '@/blocks/FooterBlock'
 import { HeaderBlock } from '@/blocks/HeaderBlock'
 import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
@@ -21,7 +20,6 @@ type LayoutWithMenuProps = {
     globalStory: GlobalStory | undefined
     breadcrumbs?: Array<BreadcrumbListItem>
   }>
-  overlayMenu?: boolean
   hideFooter?: boolean
   hideMenu?: boolean
 }
@@ -44,14 +42,11 @@ export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
   const headerBlock = filterByBlockType(globalStory.content.header, HeaderBlock.blockName)
   const footerBlock = filterByBlockType(globalStory.content.footer, FooterBlock.blockName)
 
-  const showMenuOverlay = story?.content.overlayMenu ?? props.overlayMenu
-  const darkBackground = story?.content.darkBackground
-
   const breadcrumbItems = [...(breadcrumbs ?? []), ...(story ? [{ label: story.name }] : [])]
 
   return (
     <>
-      <div className={clsx(wrapper, className, darkBackground && dark)}>
+      <div className={clsx(wrapper, className)}>
         {announcementBlocks.map((referencedBlok) => (
           <StoryblokComponent key={referencedBlok._uid} blok={referencedBlok} />
         ))}
@@ -60,7 +55,6 @@ export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
             <HeaderBlock
               key={nestedBlock._uid}
               blok={nestedBlock}
-              overlay={showMenuOverlay}
               static={story && isProductStory(story)}
             />
           ))}

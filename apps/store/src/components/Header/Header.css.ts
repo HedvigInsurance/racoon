@@ -1,5 +1,4 @@
 import { createVar, style } from '@vanilla-extract/css'
-import { recipe } from '@vanilla-extract/recipes'
 import { minWidth, theme } from 'ui'
 import { zIndexes } from '@/utils/zIndex'
 import {
@@ -26,35 +25,31 @@ export const focusableStyles = style({
 
 const ghostWrapperHeight = createVar()
 
-export const ghostWrapper = recipe({
-  base: {
-    vars: {
-      [ghostWrapperHeight]: HEADER_HEIGHT_MOBILE,
-    },
+export const ghostWrapper = style({
+  vars: {
+    [ghostWrapperHeight]: HEADER_HEIGHT_MOBILE,
+  },
 
-    position: 'relative',
-    height: ghostWrapperHeight,
+  position: 'relative',
+  height: ghostWrapperHeight,
 
-    zIndex: zIndexes.header,
+  zIndex: zIndexes.header,
 
-    '@media': {
-      [minWidth.lg]: {
-        vars: {
-          [ghostWrapperHeight]: HEADER_HEIGHT_DESKTOP,
-        },
+  '@media': {
+    [minWidth.lg]: {
+      vars: {
+        [ghostWrapperHeight]: HEADER_HEIGHT_DESKTOP,
       },
     },
   },
 
-  variants: {
-    overlay: {
-      true: {
-        // Using negative margin to pull page's content bellow the menu causing the desired
-        // 'menu overlay' behaviour. Before that was being implemented by removing the header
-        // from doc's flow with absolute positioning. However, that solution doesn't play well
-        // if we have banners/announcements on the screen.
-        marginBottom: `calc(-1 * ${ghostWrapperHeight})`,
-      },
+  selectors: {
+    'body:has(main[data-overlay-menu=true]) &': {
+      // Using negative margin to pull page's content bellow the menu causing the desired
+      // 'menu overlay' behaviour. Before that was being implemented by removing the header
+      // from doc's flow with absolute positioning. However, that solution doesn't play well
+      // if we have banners/announcements on the screen.
+      marginBottom: `calc(-1 * ${ghostWrapperHeight})`,
     },
   },
 })

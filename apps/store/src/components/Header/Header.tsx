@@ -1,6 +1,7 @@
 'use client'
 
 import { motion, Transition } from 'framer-motion'
+import { ReactNode } from 'react'
 import { bodyBgColor, headerBgTransparentColor } from 'ui/src/theme/vars.css'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { useScrollState } from '@/utils/useScrollState'
@@ -30,14 +31,13 @@ const TRANSITION: Transition = { ease: [0.65, 0.05, 0.36, 1] }
 type AnimationVariant = keyof typeof ANIMATION_VARIANTS | undefined
 
 type HeaderProps = {
-  children: React.ReactNode
+  children: ReactNode
   opaque?: boolean
-  overlay?: boolean
   static?: boolean
 }
 
 export const Header = (props: HeaderProps) => {
-  const { children, opaque = false, overlay = false, static: staticPosition = false } = props
+  const { children, opaque = false, static: staticPosition = false } = props
   const scrollState = useScrollState({ threshold: MENU_BAR_HEIGHT_PX * 2 })
 
   const initialStyles = {
@@ -50,7 +50,7 @@ export const Header = (props: HeaderProps) => {
   animate = staticPosition ? undefined : animate
 
   return (
-    <div style={initialStyles} className={ghostWrapper({ overlay })}>
+    <div style={initialStyles} className={ghostWrapper}>
       <motion.header
         className={wrapper}
         initial={initialStyles}
