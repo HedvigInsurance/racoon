@@ -18,27 +18,23 @@ type BaseProps = {
 type Props<C extends React.ElementType> = PolymorphicComponentPropsWithRef<C, BaseProps>
 
 export const Button = forwardRef(
-  <C extends React.ElementType = 'button'>(props: Props<C>, ref?: PolymorphicRef<C>) => {
-    const {
+  <C extends React.ElementType = 'button'>(
+    {
       as,
-      className,
       variant = 'primary',
       size = 'large',
+      className,
       fullWidth,
       loading,
-      children,
-      target,
       disabled,
+      target,
       rel,
+      children,
       Icon,
-      ...baseProps
-    } = props
-
-    const buttonProps = {
-      ...baseProps,
-      ...(target === '_blank' && { target: '_blank', rel: 'noopener' }),
-    } as const
-
+      ...props
+    }: Props<C>,
+    ref?: PolymorphicRef<C>,
+  ) => {
     const sizeStyles = getButtonSizeStyles(size)
 
     const classNames = clsx(
@@ -56,11 +52,11 @@ export const Button = forwardRef(
     return (
       <Component
         className={classNames}
-        {...buttonProps}
         data-loading={loading}
         disabled={isDisabled}
         rel={componentRel}
         ref={ref}
+        {...props}
       >
         <span className={childrenWrapper} style={{ opacity: loading ? 0 : 1 }}>
           {Icon} {children}
