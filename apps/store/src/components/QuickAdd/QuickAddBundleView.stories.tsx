@@ -8,7 +8,7 @@ import { ProductUsp, QuickAddBundleView } from './QuickAddBundleView'
 import { QuickAddInfoDialog } from './QuickAddInfoDialog'
 
 const meta: Meta<typeof QuickAddBundleView> = {
-  title: 'Components / Quick Add / Bundle View',
+  title: 'Components / Quick Add',
   component: QuickAddBundleView,
   parameters: { grid: { width: '1/3', align: 'center' } },
 }
@@ -129,6 +129,26 @@ export const Default: Story = {
         <Text as="p" color="textTranslucentSecondary">
           Increase your coverage with our accident insurance. Get compensation for dental, scars and
           much more.
+          <QuickAddInfoDialog
+            Header={
+              <>
+                <Pillow
+                  size="xlarge"
+                  src="https://assets.hedvig.com/f/165473/832x832/1bb4813dd1/hedvig-pillows-accident.png"
+                />
+                <Heading as="h1" variant="standard.18" mt={theme.space.md}>
+                  Accident insurance
+                </Heading>
+                <Price
+                  color="textTranslucentSecondary"
+                  amount={100}
+                  currencyCode={CurrencyCode.Sek}
+                />
+              </>
+            }
+          >
+            <Perils items={perils} />
+          </QuickAddInfoDialog>
         </Text>
         <ul>
           <ProductUsp>Extra coverage for injuries and accidents</ProductUsp>
@@ -141,31 +161,9 @@ export const Default: Story = {
       children: 'Popular',
     },
     children: (
-      <>
-        <Button size="medium" fullWidth={true}>
-          Upgrade
-        </Button>
-        <QuickAddInfoDialog
-          Header={
-            <>
-              <Pillow
-                size="xlarge"
-                src="https://assets.hedvig.com/f/165473/832x832/1bb4813dd1/hedvig-pillows-accident.png"
-              />
-              <Heading as="h1" variant="standard.18" mt={theme.space.md}>
-                Accident insurance
-              </Heading>
-              <Price
-                color="textTranslucentSecondary"
-                amount={100}
-                currencyCode={CurrencyCode.Sek}
-              />
-            </>
-          }
-        >
-          <Perils items={perils} />
-        </QuickAddInfoDialog>
-      </>
+      <Button size="medium" fullWidth={true}>
+        Upgrade
+      </Button>
     ),
   },
 }
