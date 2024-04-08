@@ -5,7 +5,6 @@ import { SEOData } from '@/services/storyblok/storyblok'
 import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 import { isBrowser } from '@/utils/env'
 import { organization } from '@/utils/jsonSchema'
-import { getCountryByLocale } from '@/utils/l10n/countryUtils'
 import { getLocaleOrFallback, isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { ORIGIN_URL } from '@/utils/PageLink'
 
@@ -88,9 +87,7 @@ const AlternateLink = ({ fullSlug }: { fullSlug: string }) => {
 const getHrefLang = (fullSlug: string) => {
   const slugLocale = fullSlug.split('/')[0]
   if (isRoutingLocale(slugLocale)) {
-    const locale = getLocaleOrFallback(slugLocale)
-    const country = getCountryByLocale(slugLocale)
-    return `${locale.language}-${country.countryCode}`
+    return getLocaleOrFallback(slugLocale).locale
   }
 
   return 'x-default'

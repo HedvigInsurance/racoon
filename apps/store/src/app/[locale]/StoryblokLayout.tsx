@@ -7,7 +7,6 @@ import { HeaderBlock } from '@/blocks/HeaderBlock'
 import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
 import { GlobalStory } from '@/services/storyblok/storyblok'
 import { filterByBlockType, isProductStory } from '@/services/storyblok/Storyblok.helpers'
-import { useChangeLocale } from '@/utils/l10n/useChangeLocale'
 import { wrapper } from './StoryblokLayout.css'
 
 // TODO: Render layout and page server-side
@@ -24,9 +23,6 @@ export const StoryblokLayout = ({
   // Removed breadcrumbs from page router LayoutWithMenu, kept other flags in fixed state
   const story: any = null
 
-  // TODO: read alternates from DOM instead of relying on story data which we may not have
-  const handleLocaleChange = useChangeLocale(story)
-
   // Announcements are added as reusable blocks for Page and ProductPage content types
   const reusableBlock = filterByBlockType(
     story?.content.announcement,
@@ -42,6 +38,7 @@ export const StoryblokLayout = ({
         <StoryblokComponent key={referencedBlok._uid} blok={referencedBlok} />
       ))}
       {headerBlock.map((nestedBlock) => (
+        // TODO: derive `static` from story DOM, similar to `data-hide-footer`, etc
         <HeaderBlock
           key={nestedBlock._uid}
           blok={nestedBlock}
@@ -52,11 +49,7 @@ export const StoryblokLayout = ({
       {/* TODO: Add breadcrumbs, should be RSC to avoid loading storyblok data from client */}
       {footerBlock.map((nestedBlock) => (
         <Fragment key={nestedBlock._uid}>
-          <FooterBlock
-            key={nestedBlock._uid}
-            blok={nestedBlock}
-            onLocaleChange={handleLocaleChange}
-          />
+          <FooterBlock key={nestedBlock._uid} blok={nestedBlock} />
         </Fragment>
       ))}
     </div>
