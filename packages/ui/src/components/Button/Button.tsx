@@ -33,6 +33,7 @@ export const Button: PolymorphicComponent = forwardRef(function Button<
     target,
     rel,
     children,
+    Icon,
     ...props
   }: Props<C>,
   ref?: PolymorphicRef<C>,
@@ -62,7 +63,7 @@ export const Button: PolymorphicComponent = forwardRef(function Button<
       {...props}
     >
       <span className={childrenWrapper} style={{ opacity: loading ? 0 : 1 }}>
-        {props.Icon} {children}
+        {Icon} {children}
       </span>
       {loading && (
         <span className={centered}>
