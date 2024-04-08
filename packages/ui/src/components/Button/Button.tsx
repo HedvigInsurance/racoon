@@ -49,7 +49,8 @@ export const Button: PolymorphicComponent = forwardRef(function Button<
   const Component = as ?? 'button'
 
   const isDisabled = disabled || loading
-  const componentRel = target === '_blank' ? 'noopener' : rel
+  const shouldSetDefaultRel = !rel && target === '_blank'
+  const componentRel = shouldSetDefaultRel ? 'noopener' : rel
 
   return (
     <Component
