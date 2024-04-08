@@ -46,7 +46,6 @@ export const StoryblokLayout = ({
         />
       ))}
       {children}
-      {/* TODO: Add breadcrumbs, should be RSC to avoid loading storyblok data from client */}
       {footerBlock.map((nestedBlock) => (
         <Fragment key={nestedBlock._uid}>
           <FooterBlock key={nestedBlock._uid} blok={nestedBlock} />

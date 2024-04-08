@@ -13,7 +13,6 @@ export const PageBlock = ({ blok }: PageBlockProps) => {
       <main
         className={main}
         {...storyblokEditable(blok)}
-        data-hide-breadcrumbs={!!blok.hideBreadcrumbs}
         data-dark-background={!!blok.darkBackground}
         data-overlay-menu={!!blok.overlayMenu}
         data-hide-chat={!!blok.hideChat}
