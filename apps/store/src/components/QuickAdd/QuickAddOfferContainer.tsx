@@ -58,7 +58,6 @@ export function QuickAddOfferContainer(props: Props) {
         title={props.product.displayNameFull}
         subtitle={t('USP_NO_BINDING_TIME')}
         productPageLink={props.product.pageLink}
-        price={getOfferPrice(props.offer.cost)}
         badge={t('QUICK_ADD_BADGE_LABEL')}
         Body={
           <ul>

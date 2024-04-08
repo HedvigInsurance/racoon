@@ -5,18 +5,13 @@ import { type OfferRecommendationFragment } from '@/services/graphql/generated'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useAddToCart } from '@/utils/useAddToCart'
 
-export type AddToCartButtonProps = {
+type Props = {
   shopSessionId: string
   offer: OfferRecommendationFragment
   productName: string
 } & Omit<ButtonProps<'button'>, 'onClick' | 'loading'>
 
-export const AddToCartButton = ({
-  shopSessionId,
-  offer,
-  productName,
-  ...buttonProps
-}: AddToCartButtonProps) => {
+export const AddToCartButton = ({ shopSessionId, offer, productName, ...buttonProps }: Props) => {
   const [addToCart, loading] = useAddToCart({
     shopSessionId: shopSessionId,
     onSuccess() {
