@@ -25,3 +25,13 @@ Default.args = {
     return `${count} person${count === 1 ? '' : 's'}`
   },
 }
+
+export const WithLabel = Template.bind({})
+WithLabel.args = {
+  name: 'numberCoInsured',
+  max: 5,
+  optionLabel(count) {
+    return `${count} person${count === 1 ? '' : 's'}`
+  },
+  label: 'Insured people',
+}

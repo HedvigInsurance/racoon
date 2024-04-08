@@ -1,10 +1,17 @@
 'use client'
 
-import styled from '@emotion/styled'
-import { type ChangeEventHandler, type MouseEvent, type MouseEventHandler, useState } from 'react'
+import clsx from 'clsx'
+import {
+  type ChangeEventHandler,
+  type MouseEvent,
+  type MouseEventHandler,
+  useState,
+  useId,
+} from 'react'
 import { MinusIcon, PlusIcon, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
+import { outerWrapper, innerWrapper, select, inputLabel, stepButton } from './StepperInput.css'
 
 type Props = {
   name?: string
@@ -17,6 +24,7 @@ type Props = {
   label?: string
   optionLabel: (count: number) => string
   onChange?: (value: number) => void
+  className?: string
 }
 
 /**
@@ -24,9 +32,12 @@ type Props = {
  * Based on: https://www.magentaa11y.com/checklist-web/stepper-input/
  */
 export const StepperInput = (props: Props) => {
-  const { max, min = 0, value, defaultValue, label, optionLabel, ...inputProps } = props
+  const { max, min = 0, value, defaultValue, label, optionLabel, className, ...inputProps } = props
   const [internalValue, setInternalValue] = useState(value ?? defaultValue ?? min)
   const { highlight, animationProps } = useHighlightAnimation<HTMLDivElement>()
+
+  const selectId = useId()
+  const labelId = useId()
 
   const changeValue = (event: MouseEvent, amount: 1 | -1) => {
     event.preventDefault()
@@ -61,23 +72,31 @@ export const StepperInput = (props: Props) => {
   const isIncrementDisabled = internalValue === max
 
   return (
-    <>
-      <Wrapper {...animationProps}>
-        <StyledSelect
+    <div className={clsx(outerWrapper, className)} {...animationProps}>
+      {label && (
+        <label id={labelId} className={inputLabel} htmlFor={selectId}>
+          {label}
+        </label>
+      )}
+      <div className={innerWrapper}>
+        <select
           {...inputProps}
+          id={selectId}
+          className={select}
           value={internalValue}
           onChange={handleChange}
-          aria-label={label}
+          aria-labelledby={labelId}
         >
           {options.map((item) => (
             <option key={item.value} value={item.value}>
               {item.label}
             </option>
           ))}
-        </StyledSelect>
+        </select>
 
         <SpaceFlex space={0.5}>
-          <StyledButton
+          <button
+            className={stepButton}
             type="button"
             onClick={decrement}
             tabIndex={-1}
@@ -88,8 +107,9 @@ export const StepperInput = (props: Props) => {
               size="1rem"
               color={isDecrementDisabled ? theme.colors.textDisabled : theme.colors.textPrimary}
             />
-          </StyledButton>
-          <StyledButton
+          </button>
+          <button
+            className={stepButton}
             type="button"
             onClick={increment}
             tabIndex={-1}
@@ -100,36 +120,9 @@ export const StepperInput = (props: Props) => {
               size="1rem"
               color={isIncrementDisabled ? theme.colors.textDisabled : theme.colors.textPrimary}
             />
-          </StyledButton>
+          </button>
         </SpaceFlex>
-      </Wrapper>
-    </>
+      </div>
+    </div>
   )
 }
-
-const Wrapper = styled.div({
-  display: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  width: '100%',
-  height: '3rem',
-
-  paddingInline: theme.space.md,
-  borderRadius: theme.radius.sm,
-  backgroundColor: theme.colors.translucent1,
-})
-
-const StyledSelect = styled.select({
-  fontSize: theme.fontSizes.xl,
-  color: theme.colors.textPrimary,
-})
-
-const StyledButton = styled.button({
-  cursor: 'pointer',
-  height: '1.5rem',
-  width: '1.5rem',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-})
