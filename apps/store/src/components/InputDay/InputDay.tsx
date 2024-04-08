@@ -55,9 +55,7 @@ export const InputDay = (props: Props) => {
       ? theme.colors.backgroundFrostedGlass
       : theme.colors.translucent1
 
-  const { highlight, animationProps } = useHighlightAnimation<HTMLButtonElement>({
-    defaultColor: backgroundColor,
-  })
+  const { highlight, animationProps } = useHighlightAnimation<HTMLButtonElement>()
 
   const handleSelect: SelectSingleEventHandler = (day) => {
     if (day) props.onSelect?.(day)
