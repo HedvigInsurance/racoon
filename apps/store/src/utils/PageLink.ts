@@ -86,6 +86,9 @@ export const PageLink = {
 
     return url
   },
+  cookiesInfo: ({ locale }: BaseParams) => {
+    return new URL(`${locale}/hedvig/cookies`, ORIGIN_URL)
+  },
   confirmation: ({ locale, shopSessionId }: ConfirmationPage) => {
     const pathname = `${locale}/confirmation/${shopSessionId}`
     return new URL(pathname, ORIGIN_URL)
