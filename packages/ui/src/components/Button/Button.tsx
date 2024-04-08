@@ -41,13 +41,14 @@ export const Button = forwardRef<Ref, Props>((props, ref) => {
     target,
     title,
     rel,
+    Icon,
     ...baseProps
   } = props
 
   const buttonChildren = (
     <>
       <span className={childrenWrapper} style={{ opacity: loading ? 0 : 1 }}>
-        {props.Icon} {children}
+        {Icon} {children}
       </span>
       {loading && (
         <span className={centered}>
