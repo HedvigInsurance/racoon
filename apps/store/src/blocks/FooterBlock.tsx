@@ -88,7 +88,7 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
 
   const footerSections = filterByBlockType(blok.sections, FooterSectionBlock.blockName)
   return (
-    <div className={wrapperStyle}>
+    <footer className={wrapperStyle}>
       <RootLayout>
         {footerSections.map((nestedBlok) => (
           <Column key={nestedBlok._uid}>
@@ -118,7 +118,7 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
           </Text>
         </div>
       </RootLayout>
-    </div>
+    </footer>
   )
 }
 FooterBlock.blockName = 'footer' as const
