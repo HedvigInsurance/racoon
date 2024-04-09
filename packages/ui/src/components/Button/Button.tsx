@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import { forwardRef, type ReactNode } from 'react'
 import type { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../TypeUtils'
 import { buttonVariant, centered, childrenWrapper, fullWidthStyles } from './Button.css'
-import type { ButtonSize} from './Button.helpers';
+import type { ButtonSize } from './Button.helpers'
 import { getButtonSizeStyles } from './Button.helpers'
 import { DotPulse } from './DotPulse'
 
@@ -18,7 +18,9 @@ type BaseProps = {
 
 export type Props<C extends React.ElementType> = PolymorphicComponentPropsWithRef<C, BaseProps>
 
-type PolymorphicComponent = <C extends React.ElementType>(props: Props<C>) => ReactNode | null
+type PolymorphicComponent = <C extends React.ElementType = 'button'>(
+  props: Props<C>,
+) => ReactNode | null
 
 export const Button: PolymorphicComponent = forwardRef(function Button<
   C extends React.ElementType = 'button',
