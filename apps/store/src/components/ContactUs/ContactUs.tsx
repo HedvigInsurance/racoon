@@ -82,6 +82,7 @@ export const ContactUs = () => {
 
               <AppButtons>
                 <Button
+                  as="a"
                   data-dd-action-name="Contact us | IOS App"
                   href={getAppStoreLink('apple', locale).toString()}
                   target="_blank"
@@ -94,6 +95,7 @@ export const ContactUs = () => {
                 </Button>
 
                 <Button
+                  as="a"
                   data-dd-action-name="Contact us | Android App"
                   href={getAppStoreLink('google', locale).toString()}
                   target="_blank"
