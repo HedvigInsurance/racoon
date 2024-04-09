@@ -7,7 +7,6 @@ import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
 import { wrapper } from '@/components/LayoutWithMenu/LayoutWithMenu.css'
 import { GlobalStory, PageStory } from '@/services/storyblok/storyblok'
 import { filterByBlockType, isProductStory } from '@/services/storyblok/Storyblok.helpers'
-import { BreadcrumbList, BreadcrumbListItem } from './BreadcrumbList'
 import { GLOBAL_PRODUCT_METADATA_PROP_NAME, GlobalProductMetadata } from './fetchProductMetadata'
 import { useHydrateProductMetadata } from './productMetadataHooks'
 
@@ -17,14 +16,13 @@ type LayoutWithMenuProps = {
     [GLOBAL_PRODUCT_METADATA_PROP_NAME]: GlobalProductMetadata
     story: PageStory | undefined
     globalStory: GlobalStory | undefined
-    breadcrumbs?: Array<BreadcrumbListItem>
   }>
   hideFooter?: boolean
   hideMenu?: boolean
 }
 
 export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
-  const { story, globalStory, className, breadcrumbs } = props.children.props
+  const { story, globalStory, className } = props.children.props
 
   useHydrateProductMetadata(props.children.props[GLOBAL_PRODUCT_METADATA_PROP_NAME])
 
@@ -38,8 +36,6 @@ export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
   )
   const headerBlock = filterByBlockType(globalStory.content.header, HeaderBlock.blockName)
   const footerBlock = filterByBlockType(globalStory.content.footer, FooterBlock.blockName)
-
-  const breadcrumbItems = [...(breadcrumbs ?? []), ...(story ? [{ label: story.name }] : [])]
 
   return (
     <>
@@ -58,11 +54,7 @@ export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
         {props.children}
         {!props.hideFooter &&
           footerBlock.map((nestedBlock) => (
-            <Fragment key={nestedBlock._uid}>
-              <BreadcrumbList items={breadcrumbItems} />
-
-              <FooterBlock key={nestedBlock._uid} blok={nestedBlock} />
-            </Fragment>
+            <FooterBlock key={nestedBlock._uid} blok={nestedBlock} />
           ))}
       </div>
     </>

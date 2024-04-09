@@ -15,9 +15,6 @@ export const breadcrumbsList = style({
       content: '""',
       margin: 'auto',
     },
-    [`body:has(main[data-hide-breadcrumbs=true]) &`]: {
-      display: 'none',
-    },
   },
 })
 

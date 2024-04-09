@@ -1,6 +1,7 @@
 import { type GetServerSidePropsContext, type GetStaticPropsContext } from 'next'
-import { fetchBreadcrumbs } from '@/components/LayoutWithMenu/fetchBreadcrumbs'
 import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
+import { fetchBreadcrumbs } from '@/components/PageBreadcrumbs/fetchBreadcrumbs'
+import { type BreadcrumbListItem } from '@/components/PageBreadcrumbs/PageBreadcrumbs'
 import { fetchCompanyReviewsMetadata } from '@/features/memberReviews/memberReviews'
 import { type RoutingLocale } from '@/utils/l10n/types'
 import { initializeApollo } from '../apollo/client'
@@ -27,7 +28,7 @@ export const getStoryblokPageProps = async ({
 
   const timerName = `Get Storyblok page props for ${locale}/${slug} ${draftMode ? '(draft)' : ''}`
   console.time(timerName)
-  const [layoutWithMenuProps, breadcrumbs, companyReviewsMetadata] = await Promise.all([
+  const [layoutWithMenuProps, parentBreadcrumbs, companyReviewsMetadata] = await Promise.all([
     getLayoutWithMenuProps(context, apolloClient),
     fetchBreadcrumbs(slug, { version, locale }),
     fetchCompanyReviewsMetadata(),
@@ -42,6 +43,11 @@ export const getStoryblokPageProps = async ({
     throw new Error(`Story with slug ${locale}/${slug} not found`)
   } finally {
     console.timeEnd(timerName)
+  }
+
+  let breadcrumbs: Array<BreadcrumbListItem> | null = null
+  if (!('hideBreadcrumbs' in story.content && story.content.hideBreadcrumbs)) {
+    breadcrumbs = [...parentBreadcrumbs, { label: story.name }]
   }
 
   return {

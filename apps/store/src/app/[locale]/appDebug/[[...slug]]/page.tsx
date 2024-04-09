@@ -1,27 +1,37 @@
-import { ISbStoryData, SbBlokData } from '@storyblok/react/rsc'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { PageBlock } from '@/blocks/PageBlock'
-import { SEOData } from '@/services/storyblok/storyblok'
+import { PageStory } from '@/services/storyblok/storyblok'
 import { getImgSrc, isProductStory } from '@/services/storyblok/Storyblok.helpers'
 import { getStoryBySlug } from '@/services/storyblok/storyblok.serverOnly'
 import { isRoutingLocale, toIsoLocale } from '@/utils/l10n/localeUtils'
 import { IsoLocale, RoutingLocale } from '@/utils/l10n/types'
 import { ProductCmsPage } from './ProductCmsPage'
+import { StoryBreadcrumbs } from './StoryBreadcrumbs'
 
-type RoutingParams = { locale: RoutingLocale; slug?: Array<string> }
+export type CmsPageRoutingParams = { locale: RoutingLocale; slug?: Array<string> }
 type Props = {
-  params: RoutingParams
+  params: CmsPageRoutingParams
 }
-
-type PageStory = ISbStoryData<{ body: Array<SbBlokData> } & SEOData>
 
 export default async function CmsPage(props: Props) {
   const story = await fetchStory(props.params)
   if (isProductStory(story)) {
-    return <ProductCmsPage locale={props.params.locale} story={story} />
+    return (
+      <>
+        <ProductCmsPage locale={props.params.locale} story={story} />
+        <StoryBreadcrumbs params={props.params} currentPageTitle={story.name} />
+      </>
+    )
   }
-  return <PageBlock blok={story.content} />
+  return (
+    <>
+      <PageBlock blok={story.content} />
+      {!story.content.hideBreadcrumbs && (
+        <StoryBreadcrumbs params={props.params} currentPageTitle={story.name} />
+      )}
+    </>
+  )
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -63,7 +73,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return result
 }
 
-async function fetchStory(params: RoutingParams) {
+async function fetchStory(params: CmsPageRoutingParams) {
   const { locale } = params
   const slug = (params.slug ?? []).join('/')
   try {

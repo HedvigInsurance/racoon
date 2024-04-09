@@ -48,3 +48,15 @@ export const getStoryBySlug = async <T extends ISbStoryData>(
   })
   return data.story as T
 }
+
+export const getParentStories = async (slug: string, { version, locale }: StoryOptions) => {
+  const absoluteSlug = slug.startsWith('/') ? slug : `/${slug}`
+  const parentSlugs = absoluteSlug
+    .split('/')
+    .slice(0, -1)
+    .map((_, index, array) => array.slice(0, index + 1).join('/'))
+
+  // Individual per-story requests probably mean better cache hit ratio and less traffic overall
+  // We used to fetch all parents with single requests in pages router instead
+  return await Promise.all(parentSlugs.map((slug) => getStoryBySlug(slug, { version, locale })))
+}

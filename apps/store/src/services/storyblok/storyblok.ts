@@ -12,6 +12,7 @@ import { FooterBlockProps } from '@/blocks/FooterBlock'
 import { HeaderBlockProps } from '@/blocks/HeaderBlock'
 import { ReusableBlockReferenceProps } from '@/blocks/ReusableBlockReference'
 import { type ContentAlignment, type ContentWidth } from '@/components/GridLayout/GridLayout.helper'
+import { BreadcrumbListItem } from '@/components/PageBreadcrumbs/PageBreadcrumbs'
 import { BLOG_ARTICLE_CONTENT_TYPE } from '@/features/blog/blog.constants'
 // TODO: get rid of this import, services should avoid feature-imports
 import { STORYBLOK_MANYPETS_FOLDER_SLUG } from '@/features/manyPets/manyPets.constants'
@@ -40,6 +41,7 @@ export type StoryblokQueryParams = {
 export type StoryblokPageProps = {
   [STORY_PROP_NAME]: PageStory
   [GLOBAL_STORY_PROP_NAME]: GlobalStory
+  breadcrumbs: Array<BreadcrumbListItem> | null
 }
 
 export type StoryblokVersion = 'draft' | 'published'
@@ -275,7 +277,7 @@ const EXCLUDE_FOLDERS = new Set([
 ])
 export const getFilteredPageLinks = async () => {
   const allLinks = await getPageLinks()
-  return allLinks.filter(({ slugParts }) => EXCLUDE_FOLDERS.has(slugParts[0]) === false)
+  return allLinks.filter(({ slugParts }) => !EXCLUDE_FOLDERS.has(slugParts[0]))
 }
 
 export const getGlobalStory = (options: StoryOptions): Promise<GlobalStory> => {
