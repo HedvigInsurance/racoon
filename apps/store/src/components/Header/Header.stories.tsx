@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import { Meta, StoryFn } from '@storybook/react'
+import type { Meta, StoryFn } from '@storybook/react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { theme } from 'ui'

@@ -1,4 +1,4 @@
-import { CountryLabel } from './types'
+import type { CountryLabel } from './types'
 
 type PhoneNumbers = Partial<Record<CountryLabel, PhoneNumberData>>
 

@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { Heading, Text, mq, theme } from 'ui'
 import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWithPlaceholder'
-import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
+import type { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 
 type ImageSize = {

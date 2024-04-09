@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { CSSProperties } from 'react'
+import type { CSSProperties } from 'react'
 import { contentFontClassName } from '@/utils/fonts'
 import { FALLBACK_LOCALE } from '@/utils/l10n/locales'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'

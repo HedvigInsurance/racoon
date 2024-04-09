@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { FormEventHandler } from 'react'
+import type { FormEventHandler } from 'react'
 import { Button, theme } from 'ui'
 import { TextField } from '@/components/TextField/TextField'
 

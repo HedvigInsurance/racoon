@@ -15,7 +15,7 @@ import { getApolloClient } from '@/services/apollo/app-router/rscClient'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
 import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { Features } from '@/utils/Features'
-import { RoutingLocale } from '@/utils/l10n/types'
+import type { RoutingLocale } from '@/utils/l10n/types'
 
 type ProductCmsPageProps = {
   locale: RoutingLocale

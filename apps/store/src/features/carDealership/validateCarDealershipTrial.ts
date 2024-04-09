@@ -1,6 +1,6 @@
 import Crypto from 'crypto'
 import { CurrencyCode } from '@/services/graphql/generated'
-import { Money } from '@/utils/formatter'
+import type { Money } from '@/utils/formatter'
 
 const API_ENDPOINT = `${process.env.RAPIO_API_BASE_URL}/car-dealership/trial`
 

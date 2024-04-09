@@ -2,7 +2,7 @@ import { useTranslation } from 'next-i18next'
 import { useMemo } from 'react'
 import { Combobox } from '@/components/Combobox/Combobox'
 import { PriceIntentAnimal, usePriceIntentAvailableBreedsQuery } from '@/services/graphql/generated'
-import {
+import type {
   PetCatBreedsField as InputFieldPetBreed,
   Breed,
 } from '@/services/PriceCalculator/Field.types'

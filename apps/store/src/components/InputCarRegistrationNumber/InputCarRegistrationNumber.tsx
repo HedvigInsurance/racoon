@@ -1,4 +1,5 @@
-import { InputHTMLAttributes, useState } from 'react'
+import type { InputHTMLAttributes} from 'react';
+import { useState } from 'react'
 import { TextField } from '@/components/TextField/TextField'
 
 const CAR_REGISTRATION_NUMBER_REGEX = '[A-Za-z]{3} [0-9]{2}[A-Za-z0-9]{1}'

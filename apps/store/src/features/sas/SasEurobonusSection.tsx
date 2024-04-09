@@ -1,7 +1,8 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { FormEventHandler, useCallback } from 'react'
+import type { FormEventHandler} from 'react';
+import { useCallback } from 'react'
 import { Button, CheckIcon, Text, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextField } from '@/components/TextField/TextField'

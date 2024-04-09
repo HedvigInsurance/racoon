@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
-import { ComponentProps } from 'react'
+import type { ComponentProps } from 'react'
 import { Text, theme } from 'ui'
-import { CurrencyCode } from '@/services/graphql/generated'
+import type { CurrencyCode } from '@/services/graphql/generated'
 import { useFormatter } from '@/utils/useFormatter'
 
 type Props = {

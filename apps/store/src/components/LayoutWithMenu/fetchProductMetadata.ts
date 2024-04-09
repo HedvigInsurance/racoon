@@ -1,5 +1,6 @@
-import { ApolloClient } from '@apollo/client'
-import { ProductMetadataDocument, ProductMetadataQuery } from '@/services/graphql/generated'
+import type { ApolloClient } from '@apollo/client'
+import type { ProductMetadataQuery } from '@/services/graphql/generated';
+import { ProductMetadataDocument } from '@/services/graphql/generated'
 
 export const GLOBAL_PRODUCT_METADATA_PROP_NAME = 'globalProductMetadata'
 

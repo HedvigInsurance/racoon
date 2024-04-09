@@ -1,26 +1,27 @@
 import * as process from 'process'
-import {
-  apiPlugin,
-  getStoryblokApi,
+import type {
   ISbStoriesParams,
   ISbStoryData,
   SbBlokData,
-  StoryblokClient,
+  StoryblokClient} from '@storyblok/react';
+import {
+  apiPlugin,
+  getStoryblokApi,
   storyblokInit,
 } from '@storyblok/react'
-import { FooterBlockProps } from '@/blocks/FooterBlock'
-import { HeaderBlockProps } from '@/blocks/HeaderBlock'
-import { ReusableBlockReferenceProps } from '@/blocks/ReusableBlockReference'
+import type { FooterBlockProps } from '@/blocks/FooterBlock'
+import type { HeaderBlockProps } from '@/blocks/HeaderBlock'
+import type { ReusableBlockReferenceProps } from '@/blocks/ReusableBlockReference'
 import { type ContentAlignment, type ContentWidth } from '@/components/GridLayout/GridLayout.helper'
-import { BreadcrumbListItem } from '@/components/PageBreadcrumbs/PageBreadcrumbs'
+import type { BreadcrumbListItem } from '@/components/PageBreadcrumbs/PageBreadcrumbs'
 import { BLOG_ARTICLE_CONTENT_TYPE } from '@/features/blog/blog.constants'
 // TODO: get rid of this import, services should avoid feature-imports
 import { STORYBLOK_MANYPETS_FOLDER_SLUG } from '@/features/manyPets/manyPets.constants'
 import { STORYBLOK_WIDGET_FOLDER_SLUG } from '@/features/widget/widget.constants'
 import { isBrowser } from '@/utils/env'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
-import { Language, RoutingLocale } from '@/utils/l10n/types'
-import { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from './Storyblok.constant'
+import type { Language, RoutingLocale } from '@/utils/l10n/types'
+import type { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from './Storyblok.constant'
 import { storyblokComponents } from './storyblokComponents'
 
 export type SbBaseBlockProps<T> = {

@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react'
 import { Space, Text, CrossIconSmall, InfoIcon, theme } from 'ui'
 import { Combobox } from '@/components/Combobox/Combobox'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { Breed } from '@/services/PriceCalculator/Field.types'
+import type { Breed } from '@/services/PriceCalculator/Field.types'
 
 type Props = {
   breeds: Array<Breed>

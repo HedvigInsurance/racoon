@@ -1,7 +1,8 @@
-import { ComponentProps, type ReactNode } from 'react'
-import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
+import type { ComponentProps} from 'react';
+import { type ReactNode } from 'react'
+import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { Features } from '@/utils/Features'
-import { FetchInsurance } from './FetchInsurance'
+import type { FetchInsurance } from './FetchInsurance'
 
 type ChildrenProps = Pick<ComponentProps<typeof FetchInsurance>, 'externalInsurer' | 'insurely'>
 

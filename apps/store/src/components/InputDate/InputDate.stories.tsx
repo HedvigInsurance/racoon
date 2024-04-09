@@ -1,4 +1,4 @@
-import { Meta, StoryFn } from '@storybook/react'
+import type { Meta, StoryFn } from '@storybook/react'
 import { InputDate } from '@/components/InputDate/InputDate'
 
 const todayAsIsoString = () => new Date().toISOString().split('T')[0]

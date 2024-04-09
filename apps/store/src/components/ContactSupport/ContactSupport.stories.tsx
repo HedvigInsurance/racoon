@@ -1,6 +1,7 @@
-import { Meta, StoryFn } from '@storybook/react'
-import { LinkField } from '@/services/storyblok/storyblok'
-import { ContactSupport, ContactSupportProps } from './ContactSupport'
+import type { Meta, StoryFn } from '@storybook/react'
+import type { LinkField } from '@/services/storyblok/storyblok'
+import type { ContactSupportProps } from './ContactSupport';
+import { ContactSupport } from './ContactSupport'
 
 export default {
   component: ContactSupport,

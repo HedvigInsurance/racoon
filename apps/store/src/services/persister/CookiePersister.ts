@@ -1,6 +1,6 @@
 import { setCookie, getCookie, deleteCookie, getCookies } from 'cookies-next'
-import { OptionsType } from 'cookies-next/lib/types'
-import { SimplePersister } from './Persister.types'
+import type { OptionsType } from 'cookies-next/lib/types'
+import type { SimplePersister } from './Persister.types'
 
 export class CookiePersister implements SimplePersister {
   constructor(private readonly cookieKey: string) {}

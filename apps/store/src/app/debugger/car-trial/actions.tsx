@@ -3,7 +3,7 @@
 import { redirect } from 'next/navigation'
 import { createCarDealershipTrial } from '@/features/carDealership/DebuggerCarTrial/createCarDealershipTrial'
 import { Field } from '@/features/carDealership/DebuggerCarTrial/debuggerCarTrial.types'
-import { FormStateWithErrors } from 'app/types/formStateTypes'
+import type { FormStateWithErrors } from 'app/types/formStateTypes'
 
 export const createCarTrial = async (
   _: FormStateWithErrors,

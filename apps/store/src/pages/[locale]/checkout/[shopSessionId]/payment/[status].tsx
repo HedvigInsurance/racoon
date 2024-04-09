@@ -1,4 +1,4 @@
-import { ApolloClient } from '@apollo/client'
+import type { ApolloClient } from '@apollo/client'
 import type { GetServerSideProps, NextPage } from 'next'
 import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import {
@@ -7,7 +7,7 @@ import {
 } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
 import { initializeApolloServerSide } from '@/services/apollo/client'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
-import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'

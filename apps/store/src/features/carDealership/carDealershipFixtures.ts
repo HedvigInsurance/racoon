@@ -1,9 +1,10 @@
 // TODO: Remove this file as soon we start to get data from the API
-import {
-  CurrencyCode,
+import type {
   Peril,
   PriceIntent,
-  ShopSession,
+  ShopSession} from '@/services/graphql/generated';
+import {
+  CurrencyCode,
   ShopSessionAuthenticationStatus,
 } from '@/services/graphql/generated'
 

@@ -9,9 +9,9 @@ import {
   type GridColumnsField,
   type SbBaseBlockProps,
 } from '@/services/storyblok/storyblok'
-import { HeadingBlockProps } from './HeadingBlock'
-import { HeadingLabelBlockProps } from './HeadingLabelBlock'
-import { TextBlockProps } from './TextBlock'
+import type { HeadingBlockProps } from './HeadingBlock'
+import type { HeadingLabelBlockProps } from './HeadingLabelBlock'
+import type { TextBlockProps } from './TextBlock'
 
 export type Props = SbBaseBlockProps<{
   heading?: ExpectedBlockType<HeadingBlockProps | HeadingLabelBlockProps>

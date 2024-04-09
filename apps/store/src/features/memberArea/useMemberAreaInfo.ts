@@ -1,5 +1,6 @@
+import type {
+  MemberAreaMemberInfoQuery} from '@/services/graphql/generated';
 import {
-  MemberAreaMemberInfoQuery,
   useMemberAreaMemberInfoQuery,
 } from '@/services/graphql/generated'
 

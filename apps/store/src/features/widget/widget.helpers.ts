@@ -1,8 +1,9 @@
 import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
-import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
-import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
-import { PriceIntentService } from '@/services/priceIntent/PriceIntentService'
-import { WidgetFlowStory, getStoryById } from '@/services/storyblok/storyblok'
+import type { Template } from '@/services/PriceCalculator/PriceCalculator.types'
+import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
+import type { PriceIntentService } from '@/services/priceIntent/PriceIntentService'
+import type { WidgetFlowStory} from '@/services/storyblok/storyblok';
+import { getStoryById } from '@/services/storyblok/storyblok'
 import { parsePriceIntentDataSearchParams } from './parseSearchParams'
 
 const widgetPriceTemplateName = (product: string, compare: boolean): string | undefined => {

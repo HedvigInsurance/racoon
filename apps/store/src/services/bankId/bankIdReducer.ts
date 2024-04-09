@@ -1,7 +1,8 @@
 import { datadogRum } from '@datadog/browser-rum'
-import { Dispatch } from 'react'
-import { ShopSessionAuthenticationStatus } from '@/services/graphql/generated'
-import { BankIdOperation, BankIdState } from './bankId.types'
+import type { Dispatch } from 'react'
+import type { ShopSessionAuthenticationStatus } from '@/services/graphql/generated'
+import type { BankIdOperation} from './bankId.types';
+import { BankIdState } from './bankId.types'
 
 export type BankIdAction =
   | ShowLoginPromptAction

@@ -1,8 +1,9 @@
-import { ParseKeys } from 'i18next'
+import type { ParseKeys } from 'i18next'
 import { useEffect, useMemo } from 'react'
+import type {
+  SwitchingContractFragment} from '@/services/graphql/generated';
 import {
-  ContractExternalInsuranceCancellationStatus,
-  SwitchingContractFragment,
+  ContractExternalInsuranceCancellationStatus
 } from '@/services/graphql/generated'
 import { useShopSessionOutcomeQuery } from '@/services/graphql/generated'
 import { tKey } from '@/utils/i18n'

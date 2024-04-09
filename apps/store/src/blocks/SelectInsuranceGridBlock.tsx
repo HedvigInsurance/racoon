@@ -6,7 +6,7 @@ import { mq } from 'ui'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import { SelectInsuranceGrid } from '@/components/SelectInsuranceGrid/SelectInsuranceGrid'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { getParameterizedLink } from '@/utils/getParameterizedLink'
 
 type Props = SbBaseBlockProps<{

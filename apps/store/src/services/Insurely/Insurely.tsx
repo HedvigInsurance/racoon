@@ -3,7 +3,7 @@
 import styled from '@emotion/styled'
 import Script from 'next/script'
 import { useEffect } from 'react'
-import { Language } from '@/utils/l10n/types'
+import type { Language } from '@/utils/l10n/types'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
 const CUSTOMER_ID = process.env.NEXT_PUBLIC_INSURELY_CUSTOMER_ID!

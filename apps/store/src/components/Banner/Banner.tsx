@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
-import { ComponentPropsWithoutRef, type ReactNode } from 'react'
+import type { ComponentPropsWithoutRef} from 'react';
+import { type ReactNode } from 'react'
 import { InfoIcon, CampaignIcon, WarningTriangleIcon, CrossIconSmall, mq, theme } from 'ui'
-import { BannerVariant } from './Banner.types'
+import type { BannerVariant } from './Banner.types'
 
 const Area = {
   Content: 'content',

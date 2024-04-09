@@ -1,4 +1,4 @@
-import { SlashCommand } from './slack.constants'
+import type { SlashCommand } from './slack.constants'
 
 export type SlashCommandRequest = {
   command: SlashCommand

@@ -6,7 +6,7 @@ import type { ProductData } from '@/components/ProductData/ProductData.types'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
 import { CompanyReviewsMetadataProvider } from '@/features/memberReviews/CompanyReviewsMetadataProvider'
 import { fetchCompanyReviewsMetadata } from '@/features/memberReviews/memberReviews'
-import { ReviewsMetadata } from '@/features/memberReviews/memberReviews.types'
+import type { ReviewsMetadata } from '@/features/memberReviews/memberReviews.types'
 import { STORYBLOK_WIDGET_FOLDER_SLUG } from '@/features/widget/widget.constants'
 import { initializeApollo } from '@/services/apollo/client'
 import {

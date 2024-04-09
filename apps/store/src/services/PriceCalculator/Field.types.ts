@@ -1,5 +1,5 @@
-import { PriceIntentAnimalBreed } from '@/services/graphql/generated'
-import { Label } from './PriceCalculator.types'
+import type { PriceIntentAnimalBreed } from '@/services/graphql/generated'
+import type { Label } from './PriceCalculator.types'
 
 export const MIXED_BREED_OPTION_ID = '-1'
 

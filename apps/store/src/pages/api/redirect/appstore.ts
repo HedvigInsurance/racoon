@@ -1,5 +1,5 @@
 import { getCookie } from 'cookies-next'
-import { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { getMobilePlatform } from '@/utils/getMobilePlatform'
 import { LOCALE_COOKIE_KEY, FALLBACK_LOCALE } from '@/utils/l10n/locales'

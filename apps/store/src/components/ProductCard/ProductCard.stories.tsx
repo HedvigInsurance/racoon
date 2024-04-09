@@ -1,6 +1,7 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import { Meta, StoryFn } from '@storybook/react'
-import { ProductCard, ProductCardProps } from './ProductCard'
+import type { Meta, StoryFn } from '@storybook/react'
+import type { ProductCardProps } from './ProductCard';
+import { ProductCard } from './ProductCard'
 
 export default {
   component: ProductCard,

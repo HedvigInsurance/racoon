@@ -1,5 +1,5 @@
-import { Meta, StoryFn } from '@storybook/react'
-import { Breed } from '@/services/PriceCalculator/Field.types'
+import type { Meta, StoryFn } from '@storybook/react'
+import type { Breed } from '@/services/PriceCalculator/Field.types'
 import { MixedBreedPicker } from './MixedBreedPicker'
 
 export default {

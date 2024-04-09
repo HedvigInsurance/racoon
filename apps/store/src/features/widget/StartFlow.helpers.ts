@@ -6,7 +6,7 @@ import {
   getStoryBySlug,
 } from '@/services/storyblok/storyblok'
 import { isWidgetFlowStory } from '@/services/storyblok/Storyblok.helpers'
-import { RoutingLocale } from '@/utils/l10n/types'
+import type { RoutingLocale } from '@/utils/l10n/types'
 import { parseCustomerDataSearchParams } from './parseSearchParams'
 import { shopSessionCustomerUpdate } from './shopSessionCustomerUpdate'
 import { STORYBLOK_WIDGET_FOLDER_SLUG } from './widget.constants'

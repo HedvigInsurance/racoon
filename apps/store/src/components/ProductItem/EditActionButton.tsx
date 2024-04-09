@@ -4,7 +4,7 @@ import Balancer from 'react-wrap-balancer'
 import { Button, Text } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
-import { ProductOfferFragment } from '@/services/graphql/generated'
+import type { ProductOfferFragment } from '@/services/graphql/generated'
 import { ActionButton } from './ProductItem'
 import { useEditProductOffer } from './useEditProductOffer'
 

@@ -1,4 +1,4 @@
-import { GetServerSidePropsContext } from 'next'
+import type { GetServerSidePropsContext } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { LoginPage } from '@/features/memberArea/pages/LoginPage'
 import { getAccessToken } from '@/services/authApi/persist'

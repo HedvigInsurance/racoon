@@ -5,7 +5,7 @@ import { PageBreadcrumbs } from '@/components/PageBreadcrumbs/PageBreadcrumbs'
 import { BlogContext, parseBlogContext } from '@/features/blog/useBlog'
 import { CompanyReviewsMetadataProvider } from '@/features/memberReviews/CompanyReviewsMetadataProvider'
 import type { ReviewsMetadata } from '@/features/memberReviews/memberReviews.types'
-import { StoryblokPageProps } from '@/services/storyblok/storyblok'
+import type { StoryblokPageProps } from '@/services/storyblok/storyblok'
 
 type Props = StoryblokPageProps & {
   companyReviewsMetadata?: ReviewsMetadata | null

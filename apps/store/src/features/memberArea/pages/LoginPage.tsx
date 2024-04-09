@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { FormEventHandler } from 'react'
+import type { FormEventHandler } from 'react'
 import { BankIdIcon, Button, HedvigLogo, mq, Text, theme } from 'ui'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'

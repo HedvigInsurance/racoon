@@ -1,4 +1,4 @@
-import { InputField } from './Field.types'
+import type { InputField } from './Field.types'
 
 export type Form = {
   sections: Array<FormSection>

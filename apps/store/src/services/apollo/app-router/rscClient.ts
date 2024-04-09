@@ -1,7 +1,7 @@
 import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client'
 import { registerApolloClient } from '@apollo/experimental-nextjs-app-support/rsc'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
-import { RoutingLocale } from '@/utils/l10n/types'
+import type { RoutingLocale } from '@/utils/l10n/types'
 import { errorLink } from '../errorLink'
 import { httpLink } from '../httpLink'
 import { userErrorLink } from '../userErrorLink'

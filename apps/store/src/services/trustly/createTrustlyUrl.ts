@@ -1,10 +1,11 @@
 import { type ApolloClient } from '@apollo/client'
-import {
-  TrustlyInitDocument,
+import type {
   TrustlyInitMutation,
-  TrustlyInitMutationVariables,
+  TrustlyInitMutationVariables} from '@/services/graphql/generated';
+import {
+  TrustlyInitDocument
 } from '@/services/graphql/generated'
-import { RoutingLocale } from '@/utils/l10n/types'
+import type { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
 
 export const getTrustlyInitMutationVariables = (

@@ -1,5 +1,6 @@
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
-import Link, { LinkProps } from 'next/link'
+import type { LinkProps } from 'next/link';
+import Link from 'next/link'
 import { navigationTriggerLink } from './Header.css'
 
 export const NavigationTrigger = (props: LinkProps & { children: string }) => {

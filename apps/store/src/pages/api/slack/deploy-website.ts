@@ -1,7 +1,7 @@
 import { type NextApiRequest, type NextApiResponse } from 'next'
 import { Slack } from '@/services/slack/slack'
 import { SlashCommand } from '@/services/slack/slack.constants'
-import { SlashCommandRequest } from '@/services/slack/slack.types'
+import type { SlashCommandRequest } from '@/services/slack/slack.types'
 import { ORIGIN_URL } from '@/utils/PageLink'
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {

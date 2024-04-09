@@ -1,5 +1,6 @@
-import { Theme, ThemeProvider as EmotionThemeProvider } from '@emotion/react'
-import { ReactNode } from 'react'
+import type { Theme} from '@emotion/react';
+import { ThemeProvider as EmotionThemeProvider } from '@emotion/react'
+import type { ReactNode } from 'react'
 import { theme as hedvigTheme } from '../theme'
 
 type ThemeProviderProps = {

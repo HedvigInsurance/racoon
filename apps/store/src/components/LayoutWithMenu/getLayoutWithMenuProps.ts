@@ -1,4 +1,4 @@
-import { ApolloClient } from '@apollo/client'
+import type { ApolloClient } from '@apollo/client'
 import { type GetServerSidePropsContext, type GetStaticPropsContext } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { initializeApollo, initializeApolloServerSide } from '@/services/apollo/client'

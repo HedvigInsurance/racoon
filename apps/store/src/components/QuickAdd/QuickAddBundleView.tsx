@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
-import { type ReactNode, type ComponentProps, PropsWithChildren } from 'react'
+import type { PropsWithChildren } from 'react';
+import { type ReactNode, type ComponentProps } from 'react'
 import { Badge, CheckIcon, Space, Text, mq, theme } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Price } from '@/components/Price'

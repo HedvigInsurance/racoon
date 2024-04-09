@@ -7,7 +7,7 @@ import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { ProductItemSkeleton } from '@/components/ProductItem/ProductItem'
 import { Skeleton } from '@/components/Skeleton'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type Props = SbBaseBlockProps<{
   checkoutPageContent: Array<SbBlokData>

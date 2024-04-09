@@ -1,6 +1,6 @@
-import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
-import { ShopSessionAuthenticationStatus } from '@/services/graphql/generated'
-import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import type { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
+import type { ShopSessionAuthenticationStatus } from '@/services/graphql/generated'
+import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 
 export type CheckoutPageProps = {
   shopSessionId: string

@@ -1,8 +1,10 @@
 'use client'
 import styled from '@emotion/styled'
-import { storyblokEditable, StoryblokComponent, SbBlokData } from '@storyblok/react'
+import type { SbBlokData } from '@storyblok/react';
+import { storyblokEditable, StoryblokComponent } from '@storyblok/react'
 import { motion, useInView, useScroll } from 'framer-motion'
-import { useState, useEffect, useRef, ReactNode } from 'react'
+import type { ReactNode } from 'react';
+import { useState, useEffect, useRef } from 'react'
 import { theme, mq } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { MAX_WIDTH } from '@/components/GridLayout/GridLayout.constants'
@@ -11,7 +13,7 @@ import {
   PurchaseForm,
   type PurchaseFormProps,
 } from '@/components/ProductPage/PurchaseForm/PurchaseForm'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { zIndexes } from '@/utils/zIndex'
 
 export const NAVIGATION_LIST_HEIGHT = '2.5rem'

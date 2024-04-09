@@ -1,4 +1,4 @@
-import { NextPageWithLayout } from 'next'
+import type { NextPageWithLayout } from 'next'
 import { MemberAreaLayout } from '../components/MemberAreaLayout'
 import { PaymentsSection } from '../PaymentsSection/PaymentsSection'
 

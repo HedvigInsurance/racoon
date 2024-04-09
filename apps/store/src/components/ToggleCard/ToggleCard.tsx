@@ -1,9 +1,11 @@
 import styled from '@emotion/styled'
-import { ReactNode, useId } from 'react'
+import type { ReactNode} from 'react';
+import { useId } from 'react'
 import { Space, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
-import { Switch, SwitchProps, SwitchWrapper } from '../Switch'
+import type { SwitchProps} from '../Switch';
+import { Switch, SwitchWrapper } from '../Switch'
 
 type Props = SwitchProps & {
   label: string

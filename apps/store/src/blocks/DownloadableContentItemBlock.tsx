@@ -1,6 +1,6 @@
 'use client'
 import { DownloadableContentItem } from '@/components/DownloadableContentItem/DownloadableContentItem'
-import { LinkField, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
+import type { LinkField, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 
 export type DownloadableContentItemBlockProps = SbBaseBlockProps<{
   thumbnail: StoryblokAsset

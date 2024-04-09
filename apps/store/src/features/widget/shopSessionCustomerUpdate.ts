@@ -1,4 +1,4 @@
-import { ApolloClient } from '@apollo/client'
+import type { ApolloClient } from '@apollo/client'
 import {
   ShopSessionCustomerUpdateDocument,
   type ShopSessionCustomerUpdateMutation,

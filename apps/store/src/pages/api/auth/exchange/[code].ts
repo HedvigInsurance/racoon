@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next'
 import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
 import { saveAuthTokens } from '@/services/authApi/persist'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'

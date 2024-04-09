@@ -3,8 +3,9 @@ import { Heading, Text, theme } from 'ui'
 import { Perils } from '@/components/Perils/Perils'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Price } from '@/components/Price'
+import type {
+  CartFragmentFragment} from '@/services/graphql/generated';
 import {
-  CartFragmentFragment,
   type OfferRecommendationFragment,
   type ProductRecommendationFragment,
 } from '@/services/graphql/generated'

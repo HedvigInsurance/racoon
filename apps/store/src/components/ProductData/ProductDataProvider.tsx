@@ -1,8 +1,8 @@
 'use client'
 import { atom, useAtom, useAtomValue, useStore } from 'jotai'
 import { atomFamily } from 'jotai/utils'
-import { ReactNode } from 'react'
-import { RoutingLocale } from '@/utils/l10n/types'
+import type { ReactNode } from 'react'
+import type { RoutingLocale } from '@/utils/l10n/types'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import type { ProductData } from './ProductData.types'
 

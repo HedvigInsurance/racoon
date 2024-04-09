@@ -1,4 +1,4 @@
-import { StoryFn } from '@storybook/react'
+import type { StoryFn } from '@storybook/react'
 import { Button, Dialog } from 'ui'
 import { CartNotificationContent } from './CartToast'
 

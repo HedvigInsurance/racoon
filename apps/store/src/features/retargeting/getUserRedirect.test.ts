@@ -1,7 +1,7 @@
 import { test, expect } from '@jest/globals'
-import { ShopSessionRetargetingQuery } from '@/services/graphql/generated'
+import type { ShopSessionRetargetingQuery } from '@/services/graphql/generated'
 import { RedirectType, getUserRedirect } from './getUserRedirect'
-import { UserParams } from './retargeting.types'
+import type { UserParams } from './retargeting.types'
 
 const userParams: UserParams = { shopSessionId: '123', locale: 'se', queryParams: [] }
 

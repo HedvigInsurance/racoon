@@ -1,4 +1,5 @@
-import { colors, UIColorKeys } from './colors/colors'
+import type { UIColorKeys } from './colors/colors';
+import { colors } from './colors/colors'
 import { radius } from './radius'
 import { space } from './space'
 import { transitions } from './transitions'

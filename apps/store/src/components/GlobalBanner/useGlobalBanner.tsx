@@ -1,7 +1,7 @@
 import { atom, useAtom, useSetAtom } from 'jotai'
 import { createJSONStorage, atomWithStorage } from 'jotai/utils'
 import { useCallback } from 'react'
-import { Banner, BannerVariant } from '@/components/Banner/Banner.types'
+import type { Banner, BannerVariant } from '@/components/Banner/Banner.types'
 
 type SetBannerOptions = {
   // When 'true' it persisted 'dismissed' info will be ignored.

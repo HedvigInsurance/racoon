@@ -1,10 +1,10 @@
-import { GetServerSideProps, NextPageWithLayout } from 'next'
+import type { GetServerSideProps, NextPageWithLayout } from 'next'
 import Head from 'next/head'
 import { ForeverPage, type Props as ForeverPageProps } from '@/components/ForeverPage/ForeverPage'
 import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
-import { RoutingLocale } from '@/utils/l10n/types'
+import type { RoutingLocale } from '@/utils/l10n/types'
 import { ORIGIN_URL } from '@/utils/PageLink'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
 

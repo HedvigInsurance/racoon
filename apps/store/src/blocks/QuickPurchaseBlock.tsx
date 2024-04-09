@@ -8,10 +8,11 @@ import { type FormEventHandler, useMemo, useState } from 'react'
 import { theme } from 'ui'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
-import {
+import type {
   FormError,
+  ProductOption} from '@/components/QuickPurchaseForm/QuickPurchaseForm';
+import {
   PRODUCT_FIELDNAME,
-  ProductOption,
   QuickPurchaseForm,
   SSN_FIELDNAME,
 } from '@/components/QuickPurchaseForm/QuickPurchaseForm'
@@ -21,7 +22,7 @@ import {
 } from '@/services/graphql/generated'
 import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 
 type QuickPurchaseBlockProps = SbBaseBlockProps<{

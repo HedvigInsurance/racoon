@@ -1,6 +1,6 @@
 import { addYears } from 'date-fns'
 import { useTranslation } from 'next-i18next'
-import { ChangeEventHandler } from 'react'
+import type { ChangeEventHandler } from 'react'
 import { formatInputDateValue } from '@/utils/date'
 import { InputDate } from './InputDate'
 

@@ -5,7 +5,7 @@ import { type Table } from '@/components/ComparisonTable/ComparisonTable.types'
 import { DesktopComparisonTable } from '@/components/ComparisonTable/DesktopComparisonTable'
 import { MobileComparisonTable } from '@/components/ComparisonTable/MobileComparisonTable'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
-import { ContentAlignment, ContentWidth } from '@/components/GridLayout/GridLayout.helper'
+import type { ContentAlignment, ContentWidth } from '@/components/GridLayout/GridLayout.helper'
 import { type StoryblokTableField, type SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { useResponsiveVariant } from '@/utils/useResponsiveVariant'
 

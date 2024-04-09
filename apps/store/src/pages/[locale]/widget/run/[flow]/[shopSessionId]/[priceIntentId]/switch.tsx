@@ -1,4 +1,4 @@
-import { ApolloClient } from '@apollo/client'
+import type { ApolloClient } from '@apollo/client'
 import { type GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useTranslation } from 'next-i18next'

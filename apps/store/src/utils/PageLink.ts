@@ -1,7 +1,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { QueryParam as CheckoutPageQueryParam } from '@/components/CheckoutPage/CheckoutPage.constants'
 import { QueryParam as CheckoutTrustlyQueryParam } from '@/components/CheckoutPaymentTrustlyPage/CheckoutPaymentTrustlyPage constants'
-import { RoutingLocale } from '@/utils/l10n/types'
+import type { RoutingLocale } from '@/utils/l10n/types'
 
 class ExtendedURL extends URL {
   constructor(url: string, base?: string) {

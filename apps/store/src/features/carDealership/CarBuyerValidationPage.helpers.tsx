@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CarTrialValidationResult, ValidateCarTrialParams } from './validateCarDealershipTrial'
+import type { CarTrialValidationResult, ValidateCarTrialParams } from './validateCarDealershipTrial'
 
 export enum Field {
   SSN = 'ssn',

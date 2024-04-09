@@ -1,24 +1,25 @@
 'use server'
 
-import { ApolloClient } from '@apollo/client'
+import type { ApolloClient } from '@apollo/client'
 import { redirect } from 'next/navigation'
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
-import {
-  CartEntryAddDocument,
+import type {
   CartEntryAddMutation,
   CartEntryAddMutationVariables,
-  ShopSessionCustomerUpdateDocument,
   ShopSessionCustomerUpdateMutation,
-  ShopSessionCustomerUpdateMutationVariables,
+  ShopSessionCustomerUpdateMutationVariables} from '@/services/graphql/generated';
+import {
+  CartEntryAddDocument,
+  ShopSessionCustomerUpdateDocument
 } from '@/services/graphql/generated'
 import { CountryCode } from '@/services/graphql/graphql'
 import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { setupPriceIntentService } from '@/services/priceIntent/app-router/PriceIntentService.utils'
-import { PriceIntentService } from '@/services/priceIntent/PriceIntentService'
+import type { PriceIntentService } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSession } from '@/services/shopSession/app-router/ShopSession.utils'
-import { RoutingLocale } from '@/utils/l10n/types'
+import type { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
-import { FormStateWithErrors } from 'app/types/formStateTypes'
+import type { FormStateWithErrors } from 'app/types/formStateTypes'
 
 const DEFAULT_LOCALE: RoutingLocale = 'se-en'
 const DEFAULT_COUNTRY_CODE = CountryCode.Se

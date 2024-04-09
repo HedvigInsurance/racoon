@@ -8,7 +8,7 @@ import { ProductItemContainer } from '@/components/ProductItem/ProductItemContai
 import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextWithLink } from '@/components/TextWithLink'
-import {
+import type {
   PriceIntentCarTrialExtensionFragment,
   ProductOfferFragment,
   ShopSessionFragment,

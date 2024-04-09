@@ -1,5 +1,5 @@
 import { type Meta, type StoryObj } from '@storybook/react'
-import { ComponentProps } from 'react'
+import type { ComponentProps } from 'react'
 import { Space } from 'ui'
 import * as RadioOptionList from './RadioOptionList'
 

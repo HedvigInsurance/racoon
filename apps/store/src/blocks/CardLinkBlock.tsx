@@ -1,7 +1,7 @@
 'use client'
 import styled from '@emotion/styled'
 import { ArrowForwardIcon, theme, mq } from 'ui'
-import { SbBaseBlockProps, LinkField } from '@/services/storyblok/storyblok'
+import type { SbBaseBlockProps, LinkField } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 import { Grid } from './CardLinkListBlock'
 

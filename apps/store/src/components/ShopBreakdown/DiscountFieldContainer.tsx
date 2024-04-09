@@ -1,6 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { type ComponentProps } from 'react'
-import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useRedeemCampaign, useUnredeemCampaign } from '@/utils/useCampaign'
 import { Discount } from './Discount'
 import { DiscountField } from './DiscountField'

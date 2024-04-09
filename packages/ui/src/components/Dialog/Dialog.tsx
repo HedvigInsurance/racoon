@@ -1,10 +1,11 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { clsx } from 'clsx'
-import {
+import type {
   ComponentProps,
-  forwardRef,
   PropsWithChildren,
-  ReactNode,
+  ReactNode} from 'react';
+import {
+  forwardRef,
   startTransition,
   useCallback,
 } from 'react'

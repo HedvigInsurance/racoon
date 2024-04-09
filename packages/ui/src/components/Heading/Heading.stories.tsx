@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
-import { Meta, StoryFn } from '@storybook/react'
-import { Heading, HeadingProps } from './Heading'
+import type { Meta, StoryFn } from '@storybook/react'
+import type { HeadingProps } from './Heading';
+import { Heading } from './Heading'
 
 export default {
   title: 'Heading',

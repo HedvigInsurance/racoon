@@ -1,5 +1,5 @@
-import { z } from 'zod'
-import { reviewSchema } from './memberReviews.utils'
+import type { z } from 'zod'
+import type { reviewSchema } from './memberReviews.utils'
 
 export type Score = 5 | 4 | 3 | 2 | 1
 

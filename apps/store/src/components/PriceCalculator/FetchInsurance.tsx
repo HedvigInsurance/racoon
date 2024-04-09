@@ -4,8 +4,9 @@ import styled from '@emotion/styled'
 import { type ComponentProps, useCallback, useState, useMemo } from 'react'
 import { Dialog, Text, theme } from 'ui'
 import { FetchInsurancePrompt } from '@/components/FetchInsurancePrompt/FetchInsurancePrompt'
+import type {
+  ExternalInsurer} from '@/services/graphql/generated';
 import {
-  ExternalInsurer,
   useInsurelyDataCollectionCreateMutation,
   usePriceIntentInsurelyUpdateMutation,
 } from '@/services/graphql/generated'
@@ -14,7 +15,7 @@ import {
   INSURELY_IFRAME_MAX_HEIGHT,
   INSURELY_IFRAME_MAX_WIDTH,
 } from '@/services/Insurely/Insurely.constants'
-import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { Features } from '@/utils/Features'
 import { FetchInsuranceSuccess } from './FetchInsuranceSuccess'
 import {

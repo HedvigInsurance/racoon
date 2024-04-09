@@ -9,7 +9,8 @@ import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { MENU_BAR_HEIGHT_DESKTOP } from '@/components/Header/Header.constants'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
-import { ProductItem, ProductItemProps } from './ProductItem'
+import type { ProductItemProps } from './ProductItem';
+import { ProductItem } from './ProductItem'
 
 export type CartToastAttributes = {
   publish: (product: ProductItemProps) => void

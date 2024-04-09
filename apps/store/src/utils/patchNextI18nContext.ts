@@ -1,4 +1,4 @@
-import { GetStaticPropsContext } from 'next'
+import type { GetStaticPropsContext } from 'next'
 import { FALLBACK_LOCALE, locales } from '@/utils/l10n/locales'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 

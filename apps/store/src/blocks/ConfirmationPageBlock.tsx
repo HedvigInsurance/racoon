@@ -1,6 +1,7 @@
 'use client'
-import { storyblokEditable, StoryblokComponent, SbBlokData } from '@storyblok/react'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import type { SbBlokData } from '@storyblok/react';
+import { storyblokEditable, StoryblokComponent } from '@storyblok/react'
+import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type ConfirmationPageBlockProps = SbBaseBlockProps<{
   body?: Array<SbBlokData>

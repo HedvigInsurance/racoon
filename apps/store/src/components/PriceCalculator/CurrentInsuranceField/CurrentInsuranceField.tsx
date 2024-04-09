@@ -3,7 +3,7 @@ import {
   useExternalInsurersQuery,
   useExternalInsurerUpdateMutation,
 } from '@/services/graphql/generated'
-import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
+import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { useShowFetchInsurance } from '../useFetchInsurance'
 import { InputCurrentInsurance } from './InputCurrentInsurance'
 

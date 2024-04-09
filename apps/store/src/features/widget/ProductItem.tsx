@@ -4,7 +4,8 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import React, { type ComponentProps, useState, forwardRef, type ReactNode } from 'react'
-import { Button, ButtonProps, CrossIconSmall, InfoIcon, LockIcon, Space, Text, mq, theme } from 'ui'
+import type { ButtonProps} from 'ui';
+import { Button, CrossIconSmall, InfoIcon, LockIcon, Space, Text, mq, theme } from 'ui'
 import * as Collapsible from '@/components/Collapsible'
 import { InputDate } from '@/components/InputDate/InputDate'
 import { InputDay } from '@/components/InputDay/InputDay'

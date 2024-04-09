@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { Heading, Space, mq, theme } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { ProductItem } from '@/components/SelectInsuranceGrid/ProductItem'
-import { Product as APIProduct } from '@/services/graphql/generated'
+import type { Product as APIProduct } from '@/services/graphql/generated'
 
 const ITEM_THRESHOLD = 4
 const LAYOUT = { GRID: 'grid', COLUMN: 'column' }

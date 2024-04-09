@@ -1,10 +1,10 @@
 import 'server-only'
-import { ISbStoryData } from '@storyblok/react'
+import type { ISbStoryData } from '@storyblok/react'
 import { apiPlugin, getStoryblokApi, storyblokInit } from '@storyblok/react/rsc'
 import { BLOG_ARTICLE_CONTENT_TYPE } from '@/features/blog/blog.constants'
-import { StoryblokVersion, StoryOptions } from '@/services/storyblok/storyblok'
+import type { StoryblokVersion, StoryOptions } from '@/services/storyblok/storyblok'
 import { storyblokComponents } from '@/services/storyblok/storyblokComponents'
-import { Language } from '@/utils/l10n/types'
+import type { Language } from '@/utils/l10n/types'
 
 // Overall app router setup for Storyblok based on
 // https://www.storyblok.com/tp/add-a-headless-cms-to-next-js-13-in-5-minutes

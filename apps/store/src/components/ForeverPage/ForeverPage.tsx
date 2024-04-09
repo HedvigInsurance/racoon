@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { FormEventHandler, useState } from 'react'
+import type { FormEventHandler} from 'react';
+import { useState } from 'react'
 import { Button, mq, Space, theme } from 'ui'
 import { useGlobalBanner } from '@/components/GlobalBanner/useGlobalBanner'
 import * as GridLayout from '@/components/GridLayout/GridLayout'

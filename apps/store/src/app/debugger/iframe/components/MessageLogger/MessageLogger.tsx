@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { Text } from 'ui'
-import { WidgetEvent, isWidgetEvent } from '@/features/widget/publishWidgetEvent'
+import type { WidgetEvent} from '@/features/widget/publishWidgetEvent';
+import { isWidgetEvent } from '@/features/widget/publishWidgetEvent'
 import { messageLog, wrapper } from './MessageLogger.css'
 
 export function MessageLogger() {

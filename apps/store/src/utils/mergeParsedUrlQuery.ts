@@ -1,4 +1,4 @@
-import { ParsedUrlQuery } from 'querystring'
+import type { ParsedUrlQuery } from 'querystring'
 import { ORIGIN_URL } from './PageLink'
 
 export const mergeParsedUrlQuery = (linkUrl: string, search: ParsedUrlQuery): string => {

@@ -1,5 +1,6 @@
-import { BackendModule, CallbackError, createInstance, InitOptions, Resource } from 'i18next'
-import { I18n } from 'next-i18next'
+import type { BackendModule, CallbackError, InitOptions, Resource } from 'i18next';
+import { createInstance } from 'i18next'
+import type { I18n } from 'next-i18next'
 import { initReactI18next } from 'react-i18next/initReactI18next'
 import nextI18nextConfig from '../../next-i18next.config.cjs'
 

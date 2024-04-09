@@ -7,7 +7,7 @@ import {
   yourFamilySection,
 } from '@/services/PriceCalculator/formFragments'
 import { setI18nNamespace, tKey } from '@/utils/i18n'
-import { Template } from '../PriceCalculator.types'
+import type { Template } from '../PriceCalculator.types'
 
 setI18nNamespace('purchase-form')
 

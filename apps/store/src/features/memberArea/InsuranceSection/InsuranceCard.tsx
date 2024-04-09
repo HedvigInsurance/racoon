@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { HedvigSymbol, Text, mq, theme } from 'ui'
-import { MemberContractFragment } from '@/services/graphql/generated'
+import type { MemberContractFragment } from '@/services/graphql/generated'
 
 type InsuranceCardProps = {
   contract: MemberContractFragment

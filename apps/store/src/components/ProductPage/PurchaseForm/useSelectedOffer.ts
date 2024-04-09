@@ -1,7 +1,8 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { SetStateAction, atom, useAtom } from 'jotai'
+import type { SetStateAction} from 'jotai';
+import { atom, useAtom } from 'jotai'
 import { useCallback } from 'react'
-import { ProductOfferFragment } from '@/services/graphql/generated'
+import type { ProductOfferFragment } from '@/services/graphql/generated'
 
 const selectedOfferAtom = atom<ProductOfferFragment | null>(null)
 

@@ -8,7 +8,7 @@ import {
   ShopSessionAuthenticationStatus,
   useShopSessionCustomerUpdateMutation,
 } from '@/services/graphql/generated'
-import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useErrorMessage } from '@/utils/useErrorMessage'
 
 const SsnFieldName = 'ssn'

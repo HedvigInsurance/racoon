@@ -1,9 +1,9 @@
-import {
+import type {
   CartFragmentFragment,
   TrialContractFragment,
   CurrentMemberQuery,
 } from '@/services/graphql/generated'
-import { StoryblokPageProps } from '@/services/storyblok/storyblok'
+import type { StoryblokPageProps } from '@/services/storyblok/storyblok'
 
 export type MemberPartnerData = CurrentMemberQuery['currentMember']['partnerData']
 

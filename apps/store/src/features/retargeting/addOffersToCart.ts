@@ -1,8 +1,9 @@
-import { ApolloClient } from '@apollo/client'
-import {
-  CartEntriesAddDocument,
+import type { ApolloClient } from '@apollo/client'
+import type {
   CartEntriesAddMutation,
-  CartEntriesAddMutationVariables,
+  CartEntriesAddMutationVariables} from '@/services/graphql/generated';
+import {
+  CartEntriesAddDocument
 } from '@/services/graphql/generated'
 
 export const addOffersToCart = async (

@@ -2,9 +2,10 @@
 
 import clsx from 'clsx'
 import { forwardRef, type ReactNode } from 'react'
-import { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../TypeUtils'
+import type { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../TypeUtils'
 import { buttonVariant, centered, childrenWrapper, fullWidthStyles } from './Button.css'
-import { ButtonSize, getButtonSizeStyles } from './Button.helpers'
+import type { ButtonSize} from './Button.helpers';
+import { getButtonSizeStyles } from './Button.helpers'
 import { DotPulse } from './DotPulse'
 
 type BaseProps = {

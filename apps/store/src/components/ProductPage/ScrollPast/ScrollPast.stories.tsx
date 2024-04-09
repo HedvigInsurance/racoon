@@ -1,8 +1,9 @@
 import styled from '@emotion/styled'
-import { Meta, StoryFn } from '@storybook/react'
+import type { Meta, StoryFn } from '@storybook/react'
 import { useRef } from 'react'
 import { Button, theme } from 'ui'
-import { ScrollPast, ScrollPastProps } from './ScrollPast'
+import type { ScrollPastProps } from './ScrollPast';
+import { ScrollPast } from './ScrollPast'
 
 export default {
   title: 'Product Page / Scroll Past',

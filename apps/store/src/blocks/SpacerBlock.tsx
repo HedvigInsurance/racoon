@@ -2,7 +2,7 @@
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { mq } from 'ui'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type Props = {
   size: string

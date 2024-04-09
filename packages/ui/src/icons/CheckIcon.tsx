@@ -1,4 +1,5 @@
-import { IconRoot, IconRootProps } from 'ui/src/icons/Root'
+import type { IconRootProps } from 'ui/src/icons/Root';
+import { IconRoot } from 'ui/src/icons/Root'
 
 export type CheckIconProps = IconRootProps
 

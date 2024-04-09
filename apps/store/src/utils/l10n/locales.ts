@@ -1,4 +1,5 @@
-import { IsoLocale, Language, Locale, RoutingLocale } from './types'
+import type { IsoLocale, RoutingLocale } from './types';
+import { Language, Locale } from './types'
 
 export const FALLBACK_LOCALE = Locale.SvSe
 export const LOCALE_COOKIE_KEY = 'NEXT_LOCALE'

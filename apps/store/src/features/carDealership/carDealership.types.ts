@@ -1,4 +1,4 @@
-import { CarTrialExtensionQuery, TrialContractFragment } from '@/services/graphql/generated'
+import type { CarTrialExtensionQuery, TrialContractFragment } from '@/services/graphql/generated'
 
 export type CarTrialExtension = CarTrialExtensionQuery['carTrial']
 

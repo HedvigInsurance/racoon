@@ -1,4 +1,4 @@
-import { GetServerSideProps, NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from 'next'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext' // eslint-disable-next-line @typescript-eslint/require-await
 
 // eslint-disable-next-line @typescript-eslint/require-await

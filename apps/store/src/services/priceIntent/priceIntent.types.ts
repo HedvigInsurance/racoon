@@ -3,7 +3,7 @@ import type {
   PriceIntentDataUpdateMutationVariables,
   PriceIntentQuery,
 } from '@/services/graphql/generated'
-import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
+import type { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 
 export type PriceIntentCreateParams = PriceIntentCreateMutationVariables & {
   priceTemplate: Template

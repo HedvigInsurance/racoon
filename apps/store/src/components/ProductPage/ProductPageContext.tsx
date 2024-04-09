@@ -1,7 +1,8 @@
 'use client'
-import { createContext, PropsWithChildren, useContext, useMemo } from 'react'
+import type { PropsWithChildren} from 'react';
+import { createContext, useContext, useMemo } from 'react'
 import { useProductData } from '../ProductData/ProductDataProvider'
-import { ProductPageProps } from './ProductPage.types'
+import type { ProductPageProps } from './ProductPage.types'
 
 type ProductPageContextData = Pick<ProductPageProps, 'priceTemplate'> & {
   content: {

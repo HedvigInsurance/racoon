@@ -5,8 +5,8 @@ import { atom, useAtom, useSetAtom } from 'jotai'
 import { createJSONStorage, atomWithStorage } from 'jotai/utils'
 import { useEffect, useCallback } from 'react'
 import { Banner } from '@/components/Banner/Banner'
-import { BannerVariant } from '@/components/Banner/Banner.types'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import type { BannerVariant } from '@/components/Banner/Banner.types'
+import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 export type AnnouncementBlockProps = SbBaseBlockProps<{
   id: string

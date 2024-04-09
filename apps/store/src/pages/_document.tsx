@@ -4,7 +4,7 @@ import { GTMBodyScript } from '@/services/gtm'
 import { Features } from '@/utils/Features'
 import { contentFontClassName } from '@/utils/fonts'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
-import { UiLocale } from '@/utils/l10n/types'
+import type { UiLocale } from '@/utils/l10n/types'
 
 const COOKIE_CONSENT_SCRIPT_ID = {
   // Could be useful for testing changes on OneTrust side

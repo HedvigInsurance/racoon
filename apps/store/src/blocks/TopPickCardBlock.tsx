@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import Link from 'next/link'
 import { TopPickCard } from '@/components/TopPickCard/TopPickCard'
-import { SbBaseBlockProps, LinkField, StoryblokAsset } from '@/services/storyblok/storyblok'
+import type { SbBaseBlockProps, LinkField, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { getImgSrc, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 
 export type TopPickCardBlockProps = SbBaseBlockProps<{

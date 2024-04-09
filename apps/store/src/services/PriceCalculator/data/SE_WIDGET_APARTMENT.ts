@@ -6,7 +6,7 @@ import {
   yourApartmentSection,
   yourFamilySection,
 } from '../formFragments'
-import { Template } from '../PriceCalculator.types'
+import type { Template } from '../PriceCalculator.types'
 
 export const SE_WIDGET_APARTMENT: Template = {
   name: 'SE_WIDGET_APARTMENT',

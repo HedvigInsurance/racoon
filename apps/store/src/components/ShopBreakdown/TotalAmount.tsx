@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { Text, theme } from 'ui'
 import { Price } from '@/components/Price'
-import { CurrencyCode } from '@/services/graphql/generated'
+import type { CurrencyCode } from '@/services/graphql/generated'
 
 type Props = {
   currencyCode: CurrencyCode

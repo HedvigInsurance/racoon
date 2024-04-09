@@ -1,7 +1,7 @@
 import { type SbBlokData, type ISbStoryData, type ISbRichtext } from '@storyblok/react'
 import { type SEOData, type StoryblokAsset, fetchStories } from '@/services/storyblok/storyblok'
 import { getImgSrc, getStoryblokImageSize } from '@/services/storyblok/Storyblok.helpers'
-import { RoutingLocale } from '@/utils/l10n/types'
+import type { RoutingLocale } from '@/utils/l10n/types'
 import { BLOG_ARTICLE_CONTENT_TYPE } from './blog.constants'
 import { convertToBlogArticleCategory } from './blog.helpers'
 import { type BlogArticleTeaser } from './blog.types'

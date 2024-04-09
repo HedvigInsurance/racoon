@@ -1,12 +1,12 @@
 import { datadogRum } from '@datadog/browser-rum'
 import { useCallback, useRef } from 'react'
-import { Subscription } from 'zen-observable-ts'
+import type { Subscription } from 'zen-observable-ts'
 import { loginMemberSeBankId } from '@/services/authApi/login'
 import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
 import { saveAuthTokens } from '@/services/authApi/persist'
-import { BankIdLoginOptions, LoginPromptOptions, StartLoginOptions } from './bankId.types'
+import type { BankIdLoginOptions, LoginPromptOptions, StartLoginOptions } from './bankId.types'
 import { apiStatusToBankIdState, bankIdLogger } from './bankId.utils'
-import { BankIdDispatch } from './bankIdReducer'
+import type { BankIdDispatch } from './bankIdReducer'
 
 type HookOptions = {
   dispatch: BankIdDispatch

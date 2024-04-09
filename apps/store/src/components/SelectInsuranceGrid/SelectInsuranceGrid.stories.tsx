@@ -1,5 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react'
-import { SelectInsuranceGrid, Product } from './SelectInsuranceGrid'
+import type { Meta, StoryObj } from '@storybook/react'
+import type { Product } from './SelectInsuranceGrid';
+import { SelectInsuranceGrid } from './SelectInsuranceGrid'
 
 const PRODUCTS_FIXTURE: Array<Product> = [
   {

@@ -1,4 +1,4 @@
-import { ApolloClient } from '@apollo/client'
+import type { ApolloClient } from '@apollo/client'
 import { cookies } from 'next/headers'
 import { AppRouterCookiePersister } from '@/services/persister/app-router/AppRouterCookiePersister'
 import { COOKIE_KEY_SHOP_SESSION } from '../ShopSession.constants'

@@ -1,4 +1,4 @@
-import { GetStaticPaths } from 'next'
+import type { GetStaticPaths } from 'next'
 import { countries } from './l10n/countries'
 import { locales } from './l10n/locales'
 import { toRoutingLocale } from './l10n/localeUtils'

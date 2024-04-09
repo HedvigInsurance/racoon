@@ -1,5 +1,6 @@
-import { Meta, StoryFn } from '@storybook/react'
-import { ProductPillow, ProductPillowProps } from './ProductPillow'
+import type { Meta, StoryFn } from '@storybook/react'
+import type { ProductPillowProps } from './ProductPillow';
+import { ProductPillow } from './ProductPillow'
 
 export default {
   title: 'Product Pillows / Product Pillow',

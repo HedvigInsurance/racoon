@@ -1,10 +1,12 @@
 'use client'
 import styled from '@emotion/styled'
-import { SbBlokData, StoryblokComponent, storyblokEditable } from '@storyblok/react'
-import { ComponentProps, useState } from 'react'
+import type { SbBlokData} from '@storyblok/react';
+import { StoryblokComponent, storyblokEditable } from '@storyblok/react'
+import type { ComponentProps} from 'react';
+import { useState } from 'react'
 import { Button, theme } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 export type ModalBlockProps = SbBaseBlockProps<{
   buttonText: string

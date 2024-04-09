@@ -6,7 +6,7 @@ import {
   ssnSeSection,
   yourAddressSection,
 } from '../formFragments'
-import { Template } from '../PriceCalculator.types'
+import type { Template } from '../PriceCalculator.types'
 
 setI18nNamespace('purchase-form')
 

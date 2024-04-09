@@ -4,7 +4,8 @@ import styled from '@emotion/styled'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { PropsWithChildren, useState } from 'react'
+import type { PropsWithChildren} from 'react';
+import { useState } from 'react'
 import { BankIdIcon, Button, Heading, mq, Space, Text, theme } from 'ui'
 import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import { CheckoutHeader } from '@/components/CheckoutHeader/CheckoutHeader'
@@ -22,11 +23,12 @@ import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountCont
 import { TextField } from '@/components/TextField/TextField'
 import { TextWithLink } from '@/components/TextWithLink'
 import { SIGN_FORM_ID } from '@/constants/sign.constants'
-import {
+import type {
   CartFragmentFragment,
-  CurrentMemberDocument,
   CurrentMemberQuery,
-  CurrentMemberQueryVariables,
+  CurrentMemberQueryVariables} from '@/services/graphql/generated';
+import {
+  CurrentMemberDocument,
   ShopSessionAuthenticationStatus,
 } from '@/services/graphql/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
@@ -35,7 +37,7 @@ import { Features } from '@/utils/Features'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { FormElement, QueryParam } from './CheckoutPage.constants'
-import { CheckoutPageProps } from './CheckoutPage.types'
+import type { CheckoutPageProps } from './CheckoutPage.types'
 import { PageDebugDialog } from './PageDebugDialog'
 import { useHandleSubmitCheckout } from './useHandleSubmitCheckout'
 

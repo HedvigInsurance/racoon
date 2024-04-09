@@ -5,7 +5,7 @@ import {
   fetchGlobalProductMetadata,
 } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { type WidgetFlowStory, getStoryById } from '@/services/storyblok/storyblok'
-import { RoutingLocale } from '@/utils/l10n/types'
+import type { RoutingLocale } from '@/utils/l10n/types'
 
 type Params = {
   apolloClient: ApolloClient<unknown>

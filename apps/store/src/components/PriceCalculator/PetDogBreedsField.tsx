@@ -4,9 +4,10 @@ import { useState, useMemo } from 'react'
 import { Space } from 'ui'
 import { Combobox } from '@/components/Combobox/Combobox'
 import { PriceIntentAnimal, usePriceIntentAvailableBreedsQuery } from '@/services/graphql/generated'
-import {
+import type {
   PetDogBreedsField as InputFieldPetDogBreeds,
-  Breed,
+  Breed} from '@/services/PriceCalculator/Field.types';
+import {
   MIXED_BREED_OPTION_ID,
 } from '@/services/PriceCalculator/Field.types'
 import { MixedBreedPicker } from './MixedBreedPicker/MixedBreedPicker'

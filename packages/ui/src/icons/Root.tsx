@@ -1,6 +1,6 @@
 import { assignInlineVars } from '@vanilla-extract/dynamic'
 import { clsx } from 'clsx'
-import { ComponentPropsWithoutRef } from 'react'
+import type { ComponentPropsWithoutRef } from 'react'
 import { iconRoot, iconSize, iconColor } from './Root.css'
 
 export type IconRootProps = ComponentPropsWithoutRef<'svg'> & {
