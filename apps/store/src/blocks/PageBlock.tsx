@@ -16,6 +16,7 @@ export const PageBlock = ({ blok }: PageBlockProps) => {
         data-dark-background={!!blok.darkBackground}
         data-overlay-menu={!!blok.overlayMenu}
         data-hide-chat={!!blok.hideChat}
+        data-supports-sticky-header={true}
       >
         {blok.body.map((nestedBlock) => (
           <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />

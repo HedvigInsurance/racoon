@@ -1,10 +1,10 @@
 'use client'
-
-import type { Transition } from 'framer-motion';
+import type { Transition } from 'framer-motion'
 import { motion } from 'framer-motion'
 import type { ReactNode } from 'react'
 import { bodyBgColor, headerBgTransparentColor } from 'ui/src/theme/vars.css'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
+import { isBrowser } from '@/utils/env'
 import { useScrollState } from '@/utils/useScrollState'
 import { MENU_BAR_HEIGHT_PX } from './Header.constants'
 import { contentWrapper, ghostWrapper, logoWrapper, wrapper } from './Header.css'
@@ -34,21 +34,33 @@ type AnimationVariant = keyof typeof ANIMATION_VARIANTS | undefined
 type HeaderProps = {
   children: ReactNode
   opaque?: boolean
-  static?: boolean
 }
 
 export const Header = (props: HeaderProps) => {
-  const { children, opaque = false, static: staticPosition = false } = props
+  const { children, opaque = false } = props
   const scrollState = useScrollState({ threshold: MENU_BAR_HEIGHT_PX * 2 })
 
   const initialStyles = {
     backgroundColor: opaque ? bodyBgColor : headerBgTransparentColor,
   }
 
-  let animate: AnimationVariant = scrollState === 'SCROLL_UP' ? 'SLIDE_IN' : undefined
-  animate = scrollState === 'BELOW' ? 'HIDE' : animate
-  animate = scrollState === 'SCROLL_DOWN' ? 'SLIDE_OUT' : animate
-  animate = staticPosition ? undefined : animate
+  let animate: AnimationVariant = undefined
+  if (
+    isBrowser() &&
+    window.document.querySelector('main[data-supports-sticky-header=true]') != null
+  ) {
+    switch (scrollState) {
+      case 'SCROLL_UP':
+        animate = 'SLIDE_IN'
+        break
+      case 'SCROLL_DOWN':
+        animate = 'SLIDE_OUT'
+        break
+      case 'BELOW':
+        animate = 'HIDE'
+        break
+    }
+  }
 
   return (
     <div style={initialStyles} className={ghostWrapper}>
