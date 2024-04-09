@@ -1,7 +1,7 @@
 'use client'
 
 import * as GridLayout from '@/components/GridLayout/GridLayout'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { makeAbsolute } from '@/services/storyblok/Storyblok.helpers'
 import { ArticleCategoryList } from './ArticleCategoryList/ArticleCategoryList'
 import { BLOG_ARTICLE_CATEGORY_LIST_BLOCK } from './blog.constants'

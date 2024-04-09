@@ -1,6 +1,7 @@
 import { stringify } from 'querystring'
 import { type ApolloClient, type NormalizedCacheObject } from '@apollo/client'
-import { type GetServerSideProps, type GetServerSidePropsContext, Redirect } from 'next'
+import type { Redirect } from 'next';
+import { type GetServerSideProps, type GetServerSidePropsContext } from 'next'
 import Head from 'next/head'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -12,11 +13,11 @@ import { createPriceIntent, getWidgetPriceTemplate } from '@/features/widget/wid
 import { initializeApolloServerSide } from '@/services/apollo/client'
 import { hideChatOnPage } from '@/services/CustomerFirst'
 import { useShopSessionQuery } from '@/services/graphql/generated'
-import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
+import type { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
-import { RoutingLocale } from '@/utils/l10n/types'
+import type { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
 

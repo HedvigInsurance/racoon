@@ -3,9 +3,11 @@ import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { useSearchParams } from 'next/navigation'
 import { type ComponentProps, useMemo, useState } from 'react'
-import { Button, ConditionalWrapper, theme } from 'ui'
+import type { Button} from 'ui';
+import { ConditionalWrapper, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
-import { LinkField, type SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import type { LinkField} from '@/services/storyblok/storyblok';
+import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 import { mergeSearchParams } from '@/utils/mergeSearchParams'
 

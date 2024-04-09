@@ -1,5 +1,5 @@
-import { OptionsType, TmpCookiesObj } from 'cookies-next/lib/types'
-import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies'
+import type { OptionsType, TmpCookiesObj } from 'cookies-next/lib/types'
+import type { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export interface SimplePersister {

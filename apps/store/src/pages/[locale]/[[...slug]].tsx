@@ -11,11 +11,12 @@ import { fetchProductReviewsMetadata } from '@/features/memberReviews/memberRevi
 import { initializeApollo } from '@/services/apollo/client'
 import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { getStoryblokPageProps } from '@/services/storyblok/getStoryblokPageProps'
+import type {
+  StoryblokPageProps,
+  StoryblokQueryParams} from '@/services/storyblok/storyblok';
 import {
   getFilteredPageLinks,
-  getRevalidate,
-  StoryblokPageProps,
-  StoryblokQueryParams,
+  getRevalidate
 } from '@/services/storyblok/storyblok'
 import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { isProductStory } from '@/services/storyblok/Storyblok.helpers'

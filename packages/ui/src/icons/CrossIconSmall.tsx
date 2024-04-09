@@ -1,4 +1,5 @@
-import { IconRoot, IconRootProps } from './Root'
+import type { IconRootProps } from './Root';
+import { IconRoot } from './Root'
 
 export const CrossIconSmall = ({ size = '1rem', ...props }: IconRootProps) => (
   <IconRoot size={size} {...props} viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">

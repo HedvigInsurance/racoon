@@ -4,8 +4,9 @@ import styled from '@emotion/styled'
 import Head from 'next/head'
 import { getImageProps } from 'next/image'
 import { ConditionalWrapper, getMediaQueryBreakpoint, mq, theme } from 'ui'
-import { Video, VideoProps } from '@/components/Video/Video'
-import { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
+import type { VideoProps } from '@/components/Video/Video';
+import { Video } from '@/components/Video/Video'
+import type { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 
 export type VideoBlockProps = SbBaseBlockProps<

@@ -1,10 +1,12 @@
 'use client'
 
 import styled from '@emotion/styled'
-import { SbBlokData, StoryblokComponent, storyblokEditable } from '@storyblok/react'
-import { ButtonBlock, ButtonBlockProps } from '@/blocks/ButtonBlock'
+import type { SbBlokData} from '@storyblok/react';
+import { StoryblokComponent, storyblokEditable } from '@storyblok/react'
+import type { ButtonBlockProps } from '@/blocks/ButtonBlock';
+import { ButtonBlock } from '@/blocks/ButtonBlock'
 import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWithPlaceholder'
-import { ExpectedBlockType, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
+import type { ExpectedBlockType, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
 type VerticalAlignment = 'top' | 'center' | 'bottom'

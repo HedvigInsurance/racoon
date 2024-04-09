@@ -1,11 +1,12 @@
 import { kv } from '@vercel/kv'
-import { z } from 'zod'
+import type { z } from 'zod'
 import { getReviewsDistribution, type ReviewsCountByScore } from './getReviewsDistribution'
 import type { Score, ReviewsMetadata, ReviewsByScore } from './memberReviews.types'
-import {
+import type {
   averageRatingSchema,
   reviewCommentsSchema,
-  commentByScoreSchema,
+  commentByScoreSchema} from './memberReviews.utils';
+import {
   validateLatestReviews,
   validateProductReviewsComments,
   validateAverageRating,

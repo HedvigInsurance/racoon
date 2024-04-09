@@ -1,6 +1,6 @@
 import { getStoriesBySlug, type StoryOptions } from '@/services/storyblok/storyblok'
 import { ORIGIN_URL } from '@/utils/PageLink'
-import { BreadcrumbListItem } from './PageBreadcrumbs'
+import type { BreadcrumbListItem } from './PageBreadcrumbs'
 
 export const fetchBreadcrumbs = async (
   slug: string,

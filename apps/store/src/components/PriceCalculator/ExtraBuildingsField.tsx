@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { FormEventHandler, useState } from 'react'
+import type { FormEventHandler} from 'react';
+import { useState } from 'react'
 import {
   Button,
   Heading,
@@ -15,12 +16,12 @@ import {
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextField } from '@/components/TextField/TextField'
-import {
+import type {
   ExtraBuildingsField as InputFieldExtraBuildings,
   ExtraBuilding,
   FieldOption,
 } from '@/services/PriceCalculator/Field.types'
-import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
+import type { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import * as InputRadio from './InputRadio'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 

@@ -1,5 +1,5 @@
 import '@emotion/react'
-import { theme } from 'ui'
+import type { theme } from 'ui'
 
 declare module '@emotion/react' {
   type HedvigTheme = typeof theme

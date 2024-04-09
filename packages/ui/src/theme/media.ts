@@ -1,4 +1,5 @@
-import { breakpoints, Level } from './media-query'
+import type { Level } from './media-query';
+import { breakpoints } from './media-query'
 
 export const animationAllowed = '(prefers-reduced-motion: no-preference)'
 

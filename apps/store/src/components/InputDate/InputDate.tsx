@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { ChangeEventHandler, InputHTMLAttributes, useId, useState } from 'react'
+import type { ChangeEventHandler, InputHTMLAttributes} from 'react';
+import { useId, useState } from 'react'
 import { ChevronIcon, theme, Text, LockIcon } from 'ui'
 import { convertToDate } from '@/utils/date'
 import { useFormatter } from '@/utils/useFormatter'

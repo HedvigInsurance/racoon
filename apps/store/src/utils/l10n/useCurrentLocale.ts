@@ -1,6 +1,6 @@
 import { useParams, usePathname } from 'next/navigation'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
-import { RoutingLocale } from '@/utils/l10n/types'
+import type { RoutingLocale } from '@/utils/l10n/types'
 
 export const useCurrentLocale = () => {
   // useParams() would return undefined during static rendering and hydration of statically rendered pages

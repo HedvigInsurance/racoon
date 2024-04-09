@@ -1,4 +1,4 @@
-import { Meta, StoryFn } from '@storybook/react'
+import type { Meta, StoryFn } from '@storybook/react'
 import { Space } from 'ui/src/components/Space'
 import { Card, CardContent, CardMedia } from './Card'
 

@@ -1,14 +1,15 @@
 import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
-import { GetStaticPaths, GetStaticProps } from 'next'
+import type { GetStaticPaths, GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { DefaultDebugDialog } from '@/components/DebugDialog/DefaultDebugDialog'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
 import { STORYBLOK_MANYPETS_FOLDER_SLUG } from '@/features/manyPets/manyPets.constants'
+import type {
+  PageStory,
+  StoryblokQueryParams} from '@/services/storyblok/storyblok';
 import {
   getRevalidate,
-  getStoryBySlug,
-  PageStory,
-  StoryblokQueryParams,
+  getStoryBySlug
 } from '@/services/storyblok/storyblok'
 import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { Features } from '@/utils/Features'

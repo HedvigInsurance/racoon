@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { Breadcrumbs, CheckoutStep } from './Breadcrumbs'
 
 const meta: Meta<typeof Breadcrumbs> = {

@@ -1,6 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useTranslation } from 'next-i18next'
-import { FormEventHandler } from 'react'
+import type { FormEventHandler } from 'react'
 import { BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { ShopSessionAuthenticationStatus } from '@/services/graphql/generated'

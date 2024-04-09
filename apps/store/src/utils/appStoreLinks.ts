@@ -1,5 +1,5 @@
 import { toIsoLocale } from '@/utils/l10n/localeUtils'
-import { RoutingLocale } from '@/utils/l10n/types'
+import type { RoutingLocale } from '@/utils/l10n/types'
 
 const APP_STORE_LINK = {
   apple: (locale: RoutingLocale) => {

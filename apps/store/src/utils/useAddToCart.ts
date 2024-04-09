@@ -1,13 +1,14 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useCallback } from 'react'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+import type {
+  CartEntryAddMutation} from '@/services/graphql/generated';
 import {
   useCartEntryAddMutation,
   ProductRecommendationsDocument,
-  useCartEntryReplaceMutation,
-  CartEntryAddMutation,
+  useCartEntryReplaceMutation
 } from '@/services/graphql/generated'
-import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 
 type Params = {
   shopSessionId: string

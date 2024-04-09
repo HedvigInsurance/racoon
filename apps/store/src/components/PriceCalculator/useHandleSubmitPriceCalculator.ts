@@ -3,9 +3,9 @@ import { useTranslation } from 'next-i18next'
 import { startTransition } from 'react'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { usePriceIntentDataUpdateMutation } from '@/services/graphql/generated'
-import { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
-import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
-import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import type { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
+import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
+import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 
 type Params = {
   shopSession: ShopSession

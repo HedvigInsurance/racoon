@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import * as RadioGroup from '@radix-ui/react-radio-group'
-import { MouseEventHandler, type ComponentProps } from 'react'
+import type { MouseEventHandler} from 'react';
+import { type ComponentProps } from 'react'
 import { Text, theme } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'

@@ -1,6 +1,6 @@
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
-import { Sprinkles } from 'ui/src/theme/sprinkles.css'
+import type { Sprinkles } from 'ui/src/theme/sprinkles.css'
 import { Button, Heading, HedvigLogo, Space, Text, mq, theme } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { HEADER_HEIGHT_MOBILE, HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header.constants'
@@ -9,7 +9,7 @@ import { InputCarRegistrationNumber } from '@/components/InputCarRegistrationNum
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { TextField } from '@/components/TextField/TextField'
-import { Money } from '@/utils/formatter'
+import type { Money } from '@/utils/formatter'
 import {
   Field,
   useCarBuyerValidationPageState,

@@ -1,6 +1,6 @@
 'use client'
-import { ReactNode } from 'react'
-import { GlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
+import type { ReactNode } from 'react'
+import type { GlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { useHydrateProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
 
 type Props = {

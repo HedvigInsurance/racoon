@@ -1,12 +1,13 @@
-import { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next'
 import { initializeApolloServerSide } from '@/services/apollo/client'
-import {
-  RedeemCampaignDocument,
+import type {
   RedeemCampaignMutation,
-  RedeemCampaignMutationVariables,
+  RedeemCampaignMutationVariables} from '@/services/graphql/generated';
+import {
+  RedeemCampaignDocument
 } from '@/services/graphql/generated'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
-import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { getPathnameFromUrl } from '@/utils/getPathnameFromUrl'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
 import { getLocaleOrFallback, getUrlLocale } from '@/utils/l10n/localeUtils'

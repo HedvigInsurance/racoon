@@ -1,7 +1,8 @@
-import { countries, CountryData } from '@/utils/l10n/countries'
+import type { CountryData } from '@/utils/l10n/countries';
+import { countries } from '@/utils/l10n/countries'
 import { locales } from '@/utils/l10n/locales'
 import { toIsoLocale } from '@/utils/l10n/localeUtils'
-import { CountryLabel, IsoLocale, Language, RoutingLocale } from '@/utils/l10n/types'
+import type { CountryLabel, IsoLocale, Language, RoutingLocale } from '@/utils/l10n/types'
 
 const localeCountries = Object.fromEntries(
   Object.entries(countries).flatMap(([countryId, countryData]) =>

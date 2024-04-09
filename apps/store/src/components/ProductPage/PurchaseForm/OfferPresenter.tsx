@@ -3,20 +3,22 @@ import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useInView } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
-import { RefObject, useEffect, useMemo, useRef, useState } from 'react'
+import type { RefObject} from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Button, Space, Text, theme } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import { ScrollToTopButton } from '@/components/ProductPage/ScrollToButton/ScrollToButton'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { BankSigneringEvent } from '@/services/bankSignering'
-import {
-  ExternalInsuranceCancellationOption,
+import type {
   ProductOfferFragment,
-  RedeemedCampaignFragment,
+  RedeemedCampaignFragment} from '@/services/graphql/generated';
+import {
+  ExternalInsuranceCancellationOption
 } from '@/services/graphql/generated'
-import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
-import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
+import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { getOffersByPrice } from '@/utils/getOffersByPrice'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'

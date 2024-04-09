@@ -1,12 +1,13 @@
 import { Provider as JotaiProvider } from 'jotai'
-import { PropsWithChildren, Suspense } from 'react'
+import type { PropsWithChildren} from 'react';
+import { Suspense } from 'react'
 import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import globalCss from 'ui/src/global.css'
 import { TranslationsProvider } from '@/appComponents/providers/TranslationsProvider'
 import { OrgStructuredData } from '@/appComponents/RootLayout/OrgStructuredData'
 import { contentFontClassName } from '@/utils/fonts'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
-import { RoutingLocale } from '@/utils/l10n/types'
+import type { RoutingLocale } from '@/utils/l10n/types'
 import { initTranslationsServerSide } from 'app/i18n'
 import { DebugError } from './DebugError'
 

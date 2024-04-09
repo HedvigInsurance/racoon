@@ -1,5 +1,5 @@
 import { useTranslation } from 'next-i18next'
-import { ComponentProps } from 'react'
+import type { ComponentProps } from 'react'
 import { Text } from 'ui'
 
 type Props = {

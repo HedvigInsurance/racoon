@@ -1,4 +1,4 @@
-import { Money } from '@/services/graphql/generated'
+import type { Money } from '@/services/graphql/generated'
 
 type SortableOffer = {
   cost: {

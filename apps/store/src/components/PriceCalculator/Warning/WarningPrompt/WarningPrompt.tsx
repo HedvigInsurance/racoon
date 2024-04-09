@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { Button, InfoIcon, Space, Text, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { PriceIntentWarning } from '@/services/graphql/generated'
+import type { PriceIntentWarning } from '@/services/graphql/generated'
 
 type Props = {
   onClickConfirm: () => void

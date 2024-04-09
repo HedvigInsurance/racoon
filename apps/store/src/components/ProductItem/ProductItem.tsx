@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import React, { type ComponentProps, useState, forwardRef, type ReactNode } from 'react'
-import { Badge, Button, ButtonProps, Text, mq, theme } from 'ui'
+import type { ButtonProps} from 'ui';
+import { Badge, Button, Text, mq, theme } from 'ui'
 import * as Collapsible from '@/components/Collapsible'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Skeleton } from '@/components/Skeleton'

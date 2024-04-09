@@ -1,8 +1,9 @@
 'use client'
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import { ConditionalWrapper, Heading, HeadingProps, PossibleHeadingVariant, theme } from 'ui'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import type { HeadingProps, PossibleHeadingVariant} from 'ui';
+import { ConditionalWrapper, Heading, theme } from 'ui'
+import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 const Wrapper = styled.div({
   paddingLeft: theme.space.md,

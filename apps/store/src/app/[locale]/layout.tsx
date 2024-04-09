@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { ProductMetadataProvider } from '@/appComponents/providers/ProductMetadataProvider'
 import { StoryblokProvider } from '@/appComponents/providers/StoryblokProvider'
 import { RootLayout } from '@/appComponents/RootLayout/RootLayout'
@@ -10,10 +10,10 @@ import { fetchCompanyReviewsMetadata } from '@/features/memberReviews/memberRevi
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
 import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
-import { GlobalStory } from '@/services/storyblok/storyblok'
+import type { GlobalStory } from '@/services/storyblok/storyblok'
 import { getStoryBySlug } from '@/services/storyblok/storyblok.serverOnly'
 import { locales } from '@/utils/l10n/locales'
-import { RoutingLocale } from '@/utils/l10n/types'
+import type { RoutingLocale } from '@/utils/l10n/types'
 import { StoryblokLayout } from './StoryblokLayout'
 
 export type LocalizedLayoutProps<P = unknown> = P & {

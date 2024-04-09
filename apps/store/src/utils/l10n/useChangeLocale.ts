@@ -7,7 +7,7 @@ import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSe
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
 import { LOCALE_COOKIE_KEY, LOCALE_COOKIE_MAX_AGE } from '@/utils/l10n/locales'
 import { toRoutingLocale } from '@/utils/l10n/localeUtils'
-import { IsoLocale } from '@/utils/l10n/types'
+import type { IsoLocale } from '@/utils/l10n/types'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 
 export const useChangeLocale = () => {

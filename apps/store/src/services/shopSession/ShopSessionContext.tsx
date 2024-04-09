@@ -1,9 +1,10 @@
 'use client'
 
 import { useApolloClient } from '@apollo/client'
+import type {
+  PropsWithChildren} from 'react';
 import {
   createContext,
-  PropsWithChildren,
   useCallback,
   useContext,
   useEffect,
@@ -11,8 +12,9 @@ import {
   useRef,
   useState,
 } from 'react'
-import { ShopSessionQueryResult, useShopSessionQuery } from '@/services/graphql/generated'
-import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import type { ShopSessionQueryResult} from '@/services/graphql/generated';
+import { useShopSessionQuery } from '@/services/graphql/generated'
+import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { isBrowser } from '@/utils/env'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 import { setupShopSessionServiceClientSide } from './ShopSession.helpers'

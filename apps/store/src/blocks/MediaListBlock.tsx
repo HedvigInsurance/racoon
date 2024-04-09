@@ -3,9 +3,9 @@ import styled from '@emotion/styled'
 import { StoryblokComponent, storyblokEditable } from '@storyblok/react'
 import { mq } from 'ui'
 import { Slideshow } from '@/components/Slideshow/Slideshow'
-import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
-import { ImageBlockProps } from './ImageBlock'
-import { VideoBlockProps } from './VideoBlock'
+import type { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import type { ImageBlockProps } from './ImageBlock'
+import type { VideoBlockProps } from './VideoBlock'
 
 const playVideoExclusively = (
   videoList: Array<HTMLVideoElement>,

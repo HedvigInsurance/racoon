@@ -1,5 +1,5 @@
 import { type CoreOptions } from '@adyen/adyen-web/dist/types/core/types'
-import { ApolloClient } from '@apollo/client'
+import type { ApolloClient } from '@apollo/client'
 import {
   AdyenAvailablePaymentMethodsDocument,
   type AdyenAvailablePaymentMethodsQuery,

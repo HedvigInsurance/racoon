@@ -1,24 +1,25 @@
-import { ApolloClient } from '@apollo/client'
-import { GetServerSidePropsContext } from 'next'
-import {
-  PriceIntentCreateDocument,
+import type { ApolloClient } from '@apollo/client'
+import type { GetServerSidePropsContext } from 'next'
+import type {
   PriceIntentCreateMutation,
   PriceIntentCreateMutationVariables,
-  PriceIntentDataUpdateDocument,
   PriceIntentDataUpdateMutation,
   PriceIntentDataUpdateMutationVariables,
-  PriceIntentDocument,
   PriceIntentQuery,
   PriceIntentQueryVariables,
-  PriceIntentConfirmDocument,
   PriceIntentConfirmMutation,
-  PriceIntentConfirmMutationVariables,
+  PriceIntentConfirmMutationVariables} from '@/services/graphql/generated';
+import {
+  PriceIntentCreateDocument,
+  PriceIntentDataUpdateDocument,
+  PriceIntentDocument,
+  PriceIntentConfirmDocument
 } from '@/services/graphql/generated'
 import { CookiePersister } from '@/services/persister/CookiePersister'
-import { SimplePersister } from '@/services/persister/Persister.types'
-import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
+import type { SimplePersister } from '@/services/persister/Persister.types'
+import type { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { ServerCookiePersister } from '../persister/ServerCookiePersister'
-import { PriceIntent, PriceIntentCreateParams } from './priceIntent.types'
+import type { PriceIntent, PriceIntentCreateParams } from './priceIntent.types'
 
 export class PriceIntentService {
   constructor(

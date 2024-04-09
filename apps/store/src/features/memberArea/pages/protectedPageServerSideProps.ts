@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next'
+import type { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'

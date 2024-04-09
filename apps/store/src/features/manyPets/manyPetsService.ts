@@ -1,6 +1,6 @@
-import { ProductOfferFragment } from '@/services/graphql/generated'
+import type { ProductOfferFragment } from '@/services/graphql/generated'
 import { TableDataTemplate } from './data/SE_PET_INSURANCE_COMPARISON_TABLE'
-import {
+import type {
   ComparisonTableTemplate,
   ParsedComparisonTableTemplate,
   ComparisonTableData,

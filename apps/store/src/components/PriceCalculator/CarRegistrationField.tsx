@@ -1,5 +1,5 @@
 import { InputCarRegistrationNumber } from '@/components/InputCarRegistrationNumber/InputCarRegistrationNumber'
-import { CarRegistrationNumberField as CarRegistrationNumberFieldType } from '@/services/PriceCalculator/Field.types'
+import type { CarRegistrationNumberField as CarRegistrationNumberFieldType } from '@/services/PriceCalculator/Field.types'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
 type RegistrationFieldProps = {

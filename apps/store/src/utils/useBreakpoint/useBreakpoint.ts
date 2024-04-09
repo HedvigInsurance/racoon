@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useState } from 'react'
-import { Level, getMediaQueryBreakpoint } from 'ui'
+import type { Level} from 'ui';
+import { getMediaQueryBreakpoint } from 'ui'
 
 /**
  * Utility function for finding out if window size is above or below a breakpoint.

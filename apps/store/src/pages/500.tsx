@@ -1,4 +1,4 @@
-import { GetStaticProps, NextPageWithLayout } from 'next'
+import type { GetStaticProps, NextPageWithLayout } from 'next'
 import { useTranslation } from 'next-i18next'
 import { Heading } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'

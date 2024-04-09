@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { GetStaticProps } from 'next'
+import type { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { CheckIcon, Text, theme } from 'ui'

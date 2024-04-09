@@ -1,11 +1,13 @@
 'use client'
 
 import styled from '@emotion/styled'
-import { ISbRichtext, storyblokEditable } from '@storyblok/react'
+import type { ISbRichtext} from '@storyblok/react';
+import { storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
-import { Text, theme, UIColors, FontSizes } from 'ui'
+import type { UIColors, FontSizes } from 'ui';
+import { Text, theme } from 'ui'
 import { listStyles, nestedLinkStyles } from '@/components/RichText/RichText.styles'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { renderRichText } from './RichTextBlock/RichTextBlock'
 
 type TextColor = keyof Pick<UIColors, 'textPrimary' | 'textSecondary' | 'textTertiary'>

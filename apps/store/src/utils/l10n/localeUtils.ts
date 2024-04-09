@@ -1,12 +1,14 @@
-import { TFunction } from 'next-i18next'
-import { FALLBACK_LOCALE, LocaleData, locales } from '@/utils/l10n/locales'
-import {
-  CountryCode,
+import type { TFunction } from 'next-i18next'
+import type { LocaleData} from '@/utils/l10n/locales';
+import { FALLBACK_LOCALE, locales } from '@/utils/l10n/locales'
+import type {
   CountryLabel,
   IsoLocale,
-  Language,
   RoutingLocale,
-  UiLocale,
+  UiLocale} from '@/utils/l10n/types';
+import {
+  CountryCode,
+  Language
 } from '@/utils/l10n/types'
 
 const routingToIsoLocales = {} as { [key in RoutingLocale]: IsoLocale }

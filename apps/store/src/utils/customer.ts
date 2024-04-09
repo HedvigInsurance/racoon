@@ -1,5 +1,6 @@
+import type {
+  ShopSessionCustomerFragment} from '@/services/graphql/generated';
 import {
-  ShopSessionCustomerFragment,
   ShopSessionCustomerMissingField,
 } from '@/services/graphql/generated'
 

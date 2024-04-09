@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
-import { default as NextImage, ImageProps } from 'next/image'
+import type { ImageProps } from 'next/image';
+import { default as NextImage } from 'next/image'
 import { useState } from 'react'
 import { theme, DEFAULT_IMAGE_QUALITY } from 'ui'
 

@@ -1,5 +1,5 @@
 import { type ApolloError } from '@apollo/client'
-import { ShopSessionAuthenticationStatus } from '@/services/graphql/generated'
+import type { ShopSessionAuthenticationStatus } from '@/services/graphql/generated'
 
 export enum BankIdState {
   Idle = 'Idle',

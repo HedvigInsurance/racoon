@@ -1,6 +1,6 @@
 'use client'
 import { apiPlugin, storyblokInit } from '@storyblok/react/rsc'
-import { PropsWithChildren } from 'react'
+import type { PropsWithChildren } from 'react'
 import { storyblokComponents } from '@/services/storyblok/storyblokComponents'
 
 storyblokInit({

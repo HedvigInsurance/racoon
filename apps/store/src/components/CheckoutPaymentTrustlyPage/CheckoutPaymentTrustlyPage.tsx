@@ -9,7 +9,7 @@ import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import { CheckoutHeader } from '@/components/CheckoutHeader/CheckoutHeader'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { TrustlyIframe } from '@/services/trustly/TrustlyIframe'
-import { RoutingLocale } from '@/utils/l10n/types'
+import type { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
 import { SuccessState } from './SuccessState'
 

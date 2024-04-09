@@ -16,7 +16,7 @@ import {
 } from '@/services/graphql/generated'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
-import { ShopSessionService } from '@/services/shopSession/ShopSessionService'
+import type { ShopSessionService } from '@/services/shopSession/ShopSessionService'
 import { type ConfirmationStory } from '@/services/storyblok/storyblok'
 import { Features } from '@/utils/Features'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'

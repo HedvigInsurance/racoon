@@ -7,7 +7,7 @@ import {
   saveAuthTokens,
 } from '@/services/authApi/persist'
 import { getShopSessionId } from '@/services/shopSession/ShopSession.helpers'
-import { CookieParams } from '@/utils/types'
+import type { CookieParams } from '@/utils/types'
 
 export const performTokenRefreshIfNeeded = async (cookieParams?: CookieParams) => {
   const currentAccessToken = getAccessToken(cookieParams)

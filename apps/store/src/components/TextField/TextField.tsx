@@ -2,10 +2,11 @@
 
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-import {
+import type {
   ChangeEventHandler,
   InputHTMLAttributes,
-  MouseEventHandler,
+  MouseEventHandler} from 'react';
+import {
   useId,
   useRef,
   useState,

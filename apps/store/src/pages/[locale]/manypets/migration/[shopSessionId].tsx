@@ -1,11 +1,11 @@
-import { ApolloClient } from '@apollo/client'
+import type { ApolloClient } from '@apollo/client'
 import { StoryblokComponent } from '@storyblok/react'
 import type { NextPage } from 'next'
-import { GetServerSideProps } from 'next'
+import type { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
 import { STORYBLOK_MANYPETS_FOLDER_SLUG } from '@/features/manyPets/manyPets.constants'
-import { ManyPetsMigrationStory } from '@/features/manyPets/manyPets.types'
+import type { ManyPetsMigrationStory } from '@/features/manyPets/manyPets.types'
 import {
   ManyPetsMigrationPage,
   type ManyPetsMigrationPageProps,
@@ -13,15 +13,16 @@ import {
 import { getComparisonTableData } from '@/features/manyPets/manyPetsService'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import { resetAuthTokens } from '@/services/authApi/persist'
-import {
-  ManyPetsMigrationOffersDocument,
+import type {
   ManyPetsMigrationOffersQuery,
   ManyPetsMigrationOffersQueryVariables,
   Money,
   ProductOfferFragment,
-  ShopSessionDocument,
   ShopSessionQuery,
-  ShopSessionQueryVariables,
+  ShopSessionQueryVariables} from '@/services/graphql/generated';
+import {
+  ManyPetsMigrationOffersDocument,
+  ShopSessionDocument
 } from '@/services/graphql/generated'
 import { getStoryBySlug } from '@/services/storyblok/storyblok'
 import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'

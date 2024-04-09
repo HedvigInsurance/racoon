@@ -1,6 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useStartDateUpdateMutation } from '@/services/graphql/generated'
-import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
+import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { formatAPIDate } from '@/utils/date'
 
 export type Params = {

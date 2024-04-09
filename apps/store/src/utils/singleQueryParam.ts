@@ -1,4 +1,4 @@
-import { NextParsedUrlQuery } from 'next/dist/server/request-meta'
+import type { NextParsedUrlQuery } from 'next/dist/server/request-meta'
 
 export const singleQueryParam = (query: NextParsedUrlQuery, key: string): string | undefined => {
   const val = query[key]

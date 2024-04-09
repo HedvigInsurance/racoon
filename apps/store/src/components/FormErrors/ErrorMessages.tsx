@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslation } from 'next-i18next'
-import { ComponentPropsWithoutRef } from 'react'
+import type { ComponentPropsWithoutRef } from 'react'
 import { Space, Text } from 'ui'
 import { AttentionCard } from '../InfoCard/InfoCard'
 

@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
-import { AnimatePresence, Variants, motion } from 'framer-motion'
+import type { Variants} from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion'
 import { type ReactNode, useEffect, useState, Children } from 'react'
 import { CheckIcon, Text, theme } from 'ui'
 

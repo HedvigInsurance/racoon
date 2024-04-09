@@ -1,12 +1,13 @@
 'use client'
 
 import styled from '@emotion/styled'
-import { SbBlokData, StoryblokComponent } from '@storyblok/react'
+import type { SbBlokData} from '@storyblok/react';
+import { StoryblokComponent } from '@storyblok/react'
 import { ConditionalWrapper, mq, theme } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
-import { SbBaseBlockProps, ExpectedBlockType } from '@/services/storyblok/storyblok'
-import { ImageBlockProps } from './ImageBlock'
-import { VideoBlockProps } from './VideoBlock'
+import type { SbBaseBlockProps, ExpectedBlockType } from '@/services/storyblok/storyblok'
+import type { ImageBlockProps } from './ImageBlock'
+import type { VideoBlockProps } from './VideoBlock'
 
 type Orientation = 'vertical' | 'fluid'
 type TextAlignment = 'top' | 'center' | 'bottom'

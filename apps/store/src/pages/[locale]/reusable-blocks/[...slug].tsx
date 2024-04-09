@@ -1,7 +1,8 @@
 import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
-import { GetServerSideProps, NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
-import { getStoryBySlug, ReusableStory, StoryblokQueryParams } from '@/services/storyblok/storyblok'
+import type { ReusableStory, StoryblokQueryParams } from '@/services/storyblok/storyblok';
+import { getStoryBySlug } from '@/services/storyblok/storyblok'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
 

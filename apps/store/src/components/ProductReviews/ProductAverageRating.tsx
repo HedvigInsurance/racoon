@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { useTranslation } from 'next-i18next'
 import { CertifiedIcon } from 'ui'
-import { ProductData } from '@/components/ProductData/ProductData.types'
+import type { ProductData } from '@/components/ProductData/ProductData.types'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { ReviewsDialog } from '@/components/ProductReviews/ReviewsDialog'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'

@@ -2,8 +2,8 @@
 
 import { StoryblokComponent } from '@storyblok/react'
 import { CurrencyCode } from '@/services/graphql/generated'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
-import { ManyPetsMigrationStory } from './manyPets.types'
+import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import type { ManyPetsMigrationStory } from './manyPets.types'
 import { ManyPetsMigrationPage } from './ManyPetsMigrationPage/ManyPetsMigrationPage'
 
 type Props = SbBaseBlockProps<ManyPetsMigrationStory['content']>

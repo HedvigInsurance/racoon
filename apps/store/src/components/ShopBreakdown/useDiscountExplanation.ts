@@ -1,7 +1,7 @@
 import { type ComponentProps } from 'react'
-import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useGetDiscountExplanation } from '@/utils/useDiscountExplanation'
-import { Discount } from './Discount'
+import type { Discount } from './Discount'
 
 type RedeemedCampaign = ShopSession['cart']['redeemedCampaign']
 

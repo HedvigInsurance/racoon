@@ -4,7 +4,7 @@ import {
 } from '@/components/PageBreadcrumbs/PageBreadcrumbs'
 import { getParentStories } from '@/services/storyblok/storyblok.serverOnly'
 import { ORIGIN_URL } from '@/utils/PageLink'
-import { CmsPageRoutingParams } from './page'
+import type { CmsPageRoutingParams } from './page'
 
 type Props = {
   params: CmsPageRoutingParams

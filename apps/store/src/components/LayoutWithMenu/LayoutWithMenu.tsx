@@ -5,9 +5,10 @@ import { FooterBlock } from '@/blocks/FooterBlock'
 import { HeaderBlock } from '@/blocks/HeaderBlock'
 import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
 import { wrapper } from '@/components/LayoutWithMenu/LayoutWithMenu.css'
-import { GlobalStory, PageStory } from '@/services/storyblok/storyblok'
+import type { GlobalStory, PageStory } from '@/services/storyblok/storyblok'
 import { filterByBlockType, isProductStory } from '@/services/storyblok/Storyblok.helpers'
-import { GLOBAL_PRODUCT_METADATA_PROP_NAME, GlobalProductMetadata } from './fetchProductMetadata'
+import type { GlobalProductMetadata } from './fetchProductMetadata';
+import { GLOBAL_PRODUCT_METADATA_PROP_NAME } from './fetchProductMetadata'
 import { useHydrateProductMetadata } from './productMetadataHooks'
 
 type LayoutWithMenuProps = {

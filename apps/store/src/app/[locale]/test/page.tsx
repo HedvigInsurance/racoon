@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { fetchGlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
-import { RoutingLocale } from '@/utils/l10n/types'
+import type { RoutingLocale } from '@/utils/l10n/types'
 import { initTranslationsServerSide } from '../../i18n'
 import { ClientComponent } from './ClientComponent'
 import { wrapper } from './styles.css'

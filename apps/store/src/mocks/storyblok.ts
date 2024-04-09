@@ -1,4 +1,4 @@
-import { GlobalStory, ProductStory } from '@/services/storyblok/storyblok'
+import type { GlobalStory, ProductStory } from '@/services/storyblok/storyblok'
 
 export const globalStory: GlobalStory = {
   id: 123,

@@ -1,8 +1,8 @@
-import { ApolloClient } from '@apollo/client'
+import type { ApolloClient } from '@apollo/client'
 import type { CountryCode } from '@/services/graphql/generated'
 import { CookiePersister } from '@/services/persister/CookiePersister'
 import { ServerCookiePersister } from '@/services/persister/ServerCookiePersister'
-import { CookieParams } from '@/utils/types'
+import type { CookieParams } from '@/utils/types'
 import { COOKIE_KEY_SHOP_SESSION } from './ShopSession.constants'
 import { ShopSessionService } from './ShopSessionService'
 

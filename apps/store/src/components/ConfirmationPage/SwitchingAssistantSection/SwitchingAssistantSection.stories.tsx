@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import {
   ContractExternalInsuranceCancellationStatus,

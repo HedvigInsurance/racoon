@@ -1,9 +1,10 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { ReactNode, useMemo } from 'react'
+import type { ReactNode} from 'react';
+import { useMemo } from 'react'
 import { Heading, InfoIcon, Text, theme } from 'ui'
 import { Tooltip } from '@/components/Tooltip/Tooltip'
-import { Label, SectionItem } from '@/services/PriceCalculator/PriceCalculator.types'
+import type { Label, SectionItem } from '@/services/PriceCalculator/PriceCalculator.types'
 import { useAutoFormat } from '@/utils/useFormatter'
 import * as Accordion from './Accordion'
 import { StepIcon } from './StepIcon'

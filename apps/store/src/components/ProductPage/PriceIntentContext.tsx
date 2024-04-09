@@ -1,9 +1,10 @@
 'use client'
 import { useApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
+import type {
+  PropsWithChildren} from 'react';
 import {
   createContext,
-  PropsWithChildren,
   useCallback,
   useContext,
   useEffect,
@@ -11,14 +12,15 @@ import {
 } from 'react'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
-import {
+import type {
   PriceIntentFragment,
   PriceIntentQueryResult,
-  ProductOfferFragment,
+  ProductOfferFragment} from '@/services/graphql/generated';
+import {
   usePriceIntentQuery,
 } from '@/services/graphql/generated'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
-import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { getOffersByPrice } from '@/utils/getOffersByPrice'
 import { useCartEntryToReplace } from './ProductPage'

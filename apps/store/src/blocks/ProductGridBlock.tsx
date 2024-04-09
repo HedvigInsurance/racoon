@@ -4,9 +4,10 @@ import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
 import { mq, theme } from 'ui'
-import { ProductCardBlock, ProductCardBlockProps } from '@/blocks/ProductCardBlock'
+import type { ProductCardBlockProps } from '@/blocks/ProductCardBlock';
+import { ProductCardBlock } from '@/blocks/ProductCardBlock'
 import { ProductGrid } from '@/components/ProductGrid/ProductGrid'
-import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import type { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type ProductGridBlockProps = SbBaseBlockProps<{
   title?: string

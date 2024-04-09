@@ -1,6 +1,7 @@
 import { clsx } from 'clsx'
 import Link from 'next/link'
-import { Children, ComponentProps, type ReactNode } from 'react'
+import type { ComponentProps} from 'react';
+import { Children, type ReactNode } from 'react'
 import { Text } from 'ui'
 import { breadcrumbItem, breadcrumbsLink, breadcrumbsList } from './PageBreadcrumbs.css'
 

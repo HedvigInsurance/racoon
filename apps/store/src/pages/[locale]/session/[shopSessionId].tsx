@@ -1,16 +1,17 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import { initializeApolloServerSide } from '@/services/apollo/client'
-import {
-  RedeemCampaignDocument,
+import type {
   RedeemCampaignMutation,
-  RedeemCampaignMutationVariables,
+  RedeemCampaignMutationVariables} from '@/services/graphql/generated';
+import {
+  RedeemCampaignDocument
 } from '@/services/graphql/generated'
 import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
-import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
-import { RoutingLocale } from '@/utils/l10n/types'
+import type { RoutingLocale } from '@/utils/l10n/types'
 import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
 

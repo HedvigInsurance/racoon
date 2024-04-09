@@ -1,5 +1,6 @@
 'use client'
-import styled, { CSSObject } from '@emotion/styled'
+import type { CSSObject } from '@emotion/styled';
+import styled from '@emotion/styled'
 import { StoryblokComponent, storyblokEditable } from '@storyblok/react'
 import { mq, theme } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
@@ -8,7 +9,7 @@ import {
   type GridColumnsField,
   type SbBaseBlockProps,
 } from '@/services/storyblok/storyblok'
-import { ImageTextBlockProps } from './ImageTextBlock'
+import type { ImageTextBlockProps } from './ImageTextBlock'
 
 type ColumnBloks = ExpectedBlockType<ImageTextBlockProps>
 

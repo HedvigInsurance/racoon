@@ -1,6 +1,8 @@
-import { Meta, StoryFn } from '@storybook/react'
-import { ProductCard, ProductCardProps } from '@/components/ProductCard/ProductCard'
-import { ProductGrid, ProductGridProps } from './ProductGrid'
+import type { Meta, StoryFn } from '@storybook/react'
+import type { ProductCardProps } from '@/components/ProductCard/ProductCard';
+import { ProductCard } from '@/components/ProductCard/ProductCard'
+import type { ProductGridProps } from './ProductGrid';
+import { ProductGrid } from './ProductGrid'
 
 export default {
   component: ProductGrid,

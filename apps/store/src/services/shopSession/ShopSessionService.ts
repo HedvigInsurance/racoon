@@ -1,21 +1,22 @@
-import { ApolloClient } from '@apollo/client'
-import {
-  ShopSessionCreateDocument,
+import type { ApolloClient } from '@apollo/client'
+import type {
   ShopSessionCreateMutation,
   ShopSessionCreateMutationVariables,
-  ShopSessionDocument,
-  ShopSessionOutcomeDocument,
   ShopSessionOutcomeFragment,
   ShopSessionOutcomeQuery,
   ShopSessionOutcomeQueryVariables,
   ShopSessionOutcomeIdQuery,
   ShopSessionOutcomeIdQueryVariables,
-  ShopSessionOutcomeIdDocument,
   ShopSessionQuery,
-  ShopSessionQueryVariables,
+  ShopSessionQueryVariables} from '@/services/graphql/generated';
+import {
+  ShopSessionCreateDocument,
+  ShopSessionDocument,
+  ShopSessionOutcomeDocument,
+  ShopSessionOutcomeIdDocument
 } from '@/services/graphql/generated'
-import { SimplePersister } from '@/services/persister/Persister.types'
-import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import type { SimplePersister } from '@/services/persister/Persister.types'
+import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 
 export class ShopSessionService {
   constructor(

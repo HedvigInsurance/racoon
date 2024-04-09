@@ -4,9 +4,10 @@ import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { theme } from 'ui'
 import { Slideshow } from '@/components/Slideshow/Slideshow'
-import { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import type { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
-import { TopPickCardBlock, TopPickCardBlockProps } from './TopPickCardBlock'
+import type { TopPickCardBlockProps } from './TopPickCardBlock';
+import { TopPickCardBlock } from './TopPickCardBlock'
 
 type ProductSlideshowBlockProps = SbBaseBlockProps<{
   title?: string

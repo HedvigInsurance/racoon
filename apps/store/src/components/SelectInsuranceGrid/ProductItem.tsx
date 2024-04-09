@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
-import Link, { LinkProps } from 'next/link'
-import { ComponentProps } from 'react'
+import type { LinkProps } from 'next/link';
+import Link from 'next/link'
+import type { ComponentProps } from 'react'
 import { Text, mq, theme } from 'ui'
 import { Pillow as BasePillow } from '@/components/Pillow/Pillow'
 

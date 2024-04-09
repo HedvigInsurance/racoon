@@ -4,8 +4,10 @@ import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import React from 'react'
 import Balancer from 'react-wrap-balancer'
-import { getColor, getMargins, Margins, theme, UIColors } from '../../theme'
-import { getHeadingVariantStyles, HeadingVariant } from './Heading.helpers'
+import type { Margins, UIColors } from '../../theme';
+import { getColor, getMargins, theme } from '../../theme'
+import type { HeadingVariant } from './Heading.helpers';
+import { getHeadingVariantStyles } from './Heading.helpers'
 
 export type { PossibleHeadingVariant } from './Heading.helpers'
 

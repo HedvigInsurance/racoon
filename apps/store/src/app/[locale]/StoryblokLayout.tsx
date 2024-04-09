@@ -1,11 +1,12 @@
 'use client'
 import { StoryblokComponent } from '@storyblok/react'
 import { clsx } from 'clsx'
-import { Fragment, ReactNode } from 'react'
+import type { ReactNode } from 'react';
+import { Fragment } from 'react'
 import { FooterBlock } from '@/blocks/FooterBlock'
 import { HeaderBlock } from '@/blocks/HeaderBlock'
 import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
-import { GlobalStory } from '@/services/storyblok/storyblok'
+import type { GlobalStory } from '@/services/storyblok/storyblok'
 import { filterByBlockType, isProductStory } from '@/services/storyblok/Storyblok.helpers'
 import { wrapper } from './StoryblokLayout.css'
 

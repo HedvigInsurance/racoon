@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { Space } from 'ui'
 import { InfoToastBar, AttentionToastBar, ErrorToastBar } from './ToastBar'
 

@@ -1,5 +1,6 @@
-import { ConfirmationStory, getStoryBySlug } from '@/services/storyblok/storyblok'
-import { RoutingLocale } from '@/utils/l10n/types'
+import type { ConfirmationStory} from '@/services/storyblok/storyblok';
+import { getStoryBySlug } from '@/services/storyblok/storyblok'
+import type { RoutingLocale } from '@/utils/l10n/types'
 
 const CONFIRMATION_PAGE_SLUG = 'confirmation'
 

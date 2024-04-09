@@ -1,5 +1,5 @@
-import { ISbStoryData } from '@storyblok/js'
-import { GetServerSideProps } from 'next'
+import type { ISbStoryData } from '@storyblok/js'
+import type { GetServerSideProps } from 'next'
 import { getStoryblokApi } from '@/services/storyblok/api'
 import { ORIGIN_URL } from '@/utils/PageLink'
 

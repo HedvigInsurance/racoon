@@ -1,10 +1,11 @@
 'use client'
 
 import styled from '@emotion/styled'
-import { ISbRichtext, renderRichText } from '@storyblok/react'
+import type { ISbRichtext} from '@storyblok/react';
+import { renderRichText } from '@storyblok/react'
 import { Heading, theme } from 'ui'
 import * as Timeline from '@/components/Timeline/Timeline'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 export type TimelineItemBlockProps = SbBaseBlockProps<{
   title: string

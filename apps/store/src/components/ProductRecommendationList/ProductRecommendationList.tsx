@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { Heading, mq, Space, theme } from 'ui'
-import { ImageSize } from '@/blocks/ProductCardBlock'
+import type { ImageSize } from '@/blocks/ProductCardBlock'
 import { ProductCard } from '@/components/ProductCard/ProductCard'
-import { ProductRecommendationFragment } from '@/services/graphql/generated'
+import type { ProductRecommendationFragment } from '@/services/graphql/generated'
 import { getStoryblokImageSize } from '@/services/storyblok/Storyblok.helpers'
 
 type Props = {

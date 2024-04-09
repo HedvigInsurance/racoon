@@ -6,7 +6,7 @@ import {
   useSelectedProductVariant,
 } from '@/components/ProductData/ProductDataProvider'
 import { ProductDocuments } from '@/components/ProductPage/ProductDocuments'
-import { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type Props = SbBaseBlockProps<{
   heading: string

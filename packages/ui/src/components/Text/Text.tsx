@@ -1,7 +1,7 @@
 import clsx from 'clsx'
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import Balancer from 'react-wrap-balancer'
-import { FontSizeProps } from '../../theme'
+import type { FontSizeProps } from '../../theme'
 import { type Sprinkles, sprinkles } from '../../theme/sprinkles.css'
 import { textBase, textStrikethrough, textUppercase } from './Text.css'
 

@@ -2,10 +2,11 @@
 
 import styled from '@emotion/styled'
 import * as RadixTabs from '@radix-ui/react-tabs'
-import { SbBlokData, StoryblokComponent, storyblokEditable } from '@storyblok/react'
+import type { SbBlokData} from '@storyblok/react';
+import { StoryblokComponent, storyblokEditable } from '@storyblok/react'
 import { Heading, mq, theme } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
-import { SbBaseBlockProps, ExpectedBlockType } from '@/services/storyblok/storyblok'
+import type { SbBaseBlockProps, ExpectedBlockType } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 
 type TabBlockFields = {

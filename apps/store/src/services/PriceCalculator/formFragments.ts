@@ -1,5 +1,5 @@
-import { InputField } from '@/services/PriceCalculator/Field.types'
-import { TemplateSection } from '@/services/PriceCalculator/PriceCalculator.types'
+import type { InputField } from '@/services/PriceCalculator/Field.types'
+import type { TemplateSection } from '@/services/PriceCalculator/PriceCalculator.types'
 import { setI18nNamespace, tKey } from '@/utils/i18n'
 
 setI18nNamespace('purchase-form')

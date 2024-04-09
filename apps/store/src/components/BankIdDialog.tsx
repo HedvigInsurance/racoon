@@ -2,7 +2,7 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { BankIdIcon, Button, CheckIcon, Text, theme, WarningTriangleIcon } from 'ui'
 import { BankIdLoginForm } from '@/components/BankIdLoginForm'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'

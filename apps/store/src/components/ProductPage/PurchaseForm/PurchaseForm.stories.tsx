@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
 import { productData } from '@/mocks/productData'
 import { productStoryBRF } from '@/mocks/storyblok'

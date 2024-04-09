@@ -2,7 +2,8 @@ import { type ApolloError } from '@apollo/client'
 import { datadogRum } from '@datadog/browser-rum'
 import { useTranslation } from 'next-i18next'
 import { useCallback, useRef } from 'react'
-import { Observable, Subscription } from 'zen-observable-ts'
+import type { Subscription } from 'zen-observable-ts';
+import { Observable } from 'zen-observable-ts'
 import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
 import { saveAuthTokens } from '@/services/authApi/persist'
 import {
@@ -13,7 +14,7 @@ import {
 } from '@/services/graphql/generated'
 import type { BankIdState, BankIdSignOperation, CheckoutSignOptions } from './bankId.types'
 import { apiStatusToBankIdState, bankIdLogger } from './bankId.utils'
-import { BankIdDispatch } from './bankIdReducer'
+import type { BankIdDispatch } from './bankIdReducer'
 import { useBankIdLoginApi } from './useBankIdLogin'
 
 export type Options = {

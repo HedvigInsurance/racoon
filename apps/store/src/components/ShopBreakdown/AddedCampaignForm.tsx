@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { FormEventHandler } from 'react'
+import type { FormEventHandler } from 'react'
 import { CrossIconSmall, Text, theme } from 'ui'
 
 type Props = {

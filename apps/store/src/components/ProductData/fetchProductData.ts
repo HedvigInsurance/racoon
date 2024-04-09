@@ -4,7 +4,7 @@ import {
   type ProductDataQuery,
   type ProductDataQueryVariables,
 } from '@/services/graphql/generated'
-import { ProductData } from './ProductData.types'
+import type { ProductData } from './ProductData.types'
 
 type Params = ProductDataQueryVariables & {
   apolloClient: ApolloClient<unknown>

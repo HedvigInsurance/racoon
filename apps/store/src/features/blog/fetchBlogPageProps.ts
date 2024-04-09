@@ -1,5 +1,5 @@
 import { type ISbStoryData, type SbBlokData } from '@storyblok/react'
-import { RoutingLocale } from '@/utils/l10n/types'
+import type { RoutingLocale } from '@/utils/l10n/types'
 import {
   BLOG_ARTICLE_CATEGORIES_PAGE_PROP,
   BLOG_ARTICLE_CATEGORY_LIST_BLOCK,

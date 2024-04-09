@@ -4,8 +4,8 @@
 
 import { datadogLogs } from '@datadog/browser-logs'
 import Script from 'next/script'
-import { TrackingEvent } from '@/services/Tracking/Tracking'
-import { CountryCode } from '@/utils/l10n/types'
+import type { TrackingEvent } from '@/services/Tracking/Tracking'
+import type { CountryCode } from '@/utils/l10n/types'
 
 const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID
 const GTM_ENVIRONMENT = process.env.NEXT_PUBLIC_GTM_ENV

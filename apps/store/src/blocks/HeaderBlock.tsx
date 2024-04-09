@@ -26,7 +26,7 @@ import { ShoppingCartMenuItem } from '@/components/Header/ShoppingCartMenuItem'
 import { TopMenuDesktop } from '@/components/Header/TopMenuDesktop/TopMenuDesktop'
 import { TopMenuMobile } from '@/components/Header/TopMenuMobile/TopMenuMobile'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
-import {
+import type {
   ExpectedBlockType,
   LinkField,
   SbBaseBlockProps,
@@ -40,7 +40,7 @@ import {
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useResponsiveVariant } from '@/utils/useResponsiveVariant'
-import { ButtonBlockProps } from './ButtonBlock'
+import type { ButtonBlockProps } from './ButtonBlock'
 
 type NavItemBlockProps = SbBaseBlockProps<{
   name: string

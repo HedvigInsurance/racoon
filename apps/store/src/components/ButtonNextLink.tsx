@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { Button, ButtonProps } from 'ui'
+import type { ButtonProps } from 'ui';
+import { Button } from 'ui'
 
 export const ButtonNextLink = ({ children, ...props }: ButtonProps<typeof Link>) => {
   return (

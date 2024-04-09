@@ -1,6 +1,6 @@
 import { Provider as JotaiProvider } from 'jotai'
-import { Metadata, Viewport } from 'next'
-import { ReactNode } from 'react'
+import type { Metadata, Viewport } from 'next'
+import type { ReactNode } from 'react'
 import { theme } from 'ui'
 import { ApolloProvider } from '@/appComponents/providers/ApolloProvider'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'

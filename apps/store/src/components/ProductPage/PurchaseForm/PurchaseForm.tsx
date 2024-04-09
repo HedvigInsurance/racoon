@@ -5,10 +5,12 @@ import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
-import { ReactNode, useCallback, useRef, useState } from 'react'
+import type { ReactNode} from 'react';
+import { useCallback, useRef, useState } from 'react'
 import { Button, Heading, mq, Space, theme } from 'ui'
-import { CartToast, CartToastAttributes } from '@/components/CartNotification/CartToast'
-import { ProductItemProps } from '@/components/CartNotification/ProductItem'
+import type { CartToastAttributes } from '@/components/CartNotification/CartToast';
+import { CartToast } from '@/components/CartNotification/CartToast'
+import type { ProductItemProps } from '@/components/CartNotification/ProductItem'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceCalculatorDynamic } from '@/components/PriceCalculator/PriceCalculatorDynamic'
 import { completePriceLoader, PriceLoader } from '@/components/PriceLoader'
@@ -22,14 +24,15 @@ import {
 import { ProductAverageRating } from '@/components/ProductReviews/ProductAverageRating'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { BankSigneringEvent } from '@/services/bankSignering'
+import type {
+  ProductOfferFragment} from '@/services/graphql/generated';
 import {
   ExternalInsuranceCancellationOption,
-  ProductOfferFragment,
   usePriceIntentConfirmMutation,
 } from '@/services/graphql/generated'
-import { Template } from '@/services/PriceCalculator/PriceCalculator.types'
-import { PriceIntent } from '@/services/priceIntent/priceIntent.types'
-import { ShopSession } from '@/services/shopSession/ShopSession.types'
+import type { Template } from '@/services/PriceCalculator/PriceCalculator.types'
+import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
+import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { sendDialogEvent } from '@/utils/dialogEvent'

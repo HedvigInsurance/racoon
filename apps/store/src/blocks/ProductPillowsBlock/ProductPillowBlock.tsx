@@ -2,7 +2,7 @@
 import { storyblokEditable } from '@storyblok/react'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
 import { ProductPillow } from '@/components/ProductPillow/ProductPillow'
-import { LinkField, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
+import type { LinkField, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 
 export type ProductPillowBlockProps = SbBaseBlockProps<{

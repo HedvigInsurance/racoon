@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useAtom } from 'jotai'
 import { Dialog, theme } from 'ui'
-import { PriceIntentWarning } from '@/services/graphql/generated'
+import type { PriceIntentWarning } from '@/services/graphql/generated'
 import { Features } from '@/utils/Features'
 import { showPriceIntentWarningAtom } from './showPriceIntentWarningAtom'
 import { WarningPrompt } from './WarningPrompt/WarningPrompt'

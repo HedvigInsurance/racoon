@@ -1,15 +1,15 @@
 import styled from '@emotion/styled'
 import Head from 'next/head'
-import { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { mq, theme } from 'ui'
 import { HeaderBlock } from '@/blocks/HeaderBlock'
-import {
+import type {
   GLOBAL_PRODUCT_METADATA_PROP_NAME,
   GlobalProductMetadata,
 } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { Skeleton } from '@/components/Skeleton'
 import { useMemberAreaMemberInfoQuery } from '@/services/graphql/generated'
-import { GlobalStory, PageStory } from '@/services/storyblok/storyblok'
+import type { GlobalStory, PageStory } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 import { CONTENT_WIDTH } from '../InsuranceSection/InsuranceSection.constants'
 import { MenuLoadingState, Menu } from './Menu'

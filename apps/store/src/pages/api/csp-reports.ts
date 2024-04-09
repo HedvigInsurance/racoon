@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 const cspReports = (req: NextApiRequest, res: NextApiResponse<void>) => {
   try {

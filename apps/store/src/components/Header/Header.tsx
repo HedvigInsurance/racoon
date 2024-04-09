@@ -1,7 +1,8 @@
 'use client'
 
-import { motion, Transition } from 'framer-motion'
-import { ReactNode } from 'react'
+import type { Transition } from 'framer-motion';
+import { motion } from 'framer-motion'
+import type { ReactNode } from 'react'
 import { bodyBgColor, headerBgTransparentColor } from 'ui/src/theme/vars.css'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { useScrollState } from '@/utils/useScrollState'

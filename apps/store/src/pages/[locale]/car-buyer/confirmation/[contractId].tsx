@@ -1,16 +1,18 @@
-import { ApolloClient } from '@apollo/client'
-import { GetServerSideProps } from 'next'
-import { ComponentPropsWithoutRef } from 'react'
-import { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage'
+import type { ApolloClient } from '@apollo/client'
+import type { GetServerSideProps } from 'next'
+import type { ComponentPropsWithoutRef } from 'react'
+import type { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage'
 import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
 import { STORYBLOK_CAR_DEALERSHIP_FOLDER_SLUG } from '@/features/carDealership/carDearlership.constants'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
-import {
-  CarTrialExtensionDocument,
+import type {
   CarTrialExtensionQuery,
-  CarTrialExtensionQueryVariables,
+  CarTrialExtensionQueryVariables} from '@/services/graphql/generated';
+import {
+  CarTrialExtensionDocument
 } from '@/services/graphql/generated'
-import { ConfirmationStory, getStoryBySlug } from '@/services/storyblok/storyblok'
+import type { ConfirmationStory} from '@/services/storyblok/storyblok';
+import { getStoryBySlug } from '@/services/storyblok/storyblok'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
 

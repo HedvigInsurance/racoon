@@ -1,5 +1,5 @@
 import { fetchStories } from '@/services/storyblok/storyblok'
-import { RoutingLocale } from '@/utils/l10n/types'
+import type { RoutingLocale } from '@/utils/l10n/types'
 import { BLOG_ARTICLE_CATEGORY_CONTENT_TYPE } from './blog.constants'
 import { type BlogArticleCategory } from './blog.types'
 

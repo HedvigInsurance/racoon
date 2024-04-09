@@ -1,5 +1,5 @@
 import { type ISbStoryData, type SbBlokData } from '@storyblok/react'
-import { LinkField, ProductStory, WidgetFlowStory } from './storyblok'
+import type { LinkField, ProductStory, WidgetFlowStory } from './storyblok'
 
 export const filterByBlockType = <BlockData extends SbBlokData>(
   blocks: Array<BlockData> = [],

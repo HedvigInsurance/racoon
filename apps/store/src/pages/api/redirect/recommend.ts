@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next'
 import { initializeApolloServerSide } from '@/services/apollo/client'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { getPathnameFromUrl } from '@/utils/getPathnameFromUrl'
