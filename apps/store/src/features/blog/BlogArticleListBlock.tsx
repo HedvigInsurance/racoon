@@ -1,7 +1,7 @@
 'use client'
 
 import styled from '@emotion/styled'
-import { useRouter } from 'next/router'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import { useMemo } from 'react'
 import { Space, theme } from 'ui'
@@ -14,7 +14,7 @@ import { ArticleTeaser } from './ArticleTeaser/ArticleTeaser'
 import { BLOG_ARTICLE_LIST_BLOCK } from './blog.constants'
 import { useBlogArticleTeasers } from './useBlog'
 
-const QUERY_PARAM = 'showAll'
+const SHOW_ALL_QUERY_PARAM = 'showAll'
 
 type Props = SbBaseBlockProps<{
   categories?: Array<string>
@@ -35,10 +35,13 @@ export const BlogArticleListBlock = (props: Props) => {
     })
   }, [teaserList, props.blok.categories])
 
-  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+
   const initiallyVisibleCount = props.blok.initiallyVisibleCount ?? 12
   const showAll =
-    filteredTeaserList.length <= initiallyVisibleCount || router.query[QUERY_PARAM] === '1'
+    filteredTeaserList.length <= initiallyVisibleCount ||
+    searchParams?.has(SHOW_ALL_QUERY_PARAM, '1')
 
   const visibleTeaserList = showAll
     ? filteredTeaserList
@@ -70,7 +73,7 @@ export const BlogArticleListBlock = (props: Props) => {
           {!showAll && (
             <ButtonWrapper>
               <InlineButtonLink
-                href={{ query: { ...router.query, [QUERY_PARAM]: '1' } }}
+                href={`${pathname}?${SHOW_ALL_QUERY_PARAM}=1`}
                 shallow={true}
                 scroll={false}
               >
