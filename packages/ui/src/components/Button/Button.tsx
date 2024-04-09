@@ -1,52 +1,67 @@
 'use client'
 
 import clsx from 'clsx'
-import {
-  ButtonHTMLAttributes,
-  forwardRef,
-  type ForwardedRef,
-  type LegacyRef,
-  type ReactNode,
-} from 'react'
+import { forwardRef, type ReactNode } from 'react'
+import { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../TypeUtils'
 import { buttonVariant, centered, childrenWrapper, fullWidthStyles } from './Button.css'
 import { ButtonSize, getButtonSizeStyles } from './Button.helpers'
 import { DotPulse } from './DotPulse'
 
-type LinkProps = {
-  href?: string
-  target?: string
-  rel?: string
-}
-
-type CustomButtonProps = {
+type BaseProps = {
   variant?: 'primary' | 'primary-alt' | 'secondary' | 'secondary-alt' | 'ghost'
   size?: ButtonSize
   fullWidth?: boolean
   loading?: boolean
   Icon?: ReactNode
-} & LinkProps
+}
 
-export type Props = ButtonHTMLAttributes<HTMLButtonElement | HTMLAnchorElement> & CustomButtonProps
-type Ref = HTMLButtonElement | HTMLAnchorElement
+export type Props<C extends React.ElementType> = PolymorphicComponentPropsWithRef<C, BaseProps>
 
-export const Button = forwardRef<Ref, Props>((props, ref) => {
-  const {
-    className,
+type PolymorphicComponent = <C extends React.ElementType>(props: Props<C>) => ReactNode | null
+
+export const Button: PolymorphicComponent = forwardRef(function Button<
+  C extends React.ElementType = 'button',
+>(
+  {
+    as,
     variant = 'primary',
     size = 'large',
+    className,
     fullWidth,
     loading,
-    href,
-    children,
+    disabled,
     target,
-    title,
     rel,
+    children,
     Icon,
-    ...baseProps
-  } = props
+    ...props
+  }: Props<C>,
+  ref?: PolymorphicRef<C>,
+) {
+  const sizeStyles = getButtonSizeStyles(size)
 
-  const buttonChildren = (
-    <>
+  const classNames = clsx(
+    buttonVariant[variant],
+    sizeStyles,
+    fullWidth && fullWidthStyles,
+    className,
+  )
+
+  const Component = as ?? 'button'
+
+  const isDisabled = disabled || loading
+  const shouldSetDefaultRel = !rel && target === '_blank'
+  const componentRel = shouldSetDefaultRel ? 'noopener' : rel
+
+  return (
+    <Component
+      className={classNames}
+      data-loading={loading}
+      disabled={isDisabled}
+      rel={componentRel}
+      ref={ref}
+      {...props}
+    >
       <span className={childrenWrapper} style={{ opacity: loading ? 0 : 1 }}>
         {Icon} {children}
       </span>
@@ -55,40 +70,6 @@ export const Button = forwardRef<Ref, Props>((props, ref) => {
           <DotPulse />
         </span>
       )}
-    </>
-  )
-
-  const buttonProps = {
-    ...baseProps,
-    children: buttonChildren,
-    disabled: props.disabled || loading,
-    ...(loading && { 'data-loading': true }),
-    ...(target === '_blank' && { target: '_blank', rel: 'noopener' }),
-    ...(rel ? { rel: rel } : {}),
-    ...(title ? { title: title } : {}),
-  } as const
-  const sizeStyles = getButtonSizeStyles(size)
-  const classNames = clsx(
-    buttonVariant[variant],
-    sizeStyles,
-    fullWidth && fullWidthStyles,
-    className,
-  )
-
-  if (href) {
-    return (
-      <a
-        className={classNames}
-        href={href}
-        ref={ref as LegacyRef<HTMLAnchorElement>}
-        {...buttonProps}
-      />
-    )
-  }
-
-  return (
-    <button className={classNames} ref={ref as ForwardedRef<HTMLButtonElement>} {...buttonProps} />
+    </Component>
   )
 })
-
-Button.displayName = 'Button'
