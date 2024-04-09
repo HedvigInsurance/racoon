@@ -1,5 +1,4 @@
 import { clsx } from 'clsx'
-import Head from 'next/head'
 import Link from 'next/link'
 import { Children, ComponentProps, type ReactNode } from 'react'
 import { Text } from 'ui'
@@ -40,13 +39,11 @@ export const PageBreadcrumbs = (props: Props) => {
         )}
       </List>
 
-      <Head>
-        <script
-          key="structured-data-breadcrumb-list"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-        />
-      </Head>
+      <script
+        key="structured-data-breadcrumb-list"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
     </>
   )
 }
