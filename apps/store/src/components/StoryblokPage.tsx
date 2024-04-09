@@ -1,7 +1,7 @@
 import { StoryblokComponent, useStoryblokState } from '@storyblok/react'
 import { DefaultDebugDialog } from '@/components/DebugDialog/DefaultDebugDialog'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
-import { BreadcrumbList } from '@/components/LayoutWithMenu/BreadcrumbList'
+import { PageBreadcrumbs } from '@/components/PageBreadcrumbs/PageBreadcrumbs'
 import { BlogContext, parseBlogContext } from '@/features/blog/useBlog'
 import { CompanyReviewsMetadataProvider } from '@/features/memberReviews/CompanyReviewsMetadataProvider'
 import type { ReviewsMetadata } from '@/features/memberReviews/memberReviews.types'
@@ -27,7 +27,7 @@ export const StoryblokPage = (props: Props) => {
           robots={robots}
         />
         <StoryblokComponent blok={story.content} />
-        {props.breadcrumbs && <BreadcrumbList items={props.breadcrumbs} />}
+        {props.breadcrumbs && <PageBreadcrumbs items={props.breadcrumbs} />}
         <DefaultDebugDialog />
       </CompanyReviewsMetadataProvider>
     </BlogContext.Provider>

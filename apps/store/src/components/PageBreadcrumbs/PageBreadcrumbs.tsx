@@ -1,6 +1,9 @@
+import { clsx } from 'clsx'
 import Head from 'next/head'
+import Link from 'next/link'
+import { Children, ComponentProps, type ReactNode } from 'react'
 import { Text } from 'ui'
-import { Breadcrumbs } from './Breadcrumbs'
+import { breadcrumbItem, breadcrumbsLink, breadcrumbsList } from './PageBreadcrumbs.css'
 
 export type BreadcrumbListItem = {
   label: string
@@ -9,7 +12,7 @@ export type BreadcrumbListItem = {
 
 type Props = { items: Array<BreadcrumbListItem> }
 
-export const BreadcrumbList = (props: Props) => {
+export const PageBreadcrumbs = (props: Props) => {
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -23,19 +26,19 @@ export const BreadcrumbList = (props: Props) => {
 
   return (
     <>
-      <Breadcrumbs.Root>
+      <List>
         {props.items.map((item) =>
           item.href ? (
-            <Breadcrumbs.Link key={item.href} href={item.href}>
+            <ItemLink key={item.href} href={item.href}>
               {item.label}
-            </Breadcrumbs.Link>
+            </ItemLink>
           ) : (
             <Text size="sm" color="textSecondaryOnGray" key={item.label}>
               {item.label}
             </Text>
           ),
         )}
-      </Breadcrumbs.Root>
+      </List>
 
       <Head>
         <script
@@ -47,3 +50,24 @@ export const BreadcrumbList = (props: Props) => {
     </>
   )
 }
+
+const List = ({ children }: { children: ReactNode }) => {
+  const count = Children.count(children)
+
+  return (
+    <>
+      <ul className={breadcrumbsList}>
+        {Children.map(children, (child, index) => (
+          <li className={breadcrumbItem}>
+            {child}
+            {index < count - 1 && <Text color="textSecondaryOnGray">&middot;</Text>}
+          </li>
+        ))}
+      </ul>
+    </>
+  )
+}
+
+const ItemLink = ({ className, ...forwardedProps }: ComponentProps<typeof Link>) => (
+  <Link className={clsx(breadcrumbsLink, className)} {...forwardedProps} />
+)

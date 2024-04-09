@@ -1,4 +1,7 @@
-import { BreadcrumbList, BreadcrumbListItem } from '@/components/LayoutWithMenu/BreadcrumbList'
+import {
+  type BreadcrumbListItem,
+  PageBreadcrumbs,
+} from '@/components/PageBreadcrumbs/PageBreadcrumbs'
 import { getParentStories } from '@/services/storyblok/storyblok.serverOnly'
 import { ORIGIN_URL } from '@/utils/PageLink'
 import { CmsPageRoutingParams } from './page'
@@ -26,5 +29,5 @@ export async function StoryBreadcrumbs(props: Props) {
   }
 
   const items = [...parentBreadcrumbs, { label: props.currentPageTitle }]
-  return <BreadcrumbList items={items} />
+  return <PageBreadcrumbs items={items} />
 }

@@ -12,7 +12,7 @@ import { FooterBlockProps } from '@/blocks/FooterBlock'
 import { HeaderBlockProps } from '@/blocks/HeaderBlock'
 import { ReusableBlockReferenceProps } from '@/blocks/ReusableBlockReference'
 import { type ContentAlignment, type ContentWidth } from '@/components/GridLayout/GridLayout.helper'
-import { BreadcrumbListItem } from '@/components/LayoutWithMenu/BreadcrumbList'
+import { BreadcrumbListItem } from '@/components/PageBreadcrumbs/PageBreadcrumbs'
 import { BLOG_ARTICLE_CONTENT_TYPE } from '@/features/blog/blog.constants'
 // TODO: get rid of this import, services should avoid feature-imports
 import { STORYBLOK_MANYPETS_FOLDER_SLUG } from '@/features/manyPets/manyPets.constants'

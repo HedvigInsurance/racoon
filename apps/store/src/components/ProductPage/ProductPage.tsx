@@ -3,7 +3,7 @@ import { StoryblokComponent } from '@storyblok/react'
 import { useSearchParams } from 'next/navigation'
 import { useMemo } from 'react'
 import { DiscountBannerTrigger } from '@/components/DiscountBannerTrigger'
-import { BreadcrumbList } from '@/components/LayoutWithMenu/BreadcrumbList'
+import { PageBreadcrumbs } from '@/components/PageBreadcrumbs/PageBreadcrumbs'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
 import { PriceIntentContextProvider } from '@/components/ProductPage/PriceIntentContext'
 import { ProductPageTrackingProvider } from '@/components/ProductPage/ProductPageTrackingProvider'
@@ -25,7 +25,7 @@ export const ProductPage = ({ story, ...props }: ProductPageProps) => {
           <ProductPageTrackingProvider>
             <ProductReviewsMetadataProvider productReviewsMetadata={props.productReviewsMetadata}>
               <StoryblokComponent blok={story.content} />
-              {props.breadcrumbs && <BreadcrumbList items={props.breadcrumbs} />}
+              {props.breadcrumbs && <PageBreadcrumbs items={props.breadcrumbs} />}
               <PageDebugDialog />
               <ProductPageViewTracker />
               <DiscountBannerTrigger />
