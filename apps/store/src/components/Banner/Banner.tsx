@@ -12,13 +12,14 @@ import type { BannerVariant } from './Banner.types'
 
 type Props = {
   children: ReactNode
+  className?: string
   handleClose: () => void
   variant?: BannerVariant
 }
 
-export const Banner = ({ children, handleClose, variant = 'info' }: Props) => {
+export const Banner = ({ children, handleClose, variant = 'info', className }: Props) => {
   return (
-    <div className={clsx(bannerRoot.base, bannerRoot[variant])}>
+    <div className={clsx(bannerRoot.base, bannerRoot[variant], className)}>
       <div className={bannerContent}>
         <Icon variant={variant} className={bannerIcon} />
         {children}

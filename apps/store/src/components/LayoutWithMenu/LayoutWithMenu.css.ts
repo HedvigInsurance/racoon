@@ -10,6 +10,9 @@ import {
 export const wrapper = style({
   minHeight: '100vh',
   isolation: 'isolate',
+  // We're using flex to support `order` rule on announcement block inside
+  display: 'flex',
+  flexDirection: 'column',
   selectors: {
     '&:has(main[data-dark-background=true])': {
       vars: {

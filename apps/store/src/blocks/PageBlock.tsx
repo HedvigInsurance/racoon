@@ -2,15 +2,22 @@ import type { SbBlokData } from '@storyblok/react/rsc';
 import { storyblokEditable, StoryblokComponent } from '@storyblok/react/rsc'
 import { DiscountBannerTrigger } from '@/components/DiscountBannerTrigger'
 import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
-import { main } from './PageBlock.css'
+import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
+import { announcementBanner, main } from './PageBlock.css'
 
 type PageBlockProps = SbBaseBlockProps<{
   body: Array<SbBlokData>
+  announcement?: Array<any>
 }>
 
 export const PageBlock = ({ blok }: PageBlockProps) => {
+  // Announcements are added as reusable blocks for Page and ProductPage content types
+  const announcementBlocks = filterByBlockType(blok.announcement, 'reusableBlockReference')
   return (
     <>
+      {announcementBlocks.map((blok) => (
+        <StoryblokComponent key={blok._uid} blok={blok} className={announcementBanner} />
+      ))}
       <main
         className={main}
         {...storyblokEditable(blok)}

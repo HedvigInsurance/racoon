@@ -8,18 +8,21 @@ import { Banner } from '@/components/Banner/Banner'
 import type { BannerVariant } from '@/components/Banner/Banner.types'
 import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
-export type AnnouncementBlockProps = SbBaseBlockProps<{
+export type AnnouncementBlockParams = {
   id: string
   content: ISbRichtext
   variant?: BannerVariant
-}>
+}
+export type AnnouncementBlockProps = SbBaseBlockProps<AnnouncementBlockParams> & {
+  className?: string
+}
 
-export const AnnouncementBlock = ({ blok }: AnnouncementBlockProps) => {
-  const { announcements, addAnnouncement, dimissAnnouncement } = useAnnouncements()
+export const AnnouncementBlock = ({ blok, className }: AnnouncementBlockProps) => {
+  const { announcements, addAnnouncement, dismissAnnouncement } = useAnnouncements()
 
   const handleClose = useCallback(() => {
-    dimissAnnouncement(blok.id)
-  }, [blok.id, dimissAnnouncement])
+    dismissAnnouncement(blok.id)
+  }, [blok.id, dismissAnnouncement])
 
   useEffect(() => {
     addAnnouncement({
@@ -34,6 +37,7 @@ export const AnnouncementBlock = ({ blok }: AnnouncementBlockProps) => {
 
   return (
     <Banner
+      className={className}
       variant={matchedAnnouncement.variant}
       handleClose={handleClose}
       {...storyblokEditable(blok)}
@@ -95,7 +99,7 @@ const useAnnouncements = () => {
     [setAnnouncements],
   )
 
-  const dimissAnnouncement = useCallback(
+  const dismissAnnouncement = useCallback(
     (announcementId: string) => {
       setDismissedAnnouncementIds((prev) => [...prev, announcementId])
     },
@@ -105,6 +109,6 @@ const useAnnouncements = () => {
   return {
     announcements,
     addAnnouncement,
-    dimissAnnouncement,
+    dismissAnnouncement,
   }
 }
