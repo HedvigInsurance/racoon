@@ -1,25 +1,28 @@
-import type { Meta, StoryFn } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { theme } from '../../theme'
 import { HedvigLogo } from './HedvigLogo'
 
-export default {
+const meta: Meta<typeof HedvigLogo> = {
   title: 'Logotypes / Hedvig Logo',
   component: HedvigLogo,
-} as Meta<typeof HedvigLogo>
-
-const Template: StoryFn<typeof HedvigLogo> = (args) => <HedvigLogo {...args} />
-
-export const Dark = Template.bind({})
-Dark.args = {
-  width: 94,
 }
 
-export const Light = Template.bind({})
-Light.args = {
-  width: 94,
-  color: theme.colors.light,
+export default meta
+type Story = StoryObj<typeof HedvigLogo>
+
+export const Dark: Story = {
+  args: {
+    width: 94,
+  },
 }
 
-Light.parameters = {
-  backgrounds: { default: 'Dark' },
+export const Light: Story = {
+  args: {
+    width: 94,
+    color: theme.colors.light,
+  },
+
+  parameters: {
+    backgrounds: { default: 'Dark' },
+  },
 }

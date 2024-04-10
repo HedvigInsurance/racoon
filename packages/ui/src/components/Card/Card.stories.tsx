@@ -2,11 +2,13 @@ import type { Meta, StoryFn } from '@storybook/react'
 import { Space } from 'ui/src/components/Space'
 import { Card, CardContent, CardMedia } from './Card'
 
-export default {
+const meta: Meta<typeof Card> = {
   title: 'Card',
   component: Card,
   args: {},
-} as Meta<typeof Card>
+}
+
+export default meta
 
 const Template: StoryFn<typeof Card> = (args) => {
   return (
@@ -32,4 +34,6 @@ const Template: StoryFn<typeof Card> = (args) => {
   )
 }
 
-export const Default = Template.bind({})
+export const Default = {
+  render: Template,
+}

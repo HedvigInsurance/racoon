@@ -1,22 +1,23 @@
-import type { Meta, StoryFn } from '@storybook/react'
+import type { StoryObj, Meta } from '@storybook/react'
 import { DiscountTooltip } from './DiscountTooltip'
 
-export default {
+const meta: Meta<typeof DiscountTooltip> = {
   title: 'Purchase Form / Discount Tooltip',
   component: DiscountTooltip,
-} as Meta<typeof DiscountTooltip>
-
-export const Default: StoryFn<typeof DiscountTooltip> = (props) => {
-  return <DiscountTooltip {...props} />
-}
-Default.args = {
-  children: '50% rabatt i 3 månader',
-  subtitle: 'Därefter betalar du 398 kr/mån',
 }
 
-export const NoSubtitle: StoryFn<typeof DiscountTooltip> = (props) => {
-  return <DiscountTooltip {...props} />
+export default meta
+type Story = StoryObj<typeof DiscountTooltip>
+
+export const Default: Story = {
+  args: {
+    children: '50% rabatt i 3 månader',
+    subtitle: 'Därefter betalar du 398 kr/mån',
+  },
 }
-NoSubtitle.args = {
-  children: '-10 kr/mån via Hedvig Forever',
+
+export const NoSubtitle: Story = {
+  args: {
+    children: '-10 kr/mån via Hedvig Forever',
+  },
 }

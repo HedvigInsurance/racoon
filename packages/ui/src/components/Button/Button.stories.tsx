@@ -2,10 +2,12 @@ import type { Meta, StoryFn } from '@storybook/react'
 import { Space, CheckIcon } from 'ui'
 import { Button } from './Button'
 
-export default {
+const meta: Meta<typeof Button> = {
   title: 'Button',
   component: Button,
-} as Meta<typeof Button>
+}
+
+export default meta
 
 const Template: StoryFn<typeof Button> = (props) => {
   return (
@@ -67,31 +69,41 @@ const Template: StoryFn<typeof Button> = (props) => {
   )
 }
 
-export const Large = Template.bind({})
-Large.args = {
-  children: 'Button label',
+export const Large = {
+  render: Template,
+  args: {
+    children: 'Button label',
+  },
 }
 
-export const Medium = Template.bind({})
-Medium.args = {
-  children: 'Button label',
-  size: 'medium',
+export const Medium = {
+  render: Template,
+  args: {
+    children: 'Button label',
+    size: 'medium',
+  },
 }
 
-export const Small = Template.bind({})
-Small.args = {
-  children: 'Button label',
-  size: 'small',
+export const Small = {
+  render: Template,
+  args: {
+    children: 'Button label',
+    size: 'small',
+  },
 }
 
-export const Responsive = Template.bind({})
-Responsive.args = {
-  children: 'Button label',
-  size: { base: 'small', lg: 'large' },
+export const Responsive = {
+  render: Template,
+  args: {
+    children: 'Button label',
+    size: { base: 'small', lg: 'large' },
+  },
 }
 
-export const WithIcon = Template.bind({})
-WithIcon.args = {
-  children: 'Button label',
-  Icon: <CheckIcon size="18px" />,
+export const WithIcon = {
+  render: Template,
+  args: {
+    children: 'Button label',
+    Icon: <CheckIcon size="18px" />,
+  },
 }

@@ -1,4 +1,4 @@
-import type { StoryFn } from '@storybook/react'
+import type { StoryObj } from '@storybook/react'
 import { Button, Dialog } from 'ui'
 import { CartNotificationContent } from './CartToast'
 
@@ -7,31 +7,39 @@ const config = {
   parameters: { grid: { width: '1/3' } },
 }
 
-export const Open: StoryFn<typeof CartNotificationContent> = (props) => (
-  <Dialog.Root open>
-    <CartNotificationContent {...props} />
-  </Dialog.Root>
-)
-Open.argTypes = { onClose: { action: 'onClose' } }
-Open.args = {
-  name: 'Hemförsäkring',
-  price: '179 kr/mån',
-}
-
-export const WithDialog: StoryFn<typeof CartNotificationContent> = (props) => {
-  return (
-    <Dialog.Root>
-      <Dialog.Trigger asChild>
-        <Button>Open notification</Button>
-      </Dialog.Trigger>
+export const Open: StoryObj<typeof CartNotificationContent> = {
+  render: (props) => (
+    <Dialog.Root open>
       <CartNotificationContent {...props} />
     </Dialog.Root>
-  )
+  ),
+
+  argTypes: { onClose: { action: 'onClose' } },
+
+  args: {
+    name: 'Hemförsäkring',
+    price: '179 kr/mån',
+  },
 }
-WithDialog.argTypes = { onClose: { action: 'onClose' } }
-WithDialog.args = {
-  name: 'Hemförsäkring',
-  price: '179 kr/mån',
+
+export const WithDialog: StoryObj<typeof CartNotificationContent> = {
+  render: (props) => {
+    return (
+      <Dialog.Root>
+        <Dialog.Trigger asChild>
+          <Button>Open notification</Button>
+        </Dialog.Trigger>
+        <CartNotificationContent {...props} />
+      </Dialog.Root>
+    )
+  },
+
+  argTypes: { onClose: { action: 'onClose' } },
+
+  args: {
+    name: 'Hemförsäkring',
+    price: '179 kr/mån',
+  },
 }
 
 export default config

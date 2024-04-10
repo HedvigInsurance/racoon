@@ -13,8 +13,8 @@ const meta: Meta<typeof LoadingDots> = {
     },
   },
 }
-export default meta
 
+export default meta
 type Story = StoryObj<typeof LoadingDots>
 
 export const Info: Story = {}

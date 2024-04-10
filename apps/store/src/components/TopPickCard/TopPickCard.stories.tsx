@@ -1,15 +1,17 @@
-import type { Meta, StoryFn } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { TopPickCard } from './TopPickCard'
 
-export default {
+const meta: Meta<typeof TopPickCard> = {
   component: TopPickCard,
-} as Meta<typeof TopPickCard>
+}
 
-const Template: StoryFn<typeof TopPickCard> = (props) => <TopPickCard {...props} />
+export default meta
+type Story = StoryObj<typeof TopPickCard>
 
-export const Default = Template.bind({})
-Default.args = {
-  title: 'Hedvig Home',
-  subtitle: 'Complete coverage for your home',
-  image: { src: 'https://via.placeholder.com/327x400' },
+export const Default: Story = {
+  args: {
+    title: 'Hedvig Home',
+    subtitle: 'Complete coverage for your home',
+    image: { src: 'https://via.placeholder.com/327x400' },
+  },
 }

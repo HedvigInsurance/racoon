@@ -10,8 +10,8 @@ const meta: Meta<typeof InputDay> = {
   argTypes: { onSelect: { action: 'select' } },
   parameters: { grid: { width: '1/3' } },
 }
-export default meta
 
+export default meta
 type Story = StoryObj<typeof InputDay>
 
 export const DayPicker: Story = {

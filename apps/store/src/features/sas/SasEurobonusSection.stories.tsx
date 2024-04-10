@@ -1,5 +1,6 @@
-import { type Meta, type StoryFn } from '@storybook/react'
-import { SasEurobonusSection } from './SasEurobonusSection'
+import type { StoryObj } from '@storybook/react'
+import { type Meta } from '@storybook/react'
+import type { SasEurobonusSection } from './SasEurobonusSection'
 
 const meta: Meta<typeof SasEurobonusSection> = {
   title: 'Checkout / SAS Eurobonus Section',
@@ -19,6 +20,4 @@ const meta: Meta<typeof SasEurobonusSection> = {
 
 export default meta
 
-export const Default: StoryFn<typeof SasEurobonusSection> = (props) => {
-  return <SasEurobonusSection {...props} />
-}
+export const Default: StoryObj<typeof SasEurobonusSection> = {}

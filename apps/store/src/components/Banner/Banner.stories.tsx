@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Banner } from './Banner'
 
-type Story = StoryObj<typeof Banner>
-
 const meta: Meta<typeof Banner> = {
   component: Banner,
   parameters: {
@@ -14,6 +12,9 @@ const meta: Meta<typeof Banner> = {
     },
   },
 }
+
+export default meta
+type Story = StoryObj<typeof Banner>
 
 const noopHandleClose = () => {}
 
@@ -64,5 +65,3 @@ export const LongText: Story = {
     </Banner>
   ),
 }
-
-export default meta
