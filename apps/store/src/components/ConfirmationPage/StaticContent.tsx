@@ -94,6 +94,7 @@ const AppStoreButtons = () => {
   return (
     <ButtonWrapper>
       <Button
+        as="a"
         href={getAppStoreLink('apple', locale).toString()}
         target="_blank"
         rel="noopener noreferrer"
@@ -106,6 +107,7 @@ const AppStoreButtons = () => {
         </SpaceFlex>
       </Button>
       <Button
+        as="a"
         href={getAppStoreLink('google', locale).toString()}
         target="_blank"
         rel="noopener noreferrer"

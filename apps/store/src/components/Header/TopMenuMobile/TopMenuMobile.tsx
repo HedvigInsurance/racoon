@@ -66,6 +66,7 @@ export const TopMenuMobile = (props: TopMenuMobileProps) => {
                 <div>{children}</div>
                 <ButtonWrapper>
                   <Button
+                    as="a"
                     href={getAppStoreLink('apple', locale).toString()}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -78,6 +79,7 @@ export const TopMenuMobile = (props: TopMenuMobileProps) => {
                     </SpaceFlex>
                   </Button>
                   <Button
+                    as="a"
                     href={getAppStoreLink('google', locale).toString()}
                     target="_blank"
                     rel="noopener noreferrer"
