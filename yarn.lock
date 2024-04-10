@@ -15301,9 +15301,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"downshift@npm:9.0.1":
-  version: 9.0.1
-  resolution: "downshift@npm:9.0.1"
+"downshift@npm:9.0.4":
+  version: 9.0.4
+  resolution: "downshift@npm:9.0.4"
   dependencies:
     "@babel/runtime": "npm:^7.22.15"
     compute-scroll-into-view: "npm:^3.0.3"
@@ -15312,7 +15312,7 @@ __metadata:
     tslib: "npm:^2.6.2"
   peerDependencies:
     react: ">=16.12.0"
-  checksum: 10c0/04769c95539c9f375776d8f146d0e7565ca8008e105e29f4bb45a066f5deb041239f378e9d2461a2deeb2d28c9df0448e7787590815dcc691bc8e3be104a7edd
+  checksum: 10c0/8474a42d7fdbe9e5fb748c79b0f824610375921a5300426312d8b8e13d72aa29a6a5d45dba42b599878855d127ba7fa4b26862a8a12d12fd576e8d955b6670c4
   languageName: node
   linkType: hard
 
@@ -25085,7 +25085,7 @@ __metadata:
     cookies-next: "npm:4.1.1"
     date-fns: "npm:3.6.0"
     dotenv: "npm:16.4.5"
-    downshift: "npm:9.0.1"
+    downshift: "npm:9.0.4"
     eslint: "npm:8.57.0"
     eslint-config-custom: "workspace:"
     eslint-config-next: "npm:14.1.4"
