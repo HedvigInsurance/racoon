@@ -35,7 +35,7 @@ export const AnnouncementBlock = ({ blok }: AnnouncementBlockProps) => {
   return (
     <Banner
       variant={matchedAnnouncement.variant}
-      handleClose={handleClose}
+      onClose={handleClose}
       {...storyblokEditable(blok)}
     >
       <Content dangerouslySetInnerHTML={{ __html: matchedAnnouncement.content }} />

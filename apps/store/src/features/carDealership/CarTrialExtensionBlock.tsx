@@ -5,12 +5,14 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import { storyblokEditable } from '@storyblok/react'
 import { addDays } from 'date-fns'
+import { useSetAtom } from 'jotai'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { useCallback, useMemo } from 'react'
 import { Space } from 'ui'
-import { useGlobalBanner } from '@/components/GlobalBanner/useGlobalBanner'
+import { globalBannerAtom } from '@/components/GlobalBanner/globalBannerState'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
+import { CarDealershipBanners } from '@/features/carDealership/carDearlership.constants'
 import { useCarTrialExtensionQuery, useUpdateConsentMutation } from '@/services/graphql/generated'
 import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { Features } from '@/utils/Features'
@@ -153,7 +155,7 @@ type AddNotificationBannerOptions = {
 }
 
 const useAddNotificationBanner = () => {
-  const { addBanner } = useGlobalBanner()
+  const setGlobalBanner = useSetAtom(globalBannerAtom)
   const { dateFull } = useFormatter()
   const { t } = useTranslation('carDealership')
 
@@ -164,25 +166,33 @@ const useAddNotificationBanner = () => {
         const dueDate = addDays(today, DAYS_UNTIL_TERMINATION)
 
         if (today <= dueDate) {
-          addBanner(
-            t('CONNECT_PAYMENT_BANNER', { dueDate: `<b>${dateFull(dueDate)}</b>` }),
-            'info',
+          setGlobalBanner(
+            {
+              id: CarDealershipBanners.ConnectPayment,
+              content: t('CONNECT_PAYMENT_BANNER', { dueDate: `<b>${dateFull(dueDate)}</b>` }),
+              variant: 'info',
+            },
             {
               force: true,
             },
           )
         }
       } else {
-        addBanner(
-          t('REMAIN_INSURED_BANNER', {
-            dueDate: `<b>${dateFull(new Date(data.trialContract.terminationDate))}</b>`,
-          }),
-          'warning',
-          { force: true },
+        setGlobalBanner(
+          {
+            id: CarDealershipBanners.Extend,
+            content: t('REMAIN_INSURED_BANNER', {
+              dueDate: `<b>${dateFull(new Date(data.trialContract.terminationDate))}</b>`,
+            }),
+            variant: 'warning',
+          },
+          {
+            force: true,
+          },
         )
       }
     },
-    [addBanner, dateFull, t],
+    [setGlobalBanner, dateFull, t],
   )
 
   return addNotificationBanner

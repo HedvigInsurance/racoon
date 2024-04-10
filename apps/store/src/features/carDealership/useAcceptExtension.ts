@@ -1,7 +1,9 @@
 import { datadogLogs } from '@datadog/browser-logs'
+import { useSetAtom } from 'jotai'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { useGlobalBanner } from '@/components/GlobalBanner/useGlobalBanner'
+import { dismissedBannerIdAtom } from '@/components/GlobalBanner/globalBannerState'
+import { CarDealershipBanners } from '@/features/carDealership/carDearlership.constants'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
@@ -25,7 +27,7 @@ type Params = {
 export const useAcceptExtension = (params: Params) => {
   const { startCheckoutSign, currentOperation } = useBankIdContext()
   const router = useRouter()
-  const { dismissBanner } = useGlobalBanner()
+  const setDismissedBannerId = useSetAtom(dismissedBannerIdAtom)
   const { showError } = useAppErrorHandleContext()
   const [getCurrentMember] = useCurrentMemberLazyQuery()
   const locale = useRoutingLocale()
@@ -59,6 +61,8 @@ export const useAcceptExtension = (params: Params) => {
           return
         }
 
+        setDismissedBannerId(CarDealershipBanners.Extend)
+
         const nextUrl = PageLink.carDealershipConfirmation({
           locale,
           contractId: params.trialContractId,
@@ -70,7 +74,6 @@ export const useAcceptExtension = (params: Params) => {
           LOGGER.info('Member does not have active payment connection', {
             promptedPayment: params.requirePaymentConnection,
           })
-          dismissBanner()
           await router.push(
             PageLink.checkoutPaymentTrustly({
               locale,
@@ -82,7 +85,6 @@ export const useAcceptExtension = (params: Params) => {
           LOGGER.info('Member has active payment connection', {
             promptedPayment: params.requirePaymentConnection,
           })
-          dismissBanner()
           await router.push(nextUrl)
         }
       },

@@ -1,10 +1,9 @@
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import type { FormEventHandler} from 'react';
+import type { FormEventHandler } from 'react'
 import { useState } from 'react'
 import { Button, mq, Space, theme } from 'ui'
-import { useGlobalBanner } from '@/components/GlobalBanner/useGlobalBanner'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { HEADER_HEIGHT_MOBILE, HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header.constants'
 import { TextField } from '@/components/TextField/TextField'
@@ -26,13 +25,11 @@ export const ForeverPage = ({ code: initialCode }: Props) => {
 
   const { shopSession } = useShopSession()
   const locale = useRoutingLocale()
-  const { addBanner } = useGlobalBanner()
   const redirectUrl = PageLink.store({ locale })
   const [addCampaign, { errorMessage, loading, called }] = useRedeemCampaign({
     shopSessionId: shopSession?.id ?? '',
-    async onCompleted() {
-      await router.push(redirectUrl)
-      addBanner(t('GLOBAL_BANNER_CAMPAIGN'))
+    onCompleted() {
+      router.push(redirectUrl)
     },
   })
   const showLoading = loading || (called && !errorMessage)
