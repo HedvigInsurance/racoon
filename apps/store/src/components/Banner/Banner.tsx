@@ -12,18 +12,18 @@ import type { BannerVariant } from './Banner.types'
 
 type Props = {
   children: ReactNode
-  handleClose: () => void
+  onClose: () => void
   variant?: BannerVariant
 }
 
-export const Banner = ({ children, handleClose, variant = 'info' }: Props) => {
+export const Banner = ({ children, onClose, variant = 'info' }: Props) => {
   return (
     <div className={clsx(bannerRoot.base, bannerRoot[variant])}>
       <div className={bannerContent}>
         <Icon variant={variant} className={bannerIcon} />
         {children}
       </div>
-      <button className={bannerCloseButton} onClick={handleClose}>
+      <button className={bannerCloseButton} onClick={onClose}>
         <CrossIconSmall size="1rem" />
       </button>
     </div>

@@ -1,0 +1,42 @@
+import { atom } from 'jotai'
+import { atomWithStorage, createJSONStorage } from 'jotai/utils'
+import type { Banner } from '@/components/Banner/Banner.types'
+
+type BannerWithId = Banner & { id: string }
+
+type SetBannerOptions = {
+  force: boolean // If true, replace existing banner when present and reset dismissed flag
+}
+
+// Represents 0 or 1 global banner announcements and tracks visible/dismissed state within the same session
+// Banner is identified by string id, so dismissing a banner does not prevent banner with different id from being shown
+//
+// We intentionally don't support banner stack or any other forms of multiple banners being tracked or displayed
+export const globalBannerAtom = atom(
+  (get) => {
+    const currentBanner = get(currentBannerAtom)
+    const dismissedBannerId = get(dismissedBannerIdAtom)
+    if (currentBanner != null && dismissedBannerId !== currentBanner.id) {
+      return currentBanner
+    }
+    return null
+  },
+  (get, set, newBanner: BannerWithId, options?: SetBannerOptions) => {
+    const { id: currentId } = get(currentBannerAtom) ?? {}
+    const dismissedId = get(dismissedBannerIdAtom)
+    if (currentId == null || dismissedId !== currentId || options?.force) {
+      set(currentBannerAtom, newBanner)
+    }
+    if (options?.force && dismissedId === newBanner.id) {
+      set(dismissedBannerIdAtom, null)
+    }
+  },
+)
+
+const currentBannerAtom = atom<BannerWithId | null>(null)
+
+export const dismissedBannerIdAtom = atomWithStorage<string | null>(
+  'dismissedGlobalBannerId',
+  null,
+  createJSONStorage(() => window.sessionStorage),
+)

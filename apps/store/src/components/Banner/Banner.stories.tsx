@@ -19,7 +19,7 @@ const noopHandleClose = () => {}
 
 export const Info: Story = {
   render: () => (
-    <Banner handleClose={noopHandleClose}>
+    <Banner onClose={noopHandleClose}>
       <span>
         Here’s a message with random information ·{' '}
         <a style={{ textDecoration: 'underline' }} href="#">
@@ -32,7 +32,7 @@ export const Info: Story = {
 
 export const Campaign: Story = {
   render: () => (
-    <Banner variant="campaign" handleClose={noopHandleClose}>
+    <Banner variant="campaign" onClose={noopHandleClose}>
       Campaign code applied
     </Banner>
   ),
@@ -40,7 +40,7 @@ export const Campaign: Story = {
 
 export const Warning: Story = {
   render: () => (
-    <Banner variant="warning" handleClose={noopHandleClose}>
+    <Banner variant="warning" onClose={noopHandleClose}>
       Price quote unavailable
     </Banner>
   ),
@@ -48,7 +48,7 @@ export const Warning: Story = {
 
 export const Error: Story = {
   render: () => (
-    <Banner variant="error" handleClose={noopHandleClose}>
+    <Banner variant="error" onClose={noopHandleClose}>
       An unknown error has occured
     </Banner>
   ),
@@ -56,7 +56,7 @@ export const Error: Story = {
 
 export const LongText: Story = {
   render: () => (
-    <Banner handleClose={noopHandleClose}>
+    <Banner onClose={noopHandleClose}>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eget nunc cursus, laoreet leo
       ut, mollis odio. Nunc egestas, nisi ac lobortis bibendum, libero
     </Banner>
