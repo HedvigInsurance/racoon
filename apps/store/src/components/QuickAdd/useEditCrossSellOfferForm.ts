@@ -2,6 +2,8 @@ import { useApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
 import { isSameDay } from 'date-fns'
 import { useMemo, useState, type FormEventHandler } from 'react'
+import { type InputDayProps } from '@/components/InputDay/InputDay'
+import { type StepperInputProps } from '@/components/StepperInput/StepperInput'
 import {
   useStartDateUpdateMutation,
   type OfferRecommendationFragment,
@@ -13,6 +15,11 @@ import { convertToDate, formatAPIDate } from '@/utils/date'
 export enum Fields {
   NUMBER_CO_INSURED = 'numberCoInsured',
   START_DATE = 'startDate',
+}
+
+type FieldProps = {
+  [Fields.NUMBER_CO_INSURED]: Partial<StepperInputProps>
+  [Fields.START_DATE]: Partial<InputDayProps>
 }
 
 type Params = {
@@ -66,33 +73,45 @@ export function useEditCrossSellOfferForm({ shopSessionId, productName, initialO
 
         await priceIntentService.update({
           priceIntentId: priceIntent.id,
-          data: {
-            numberCoInsured,
-            startDate: formatAPIDate(startDate),
-          },
+          data: { numberCoInsured },
           customer: { shopSessionId },
         })
         const { offers } = await priceIntentService.confirm(priceIntent.id)
-
-        const updatedOffer = offers[0]
-        setOffer(updatedOffer)
-        setState('idle')
-        setStartDate(getOfferStartDateWithFallback(updatedOffer))
-        setNumberCoInsured(getOfferNumberCoInsuredWithFallback(updatedOffer))
-      } else {
+        const newOffer = offers[0]
         await updateStartDate({
           variables: {
-            productOfferIds: [offer.id],
+            productOfferIds: [newOffer.id],
             startDate: formatAPIDate(startDate),
           },
-          onCompleted: (data) => {
+          onCompleted(data) {
             const updatedOffer = data.productOffersStartDateUpdate.productOffers[0]
             setOffer(updatedOffer)
             setState('idle')
             setStartDate(getOfferStartDateWithFallback(updatedOffer))
             setNumberCoInsured(getOfferNumberCoInsuredWithFallback(updatedOffer))
           },
-          onError: (error) => {
+          onError(error) {
+            datadogLogs.logger.error(
+              'Cross sell | failed to update offer numberCoInsured/startDate',
+              { error },
+            )
+            setState('error')
+          },
+        })
+      } else {
+        await updateStartDate({
+          variables: {
+            productOfferIds: [offer.id],
+            startDate: formatAPIDate(startDate),
+          },
+          onCompleted(data) {
+            const updatedOffer = data.productOffersStartDateUpdate.productOffers[0]
+            setOffer(updatedOffer)
+            setState('idle')
+            setStartDate(getOfferStartDateWithFallback(updatedOffer))
+            setNumberCoInsured(getOfferNumberCoInsuredWithFallback(updatedOffer))
+          },
+          onError(error) {
             datadogLogs.logger.error('Cross sell | failed to update offer startDate', { error })
             setState('error')
           },
@@ -104,22 +123,23 @@ export function useEditCrossSellOfferForm({ shopSessionId, productName, initialO
     }
   }
 
+  const fieldProps: FieldProps = {
+    [Fields.NUMBER_CO_INSURED]: {
+      value: numberCoInsured,
+      onChange: setNumberCoInsured,
+    },
+    [Fields.START_DATE]: {
+      selected: startDate,
+      onSelect: setStartDate,
+    },
+  }
+
   return {
     state,
     offer,
     isFormPristine,
     handleSubmit,
-    // TODO: get this typed
-    fieldProps: {
-      [Fields.NUMBER_CO_INSURED]: {
-        value: numberCoInsured,
-        onChange: setNumberCoInsured,
-      },
-      [Fields.START_DATE]: {
-        selected: startDate,
-        onSelect: setStartDate,
-      },
-    },
+    fieldProps,
   }
 }
 
