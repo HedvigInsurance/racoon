@@ -68,6 +68,9 @@ export const bannerCloseButton = style({
   gridArea: GridArea.CloseBtn,
   justifySelf: 'end',
   color: colors.textPrimary,
-  paddingLeft: theme.space.xs,
+  marginLeft: theme.space.xs,
   cursor: 'pointer',
+  ':focus-visible': {
+    outline: `2px solid ${theme.colors.gray900}`,
+  },
 })
