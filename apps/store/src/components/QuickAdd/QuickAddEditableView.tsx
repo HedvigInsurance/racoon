@@ -38,11 +38,12 @@ export function QuickAddEditableView(props: Props) {
   const { t } = useTranslation('cart')
 
   const formId = useId()
-  const { state, offer, isFormPristine, fieldProps, handleSubmit } = useEditCrossSellOfferForm({
-    shopSessionId: props.shopSessionId,
-    productName: props.productName,
-    initialOffer: props.offer,
-  })
+  const { state, handleChangeNumberCoInsured, handleChangeStartDate, handleSubmit } =
+    useEditCrossSellOfferForm({
+      shopSessionId: props.shopSessionId,
+      productName: props.productName,
+      initialOffer: props.offer,
+    })
 
   return (
     <div className={card}>
@@ -79,13 +80,15 @@ export function QuickAddEditableView(props: Props) {
                 min={0}
                 max={5}
                 optionLabel={(count) => t('NUMBER_COINSURED_OPTION_LABEL', { count })}
-                {...fieldProps[Fields.NUMBER_CO_INSURED]}
+                value={state[Fields.NUMBER_CO_INSURED]}
+                onChange={handleChangeNumberCoInsured}
               />
               <InputDay
                 className={startDateInput}
                 label={t('START_DATE_LABEL')}
                 fromDate={new Date()}
-                {...fieldProps[Fields.START_DATE]}
+                selected={state[Fields.START_DATE]}
+                onSelect={handleChangeStartDate}
               />
             </Space>
           </form>
@@ -95,7 +98,7 @@ export function QuickAddEditableView(props: Props) {
               {t('OFFER_PRICE_LABEL')}
             </Text>
             <Price
-              {...getOfferPrice(offer.cost)}
+              {...getOfferPrice(state.offer.cost)}
               color="textTranslucentPrimary"
               secondaryColor="textTranslucentSecondary"
             />
@@ -103,16 +106,21 @@ export function QuickAddEditableView(props: Props) {
 
           <div className={actionsWrapper}>
             <DismissButton variant="secondary" />
-            {isFormPristine ? (
+            {state.isPristine ? (
               <AddToCartButton
                 shopSessionId={props.shopSessionId}
-                offer={offer}
+                offer={state.offer}
                 productName={props.productName}
               >
                 {t('QUICK_ADD_BUTTON')}
               </AddToCartButton>
             ) : (
-              <Button type="submit" form={formId} size="medium" loading={state === 'loading'}>
+              <Button
+                type="submit"
+                form={formId}
+                size="medium"
+                loading={state.status === 'submitting'}
+              >
                 {t('QUICK_ADD_UPDATE')}
               </Button>
             )}
