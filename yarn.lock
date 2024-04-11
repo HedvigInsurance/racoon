@@ -7507,12 +7507,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@opentelemetry/api-logs@npm:0.49.1":
-  version: 0.49.1
-  resolution: "@opentelemetry/api-logs@npm:0.49.1"
+"@opentelemetry/api-logs@npm:0.50.0":
+  version: 0.50.0
+  resolution: "@opentelemetry/api-logs@npm:0.50.0"
   dependencies:
     "@opentelemetry/api": "npm:^1.0.0"
-  checksum: 10c0/479d8529c0e51effa92e265ba15b75dc010aefe97beb04f6d407d8298a5dcefb0c7fcdaff8c2a65e2a41435d8951407b37e6deb878b5e0191887176faa9565f8
+  checksum: 10c0/df55e207db749efe05fc628fcde1e8b7fa277ccc126f749ee376abfdd8e6c622618930756647b9d556319896bbe270398940fbd2c07529c3ca7cc9dac8fd71ae
   languageName: node
   linkType: hard
 
@@ -25033,7 +25033,7 @@ __metadata:
     "@lottiefiles/react-lottie-player": "npm:3.5.3"
     "@next/bundle-analyzer": "npm:14.1.4"
     "@opentelemetry/api": "npm:1.8.0"
-    "@opentelemetry/api-logs": "npm:0.49.1"
+    "@opentelemetry/api-logs": "npm:0.50.0"
     "@radix-ui/react-accordion": "npm:1.1.2"
     "@radix-ui/react-checkbox": "npm:1.0.4"
     "@radix-ui/react-collapsible": "npm:1.0.3"
