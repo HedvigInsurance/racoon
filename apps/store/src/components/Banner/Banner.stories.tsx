@@ -57,8 +57,10 @@ export const Error: Story = {
 export const LongText: Story = {
   render: () => (
     <Banner onClose={noopHandleClose}>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eget nunc cursus, laoreet leo
-      ut, mollis odio. Nunc egestas, nisi ac lobortis bibendum, libero
+      <span>
+        Lorem ipsum <b>dolor sit amet</b>, consectetur adipiscing elit. Mauris eget nunc cursus,
+        laoreet leo ut, mollis odio. Nunc egestas, nisi ac lobortis bibendum, libero
+      </span>
     </Banner>
   ),
 }

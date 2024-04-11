@@ -1,4 +1,4 @@
-import { style, styleVariants } from '@vanilla-extract/css'
+import { globalStyle, style, styleVariants } from '@vanilla-extract/css'
 import { colors, minWidth, theme } from 'ui/src/theme'
 
 const GridArea = {
@@ -58,6 +58,10 @@ export const bannerContent = style({
   gridTemplateColumns: 'auto 1fr',
   alignItems: 'center',
   gap: theme.space.xs,
+})
+
+globalStyle(`${bannerContent} b`, {
+  color: theme.colors.textPrimary,
 })
 
 export const bannerCloseButton = style({
