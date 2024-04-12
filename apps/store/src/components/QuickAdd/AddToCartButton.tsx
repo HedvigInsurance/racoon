@@ -1,25 +1,28 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
-import { type ReactNode } from 'react'
-import { Button } from 'ui'
+import { Button, type ButtonProps } from 'ui'
 import { type OfferRecommendationFragment } from '@/services/graphql/generated'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useAddToCart } from '@/utils/useAddToCart'
 
-type Props = {
+export type AddToCartButtonProps = {
   shopSessionId: string
   offer: OfferRecommendationFragment
   productName: string
-  children: ReactNode
-}
+} & Omit<ButtonProps<'button'>, 'onClick' | 'loading'>
 
-export const AddToCartButton = (props: Props) => {
+export const AddToCartButton = ({
+  shopSessionId,
+  offer,
+  productName,
+  ...buttonProps
+}: AddToCartButtonProps) => {
   const [addToCart, loading] = useAddToCart({
-    shopSessionId: props.shopSessionId,
+    shopSessionId: shopSessionId,
     onSuccess() {
       datadogLogs.logger.info('Quick Add | Added offer to cart', {
-        productOfferId: props.offer.id,
-        product: props.productName,
+        productOfferId: offer.id,
+        product: productName,
       })
       window.scrollTo({ top: 0 })
     },
@@ -29,16 +32,12 @@ export const AddToCartButton = (props: Props) => {
   const handleAdd = () => {
     datadogRum.addAction('Quick Add To Cart', {
       type: 'complete',
-      productOfferId: props.offer.id,
-      product: props.productName,
+      productOfferId: offer.id,
+      product: productName,
     })
-    tracking.reportAddToCart(props.offer, 'recommendations')
-    addToCart(props.offer.id)
+    tracking.reportAddToCart(offer, 'recommendations')
+    addToCart(offer.id)
   }
 
-  return (
-    <Button size="medium" fullWidth={true} loading={loading} onClick={handleAdd}>
-      {props.children}
-    </Button>
-  )
+  return <Button size="medium" {...buttonProps} onClick={handleAdd} loading={loading} />
 }

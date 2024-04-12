@@ -12,7 +12,8 @@ import { Features } from '@/utils/Features'
 import { getOfferPrice } from '@/utils/getOfferPrice'
 import { AddToCartButton } from './AddToCartButton'
 import { DismissButton } from './DismissButton'
-import { ProductUsp, QuickAddBundleView } from './QuickAddBundleView'
+import { ProductUsp } from './ProductUsp'
+import { QuickAddBundleView } from './QuickAddBundleView'
 import { QuickAddEditableView } from './QuickAddEditableView'
 import { QuickAddInfoDialog } from './QuickAddInfoDialog'
 import { useShowQuickAdd } from './useShowQuickAdd'
@@ -48,7 +49,26 @@ export function QuickAddOfferContainer(props: Props) {
   const homeInsuranceInCart =
     props.cart.entries.find((entry) => HOME_INSURANCES.includes(entry.product.name)) ?? null
   if (!homeInsuranceInCart && Features.enabled('CROSS_SELL_CARD_V2')) {
-    return <QuickAddEditableView />
+    return (
+      <QuickAddEditableView
+        shopSessionId={props.shopSessionId}
+        offer={props.offer}
+        productName={props.product.name}
+        pillow={props.product.pillowImage}
+        title={props.product.displayNameFull}
+        subtitle={t('USP_NO_BINDING_TIME')}
+        productPageLink={props.product.pageLink}
+        price={getOfferPrice(props.offer.cost)}
+        badge={t('QUICK_ADD_BADGE_LABEL')}
+        Body={
+          <ul>
+            <ProductUsp>{t('ACCIDENT_OFFER_USP_1')}</ProductUsp>
+            <ProductUsp>{t('ACCIDENT_OFFER_USP_2')}</ProductUsp>
+            <ProductUsp>{t('ACCIDENT_OFFER_USP_3')}</ProductUsp>
+          </ul>
+        }
+      />
+    )
   }
 
   const householdSize = parseInt(props.offer.priceIntentData[CO_INSURED_DATA_KEY] || 0, 10) + 1
@@ -72,7 +92,6 @@ export function QuickAddOfferContainer(props: Props) {
       price={price}
       badge={{ children: t('QUICK_ADD_BADGE_LABEL') }}
       Body={
-        // Assume Accident insurance
         <>
           <Text as="p" color="textTranslucentSecondary">
             {t('ACCIDENT_OFFER_DESCRIPTION_BUNDLE')}
@@ -103,10 +122,11 @@ export function QuickAddOfferContainer(props: Props) {
             shopSessionId={props.shopSessionId}
             productName={props.product.name}
             offer={props.offer}
+            fullWidth={true}
           >
             {t('QUICK_ADD_BUTTON_BUNDLE')}
           </AddToCartButton>
-          <DismissButton />
+          <DismissButton variant="ghost" fullWidth={true} />
         </Space>
       }
     />

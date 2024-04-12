@@ -3,9 +3,9 @@ import { Button, Heading, Text, theme } from 'ui'
 import { Perils } from '@/components/Perils/Perils'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Price } from '@/components/Price'
-import type { PerilFragment } from '@/services/graphql/generated';
-import { CurrencyCode } from '@/services/graphql/generated'
-import { ProductUsp, QuickAddBundleView } from './QuickAddBundleView'
+import { CurrencyCode, type PerilFragment } from '@/services/graphql/generated'
+import { ProductUsp } from './ProductUsp'
+import { QuickAddBundleView } from './QuickAddBundleView'
 import { QuickAddInfoDialog } from './QuickAddInfoDialog'
 
 const meta: Meta<typeof QuickAddBundleView> = {

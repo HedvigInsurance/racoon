@@ -7,7 +7,7 @@ import { getBadgeSize } from './Badge.helper'
 
 type BadgeColors = Pick<
   UIColors,
-  'blueFill1' | 'blueFill2' | 'blueFill3' | 'green50' | 'signalAmberHighlight'
+  'blueFill1' | 'blueFill2' | 'blueFill3' | 'green50' | 'signalAmberHighlight' | 'pinkFill1'
 >
 
 export type BadgeProps = Margins & {

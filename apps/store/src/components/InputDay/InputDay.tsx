@@ -33,7 +33,6 @@ type Props = {
   fromDate?: Date
   toDate?: Date
   disabled?: boolean
-  backgroundColor?: 'default' | 'light'
   required?: boolean
   autoFocus?: boolean
   loading?: boolean
@@ -58,11 +57,6 @@ export const InputDay = (props: Props) => {
   const autoIdentifier = useId()
   const inputId = props.id ?? autoIdentifier
 
-  const backgroundColor =
-    props.backgroundColor === 'light'
-      ? theme.colors.backgroundFrostedGlass
-      : theme.colors.translucent1
-
   const { highlight, animationProps } = useHighlightAnimation<HTMLButtonElement>()
 
   const handleSelect: SelectSingleEventHandler = (day) => {
@@ -85,7 +79,6 @@ export const InputDay = (props: Props) => {
       <Popover.Trigger
         {...animationProps}
         className={clsx(trigger, props.className)}
-        style={{ backgroundColor }}
         disabled={props.disabled}
       >
         <label className={label} htmlFor={inputId} data-disabled={props.disabled}>

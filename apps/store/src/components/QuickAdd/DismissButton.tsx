@@ -1,9 +1,11 @@
 import { datadogRum } from '@datadog/browser-rum'
 import { useTranslation } from 'next-i18next'
-import { Button } from 'ui'
+import { Button, type ButtonProps } from 'ui'
 import { useShowQuickAdd } from './useShowQuickAdd'
 
-export const DismissButton = () => {
+type Props = Omit<ButtonProps<'button'>, 'onClick' | 'children'>
+
+export function DismissButton(props: Props) {
   const { t } = useTranslation('cart')
   const [, setShow] = useShowQuickAdd()
 
@@ -14,7 +16,7 @@ export const DismissButton = () => {
   }
 
   return (
-    <Button size="medium" variant="ghost" fullWidth={true} onClick={handleDismiss}>
+    <Button size="medium" {...props} onClick={handleDismiss}>
       {t('QUICK_ADD_DISMISS')}
     </Button>
   )
