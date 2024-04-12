@@ -19,6 +19,7 @@ const config = {
   PRICE_INTENT_WARNING: process.env.NEXT_PUBLIC_FEATURE_PRICE_INTENT_WARNING === 'true',
   BANKID_V6: process.env.NEXT_PUBLIC_FEATURE_BANKID_V6 === 'true',
   MYMONEY: process.env.NEXT_PUBLIC_FEATURE_MYMONEY === 'true',
+  CROSS_SELL_CARD_V2: process.env.NEXT_PUBLIC_CROSS_SELL_CARD_V2 === 'true',
 } as const
 
 export type FeatureFlag = keyof typeof config

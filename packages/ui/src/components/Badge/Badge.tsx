@@ -11,6 +11,7 @@ type BadgeColors = Pick<
 >
 
 export type BadgeProps = Margins & {
+  className?: string
   as?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span'
   color?: keyof BadgeColors
   children: React.ReactNode

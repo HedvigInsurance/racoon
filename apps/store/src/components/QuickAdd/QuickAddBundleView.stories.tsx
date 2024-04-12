@@ -114,16 +114,19 @@ export const Default: Story = {
   args: {
     title: 'Home + Accident',
     subtitle: 'Covers 2 people',
-    pillow: {
-      src: 'https://assets.hedvig.com/f/165473/832x832/1bb4813dd1/hedvig-pillows-accident.png',
-    },
-    mainOfferPillow: {
+    primaryPillow: {
       src: 'https://assets.hedvig.com/f/165473/832x832/cdaaa91242/hedvig-pillows-home.png',
+    },
+    secondaryPillow: {
+      src: 'https://assets.hedvig.com/f/165473/832x832/1bb4813dd1/hedvig-pillows-accident.png',
     },
     href: '/se',
     price: {
       currencyCode: CurrencyCode.Sek,
       amount: 99,
+    },
+    badge: {
+      children: 'Popular',
     },
     Body: (
       <>
@@ -158,10 +161,7 @@ export const Default: Story = {
         </ul>
       </>
     ),
-    badge: {
-      children: 'Popular',
-    },
-    children: (
+    Footer: (
       <Button size="medium" fullWidth={true}>
         Upgrade
       </Button>
