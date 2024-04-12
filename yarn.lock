@@ -41,16 +41,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client-react-streaming@npm:0.9.1":
-  version: 0.9.1
-  resolution: "@apollo/client-react-streaming@npm:0.9.1"
+"@apollo/client-react-streaming@npm:0.10.0":
+  version: 0.10.0
+  resolution: "@apollo/client-react-streaming@npm:0.10.0"
   dependencies:
     superjson: "npm:^1.12.2 || ^2.0.0"
     ts-invariant: "npm:^0.10.3"
   peerDependencies:
     "@apollo/client": ^3.9.6
     react: ^18
-  checksum: 10c0/18caaa83cee0a40043d3e555bdb35aea906ebd0b2d2195135c3bb015467a548a39b1f3acff6f88058ec4f2f868a26cc4979f83e162820955eafc3214238f98c7
+  checksum: 10c0/b960665331cf52c05e033c91635df41ee311cd910d84b9f41b59be2496760f72591610c3eb746a46f57416f29bea7e2ee47e84e81fc3f0099db5087284f00905
   languageName: node
   linkType: hard
 
@@ -91,16 +91,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/experimental-nextjs-app-support@npm:0.9.1":
-  version: 0.9.1
-  resolution: "@apollo/experimental-nextjs-app-support@npm:0.9.1"
+"@apollo/experimental-nextjs-app-support@npm:0.10.0":
+  version: 0.10.0
+  resolution: "@apollo/experimental-nextjs-app-support@npm:0.10.0"
   dependencies:
-    "@apollo/client-react-streaming": "npm:0.9.1"
+    "@apollo/client-react-streaming": "npm:0.10.0"
   peerDependencies:
     "@apollo/client": ^3.9.6
     next: ^13.4.1 || ^14.0.0
     react: ^18
-  checksum: 10c0/2dccbf09aa0fa8e6213f9319f76c44f8307a3b537ead35cf8abbc6e3c07ce724ccd6f770cd6b5ca49a633f4ec2d2abfc52cf5f68e343c9b328336952b247a61c
+  checksum: 10c0/648f129233cfbd71f019ac5c2b2dc254b1a9a4f6f1f4cc777c2870c8b0ba81e29ba3be4e0320def377b42617ccc09c0798936f9ded7ab9947bde1a2386063f78
   languageName: node
   linkType: hard
 
@@ -25010,7 +25010,7 @@ __metadata:
   dependencies:
     "@adyen/adyen-web": "npm:3.23.0"
     "@apollo/client": "npm:3.9.10"
-    "@apollo/experimental-nextjs-app-support": "npm:0.9.1"
+    "@apollo/experimental-nextjs-app-support": "npm:0.10.0"
     "@babel/core": "npm:7.24.4"
     "@babel/preset-env": "npm:7.24.4"
     "@babel/preset-react": "npm:7.24.1"
