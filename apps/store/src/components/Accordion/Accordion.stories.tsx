@@ -80,5 +80,7 @@ const Template: StoryFn<typeof Accordion.Root> = () => {
   )
 }
 
-export const Default = Template.bind({})
-Default.args = {}
+export const Default = {
+  render: Template,
+  args: {},
+}

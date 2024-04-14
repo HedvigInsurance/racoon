@@ -2,14 +2,16 @@ import styled from '@emotion/styled'
 import type { Meta, StoryFn } from '@storybook/react'
 import { useRef } from 'react'
 import { Button, theme } from 'ui'
-import type { ScrollPastProps } from './ScrollPast';
+import type { ScrollPastProps } from './ScrollPast'
 import { ScrollPast } from './ScrollPast'
 
-export default {
+const meta: Meta<typeof ScrollPast> = {
   title: 'Product Page / Scroll Past',
   component: ScrollPast,
   argTypes: {},
 } as Meta<typeof ScrollPast>
+
+export default meta
 
 const Template: StoryFn<ScrollPastProps> = (props) => {
   const ref = useRef(null)
@@ -143,5 +145,7 @@ const FixedFooter = styled.div({
   justifyContent: 'center',
 })
 
-export const Default = Template.bind({})
-Default.args = {}
+export const Default = {
+  render: Template,
+  args: {},
+}

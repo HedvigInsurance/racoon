@@ -3,11 +3,13 @@ import { Text } from 'ui'
 import * as TierLevelRadioGroup from './TierLevelRadioGroup'
 import * as TierSelector from './TierSelector'
 
-export default {
+const meta: Meta<typeof TierSelector.Root> = {
   title: 'Purchase Form / Tier Selector',
   component: TierSelector.Root,
   parameters: { grid: { width: '1/3' } },
-} as Meta<typeof TierSelector.Root>
+}
+
+export default meta
 
 const Template: StoryFn<typeof TierSelector.Root> = () => {
   return (
@@ -40,5 +42,6 @@ const Template: StoryFn<typeof TierSelector.Root> = () => {
   )
 }
 
-export const Default = Template.bind({})
-Default.args = {}
+export const Default = {
+  render: Template,
+}

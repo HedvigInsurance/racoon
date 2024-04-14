@@ -1,8 +1,8 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import type { Meta, StoryFn } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { StepperInput } from './StepperInput'
 
-export default {
+const meta: Meta<typeof StepperInput> = {
   title: 'Inputs / Stepper Input',
   component: StepperInput,
   parameters: {
@@ -12,26 +12,24 @@ export default {
     },
     grid: { width: '1/3' },
   },
-} as Meta<typeof StepperInput>
-
-const Template: StoryFn<typeof StepperInput> = (props) => {
-  return <StepperInput {...props} />
 }
-export const Default = Template.bind({})
-Default.args = {
-  name: 'numberCoInsured',
-  max: 5,
-  optionLabel(count) {
-    return `${count} person${count === 1 ? '' : 's'}`
+
+export default meta
+type Story = StoryObj<typeof StepperInput>
+
+export const Default: Story = {
+  args: {
+    name: 'numberCoInsured',
+    max: 5,
+    optionLabel(count: number) {
+      return `${count} person${count === 1 ? '' : 's'}`
+    },
   },
 }
 
-export const WithLabel = Template.bind({})
-WithLabel.args = {
-  name: 'numberCoInsured',
-  max: 5,
-  optionLabel(count) {
-    return `${count} person${count === 1 ? '' : 's'}`
+export const WithLabel: Story = {
+  args: {
+    ...Default.args,
+    label: 'Insured people',
   },
-  label: 'Insured people',
 }

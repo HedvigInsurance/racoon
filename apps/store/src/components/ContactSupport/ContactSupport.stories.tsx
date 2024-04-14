@@ -1,6 +1,6 @@
-import type { Meta, StoryFn } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import type { LinkField } from '@/services/storyblok/storyblok'
-import type { ContactSupportProps } from './ContactSupport';
+import type { ContactSupportProps } from './ContactSupport'
 import { ContactSupport } from './ContactSupport'
 
 export default {
@@ -15,9 +15,7 @@ export default {
   },
 } as Meta<typeof ContactSupport>
 
-const Template: StoryFn<ContactSupportProps> = (props) => {
-  return <ContactSupport {...props} />
-}
+type Story = StoryObj<ContactSupportProps>
 
 const linkField: LinkField = {
   id: '1234',
@@ -26,11 +24,12 @@ const linkField: LinkField = {
   cached_url: 'https://hedvigapp.typeform.com/to/p0m0QakI',
 }
 
-export const Default = Template.bind({})
-Default.args = {
-  chatTitle: 'Chatta med oss',
-  phoneTitle: 'Teckna via telefon',
-  chatOpeningHours: '9.00–22.00',
-  phoneOpeningHours: '10.00–17.00',
-  phoneLink: linkField,
+export const Default: Story = {
+  args: {
+    chatTitle: 'Chatta med oss',
+    phoneTitle: 'Teckna via telefon',
+    chatOpeningHours: '9.00–22.00',
+    phoneOpeningHours: '10.00–17.00',
+    phoneLink: linkField,
+  },
 }

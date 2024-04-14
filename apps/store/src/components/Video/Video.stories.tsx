@@ -1,8 +1,8 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import type { Meta, StoryFn } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { Video } from './Video'
 
-export default {
+const meta: Meta<typeof Video> = {
   component: Video,
   parameters: {
     viewport: {
@@ -11,24 +11,27 @@ export default {
     },
     grid: { width: '1/2' },
   },
-} as Meta<typeof Video>
-
-const Template: StoryFn<typeof Video> = (args) => <Video {...args} />
-
-export const Default = Template.bind({})
-Default.args = {
-  autoPlay: true,
-  sources: [{ url: 'https://cdn.hedvig.com/hedvig-dot-com/videos/pillow-hero.webm' }],
 }
 
-export const ProductVideo = Template.bind({})
-ProductVideo.args = {
-  autoPlay: true,
-  sources: [
-    { url: 'https://cdn.dev.hedvigit.com/assets/videos/HEDVIG_FILM01_1x1_15sec_CLEAN.mp4' },
-  ],
-  aspectRatioPortrait: '4 / 6',
-  maxHeightPortrait: 80,
-  aspectRatioLandscape: '1 / 1',
-  maxHeightLandscape: 90,
+export default meta
+type Story = StoryObj<typeof Video>
+
+export const Default: Story = {
+  args: {
+    autoPlay: true,
+    sources: [{ url: 'https://cdn.hedvig.com/hedvig-dot-com/videos/pillow-hero.webm' }],
+  },
+}
+
+export const ProductVideo: Story = {
+  args: {
+    autoPlay: true,
+    sources: [
+      { url: 'https://cdn.dev.hedvigit.com/assets/videos/HEDVIG_FILM01_1x1_15sec_CLEAN.mp4' },
+    ],
+    aspectRatioPortrait: '4 / 6',
+    maxHeightPortrait: 80,
+    aspectRatioLandscape: '1 / 1',
+    maxHeightLandscape: 90,
+  },
 }

@@ -29,60 +29,75 @@ const Template: StoryFn<BankIdContextValue> = (contextValue) => {
   )
 }
 
-export const Idle = Template.bind({})
-Idle.args = {
-  ...defaultContextValue,
-  currentOperation: {
-    type: 'login',
-    state: BankIdState.Idle,
-    ssn: '111122334455',
+export const Idle = {
+  render: Template,
+
+  args: {
+    ...defaultContextValue,
+    currentOperation: {
+      type: 'login',
+      state: BankIdState.Idle,
+      ssn: '111122334455',
+    },
   },
 }
 
-export const Pending = Template.bind({})
-Pending.args = {
-  ...defaultContextValue,
-  currentOperation: {
-    type: 'login',
-    state: BankIdState.Pending,
-    ssn: '111122334455',
-    qrCodeData:
-      'bankid.67df3917-fa0d-44e5-b327-edcc928297f8.0.dc69358e712458a66a7525beef148ae8526b1c71610eff2c16cdffb4cdac9bf8',
-    autoStartToken: 'abc123',
+export const Pending = {
+  render: Template,
+
+  args: {
+    ...defaultContextValue,
+    currentOperation: {
+      type: 'login',
+      state: BankIdState.Pending,
+      ssn: '111122334455',
+      qrCodeData:
+        'bankid.67df3917-fa0d-44e5-b327-edcc928297f8.0.dc69358e712458a66a7525beef148ae8526b1c71610eff2c16cdffb4cdac9bf8',
+      autoStartToken: 'abc123',
+    },
   },
 }
 
-export const QrCodeRead = Template.bind({})
-QrCodeRead.args = {
-  ...defaultContextValue,
-  currentOperation: {
-    type: 'login',
-    state: BankIdState.Pending,
-    ssn: '111122334455',
-    bankidAppOpened: true,
-    qrCodeData:
-      'bankid.67df3917-fa0d-44e5-b327-edcc928297f8.0.dc69358e712458a66a7525beef148ae8526b1c71610eff2c16cdffb4cdac9bf8',
-    autoStartToken: 'abc123',
+export const QrCodeRead = {
+  render: Template,
+
+  args: {
+    ...defaultContextValue,
+    currentOperation: {
+      type: 'login',
+      state: BankIdState.Pending,
+      ssn: '111122334455',
+      bankidAppOpened: true,
+      qrCodeData:
+        'bankid.67df3917-fa0d-44e5-b327-edcc928297f8.0.dc69358e712458a66a7525beef148ae8526b1c71610eff2c16cdffb4cdac9bf8',
+      autoStartToken: 'abc123',
+    },
   },
 }
 
-export const Success = Template.bind({})
-Success.args = {
-  ...defaultContextValue,
-  currentOperation: {
-    type: 'login',
-    state: BankIdState.Success,
-    ssn: '111122334455',
+export const Success = {
+  render: Template,
+
+  args: {
+    ...defaultContextValue,
+    currentOperation: {
+      type: 'login',
+      state: BankIdState.Success,
+      ssn: '111122334455',
+    },
   },
 }
 
-export const SessionTimedOutError = Template.bind({})
-SessionTimedOutError.args = {
-  ...defaultContextValue,
-  currentOperation: {
-    type: 'login',
-    state: BankIdState.Error,
-    ssn: '111122334455',
-    error: 'Your BankID session timed out.\n Please try again.',
+export const SessionTimedOutError = {
+  render: Template,
+
+  args: {
+    ...defaultContextValue,
+    currentOperation: {
+      type: 'login',
+      state: BankIdState.Error,
+      ssn: '111122334455',
+      error: 'Your BankID session timed out.\n Please try again.',
+    },
   },
 }

@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from '@storybook/react'
+import type { StoryObj, Meta } from '@storybook/react'
 import { InputDate } from '@/components/InputDate/InputDate'
 
 const todayAsIsoString = () => new Date().toISOString().split('T')[0]
@@ -13,21 +13,20 @@ const meta: Meta<typeof InputDate> = {
   argTypes: { onChange: { action: 'change' } },
   parameters: { grid: { width: '1/3' } },
 }
+
 export default meta
+type Story = StoryObj<typeof InputDate>
 
-export const Default: StoryFn<typeof InputDate> = (props) => {
-  return <InputDate {...props} />
-}
+export const Default: Story = {}
 
-export const MinMaxLimits: StoryFn<typeof InputDate> = (props) => {
-  return <InputDate {...props} />
-}
-MinMaxLimits.args = {
-  ...meta.args,
-  min: todayAsIsoString(),
-  max: (() => {
-    const defaultMax = new Date()
-    defaultMax.setDate(90)
-    return defaultMax.toISOString().split('T')[0]
-  })(),
+export const MinMaxLimits: Story = {
+  args: {
+    ...meta.args,
+    min: todayAsIsoString(),
+    max: (() => {
+      const defaultMax = new Date()
+      defaultMax.setDate(90)
+      return defaultMax.toISOString().split('T')[0]
+    })(),
+  },
 }

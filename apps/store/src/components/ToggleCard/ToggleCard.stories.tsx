@@ -1,8 +1,8 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import type { Meta, StoryFn } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { ToggleCard } from './ToggleCard'
 
-export default {
+const meta: Meta<typeof ToggleCard> = {
   title: 'Inputs/ToggleCard',
   component: ToggleCard,
   parameters: {
@@ -12,13 +12,13 @@ export default {
     },
     grid: { width: '1/3' },
   },
-} as Meta<typeof ToggleCard>
-
-const Template: StoryFn<typeof ToggleCard> = (props) => {
-  return <ToggleCard {...props} />
 }
 
-export const Default = Template.bind({})
-Default.args = {
-  label: 'Has water connected',
+export default meta
+type Story = StoryObj<typeof ToggleCard>
+
+export const Default: Story = {
+  args: {
+    label: 'Has water connected',
+  },
 }

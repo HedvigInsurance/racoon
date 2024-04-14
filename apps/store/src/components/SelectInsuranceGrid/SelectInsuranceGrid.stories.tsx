@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import type { Product } from './SelectInsuranceGrid';
+import type { Product } from './SelectInsuranceGrid'
 import { SelectInsuranceGrid } from './SelectInsuranceGrid'
 
 const PRODUCTS_FIXTURE: Array<Product> = [
@@ -93,11 +93,12 @@ const PRODUCTS_FIXTURE: Array<Product> = [
   },
 ]
 
-type Story = StoryObj<typeof SelectInsuranceGrid>
-
 const meta: Meta<typeof SelectInsuranceGrid> = {
   component: SelectInsuranceGrid,
 }
+
+export default meta
+type Story = StoryObj<typeof SelectInsuranceGrid>
 
 export const WithFewerProducts: Story = {
   render: () => <SelectInsuranceGrid products={PRODUCTS_FIXTURE.slice(0, 4)} />,
@@ -110,5 +111,3 @@ export const WithAllProducts: Story = {
 export const WithHeading: Story = {
   render: () => <SelectInsuranceGrid products={PRODUCTS_FIXTURE} heading="Select insurance" />,
 }
-
-export default meta

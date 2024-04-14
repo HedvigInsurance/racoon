@@ -6,7 +6,7 @@ const Item = () => (
   <div style={{ width: '20.43rem', height: '25rem', backgroundColor: '#e3e3e3' }} />
 )
 
-export default {
+const meta: Meta<typeof Slideshow> = {
   component: Slideshow,
   parameters: {
     viewport: {
@@ -14,7 +14,9 @@ export default {
       defaultViewport: 'iphonese2',
     },
   },
-} as Meta<typeof Slideshow>
+}
+
+export default meta
 
 const Template: StoryFn<typeof Slideshow> = (props) => (
   <Slideshow {...props}>
@@ -25,7 +27,9 @@ const Template: StoryFn<typeof Slideshow> = (props) => (
   </Slideshow>
 )
 
-export const Default = Template.bind({})
-Default.args = {
-  title: 'Top picks',
+export const Default = {
+  render: Template,
+  args: {
+    title: 'Top picks',
+  },
 }

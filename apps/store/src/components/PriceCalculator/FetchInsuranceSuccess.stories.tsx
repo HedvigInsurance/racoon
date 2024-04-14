@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
-import { type Meta, type StoryFn } from '@storybook/react'
+import type { StoryObj } from '@storybook/react'
+import { type Meta } from '@storybook/react'
 import { Space, Text, theme } from 'ui'
 import { FetchInsuranceSuccess } from './FetchInsuranceSuccess'
 
@@ -15,22 +16,24 @@ const meta: Meta<typeof FetchInsuranceSuccess> = {
 
 export default meta
 
-export const Default: StoryFn<typeof FetchInsuranceSuccess> = (props) => {
-  return (
-    <DialogWindow>
-      <FetchInsuranceSuccess {...props}>
-        <Space y={0.5}>
-          <Text>Trygg Hansa Hemförsäkring</Text>
-          <div>
-            <Text size="xs">Stadsgatan 10</Text>
-            <Text size="xs" color="textSecondaryOnGray">
-              119 kr/mån · Förnyas 28.12.2022
-            </Text>
-          </div>
-        </Space>
-      </FetchInsuranceSuccess>
-    </DialogWindow>
-  )
+export const Default: StoryObj<typeof FetchInsuranceSuccess> = {
+  render: (props) => {
+    return (
+      <DialogWindow>
+        <FetchInsuranceSuccess {...props}>
+          <Space y={0.5}>
+            <Text>Trygg Hansa Hemförsäkring</Text>
+            <div>
+              <Text size="xs">Stadsgatan 10</Text>
+              <Text size="xs" color="textSecondaryOnGray">
+                119 kr/mån · Förnyas 28.12.2022
+              </Text>
+            </div>
+          </Space>
+        </FetchInsuranceSuccess>
+      </DialogWindow>
+    )
+  },
 }
 
 const DialogWindow = styled.div({

@@ -5,7 +5,6 @@ import type { Meta, StoryFn } from '@storybook/react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { theme } from 'ui'
-import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { Header } from './Header'
 import { navigationItem, navigationProductList, wrapper } from './Header.css'
@@ -32,7 +31,7 @@ const StyledLink = styled(Link)({
 })
 
 export const MockedShoppingCartMenuItem = ({ count = 0 }) => {
-  const locale = useRoutingLocale()
+  const locale = 'se-en'
 
   return (
     <ShoppingCartMenuItemWrapper>
@@ -98,22 +97,29 @@ const Template: StoryFn<TopMenuProps> = (props) => {
   )
 }
 
-export const DesktopMenu = Template.bind({})
-DesktopMenu.args = {
-  isOpen: false,
-  currentActiveItem: 'insurances',
-  count: 0,
+export const DesktopMenu = {
+  render: Template,
+
+  args: {
+    isOpen: false,
+    currentActiveItem: 'insurances',
+    count: 0,
+  },
 }
 
-export const MobileMenu = Template.bind({})
-MobileMenu.args = {
-  isOpen: true,
-  currentActiveItem: 'insurances',
-  count: 0,
-}
-MobileMenu.parameters = {
-  viewport: {
-    viewports: INITIAL_VIEWPORTS,
-    defaultViewport: 'iphone12',
+export const MobileMenu = {
+  render: Template,
+
+  args: {
+    isOpen: true,
+    currentActiveItem: 'insurances',
+    count: 0,
+  },
+
+  parameters: {
+    viewport: {
+      viewports: INITIAL_VIEWPORTS,
+      defaultViewport: 'iphone12',
+    },
   },
 }

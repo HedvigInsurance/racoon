@@ -1,8 +1,8 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import type { Meta, StoryFn } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { PersonalNumberField } from './PersonalNumberField'
 
-export default {
+const meta: Meta<typeof PersonalNumberField> = {
   title: 'Inputs/PersonalNumberField',
   component: PersonalNumberField,
   parameters: {
@@ -12,13 +12,14 @@ export default {
     },
     grid: { width: '1/3' },
   },
-  argTypes: { onCompanyChange: { action: 'changed' } },
-} as Meta<typeof PersonalNumberField>
-
-const Template: StoryFn<typeof PersonalNumberField> = (props) => {
-  return <PersonalNumberField {...props} />
+  argTypes: { onClear: { action: 'cleared' } },
 }
-export const Default = Template.bind({})
-Default.args = {
-  label: 'ÅÅÅÅMMDDXXXX',
+
+export default meta
+type Story = StoryObj<typeof PersonalNumberField>
+
+export const Default: Story = {
+  args: {
+    label: 'ÅÅÅÅMMDDXXXX',
+  },
 }

@@ -1,8 +1,7 @@
-import type { Meta, StoryFn } from '@storybook/react'
-import type { TextProps } from './Text';
+import type { Meta, StoryObj } from '@storybook/react'
 import { Text } from './Text'
 
-export default {
+const meta: Meta<typeof Text> = {
   title: 'Text',
   component: Text,
   parameters: {
@@ -13,12 +12,15 @@ export default {
   args: {
     children: 'This is a Text',
   },
-} as Meta<typeof Text>
+}
 
-const Template: StoryFn<TextProps> = ({ children, ...rest }) => <Text {...rest}>{children}</Text>
+export default meta
+type Story = StoryObj<typeof Text>
 
-export const SingleSize = Template.bind({})
-SingleSize.args = { color: 'textPrimary', size: 'lg' }
+export const SingleSize: Story = {
+  args: { color: 'textPrimary', size: 'lg' },
+}
 
-export const ResponsiveSize = Template.bind({})
-ResponsiveSize.args = { color: 'textPrimary', size: { _: 'sm', md: 'lg', lg: 'xxl' } }
+export const ResponsiveSize: Story = {
+  args: { color: 'textPrimary', size: { _: 'sm', md: 'lg', lg: 'xxl' } },
+}

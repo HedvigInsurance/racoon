@@ -1,8 +1,8 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import type { Meta, StoryFn } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { QuickPurchaseForm, type ProductOption } from './QuickPurchaseForm'
 
-export default {
+const meta: Meta<typeof QuickPurchaseForm> = {
   component: QuickPurchaseForm,
   parameters: {
     viewport: {
@@ -11,7 +11,10 @@ export default {
     },
     grid: { width: '1/3' },
   },
-} as Meta<typeof QuickPurchaseForm>
+}
+
+export default meta
+type Story = StoryObj<typeof QuickPurchaseForm>
 
 const options: Array<ProductOption> = [
   {
@@ -30,9 +33,8 @@ const options: Array<ProductOption> = [
   },
 ]
 
-const Template: StoryFn<typeof QuickPurchaseForm> = () => {
-  return <QuickPurchaseForm productOptions={options} />
+export const Default: Story = {
+  args: {
+    productOptions: options,
+  },
 }
-
-export const Default = Template.bind({})
-Default.args = {}

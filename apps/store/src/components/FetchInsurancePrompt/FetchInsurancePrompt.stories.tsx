@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
-import { type Meta, type StoryFn } from '@storybook/react'
+import type { StoryObj} from '@storybook/react';
+import { type Meta } from '@storybook/react'
 import { theme } from 'ui'
 import { FetchInsurancePrompt } from './FetchInsurancePrompt'
 
@@ -16,12 +17,14 @@ const meta: Meta<typeof FetchInsurancePrompt> = {
 
 export default meta
 
-export const Default: StoryFn<typeof FetchInsurancePrompt> = (props) => {
-  return (
-    <DialogWindow>
-      <FetchInsurancePrompt {...props} />
-    </DialogWindow>
-  )
+export const Default: StoryObj<typeof FetchInsurancePrompt> = {
+  render: (props) => {
+    return (
+      <DialogWindow>
+        <FetchInsurancePrompt {...props} />
+      </DialogWindow>
+    )
+  },
 }
 
 const DialogWindow = styled.div({

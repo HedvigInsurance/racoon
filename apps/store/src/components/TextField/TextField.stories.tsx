@@ -2,7 +2,7 @@ import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import type { Meta, StoryFn } from '@storybook/react'
 import { TextField } from './TextField'
 
-export default {
+const meta: Meta<typeof TextField> = {
   title: 'Inputs/TextField',
   component: TextField,
   parameters: {
@@ -12,7 +12,9 @@ export default {
     },
     grid: { width: '1/3' },
   },
-} as Meta<typeof TextField>
+}
+
+export default meta
 
 const Template: StoryFn<typeof TextField> = ({ defaultValue, ...props }) => {
   return (
@@ -28,28 +30,34 @@ const Template: StoryFn<typeof TextField> = ({ defaultValue, ...props }) => {
   )
 }
 
-export const Large = Template.bind({})
-Large.args = {
-  label: 'Name',
-  variant: 'large',
-  defaultValue: 'John Sculley',
+export const Large = {
+  render: Template,
+  args: {
+    label: 'Name',
+    variant: 'large',
+    defaultValue: 'John Sculley',
+  },
 }
 
-export const Small = Template.bind({})
-Small.args = {
-  label: 'Address',
-  variant: 'small',
-  defaultValue: '786 Franklin Ave.',
+export const Small = {
+  render: Template,
+  args: {
+    label: 'Address',
+    variant: 'small',
+    defaultValue: '786 Franklin Ave.',
+  },
 }
 
-export const Number = Template.bind({})
-Number.args = {
-  type: 'text',
-  inputMode: 'numeric',
-  pattern: '[0-9]*',
-  autoComplete: 'off',
-  label: 'Weight',
-  variant: 'large',
-  defaultValue: '150',
-  suffix: 'kg',
+export const Number = {
+  render: Template,
+  args: {
+    type: 'text',
+    inputMode: 'numeric',
+    pattern: '[0-9]*',
+    autoComplete: 'off',
+    label: 'Weight',
+    variant: 'large',
+    defaultValue: '150',
+    suffix: 'kg',
+  },
 }

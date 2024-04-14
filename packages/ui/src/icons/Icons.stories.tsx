@@ -50,7 +50,9 @@ const Template: StoryFn<typeof Icon> = () => {
   )
 }
 
-export const Icons = Template.bind({})
+export const Icons = {
+  render: Template,
+}
 
 const Page = styled.div({
   height: '100vh',
