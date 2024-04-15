@@ -26,73 +26,71 @@ export function useEditCrossSellOfferForm({ shopSessionId, productName, initialO
   const apolloClient = useApolloClient()
   const [state, disptach] = useFormState(initialOffer)
 
+  const getNewOffer = async (
+    data: Record<string, unknown>,
+  ): Promise<OfferRecommendationFragment> => {
+    const priceIntentService = priceIntentServiceInitClientSide(apolloClient)
+
+    const priceTemplate = getPriceTemplate(productName)
+    if (!priceTemplate) {
+      throw new Error(`Cross sell | Price template not found for product ${productName}`)
+    }
+
+    const priceIntent = await priceIntentService.getOrCreate({
+      shopSessionId,
+      priceTemplate,
+      productName,
+    })
+
+    const { offers } = await priceIntentService.upddateAndConfirm({
+      priceIntentId: priceIntent.id,
+      data: { ...priceIntent.suggestedData, ...data },
+    })
+
+    return offers[0] as OfferRecommendationFragment
+  }
+
+  const updateOfferStartDate = async (
+    offerId: string,
+    startDate: Date,
+  ): Promise<OfferRecommendationFragment> => {
+    const { data } = await updateStartDate({
+      variables: {
+        productOfferIds: [offerId],
+        startDate: formatAPIDate(startDate),
+      },
+    })
+
+    const updatedOffer = data?.productOffersStartDateUpdate.productOffers[0]
+    if (!updatedOffer) {
+      throw new Error(`Cross sell | failed to update offer (${offerId}) startDate (${startDate})`)
+    }
+
+    return updatedOffer
+  }
+
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault()
 
     try {
       disptach({ type: 'SUBMIT' })
+      let updatedOffer = state.offer
 
       const hasNumberCoInsuredChanged =
-        state[Fields.NUMBER_CO_INSURED] !== getOfferNumberCoInsuredWithFallback(state.offer)
+        state[Fields.NUMBER_CO_INSURED] !== getOfferNumberCoInsuredWithFallback(updatedOffer)
       if (hasNumberCoInsuredChanged) {
-        const priceIntentService = priceIntentServiceInitClientSide(apolloClient)
-
-        const priceTemplate = getPriceTemplate(productName)
-        if (!priceTemplate) {
-          disptach({ type: 'ERROR' })
-          datadogLogs.logger.error('Cross sell | Price template not found', {
-            productName,
-          })
-          return
-        }
-
-        const priceIntent = await priceIntentService.getOrCreate({
-          shopSessionId,
-          priceTemplate,
-          productName,
-        })
-
-        // TODO: consilidate update and confirm into one call
-        await priceIntentService.update({
-          priceIntentId: priceIntent.id,
-          data: { numberCoInsured: state[Fields.NUMBER_CO_INSURED] },
-          customer: { shopSessionId },
-        })
-        const { offers } = await priceIntentService.confirm(priceIntent.id)
-        const newOffer = offers[0]
-        await updateStartDate({
-          variables: {
-            productOfferIds: [newOffer.id],
-            startDate: formatAPIDate(state[Fields.START_DATE]),
-          },
-          onCompleted(data) {
-            const updatedOffer = data.productOffersStartDateUpdate.productOffers[0]
-            disptach({ type: 'REST_FORM', payload: updatedOffer })
-          },
-          onError(error) {
-            datadogLogs.logger.error(
-              'Cross sell | failed to update offer numberCoInsured/startDate',
-              { error },
-            )
-            disptach({ type: 'ERROR' })
-          },
-        })
-      } else {
-        await updateStartDate({
-          variables: {
-            productOfferIds: [state.offer.id],
-            startDate: formatAPIDate(state[Fields.START_DATE]),
-          },
-          onCompleted(data) {
-            const updatedOffer = data.productOffersStartDateUpdate.productOffers[0]
-            disptach({ type: 'REST_FORM', payload: updatedOffer })
-          },
-          onError(error) {
-            datadogLogs.logger.error('Cross sell | failed to update offer startDate', { error })
-            disptach({ type: 'ERROR' })
-          },
-        })
+        updatedOffer = await getNewOffer({ numberCoInsured: state[Fields.NUMBER_CO_INSURED] })
       }
+
+      const hasStartDateChanged = !isSameDay(
+        state[Fields.START_DATE],
+        getOfferStartDateWithFallback(updatedOffer),
+      )
+      if (hasStartDateChanged) {
+        updatedOffer = await updateOfferStartDate(updatedOffer.id, state[Fields.START_DATE])
+      }
+
+      disptach({ type: 'RESET_FORM', payload: updatedOffer })
     } catch (error) {
       datadogLogs.logger.error('Cross sell | failed to update offer', { error })
       disptach({ type: 'ERROR' })
@@ -148,7 +146,7 @@ type Action =
   | { type: 'CHANGE_NUMBER_CO_INSURED'; payload: number }
   | { type: 'SUBMIT' }
   | { type: 'ERROR' }
-  | { type: 'REST_FORM'; payload: OfferRecommendationFragment }
+  | { type: 'RESET_FORM'; payload: OfferRecommendationFragment }
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
@@ -176,7 +174,7 @@ function reducer(state: State, action: Action): State {
       return { ...state, status: 'submitting' }
     case 'ERROR':
       return { ...state, status: 'error' }
-    case 'REST_FORM':
+    case 'RESET_FORM':
       return {
         ...state,
         offer: action.payload,

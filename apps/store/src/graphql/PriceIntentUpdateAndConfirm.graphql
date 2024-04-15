@@ -1,0 +1,23 @@
+mutation PriceIntentUpdateAndConfirm($priceIntentId: UUID!, $data: PricingFormData!) {
+  priceIntentDataUpdate(priceIntentId: $priceIntentId, data: $data) {
+    priceIntent {
+      id
+      data
+    }
+    userError {
+      message
+    }
+  }
+
+  priceIntentConfirm(priceIntentId: $priceIntentId) {
+    priceIntent {
+      ...PriceIntent
+      defaultOffer {
+        id
+      }
+    }
+    userError {
+      message
+    }
+  }
+}
