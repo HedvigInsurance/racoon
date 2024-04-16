@@ -15,7 +15,9 @@ import { ReviewsDialog } from './ReviewsDialog'
 import { ReviewsDiclaimer } from './ReviewsDisclaimer'
 import { ReviewsDistributionByScore } from './ReviewsDistributionByScore'
 
-export const ProductReviews = () => {
+export type ProductReviewsProps = { showReviewComments?: boolean }
+
+export const ProductReviews = ({ showReviewComments = true }: ProductReviewsProps) => {
   const { t } = useTranslation('reviews')
 
   const { name: productId, displayNameFull: productName, pillowImage } = useProductData()
@@ -46,22 +48,24 @@ export const ProductReviews = () => {
           ))}
         </div>
 
-        <ReviewsDialog
-          productIds={[productId]}
-          Header={
-            <PillowHeader
-              title={productName}
-              score={averageRating.score}
-              reviewsCount={averageRating.totalOfReviews}
-              pillow={pillowImage}
-            />
-          }
-          reviewsDistribution={reviewsDistribution}
-        >
-          <Button variant="primary-alt" size="medium">
-            {t('VIEW_REVIEWS_LABEL')}
-          </Button>
-        </ReviewsDialog>
+        {showReviewComments && (
+          <ReviewsDialog
+            productIds={[productId]}
+            Header={
+              <PillowHeader
+                title={productName}
+                score={averageRating.score}
+                reviewsCount={averageRating.totalOfReviews}
+                pillow={pillowImage}
+              />
+            }
+            reviewsDistribution={reviewsDistribution}
+          >
+            <Button variant="primary-alt" size="medium">
+              {t('VIEW_REVIEWS_LABEL')}
+            </Button>
+          </ReviewsDialog>
+        )}
       </Space>
     </div>
   )
