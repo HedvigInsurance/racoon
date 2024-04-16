@@ -7,10 +7,12 @@ import { ReviewsDialog } from '@/components/ProductReviews/ReviewsDialog'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
 import { useProuctReviewsMetadata } from '@/features/memberReviews/ProductReviewsMetadataProvider'
 import { sendDialogEvent } from '@/utils/dialogEvent'
+import { Features } from '@/utils/Features'
 import { useFormatter } from '@/utils/useFormatter'
 import { AverageRating } from './AverageRating'
 import { wrapper, trigger, certifiedIcon, disclaimerText } from './ProductAverageRating.css'
 import { ReviewsDiclaimer } from './ReviewsDisclaimer'
+import { ReviewsDistributionDialog } from './ReviewsDistributionDialog'
 
 export const ProductAverageRating = () => {
   const { t } = useTranslation('reviews')
@@ -37,6 +39,26 @@ export const ProductAverageRating = () => {
 
   const { averageRating, reviewsDistribution } = productReviewsMetadata
 
+  const Trigger = (
+    <button className={trigger} onClick={openDialog}>
+      {t('REVIEWS_COUNT_LABEL', {
+        count: averageRating.totalOfReviews,
+        reviewsCount: numberGrouping(averageRating.totalOfReviews),
+      })}
+    </button>
+  )
+
+  const Header = (
+    <section>
+      <AverageRating size={{ _: 9, sm: 11 }} score={averageRating.score} maxScore={MAX_SCORE} />
+      <ReviewsDiclaimer
+        className={disclaimerText}
+        size={{ _: 'xs', sm: 'md' }}
+        reviewsCount={averageRating.totalOfReviews}
+      />
+    </section>
+  )
+
   return (
     <>
       <Head>
@@ -52,32 +74,24 @@ export const ProductAverageRating = () => {
       <div className={wrapper}>
         <CertifiedIcon className={certifiedIcon} size="1.15rem" />
 
-        <ReviewsDialog
-          productIds={[productData.name]}
-          Header={
-            <section>
-              <AverageRating
-                size={{ _: 9, sm: 11 }}
-                score={averageRating.score}
-                maxScore={MAX_SCORE}
-              />
-              <ReviewsDiclaimer
-                className={disclaimerText}
-                size={{ _: 'xs', sm: 'md' }}
-                reviewsCount={averageRating.totalOfReviews}
-              />
-            </section>
-          }
-          reviewsDistribution={reviewsDistribution}
-          onClose={closeDialog}
-        >
-          <button className={trigger} onClick={openDialog}>
-            {t('REVIEWS_COUNT_LABEL', {
-              count: averageRating.totalOfReviews,
-              reviewsCount: numberGrouping(averageRating.totalOfReviews),
-            })}
-          </button>
-        </ReviewsDialog>
+        {Features.enabled('HIDE_REVIEWS_FROM_PRODUCT_AVERAGE_RATING') ? (
+          <ReviewsDistributionDialog
+            Header={Header}
+            reviewsDistribution={reviewsDistribution}
+            onClose={closeDialog}
+          >
+            {Trigger}
+          </ReviewsDistributionDialog>
+        ) : (
+          <ReviewsDialog
+            productIds={[productData.name]}
+            Header={Header}
+            reviewsDistribution={reviewsDistribution}
+            onClose={closeDialog}
+          >
+            {Trigger}
+          </ReviewsDialog>
+        )}
       </div>
     </>
   )

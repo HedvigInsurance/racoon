@@ -7,8 +7,8 @@ import type { ReviewsDistribution } from '@/features/memberReviews/memberReviews
 import type { ReviewsByScore } from '@/features/memberReviews/memberReviews.types'
 import { ReviewComment } from './ReviewComment'
 import {
-  closeBtn,
   dialogContent,
+  dialogCloseBtn,
   dialogWindow,
   reviewComment,
   latestReviewsLabel,
@@ -45,7 +45,7 @@ export function ReviewsDialog({
 
       {state.status !== 'initial' && (
         <Dialog.Content className={dialogContent} centerContent={true} onClose={onClose}>
-          <Dialog.Close className={closeBtn} onClick={onClose}>
+          <Dialog.Close className={dialogCloseBtn} onClick={onClose}>
             <CrossIcon size={'1rem'} />
           </Dialog.Close>
 
