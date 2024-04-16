@@ -8,12 +8,16 @@ import type {
   PriceIntentQuery,
   PriceIntentQueryVariables,
   PriceIntentConfirmMutation,
-  PriceIntentConfirmMutationVariables} from '@/services/graphql/generated';
+  PriceIntentConfirmMutationVariables,
+  PriceIntentUpdateAndConfirmMutation,
+  PriceIntentUpdateAndConfirmMutationVariables,
+} from '@/services/graphql/generated'
 import {
   PriceIntentCreateDocument,
   PriceIntentDataUpdateDocument,
   PriceIntentDocument,
-  PriceIntentConfirmDocument
+  PriceIntentConfirmDocument,
+  PriceIntentUpdateAndConfirmDocument,
 } from '@/services/graphql/generated'
 import { CookiePersister } from '@/services/persister/CookiePersister'
 import type { SimplePersister } from '@/services/persister/Persister.types'
@@ -120,6 +124,21 @@ export class PriceIntentService {
     })
     const { priceIntent } = updatedResult.data?.priceIntentConfirm ?? {}
     if (!priceIntent) throw new Error('Could not confirm price intent')
+    return priceIntent
+  }
+
+  public async upddateAndConfirm(variables: PriceIntentUpdateAndConfirmMutationVariables) {
+    const updatedResult = await this.apolloClient.mutate<
+      PriceIntentUpdateAndConfirmMutation,
+      PriceIntentUpdateAndConfirmMutationVariables
+    >({
+      mutation: PriceIntentUpdateAndConfirmDocument,
+      variables,
+    })
+
+    const { priceIntent } = updatedResult.data?.priceIntentConfirm ?? {}
+    if (!priceIntent) throw new Error('Could not update and confirm price intent')
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return priceIntent
   }
 

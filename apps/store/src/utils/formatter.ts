@@ -1,3 +1,4 @@
+import { isSameDay } from 'date-fns'
 import { type TFunction } from 'next-i18next'
 import Personnummer from 'personnummer'
 import { type CurrencyCode } from '@/services/graphql/generated'
@@ -34,11 +35,8 @@ type DateFormatOptions = { locale: IsoLocale } & { t: TFunction }
 
 const formatDateFromNow = (date: Date, options: DateFormatOptions): string => {
   const today = new Date()
-  const isSameDay =
-    Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()) ===
-    Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate())
 
-  if (isSameDay) {
+  if (isSameDay(date, today)) {
     return options.t('DATE_SAME_DAY')
   }
 

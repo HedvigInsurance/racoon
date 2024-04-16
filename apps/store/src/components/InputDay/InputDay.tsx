@@ -22,7 +22,7 @@ import {
 
 import 'react-day-picker/dist/style.css'
 
-type Props = {
+export type InputDayProps = {
   label: string
 
   id?: string
@@ -39,7 +39,7 @@ type Props = {
   className?: string
 }
 
-export const InputDay = (props: Props) => {
+export const InputDay = (props: InputDayProps) => {
   const { t } = useTranslation()
   const formatter = useFormatter()
   const { language } = useCurrentLocale()

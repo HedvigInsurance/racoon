@@ -13,7 +13,7 @@ import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 import { outerWrapper, innerWrapper, select, inputLabel, stepButton } from './StepperInput.css'
 
-type Props = {
+export type StepperInputProps = {
   name?: string
   autoFocus?: boolean
   min?: number
@@ -31,7 +31,7 @@ type Props = {
  * Specialized Stepper Input
  * Based on: https://www.magentaa11y.com/checklist-web/stepper-input/
  */
-export const StepperInput = (props: Props) => {
+export const StepperInput = (props: StepperInputProps) => {
   const { max, min = 0, value, defaultValue, label, optionLabel, className, ...inputProps } = props
   const [internalValue, setInternalValue] = useState(value ?? defaultValue ?? min)
   const { highlight, animationProps } = useHighlightAnimation<HTMLDivElement>()
