@@ -1,7 +1,13 @@
 'use client'
 
-import { ProductReviews } from '@/components/ProductReviews/ProductReviews'
+import {
+  ProductReviews,
+  type ProductReviewsProps,
+} from '@/components/ProductReviews/ProductReviews'
+import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
-export const ProductReviewsBlock = () => {
-  return <ProductReviews />
+type Props = SbBaseBlockProps<ProductReviewsProps>
+
+export const ProductReviewsBlock = (props: Props) => {
+  return <ProductReviews showReviewComments={props.blok.showReviewComments} />
 }
