@@ -20,6 +20,8 @@ const config = {
   BANKID_V6: process.env.NEXT_PUBLIC_FEATURE_BANKID_V6 === 'true',
   MYMONEY: process.env.NEXT_PUBLIC_FEATURE_MYMONEY === 'true',
   CROSS_SELL_CARD_V2: process.env.NEXT_PUBLIC_CROSS_SELL_CARD_V2 === 'true',
+  HIDE_REVIEWS_FROM_PRODUCT_AVERAGE_RATING:
+    process.env.NEXT_PUBLIC_HIDE_REVIEWS_FROM_PRODUCT_AVERAGE_RATING === 'true',
 } as const
 
 export type FeatureFlag = keyof typeof config
