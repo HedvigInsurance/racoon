@@ -12,6 +12,11 @@ const COOKIE_CONSENT_SCRIPT_ID = {
   PRODUCTION: '628f5fee-1891-418c-9ed2-f893b8a3998a',
 }
 
+const scriptId =
+  process.env.VERCEL_ENV === 'production'
+    ? COOKIE_CONSENT_SCRIPT_ID.PRODUCTION
+    : COOKIE_CONSENT_SCRIPT_ID.TEST
+
 export default class MyDocument extends Document {
   lang() {
     const { locale } = this.props.__NEXT_DATA__.query
@@ -45,7 +50,7 @@ export default class MyDocument extends Document {
               src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"
               data-document-language="true"
               type="text/javascript"
-              data-domain-script={COOKIE_CONSENT_SCRIPT_ID.PRODUCTION}
+              data-domain-script={scriptId}
               // Load before any other script as recommended by Next (https://shorturl.at/hvO14)
               strategy="beforeInteractive"
             />
