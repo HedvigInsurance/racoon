@@ -7,10 +7,11 @@ import type {
   CartEntryAddMutation,
   CartEntryAddMutationVariables,
   ShopSessionCustomerUpdateMutation,
-  ShopSessionCustomerUpdateMutationVariables} from '@/services/graphql/generated';
+  ShopSessionCustomerUpdateMutationVariables,
+} from '@/services/graphql/generated'
 import {
   CartEntryAddDocument,
-  ShopSessionCustomerUpdateDocument
+  ShopSessionCustomerUpdateDocument,
 } from '@/services/graphql/generated'
 import { CountryCode } from '@/services/graphql/graphql'
 import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
@@ -47,7 +48,7 @@ export const createCustomerSession = async (
       }
     }
 
-    const apolloClient = getApolloClient({ locale: DEFAULT_LOCALE })
+    const apolloClient = await getApolloClient()
 
     const shopSessionService = setupShopSession(apolloClient)
     const shopSession = await shopSessionService.create({ countryCode: DEFAULT_COUNTRY_CODE })

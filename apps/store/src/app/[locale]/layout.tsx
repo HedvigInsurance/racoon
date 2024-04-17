@@ -23,7 +23,7 @@ export type LocalizedLayoutProps<P = unknown> = P & {
 
 // TODO: How do we cache/invalidate companyReviewsMetadata ?
 const Layout = async ({ children, params: { locale } }: LocalizedLayoutProps) => {
-  const apolloClient = getApolloClient({ locale })
+  const apolloClient = await getApolloClient()
   const [companyReviewsMetadata, productMetadata, globalStory] = await Promise.all([
     fetchCompanyReviewsMetadata(),
     fetchGlobalProductMetadata({ apolloClient }),

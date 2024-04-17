@@ -25,10 +25,8 @@ type RscClientParams =
     }
   | undefined
 
-type GetClient = (params: RscClientParams) => ApolloClient<any>
-
 // TODO: Support RSC client for dynamic pages too (auth headers, hedvig-shop-session-id header)
-const { getClient }: { getClient: GetClient } = registerApolloClient(
+const { getClient } = registerApolloClient(
   // @ts-expect-error apollo did not declare parametrised version, but it works
   (params: RscClientParams) => {
     const locale = getLocaleOrFallback(params?.locale).routingLocale
