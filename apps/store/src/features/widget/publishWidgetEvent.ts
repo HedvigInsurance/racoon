@@ -1,11 +1,23 @@
 enum Status {
   Success = 'success',
+  Signed = 'signed',
   Close = 'close',
   Event = 'event',
 }
 
+/**
+ * WidgetEvent
+ * Event sent from the widget to the parent window for partner integrations to listen to.
+ *
+ * - `signed` - The user has successfully signed the insurance
+ * - `success` - The user has successfully signed the insurance and connected payment
+ * - `close` - The user pressed one of our close buttons.
+ * - `event` - An unspecified event is sent to the partner including a second parameter “message” that includes the request ID
+ */
+
 export type WidgetEvent =
   | { status: Status.Success }
+  | { status: Status.Signed }
   | { status: Status.Close }
   | { status: Status.Event; message: { requestId: string } }
 
@@ -22,6 +34,7 @@ const sendWidgetEvent = (event: WidgetEvent): void => {
 
 export const publishWidgetEvent = {
   success: () => sendWidgetEvent({ status: Status.Success }),
+  signed: () => sendWidgetEvent({ status: Status.Signed }),
   close: () => sendWidgetEvent({ status: Status.Close }),
   event: (message: { requestId: string }) => sendWidgetEvent({ status: Status.Event, message }),
 }

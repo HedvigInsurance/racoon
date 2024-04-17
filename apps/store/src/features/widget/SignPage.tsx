@@ -36,6 +36,7 @@ import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { Header } from './Header'
 import { ProductItemContainer } from './ProductItemContainer'
+import { publishWidgetEvent } from './publishWidgetEvent'
 
 type Props = {
   shopSession: ShopSession
@@ -67,6 +68,7 @@ export const SignPage = (props: Props) => {
     customerAuthenticationStatus: props.customerAuthenticationStatus,
     async onSuccess() {
       datadogLogs.logger.info('Widget Sign | Sign Success', { shopSessionId: props.shopSession.id })
+      publishWidgetEvent.signed()
 
       const { data } = await fetchCurrentMember()
       if (!data) throw new Error('Widget Sign | Missing current member')
