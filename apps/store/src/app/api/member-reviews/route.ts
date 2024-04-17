@@ -1,10 +1,12 @@
-import type { NextRequest} from 'next/server';
+import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import {
   fetchCompanyReviewsByScore,
   fetchProductReviewsByScore,
 } from '@/features/memberReviews/memberReviews'
 import type { ReviewsByScore, Review, Score } from '@/features/memberReviews/memberReviews.types'
+
+export const dynamic = 'force-dynamic'
 
 export async function GET(req: NextRequest) {
   try {
