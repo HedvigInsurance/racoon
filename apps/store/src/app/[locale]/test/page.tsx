@@ -13,7 +13,7 @@ type Props = {
 const Page = async (props: Props) => {
   const { t } = await initTranslationsServerSide(props.params.locale)
   // Same graphql request as in layout, only one network request gets executed thanks to Apollo SSR cache
-  const apolloClient = getApolloClient({ locale: props.params.locale })
+  const apolloClient = await getApolloClient()
   const productMetadata = await fetchGlobalProductMetadata({ apolloClient })
 
   console.log('productMetadata@page, items:', productMetadata.length)
