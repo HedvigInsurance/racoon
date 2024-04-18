@@ -1,4 +1,4 @@
-import type { IsoLocale, RoutingLocale } from './types';
+import type { IsoLocale, RoutingLocale } from './types'
 import { Language, Locale } from './types'
 
 export const FALLBACK_LOCALE = Locale.SvSe
@@ -30,8 +30,8 @@ export const locales: Record<IsoLocale, LocaleData> = {
     chatWidgetSrc:
       'https://c1.hedvig.com:443/static/public/widgets/chat/chat-worker.js?id=b74b00c0-c211-424d-b1b5-37bd6f5d10cb&height=600&isMobile=false&preview=0&widgetUrl=https://c1.hedvig.com/static/public/widgets/chat/build/',
   },
-  [Locale.NbNo]: {
-    locale: Locale.NbNo,
+  [Locale.NoNo]: {
+    locale: Locale.NoNo,
     language: Language.No,
     routingLocale: 'no',
     htmlLang: 'no',

@@ -4,7 +4,7 @@ export { CountryCode } from '@/services/graphql/generated'
 export const Locale = {
   SvSe: 'sv-SE',
   EnSe: 'en-SE',
-  NbNo: 'nb-NO',
+  NoNo: 'no-NO',
   EnNo: 'en-NO',
   DaDk: 'da-DK',
   EnDk: 'en-DK',
