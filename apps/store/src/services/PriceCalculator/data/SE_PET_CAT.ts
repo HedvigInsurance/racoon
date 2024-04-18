@@ -91,12 +91,12 @@ export const SE_PET_CAT: Template = {
             label: { key: tKey('FIELD_OUTSIDE_ACCESS_LABEL') },
             options: [
               {
-                label: { key: tKey('FIELD_OUTSIDE_ACCESS_OPTION_NO') },
-                value: 'false',
-              },
-              {
                 label: { key: tKey('FIELD_OUTSIDE_ACCESS_OPTION_YES') },
                 value: 'true',
+              },
+              {
+                label: { key: tKey('FIELD_OUTSIDE_ACCESS_OPTION_NO') },
+                value: 'false',
               },
             ],
             required: true,
