@@ -25,7 +25,7 @@ export const useAdyenTranslations = (): {
         },
         startButton: 'Tryk her for at begynde',
       }
-    case 'nb-NO':
+    case 'no-NO':
       return {
         locale: 'no-NO',
         title: 'Koble til betaling',

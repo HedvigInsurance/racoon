@@ -22,8 +22,8 @@ export const countries: Record<CountryLabel, CountryData> = {
     id: CountryLabel.NO,
     adtractionScriptSrc: 'https://cdn.adt387.com/jsTag?ap=1492109567',
     countryCode: CountryCode.No,
-    defaultLocale: Locale.NbNo,
-    locales: [Locale.NbNo, Locale.EnNo],
+    defaultLocale: Locale.NoNo,
+    locales: [Locale.NoNo, Locale.EnNo],
     currencyCode: 'NOK',
   },
   [CountryLabel.DK]: {
