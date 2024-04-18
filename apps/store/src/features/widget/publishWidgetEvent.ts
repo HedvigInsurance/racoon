@@ -1,4 +1,5 @@
 enum Status {
+  WidgetLoaded = 'widgetLoaded',
   Success = 'success',
   Signed = 'signed',
   Close = 'close',
@@ -9,6 +10,7 @@ enum Status {
  * WidgetEvent
  * Event sent from the widget to the parent window for partner integrations to listen to.
  *
+ * - `widgetLoaded` - Sent oncne the widget has first been render on widget landing page or first step of the flow page
  * - `signed` - The user has successfully signed the insurance
  * - `success` - The user has successfully signed the insurance and connected payment
  * - `close` - The user pressed one of our close buttons.
@@ -16,6 +18,7 @@ enum Status {
  */
 
 export type WidgetEvent =
+  | { status: Status.WidgetLoaded }
   | { status: Status.Success }
   | { status: Status.Signed }
   | { status: Status.Close }
@@ -33,6 +36,7 @@ const sendWidgetEvent = (event: WidgetEvent): void => {
 }
 
 export const publishWidgetEvent = {
+  widgetLoaded: () => sendWidgetEvent({ status: Status.WidgetLoaded }),
   success: () => sendWidgetEvent({ status: Status.Success }),
   signed: () => sendWidgetEvent({ status: Status.Signed }),
   close: () => sendWidgetEvent({ status: Status.Close }),
