@@ -1,5 +1,5 @@
 import { useTranslation } from 'next-i18next'
-import { Heading, Text, theme } from 'ui'
+import { Button, Heading, Text, theme } from 'ui'
 import { Perils } from '@/components/Perils/Perils'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Price } from '@/components/Price'
@@ -11,12 +11,12 @@ import {
 } from '@/services/graphql/generated'
 import { Features } from '@/utils/Features'
 import { getOfferPrice } from '@/utils/getOfferPrice'
-import { AddToCartButton } from './AddToCartButton'
 import { DismissButton } from './DismissButton'
 import { ProductUsp } from './ProductUsp'
 import { QuickAddBundleView } from './QuickAddBundleView'
 import { QuickAddEditableView } from './QuickAddEditableView'
 import { QuickAddInfoDialog } from './QuickAddInfoDialog'
+import { useAddRecommendationOfferToCart } from './useAddRecommendationOfferToCart'
 import { useShowQuickAdd } from './useShowQuickAdd'
 
 const CO_INSURED_DATA_KEY = 'numberCoInsured'
@@ -38,6 +38,9 @@ type Props = {
 export function QuickAddOfferContainer(props: Props) {
   const { t } = useTranslation('cart')
   const [show] = useShowQuickAdd()
+  const [addOfferToCart, loading] = useAddRecommendationOfferToCart({
+    shopSessionId: props.shopSessionId,
+  })
 
   // We only support cross-selling of Accident insurance at the moment
   if (props.product.name !== ACCIDENT_INSURANCE) {
@@ -54,7 +57,6 @@ export function QuickAddOfferContainer(props: Props) {
       <QuickAddEditableView
         shopSessionId={props.shopSessionId}
         offer={props.offer}
-        productName={props.product.name}
         pillow={props.product.pillowImage}
         title={props.product.displayNameFull}
         subtitle={t('USP_NO_BINDING_TIME')}
@@ -119,14 +121,14 @@ export function QuickAddOfferContainer(props: Props) {
       Footer={
         <SpaceFlex space={0.5}>
           <DismissButton variant="secondary" fullWidth={true} />
-          <AddToCartButton
-            shopSessionId={props.shopSessionId}
-            productName={props.product.name}
-            offer={props.offer}
+          <Button
+            size="medium"
             fullWidth={true}
+            onClick={() => addOfferToCart(props.offer)}
+            loading={loading}
           >
             {t('QUICK_ADD_BUTTON_BUNDLE')}
-          </AddToCartButton>
+          </Button>
         </SpaceFlex>
       }
     />

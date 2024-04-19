@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { useId, type ComponentProps, type ReactNode } from 'react'
+import { Controller } from 'react-hook-form'
 import { Space, Text, Badge, Button } from 'ui'
 import { InputDay } from '@/components/InputDay/InputDay'
 import { Pillow } from '@/components/Pillow/Pillow'
@@ -8,7 +9,6 @@ import { Price } from '@/components/Price'
 import { StepperInput } from '@/components/StepperInput/StepperInput'
 import { type OfferRecommendationFragment } from '@/services/graphql/generated'
 import { getOfferPrice } from '@/utils/getOfferPrice'
-import { AddToCartButton } from './AddToCartButton'
 import { DismissButton } from './DismissButton'
 import {
   alignedBadge,
@@ -25,7 +25,6 @@ type Props = {
   shopSessionId: string
   offer: OfferRecommendationFragment
   title: string
-  productName: string
   subtitle: string
   pillow: ComponentProps<typeof Pillow>
   productPageLink: string
@@ -37,12 +36,10 @@ export function QuickAddEditableView(props: Props) {
   const { t } = useTranslation('cart')
 
   const formId = useId()
-  const { state, handleChangeNumberCoInsured, handleChangeStartDate, handleSubmit } =
-    useEditCrossSellOfferForm({
-      shopSessionId: props.shopSessionId,
-      productName: props.productName,
-      initialOffer: props.offer,
-    })
+  const { offer, formState, handleSubmit, control } = useEditCrossSellOfferForm({
+    shopSessionId: props.shopSessionId,
+    initialOffer: props.offer,
+  })
 
   return (
     <div className={card}>
@@ -73,21 +70,33 @@ export function QuickAddEditableView(props: Props) {
         <Space y={1}>
           <form id={formId} onSubmit={handleSubmit}>
             <Space y={0.25}>
-              <StepperInput
-                className={formField}
-                label={t('NUMBER_COINSURED_INPUT_LABEL')}
-                min={0}
-                max={5}
-                optionLabel={(count) => t('NUMBER_COINSURED_OPTION_LABEL', { count })}
-                value={state[Fields.NUMBER_CO_INSURED]}
-                onChange={handleChangeNumberCoInsured}
+              <Controller
+                name={Fields.NUMBER_CO_INSURED}
+                control={control}
+                render={({ field }) => (
+                  <StepperInput
+                    className={formField}
+                    min={0}
+                    max={5}
+                    label={t('NUMBER_COINSURED_INPUT_LABEL')}
+                    optionLabel={(count) => t('NUMBER_COINSURED_OPTION_LABEL', { count })}
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                )}
               />
-              <InputDay
-                className={formField}
-                label={t('START_DATE_LABEL')}
-                fromDate={new Date()}
-                selected={state[Fields.START_DATE]}
-                onSelect={handleChangeStartDate}
+              <Controller
+                name={Fields.START_DATE}
+                control={control}
+                render={({ field }) => (
+                  <InputDay
+                    className={formField}
+                    label={t('START_DATE_LABEL')}
+                    fromDate={new Date()}
+                    selected={field.value}
+                    onSelect={(date) => field.onChange(date)}
+                  />
+                )}
               />
             </Space>
           </form>
@@ -97,7 +106,7 @@ export function QuickAddEditableView(props: Props) {
               {t('OFFER_PRICE_LABEL')}
             </Text>
             <Price
-              {...getOfferPrice(state.offer.cost)}
+              {...getOfferPrice(offer.cost)}
               color="textTranslucentPrimary"
               secondaryColor="textTranslucentSecondary"
             />
@@ -105,24 +114,11 @@ export function QuickAddEditableView(props: Props) {
 
           <div className={actionsWrapper}>
             <DismissButton variant="secondary" />
-            {state.isPristine ? (
-              <AddToCartButton
-                shopSessionId={props.shopSessionId}
-                offer={state.offer}
-                productName={props.productName}
-              >
-                {t('QUICK_ADD_BUTTON')}
-              </AddToCartButton>
-            ) : (
-              <Button
-                type="submit"
-                form={formId}
-                size="medium"
-                loading={state.status === 'submitting'}
-              >
-                {t('QUICK_ADD_UPDATE')}
-              </Button>
-            )}
+            <Button type="submit" form={formId} size="medium" loading={formState.isSubmitting}>
+              {formState.dirtyFields[Fields.NUMBER_CO_INSURED]
+                ? t('QUICK_ADD_UPDATE')
+                : t('QUICK_ADD_BUTTON')}
+            </Button>
           </div>
         </Space>
       </Space>

@@ -1,7 +1,8 @@
 import { useApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
-import { isSameDay, isBefore } from 'date-fns'
-import { useCallback, useReducer, type FormEventHandler } from 'react'
+import { isBefore } from 'date-fns'
+import { useState } from 'react'
+import { useForm, type SubmitHandler } from 'react-hook-form'
 import {
   useStartDateUpdateMutation,
   type OfferRecommendationFragment,
@@ -9,22 +10,39 @@ import {
 import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 import { convertToDate, formatAPIDate } from '@/utils/date'
+import { useAddRecommendationOfferToCart } from './useAddRecommendationOfferToCart'
+
+const TODAY = new Date()
 
 export enum Fields {
   NUMBER_CO_INSURED = 'numberCoInsured',
   START_DATE = 'startDate',
 }
 
+type FormInput = {
+  [Fields.NUMBER_CO_INSURED]: number
+  [Fields.START_DATE]: Date
+}
+
 type Params = {
   shopSessionId: string
-  productName: string
   initialOffer: OfferRecommendationFragment
 }
 
-export function useEditCrossSellOfferForm({ shopSessionId, productName, initialOffer }: Params) {
-  const [updateStartDate] = useStartDateUpdateMutation()
+export function useEditCrossSellOfferForm({ shopSessionId, initialOffer }: Params) {
   const apolloClient = useApolloClient()
-  const [state, disptach] = useFormState(initialOffer)
+  const [updateStartDate] = useStartDateUpdateMutation()
+
+  const [offer, setOffer] = useState(initialOffer)
+  const [addOfferToCart] = useAddRecommendationOfferToCart({ shopSessionId })
+  const { formState, handleSubmit, getFieldState, reset, control } = useForm({
+    defaultValues: getDefaultValuesFromOffer(initialOffer),
+    resetOptions: {
+      keepDefaultValues: false,
+    },
+  })
+
+  const productName = offer.product.name
 
   const getNewOffer = async (
     data: Record<string, unknown>,
@@ -69,152 +87,64 @@ export function useEditCrossSellOfferForm({ shopSessionId, productName, initialO
     return updatedOffer
   }
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
-    event.preventDefault()
-
+  const onSubmit: SubmitHandler<FormInput> = async (formData) => {
     try {
-      disptach({ type: 'SUBMIT' })
-      let updatedOffer = state.offer
+      const hasNumberCoInsuredChanged = getFieldState(Fields.NUMBER_CO_INSURED).isDirty
+      const hasStartDateChanged = getFieldState(Fields.START_DATE).isDirty
+      const intent = hasNumberCoInsuredChanged ? 'get-price' : 'add-to-cart'
 
-      const hasNumberCoInsuredChanged =
-        state[Fields.NUMBER_CO_INSURED] !== getOfferNumberCoInsuredWithFallback(updatedOffer)
-      if (hasNumberCoInsuredChanged) {
-        updatedOffer = await getNewOffer({ numberCoInsured: state[Fields.NUMBER_CO_INSURED] })
+      let updatedOffer = offer
+      if (intent === 'get-price') {
+        updatedOffer = await getNewOffer({ numberCoInsured: formData[Fields.NUMBER_CO_INSURED] })
+
+        if (hasStartDateChanged) {
+          updatedOffer = await updateOfferStartDate(updatedOffer.id, formData[Fields.START_DATE])
+        }
+
+        reset({
+          [Fields.NUMBER_CO_INSURED]: getOfferNumberCoInsuredWithFallback(updatedOffer),
+          [Fields.START_DATE]: getOfferStartDateWithFallback(updatedOffer),
+        })
+
+        setOffer(updatedOffer)
+      } else {
+        if (hasStartDateChanged) {
+          updatedOffer = await updateOfferStartDate(offer.id, formData[Fields.START_DATE])
+        }
+
+        await addOfferToCart(updatedOffer)
       }
-
-      const hasStartDateChanged = !isSameDay(
-        state[Fields.START_DATE],
-        getOfferStartDateWithFallback(updatedOffer),
-      )
-      if (hasStartDateChanged) {
-        updatedOffer = await updateOfferStartDate(updatedOffer.id, state[Fields.START_DATE])
-      }
-
-      disptach({ type: 'RESET_FORM', payload: updatedOffer })
     } catch (error) {
       datadogLogs.logger.error('Cross sell | failed to update offer', { error })
-      disptach({ type: 'ERROR' })
+      // You still want to throw the error so 'useForm' knows about it and set form status accordingly
+      throw error
     }
   }
 
-  const handleChangeNumberCoInsured = useCallback(
-    (numberCoInsured: number) => {
-      disptach({ type: 'CHANGE_NUMBER_CO_INSURED', payload: numberCoInsured })
-    },
-    [disptach],
-  )
-
-  const handleChangeStartDate = useCallback(
-    (date: Date) => {
-      disptach({ type: 'CHANGE_START_DATE', payload: date })
-    },
-    [disptach],
-  )
-
   return {
-    state,
-    handleChangeNumberCoInsured,
-    handleChangeStartDate,
-    handleSubmit,
+    offer,
+    formState,
+    handleSubmit: handleSubmit(onSubmit),
+    control,
   }
 }
 
 function getOfferStartDateWithFallback(offer: OfferRecommendationFragment) {
-  const today = new Date()
   const offerStartDate = convertToDate(offer.startDate)
-
-  if (offerStartDate === null || isBefore(offerStartDate, today)) return today
+  if (offerStartDate === null || isBefore(offerStartDate, TODAY)) return TODAY
 
   return offerStartDate
 }
 
 function getOfferNumberCoInsuredWithFallback(offer: OfferRecommendationFragment) {
   const CO_INSURED_DATA_KEY = 'numberCoInsured'
+
   return parseInt(offer.priceIntentData[CO_INSURED_DATA_KEY]) || 0
 }
 
-type State = {
-  offer: OfferRecommendationFragment
-  [Fields.NUMBER_CO_INSURED]: number
-  [Fields.START_DATE]: Date
-  status: 'idle' | 'submitting' | 'error'
-  isPristine: boolean
-}
-
-type Action =
-  | { type: 'CHANGE_START_DATE'; payload: Date }
-  | { type: 'CHANGE_NUMBER_CO_INSURED'; payload: number }
-  | { type: 'SUBMIT' }
-  | { type: 'ERROR' }
-  | { type: 'RESET_FORM'; payload: OfferRecommendationFragment }
-
-function reducer(state: State, action: Action): State {
-  switch (action.type) {
-    case 'CHANGE_START_DATE':
-      return {
-        ...state,
-        [Fields.START_DATE]: action.payload,
-        isPristine: !hasFormChanged({
-          offer: state.offer,
-          numberCoInsured: state[Fields.NUMBER_CO_INSURED],
-          startDate: action.payload,
-        }),
-      }
-    case 'CHANGE_NUMBER_CO_INSURED':
-      return {
-        ...state,
-        [Fields.NUMBER_CO_INSURED]: action.payload,
-        isPristine: !hasFormChanged({
-          offer: state.offer,
-          numberCoInsured: action.payload,
-          startDate: state[Fields.START_DATE],
-        }),
-      }
-    case 'SUBMIT':
-      return { ...state, status: 'submitting' }
-    case 'ERROR':
-      return { ...state, status: 'error' }
-    case 'RESET_FORM':
-      return {
-        ...state,
-        offer: action.payload,
-        [Fields.NUMBER_CO_INSURED]: getOfferNumberCoInsuredWithFallback(action.payload),
-        [Fields.START_DATE]: getOfferStartDateWithFallback(action.payload),
-        status: 'idle',
-        isPristine: true,
-      }
-    default:
-      return state
-  }
-}
-
-function getInitalState(initialOffer: OfferRecommendationFragment): State {
+function getDefaultValuesFromOffer(offer: OfferRecommendationFragment): FormInput {
   return {
-    offer: initialOffer,
-    [Fields.NUMBER_CO_INSURED]: getOfferNumberCoInsuredWithFallback(initialOffer),
-    [Fields.START_DATE]: getOfferStartDateWithFallback(initialOffer),
-    status: 'idle',
-    isPristine: true,
+    [Fields.NUMBER_CO_INSURED]: getOfferNumberCoInsuredWithFallback(offer),
+    [Fields.START_DATE]: getOfferStartDateWithFallback(offer),
   }
-}
-
-function hasFormChanged({
-  offer,
-  numberCoInsured,
-  startDate,
-}: {
-  offer: OfferRecommendationFragment
-  numberCoInsured: number
-  startDate: Date
-}) {
-  return (
-    numberCoInsured !== getOfferNumberCoInsuredWithFallback(offer) ||
-    !isSameDay(startDate, getOfferStartDateWithFallback(offer))
-  )
-}
-
-function useFormState(initialOffer: OfferRecommendationFragment) {
-  const [state, disptach] = useReducer(reducer, getInitalState(initialOffer))
-
-  return [state, disptach] as const
 }
