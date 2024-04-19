@@ -32,12 +32,10 @@ export const alignedBadge = style({
   fontSize: theme.fontSizes.xs,
 })
 
-export const stepperInput = style({
-  backgroundColor: theme.colors.offWhite,
-})
-
-export const startDateInput = style({
-  backgroundColor: theme.colors.offWhite,
+// TODO: remove !important when we don't have issues with vanilla extract duplicated
+// styles anymore
+export const formField = style({
+  backgroundColor: `${theme.colors.offWhite} !important`,
 })
 
 export const priceWrapper = style({

@@ -15,8 +15,7 @@ import {
   alignedBadge,
   card,
   link,
-  stepperInput,
-  startDateInput,
+  formField,
   priceWrapper,
   actionsWrapper,
 } from './QuickAddEditableView.css'
@@ -75,7 +74,7 @@ export function QuickAddEditableView(props: Props) {
           <form id={formId} onSubmit={handleSubmit}>
             <Space y={0.25}>
               <StepperInput
-                className={stepperInput}
+                className={formField}
                 label={t('NUMBER_COINSURED_INPUT_LABEL')}
                 min={0}
                 max={5}
@@ -84,7 +83,7 @@ export function QuickAddEditableView(props: Props) {
                 onChange={handleChangeNumberCoInsured}
               />
               <InputDay
-                className={startDateInput}
+                className={formField}
                 label={t('START_DATE_LABEL')}
                 fromDate={new Date()}
                 selected={state[Fields.START_DATE]}
