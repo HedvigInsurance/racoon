@@ -10,6 +10,7 @@ const MAX_AGE = 60 * 60 * 24 // 24 hours
 const OPTIONS: OptionsType = {
   maxAge: MAX_AGE,
   path: '/',
+  sameSite: 'none',
   ...(process.env.NODE_ENV === 'production' && {
     secure: true,
   }),
@@ -21,6 +22,7 @@ type SaveAuthTokensParams = CookieParams & {
 }
 
 export const saveAuthTokens = (params: SaveAuthTokensParams) => {
+  console.log('saveAuthTokens', params)
   const { accessToken, refreshToken, ...cookieParams } = params
   setCookie(COOKIE_KEY, serialize(accessToken), { ...cookieParams, ...OPTIONS })
   setCookie(REFRESH_TOKEN_COOKIE_KEY, refreshToken, { ...cookieParams, ...OPTIONS })
