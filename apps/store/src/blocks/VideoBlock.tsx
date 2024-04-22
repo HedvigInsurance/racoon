@@ -1,10 +1,10 @@
 'use client'
 
 import styled from '@emotion/styled'
-import Head from 'next/head'
 import { getImageProps } from 'next/image'
+import ReactDOM from 'react-dom'
 import { ConditionalWrapper, getMediaQueryBreakpoint, mq, theme } from 'ui'
-import type { VideoProps } from '@/components/Video/Video';
+import type { VideoProps } from '@/components/Video/Video'
 import { Video } from '@/components/Video/Video'
 import type { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
@@ -41,17 +41,16 @@ export const VideoBlock = ({ className, blok, nested = false }: VideoBlockProps)
         alt: '',
       }).props.src
     : undefined
+
+  if (blok.autoPlay && posterUrl) {
+    ReactDOM.preload(posterUrl, { as: 'image' })
+  }
+
   return (
     <ConditionalWrapper
       condition={!(blok.fullBleed || nested)}
       wrapWith={(children) => <Wrapper className={className}>{children}</Wrapper>}
     >
-      {blok.autoPlay && (
-        <Head>
-          <link rel="preload" href={posterUrl} as="image" />
-        </Head>
-      )}
-
       <Video
         sources={videoSources}
         poster={posterUrl}
