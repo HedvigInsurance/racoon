@@ -1,7 +1,7 @@
 import { ProductPageBlock } from '@/blocks/ProductPageBlock'
 import { BankIdDialog } from '@/components/BankIdDialog'
 import { BankIdV6Dialog } from '@/components/BankIdV6Dialog/BankIdV6Dialog'
-import { DiscountBannerTrigger } from '@/components/DiscountBannerTrigger'
+import { PageBannerTriggers } from '@/components/Banner/PageBannerTriggers'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
 import { PageDebugDialog } from '@/components/ProductPage/PageDebugDialog'
@@ -58,7 +58,7 @@ export const ProductCmsPage = async ({ story }: ProductCmsPageProps) => {
                 <ProductPageBlock blok={story.content} />
                 <PageDebugDialog />
                 <ProductPageViewTracker />
-                <DiscountBannerTrigger />
+                <PageBannerTriggers blok={story.content} />
                 {Features.enabled('BANKID_V6') ? <BankIdV6Dialog /> : <BankIdDialog />}
               </BankIdContextProvider>
             </ProductReviewsMetadataProvider>
