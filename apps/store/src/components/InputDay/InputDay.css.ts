@@ -1,6 +1,8 @@
 import { style, keyframes, styleVariants, globalStyle } from '@vanilla-extract/css'
 import { theme } from 'ui/src/theme'
 
+const paddingRight = '1.25rem'
+
 const slideUpAndFadeAnimation = keyframes({
   '0%': { opacity: 0, transform: 'translateY(10px)' },
   '100%': { opacity: 1, transform: 'translateY(0)' },
@@ -47,9 +49,16 @@ export const innerWrapper = style({
   alignItems: 'center',
   justifyContent: 'space-between',
   paddingTop: theme.space.xl,
-  paddingRight: '1.25rem',
+  paddingRight: `${paddingRight}`,
   paddingBottom: theme.space.sm,
   paddingLeft: theme.space.md,
+})
+
+export const iconWrapper = style({
+  position: 'absolute',
+  right: `${paddingRight}`,
+  top: '50%',
+  transform: 'translateY(-50%)',
 })
 
 const chevronIconBase = style({
