@@ -1,6 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { Observable } from 'zen-observable-ts'
-import { Features } from '@/utils/Features'
 import { AuthEndpoint } from './authEndpoint'
 import { fetchJson, ServerError } from './fetchJson'
 
@@ -90,9 +89,7 @@ const memberLoginCreateSE = async (personalNumber: string) => {
   })
 
   if (data.result === 'error') {
-    const errorMessage = Features.enabled('BANKID_V6')
-      ? data.reason
-      : `Failed to login: ${data.reason}`
+    const errorMessage = data.reason
     throw new Error(errorMessage)
   }
 

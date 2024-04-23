@@ -9,7 +9,6 @@ import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import globalCss from 'ui/src/global.css'
 import { theme } from 'ui'
 import { AppErrorDialog } from '@/components/AppErrorDialog'
-import { BankIdDialogDynamic } from '@/components/BankIdDialogDynamic'
 import { BankIdV6DialogDynamic } from '@/components/BankIdV6Dialog/BankIdV6DialogDynamic'
 import { ContactUs } from '@/components/ContactUs/ContactUs'
 import { GlobalBannerDynamic } from '@/components/GlobalBanner/GlobalBannerDynamic'
@@ -114,11 +113,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
                     {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
                   </AppErrorProvider>
                 </BalancerProvider>
-                {Features.enabled('BANKID_V6') ? (
-                  <BankIdV6DialogDynamic />
-                ) : (
-                  <BankIdDialogDynamic />
-                )}
+                <BankIdV6DialogDynamic />
               </BankIdContextProvider>
             </ShopSessionTrackingProvider>
           </ShopSessionProvider>

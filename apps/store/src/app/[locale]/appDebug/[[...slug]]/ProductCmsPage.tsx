@@ -1,5 +1,4 @@
 import { ProductPageBlock } from '@/blocks/ProductPageBlock'
-import { BankIdDialog } from '@/components/BankIdDialog'
 import { BankIdV6Dialog } from '@/components/BankIdV6Dialog/BankIdV6Dialog'
 import { PageBannerTriggers } from '@/components/Banner/PageBannerTriggers'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
@@ -14,7 +13,6 @@ import { ProductReviewsMetadataProvider } from '@/features/memberReviews/Product
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
 import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
-import { Features } from '@/utils/Features'
 import type { RoutingLocale } from '@/utils/l10n/types'
 
 type ProductCmsPageProps = {
@@ -59,7 +57,7 @@ export const ProductCmsPage = async ({ story }: ProductCmsPageProps) => {
                 <PageDebugDialog />
                 <ProductPageViewTracker />
                 <PageBannerTriggers blok={story.content} />
-                {Features.enabled('BANKID_V6') ? <BankIdV6Dialog /> : <BankIdDialog />}
+                <BankIdV6Dialog />
               </BankIdContextProvider>
             </ProductReviewsMetadataProvider>
           </ProductPageTrackingProvider>
