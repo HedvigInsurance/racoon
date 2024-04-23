@@ -1,12 +1,11 @@
-import type { SbBlokData } from '@storyblok/react/rsc';
 import { storyblokEditable, StoryblokComponent } from '@storyblok/react/rsc'
-import { DiscountBannerTrigger } from '@/components/DiscountBannerTrigger'
-import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { PageBannerTriggers } from '@/components/Banner/PageBannerTriggers'
+import type { PageStory } from '@/services/storyblok/storyblok'
 import { main } from './PageBlock.css'
 
-type PageBlockProps = SbBaseBlockProps<{
-  body: Array<SbBlokData>
-}>
+type PageBlockProps = {
+  blok: PageStory['content']
+}
 
 export const PageBlock = ({ blok }: PageBlockProps) => {
   return (
@@ -22,7 +21,7 @@ export const PageBlock = ({ blok }: PageBlockProps) => {
           <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
         ))}
       </main>
-      <DiscountBannerTrigger />
+      <PageBannerTriggers blok={blok} />
     </>
   )
 }

@@ -21,10 +21,15 @@ export const globalBannerAtom = atom(
     }
     return null
   },
-  (get, set, newBanner: BannerWithId, options?: SetBannerOptions) => {
+  (get, set, newBanner: BannerWithId | null, options?: SetBannerOptions) => {
+    if (newBanner == null) {
+      set(currentBannerAtom, null)
+      return
+    }
+
     const { id: currentId } = get(currentBannerAtom) ?? {}
     const dismissedId = get(dismissedBannerIdAtom)
-    if (currentId == null || dismissedId !== currentId || options?.force) {
+    if (currentId == null || dismissedId === currentId || options?.force) {
       set(currentBannerAtom, newBanner)
     }
     if (options?.force && dismissedId === newBanner.id) {

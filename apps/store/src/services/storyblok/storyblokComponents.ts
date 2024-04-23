@@ -1,6 +1,5 @@
 import { AccordionBlock } from '@/blocks/AccordionBlock'
 import { AccordionItemBlock } from '@/blocks/AccordionItemBlock'
-import { AnnouncementBlock } from '@/blocks/AnnouncementBlock'
 import { AverageRatingBannerBlock } from '@/blocks/AverageRatingBannerBlock'
 import { BannerBlock } from '@/blocks/BannerBlock'
 import { ButtonBlock } from '@/blocks/ButtonBlock'
@@ -66,7 +65,6 @@ const blockAliases = { reusableBlock: PageBlock }
 export const storyblokComponents = {
   accordion: AccordionBlock,
   accordionItem: AccordionItemBlock,
-  announcement: AnnouncementBlock,
   averageRatingBanner: AverageRatingBannerBlock,
   banner: BannerBlock,
   button: ButtonBlock,
