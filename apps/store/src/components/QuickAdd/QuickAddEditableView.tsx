@@ -5,7 +5,6 @@ import { Space, Text, Badge, Button } from 'ui'
 import { InputDay } from '@/components/InputDay/InputDay'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Price } from '@/components/Price'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { StepperInput } from '@/components/StepperInput/StepperInput'
 import { type OfferRecommendationFragment } from '@/services/graphql/generated'
 import { getOfferPrice } from '@/utils/getOfferPrice'
@@ -14,6 +13,7 @@ import { DismissButton } from './DismissButton'
 import {
   alignedBadge,
   card,
+  cardHeader,
   link,
   formField,
   priceWrapper,
@@ -47,7 +47,7 @@ export function QuickAddEditableView(props: Props) {
   return (
     <div className={card}>
       <Space y={1}>
-        <SpaceFlex space={1} align="center">
+        <div className={cardHeader}>
           <Pillow size="small" {...props.pillow} />
 
           <div>
@@ -66,7 +66,7 @@ export function QuickAddEditableView(props: Props) {
               {props.badge}
             </Badge>
           )}
-        </SpaceFlex>
+        </div>
 
         {props.Body}
 
