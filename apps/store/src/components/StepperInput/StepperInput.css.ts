@@ -3,8 +3,9 @@ import { theme } from 'ui/src/theme'
 
 export const outerWrapper = style({
   display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  gap: theme.space.md,
   width: '100%',
   minHeight: '3rem',
   paddingInline: theme.space.md,
@@ -19,9 +20,7 @@ export const outerWrapper = style({
 
 export const innerWrapper = style({
   display: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'center',
+  flexDirection: 'column',
 })
 
 export const inputLabel = style({
