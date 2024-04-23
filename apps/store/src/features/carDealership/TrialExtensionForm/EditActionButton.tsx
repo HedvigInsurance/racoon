@@ -2,11 +2,11 @@ import { datadogRum } from '@datadog/browser-rum'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
 import { ActionButton } from '@/components/ProductItem/ProductItem'
-import type { PriceIntentFragment} from '@/services/graphql/generated';
+import type { PriceIntentFragment } from '@/services/graphql/generated'
 import { type ProductOfferFragment } from '@/services/graphql/generated'
 import { getOffersByPrice } from '@/utils/getOffersByPrice'
-import { EditExtensionOfferForm } from './EditExtensionOfferForm'
-import { useEditAndConfirm } from './useEditAndConfirm'
+import { EditExtensionOfferForm } from '../EditExtensionOfferForm'
+import { useEditAndConfirm } from '../useEditAndConfirm'
 
 type State = { type: 'IDLE' } | { type: 'EDITING' } | { type: 'SUBMITTING'; tierLevel?: string }
 

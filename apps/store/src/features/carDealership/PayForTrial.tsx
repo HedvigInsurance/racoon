@@ -18,7 +18,7 @@ import { MyMoneyConsent } from './MyMoneyConsent/MyMoneyConsent'
 import { concentAcceptedAtom } from './MyMoneyConsent/MyMoneyConsentAtom'
 import { PriceBreakdown } from './PriceBreakdown'
 import { ProductItemContractContainerCar } from './ProductItemContractContainer'
-import { type MyMoneyConsentProps } from './TrialExtensionForm'
+import { type MyMoneyConsentProps } from './TrialExtensionForm/TrialExtensionForm'
 
 type Props = {
   trialContract: TrialContract

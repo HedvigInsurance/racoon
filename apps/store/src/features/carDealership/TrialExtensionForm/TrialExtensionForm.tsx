@@ -3,11 +3,12 @@ import styled from '@emotion/styled'
 import { useAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { useMemo, useState } from 'react'
-import { BankIdIcon, Button, CheckIcon, Space, Text, theme } from 'ui'
+import { BankIdIcon, Button, CheckIcon, Dialog, Space, Text, theme } from 'ui'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextWithLink } from '@/components/TextWithLink'
+import useLocalSessionStorage from '@/hooks/useLocalSessionStorage'
 import type {
   PriceIntentCarTrialExtensionFragment,
   ProductOfferFragment,
@@ -17,13 +18,18 @@ import { convertToDate } from '@/utils/date'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
-import { type TrialContract } from './carDealership.types'
+import { type TrialContract } from '../carDealership.types'
+import { ExtensionOfferToggle } from '../ExtensionOfferToggle'
+import { MyMoneyConsent } from '../MyMoneyConsent/MyMoneyConsent'
+import { concentAcceptedAtom } from '../MyMoneyConsent/MyMoneyConsentAtom'
+import { PriceBreakdown } from '../PriceBreakdown'
+import { ProductItemContractContainerCar } from '../ProductItemContractContainer'
 import { EditActionButton } from './EditActionButton'
-import { ExtensionOfferToggle } from './ExtensionOfferToggle'
-import { MyMoneyConsent } from './MyMoneyConsent/MyMoneyConsent'
-import { concentAcceptedAtom } from './MyMoneyConsent/MyMoneyConsentAtom'
-import { PriceBreakdown } from './PriceBreakdown'
-import { ProductItemContractContainerCar } from './ProductItemContractContainer'
+import {
+  consentDialogContent,
+  consentDialogMessage,
+  consentDialogWindow,
+} from './TrialExtensionForm.css'
 import { useAcceptExtension } from './useAcceptExtension'
 
 export type MyMoneyConsentProps = {
@@ -63,6 +69,18 @@ export const TrialExtensionForm = ({
       priceIntent.offers[0].variant.typeOfContract
     )
   })
+
+  const [wasMyMoneyConsentShown, setWasMyMoneyConsentShown] = useLocalSessionStorage(
+    'wasMyMoneyConsentShown',
+    false,
+  )
+
+  const shouldShowMyMoneyConsentConfirmation = !concentAccepted && !wasMyMoneyConsentShown
+
+  const markMyMoneyConsentConfirmationAsShown = () => {
+    setWasMyMoneyConsentShown(true)
+  }
+
   const selectedOffer = useMemo(
     () => getSelectedOffer(priceIntent, tierLevel),
     [priceIntent, tierLevel],
@@ -161,12 +179,56 @@ export const TrialExtensionForm = ({
         {collectConsent && <MyMoneyConsent />}
 
         <Space y={1}>
-          <Button onClick={handleClickSign} loading={loading}>
-            <SpaceFlex space={0.5} align="center">
-              <BankIdIcon />
-              {requirePaymentConnection ? t('SIGN_AND_PAY_BUTTON') : t('SIGN_BUTTON')}
-            </SpaceFlex>
-          </Button>
+          {shouldShowMyMoneyConsentConfirmation ? (
+            <Dialog.Root
+              onOpenChange={(isOpen) => {
+                // Dialog is closed
+                if (!isOpen) {
+                  markMyMoneyConsentConfirmationAsShown()
+                }
+              }}
+            >
+              <Dialog.Trigger asChild>
+                <Button loading={loading}>
+                  <SpaceFlex space={0.5} align="center">
+                    <BankIdIcon />
+                    {requirePaymentConnection ? t('SIGN_AND_PAY_BUTTON') : t('SIGN_BUTTON')}
+                  </SpaceFlex>
+                </Button>
+              </Dialog.Trigger>
+              <Dialog.Content centerContent={true} className={consentDialogContent}>
+                <Dialog.Window className={consentDialogWindow}>
+                  <div className={consentDialogMessage}>
+                    <Dialog.Title asChild>
+                      <Text size="md">Vill du gå vidare utan erbjudandet?</Text>
+                    </Dialog.Title>
+                    <Dialog.Description asChild>
+                      <Text size="md" color="textSecondary">
+                        Sambla ger dig förmånliga räntor på ditt existerande billån.
+                      </Text>
+                    </Dialog.Description>
+                  </div>
+
+                  <SpaceFlex space={0.5} direction="vertical">
+                    <Dialog.Close asChild>
+                      <Button>Gå tillbaka</Button>
+                    </Dialog.Close>
+
+                    <Button onClick={handleClickSign} loading={loading} variant="ghost">
+                      Fortsätt utan erbjudande
+                    </Button>
+                  </SpaceFlex>
+                </Dialog.Window>
+              </Dialog.Content>
+            </Dialog.Root>
+          ) : (
+            <Button onClick={handleClickSign} loading={loading}>
+              <SpaceFlex space={0.5} align="center">
+                <BankIdIcon />
+                {requirePaymentConnection ? t('SIGN_AND_PAY_BUTTON') : t('SIGN_BUTTON')}
+              </SpaceFlex>
+            </Button>
+          )}
 
           <UspWrapper>
             <CheckIcon size="1rem" />
