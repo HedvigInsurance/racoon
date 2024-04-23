@@ -3,8 +3,8 @@ import { Fragment, type ReactElement } from 'react'
 import { FooterBlock } from '@/blocks/FooterBlock'
 import { HeaderBlock } from '@/blocks/HeaderBlock'
 import { wrapper } from '@/components/LayoutWithMenu/LayoutWithMenu.css'
-import type { GlobalStory, PageStory } from '@/services/storyblok/storyblok'
-import { filterByBlockType, isProductStory } from '@/services/storyblok/Storyblok.helpers'
+import type { GlobalStory } from '@/services/storyblok/storyblok'
+import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 import type { GlobalProductMetadata } from './fetchProductMetadata'
 import { GLOBAL_PRODUCT_METADATA_PROP_NAME } from './fetchProductMetadata'
 import { useHydrateProductMetadata } from './productMetadataHooks'
@@ -13,7 +13,6 @@ type LayoutWithMenuProps = {
   children: ReactElement<{
     className: string
     [GLOBAL_PRODUCT_METADATA_PROP_NAME]: GlobalProductMetadata
-    story: PageStory | undefined
     globalStory: GlobalStory | undefined
   }>
   hideFooter?: boolean
@@ -21,7 +20,7 @@ type LayoutWithMenuProps = {
 }
 
 export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
-  const { story, globalStory, className } = props.children.props
+  const { globalStory, className } = props.children.props
 
   useHydrateProductMetadata(props.children.props[GLOBAL_PRODUCT_METADATA_PROP_NAME])
 
@@ -36,11 +35,7 @@ export const LayoutWithMenu = (props: LayoutWithMenuProps) => {
       <div className={clsx(wrapper, className)}>
         {!props.hideMenu &&
           headerBlock.map((nestedBlock) => (
-            <HeaderBlock
-              key={nestedBlock._uid}
-              blok={nestedBlock}
-              static={story && isProductStory(story)}
-            />
+            <HeaderBlock key={nestedBlock._uid} blok={nestedBlock} />
           ))}
         {props.children}
         {!props.hideFooter &&
