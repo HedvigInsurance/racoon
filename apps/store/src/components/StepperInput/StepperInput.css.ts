@@ -41,4 +41,8 @@ export const stepButton = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  color: theme.colors.textPrimary,
+  ':disabled': {
+    color: theme.colors.textDisabled,
+  },
 })

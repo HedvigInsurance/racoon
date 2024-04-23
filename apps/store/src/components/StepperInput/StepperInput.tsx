@@ -8,7 +8,7 @@ import {
   useState,
   useId,
 } from 'react'
-import { MinusIcon, PlusIcon, theme } from 'ui'
+import { MinusIcon, PlusIcon } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 import { outerWrapper, innerWrapper, select, inputLabel, stepButton } from './StepperInput.css'
@@ -105,10 +105,7 @@ export const StepperInput = (props: StepperInputProps) => {
           aria-hidden={true}
           disabled={isDecrementDisabled}
         >
-          <MinusIcon
-            size="1rem"
-            color={isDecrementDisabled ? theme.colors.textDisabled : theme.colors.textPrimary}
-          />
+          <MinusIcon size="1rem" />
         </button>
         <button
           className={stepButton}
@@ -118,10 +115,7 @@ export const StepperInput = (props: StepperInputProps) => {
           aria-hidden={true}
           disabled={isIncrementDisabled}
         >
-          <PlusIcon
-            size="1rem"
-            color={isIncrementDisabled ? theme.colors.textDisabled : theme.colors.textPrimary}
-          />
+          <PlusIcon size="1rem" />
         </button>
       </SpaceFlex>
     </div>
