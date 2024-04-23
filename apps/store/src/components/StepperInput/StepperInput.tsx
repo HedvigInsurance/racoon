@@ -8,7 +8,7 @@ import {
   useState,
   useId,
 } from 'react'
-import { MinusIcon, PlusIcon, theme } from 'ui'
+import { MinusIcon, PlusIcon } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 import { outerWrapper, innerWrapper, select, inputLabel, stepButton } from './StepperInput.css'
@@ -73,12 +73,13 @@ export const StepperInput = (props: StepperInputProps) => {
 
   return (
     <div className={clsx(outerWrapper, className)} {...animationProps}>
-      {label && (
-        <label id={labelId} className={inputLabel} htmlFor={selectId}>
-          {label}
-        </label>
-      )}
       <div className={innerWrapper}>
+        {label && (
+          <label id={labelId} className={inputLabel} htmlFor={selectId}>
+            {label}
+          </label>
+        )}
+
         <select
           {...inputProps}
           id={selectId}
@@ -93,36 +94,30 @@ export const StepperInput = (props: StepperInputProps) => {
             </option>
           ))}
         </select>
-
-        <SpaceFlex space={0.5}>
-          <button
-            className={stepButton}
-            type="button"
-            onClick={decrement}
-            tabIndex={-1}
-            aria-hidden={true}
-            disabled={isDecrementDisabled}
-          >
-            <MinusIcon
-              size="1rem"
-              color={isDecrementDisabled ? theme.colors.textDisabled : theme.colors.textPrimary}
-            />
-          </button>
-          <button
-            className={stepButton}
-            type="button"
-            onClick={increment}
-            tabIndex={-1}
-            aria-hidden={true}
-            disabled={isIncrementDisabled}
-          >
-            <PlusIcon
-              size="1rem"
-              color={isIncrementDisabled ? theme.colors.textDisabled : theme.colors.textPrimary}
-            />
-          </button>
-        </SpaceFlex>
       </div>
+
+      <SpaceFlex space={0.5}>
+        <button
+          className={stepButton}
+          type="button"
+          onClick={decrement}
+          tabIndex={-1}
+          aria-hidden={true}
+          disabled={isDecrementDisabled}
+        >
+          <MinusIcon size="1rem" />
+        </button>
+        <button
+          className={stepButton}
+          type="button"
+          onClick={increment}
+          tabIndex={-1}
+          aria-hidden={true}
+          disabled={isIncrementDisabled}
+        >
+          <PlusIcon size="1rem" />
+        </button>
+      </SpaceFlex>
     </div>
   )
 }
