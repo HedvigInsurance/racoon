@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { useTranslation } from 'next-i18next'
 import { CertifiedIcon } from 'ui'
 import type { ProductData } from '@/components/ProductData/ProductData.types'
@@ -60,13 +61,15 @@ export const ProductAverageRating = () => {
 
   return (
     <>
-      <script
-        key="product-structured-data"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(getProductStructuredData(productData, averageRating)),
-        }}
-      />
+      <Head>
+        <script
+          key="product-structured-data"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(getProductStructuredData(productData, averageRating)),
+          }}
+        />
+      </Head>
 
       <div className={wrapper}>
         <CertifiedIcon className={certifiedIcon} size="1.15rem" />

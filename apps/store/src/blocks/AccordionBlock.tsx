@@ -1,9 +1,10 @@
 'use client'
 import styled from '@emotion/styled'
 import { storyblokEditable, renderRichText } from '@storyblok/react'
+import Head from 'next/head'
 import { useState, useCallback } from 'react'
 import { Heading, Text, theme, mq } from 'ui'
-import type { AccordionItemBlockProps } from '@/blocks/AccordionItemBlock'
+import type { AccordionItemBlockProps } from '@/blocks/AccordionItemBlock';
 import { AccordionItemBlock } from '@/blocks/AccordionItemBlock'
 import { Wrapper as TabsBlockWrapper } from '@/blocks/TabsBlock'
 import * as Accordion from '@/components/Accordion/Accordion'
@@ -11,6 +12,7 @@ import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { TEXT_CONTENT_MAX_WIDTH } from '@/components/GridLayout/GridLayout.constants'
 import type { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
+import { isBrowser } from '@/utils/env'
 
 type Props = SbBaseBlockProps<{
   items: ExpectedBlockType<AccordionItemBlockProps>
@@ -76,14 +78,17 @@ export const AccordionBlock = ({ blok, nested }: Props) => {
 
   return (
     <>
-      {enableFAQStructuredData && (
-        <script
-          key="accordion-faq-sctructured-data"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(FAQStructuredData),
-          }}
-        />
+      {isBrowser() && enableFAQStructuredData && (
+        // isBrowser check is needed due to bug in Next where script tag is inserted twice despite having a key
+        <Head>
+          <script
+            key="accordion-faq-sctructured-data"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(FAQStructuredData),
+            }}
+          />
+        </Head>
       )}
       {content}
     </>
