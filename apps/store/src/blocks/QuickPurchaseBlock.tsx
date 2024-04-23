@@ -2,15 +2,13 @@
 import { useApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import { type FormEventHandler, useMemo, useState } from 'react'
 import { theme } from 'ui'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
-import type {
-  FormError,
-  ProductOption} from '@/components/QuickPurchaseForm/QuickPurchaseForm';
+import type { FormError, ProductOption } from '@/components/QuickPurchaseForm/QuickPurchaseForm'
 import {
   PRODUCT_FIELDNAME,
   QuickPurchaseForm,

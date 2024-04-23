@@ -2,7 +2,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import { useRouter } from 'next/router'
+import { useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 import { theme } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
@@ -30,11 +30,10 @@ export const InsurelyBlock = (props: Props) => {
     align: props.blok.layout?.alignment,
   }
 
-  const router = useRouter()
+  const searchParams = useSearchParams()
+  const sessionId = searchParams?.get('sessionId')
   useEffect(() => {
-    if (!router.isReady) return
-
-    const sessionId = router.query.sessionId
+    if (!sessionId) return
     datadogLogs.setGlobalContextProperty('insurelySalesSupportToolSessionId', sessionId)
     setInsurelyConfig({
       showCloseButton: false,
@@ -42,7 +41,7 @@ export const InsurelyBlock = (props: Props) => {
       salesSupportToolSessionId: typeof sessionId === 'string' ? sessionId : undefined,
       multiCompanySelect: true,
     })
-  }, [router.isReady, router.query.sessionId])
+  }, [sessionId])
 
   return (
     <GridLayout.Root {...storyblokEditable}>
