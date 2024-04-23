@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import type { PropsWithChildren} from 'react';
+import type { PropsWithChildren } from 'react'
 import { useState } from 'react'
 import { BankIdIcon, Button, Heading, mq, Space, Text, theme } from 'ui'
 import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
@@ -26,14 +26,14 @@ import { SIGN_FORM_ID } from '@/constants/sign.constants'
 import type {
   CartFragmentFragment,
   CurrentMemberQuery,
-  CurrentMemberQueryVariables} from '@/services/graphql/generated';
+  CurrentMemberQueryVariables,
+} from '@/services/graphql/generated'
 import {
   CurrentMemberDocument,
   ShopSessionAuthenticationStatus,
 } from '@/services/graphql/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
-import { Features } from '@/utils/Features'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { FormElement, QueryParam } from './CheckoutPage.constants'
@@ -121,24 +121,22 @@ const CheckoutPage = (props: CheckoutPageProps) => {
         </Layout>
       </Space>
 
-      {!Features.enabled('BANKID_V6') && (
-        <FullscreenDialog.Root open={showSignError} onOpenChange={setShowSignError}>
-          <FullscreenDialog.Modal
-            center={true}
-            Footer={
-              <FullscreenDialog.Close asChild>
-                <Button type="button" variant="primary">
-                  {t('ERROR_GENERAL_DIALOG_ACTION_TRY_AGAIN')}
-                </Button>
-              </FullscreenDialog.Close>
-            }
-          >
-            <ErrorPrompt size={{ _: 'md', lg: 'lg' }} align="center">
-              {t('ERROR_GENERAL_DIALOG_PROMPT')}
-            </ErrorPrompt>
-          </FullscreenDialog.Modal>
-        </FullscreenDialog.Root>
-      )}
+      <FullscreenDialog.Root open={showSignError} onOpenChange={setShowSignError}>
+        <FullscreenDialog.Modal
+          center={true}
+          Footer={
+            <FullscreenDialog.Close asChild>
+              <Button type="button" variant="primary">
+                {t('ERROR_GENERAL_DIALOG_ACTION_TRY_AGAIN')}
+              </Button>
+            </FullscreenDialog.Close>
+          }
+        >
+          <ErrorPrompt size={{ _: 'md', lg: 'lg' }} align="center">
+            {t('ERROR_GENERAL_DIALOG_PROMPT')}
+          </ErrorPrompt>
+        </FullscreenDialog.Modal>
+      </FullscreenDialog.Root>
 
       <PageDebugDialog />
     </>

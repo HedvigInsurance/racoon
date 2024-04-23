@@ -31,7 +31,6 @@ import {
 } from '@/services/graphql/generated'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'
-import { Features } from '@/utils/Features'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { Header } from './Header'
@@ -283,24 +282,22 @@ export const SignPage = (props: Props) => {
         </div>
       </Wrapper>
 
-      {!Features.enabled('BANKID_V6') && (
-        <FullscreenDialog.Root open={showSignError} onOpenChange={setShowSignError}>
-          <FullscreenDialog.Modal
-            center={true}
-            Footer={
-              <FullscreenDialog.Close asChild>
-                <Button type="button" variant="primary">
-                  {t('checkout:ERROR_GENERAL_DIALOG_ACTION_TRY_AGAIN')}
-                </Button>
-              </FullscreenDialog.Close>
-            }
-          >
-            <ErrorPrompt size={{ _: 'md', lg: 'lg' }} align="center">
-              {t('checkout:ERROR_GENERAL_DIALOG_PROMPT')}
-            </ErrorPrompt>
-          </FullscreenDialog.Modal>
-        </FullscreenDialog.Root>
-      )}
+      <FullscreenDialog.Root open={showSignError} onOpenChange={setShowSignError}>
+        <FullscreenDialog.Modal
+          center={true}
+          Footer={
+            <FullscreenDialog.Close asChild>
+              <Button type="button" variant="primary">
+                {t('checkout:ERROR_GENERAL_DIALOG_ACTION_TRY_AGAIN')}
+              </Button>
+            </FullscreenDialog.Close>
+          }
+        >
+          <ErrorPrompt size={{ _: 'md', lg: 'lg' }} align="center">
+            {t('checkout:ERROR_GENERAL_DIALOG_PROMPT')}
+          </ErrorPrompt>
+        </FullscreenDialog.Modal>
+      </FullscreenDialog.Root>
     </>
   )
 }

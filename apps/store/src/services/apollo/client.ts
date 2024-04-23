@@ -6,7 +6,6 @@ import { type AppInitialProps } from 'next/app'
 import { useMemo } from 'react'
 import { getAuthHeaders } from '@/services/authApi/persist'
 import { isBrowser } from '@/utils/env'
-import { Features } from '@/utils/Features'
 import { toIsoLocale } from '@/utils/l10n/localeUtils'
 import { type RoutingLocale } from '@/utils/l10n/types'
 import { getShopSessionHeader, performTokenRefreshIfNeeded } from './apollo.helpers'
@@ -66,8 +65,6 @@ export const initializeApollo = (params: InitializeApolloParams = {}) => {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     apolloClient ??
     createApolloClient({
-      // Part of BankID V6 release plan
-      ...(Features.enabled('BANKID_V6') ? { 'hedvig-bankid-v6': 'true' } : {}),
       ...(authHeaders ?? getAuthHeaders({ req, res })),
       ...(locale && getHedvigLanguageHeader(locale)),
       ...getShopSessionHeader({ req, res }),
