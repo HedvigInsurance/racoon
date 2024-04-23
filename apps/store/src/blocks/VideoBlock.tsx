@@ -12,6 +12,7 @@ import type {
   StoryblokAsset,
 } from '@/services/storyblok/storyblok'
 import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
+import { isBrowser } from '@/utils/env'
 
 export type VideoBlockProps = SbBaseBlockProps<
   {
@@ -48,7 +49,12 @@ export const VideoBlock = ({ className, blok, nested = false }: VideoBlockProps)
     : undefined
 
   if (blok.autoPlay && posterUrl) {
-    ReactDOM.preload(posterUrl, { as: 'image' })
+    // We should run it server-side too when react-dom stabilizes the API
+    // But as of Next 14.2 / react-dom 18.2 it crashes when building static pages
+    // Can be tested with `SKIP_BUILD_STATIC_GENERATION=0 yarn build`
+    if (isBrowser()) {
+      ReactDOM.preload(posterUrl, { as: 'image' })
+    }
   }
 
   return (
