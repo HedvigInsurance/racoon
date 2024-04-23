@@ -1,12 +1,16 @@
 'use client'
 
-import styled from '@emotion/styled'
 import Head from 'next/head'
 import { getImageProps } from 'next/image'
-import { ConditionalWrapper, getMediaQueryBreakpoint, mq, theme } from 'ui'
-import type { VideoProps } from '@/components/Video/Video';
+import { ConditionalWrapper, getMediaQueryBreakpoint } from 'ui'
+import * as GridLayout from '@/components/GridLayout/GridLayout'
+import type { VideoProps } from '@/components/Video/Video'
 import { Video } from '@/components/Video/Video'
-import type { SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
+import type {
+  GridColumnsField,
+  SbBaseBlockProps,
+  StoryblokAsset,
+} from '@/services/storyblok/storyblok'
 import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 
 export type VideoBlockProps = SbBaseBlockProps<
@@ -16,6 +20,7 @@ export type VideoBlockProps = SbBaseBlockProps<
     poster?: StoryblokAsset
     fullBleed?: boolean
     controls?: boolean
+    layout?: GridColumnsField
   } & Pick<
     VideoProps,
     | 'autoPlay'
@@ -44,7 +49,16 @@ export const VideoBlock = ({ className, blok, nested = false }: VideoBlockProps)
   return (
     <ConditionalWrapper
       condition={!(blok.fullBleed || nested)}
-      wrapWith={(children) => <Wrapper className={className}>{children}</Wrapper>}
+      wrapWith={(children) => (
+        <GridLayout.Root className={className}>
+          <GridLayout.Content
+            width={blok.layout?.widths ?? { base: '1' }}
+            align={blok.layout?.alignment ?? 'center'}
+          >
+            {children}
+          </GridLayout.Content>
+        </GridLayout.Root>
+      )}
     >
       {blok.autoPlay && (
         <Head>
@@ -67,10 +81,3 @@ export const VideoBlock = ({ className, blok, nested = false }: VideoBlockProps)
     </ConditionalWrapper>
   )
 }
-
-const Wrapper = styled.div({
-  paddingInline: theme.space.xs,
-  [mq.lg]: {
-    paddingInline: theme.space.md,
-  },
-})
