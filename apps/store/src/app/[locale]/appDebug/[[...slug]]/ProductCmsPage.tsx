@@ -1,5 +1,5 @@
 import { ProductPageBlock } from '@/blocks/ProductPageBlock'
-import { BankIdV6Dialog } from '@/components/BankIdV6Dialog/BankIdV6Dialog'
+import { BankIdDialog } from '@/components/BankIdDialog/BankIdDialog'
 import { PageBannerTriggers } from '@/components/Banner/PageBannerTriggers'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
@@ -57,7 +57,7 @@ export const ProductCmsPage = async ({ story }: ProductCmsPageProps) => {
                 <PageDebugDialog />
                 <ProductPageViewTracker />
                 <PageBannerTriggers blok={story.content} />
-                <BankIdV6Dialog />
+                <BankIdDialog />
               </BankIdContextProvider>
             </ProductReviewsMetadataProvider>
           </ProductPageTrackingProvider>

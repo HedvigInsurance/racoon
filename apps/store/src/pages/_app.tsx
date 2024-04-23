@@ -9,7 +9,7 @@ import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import globalCss from 'ui/src/global.css'
 import { theme } from 'ui'
 import { AppErrorDialog } from '@/components/AppErrorDialog'
-import { BankIdV6DialogDynamic } from '@/components/BankIdV6Dialog/BankIdV6DialogDynamic'
+import { BankIdDialogDynamic } from '@/components/BankIdDialog/BankIdDialogDynamic'
 import { ContactUs } from '@/components/ContactUs/ContactUs'
 import { GlobalBannerDynamic } from '@/components/GlobalBanner/GlobalBannerDynamic'
 import { GTMLoader } from '@/components/GTMLoader'
@@ -113,7 +113,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
                     {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
                   </AppErrorProvider>
                 </BalancerProvider>
-                <BankIdV6DialogDynamic />
+                <BankIdDialogDynamic />
               </BankIdContextProvider>
             </ShopSessionTrackingProvider>
           </ShopSessionProvider>

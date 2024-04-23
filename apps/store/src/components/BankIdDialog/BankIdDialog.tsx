@@ -19,7 +19,7 @@ import { BankIdLoginForm } from '@/components/BankIdLoginForm'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { Skeleton } from '@/components/Skeleton'
 import { SIGN_FORM_ID } from '@/constants/sign.constants'
-import type { BankIdOperation} from '@/services/bankId/bankId.types';
+import type { BankIdOperation } from '@/services/bankId/bankId.types'
 import { BankIdState } from '@/services/bankId/bankId.types'
 import { bankIdLogger } from '@/services/bankId/bankId.utils'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
@@ -34,9 +34,9 @@ import {
   contentWrapperMaxWidth,
   qrOnAnotherDeviceFooter,
   qrOnAnotherDeviceLink,
-} from './BankIdV6Dialog.css'
+} from './BankIdDialog.css'
 
-export function BankIdV6Dialog() {
+export function BankIdDialog() {
   const { t } = useTranslation('bankid')
   const { shopSession } = useShopSession()
   const { startLogin, cancelLogin, cancelCheckoutSign, currentOperation } = useBankIdContext()
