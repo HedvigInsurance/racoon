@@ -1,14 +1,7 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { clsx } from 'clsx'
-import type {
-  ComponentProps,
-  PropsWithChildren,
-  ReactNode} from 'react';
-import {
-  forwardRef,
-  startTransition,
-  useCallback,
-} from 'react'
+import type { ComponentProps, PropsWithChildren, ReactNode } from 'react'
+import { forwardRef, startTransition, useCallback } from 'react'
 import { contentWrapper, dialogWindow, overlay } from './Dialog.css'
 
 type ContentProps = {
@@ -66,6 +59,8 @@ export const Root = ({
 }
 
 export const Trigger = DialogPrimitive.Trigger
+export const Title = DialogPrimitive.Title
+export const Description = DialogPrimitive.Description
 export const Close = DialogPrimitive.Close
 
 // Example of exposing base component for further styling by either vanilla-extract or emotion
