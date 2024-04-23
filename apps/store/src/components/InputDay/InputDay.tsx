@@ -15,6 +15,7 @@ import {
   trigger,
   label,
   innerWrapper,
+  iconWrapper,
   chevronIcon,
   popoverContent,
   dayPicker,
@@ -93,14 +94,16 @@ export const InputDay = (props: InputDayProps) => {
             </Text>
           )}
 
-          {/* eslint-disable-next-line no-nested-ternary */}
-          {props.loading ? (
-            <LoadingDots color={theme.colors.textPrimary} />
-          ) : props.disabled ? (
-            <LockIcon size="1rem" color={theme.colors.textSecondary} />
-          ) : (
-            <ChevronIcon className={chevronIcon.animated} size="1rem" />
-          )}
+          <div className={iconWrapper}>
+            {/* eslint-disable-next-line no-nested-ternary */}
+            {props.loading ? (
+              <LoadingDots color={theme.colors.textPrimary} />
+            ) : props.disabled ? (
+              <LockIcon size="1rem" color={theme.colors.textSecondary} />
+            ) : (
+              <ChevronIcon className={chevronIcon.animated} size="1rem" />
+            )}
+          </div>
         </div>
 
         <input
