@@ -7,7 +7,7 @@ import {
 import { BlogArticleBlock } from './BlogArticleBlock'
 import { BlogArticleCategoryBlock } from './BlogArticleCategoryBlock'
 import { BlogArticleCategoryListBlock } from './BlogArticleCategoryListBlock'
-import { BlogArticleListBlock } from './BlogArticleListBlock'
+import { BlogArticleListBlock } from './BlogArticleListBlock/BlogArticleListBlock'
 
 export const blogBlocks = {
   [BLOG_ARTICLE_CONTENT_TYPE]: BlogArticleBlock,
