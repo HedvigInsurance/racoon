@@ -18,14 +18,19 @@ export async function StoryBreadcrumbs(props: Props) {
 
   const parentBreadcrumbs: Array<BreadcrumbListItem> = []
   if (slug.length > 1) {
-    const parentStories = await getParentStories(slug.join('/'), { locale: props.params.locale })
-    parentStories.forEach((item) => {
-      const slugWithoutTrailingSlash = item.full_slug.replace(/\/$/, '')
-      parentBreadcrumbs.push({
-        label: item.name,
-        href: `${ORIGIN_URL}/${slugWithoutTrailingSlash}`,
+    try {
+      const parentStories = await getParentStories(slug.join('/'), { locale: props.params.locale })
+      parentStories.forEach((item) => {
+        const slugWithoutTrailingSlash = item.full_slug.replace(/\/$/, '')
+        parentBreadcrumbs.push({
+          label: item.name,
+          href: `${ORIGIN_URL}/${slugWithoutTrailingSlash}`,
+        })
       })
-    })
+    } catch (err) {
+      console.log(`Failed to get breadcrumbs for ${JSON.stringify(props.params)}`, err)
+      return null
+    }
   }
 
   const items = [...parentBreadcrumbs, { label: props.currentPageTitle }]

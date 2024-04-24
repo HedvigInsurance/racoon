@@ -1,27 +1,18 @@
 import * as process from 'process'
-import type {
-  ISbStoriesParams,
-  ISbStoryData,
-  SbBlokData,
-  StoryblokClient} from '@storyblok/react';
-import {
-  apiPlugin,
-  getStoryblokApi,
-  storyblokInit,
-} from '@storyblok/react'
+import type { ISbStoriesParams, ISbStoryData, SbBlokData, StoryblokClient } from '@storyblok/react'
+import { apiPlugin, getStoryblokApi, storyblokInit } from '@storyblok/react'
 import type { FooterBlockProps } from '@/blocks/FooterBlock'
 import type { HeaderBlockProps } from '@/blocks/HeaderBlock'
 import type { ReusableBlockReferenceProps } from '@/blocks/ReusableBlockReference'
 import { type ContentAlignment, type ContentWidth } from '@/components/GridLayout/GridLayout.helper'
 import type { BreadcrumbListItem } from '@/components/PageBreadcrumbs/PageBreadcrumbs'
 import { BLOG_ARTICLE_CONTENT_TYPE } from '@/features/blog/blog.constants'
-// TODO: get rid of this import, services should avoid feature-imports
-import { STORYBLOK_MANYPETS_FOLDER_SLUG } from '@/features/manyPets/manyPets.constants'
-import { STORYBLOK_WIDGET_FOLDER_SLUG } from '@/features/widget/widget.constants'
+import type { LinkData, PageLink } from '@/services/storyblok/Storyblok.helpers'
 import { isBrowser } from '@/utils/env'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
-import type { Language, RoutingLocale } from '@/utils/l10n/types'
+import type { Language } from '@/utils/l10n/types'
 import type { GLOBAL_STORY_PROP_NAME, STORY_PROP_NAME } from './Storyblok.constant'
+import { LINKS_EXCLUDE_PATHS } from './Storyblok.constant'
 import { storyblokComponents } from './storyblokComponents'
 
 export type SbBaseBlockProps<T> = {
@@ -173,17 +164,6 @@ export type ConfirmationStory = ISbStoryData & {
   }
 }
 
-type LinkData = Pick<
-  ISbStoryData,
-  'id' | 'slug' | 'name' | 'parent_id' | 'position' | 'uuid' | 'is_startpage'
-> & { is_folder: boolean; path: string; published: boolean; real_path: string }
-
-type PageLink = {
-  link: LinkData
-  locale: RoutingLocale
-  slugParts: Array<string>
-}
-
 export const initStoryblok = () => {
   // https://github.com/storyblok/storyblok-react/issues/156#issuecomment-1197764828
   let shouldUseBridge = false
@@ -267,18 +247,9 @@ export const getPageLinks = async (params?: GetPageLinksParams): Promise<Array<P
   return pageLinks
 }
 
-// NOTE: Excluding by content_type would be easier to support,
-// but according to the docs it's only possible to do if we fetch full stories, not links
-const EXCLUDE_FOLDERS = new Set([
-  'reusable-blocks',
-  'product-metadata',
-  'car-buyer',
-  STORYBLOK_MANYPETS_FOLDER_SLUG,
-  STORYBLOK_WIDGET_FOLDER_SLUG,
-])
-export const getFilteredPageLinks = async () => {
-  const allLinks = await getPageLinks()
-  return allLinks.filter(({ slugParts }) => !EXCLUDE_FOLDERS.has(slugParts[0]))
+export const getFilteredPageLinks = async (params?: GetPageLinksParams) => {
+  const allLinks = await getPageLinks(params)
+  return allLinks.filter(({ slugParts }) => !LINKS_EXCLUDE_PATHS.has(slugParts[0]))
 }
 
 export const getGlobalStory = (options: StoryOptions): Promise<GlobalStory> => {

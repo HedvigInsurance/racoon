@@ -8,12 +8,13 @@ import type {
   ShopSessionOutcomeIdQuery,
   ShopSessionOutcomeIdQueryVariables,
   ShopSessionQuery,
-  ShopSessionQueryVariables} from '@/services/graphql/generated';
+  ShopSessionQueryVariables,
+} from '@/services/graphql/generated'
 import {
   ShopSessionCreateDocument,
   ShopSessionDocument,
   ShopSessionOutcomeDocument,
-  ShopSessionOutcomeIdDocument
+  ShopSessionOutcomeIdDocument,
 } from '@/services/graphql/generated'
 import type { SimplePersister } from '@/services/persister/Persister.types'
 import type { ShopSession } from '@/services/shopSession/ShopSession.types'
@@ -83,7 +84,7 @@ export class ShopSessionService {
     >({
       mutation: ShopSessionCreateDocument,
       variables,
-      // TODO: Investigate if we can do it by returning shopSession recond on top instead of shopSessionCreate
+      // TODO: Investigate if we can do it by returning shopSession record on top instead of shopSessionCreate
       update: (cache, result) => {
         const shopSession = result.data?.shopSessionCreate
         if (shopSession) {
