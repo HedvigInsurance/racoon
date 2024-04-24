@@ -1,7 +1,6 @@
 import { datadogRum } from '@datadog/browser-rum'
 import type { Dispatch } from 'react'
-import type { ShopSessionAuthenticationStatus } from '@/services/graphql/generated'
-import type { BankIdOperation} from './bankId.types';
+import type { BankIdOperation } from './bankId.types'
 import { BankIdState } from './bankId.types'
 
 export type BankIdAction =
@@ -24,7 +23,6 @@ type StartLoginAction = {
 type StartSignAction = {
   type: 'startCheckoutSign'
   ssn: string
-  customerAuthenticationStatus: ShopSessionAuthenticationStatus
 }
 type PropertiesUpdateAction = {
   type: 'propertiesUpdate'
@@ -111,7 +109,6 @@ export const bankIdReducer = (
           type: 'sign',
           state: BankIdState.Starting,
           ssn: action.ssn,
-          customerAuthenticationStatus: action.customerAuthenticationStatus,
         },
       }
     case 'cancel':

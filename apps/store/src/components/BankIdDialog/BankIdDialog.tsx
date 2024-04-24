@@ -23,7 +23,6 @@ import type { BankIdOperation } from '@/services/bankId/bankId.types'
 import { BankIdState } from '@/services/bankId/bankId.types'
 import { bankIdLogger } from '@/services/bankId/bankId.utils'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
-import { ShopSessionAuthenticationStatus } from '@/services/graphql/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { wait } from '@/utils/wait'
 import {
@@ -44,16 +43,7 @@ export function BankIdDialog() {
   useTriggerBankIdOnSameDevice(currentOperation)
   const tryAgainButtonProps = useTryAgainButtonProps(currentOperation)
 
-  let isOpen = !!currentOperation
-  if (currentOperation?.type === 'sign') {
-    // In some cases we show progress on signing page, not in dialog
-    const isSigningAuthenticatedMember =
-      currentOperation.customerAuthenticationStatus ===
-      ShopSessionAuthenticationStatus.Authenticated
-    if (isSigningAuthenticatedMember) {
-      isOpen = false
-    }
-  }
+  const isOpen = !!currentOperation
 
   const handleOpenChange = (open: boolean) => {
     if (!open && currentOperation) {

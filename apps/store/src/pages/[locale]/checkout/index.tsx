@@ -27,15 +27,7 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
 
   if (!shopSession?.customer) return null
 
-  const { authenticationStatus } = shopSession.customer
-
-  return (
-    <CheckoutPage
-      {...props}
-      shopSession={shopSession}
-      customerAuthenticationStatus={authenticationStatus}
-    />
-  )
+  return <CheckoutPage {...props} shopSession={shopSession} />
 }
 
 export const getServerSideProps: GetServerSideProps<NextPageProps> = async (context) => {

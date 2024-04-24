@@ -25,7 +25,6 @@ import { SIGN_FORM_ID } from '@/constants/sign.constants'
 import {
   MemberPaymentConnectionStatus,
   type ProductOfferFragment,
-  ShopSessionAuthenticationStatus,
   useCartEntryRemoveMutation,
   useCurrentMemberLazyQuery,
 } from '@/services/graphql/generated'
@@ -40,7 +39,6 @@ import { publishWidgetEvent } from './publishWidgetEvent'
 type Props = {
   shopSession: ShopSession
   priceIntentId: string
-  customerAuthenticationStatus: ShopSessionAuthenticationStatus
   ssn: string
   shouldCollectEmail: boolean
   shouldCollectName: boolean
@@ -64,7 +62,6 @@ export const SignPage = (props: Props) => {
   const [handleSubmitSign, { loading, userError }] = useHandleSubmitCheckout({
     shopSessionId: props.shopSession.id,
     ssn: props.ssn,
-    customerAuthenticationStatus: props.customerAuthenticationStatus,
     async onSuccess() {
       datadogLogs.logger.info('Widget Sign | Sign Success', { shopSessionId: props.shopSession.id })
       publishWidgetEvent.signed()
@@ -75,7 +72,6 @@ export const SignPage = (props: Props) => {
       tracking.reportPurchase({
         cart: props.shopSession.cart,
         memberId: data.currentMember.id,
-        isNewMember: props.customerAuthenticationStatus === ShopSessionAuthenticationStatus.None,
         customer: data.currentMember,
       })
 
@@ -111,8 +107,6 @@ export const SignPage = (props: Props) => {
     })
     handleSubmitSign(event)
   }
-
-  const userErrorMessage = userError?.message
 
   const mainOffer = props.shopSession.cart.entries.find(
     (item) => item.product.name === props.productName,
@@ -249,9 +243,9 @@ export const SignPage = (props: Props) => {
                           <Text size="xs">{t('USP_TEXT')}</Text>
                         </UspWrapper>
 
-                        {userErrorMessage ? (
+                        {userError ? (
                           <Text as="p" size="xs" color="textSecondary" align="center">
-                            {userErrorMessage}
+                            {userError}
                           </Text>
                         ) : (
                           <TextWithLink

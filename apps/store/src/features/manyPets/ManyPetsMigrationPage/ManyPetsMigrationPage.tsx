@@ -4,7 +4,7 @@ import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import type { FormEventHandler, ReactNode} from 'react';
+import type { FormEventHandler, ReactNode } from 'react'
 import { useCallback, useRef } from 'react'
 import { BankIdIcon, Button, Heading, HedvigLogo, mq, Space, theme } from 'ui'
 import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
@@ -21,13 +21,8 @@ import { TextWithLink } from '@/components/TextWithLink'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
-import type {
-  Money,
-  ProductOfferFragment} from '@/services/graphql/generated';
-import {
-  useManyPetsFillCartMutation,
-  useShopSessionQuery,
-} from '@/services/graphql/generated'
+import type { Money, ProductOfferFragment } from '@/services/graphql/generated'
+import { useManyPetsFillCartMutation, useShopSessionQuery } from '@/services/graphql/generated'
 import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
@@ -241,13 +236,12 @@ const useSignMigration = (
       }
 
       const shopSessionId = shopSession.id
-      const { authenticationStatus: customerAuthenticationStatus, ssn } = shopSession.customer
+      const { ssn } = shopSession.customer
       manypetsLogger.setContextProperty('shopSessionId', shopSessionId)
 
       datadogRum.addAction('ManyPets StartingSigning', {
         shopSessionId,
         entriesCount: shopSession.cart.entries.length,
-        customerAuthenticationStatus,
       })
 
       try {
@@ -272,7 +266,6 @@ const useSignMigration = (
 
         manypetsLogger.info('ManyPets StartingCheckoutSign')
         startCheckoutSign({
-          customerAuthenticationStatus,
           shopSessionId,
           ssn,
           async onSuccess() {

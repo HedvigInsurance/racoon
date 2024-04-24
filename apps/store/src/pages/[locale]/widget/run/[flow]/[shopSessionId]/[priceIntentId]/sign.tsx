@@ -101,7 +101,6 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
         ssn: customer.ssn,
         shouldCollectEmail: getShouldCollectEmail(customer),
         shouldCollectName: getShouldCollectName(customer),
-        customerAuthenticationStatus: customer.authenticationStatus,
         shopSessionId: context.params.shopSessionId,
         content: story.content.checkoutPageContent,
         flow: context.params.flow,

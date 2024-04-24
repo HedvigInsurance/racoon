@@ -1,5 +1,4 @@
 import { type ApolloError } from '@apollo/client'
-import type { ShopSessionAuthenticationStatus } from '@/services/graphql/generated'
 
 export enum BankIdState {
   Idle = 'Idle',
@@ -22,7 +21,6 @@ export type BankIdLoginOperation = {
 export type BankIdSignOperation = {
   type: 'sign'
   ssn: string
-  customerAuthenticationStatus: ShopSessionAuthenticationStatus
   state: BankIdState
   error?: string
   qrCodeData?: string
@@ -45,7 +43,6 @@ export type BankIdLoginOptions = {
 export type StartLoginOptions = { ssn: string; onSuccess?: () => void | Promise<void> }
 
 export type CheckoutSignOptions = {
-  customerAuthenticationStatus: ShopSessionAuthenticationStatus
   shopSessionId: string
   ssn: string
   onSuccess: () => void | Promise<void>

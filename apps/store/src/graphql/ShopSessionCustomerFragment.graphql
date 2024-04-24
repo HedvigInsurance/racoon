@@ -1,5 +1,4 @@
 fragment ShopSessionCustomer on ShopSessionCustomer {
-    authenticationStatus
     missingFields
     ssn
 }

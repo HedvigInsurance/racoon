@@ -28,10 +28,7 @@ import type {
   CurrentMemberQuery,
   CurrentMemberQueryVariables,
 } from '@/services/graphql/generated'
-import {
-  CurrentMemberDocument,
-  ShopSessionAuthenticationStatus,
-} from '@/services/graphql/generated'
+import { CurrentMemberDocument } from '@/services/graphql/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
@@ -145,19 +142,13 @@ const CheckoutPage = (props: CheckoutPageProps) => {
 
 type CheckoutFormProps = Pick<
   CheckoutPageProps,
-  | 'checkoutSteps'
-  | 'customerAuthenticationStatus'
-  | 'shopSession'
-  | 'shouldCollectEmail'
-  | 'shouldCollectName'
-  | 'ssn'
+  'checkoutSteps' | 'shopSession' | 'shouldCollectEmail' | 'shouldCollectName' | 'ssn'
 > & { onSignError: () => void }
 
 // Optimization: separated from page component to avoid rerendering full page when checkout status changes
 // Prop-drilling so many props is awkward, consider refactoring to group them somehow
 const CheckoutForm = ({
   checkoutSteps,
-  customerAuthenticationStatus,
   onSignError,
   shopSession,
   ssn,
@@ -174,7 +165,6 @@ const CheckoutForm = ({
   const [handleSubmitSign, { loading, userError }] = useHandleSubmitCheckout({
     shopSessionId: shopSession.id,
     ssn,
-    customerAuthenticationStatus,
     async onSuccess() {
       const { data } = await apolloClient.query<CurrentMemberQuery, CurrentMemberQueryVariables>({
         query: CurrentMemberDocument,
@@ -184,7 +174,6 @@ const CheckoutForm = ({
       tracking.reportPurchase({
         cart: shopSession.cart,
         memberId,
-        isNewMember: customerAuthenticationStatus === ShopSessionAuthenticationStatus.None,
         customer: data.currentMember,
       })
       resetShopSession()
@@ -199,8 +188,6 @@ const CheckoutForm = ({
       onSignError()
     },
   })
-
-  const userErrorMessage = userError?.message
 
   return (
     <form id={SIGN_FORM_ID} onSubmit={handleSubmitSign}>
@@ -231,17 +218,12 @@ const CheckoutForm = ({
           <TextField type="email" label={t('FORM_EMAIL_LABEL')} name={FormElement.Email} required />
         )}
         <Space y={0.5}>
-          <SignButton
-            loading={loading}
-            showBankIdIcon={
-              customerAuthenticationStatus !== ShopSessionAuthenticationStatus.Authenticated
-            }
-          >
+          <SignButton loading={loading}>
             {t('SIGN_BUTTON', { count: shopSession.cart.entries.length })}
           </SignButton>
-          {userErrorMessage ? (
+          {userError ? (
             <Text as="p" size="xs" color="textSecondary" align="center">
-              {userErrorMessage}
+              {userError}
             </Text>
           ) : (
             <TextWithLink
@@ -304,12 +286,12 @@ const TextLink = styled(Link)({
   },
 })
 
-type SignButtonProps = PropsWithChildren<{ loading: boolean; showBankIdIcon: boolean }>
-const SignButton = ({ children, loading, showBankIdIcon }: SignButtonProps) => {
+type SignButtonProps = PropsWithChildren<{ loading: boolean }>
+const SignButton = ({ children, loading }: SignButtonProps) => {
   return (
     <Button type="submit" loading={loading}>
       <StyledSignButtonContent>
-        {showBankIdIcon && <BankIdIcon color="white" />}
+        <BankIdIcon color="white" />
         {children}
       </StyledSignButtonContent>
     </Button>
