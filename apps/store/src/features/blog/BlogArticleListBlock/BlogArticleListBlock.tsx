@@ -1,18 +1,18 @@
 'use client'
 
-import styled from '@emotion/styled'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import { useMemo } from 'react'
-import { Space, theme } from 'ui'
+import { Space } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { getImgSrc, makeAbsolute } from '@/services/storyblok/Storyblok.helpers'
 import { useFormatter } from '@/utils/useFormatter'
-import { ArticleTeaser } from './ArticleTeaser/ArticleTeaser'
-import { BLOG_ARTICLE_LIST_BLOCK } from './blog.constants'
-import { useBlogArticleTeasers } from './useBlog'
+import { ArticleTeaser } from '../ArticleTeaser/ArticleTeaser'
+import { BLOG_ARTICLE_LIST_BLOCK } from '../blog.constants'
+import { useBlogArticleTeasers } from '../useBlog'
+import { buttonWrapper, inlineButtonLink, articleList } from './BlogArticleListBlock.css'
 
 const SHOW_ALL_QUERY_PARAM = 'showAll'
 
@@ -51,7 +51,7 @@ export const BlogArticleListBlock = (props: Props) => {
     <GridLayout.Root>
       <GridLayout.Content width={{ xxl: '5/6' }} align="center">
         <Space y={8}>
-          <List>
+          <div className={articleList}>
             {visibleTeaserList.map((item, index) => (
               <ArticleTeaser.Root
                 key={item.id}
@@ -68,18 +68,19 @@ export const BlogArticleListBlock = (props: Props) => {
                 />
               </ArticleTeaser.Root>
             ))}
-          </List>
+          </div>
 
           {!showAll && (
-            <ButtonWrapper>
-              <InlineButtonLink
+            <div className={buttonWrapper}>
+              <ButtonNextLink
+                className={inlineButtonLink}
                 href={`${pathname}?${SHOW_ALL_QUERY_PARAM}=1`}
                 shallow={true}
                 scroll={false}
               >
                 {t('BLOG_LOAD_MORE_BUTTON')}
-              </InlineButtonLink>
-            </ButtonWrapper>
+              </ButtonNextLink>
+            </div>
           )}
         </Space>
       </GridLayout.Content>
@@ -87,18 +88,3 @@ export const BlogArticleListBlock = (props: Props) => {
   )
 }
 BlogArticleListBlock.blockName = BLOG_ARTICLE_LIST_BLOCK
-
-const List = styled.div({
-  display: 'grid',
-  rowGap: theme.space.xxxl,
-  columnGap: theme.space.lg,
-  gridTemplateColumns: 'repeat(auto-fill, minmax(21rem, 1fr))',
-  gridTemplateRows: 'max-content',
-})
-
-const ButtonWrapper = styled.div({
-  display: 'flex',
-  justifyContent: 'center',
-})
-
-const InlineButtonLink = styled(ButtonNextLink)({ width: 'auto' })
