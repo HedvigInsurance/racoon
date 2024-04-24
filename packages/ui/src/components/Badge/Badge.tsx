@@ -1,47 +1,33 @@
-import isPropValid from '@emotion/is-prop-valid'
-import styled from '@emotion/styled'
-import type { Margins, UIColors } from '../../theme';
-import { getColor, getMargins, theme } from '../../theme'
-import type { BadgeSizeProps} from './Badge.helper';
-import { getBadgeSize } from './Badge.helper'
+import { assignInlineVars } from '@vanilla-extract/dynamic'
+import { clsx } from 'clsx'
+import { getColor, type UIColors } from '../../theme'
+import { badge, badgeBgColorVar } from './Badge.css'
 
 type BadgeColors = Pick<
   UIColors,
   'blueFill1' | 'blueFill2' | 'blueFill3' | 'green50' | 'signalAmberHighlight' | 'pinkFill1'
 >
 
-export type BadgeProps = Margins & {
-  className?: string
-  as?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span'
-  color?: keyof BadgeColors
+export type BadgeProps = {
   children: React.ReactNode
-  size?: BadgeSizeProps
+  as?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span'
+  className?: string
+  color?: keyof BadgeColors
+  size?: 'small' | 'big' | 'responsive'
 }
 
-const elementConfig = {
-  shouldForwardProp: (prop: string) => isPropValid(prop) && prop !== 'color',
+export const Badge = ({ as, className, children, color, size = 'small', ...rest }: BadgeProps) => {
+  const Component = as ?? 'div'
+
+  return (
+    <Component
+      className={clsx(badge({ size }), className)}
+      style={assignInlineVars({
+        [badgeBgColorVar]: getColor(color ?? 'blueFill1'),
+      })}
+      {...rest}
+    >
+      {children}
+    </Component>
+  )
 }
-
-type BadgeBaseProps = Pick<BadgeProps, 'color' | 'size'> & Margins
-
-export const BadgeBase = styled(
-  'div',
-  elementConfig,
-)<BadgeBaseProps>(({ color, size, ...props }) => {
-  color = color ?? 'blueFill1'
-  size = size ?? 'small'
-  return {
-    display: 'inline-block',
-    color: theme.colors.dark,
-    backgroundColor: getColor(color),
-    borderRadius: theme.radius.xxs,
-    ...getBadgeSize(size),
-    ...getMargins(props),
-  }
-})
-
-export const Badge = ({ as, children, color, ...rest }: BadgeProps) => (
-  <BadgeBase as={as} color={color} {...rest}>
-    {children}
-  </BadgeBase>
-)

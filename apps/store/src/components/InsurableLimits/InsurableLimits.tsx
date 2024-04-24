@@ -3,6 +3,7 @@ import React from 'react'
 import Balancer from 'react-wrap-balancer'
 import { Badge, Text, theme } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
+import { badge } from './InsurableLimits.css'
 
 type InsurableLimit = {
   label: string
@@ -30,7 +31,7 @@ export const InsurableLimits = ({ items }: InsurableLimitsProps) => {
     <Grid>
       {items.map((item) => (
         <GridLayout.Content width={columns} align="left" key={item.label}>
-          <Badge as="h3" mb={theme.space.md}>
+          <Badge className={badge} as="h3">
             {item.label}
           </Badge>
           <Text size="xl">{item.value}</Text>

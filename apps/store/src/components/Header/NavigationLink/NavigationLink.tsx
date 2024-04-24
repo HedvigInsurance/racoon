@@ -57,7 +57,7 @@ export const ProductNavigationLink = ({
         </Text>
       </Link>
       {label && (
-        <Badge size={{ _: 'big', lg: 'small' }} as="span" color="green50">
+        <Badge size="responsive" as="span" color="green50">
           {label}
         </Badge>
       )}
