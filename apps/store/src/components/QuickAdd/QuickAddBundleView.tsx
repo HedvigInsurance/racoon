@@ -8,8 +8,6 @@ import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import {
   alignedBadge,
   card,
-  divider,
-  footer,
   link,
   pillow,
   pillowWrapper,
@@ -57,29 +55,25 @@ export function QuickAddBundleView(props: Props) {
             </Text>
           </div>
 
-          {props.badge && <Badge className={alignedBadge} color="blueFill3" {...props.badge} />}
+          {props.badge && <Badge className={alignedBadge} color="pinkFill1" {...props.badge} />}
         </SpaceFlex>
-
-        <hr className={divider} />
 
         {props.Body}
 
-        <div className={footer}>
-          <div className={priceWrapper}>
-            <Text as="p" color="textTranslucentPrimary">
-              {t('OFFER_PRICE_LABEL')}
-            </Text>
-            <SpaceFlex space={0}>
-              <Text color="textTranslucentPrimary">+</Text>
-              <Price
-                {...props.price}
-                color="textTranslucentPrimary"
-                secondaryColor="textTranslucentSecondary"
-              />
-            </SpaceFlex>
-          </div>
-          {props.Footer}
+        <div className={priceWrapper}>
+          <Text as="p" color="textTranslucentPrimary">
+            {t('OFFER_PRICE_LABEL')}
+          </Text>
+          <SpaceFlex space={0}>
+            <Text color="textTranslucentPrimary">+</Text>
+            <Price
+              {...props.price}
+              color="textTranslucentPrimary"
+              secondaryColor="textTranslucentSecondary"
+            />
+          </SpaceFlex>
         </div>
+        {props.Footer}
       </Space>
     </div>
   )

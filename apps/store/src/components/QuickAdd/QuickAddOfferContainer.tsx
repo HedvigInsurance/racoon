@@ -1,8 +1,9 @@
 import { useTranslation } from 'next-i18next'
-import { Heading, Text, Space, theme } from 'ui'
+import { Heading, Text, theme } from 'ui'
 import { Perils } from '@/components/Perils/Perils'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Price } from '@/components/Price'
+import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import type { CartFragmentFragment } from '@/services/graphql/generated'
 import {
   type OfferRecommendationFragment,
@@ -116,7 +117,8 @@ export function QuickAddOfferContainer(props: Props) {
         </>
       }
       Footer={
-        <Space y={0.5}>
+        <SpaceFlex space={0.5}>
+          <DismissButton variant="secondary" fullWidth={true} />
           <AddToCartButton
             shopSessionId={props.shopSessionId}
             productName={props.product.name}
@@ -125,8 +127,7 @@ export function QuickAddOfferContainer(props: Props) {
           >
             {t('QUICK_ADD_BUTTON_BUNDLE')}
           </AddToCartButton>
-          <DismissButton variant="ghost" fullWidth={true} />
-        </Space>
+        </SpaceFlex>
       }
     />
   )
