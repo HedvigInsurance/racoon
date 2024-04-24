@@ -10,7 +10,6 @@ type Props = {
 }
 
 export default function RootAppLayout({ children }: Props) {
-  return <JotaiProvider>{children}</JotaiProvider>
   return (
     <>
       <JotaiProvider>{children}</JotaiProvider>

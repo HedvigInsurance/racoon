@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { ProductPageBlock } from '@/blocks/ProductPageBlock'
 import { BankIdDialog } from '@/components/BankIdDialog/BankIdDialog'
 import { PageBannerTriggers } from '@/components/Banner/PageBannerTriggers'
@@ -49,19 +50,21 @@ export const ProductCmsPage = async ({ locale, story }: ProductCmsPageProps) => 
       selectedTypeOfContract={initialSelectedTypeOfContract}
     >
       <ProductPageContextProvider story={story} priceTemplate={priceTemplate}>
-        <PriceIntentContextProvider>
-          <ProductPageTrackingProvider>
-            <ProductReviewsMetadataProvider productReviewsMetadata={productReviewsMetadata}>
-              <BankIdContextProvider>
-                <ProductPageBlock blok={story.content} />
-                <PageDebugDialog />
-                <ProductPageViewTracker />
-                <PageBannerTriggers blok={story.content} />
-                <BankIdDialog />
-              </BankIdContextProvider>
-            </ProductReviewsMetadataProvider>
-          </ProductPageTrackingProvider>
-        </PriceIntentContextProvider>
+        <Suspense>
+          <PriceIntentContextProvider>
+            <ProductPageTrackingProvider>
+              <ProductReviewsMetadataProvider productReviewsMetadata={productReviewsMetadata}>
+                <BankIdContextProvider>
+                  <ProductPageBlock blok={story.content} />
+                  <PageDebugDialog />
+                  <ProductPageViewTracker />
+                  <PageBannerTriggers blok={story.content} />
+                  <BankIdDialog />
+                </BankIdContextProvider>
+              </ProductReviewsMetadataProvider>
+            </ProductPageTrackingProvider>
+          </PriceIntentContextProvider>
+        </Suspense>
       </ProductPageContextProvider>
     </ProductDataProvider>
   )

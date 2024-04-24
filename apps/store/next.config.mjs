@@ -15,6 +15,12 @@ const config = {
       '*': ['./next-i18next.config.cjs', './public/locales/**/*'],
     },
   },
+  logging: {
+    fetches: {
+      // Detailed fetch logs in dev move
+      fullUrl: true,
+    },
+  },
   reactStrictMode: true,
   swcMinify: true,
   compiler: {
