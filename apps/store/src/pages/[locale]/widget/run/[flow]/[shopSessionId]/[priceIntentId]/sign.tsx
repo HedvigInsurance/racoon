@@ -13,7 +13,6 @@ import { useShopSessionQuery } from '@/services/graphql/generated'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
-import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
 
@@ -99,8 +98,6 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       props: {
         ...translations,
         ssn: customer.ssn,
-        shouldCollectEmail: getShouldCollectEmail(customer),
-        shouldCollectName: getShouldCollectName(customer),
         shopSessionId: context.params.shopSessionId,
         content: story.content.checkoutPageContent,
         flow: context.params.flow,

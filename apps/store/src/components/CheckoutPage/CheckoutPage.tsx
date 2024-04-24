@@ -31,6 +31,7 @@ import type {
 import { CurrentMemberDocument } from '@/services/graphql/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
+import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { FormElement, QueryParam } from './CheckoutPage.constants'
@@ -140,21 +141,13 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   )
 }
 
-type CheckoutFormProps = Pick<
-  CheckoutPageProps,
-  'checkoutSteps' | 'shopSession' | 'shouldCollectEmail' | 'shouldCollectName' | 'ssn'
-> & { onSignError: () => void }
+type CheckoutFormProps = Pick<CheckoutPageProps, 'checkoutSteps' | 'shopSession' | 'ssn'> & {
+  onSignError: () => void
+}
 
 // Optimization: separated from page component to avoid rerendering full page when checkout status changes
 // Prop-drilling so many props is awkward, consider refactoring to group them somehow
-const CheckoutForm = ({
-  checkoutSteps,
-  onSignError,
-  shopSession,
-  ssn,
-  shouldCollectEmail,
-  shouldCollectName,
-}: CheckoutFormProps) => {
+const CheckoutForm = ({ checkoutSteps, onSignError, shopSession, ssn }: CheckoutFormProps) => {
   const { t } = useTranslation('checkout')
   const router = useRouter()
   const { reset: resetShopSession } = useShopSession()
@@ -188,6 +181,12 @@ const CheckoutForm = ({
       onSignError()
     },
   })
+
+  if (shopSession.customer == null) {
+    throw new Error('Must have shopSession.customer at this point')
+  }
+  const shouldCollectName = getShouldCollectName(shopSession.customer)
+  const shouldCollectEmail = getShouldCollectEmail(shopSession.customer)
 
   return (
     <form id={SIGN_FORM_ID} onSubmit={handleSubmitSign}>

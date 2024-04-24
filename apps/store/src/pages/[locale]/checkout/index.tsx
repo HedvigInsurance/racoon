@@ -12,7 +12,6 @@ import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.const
 import { getCurrentShopSessionServerSide } from '@/services/shopSession/ShopSession.helpers'
 import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
@@ -77,8 +76,6 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
     ...translations,
     [SHOP_SESSION_PROP_NAME]: shopSession.id,
     ssn: customer.ssn,
-    shouldCollectEmail: getShouldCollectEmail(customer),
-    shouldCollectName: getShouldCollectName(customer),
     shopSessionSigningId: shopSessionSigning?.id ?? null,
     checkoutSteps,
   }

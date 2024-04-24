@@ -30,6 +30,7 @@ import {
 } from '@/services/graphql/generated'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'
+import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { Header } from './Header'
@@ -40,8 +41,6 @@ type Props = {
   shopSession: ShopSession
   priceIntentId: string
   ssn: string
-  shouldCollectEmail: boolean
-  shouldCollectName: boolean
   suggestedEmail?: string
   flow: string
   content?: Array<SbBlokData>
@@ -130,6 +129,12 @@ export const SignPage = (props: Props) => {
       })
     }
 
+  if (props.shopSession.customer == null) {
+    throw new Error('Must have shopSession.customer at this point')
+  }
+  const shouldCollectName = getShouldCollectName(props.shopSession.customer)
+  const shouldCollectEmail = getShouldCollectEmail(props.shopSession.customer)
+
   return (
     <>
       <Wrapper y={3}>
@@ -204,7 +209,7 @@ export const SignPage = (props: Props) => {
                       disabled
                     />
 
-                    {props.shouldCollectName && (
+                    {shouldCollectName && (
                       <>
                         <TextField
                           type="text"
@@ -221,7 +226,7 @@ export const SignPage = (props: Props) => {
                       </>
                     )}
 
-                    {props.shouldCollectEmail && (
+                    {shouldCollectEmail && (
                       <TextField
                         type="email"
                         label={t('checkout:FORM_EMAIL_LABEL')}
