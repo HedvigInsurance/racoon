@@ -40,17 +40,14 @@ export const useAcceptExtension = (params: Params) => {
   }, [showError, currentOperation])
 
   const performSign = () => {
-    const { ssn, authenticationStatus } = params.shopSession.customer ?? {}
+    const { ssn } = params.shopSession.customer ?? {}
 
-    if (!ssn || !authenticationStatus) {
-      return LOGGER.info(
-        `Impossible to sign shopSession: ${params.shopSession.id} - lacking 'ssn' and 'authenticationStatus'`,
-      )
+    if (!ssn) {
+      return LOGGER.info(`Impossible to sign shopSession: ${params.shopSession.id} - lacking 'ssn'`)
     }
 
     startCheckoutSign({
       shopSessionId: params.shopSession.id,
-      customerAuthenticationStatus: authenticationStatus,
       ssn,
 
       async onSuccess() {

@@ -1,4 +1,4 @@
-import type { ShopSessionCustomer } from '@/services/graphql/generated'
+import type { ShopSessionCustomerFragment } from '@/services/graphql/generated'
 import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { getShouldCollectEmail } from '@/utils/customer'
 import { SE_ACCIDENT } from './data/SE_ACCIDENT'
@@ -10,7 +10,7 @@ import { SE_PET_CAT } from './data/SE_PET_CAT'
 import { SE_PET_DOG } from './data/SE_PET_DOG'
 import { SE_STUDENT_APARTMENT } from './data/SE_STUDENT_APARTMENT'
 import { SE_WIDGET_APARTMENT, SE_WIDGET_APARTMENT_NO_COMPARE } from './data/SE_WIDGET_APARTMENT'
-import type { InputField} from './Field.types';
+import type { InputField } from './Field.types'
 import { MIXED_BREED_OPTION_ID } from './Field.types'
 import type { Form, FormSection, JSONData, Template } from './PriceCalculator.types'
 
@@ -63,7 +63,7 @@ export const prefillData = ({ form, data, valueField }: FillDataParams): Form =>
 }
 
 type SetupFormOptions = {
-  customer: ShopSessionCustomer | null | undefined
+  customer: ShopSessionCustomerFragment | null | undefined
   priceIntent: PriceIntent
   template: Template
 }

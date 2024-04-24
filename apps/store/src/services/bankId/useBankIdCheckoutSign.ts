@@ -2,12 +2,11 @@ import { type ApolloError } from '@apollo/client'
 import { datadogRum } from '@datadog/browser-rum'
 import { useTranslation } from 'next-i18next'
 import { useCallback, useRef } from 'react'
-import type { Subscription } from 'zen-observable-ts';
+import type { Subscription } from 'zen-observable-ts'
 import { Observable } from 'zen-observable-ts'
 import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
 import { saveAuthTokens } from '@/services/authApi/persist'
 import {
-  ShopSessionAuthenticationStatus,
   ShopSessionSigningStatus,
   useShopSessionSigningLazyQuery,
   useShopSessionStartSignMutation,
@@ -15,20 +14,16 @@ import {
 import type { BankIdState, BankIdSignOperation, CheckoutSignOptions } from './bankId.types'
 import { apiStatusToBankIdState, bankIdLogger } from './bankId.utils'
 import type { BankIdDispatch } from './bankIdReducer'
-import { useBankIdLoginApi } from './useBankIdLogin'
 
 export type Options = {
   dispatch: BankIdDispatch
 }
 
 export const useBankIdCheckoutSign = ({ dispatch }: Options) => {
-  const { startLogin, cancelLogin } = useBankIdLoginApi({ dispatch })
-
   const { startSign, cancelSign } = useBankIdCheckoutSignApi({ dispatch })
 
   const startCheckoutSign = useCallback(
     async ({
-      customerAuthenticationStatus,
       shopSessionId,
       ssn,
       onSuccess,
@@ -45,29 +40,18 @@ export const useBankIdCheckoutSign = ({ dispatch }: Options) => {
         }
       }
 
-      dispatch({ type: 'startCheckoutSign', ssn, customerAuthenticationStatus })
+      dispatch({ type: 'startCheckoutSign', ssn })
       datadogRum.addAction('bankIdSign start')
 
-      if (customerAuthenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired) {
-        bankIdLogger.info('Authentication required for returning member')
-        startLogin({
-          ssn,
-          onSuccess() {
-            startSign({ shopSessionId, onSuccess: handleSuccess, onError })
-          },
-        })
-      } else {
-        startSign({ shopSessionId, onSuccess: handleSuccess, onError })
-      }
+      startSign({ shopSessionId, onSuccess: handleSuccess, onError })
     },
-    [dispatch, startLogin, startSign],
+    [dispatch, startSign],
   )
 
   const cancelCheckoutSign = useCallback(() => {
-    cancelLogin()
     cancelSign()
     dispatch({ type: 'cancel' })
-  }, [cancelLogin, cancelSign, dispatch])
+  }, [cancelSign, dispatch])
 
   return {
     startCheckoutSign,

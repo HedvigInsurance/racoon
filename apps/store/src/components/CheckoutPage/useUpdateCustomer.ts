@@ -1,21 +1,14 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useShopSessionCustomerUpdateMutation } from '@/services/graphql/generated'
-import { useGetMutationError } from '@/utils/useGetMutationError'
+import { useErrorMessage } from '@/utils/useErrorMessage'
 import { FormElement } from './CheckoutPage.constants'
 
 type Params = {
   shopSessionId: string
-  onSuccess?: () => void
 }
 
-export const useUpdateCustomer = ({ shopSessionId, onSuccess }: Params) => {
-  const getMutationError = useGetMutationError()
+export const useUpdateCustomer = ({ shopSessionId }: Params) => {
   const [updateCustomer, result] = useShopSessionCustomerUpdateMutation({
-    onCompleted(data) {
-      if (!data.shopSessionCustomerUpdate.userError) {
-        onSuccess?.()
-      }
-    },
     onError(error) {
       datadogLogs.logger.warn('Failed to update contact details', { error })
     },
@@ -35,7 +28,7 @@ export const useUpdateCustomer = ({ shopSessionId, onSuccess }: Params) => {
     handleSubmit,
     {
       loading: result.loading,
-      userError: getMutationError(result, result.data?.shopSessionCustomerUpdate),
+      userError: useErrorMessage(result.error),
     },
   ] as const
 }

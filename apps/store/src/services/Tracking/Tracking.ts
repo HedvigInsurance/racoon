@@ -170,12 +170,10 @@ export class Tracking {
   public async reportPurchase({
     cart,
     memberId,
-    isNewMember,
     customer,
   }: {
     cart: CartFragmentFragment
     memberId: string
-    isNewMember: boolean
     customer: {
       email: string
       firstName?: string
@@ -187,7 +185,6 @@ export class Tracking {
     const userData = await getLegacyUserData(this.context, customer, cart)
     event.ecommerce.userData = userData
     event.ecommerce.transaction_id = cart.id
-    event.new_customer = isNewMember
     this.reportEcommerceEvent(event)
     this.reportAdtractionEvent(cart, customer.email)
   }

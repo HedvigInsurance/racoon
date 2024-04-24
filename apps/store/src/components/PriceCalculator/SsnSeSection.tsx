@@ -3,11 +3,7 @@ import { useTranslation } from 'next-i18next'
 import { type FormEventHandler } from 'react'
 import { Button, Space } from 'ui'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
-import { useBankIdContext } from '@/services/bankId/BankIdContext'
-import {
-  ShopSessionAuthenticationStatus,
-  useShopSessionCustomerUpdateMutation,
-} from '@/services/graphql/generated'
+import { useShopSessionCustomerUpdateMutation } from '@/services/graphql/generated'
 import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useErrorMessage } from '@/utils/useErrorMessage'
 
@@ -17,7 +13,6 @@ type Props = { shopSession: ShopSession; onCompleted: () => void }
 
 export const SsnSeSection = ({ shopSession, onCompleted }: Props) => {
   const { t } = useTranslation('purchase-form')
-  const { showLoginPrompt } = useBankIdContext()
   const [updateCustomer, result] = useShopSessionCustomerUpdateMutation({
     // priceIntent.suggestedData may be updated based on customer.ssn
     refetchQueries: 'active',
@@ -26,13 +21,7 @@ export const SsnSeSection = ({ shopSession, onCompleted }: Props) => {
       const { shopSession } = data.shopSessionCustomerUpdate
       if (!shopSession) return
 
-      const { authenticationStatus } = shopSession.customer ?? {}
-      if (authenticationStatus === ShopSessionAuthenticationStatus.AuthenticationRequired) {
-        const ssn = shopSession.customer!.ssn!
-        showLoginPrompt({ ssn, onCompleted })
-      } else {
-        onCompleted()
-      }
+      onCompleted()
     },
     onError(error) {
       datadogLogs.logger.debug('Failed to update customer ssn', { error })
