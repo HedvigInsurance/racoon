@@ -4,10 +4,10 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { type ReactNode, useEffect, useState, Children } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import type { FontSizeProps, FontSizes } from 'ui'
-import { CheckIcon } from 'ui'
+import { CheckIcon, theme } from 'ui'
 import { list, listItem, tickerItemWrapper } from './Ticker.css'
 
-const DURATION = 1
+const DURATION = 0.5
 
 export type TickerHeight = {
   tickerHeight: FontSizes
@@ -27,7 +27,7 @@ export const Ticker = (props: Props) => {
   useEffect(() => {
     const interval = setInterval(() => {
       setVisibleIndex((prevIndex) => (prevIndex + 1) % childrenCount)
-    }, 3000)
+    }, 2000)
 
     return () => clearInterval(interval)
   }, [childrenCount])
@@ -66,7 +66,7 @@ const ANIMATION: Variants = {
   original: { y: 0, opacity: 1 },
   pushUp: { y: `-${DRIFT_HEIGHT}`, opacity: 0 },
 }
-const TRANSITION = { duration: DURATION, ease: 'anticipate' }
+const TRANSITION = { duration: DURATION, ...theme.transitions.framer.easeInOutQuint }
 
 type TickerItemProps = {
   children: React.ReactNode
