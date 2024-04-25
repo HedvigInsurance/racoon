@@ -1,13 +1,23 @@
-import styled from '@emotion/styled'
-import type { Variants} from 'framer-motion';
+import clsx from 'clsx'
+import type { Variants } from 'framer-motion'
 import { AnimatePresence, motion } from 'framer-motion'
 import { type ReactNode, useEffect, useState, Children } from 'react'
-import { CheckIcon, Text, theme } from 'ui'
+import { sprinkles } from 'ui/src/theme/sprinkles.css'
+import type { FontSizeProps, FontSizes } from 'ui'
+import { CheckIcon } from 'ui'
+import { list, listItem, tickerItemWrapper } from './Ticker.css'
 
 const DURATION = 1
 
+export type TickerHeight = {
+  tickerHeight: FontSizes
+  tickerHeightDesktop: FontSizes
+}
+
 type Props = {
   children: Iterable<ReactNode>
+  showCheckIcon?: boolean
+  size: FontSizeProps
 }
 
 export const Ticker = (props: Props) => {
@@ -22,15 +32,19 @@ export const Ticker = (props: Props) => {
     return () => clearInterval(interval)
   }, [childrenCount])
 
+  // Font size is used as height for the ticker to make animation of items responsive
+  const classNames = clsx(list, sprinkles({ fontSize: props.size }))
+
   return (
-    <List>
+    <ul className={classNames}>
       <AnimatePresence initial={false}>
         {Children.map(props.children, (child, index) => {
           if (index !== visibleIndex) return null
 
           return (
-            <ListItem
+            <motion.li
               key={index}
+              className={listItem}
               transition={TRANSITION}
               variants={ANIMATION}
               initial="pushDown"
@@ -38,15 +52,15 @@ export const Ticker = (props: Props) => {
               exit="pushUp"
             >
               {child}
-            </ListItem>
+            </motion.li>
           )
         })}
       </AnimatePresence>
-    </List>
+    </ul>
   )
 }
 
-const DRIFT_HEIGHT = '1.5rem'
+const DRIFT_HEIGHT = '0.8em'
 const ANIMATION: Variants = {
   pushDown: { y: DRIFT_HEIGHT, opacity: 0 },
   original: { y: 0, opacity: 1 },
@@ -54,36 +68,16 @@ const ANIMATION: Variants = {
 }
 const TRANSITION = { duration: DURATION, ease: 'anticipate' }
 
-const List = styled.ul({
-  position: 'relative',
-  height: '2.5rem',
-  overflow: 'hidden',
-})
-
-const ListItem = styled(motion.li)({
-  position: 'absolute',
-  inset: 0,
-})
-
 type TickerItemProps = {
-  children: string
+  children: React.ReactNode
+  showCheckIcon?: boolean
 }
 
 export const TickerItem = (props: TickerItemProps) => {
   return (
-    <TickerItemWrapper>
-      <CheckIcon size="1rem" />
-      <Text as="p" size="xs">
-        {props.children}
-      </Text>
-    </TickerItemWrapper>
+    <div className={tickerItemWrapper}>
+      {props.showCheckIcon && <CheckIcon size="1rem" />}
+      {props.children}
+    </div>
   )
 }
-
-const TickerItemWrapper = styled.div({
-  height: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: theme.space.xs,
-})
