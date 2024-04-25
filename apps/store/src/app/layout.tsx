@@ -5,6 +5,7 @@ import { theme } from 'ui'
 import { ApolloProvider } from '@/appComponents/providers/ApolloProvider'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { ORIGIN_URL } from '@/utils/PageLink'
+import { AppInitTriggers } from './AppInitTriggers'
 
 type Props = {
   children: ReactNode
@@ -12,11 +13,14 @@ type Props = {
 
 export default function RootAppLayout({ children }: Props) {
   return (
-    <ApolloProvider>
-      <ShopSessionProvider>
-        <JotaiProvider>{children}</JotaiProvider>
-      </ShopSessionProvider>
-    </ApolloProvider>
+    <>
+      <ApolloProvider>
+        <ShopSessionProvider>
+          <JotaiProvider>{children}</JotaiProvider>
+        </ShopSessionProvider>
+      </ApolloProvider>
+      <AppInitTriggers />
+    </>
   )
 }
 
