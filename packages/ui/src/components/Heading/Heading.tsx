@@ -4,9 +4,9 @@ import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import React from 'react'
 import Balancer from 'react-wrap-balancer'
-import type { Margins, UIColors } from '../../theme';
+import type { Margins, UIColors } from '../../theme'
 import { getColor, getMargins, theme } from '../../theme'
-import type { HeadingVariant } from './Heading.helpers';
+import type { HeadingVariant } from './Heading.helpers'
 import { getHeadingVariantStyles } from './Heading.helpers'
 
 export type { PossibleHeadingVariant } from './Heading.helpers'
@@ -22,7 +22,7 @@ type HeadingColors = Pick<
 >
 
 export type HeadingProps = Margins & {
-  as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+  as: 'h1' | 'h2' | 'h3' | 'h4' | 'p'
   color?: keyof HeadingColors
   children: React.ReactNode
   variant?: HeadingVariant

@@ -1,7 +1,7 @@
 'use client'
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import type { HeadingProps, PossibleHeadingVariant} from 'ui';
+import type { HeadingProps, PossibleHeadingVariant } from 'ui'
 import { ConditionalWrapper, Heading, theme } from 'ui'
 import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
