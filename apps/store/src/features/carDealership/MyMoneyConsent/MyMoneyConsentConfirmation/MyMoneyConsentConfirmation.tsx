@@ -1,8 +1,9 @@
 import type { ComponentPropsWithoutRef, PropsWithChildren } from 'react'
-import { Button, Dialog, Text } from 'ui'
+import { Button, Dialog, InfoIcon, Text } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import {
   consentDialogContent,
+  consentDialogIcon,
   consentDialogMessage,
   consentDialogWindow,
 } from './MyMoneyConsentConfirmation.css'
@@ -26,6 +27,7 @@ export function MyMoneyConsentConfirmation({ children, loading, onClose, onConti
       <Dialog.Content centerContent={true} className={consentDialogContent}>
         <Dialog.Window className={consentDialogWindow}>
           <div className={consentDialogMessage}>
+            <InfoIcon size="1.5rem" className={consentDialogIcon} />
             <Dialog.Title asChild>
               <Text size="md">Vill du gå vidare utan erbjudandet?</Text>
             </Dialog.Title>

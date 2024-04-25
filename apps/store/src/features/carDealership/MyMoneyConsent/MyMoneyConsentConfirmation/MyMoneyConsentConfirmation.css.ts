@@ -16,6 +16,14 @@ export const consentDialogWindow = style({
 })
 
 export const consentDialogMessage = style({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
   textAlign: 'center',
   marginBottom: theme.space.lg,
+})
+
+export const consentDialogIcon = style({
+  color: theme.colors.signalBlueElement,
+  marginBottom: theme.space.md,
 })
