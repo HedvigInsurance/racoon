@@ -1,3 +1,5 @@
+import { isPast, isSameDay, startOfToday } from 'date-fns'
+import { useCallback, useEffect, useMemo } from 'react'
 import { InputStartDay } from '@/components/InputDay/InputStartDay'
 import {
   type ProductOfferFragment,
@@ -16,26 +18,48 @@ type Props = {
   offer: ProductOfferFragment
 }
 
+const adjustPastDateToToday = (date?: Date | null) => {
+  if (date && isPast(date)) {
+    return startOfToday()
+  }
+
+  return date
+}
+
 export const CancellationForm = (props: Props) => {
   const { data } = usePriceIntentQuery({ variables: { priceIntentId: props.priceIntentId } })
+
   if (!data) throw new Error('Cancellation | Missing data')
 
-  const productOfferIds = data.priceIntent.offers.map((item) => item.id)
+  const productOfferIds = useMemo(
+    () => data.priceIntent.offers.map((item) => item.id),
+    [data.priceIntent.offers],
+  )
+
   const [mutate] = useCancellationRequestedUpdateMutation()
+
   const handleAutoSwitchChange = (checked: boolean) => {
     mutate({ variables: { productOfferIds, requested: checked } })
   }
 
-  const startDate = convertToDate(props.offer.startDate) ?? undefined
   const [updateStartDate, updateStartDateResult] = useStartDateUpdateMutation()
-  const handleChangeStartDate = (date: Date) => {
-    updateStartDate({
-      variables: {
-        productOfferIds,
-        startDate: formatAPIDate(date),
-      },
-    })
-  }
+
+  const startDate = useMemo(
+    () => convertToDate(props.offer.startDate) ?? undefined,
+    [props.offer.startDate],
+  )
+
+  const handleChangeStartDate = useCallback(
+    (date: Date) => {
+      updateStartDate({
+        variables: {
+          productOfferIds,
+          startDate: formatAPIDate(date),
+        },
+      })
+    },
+    [productOfferIds, updateStartDate],
+  )
 
   const startDateProps = {
     startDate,
@@ -48,6 +72,20 @@ export const CancellationForm = (props: Props) => {
     onAutoSwitchChange: handleAutoSwitchChange,
     companyName: props.offer.cancellation.externalInsurer?.displayName ?? 'Unknown',
   }
+
+  useEffect(() => {
+    const adjustedStartDate = adjustPastDateToToday(startDate)
+
+    if (!startDate || !adjustedStartDate) {
+      return
+    }
+
+    const isDifferentDate = !isSameDay(startDate, adjustedStartDate)
+
+    if (isDifferentDate) {
+      handleChangeStartDate(adjustedStartDate)
+    }
+  }, [handleChangeStartDate, startDate])
 
   switch (props.offer.cancellation.option) {
     case ExternalInsuranceCancellationOption.None:
