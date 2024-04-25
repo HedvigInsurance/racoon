@@ -5,7 +5,8 @@ export const card = style({
   padding: theme.space.md,
   border: `1px solid ${theme.colors.borderTranslucent1}`,
   borderRadius: theme.radius.md,
-  backgroundColor: theme.colors.blueFill1,
+  // TODO: replace this to theme.colors.signalbluefill when we update Uikit colors
+  backgroundColor: 'hsl(201, 84%, 90%)',
 
   '@media': {
     [minWidth.lg]: {
@@ -36,23 +37,14 @@ export const link = style({
 export const alignedBadge = style({
   alignSelf: 'flex-start',
   marginLeft: 'auto',
-})
-
-export const divider = style({
-  width: '100%',
-  height: 1,
-  backgroundColor: theme.colors.borderTranslucent1,
-})
-
-export const footer = style({
-  paddingTop: theme.space.xs,
+  fontSize: theme.fontSizes.xs,
 })
 
 export const priceWrapper = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  marginBottom: theme.space.lg,
+  marginBottom: theme.space.xl,
 })
 
 export const productDetail = style({

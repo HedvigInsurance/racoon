@@ -60,4 +60,5 @@ export const actionsWrapper = style({
   gridAutoFlow: 'column',
   gridAutoColumns: '1fr',
   gap: theme.space.xs,
+  paddingTop: theme.space.md,
 })
