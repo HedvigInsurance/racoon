@@ -23014,6 +23014,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-hook-form@npm:7.51.3":
+  version: 7.51.3
+  resolution: "react-hook-form@npm:7.51.3"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18
+  checksum: 10c0/dd7dfc8514df19a13b7647b3faebdcb1329723afb52454626496eeaa657323d42bab12dc85e6b77d758a166c6427fa87f13c5bd9f5f78666c682e8263117e297
+  languageName: node
+  linkType: hard
+
 "react-i18next@npm:14.1.0":
   version: 14.1.0
   resolution: "react-i18next@npm:14.1.0"
@@ -24803,6 +24812,7 @@ __metadata:
     react-day-picker: "npm:8.10.1"
     react-device-detect: "npm:2.2.3"
     react-dom: "npm:18.2.0"
+    react-hook-form: "npm:7.51.3"
     react-i18next: "npm:14.1.0"
     react-wrap-balancer: "npm:1.1.0"
     server-only: "npm:0.0.1"
