@@ -73,6 +73,7 @@ export const CancellationForm = (props: Props) => {
     companyName: props.offer.cancellation.externalInsurer?.displayName ?? 'Unknown',
   }
 
+  // Update past offer start date to today
   useEffect(() => {
     const adjustedStartDate = adjustPastDateToToday(startDate)
 
