@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next'
 import type { ComponentPropsWithoutRef, PropsWithChildren } from 'react'
 import { Button, Dialog, InfoIcon, Text } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -15,6 +16,8 @@ type Props = {
 } & PropsWithChildren<ComponentPropsWithoutRef<typeof Dialog.Root>>
 
 export function MyMoneyConsentConfirmation({ children, loading, onClose, onContinue }: Props) {
+  const { t } = useTranslation('carDealership')
+
   const handleClose = (isOpen: boolean) => {
     if (!isOpen) {
       onClose()
@@ -29,22 +32,22 @@ export function MyMoneyConsentConfirmation({ children, loading, onClose, onConti
           <div className={consentDialogMessage}>
             <InfoIcon size="1.5rem" className={consentDialogIcon} />
             <Dialog.Title asChild>
-              <Text size="md">Vill du gå vidare utan erbjudandet?</Text>
+              <Text size="md">{t('MY_MONEY_CONSENT_CONFIRMATION_TITLE')}</Text>
             </Dialog.Title>
             <Dialog.Description asChild>
               <Text size="md" color="textSecondary">
-                Sambla ger dig förmånliga räntor på ditt existerande billån.
+                {t('MY_MONEY_CONSENT_CONFIRMATION_DESCRIPTION')}
               </Text>
             </Dialog.Description>
           </div>
 
           <SpaceFlex space={0.5} direction="vertical">
             <Dialog.Close asChild>
-              <Button>Gå tillbaka</Button>
+              <Button>{t('MY_MONEY_CONSENT_CONFIRMATION_BACK_BUTTON')}</Button>
             </Dialog.Close>
 
             <Button onClick={onContinue} loading={loading} variant="ghost">
-              Fortsätt utan erbjudande
+              {t('MY_MONEY_CONSENT_CONFIRMATION_CONTINUE_BUTTON')}
             </Button>
           </SpaceFlex>
         </Dialog.Window>
