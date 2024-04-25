@@ -21,7 +21,7 @@ export const getServerSideProps: GetServerSideProps<any, Params> = async (contex
   if (!isRoutingLocale(context.locale)) return { notFound: true }
 
   const url = new URL(context.resolvedUrl, ORIGIN_URL)
-  const redirect = redirectIfRunningInStoryblokEditor(url, context.locale)
+  const redirect = redirectIfRunningInStoryblokEditor(url)
   if (redirect) return { redirect }
 
   const flowMetadata = await fetchFlowMetadata({

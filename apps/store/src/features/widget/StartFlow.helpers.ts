@@ -11,13 +11,10 @@ import { parseCustomerDataSearchParams } from './parseSearchParams'
 import { shopSessionCustomerUpdate } from './shopSessionCustomerUpdate'
 import { STORYBLOK_WIDGET_FOLDER_SLUG } from './widget.constants'
 
-export const redirectIfRunningInStoryblokEditor = (
-  url: URL,
-  locale: RoutingLocale,
-): Redirect | undefined => {
+export const redirectIfRunningInStoryblokEditor = (url: URL): Redirect | undefined => {
   const runningInStoryblokEditor = url.searchParams.has('_storyblok')
   if (runningInStoryblokEditor) {
-    url.pathname = url.pathname.replace('/widget/flows', `${locale}/widget/preview`)
+    url.pathname = url.pathname.replace('widget/flows', 'widget/preview')
     return { destination: url.href, permanent: false }
   }
 }
