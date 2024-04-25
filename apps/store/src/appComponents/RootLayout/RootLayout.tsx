@@ -1,14 +1,15 @@
-import { Provider as JotaiProvider } from 'jotai'
-import type { PropsWithChildren} from 'react';
+import type { PropsWithChildren } from 'react'
 import { Suspense } from 'react'
 import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import globalCss from 'ui/src/global.css'
 import { TranslationsProvider } from '@/appComponents/providers/TranslationsProvider'
 import { OrgStructuredData } from '@/appComponents/RootLayout/OrgStructuredData'
+import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { contentFontClassName } from '@/utils/fonts'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 import type { RoutingLocale } from '@/utils/l10n/types'
-import { initTranslationsServerSide } from 'app/i18n'
+import { initTranslationsServerSide } from '../../app/i18n'
+import { ApolloProvider } from '../providers/ApolloProvider'
 import { DebugError } from './DebugError'
 
 // Trick compiler into thinking we need global.css import for anything other than side effects
@@ -34,11 +35,13 @@ export async function RootLayout({
           <DebugError />
         </Suspense>
 
-        <TranslationsProvider locale={locale} resources={resources}>
-          <JotaiProvider>
-            <BalancerProvider>{children}</BalancerProvider>
-          </JotaiProvider>
-        </TranslationsProvider>
+        <ApolloProvider locale={locale}>
+          <ShopSessionProvider>
+            <TranslationsProvider locale={locale} resources={resources}>
+              <BalancerProvider>{children}</BalancerProvider>
+            </TranslationsProvider>
+          </ShopSessionProvider>
+        </ApolloProvider>
       </body>
     </html>
   )

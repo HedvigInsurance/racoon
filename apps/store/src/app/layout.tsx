@@ -2,8 +2,6 @@ import { Provider as JotaiProvider } from 'jotai'
 import type { Metadata, Viewport } from 'next'
 import type { ReactNode } from 'react'
 import { theme } from 'ui'
-import { ApolloProvider } from '@/appComponents/providers/ApolloProvider'
-import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { ORIGIN_URL } from '@/utils/PageLink'
 import { AppInitTriggers } from './AppInitTriggers'
 
@@ -12,13 +10,10 @@ type Props = {
 }
 
 export default function RootAppLayout({ children }: Props) {
+  return <JotaiProvider>{children}</JotaiProvider>
   return (
     <>
-      <ApolloProvider>
-        <ShopSessionProvider>
-          <JotaiProvider>{children}</JotaiProvider>
-        </ShopSessionProvider>
-      </ApolloProvider>
+      <JotaiProvider>{children}</JotaiProvider>
       <AppInitTriggers />
     </>
   )

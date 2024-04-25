@@ -20,7 +20,7 @@ import type { PriceIntentService } from '@/services/priceIntent/PriceIntentServi
 import { setupShopSession } from '@/services/shopSession/app-router/ShopSession.utils'
 import type { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
-import type { FormStateWithErrors } from 'app/types/formStateTypes'
+import type { FormStateWithErrors } from '../types/formStateTypes'
 
 const DEFAULT_LOCALE: RoutingLocale = 'se-en'
 const DEFAULT_COUNTRY_CODE = CountryCode.Se
@@ -48,8 +48,7 @@ export const createCustomerSession = async (
       }
     }
 
-    const apolloClient = await getApolloClient()
-
+    const apolloClient = getApolloClient(DEFAULT_LOCALE)
     const shopSessionService = setupShopSession(apolloClient)
     const shopSession = await shopSessionService.create({ countryCode: DEFAULT_COUNTRY_CODE })
     console.log(`Created new ShopSession: ${shopSession.id}`)
