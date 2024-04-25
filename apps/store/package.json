@@ -84,7 +84,7 @@
     "ui": "workspace:",
     "uuid": "9.0.1",
     "zen-observable-ts": "1.2.5",
-    "zod": "3.22.5"
+    "zod": "3.23.0"
   },
   "devDependencies": {
     "@babel/core": "7.24.4",
