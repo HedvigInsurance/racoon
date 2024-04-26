@@ -27,7 +27,7 @@ Note: `LOKALISE_TOKEN` should already be set in `.env.local`
 
 ### Adding new keys
 
-When adding new keys make sure to re-download the transaltion files but running:
+When adding new keys make sure to re-download the transaltion files by running:
 
 ```bash
 yarn workspace store download-translations
