@@ -1,5 +1,5 @@
 import { useTranslation } from 'next-i18next'
-import type { ComponentPropsWithoutRef, PropsWithChildren } from 'react'
+import type { ComponentPropsWithoutRef } from 'react'
 import { Button, Dialog, InfoIcon, Text } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import {
@@ -18,14 +18,14 @@ type Props = {
 export function MyMoneyConsentConfirmation({ children, loading, onClose, onContinue }: Props) {
   const { t } = useTranslation('carDealership')
 
-  const handleClose = (isOpen: boolean) => {
+  const handleOpenChange = (isOpen: boolean) => {
     if (!isOpen) {
       onClose()
     }
   }
 
   return (
-    <Dialog.Root onOpenChange={handleClose}>
+    <Dialog.Root onOpenChange={handleOpenChange}>
       <Dialog.Trigger asChild>{children}</Dialog.Trigger>
       <Dialog.Content centerContent={true} className={consentDialogContent}>
         <Dialog.Window className={consentDialogWindow}>
