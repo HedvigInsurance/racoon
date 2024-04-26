@@ -13,7 +13,7 @@ type Props = {
   onClose: () => void
   onContinue: () => void
   loading?: boolean
-} & PropsWithChildren<ComponentPropsWithoutRef<typeof Dialog.Root>>
+} & ComponentPropsWithoutRef<typeof Dialog.Root>
 
 export function MyMoneyConsentConfirmation({ children, loading, onClose, onContinue }: Props) {
   const { t } = useTranslation('carDealership')
