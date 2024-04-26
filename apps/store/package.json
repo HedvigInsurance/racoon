@@ -112,7 +112,7 @@
     "@swc-jotai/react-refresh": "0.1.0",
     "@testing-library/dom": "10.0.0",
     "@testing-library/jest-dom": "6.4.2",
-    "@testing-library/react": "15.0.2",
+    "@testing-library/react": "15.0.3",
     "@testing-library/user-event": "14.5.2",
     "@types/clone-deep": "4.0.4",
     "@types/md5": "2.3.5",
