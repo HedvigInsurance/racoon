@@ -23,7 +23,7 @@ import type { CarTrialExtension, TrialContract } from './carDealership.types'
 import { useUserWantsExtension } from './ExtensionOfferToggle'
 import { LoadingSkeleton } from './LoadingSkeleton'
 import { PayForTrial } from './PayForTrial'
-import { TrialExtensionForm } from './TrialExtensionForm'
+import { TrialExtensionForm } from './TrialExtensionForm/TrialExtensionForm'
 
 // We cancel the trial if member hasn't connected payment
 const DAYS_UNTIL_TERMINATION = 14

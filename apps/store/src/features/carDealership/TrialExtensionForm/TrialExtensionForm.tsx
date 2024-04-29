@@ -2,6 +2,7 @@ import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
+import type { ComponentPropsWithoutRef } from 'react'
 import { useMemo, useState } from 'react'
 import { BankIdIcon, Button, CheckIcon, Space, Text, theme } from 'ui'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
@@ -17,13 +18,15 @@ import { convertToDate } from '@/utils/date'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
-import { type TrialContract } from './carDealership.types'
+import { type TrialContract } from '../carDealership.types'
+import { ExtensionOfferToggle } from '../ExtensionOfferToggle'
+import { concentAcceptedAtom } from '../MyMoneyConsent/myMoneyConcentAtom'
+import { MyMoneyConsent } from '../MyMoneyConsent/MyMoneyConsent'
+import { myMoneyConsentConfirmationFlagAtom } from '../MyMoneyConsentConfirmation/myMoneyConcentConfirmationAtom'
+import { MyMoneyConsentConfirmation } from '../MyMoneyConsentConfirmation/MyMoneyConsentConfirmation'
+import { PriceBreakdown } from '../PriceBreakdown'
+import { ProductItemContractContainerCar } from '../ProductItemContractContainer'
 import { EditActionButton } from './EditActionButton'
-import { ExtensionOfferToggle } from './ExtensionOfferToggle'
-import { MyMoneyConsent } from './MyMoneyConsent/MyMoneyConsent'
-import { concentAcceptedAtom } from './MyMoneyConsent/MyMoneyConsentAtom'
-import { PriceBreakdown } from './PriceBreakdown'
-import { ProductItemContractContainerCar } from './ProductItemContractContainer'
 import { useAcceptExtension } from './useAcceptExtension'
 
 export type MyMoneyConsentProps = {
@@ -63,6 +66,13 @@ export const TrialExtensionForm = ({
       priceIntent.offers[0].variant.typeOfContract
     )
   })
+
+  const [wasMyMoneyConsentShown, setWasMyMoneyConsentShown] = useAtom(
+    myMoneyConsentConfirmationFlagAtom,
+  )
+
+  const shouldShowMyMoneyConsentConfirmation = !concentAccepted && !wasMyMoneyConsentShown
+
   const selectedOffer = useMemo(
     () => getSelectedOffer(priceIntent, tierLevel),
     [priceIntent, tierLevel],
@@ -88,12 +98,16 @@ export const TrialExtensionForm = ({
     setTierLevel(tierLevel)
   }
 
+  const markMyMoneyConsentConfirmationAsShown = () => setWasMyMoneyConsentShown(true)
+
   const handleClickSign = () => {
     datadogRum.addAction('Car dealership | Click Sign')
     acceptExtension(selectedOffer.id)
     // Send MyMoney consent state
     onConsentChange?.(concentAccepted)
   }
+
+  const signButtonLabel = requirePaymentConnection ? t('SIGN_AND_PAY_BUTTON') : t('SIGN_BUTTON')
 
   return (
     <Space y={1}>
@@ -161,12 +175,18 @@ export const TrialExtensionForm = ({
         {collectConsent && <MyMoneyConsent />}
 
         <Space y={1}>
-          <Button onClick={handleClickSign} loading={loading}>
-            <SpaceFlex space={0.5} align="center">
-              <BankIdIcon />
-              {requirePaymentConnection ? t('SIGN_AND_PAY_BUTTON') : t('SIGN_BUTTON')}
-            </SpaceFlex>
-          </Button>
+          {shouldShowMyMoneyConsentConfirmation ? (
+            <MyMoneyConsentConfirmation
+              onClose={markMyMoneyConsentConfirmationAsShown}
+              onContinue={handleClickSign}
+            >
+              <SignButton>{signButtonLabel}</SignButton>
+            </MyMoneyConsentConfirmation>
+          ) : (
+            <SignButton onClick={handleClickSign} loading={loading}>
+              {signButtonLabel}
+            </SignButton>
+          )}
 
           <UspWrapper>
             <CheckIcon size="1rem" />
@@ -187,6 +207,18 @@ export const TrialExtensionForm = ({
         </Space>
       </Space>
     </Space>
+  )
+}
+
+type SignButtonProps = ComponentPropsWithoutRef<typeof Button>
+const SignButton = ({ children, ...props }: SignButtonProps) => {
+  return (
+    <Button {...props}>
+      <SpaceFlex space={0.5} align="center">
+        <BankIdIcon />
+        {children}
+      </SpaceFlex>
+    </Button>
   )
 }
 

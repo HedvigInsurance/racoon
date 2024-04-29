@@ -16,16 +16,26 @@ Images are uploaded and managed in Storyblok. Videos are uploaded to our S3 buck
 
 ## Translations
 
-Translations are store under `public/locales`. They can be downloaded by running:
-
-```bash
-yarn workspace store download-translations
-```
+Translations are managed through `Lokalize` then downloaded to `public/locals`.
 
 Requirements:
 
 - [lokalise2 CLI](https://github.com/lokalise/lokalise-cli-2-go)
 - `LOKALISE_TOKEN` environment variable (not loaded automatically from `.env`)
+
+Note: `LOKALISE_TOKEN` should already be set in `.env.local`
+
+### Adding new keys
+
+When adding new keys make sure to re-download the transaltion files by running:
+
+```bash
+yarn workspace store download-translations
+```
+
+### Type generation
+
+Translation keys are type-safe. However, English translations are needed for the types to be generated.
 
 ### Debugging
 
