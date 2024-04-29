@@ -1,5 +1,6 @@
 import { useStoryblokState } from '@storyblok/react'
 import { type GetStaticPaths, type GetStaticProps, type NextPageWithLayout } from 'next'
+import { removeTrailingSlash } from 'next/dist/shared/lib/router/utils/remove-trailing-slash'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
@@ -11,14 +12,9 @@ import { fetchProductReviewsMetadata } from '@/features/memberReviews/memberRevi
 import { initializeApollo } from '@/services/apollo/client'
 import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { getStoryblokPageProps } from '@/services/storyblok/getStoryblokPageProps'
-import type {
-  StoryblokPageProps,
-  StoryblokQueryParams} from '@/services/storyblok/storyblok';
-import {
-  getFilteredPageLinks,
-  getRevalidate
-} from '@/services/storyblok/storyblok'
-import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
+import type { StoryblokPageProps, StoryblokQueryParams } from '@/services/storyblok/storyblok'
+import { getFilteredPageLinks, getRevalidate } from '@/services/storyblok/storyblok'
+import { MOST_VISITED_PATHS, STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { isProductStory } from '@/services/storyblok/Storyblok.helpers'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
@@ -108,19 +104,12 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // When this is true (preview env) don't prerender any static pages
-  if (process.env.SKIP_BUILD_STATIC_GENERATION === 'true') {
-    console.info('Skipping static generation...')
-    return {
-      paths: [],
-      fallback: 'blocking',
-    }
-  }
-
   const pageLinks = await getFilteredPageLinks()
-
+  const mostVisitedLinks = pageLinks.filter((item) =>
+    MOST_VISITED_PATHS.has(`/${removeTrailingSlash(item.link.slug)}`),
+  )
   return {
-    paths: pageLinks.map(({ locale, slugParts }) => {
+    paths: mostVisitedLinks.map(({ locale, slugParts }) => {
       return { params: { locale, slug: slugParts } }
     }),
     fallback: 'blocking',
