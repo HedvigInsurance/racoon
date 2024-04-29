@@ -1,14 +1,11 @@
 import clsx from 'clsx'
 import type { Variants } from 'framer-motion'
-import { AnimatePresence, motion } from 'framer-motion'
-import { type ReactNode, useState, Children } from 'react'
+import { motion } from 'framer-motion'
+import { useEffect, useRef, type ReactNode } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import type { FontSizeProps, FontSizes } from 'ui'
 import { CheckIcon, theme } from 'ui'
-import { useInterval } from '@/utils/useInterval'
 import { list, listItem, tickerItemWrapper } from './Ticker.css'
-
-const DURATION = 0.5
 
 export type TickerHeight = {
   tickerHeight: FontSizes
@@ -16,47 +13,19 @@ export type TickerHeight = {
 }
 
 type Props = {
-  children: Iterable<ReactNode>
+  children: ReactNode
   showCheckIcon?: boolean
   size: FontSizeProps
 }
 
 export function Ticker(props: Props) {
-  const [visibleIndex, setVisibleIndex] = useState(0)
-  const childrenCount = Children.count(props.children)
-
-  useInterval(() => {
-    setVisibleIndex((prevIndex) => (prevIndex + 1) % childrenCount)
-  }, 2000)
-
   // Font size is used as height for the ticker to make animation of items responsive
   const classNames = clsx(list, sprinkles({ fontSize: props.size }))
 
-  return (
-    <ul className={classNames}>
-      <AnimatePresence initial={false}>
-        {Children.map(props.children, (child, index) => {
-          if (index !== visibleIndex) return null
-
-          return (
-            <motion.li
-              key={index}
-              className={listItem}
-              transition={TRANSITION}
-              variants={ANIMATION}
-              initial="pushDown"
-              animate="original"
-              exit="pushUp"
-            >
-              {child}
-            </motion.li>
-          )
-        })}
-      </AnimatePresence>
-    </ul>
-  )
+  return <ul className={classNames}>{props.children}</ul>
 }
 
+const DURATION = 0.5
 const DRIFT_HEIGHT = '0.8em'
 const ANIMATION: Variants = {
   pushDown: { y: DRIFT_HEIGHT, opacity: 0 },
@@ -70,11 +39,42 @@ type TickerItemProps = {
   showCheckIcon?: boolean
 }
 
-export const TickerItem = (props: TickerItemProps) => {
+export function TickerItem(props: TickerItemProps) {
   return (
-    <div className={tickerItemWrapper}>
-      {props.showCheckIcon && <CheckIcon size="1rem" />}
-      {props.children}
-    </div>
+    <motion.li
+      className={listItem}
+      transition={TRANSITION}
+      variants={ANIMATION}
+      initial="pushDown"
+      animate="original"
+      exit="pushUp"
+    >
+      <div className={tickerItemWrapper}>
+        {props.showCheckIcon && <CheckIcon size="1rem" />}
+        {props.children}
+      </div>
+    </motion.li>
   )
+}
+
+export const useTickerAnimation = (callback: () => void, isInView: boolean, delay = 2000) => {
+  // Store timeout ref to clear it on unmount or when the element is not in view
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>()
+
+  useEffect(() => {
+    const animate = () => {
+      timeoutRef.current = setTimeout(() => {
+        callback()
+        animate()
+      }, delay)
+    }
+
+    if (isInView) {
+      animate()
+    } else {
+      clearTimeout(timeoutRef.current)
+    }
+
+    return () => clearTimeout(timeoutRef.current)
+  }, [delay, isInView, callback])
 }
