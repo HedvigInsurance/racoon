@@ -2,6 +2,7 @@ import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
+import type { ComponentPropsWithoutRef } from 'react'
 import { useMemo, useState } from 'react'
 import { BankIdIcon, Button, CheckIcon, Space, Text, theme } from 'ui'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
@@ -106,6 +107,8 @@ export const TrialExtensionForm = ({
     onConsentChange?.(concentAccepted)
   }
 
+  const signButtonLabel = requirePaymentConnection ? t('SIGN_AND_PAY_BUTTON') : t('SIGN_BUTTON')
+
   return (
     <Space y={1}>
       {requirePaymentConnection && (
@@ -177,20 +180,12 @@ export const TrialExtensionForm = ({
               onClose={markMyMoneyConsentConfirmationAsShown}
               onContinue={handleClickSign}
             >
-              <Button>
-                <SpaceFlex space={0.5} align="center">
-                  <BankIdIcon />
-                  {requirePaymentConnection ? t('SIGN_AND_PAY_BUTTON') : t('SIGN_BUTTON')}
-                </SpaceFlex>
-              </Button>
+              <SignButton>{signButtonLabel}</SignButton>
             </MyMoneyConsentConfirmation>
           ) : (
-            <Button onClick={handleClickSign} loading={loading}>
-              <SpaceFlex space={0.5} align="center">
-                <BankIdIcon />
-                {requirePaymentConnection ? t('SIGN_AND_PAY_BUTTON') : t('SIGN_BUTTON')}
-              </SpaceFlex>
-            </Button>
+            <SignButton onClick={handleClickSign} loading={loading}>
+              {signButtonLabel}
+            </SignButton>
           )}
 
           <UspWrapper>
@@ -212,6 +207,18 @@ export const TrialExtensionForm = ({
         </Space>
       </Space>
     </Space>
+  )
+}
+
+type SignButtonProps = ComponentPropsWithoutRef<typeof Button>
+const SignButton = ({ children, ...props }: SignButtonProps) => {
+  return (
+    <Button {...props}>
+      <SpaceFlex space={0.5} align="center">
+        <BankIdIcon />
+        {children}
+      </SpaceFlex>
+    </Button>
   )
 }
 
