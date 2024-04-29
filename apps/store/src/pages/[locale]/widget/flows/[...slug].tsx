@@ -27,6 +27,7 @@ export const getServerSideProps: GetServerSideProps<any, Params> = async (contex
   const flowMetadata = await fetchFlowMetadata({
     locale: context.locale,
     slug: context.params.slug.join('/'),
+    draftMode: context.draftMode,
   })
   if (!flowMetadata) return { notFound: true }
 
