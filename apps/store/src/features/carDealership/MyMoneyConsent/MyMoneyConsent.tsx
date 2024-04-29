@@ -5,6 +5,7 @@ import { useTranslation } from 'next-i18next'
 import React, { useState } from 'react'
 import { CheckIcon, Text } from 'ui'
 import * as Collapsible from '@/components/Collapsible'
+import { concentAcceptedAtom } from './myMoneyConcentAtom'
 import {
   checkboxIndicator,
   checkboxRoot,
@@ -12,7 +13,6 @@ import {
   consentWrapper,
   trigger,
 } from './MyMoneyConsent.css'
-import { concentAcceptedAtom } from './MyMoneyConsentAtom'
 
 export const MyMoneyConsent = () => {
   const { t } = useTranslation(['carDealership', 'common'])
