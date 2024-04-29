@@ -1,13 +1,22 @@
+import { useApolloClient } from '@apollo/client'
+import { datadogLogs } from '@datadog/browser-logs'
+import { isBefore, isSameDay } from 'date-fns'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
-import { useId, type ComponentProps, type ReactNode } from 'react'
-import { Controller } from 'react-hook-form'
+import { useState, useId, type ComponentProps, type ReactNode, type FormEventHandler } from 'react'
+import { z } from 'zod'
 import { Space, Text, Badge, Button } from 'ui'
 import { InputDay } from '@/components/InputDay/InputDay'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Price } from '@/components/Price'
 import { StepperInput } from '@/components/StepperInput/StepperInput'
-import { type OfferRecommendationFragment } from '@/services/graphql/generated'
+import {
+  useStartDateUpdateMutation,
+  type OfferRecommendationFragment,
+} from '@/services/graphql/generated'
+import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
+import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
+import { convertToDate, formatAPIDate } from '@/utils/date'
 import { getOfferPrice } from '@/utils/getOfferPrice'
 import { DismissButton } from './DismissButton'
 import {
@@ -19,11 +28,29 @@ import {
   priceWrapper,
   actionsWrapper,
 } from './QuickAddEditableView.css'
-import { useEditCrossSellOfferForm, Fields } from './useEditCrossSellOfferForm'
+import { useAddRecommendationOfferToCart } from './useAddRecommendationOfferToCart'
+
+enum Fields {
+  NUMBER_CO_INSURED = 'numberCoInsured',
+  START_DATE = 'startDate',
+  INTENT = 'intent',
+}
+
+const FORM_SCHEMA = z.object({
+  [Fields.NUMBER_CO_INSURED]: z.string().transform((value) => parseInt(value, 10)),
+  [Fields.START_DATE]: z.string().transform((value) => new Date(value)),
+  [Fields.INTENT]: z.enum(['add-offer', 'update-price']),
+})
+
+type FormInput = {
+  [Fields.NUMBER_CO_INSURED]: number
+  [Fields.START_DATE]: Date
+  [Fields.INTENT]: 'add-offer' | 'update-price'
+}
 
 type Props = {
   shopSessionId: string
-  offer: OfferRecommendationFragment
+  initialOffer: OfferRecommendationFragment
   title: string
   subtitle: string
   pillow: ComponentProps<typeof Pillow>
@@ -36,10 +63,52 @@ export function QuickAddEditableView(props: Props) {
   const { t } = useTranslation('cart')
 
   const formId = useId()
-  const { offer, formState, handleSubmit, control } = useEditCrossSellOfferForm({
+  const [offer, setOffer] = useState(props.initialOffer)
+  const [hasNumberCoInsuredChanged, setHasNumberCoInsuredChanged] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+
+  const getNewOffer = useGetNewOffer({
     shopSessionId: props.shopSessionId,
-    initialOffer: props.offer,
+    productName: offer.product.name,
   })
+  const updateOfferStartDate = useUpdateOfferStartDate()
+  const [addOfferToCart] = useAddRecommendationOfferToCart({ shopSessionId: props.shopSessionId })
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+    try {
+      event.preventDefault()
+      setSubmitting(true)
+
+      const formData = new FormData(event.currentTarget)
+      const formValues = getFormValues(formData)
+      const hasStartDateChanged = !isSameDay(
+        formValues[Fields.START_DATE],
+        getOfferStartDateWithFallback(offer),
+      )
+
+      let updatedOffer = offer
+      if (formValues[Fields.INTENT] === 'update-price') {
+        updatedOffer = await getNewOffer({ numberCoInsured: formValues[Fields.NUMBER_CO_INSURED] })
+
+        if (hasStartDateChanged) {
+          updatedOffer = await updateOfferStartDate(updatedOffer.id, formValues[Fields.START_DATE])
+        }
+
+        setOffer(updatedOffer)
+        setHasNumberCoInsuredChanged(false)
+      } else {
+        if (hasStartDateChanged) {
+          updatedOffer = await updateOfferStartDate(offer.id, formValues[Fields.START_DATE])
+        }
+
+        await addOfferToCart(updatedOffer)
+      }
+    } catch (error) {
+      datadogLogs.logger.error('Cross sell | failed to update offer', { error })
+    } finally {
+      setSubmitting(false)
+    }
+  }
 
   return (
     <div className={card}>
@@ -70,35 +139,33 @@ export function QuickAddEditableView(props: Props) {
         <Space y={1}>
           <form id={formId} onSubmit={handleSubmit}>
             <Space y={0.25}>
-              <Controller
+              <StepperInput
+                className={formField}
                 name={Fields.NUMBER_CO_INSURED}
-                control={control}
-                render={({ field }) => (
-                  <StepperInput
-                    className={formField}
-                    min={0}
-                    max={5}
-                    label={t('NUMBER_COINSURED_INPUT_LABEL')}
-                    optionLabel={(count) => t('NUMBER_COINSURED_OPTION_LABEL', { count })}
-                    value={field.value}
-                    onChange={field.onChange}
-                  />
-                )}
+                min={0}
+                max={5}
+                label={t('NUMBER_COINSURED_INPUT_LABEL')}
+                optionLabel={(count) => t('NUMBER_COINSURED_OPTION_LABEL', { count })}
+                defaultValue={getOfferNumberCoInsuredWithFallback(offer)}
+                onChange={(value) =>
+                  setHasNumberCoInsuredChanged(value !== getOfferNumberCoInsuredWithFallback(offer))
+                }
+                required={true}
               />
-              <Controller
+              <InputDay
+                className={formField}
                 name={Fields.START_DATE}
-                control={control}
-                render={({ field }) => (
-                  <InputDay
-                    className={formField}
-                    label={t('START_DATE_LABEL')}
-                    fromDate={new Date()}
-                    selected={field.value}
-                    onSelect={(date) => field.onChange(date)}
-                  />
-                )}
+                label={t('START_DATE_LABEL')}
+                fromDate={new Date()}
+                defaultSelected={getOfferStartDateWithFallback(offer)}
+                required={true}
               />
             </Space>
+            <input
+              type="hidden"
+              name={Fields.INTENT}
+              value={hasNumberCoInsuredChanged ? 'update-price' : 'add-offer'}
+            />
           </form>
 
           <div className={priceWrapper}>
@@ -114,14 +181,92 @@ export function QuickAddEditableView(props: Props) {
 
           <div className={actionsWrapper}>
             <DismissButton variant="secondary" />
-            <Button type="submit" form={formId} size="medium" loading={formState.isSubmitting}>
-              {formState.dirtyFields[Fields.NUMBER_CO_INSURED]
-                ? t('QUICK_ADD_UPDATE')
-                : t('QUICK_ADD_BUTTON')}
+            <Button type="submit" form={formId} size="medium" loading={submitting}>
+              {hasNumberCoInsuredChanged ? t('QUICK_ADD_UPDATE') : t('QUICK_ADD_BUTTON')}
             </Button>
           </div>
         </Space>
       </Space>
     </div>
   )
+}
+
+function getOfferStartDateWithFallback(offer: OfferRecommendationFragment) {
+  const today = new Date()
+  const offerStartDate = convertToDate(offer.startDate)
+  if (offerStartDate === null || isBefore(offerStartDate, today)) return today
+
+  return offerStartDate
+}
+
+function getOfferNumberCoInsuredWithFallback(offer: OfferRecommendationFragment) {
+  const CO_INSURED_DATA_KEY = 'numberCoInsured'
+
+  return parseInt(offer.priceIntentData[CO_INSURED_DATA_KEY]) || 0
+}
+
+function getFormValues(formData: FormData): FormInput {
+  const data = FORM_SCHEMA.parse(Object.fromEntries(formData.entries()))
+
+  return data
+}
+
+type UseGetNewOfferParams = {
+  shopSessionId: string
+  productName: string
+}
+
+function useGetNewOffer({ shopSessionId, productName }: UseGetNewOfferParams) {
+  const apolloClient = useApolloClient()
+
+  const getNewOffer = async (
+    data: Record<string, unknown>,
+  ): Promise<OfferRecommendationFragment> => {
+    const priceIntentService = priceIntentServiceInitClientSide(apolloClient)
+
+    const priceTemplate = getPriceTemplate(productName)
+    if (!priceTemplate) {
+      throw new Error(`Cross sell | Price template not found for product ${productName}`)
+    }
+
+    const priceIntent = await priceIntentService.getOrCreate({
+      shopSessionId,
+      priceTemplate,
+      productName,
+    })
+
+    const { offers } = await priceIntentService.upddateAndConfirm({
+      priceIntentId: priceIntent.id,
+      data: { ...priceIntent.suggestedData, ...data },
+    })
+
+    return offers[0] as OfferRecommendationFragment
+  }
+
+  return getNewOffer
+}
+
+function useUpdateOfferStartDate() {
+  const [updateStartDate] = useStartDateUpdateMutation()
+
+  const updateOfferStartDate = async (
+    offerId: string,
+    startDate: Date,
+  ): Promise<OfferRecommendationFragment> => {
+    const { data } = await updateStartDate({
+      variables: {
+        productOfferIds: [offerId],
+        startDate: formatAPIDate(startDate),
+      },
+    })
+
+    const updatedOffer = data?.productOffersStartDateUpdate.productOffers[0]
+    if (!updatedOffer) {
+      throw new Error(`Cross sell | failed to update offer (${offerId}) startDate (${startDate})`)
+    }
+
+    return updatedOffer
+  }
+
+  return updateOfferStartDate
 }
