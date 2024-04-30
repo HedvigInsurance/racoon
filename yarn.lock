@@ -11671,9 +11671,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vercel/otel@npm:1.8.1":
-  version: 1.8.1
-  resolution: "@vercel/otel@npm:1.8.1"
+"@vercel/otel@npm:1.8.2":
+  version: 1.8.2
+  resolution: "@vercel/otel@npm:1.8.2"
   peerDependencies:
     "@opentelemetry/api": ^1.7.0
     "@opentelemetry/api-logs": ^0.46.0
@@ -11682,7 +11682,7 @@ __metadata:
     "@opentelemetry/sdk-logs": ^0.46.0
     "@opentelemetry/sdk-metrics": ^1.19.0
     "@opentelemetry/sdk-trace-base": ^1.19.0
-  checksum: 10c0/42bab858e0664dff41de867875688420d5b1dd1659560371e2a7ac6fc662c9797633f8a84775779423990f1024154040d92f308fe16408fa1c408f0e30676559
+  checksum: 10c0/702e37f4ef6b15517fc908d82ae98a12b8f2c74a66dff188532fe28d44c7edfac12418baf934b9fba891d70f7fcf4e4602ca99fd65211902a9ea17732c9e52d4
   languageName: node
   linkType: hard
 
@@ -24905,7 +24905,7 @@ __metadata:
     "@vanilla-extract/webpack-plugin": "npm:2.3.7"
     "@vercel/edge-config": "npm:1.1.0"
     "@vercel/kv": "npm:1.0.1"
-    "@vercel/otel": "npm:1.8.1"
+    "@vercel/otel": "npm:1.8.2"
     ajv: "npm:8.12.0"
     apollo-link-timeout: "npm:4.0.0"
     babel-loader: "npm:9.1.3"
