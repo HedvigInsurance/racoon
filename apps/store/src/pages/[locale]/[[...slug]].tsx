@@ -97,7 +97,6 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
       revalidate: getRevalidate(),
     }
   } catch (error) {
-    console.debug(error)
     console.error(error)
     return { notFound: true }
   }

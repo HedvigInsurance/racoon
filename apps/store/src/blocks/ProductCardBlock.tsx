@@ -15,6 +15,7 @@ export type ProductCardBlockProps = SbBaseBlockProps<
     subtitle: string
     image: StoryblokAsset
     link: LinkField
+    priority?: boolean
   } & ImageSize
 >
 
@@ -34,7 +35,7 @@ export const ProductCardBlock = ({ blok }: ProductCardBlockProps) => {
     <ProductCard
       title={blok.title}
       subtitle={blok.subtitle}
-      image={{ src: getImgSrc(blok.image.filename), alt: blok.image.alt }}
+      image={{ src: getImgSrc(blok.image.filename), alt: blok.image.alt, priority: blok.priority }}
       aspectRatio={blok.aspectRatio ?? '5 / 4'}
       link={{ url: link, type: linkType }}
       {...storyblokEditable(blok)}
