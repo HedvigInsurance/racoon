@@ -19,6 +19,7 @@ type ImageProps = {
   alt?: string
   blurDataURL?: string
   objectPosition?: string
+  priority?: boolean
 }
 
 type LinkHref = string | UrlObject
