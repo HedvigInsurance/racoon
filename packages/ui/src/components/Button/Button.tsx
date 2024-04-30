@@ -3,13 +3,13 @@
 import clsx from 'clsx'
 import { forwardRef, type ReactNode } from 'react'
 import type { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../TypeUtils'
-import { buttonVariant, centered, childrenWrapper, fullWidthStyles } from './Button.css'
+import { baseButton, buttonVariant, centered, childrenWrapper, fullWidthStyles } from './Button.css'
 import type { ButtonSize } from './Button.helpers'
 import { getButtonSizeStyles } from './Button.helpers'
 import { DotPulse } from './DotPulse'
 
 type BaseProps = {
-  variant?: 'primary' | 'primary-alt' | 'secondary' | 'secondary-alt' | 'ghost'
+  variant?: 'primary' | 'primary-alt' | 'secondary' | 'secondary-alt' | 'ghost' | 'ghost-alt'
   size?: ButtonSize
   fullWidth?: boolean
   loading?: boolean
@@ -44,6 +44,7 @@ export const Button: PolymorphicComponent = forwardRef(function Button<
   const sizeStyles = getButtonSizeStyles(size)
 
   const classNames = clsx(
+    baseButton,
     buttonVariant[variant],
     sizeStyles,
     fullWidth && fullWidthStyles,

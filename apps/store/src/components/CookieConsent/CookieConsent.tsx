@@ -145,7 +145,7 @@ export function CookieConsent() {
               </Text>
             </div>
             <div className={buttonGroup}>
-              <Button variant="secondary-alt" size="medium" onClick={handleCookieSettings}>
+              <Button variant="ghost-alt" size="medium" onClick={handleCookieSettings}>
                 {t('cookieConsent:COOKIE_CONSENT_SETTINGS_BUTTON')}
               </Button>
               <Button variant="secondary-alt" size="medium" onClick={handleAccept}>

@@ -32,37 +32,33 @@ const shadow = style({
 })
 
 export const buttonVariant = styleVariants({
-  primary: [
-    baseButton,
-    {
-      backgroundColor: theme.colors.gray1000,
-      color: theme.colors.textNegative,
+  primary: {
+    backgroundColor: theme.colors.gray1000,
+    color: theme.colors.textNegative,
 
-      '@media (hover: hover)': {
-        '&:hover': {
-          backgroundColor: theme.colors.grayTranslucent900,
-        },
-      },
-
-      ':active': {
+    '@media (hover: hover)': {
+      '&:hover': {
         backgroundColor: theme.colors.grayTranslucent900,
       },
+    },
 
-      ':focus-visible': {
-        boxShadow: theme.shadow.focusAlt,
-      },
+    ':active': {
+      backgroundColor: theme.colors.grayTranslucent900,
+    },
 
-      selectors: {
-        '&:disabled:not([data-loading])': {
-          backgroundColor: theme.colors.gray200,
-          color: theme.colors.textDisabled,
-        },
+    ':focus-visible': {
+      boxShadow: theme.shadow.focusAlt,
+    },
+
+    selectors: {
+      '&:disabled:not([data-loading])': {
+        backgroundColor: theme.colors.gray200,
+        color: theme.colors.textDisabled,
       },
     },
-  ],
+  },
 
   'primary-alt': [
-    baseButton,
     shadow,
     {
       backgroundColor: theme.colors.green50,
@@ -90,7 +86,6 @@ export const buttonVariant = styleVariants({
   ],
 
   secondary: [
-    baseButton,
     shadow,
     {
       backgroundColor: theme.colors.translucent1,
@@ -118,7 +113,6 @@ export const buttonVariant = styleVariants({
   ],
 
   'secondary-alt': [
-    baseButton,
     shadow,
     {
       backgroundColor: theme.colors.offWhite,
@@ -135,30 +129,50 @@ export const buttonVariant = styleVariants({
     },
   ],
 
-  ghost: [
-    baseButton,
-    {
-      backgroundColor: 'transparent',
-      color: theme.colors.textPrimary,
+  ghost: {
+    backgroundColor: 'transparent',
+    color: theme.colors.textPrimary,
 
-      '@media (hover: hover)': {
-        '&:hover': {
-          backgroundColor: theme.colors.translucent1,
-        },
-      },
-
-      ':active': {
-        backgroundColor: theme.colors.gray100,
-      },
-
-      selectors: {
-        '&:disabled:not([data-loading])': {
-          color: theme.colors.textDisabled,
-          backgroundColor: 'transparent',
-        },
+    '@media (hover: hover)': {
+      '&:hover': {
+        backgroundColor: theme.colors.translucent1,
       },
     },
-  ],
+
+    ':active': {
+      backgroundColor: theme.colors.gray100,
+    },
+
+    selectors: {
+      '&:disabled:not([data-loading])': {
+        color: theme.colors.textDisabled,
+        backgroundColor: 'transparent',
+      },
+    },
+  },
+  'ghost-alt': {
+    backgroundColor: 'transparent',
+    color: theme.colors.textNegative,
+
+    '@media (hover: hover)': {
+      '&:hover': {
+        backgroundColor: theme.colors.offWhite,
+        color: theme.colors.textPrimary,
+      },
+    },
+
+    ':active': {
+      backgroundColor: theme.colors.gray100,
+      color: theme.colors.textPrimary,
+    },
+
+    selectors: {
+      '&:disabled:not([data-loading])': {
+        color: theme.colors.textDisabled,
+        backgroundColor: 'transparent',
+      },
+    },
+  },
 })
 
 const HEIGHT = {
