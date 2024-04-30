@@ -70,8 +70,7 @@ This Turborepo monorepo includes the following packages and apps:
 
 - `store`: Hedvig.com website
 - `ui`: Hedvig UI library (React)
-- `scripts`: ESLint configurations
-- `tsconfig`: TypeScript configs used throughout the monorepo
+- `estlit-config-custom`: ESLint configurations
 
 Every package/app is 100% written in Typescript.
 
