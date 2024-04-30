@@ -1,10 +1,11 @@
 import clsx from 'clsx'
 import type { Variants } from 'framer-motion'
 import { AnimatePresence, motion } from 'framer-motion'
-import { type ReactNode, useEffect, useState, Children } from 'react'
+import { type ReactNode, useState, Children } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import type { FontSizeProps, FontSizes } from 'ui'
 import { CheckIcon, theme } from 'ui'
+import { useInterval } from '@/utils/useInterval'
 import { list, listItem, tickerItemWrapper } from './Ticker.css'
 
 const DURATION = 0.5
@@ -20,17 +21,13 @@ type Props = {
   size: FontSizeProps
 }
 
-export const Ticker = (props: Props) => {
+export function Ticker(props: Props) {
   const [visibleIndex, setVisibleIndex] = useState(0)
-
   const childrenCount = Children.count(props.children)
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setVisibleIndex((prevIndex) => (prevIndex + 1) % childrenCount)
-    }, 2000)
 
-    return () => clearInterval(interval)
-  }, [childrenCount])
+  useInterval(() => {
+    setVisibleIndex((prevIndex) => (prevIndex + 1) % childrenCount)
+  }, 2000)
 
   // Font size is used as height for the ticker to make animation of items responsive
   const classNames = clsx(list, sprinkles({ fontSize: props.size }))
