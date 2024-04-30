@@ -24,9 +24,10 @@ import { TextWithLink } from '@/components/TextWithLink'
 import { SIGN_FORM_ID } from '@/constants/sign.constants'
 import {
   MemberPaymentConnectionStatus,
-  type ProductOfferFragment,
   useCartEntryRemoveMutation,
   useCurrentMemberLazyQuery,
+  type ProductOfferFragment,
+  type PriceIntentFragment,
 } from '@/services/graphql/generated'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'
@@ -38,15 +39,15 @@ import { publishWidgetEvent } from './publishWidgetEvent'
 
 type Props = {
   shopSession: ShopSession
-  priceIntentId: string
+  priceIntent: PriceIntentFragment
   ssn: string
   shouldCollectEmail: boolean
   shouldCollectName: boolean
-  suggestedEmail?: string
   flow: string
-  content?: Array<SbBlokData>
   productName: string
+  suggestedEmail?: string
   showBackButton?: boolean
+  content?: Array<SbBlokData>
 }
 
 export const SignPage = (props: Props) => {
@@ -150,7 +151,11 @@ export const SignPage = (props: Props) => {
               <Space y={1}>
                 <ShopBreakdown>
                   {mainOffer && (
-                    <ProductItemContainer offer={mainOffer}>
+                    <ProductItemContainer
+                      shopSessionId={props.shopSession.id}
+                      offers={props.priceIntent.offers}
+                      selectedOffer={mainOffer}
+                    >
                       <ButtonNextLink
                         variant="secondary"
                         size="medium"
@@ -158,7 +163,7 @@ export const SignPage = (props: Props) => {
                           locale,
                           flow: props.flow,
                           shopSessionId: props.shopSession.id,
-                          priceIntentId: props.priceIntentId,
+                          priceIntentId: props.priceIntent.id,
                         })}
                       >
                         {t('cart:CART_ENTRY_EDIT_BUTTON')}
@@ -174,7 +179,12 @@ export const SignPage = (props: Props) => {
                         exit={{ opacity: 0, height: 0 }}
                         style={{ position: 'relative' }}
                       >
-                        <ProductItemContainer offer={item} onDelete={handleRemoveCartItem(item)} />
+                        <ProductItemContainer
+                          shopSessionId={props.shopSession.id}
+                          offers={[item]}
+                          selectedOffer={item}
+                          onDelete={handleRemoveCartItem(item)}
+                        />
                         {result.loading && <ProductItemLoadingOverlay />}
                       </motion.div>
                     ))}

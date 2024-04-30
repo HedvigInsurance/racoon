@@ -10,15 +10,21 @@ type Props = {
   offers: Array<ProductOfferFragment>
   selectedOffer: ProductOfferFragment
   onValueChange: (offerId: string) => void
+  defaultOpen?: boolean
 }
 
-export const ProductTierSelector = ({ offers, selectedOffer, onValueChange }: Props) => {
+export const ProductTierSelector = ({
+  offers,
+  selectedOffer,
+  onValueChange,
+  defaultOpen,
+}: Props) => {
   const { t } = useTranslation('purchase-form')
   const getVariantDescription = useGetVariantDescription()
   const formatter = useFormatter()
 
   return (
-    <TierSelector.Root defaultOpen={true}>
+    <TierSelector.Root defaultOpen={defaultOpen ?? true}>
       <TierSelector.Header>
         <Text>{t('TIER_SELECTOR_SELECTED_LABEL', { ns: 'purchase-form' })}</Text>
         <ToggleText>

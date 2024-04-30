@@ -3,7 +3,7 @@ import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useInView } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
-import type { RefObject} from 'react';
+import type { RefObject } from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Button, Space, Text, theme } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
@@ -11,16 +11,11 @@ import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import { ScrollToTopButton } from '@/components/ProductPage/ScrollToButton/ScrollToButton'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { BankSigneringEvent } from '@/services/bankSignering'
-import type {
-  ProductOfferFragment,
-  RedeemedCampaignFragment} from '@/services/graphql/generated';
-import {
-  ExternalInsuranceCancellationOption
-} from '@/services/graphql/generated'
+import type { ProductOfferFragment, RedeemedCampaignFragment } from '@/services/graphql/generated'
+import { ExternalInsuranceCancellationOption } from '@/services/graphql/generated'
 import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'
-import { getOffersByPrice } from '@/utils/getOffersByPrice'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useAddToCart } from '@/utils/useAddToCart'
@@ -32,6 +27,7 @@ import { DeductibleSelector } from './DeductibleSelector'
 import { DiscountTooltip } from './DiscountTooltip/DiscountTooltip'
 import { ProductTierSelector } from './ProductTierSelector'
 import { useSelectedOffer } from './useSelectedOffer'
+import { useTiersAndDeductibles } from './useTiersAndDeductibles'
 
 enum AddToCartRedirect {
   Cart = 'Cart',
@@ -56,6 +52,10 @@ export const OfferPresenter = (props: Props) => {
   const formatter = useFormatter()
   const [addToCartRedirect, setAddToCartRedirect] = useState<AddToCartRedirect | null>(null)
   const locale = useRoutingLocale()
+  const { tiers, deductibles } = useTiersAndDeductibles({
+    offers: priceIntent.offers,
+    selectedOffer,
+  })
 
   const handleOfferChange = (offerId: string) => {
     const offer = priceIntent.offers.find((offer) => offer.id === offerId)
@@ -120,22 +120,6 @@ export const OfferPresenter = (props: Props) => {
 
   const displayPrice = formatter.monthlyPrice(selectedOffer.cost.net)
 
-  // Sort deductibles based on monthly price
-  const sortedOffers = useMemo(() => getOffersByPrice(priceIntent.offers), [priceIntent.offers])
-
-  const tiers = useMemo(() => {
-    const tierList: Array<ProductOfferFragment> = []
-    const usedTiers = new Set<string>()
-    for (const offer of sortedOffers) {
-      const typeOfContract = offer.variant.typeOfContract
-      if (usedTiers.has(typeOfContract)) continue
-
-      usedTiers.add(typeOfContract)
-      tierList.push(typeOfContract === selectedOffer.variant.typeOfContract ? selectedOffer : offer)
-    }
-    return tierList
-  }, [sortedOffers, selectedOffer])
-
   const selectedTier = useMemo(() => {
     const tier = tiers.find(
       (item) => item.variant.typeOfContract === selectedOffer.variant.typeOfContract,
@@ -151,12 +135,6 @@ export const OfferPresenter = (props: Props) => {
 
     return tier
   }, [tiers, selectedOffer])
-
-  const deductibles = useMemo(() => {
-    return sortedOffers.filter(
-      (item) => item.variant.typeOfContract === selectedOffer.variant.typeOfContract,
-    )
-  }, [sortedOffers, selectedOffer])
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
