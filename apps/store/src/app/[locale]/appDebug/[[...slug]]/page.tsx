@@ -16,6 +16,11 @@ type Props = {
 
 export default async function CmsPage(props: Props) {
   const story = await fetchStory(props.params)
+  // Patching incorrect data from Storyblok for /se-en/
+  let { hideBreadcrumbs } = story.content
+  if ((props.params.slug?.length ?? 0) < 1) {
+    hideBreadcrumbs = true
+  }
   if (isProductStory(story)) {
     return (
       <>
@@ -27,9 +32,7 @@ export default async function CmsPage(props: Props) {
   return (
     <>
       <PageBlock blok={story.content} />
-      {!story.content.hideBreadcrumbs && (
-        <StoryBreadcrumbs params={props.params} currentPageTitle={story.name} />
-      )}
+      {!hideBreadcrumbs && <StoryBreadcrumbs params={props.params} currentPageTitle={story.name} />}
     </>
   )
 }

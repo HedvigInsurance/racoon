@@ -21,13 +21,13 @@ type ProductCmsPageProps = {
   story: any
 }
 
-export const ProductCmsPage = async ({ story }: ProductCmsPageProps) => {
+export const ProductCmsPage = async ({ locale, story }: ProductCmsPageProps) => {
   const priceTemplate = getPriceTemplate(story.content.priceFormTemplateId)
   if (priceTemplate === undefined) {
     throw new Error(`Unknown price template: ${story.content.priceFormTemplateId}`)
   }
 
-  const apolloClient = await getApolloClient()
+  const apolloClient = getApolloClient(locale)
   const productName = story.content.productId
   const [productData, productReviewsMetadata] = await Promise.all([
     fetchProductData({
