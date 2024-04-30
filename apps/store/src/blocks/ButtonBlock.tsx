@@ -3,10 +3,10 @@ import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { useSearchParams } from 'next/navigation'
 import { type ComponentProps, useMemo, useState } from 'react'
-import type { Button} from 'ui';
+import type { Button } from 'ui'
 import { ConditionalWrapper, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
-import type { LinkField} from '@/services/storyblok/storyblok';
+import type { LinkField } from '@/services/storyblok/storyblok'
 import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 import { mergeSearchParams } from '@/utils/mergeSearchParams'
@@ -16,6 +16,7 @@ export type ButtonBlockProps = SbBaseBlockProps<{
   link: LinkField
   variant: ComponentProps<typeof Button>['variant']
   size: ComponentProps<typeof Button>['size']
+  // TODO: Remove props below when StartWidgetFlowButtonBlock takes over
   forwardQueryString?: boolean
   showLoading?: boolean
 }>
