@@ -56,6 +56,7 @@ import { TopPickCardBlock } from '@/blocks/TopPickCardBlock'
 import { USPBlock, USPBlockItem } from '@/blocks/USPBlock'
 import { VideoBlock } from '@/blocks/VideoBlock'
 import { WidgetFlowBlock } from '@/blocks/WidgetFlowBlock'
+import { WidgetFlowStartButtonBlock } from '@/blocks/WidgetFlowStartButtonBlock'
 import { blogBlocks } from '@/features/blog/blogBlocks'
 import { carDealershipBlocks } from '@/features/carDealership/carDealershipBlocks'
 import { manyPetsBlocks } from '@/features/manyPets/manyPetsBlocks'
@@ -122,6 +123,7 @@ export const storyblokComponents = {
   uspItem: USPBlockItem,
   videoBlock: VideoBlock,
   widgetFlow: WidgetFlowBlock,
+  widgetFlowStartButton: WidgetFlowStartButtonBlock,
 
   ...blogBlocks,
   ...carDealershipBlocks,
