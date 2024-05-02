@@ -1,7 +1,5 @@
 'use client'
 import { StoryblokComponent } from '@storyblok/react'
-import { useSearchParams } from 'next/navigation'
-import { useMemo } from 'react'
 import { PageBannerTriggers } from '@/components/Banner/PageBannerTriggers'
 import { PageBreadcrumbs } from '@/components/PageBreadcrumbs/PageBreadcrumbs'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
@@ -9,7 +7,6 @@ import { PriceIntentContextProvider } from '@/components/ProductPage/PriceIntent
 import { ProductPageTrackingProvider } from '@/components/ProductPage/ProductPageTrackingProvider'
 import { ProductPageViewTracker } from '@/components/ProductPage/ProductPageViewTrack'
 import { ProductReviewsMetadataProvider } from '@/features/memberReviews/ProductReviewsMetadataProvider'
-import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { PageDebugDialog } from './PageDebugDialog'
 import { type ProductPageProps } from './ProductPage.types'
 import { ProductPageContextProvider } from './ProductPageContext'
@@ -34,16 +31,5 @@ export const ProductPage = ({ story, ...props }: ProductPageProps) => {
         </PriceIntentContextProvider>
       </ProductPageContextProvider>
     </ProductDataProvider>
-  )
-}
-
-export const useCartEntryToReplace = () => {
-  const searchParams = useSearchParams()
-  const cartEntryId = searchParams?.get('replace') as string | undefined
-  const { shopSession } = useShopSession()
-
-  return useMemo(
-    () => shopSession?.cart.entries.find((item) => item.id === cartEntryId),
-    [shopSession?.cart.entries, cartEntryId],
   )
 }
