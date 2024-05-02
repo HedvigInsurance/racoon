@@ -124,11 +124,6 @@ export const ContactUs = () => {
                       <span>{t('FAQ_OPTION_VALUE')}</span>
                     </LinkButton>
 
-                    <LinkButton href="#" aria-disabled="true">
-                      <span>{t('CHAT_OPTION_LABEL')}</span>
-                      <span>{t('CHAT_UNAVAILABLE_LABEL')}</span>
-                    </LinkButton>
-
                     <LinkButton
                       data-dd-action-name="Contact us | phone"
                       href={PageLink.help({ locale }).pathname}
