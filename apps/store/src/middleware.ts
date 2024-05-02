@@ -39,6 +39,14 @@ const localeMiddleware = (req: NextRequest): NextResponse | undefined => {
   const redirectToLocale = (locale: string) => {
     const targetUrl = req.nextUrl.clone()
     targetUrl.pathname = `/${locale}${targetUrl.pathname}`
+
+    if (
+      locale === locales['sv-SE'].routingLocale ||
+      locale === locales[FALLBACK_LOCALE].routingLocale
+    ) {
+      return NextResponse.rewrite(targetUrl)
+    }
+
     return NextResponse.redirect(targetUrl, 308)
   }
 
