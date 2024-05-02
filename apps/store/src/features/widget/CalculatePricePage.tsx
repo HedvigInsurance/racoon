@@ -19,13 +19,12 @@ import {
 import { type Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'
-import { Features } from '@/utils/Features'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useAddToCart } from '@/utils/useAddToCart'
 import { Header } from './Header'
 
-const WIDGET_SWITCH = Features.enabled('WIDGET_SWITCH')
+const CAR_INSURANCE = 'SE_CAR'
 
 type Props = {
   shopSession: ShopSession
@@ -60,12 +59,15 @@ export const CalculatePricePage = (props: Props) => {
       await priceLoaderPromise.current
 
       const addedOffer = updatedCart.entries.find((item) => item.id === productOfferId)
+      // Later that 'insurance base' check will be removed. At first, switching directly to sign page will be available
+      // only for car. Other insurances like home sould keep using "switch page"
+      const isCarInsurance = addedOffer?.product.name === CAR_INSURANCE
       if (
-        !WIDGET_SWITCH ||
-        addedOffer?.cancellation.option === ExternalInsuranceCancellationOption.None
+        !isCarInsurance &&
+        addedOffer?.cancellation.option !== ExternalInsuranceCancellationOption.None
       ) {
         await router.push(
-          PageLink.widgetSign({
+          PageLink.widgetSwitch({
             locale,
             flow: props.flow,
             shopSessionId: props.shopSession.id,
@@ -74,7 +76,7 @@ export const CalculatePricePage = (props: Props) => {
         )
       } else {
         await router.push(
-          PageLink.widgetSwitch({
+          PageLink.widgetSign({
             locale,
             flow: props.flow,
             shopSessionId: props.shopSession.id,
