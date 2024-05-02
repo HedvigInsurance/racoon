@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import NextLink from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { type FormEventHandler, type ReactNode } from 'react'
+import { browserName, deviceType, osName } from 'react-device-detect'
 import { Button, Space, Text } from 'ui'
 import { linkStyles } from '@/components/RichText/RichText.styles'
 import { deserializeField } from '@/services/PriceCalculator/PriceCalculator.helpers'
@@ -37,6 +38,11 @@ export const PriceCalculatorSection = ({ section, loading, onSubmit, last, child
       }
     }
 
+    if (last) {
+      // Make sure we don't add deviceInfo in every section - would be harmless, but inefficient
+      addDeviceInfo(data)
+    }
+
     onSubmit(data)
   }
 
@@ -61,6 +67,16 @@ export const PriceCalculatorSection = ({ section, loading, onSubmit, last, child
       </Space>
     </form>
   )
+}
+
+const addDeviceInfo = (data: JSONData) => {
+  Object.assign(data, {
+    deviceInfo: {
+      deviceType,
+      osName,
+      browserName,
+    },
+  })
 }
 
 const Link = styled(NextLink)(linkStyles, {
