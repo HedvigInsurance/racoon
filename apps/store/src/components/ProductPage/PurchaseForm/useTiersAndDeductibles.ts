@@ -9,8 +9,9 @@ type Params = {
 
 export function useTiersAndDeductibles({ offers, selectedOffer }: Params) {
   return useMemo(() => {
-    const sortedOffers = getOffersByPrice(offers)
+    if (offers.length === 1) return { tiers: [], deductibles: [] }
 
+    const sortedOffers = getOffersByPrice(offers)
     const tiers: Array<ProductOfferFragment> = []
     const usedTiers = new Set<string>()
     for (const offer of sortedOffers) {
