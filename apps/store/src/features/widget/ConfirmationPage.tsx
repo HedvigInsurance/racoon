@@ -10,7 +10,7 @@ import { useDiscountProps } from '@/components/ShopBreakdown/useDiscountExplanat
 import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import type { ConfirmationStory } from '@/services/storyblok/storyblok'
 import { Header } from './Header'
-import { ProductItemContainer } from './ProductItemContainer'
+import { ProductItem } from './ProductItem'
 import { publishWidgetEvent } from './publishWidgetEvent'
 
 type Props = {
@@ -39,7 +39,12 @@ export const ConfirmationPage = (props: Props) => {
             </Heading>
             <Space y={1}>
               {props.shopSession.cart.entries.map((item) => (
-                <ProductItemContainer key={item.id} offer={item} disableStartDate={true} />
+                <ProductItem
+                  key={item.id}
+                  shopSessionId={props.shopSession.id}
+                  selectedOffer={item}
+                  disableStartDate={true}
+                />
               ))}
 
               {discount && (

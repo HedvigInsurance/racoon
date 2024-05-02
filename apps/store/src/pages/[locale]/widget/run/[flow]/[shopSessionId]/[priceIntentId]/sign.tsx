@@ -9,7 +9,7 @@ import { SignPage } from '@/features/widget/SignPage'
 import { fetchFlowStory } from '@/features/widget/widget.helpers'
 import { initializeApolloServerSide } from '@/services/apollo/client'
 import { hideChatOnPage } from '@/services/CustomerFirst'
-import { useShopSessionQuery } from '@/services/graphql/generated'
+import { usePriceIntentQuery, useShopSessionQuery } from '@/services/graphql/generated'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
@@ -17,8 +17,9 @@ import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
 
-type Props = Omit<ComponentPropsWithoutRef<typeof SignPage>, 'shopSession'> & {
+type Props = Omit<ComponentPropsWithoutRef<typeof SignPage>, 'shopSession' | 'priceIntent'> & {
   shopSessionId: string
+  priceIntentId: string
   productData: ProductData
   pageTitle: string
 }
@@ -29,7 +30,12 @@ const NextWidgetSignPage = (props: Props) => {
   })
   const shopSession = shopSessionResult.data?.shopSession
 
-  if (!shopSession) return null
+  const priceIntentResult = usePriceIntentQuery({
+    variables: { priceIntentId: props.priceIntentId },
+  })
+  const priceIntent = priceIntentResult.data?.priceIntent
+
+  if (!shopSession || !priceIntent) return null
 
   return (
     <>
@@ -38,7 +44,7 @@ const NextWidgetSignPage = (props: Props) => {
       </Head>
       <ProductDataProvider productData={props.productData}>
         <TrackingProvider shopSession={shopSession} productData={props.productData}>
-          <SignPage shopSession={shopSession} {...props} />
+          <SignPage shopSession={shopSession} priceIntent={priceIntent} {...props} />
         </TrackingProvider>
       </ProductDataProvider>
     </>

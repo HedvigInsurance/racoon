@@ -1,10 +1,8 @@
-// This is a copy of @/components/ProductItem/ProductItem
-// We will to merge this file with the original one
-
+import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import React, { type ComponentProps, useState, forwardRef, type ReactNode } from 'react'
-import type { ButtonProps} from 'ui';
+import React, { useState, useMemo, forwardRef, type ReactNode } from 'react'
+import type { ButtonProps } from 'ui'
 import { Button, CrossIconSmall, InfoIcon, LockIcon, Space, Text, mq, theme } from 'ui'
 import * as Collapsible from '@/components/Collapsible'
 import { InputDate } from '@/components/InputDate/InputDate'
@@ -12,36 +10,80 @@ import { InputDay } from '@/components/InputDay/InputDay'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { ProductDetails } from '@/components/ProductItem/ProductDetails'
 import { ProductDetailsHeader } from '@/components/ProductItem/ProductDetailsHeader'
+import { useGetStartDateProps } from '@/components/ProductItem/useGetStartDateProps'
+import { ProductTierSelector } from '@/components/ProductPage/PurchaseForm/ProductTierSelector'
 import { Skeleton } from '@/components/Skeleton'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Tooltip } from '@/components/Tooltip/Tooltip'
+import { useStartDateUpdateMutation, type ProductOfferFragment } from '@/services/graphql/generated'
 import { convertToDate, formatAPIDate } from '@/utils/date'
 import { Features } from '@/utils/Features'
+import { getOfferPrice } from '@/utils/getOfferPrice'
+import { useAddToCart } from '@/utils/useAddToCart'
+import { type Offer } from './widget.types'
 
 const USE_DAY_PICKER = Features.enabled('DAY_PICKER')
 
+const TODAY = new Date()
+
 type Props = {
-  title: string
-  pillowSrc: string
-  price: ComponentProps<typeof ProductDetailsHeader>['price']
-  productDetails: ComponentProps<typeof ProductDetails>['items']
-  productDocuments: ComponentProps<typeof ProductDetails>['documents']
-  defaultExpanded?: boolean
-  children?: ReactNode
-  exposure: string
+  shopSessionId: string
+  selectedOffer: Offer
+  tiers?: Array<Offer>
+  deductibles?: Array<Offer>
   variant?: 'green'
-  tooltip: string
-  autoSwitch: boolean
-  startDate?: string
-  onChangeStartDate: (value: string) => void
+  defaultExpanded?: boolean
   disableStartDate?: boolean
-  loading: boolean
   onDelete?: (event: React.MouseEvent<HTMLButtonElement>) => void
+  children?: ReactNode
 }
 
 export const ProductItem = (props: Props) => {
   const { t } = useTranslation(['cart', 'purchase-form'])
   const [expanded, setExpanded] = useState(props.defaultExpanded ?? false)
+
+  const getStartDateProps = useGetStartDateProps()
+  const { tooltip } = getStartDateProps({
+    data: props.selectedOffer.priceIntentData,
+    startDate: props.selectedOffer.startDate,
+  })
+
+  const productDetails = useMemo(() => {
+    const items = props.selectedOffer.displayItems.map((item) => ({
+      title: item.displayTitle,
+      value: item.displayValue,
+    }))
+    const tierLevelDisplayName = getTierLevelDisplayName(props.selectedOffer)
+    if (tierLevelDisplayName) {
+      items.push({ title: t('DATA_TABLE_TIER_LABEL'), value: tierLevelDisplayName })
+    }
+    const deductibleDisplayName = props.selectedOffer.deductible?.displayName
+    if (deductibleDisplayName) {
+      items.push({ title: t('DATA_TABLE_DEDUCTIBLE_LABEL'), value: deductibleDisplayName })
+    }
+    return items
+  }, [props.selectedOffer, t])
+
+  const productDocuments = props.selectedOffer.variant.documents.map((item) => ({
+    title: item.displayName,
+    url: item.url,
+  }))
+
+  const [updateStartDate, { loading: updateStartDateLoading }] = useStartDateUpdateMutation()
+  const handleChangeStartDate = (startDate: string) => {
+    updateStartDate({
+      variables: { productOfferIds: [props.selectedOffer.id], startDate },
+    })
+  }
+
+  const [addToCart] = useAddToCart({
+    shopSessionId: props.shopSessionId,
+    entryToReplace: props.selectedOffer.id,
+    onSuccess() {
+      datadogRum.addAction('Widget | Changeed car tier level')
+    },
+  })
+  const handleChangeTierLevel = (offerId: string) => addToCart(offerId)
 
   const handleClickHoverable = () => {
     setExpanded((prev) => !prev)
@@ -51,23 +93,19 @@ export const ProductItem = (props: Props) => {
     event.stopPropagation()
   }
 
-  const handleChangeStartDate = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.onChangeStartDate(event.target.value)
-  }
-
-  const todayDate = new Date()
-  const today = formatAPIDate(todayDate)
+  const today = formatAPIDate(TODAY)
+  const pillow = props.selectedOffer.product.pillowImage
 
   return (
     <Card data-variant={props.variant}>
       <Hoverable onClick={handleClickHoverable} data-variant={props.variant}>
         <Space y={1}>
-          <Header style={{ gridTemplateColumns: props.pillowSrc ? 'auto 1fr' : '1fr' }}>
-            <Pillow size="small" src={props.pillowSrc} alt="" />
+          <Header style={{ gridTemplateColumns: pillow.src ? 'auto 1fr' : '1fr' }}>
+            <Pillow size="small" src={pillow.src} alt="" />
             <div>
               <HeaderRow>
                 <Text as="p" size="md" color="textTranslucentPrimary">
-                  {props.title}
+                  {props.selectedOffer.product.displayNameFull}
                 </Text>
 
                 {props.onDelete && (
@@ -78,10 +116,10 @@ export const ProductItem = (props: Props) => {
               </HeaderRow>
               <SpaceFlex align="center" space={0.25}>
                 <Text as="p" color="textTranslucentSecondary">
-                  {props.exposure}
+                  {props.selectedOffer.exposure.displayNameShort}
                 </Text>
-                {!props.autoSwitch && (
-                  <Tooltip message={props.tooltip}>
+                {!props.selectedOffer.cancellation.requested && (
+                  <Tooltip message={tooltip}>
                     <button onClick={handleClickTooltip}>
                       <InfoIcon color={theme.colors.textSecondary} />
                     </button>
@@ -94,7 +132,7 @@ export const ProductItem = (props: Props) => {
       </Hoverable>
 
       {/* eslint-disable-next-line no-nested-ternary */}
-      {props.autoSwitch ? (
+      {props.selectedOffer.cancellation.requested ? (
         <FakeInput>
           <Text as="p" color="textTranslucentSecondary" size="xs">
             {t('purchase-form:START_DATE_FIELD_LABEL')}
@@ -104,7 +142,7 @@ export const ProductItem = (props: Props) => {
               {t('CART_ENTRY_AUTO_SWITCH')}
             </Text>
 
-            <Tooltip message={props.tooltip}>
+            <Tooltip message={tooltip}>
               <button onClick={handleClickTooltip}>
                 <LockIcon size="1rem" color={theme.colors.textSecondary} />
               </button>
@@ -114,35 +152,54 @@ export const ProductItem = (props: Props) => {
       ) : USE_DAY_PICKER ? (
         <InputDay
           label={t('purchase-form:START_DATE_FIELD_LABEL')}
-          selected={convertToDate(props.startDate) ?? undefined}
-          onSelect={(date) => props.onChangeStartDate(formatAPIDate(date))}
-          fromDate={todayDate}
+          selected={convertToDate(props.selectedOffer.startDate) ?? undefined}
+          onSelect={(date) => handleChangeStartDate(formatAPIDate(date))}
+          fromDate={TODAY}
           disabled={props.disableStartDate}
-          loading={props.loading}
+          loading={updateStartDateLoading}
         />
       ) : (
         <InputDate
           label={t('purchase-form:START_DATE_FIELD_LABEL')}
-          value={props.startDate}
+          value={props.selectedOffer.startDate}
           backgroundColor="light"
-          onChange={handleChangeStartDate}
-          disabled={props.disableStartDate || props.loading}
+          onChange={(event) => handleChangeStartDate(event.target.value)}
+          disabled={props.disableStartDate || updateStartDateLoading}
           min={today}
+        />
+      )}
+
+      {props.tiers && props.tiers.length > 0 && (
+        <ProductTierSelector
+          offers={props.tiers}
+          selectedOffer={props.selectedOffer}
+          onValueChange={handleChangeTierLevel}
+          defaultOpen={false}
         />
       )}
 
       <Collapsible.Root open={expanded} onOpenChange={setExpanded}>
         <Collapsible.Trigger asChild={true}>
-          <StyledProductDetailsHeader price={props.price} expanded={expanded} />
+          <StyledProductDetailsHeader
+            price={getOfferPrice(props.selectedOffer.cost)}
+            expanded={expanded}
+          />
         </Collapsible.Trigger>
         <Collapsible.Content style={{ cursor: 'initial' }}>
-          <StyledProductDetails items={props.productDetails} documents={props.productDocuments} />
+          <StyledProductDetails items={productDetails} documents={productDocuments} />
         </Collapsible.Content>
       </Collapsible.Root>
 
       {props.children && <Footer>{props.children}</Footer>}
     </Card>
   )
+}
+
+const getTierLevelDisplayName = (item: Pick<ProductOfferFragment, 'variant' | 'product'>) => {
+  // TODO: small hack, move logic to API
+  return item.variant.displayName !== item.product.displayNameFull
+    ? item.variant.displayName
+    : undefined
 }
 
 export const ActionButton = forwardRef<HTMLButtonElement, ButtonProps<React.ElementType>>(
