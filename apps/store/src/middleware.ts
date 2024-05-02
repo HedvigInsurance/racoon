@@ -34,12 +34,39 @@ export async function middleware(req: NextRequest) {
 const localeMiddleware = (req: NextRequest): NextResponse | undefined => {
   const url = new URL(req.url)
   const firstSegment = url.pathname.split('/')[1]
-  if (isRoutingLocale(firstSegment)) return
+
+  // Localized route
+  if (isRoutingLocale(firstSegment)) {
+    const isSwedish = firstSegment === locales['sv-SE'].routingLocale
+
+    // URL only have a locale
+    const isHomePage = url.pathname.split('/').length === 2
+
+    const isSwedishHomepage = isSwedish && isHomePage
+
+    if (isSwedishHomepage) {
+      const targetUrl = req.nextUrl.clone()
+      targetUrl.pathname = '/'
+
+      // Set the Swedish homepage path to `/`
+      // The `redirectToLocale` function will be invoked with the default locale which is Swedish
+      // URL will rewritten to serve the Swedish page on `/`
+      return NextResponse.redirect(targetUrl, 308)
+    }
+
+    // Serve original route
+    return
+  }
 
   const redirectToLocale = (locale: string) => {
     const targetUrl = req.nextUrl.clone()
     targetUrl.pathname = `/${locale}${targetUrl.pathname}`
 
+    // This function is invoked when requesting a non-localized route
+    // To redirect it to the relevant localized version
+    // When called with a the Swedish or default locales
+    // We rewrite the URL instead of redirecting
+    // To display the translated pages without changing the URL
     if (
       locale === locales['sv-SE'].routingLocale ||
       locale === locales[FALLBACK_LOCALE].routingLocale
