@@ -23,30 +23,36 @@ export type LocalizedLayoutProps<P = unknown> = P & {
 
 // TODO: How do we cache/invalidate companyReviewsMetadata ?
 const Layout = async ({ children, params: { locale } }: LocalizedLayoutProps) => {
-  const apolloClient = getApolloClient(locale)
-  const [companyReviewsMetadata, productMetadata, globalStory] = await Promise.all([
-    fetchCompanyReviewsMetadata(),
-    fetchGlobalProductMetadata({ apolloClient }),
-    getStoryBySlug<GlobalStory>('global', { locale }),
-  ])
+  // const apolloClient = getApolloClient(locale)
+  // const [companyReviewsMetadata, productMetadata, globalStory] = await Promise.all([
+  //   fetchCompanyReviewsMetadata(),
+  //   fetchGlobalProductMetadata({ apolloClient }),
+  //   getStoryBySlug<GlobalStory>('global', { locale }),
+  // ])
 
   return (
-    <RootLayout locale={locale}>
-      <ProductMetadataProvider productMetadata={productMetadata}>
-        <CompanyReviewsMetadataProvider companyReviewsMetadata={companyReviewsMetadata}>
-          <ShopSessionProvider>
-            <AppErrorProvider>
-              <AppErrorDialog />
-              <GlobalBannerDynamic />
-              <StoryblokProvider>
-                <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
-              </StoryblokProvider>
-            </AppErrorProvider>
-          </ShopSessionProvider>
-        </CompanyReviewsMetadataProvider>
-      </ProductMetadataProvider>
-    </RootLayout>
+    <html>
+      <body>{children}</body>
+    </html>
   )
+
+  // return (
+  //   <RootLayout locale={locale}>
+  //     <ProductMetadataProvider productMetadata={productMetadata}>
+  //       <CompanyReviewsMetadataProvider companyReviewsMetadata={companyReviewsMetadata}>
+  //         <ShopSessionProvider>
+  //           <AppErrorProvider>
+  //             <AppErrorDialog />
+  //             <GlobalBannerDynamic />
+  //             <StoryblokProvider>
+  //               <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
+  //             </StoryblokProvider>
+  //           </AppErrorProvider>
+  //         </ShopSessionProvider>
+  //       </CompanyReviewsMetadataProvider>
+  //     </ProductMetadataProvider>
+  //   </RootLayout>
+  // )
 }
 
 export const dynamicParams = false

@@ -16,13 +16,13 @@ type Props = {
 // export const revalidate = 0
 
 export default async function CmsPage(props: Props) {
-  const story = await fetchStory(props.params.locale, props.params.slug?.join('/'))
+  // const story = await fetchStory(props.params.locale, props.params.slug?.join('/'))
 
   // Make this a dynamic route
   const headersList = headers()
   const referer = headersList.get('referer')
 
-  console.log({ story, referer })
+  console.log({ referer })
   // Patching incorrect data from Storyblok for /se-en/
   // let { hideBreadcrumbs } = story.content
   // if ((props.params.slug?.length ?? 0) < 1) {
