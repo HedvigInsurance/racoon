@@ -1,12 +1,13 @@
 import 'server-only'
 import type { ISbStoryData } from '@storyblok/react'
 import { apiPlugin, getStoryblokApi, storyblokInit } from '@storyblok/react/rsc'
+import { draftMode } from 'next/headers'
 import { BLOG_ARTICLE_CONTENT_TYPE } from '@/features/blog/blog.constants'
-import type { StoryOptions } from '@/services/storyblok/storyblok'
 import { LINKS_EXCLUDE_PATHS } from '@/services/storyblok/Storyblok.constant'
 import type { LinkData, PageLink } from '@/services/storyblok/Storyblok.helpers'
 import { storyblokComponents } from '@/services/storyblok/storyblokComponents'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
+import type { RoutingLocale } from '@/utils/l10n/types'
 
 // Overall app router setup for Storyblok based on
 // https://www.storyblok.com/tp/add-a-headless-cms-to-next-js-13-in-5-minutes
@@ -19,7 +20,7 @@ storyblokInit({
 
 export const getStoryBySlug = async <T extends ISbStoryData>(
   slug: string,
-  { locale, version = 'published' }: StoryOptions,
+  { locale }: RscStoryOptions,
 ): Promise<T> => {
   const storyblokApi = await getStoryblokApiWithCache()
   const fullSlug = slug.length > 0 ? `${locale}/${slug}` : locale
@@ -27,7 +28,7 @@ export const getStoryBySlug = async <T extends ISbStoryData>(
     .getStory(
       fullSlug,
       {
-        version,
+        version: getVersion(),
         resolve_links: 'url',
         resolve_relations: `reusableBlockReference.reference,${BLOG_ARTICLE_CONTENT_TYPE}.categories,page.abTestOrigin`,
       },
@@ -43,7 +44,15 @@ export const getStoryBySlug = async <T extends ISbStoryData>(
   return data.story as T
 }
 
-export const getParentStories = async (slug: string, { version, locale }: StoryOptions) => {
+type RscStoryOptions = {
+  locale: RoutingLocale
+}
+
+const getVersion = () => {
+  return draftMode().isEnabled ? 'draft' : 'published'
+}
+
+export const getParentStories = async (slug: string, { locale }: RscStoryOptions) => {
   const absoluteSlug = slug.startsWith('/') ? slug : `/${slug}`
   const parentSlugs = absoluteSlug
     .split('/')
@@ -57,7 +66,7 @@ export const getParentStories = async (slug: string, { version, locale }: StoryO
 
   // Individual per-story requests probably mean better cache hit ratio and less traffic overall
   // We used to fetch all parents with single requests in pages router instead
-  return await Promise.all(parentSlugs.map((slug) => getStoryBySlug(slug, { locale, version })))
+  return await Promise.all(parentSlugs.map((slug) => getStoryBySlug(slug, { locale })))
 }
 
 export const getCmsPageLinks = async (startsWith?: string) => {
