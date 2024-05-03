@@ -169,7 +169,7 @@ export const ProductItem = (props: Props) => {
         />
       )}
 
-      {props.tiers && props.tiers.length > 0 && (
+      {props.tiers && props.tiers.length > 1 && (
         <ProductTierSelector
           offers={props.tiers}
           selectedOffer={props.selectedOffer}
