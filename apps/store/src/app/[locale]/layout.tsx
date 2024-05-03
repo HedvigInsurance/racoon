@@ -31,21 +31,23 @@ const Layout = async ({ children, params: { locale } }: LocalizedLayoutProps) =>
   ])
 
   return (
-    <RootLayout locale={locale}>
-      <ProductMetadataProvider productMetadata={productMetadata}>
-        <CompanyReviewsMetadataProvider companyReviewsMetadata={companyReviewsMetadata}>
-          <ShopSessionProvider>
-            <AppErrorProvider>
-              <AppErrorDialog />
-              <GlobalBannerDynamic />
-              <StoryblokProvider>
-                <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
-              </StoryblokProvider>
-            </AppErrorProvider>
-          </ShopSessionProvider>
-        </CompanyReviewsMetadataProvider>
-      </ProductMetadataProvider>
-    </RootLayout>
+    <>
+      <RootLayout locale={locale}>
+        <ProductMetadataProvider productMetadata={productMetadata}>
+          <CompanyReviewsMetadataProvider companyReviewsMetadata={companyReviewsMetadata}>
+            <ShopSessionProvider>
+              <AppErrorProvider>
+                <AppErrorDialog />
+                <GlobalBannerDynamic />
+                <StoryblokProvider>
+                  <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
+                </StoryblokProvider>
+              </AppErrorProvider>
+            </ShopSessionProvider>
+          </CompanyReviewsMetadataProvider>
+        </ProductMetadataProvider>
+      </RootLayout>
+    </>
   )
 }
 

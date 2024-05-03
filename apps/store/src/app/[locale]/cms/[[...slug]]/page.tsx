@@ -1,8 +1,9 @@
+import { StoryblokStory } from '@storyblok/react/rsc'
 import type { Metadata } from 'next'
 import { removeTrailingSlash } from 'next/dist/shared/lib/router/utils/remove-trailing-slash'
 import { notFound } from 'next/navigation'
 import { cache } from 'react'
-import { PageBlock } from '@/blocks/PageBlock'
+import { storyblokBridgeOptions } from '@/appComponents/storyblokBridgeOptions'
 import type { PageStory } from '@/services/storyblok/storyblok'
 import { MOST_VISITED_PATHS } from '@/services/storyblok/Storyblok.constant'
 import { getImgSrc, isProductStory } from '@/services/storyblok/Storyblok.helpers'
@@ -34,7 +35,7 @@ export default async function CmsPage(props: Props) {
   }
   return (
     <>
-      <PageBlock blok={story.content} />
+      <StoryblokStory story={story} bridgeOptions={storyblokBridgeOptions} />
       {!hideBreadcrumbs && <StoryBreadcrumbs params={props.params} currentPageTitle={story.name} />}
     </>
   )

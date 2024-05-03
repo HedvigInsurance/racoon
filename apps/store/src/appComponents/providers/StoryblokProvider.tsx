@@ -7,7 +7,6 @@ storyblokInit({
   accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
   use: [apiPlugin],
   components: storyblokComponents,
-  // TODO: bridge, etc
 })
 
 // The main purpose of this component is to call storyblokInit client-side
