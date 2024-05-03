@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { removeTrailingSlash } from 'next/dist/shared/lib/router/utils/remove-trailing-slash'
+import { headers } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { cache } from 'react'
 import { PageBlock } from '@/blocks/PageBlock'
@@ -19,10 +20,10 @@ type Props = {
 
 export default async function CmsPage(props: Props) {
   // Make this a dynamic route
-  // const headersList = headers()
-  // const referer = headersList.get('referer')
+  const headersList = headers()
+  const referer = headersList.get('referer')
 
-  // console.log({ referer })
+  console.log({ referer })
 
   const story = await fetchStory(props.params.locale, props.params.slug?.join('/'))
   // Patching incorrect data from Storyblok for /se-en/
@@ -110,8 +111,7 @@ export async function generateStaticParams({
 export const dynamicParams = true
 
 // DEBUG: Set SWR for 60 seconds
-export const dynamic = 'force-dynamic'
-// export const revalidate = 40
+export const revalidate = 40
 
 // Cache speeds up development mode by deduplicating requests between metadata and main renderer
 const fetchStory = cache(async (locale: RoutingLocale, slug = '') => {
