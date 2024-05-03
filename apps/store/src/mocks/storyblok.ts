@@ -54,5 +54,9 @@ export const productStoryBRF: ProductStory = {
     announcement: [],
     robots: 'index',
     globalStory: globalStory,
+    coverageLabel: 'Coverage',
+    overviewLabel: 'Overview',
+    coverage: [],
+    overview: [],
   },
 }

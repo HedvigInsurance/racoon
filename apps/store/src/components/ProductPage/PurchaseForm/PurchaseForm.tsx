@@ -5,18 +5,23 @@ import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
-import type { ReactNode} from 'react';
+import type { ReactNode } from 'react'
+import { Suspense } from 'react'
 import { useCallback, useRef, useState } from 'react'
 import { Button, Heading, mq, Space, theme } from 'ui'
-import type { CartToastAttributes } from '@/components/CartNotification/CartToast';
+import type { CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { CartToast } from '@/components/CartNotification/CartToast'
 import type { ProductItemProps } from '@/components/CartNotification/ProductItem'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceCalculatorDynamic } from '@/components/PriceCalculator/PriceCalculatorDynamic'
 import { completePriceLoader, PriceLoader } from '@/components/PriceLoader'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
-import { usePriceIntent } from '@/components/ProductPage/PriceIntentContext'
+import {
+  PriceIntentContextProvider,
+  usePriceIntent,
+} from '@/components/ProductPage/PriceIntentContext'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
+import { ProductPageTrackingProvider } from '@/components/ProductPage/ProductPageTrackingProvider'
 import {
   useIsPriceCalculatorExpanded,
   useOpenPriceCalculatorQueryParam,
@@ -24,8 +29,7 @@ import {
 import { ProductAverageRating } from '@/components/ProductReviews/ProductAverageRating'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { BankSigneringEvent } from '@/services/bankSignering'
-import type {
-  ProductOfferFragment} from '@/services/graphql/generated';
+import type { ProductOfferFragment } from '@/services/graphql/generated'
 import {
   ExternalInsuranceCancellationOption,
   usePriceIntentConfirmMutation,
@@ -50,7 +54,19 @@ export type PurchaseFormProps = {
   showAverageRating?: boolean
 }
 
-export const PurchaseForm = (props: PurchaseFormProps) => {
+export function PurchaseForm(props: PurchaseFormProps) {
+  return (
+    <Suspense>
+      <PriceIntentContextProvider>
+        <ProductPageTrackingProvider>
+          <PurchaseFormInner {...props} />
+        </ProductPageTrackingProvider>
+      </PriceIntentContextProvider>
+    </Suspense>
+  )
+}
+
+const PurchaseFormInner = (props: PurchaseFormProps) => {
   const { t } = useTranslation('purchase-form')
   const { priceTemplate } = useProductPageContext()
   const productData = useProductData()
