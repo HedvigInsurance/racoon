@@ -105,6 +105,7 @@ export const dynamicParams = true
 
 // DEBUG: Force dynamic server-side rendering
 export const dynamic = 'force-dynamic'
+export const revalidate = 60
 
 // Cache speeds up development mode by deduplicating requests between metadata and main renderer
 const fetchStory = cache(async (locale: RoutingLocale, slug = '') => {
