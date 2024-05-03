@@ -2,6 +2,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { QueryParam as CheckoutPageQueryParam } from '@/components/CheckoutPage/CheckoutPage.constants'
 import { QueryParam as CheckoutTrustlyQueryParam } from '@/components/CheckoutPaymentTrustlyPage/CheckoutPaymentTrustlyPage constants'
 import type { RoutingLocale } from '@/utils/l10n/types'
+import { locales } from './l10n/locales'
 
 class ExtendedURL extends URL {
   constructor(url: string, base?: string) {
@@ -53,6 +54,9 @@ type MemberLoginPage = BaseParams & {
 
 export const PageLink = {
   home: ({ locale }: BaseParams) => {
+    if (locale === locales['sv-SE'].routingLocale) {
+      return new URL(ORIGIN_URL)
+    }
     return new URL(locale, ORIGIN_URL)
   },
   // TODO: we probably want a better setup for locale-specific slugs than just hardcoding them
