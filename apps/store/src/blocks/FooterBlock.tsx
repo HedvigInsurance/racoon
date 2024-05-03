@@ -89,35 +89,7 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
   const footerSections = filterByBlockType(blok.sections, FooterSectionBlock.blockName)
   return (
     <footer className={wrapperStyle}>
-      <RootLayout>
-        {footerSections.map((nestedBlok) => (
-          <Column key={nestedBlok._uid}>
-            <FooterSectionBlock blok={nestedBlok} />
-          </Column>
-        ))}
-
-        <LocaleForm>
-          <StyledInputSelect
-            name={LocaleField.Language}
-            onChange={handleChangeLanguage}
-            defaultValue={currentLanguage}
-            options={languageList}
-          />
-        </LocaleForm>
-
-        <div className={disclaimerStyle}>
-          <Text color="textSecondary" size="sm">
-            © {new Date().getFullYear()} {organization.name} AB
-            <br />
-            <br />
-            {organization.address.streetAddress}
-            <br />
-            {organization.address.postalCode} {organization.address.addressLocality}
-            <br />
-            Org.nr. {BUSINESS_REGISTRATION_NUMBER}
-          </Text>
-        </div>
-      </RootLayout>
+      <h1>footer</h1>
     </footer>
   )
 }
