@@ -136,6 +136,11 @@ export const OfferPresenter = (props: Props) => {
     return tier
   }, [tiers, selectedOffer])
 
+  const productOfferIds = useMemo(
+    () => props.priceIntent.offers.map(({ id }) => id),
+    [props.priceIntent.offers],
+  )
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     addToCart(selectedOffer.id)
@@ -179,7 +184,7 @@ export const OfferPresenter = (props: Props) => {
                 />
               )}
 
-              <CancellationForm priceIntentId={priceIntent.id} offer={selectedOffer} />
+              <CancellationForm productOfferIds={productOfferIds} offer={selectedOffer} />
 
               <Button
                 type="submit"

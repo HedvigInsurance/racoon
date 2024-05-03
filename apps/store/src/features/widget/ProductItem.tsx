@@ -3,6 +3,7 @@ import { clsx } from 'clsx'
 import { useTranslation } from 'next-i18next'
 import React, { useState, useMemo, type ReactNode } from 'react'
 import { CrossIconSmall, LockIcon, Text, theme } from 'ui'
+import { CancellationForm } from '@/components/Cancellation/CancellationForm'
 import * as Collapsible from '@/components/Collapsible'
 import { InputDay } from '@/components/InputDay/InputDay'
 import { Pillow } from '@/components/Pillow/Pillow'
@@ -11,8 +12,8 @@ import { ProductDetailsHeader } from '@/components/ProductItem/ProductDetailsHea
 import { useGetStartDateProps } from '@/components/ProductItem/useGetStartDateProps'
 import { ProductTierSelector } from '@/components/ProductPage/PurchaseForm/ProductTierSelector'
 import { Tooltip } from '@/components/Tooltip/Tooltip'
-import { useStartDateUpdateMutation, type ProductOfferFragment } from '@/services/graphql/generated'
-import { convertToDate, formatAPIDate } from '@/utils/date'
+import { type ProductOfferFragment } from '@/services/graphql/generated'
+import { convertToDate } from '@/utils/date'
 import { getOfferPrice } from '@/utils/getOfferPrice'
 import { useAddToCart } from '@/utils/useAddToCart'
 import {
@@ -29,8 +30,6 @@ import {
   detailsHeader,
 } from './ProductItem.css'
 import { type Offer } from './widget.types'
-
-const TODAY = new Date()
 
 type Props = {
   shopSessionId: string
@@ -147,18 +146,17 @@ type EditUIProps = {
 }
 
 function EditUI(props: EditUIProps) {
-  const { t } = useTranslation(['cart', 'purchase-form'])
-
-  const [updateStartDate, { loading: updateStartDateLoading }] = useStartDateUpdateMutation()
-  const handleChangeStartDate = (date: Date) => {
+  const productOfferIds = useMemo(() => {
     const tiersOffersIds = props.tiers?.map((tier) => tier.id) ?? []
     const deductiblesOffersIds = props.deductibles?.map((deductible) => deductible.id) ?? []
-    const offersIds = new Set([props.selectedOffer.id, ...tiersOffersIds, ...deductiblesOffersIds])
+    const offersIdsSet = new Set([
+      props.selectedOffer.id,
+      ...tiersOffersIds,
+      ...deductiblesOffersIds,
+    ])
 
-    updateStartDate({
-      variables: { productOfferIds: Array.from(offersIds), startDate: formatAPIDate(date) },
-    })
-  }
+    return Array.from(offersIdsSet)
+  }, [props.selectedOffer.id, props.deductibles, props.tiers])
 
   const [addToCart] = useAddToCart({
     shopSessionId: props.shopSessionId,
@@ -171,13 +169,7 @@ function EditUI(props: EditUIProps) {
 
   return (
     <>
-      <InputDay
-        label={t('purchase-form:START_DATE_FIELD_LABEL')}
-        selected={convertToDate(props.selectedOffer.startDate) ?? undefined}
-        onSelect={handleChangeStartDate}
-        fromDate={TODAY}
-        loading={updateStartDateLoading}
-      />
+      <CancellationForm productOfferIds={productOfferIds} offer={props.selectedOffer} />
 
       {props.tiers && props.tiers.length > 1 && (
         <ProductTierSelector

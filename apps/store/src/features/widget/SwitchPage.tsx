@@ -37,6 +37,11 @@ export const SwitchPage = (props: Props) => {
     return cartOffer
   }, [props.priceIntent.offers, props.shopSession.cart.entries])
 
+  const productOfferIds = useMemo(
+    () => props.priceIntent.offers.map(({ id }) => id),
+    [props.priceIntent.offers],
+  )
+
   const locale = useRoutingLocale()
 
   return (
@@ -59,7 +64,7 @@ export const SwitchPage = (props: Props) => {
                 campaign={props.shopSession.cart.redeemedCampaign ?? undefined}
               />
               <Space y={0.25}>
-                <CancellationForm priceIntentId={props.priceIntent.id} offer={offer} />
+                <CancellationForm productOfferIds={productOfferIds} offer={offer} />
                 <ButtonNextLink
                   href={PageLink.widgetSign({
                     locale,
