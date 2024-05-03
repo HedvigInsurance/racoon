@@ -24,18 +24,11 @@ export const getStoryBySlug = async <T extends ISbStoryData>(
   const storyblokApi = await getStoryblokApiWithCache()
   const fullSlug = slug.length > 0 ? `${locale}/${slug}` : locale
   const { data } = await storyblokApi
-    .getStory(
-      fullSlug,
-      {
-        version,
-        resolve_links: 'url',
-        resolve_relations: `reusableBlockReference.reference,${BLOG_ARTICLE_CONTENT_TYPE}.categories,page.abTestOrigin`,
-      },
-      {
-        // Use 'no-cache' for debugging caching issue
-        cache: 'force-cache',
-      },
-    )
+    .getStory(fullSlug, {
+      version,
+      resolve_links: 'url',
+      resolve_relations: `reusableBlockReference.reference,${BLOG_ARTICLE_CONTENT_TYPE}.categories,page.abTestOrigin`,
+    })
     .catch((err) => {
       console.log(`Failed to get story ${fullSlug}`, err)
       throw err
@@ -95,10 +88,6 @@ const getStoryblokApiWithCache = async (): Promise<ReturnType<typeof getStoryblo
 const cvCacheTag = 'storyblok.cv'
 const fetchStoryblokCacheVersion = async (): Promise<number> => {
   const storyblokApi = getStoryblokApi()
-  await storyblokApi.getStory(
-    'se',
-    {},
-    { cache: 'force-cache', next: { tags: [cvCacheTag], revalidate: 60 } },
-  )
+  await storyblokApi.getStory('se', {}, { next: { tags: [cvCacheTag], revalidate: 60 } })
   return storyblokApi.cacheVersion()
 }

@@ -19,13 +19,13 @@ type Props = {
 }
 
 export default async function CmsPage(props: Props) {
+  const story = await fetchStory(props.params.locale, props.params.slug?.join('/'))
+
   // Make this a dynamic route
   const headersList = headers()
   const referer = headersList.get('referer')
 
   console.log({ referer })
-
-  const story = await fetchStory(props.params.locale, props.params.slug?.join('/'))
   // Patching incorrect data from Storyblok for /se-en/
   let { hideBreadcrumbs } = story.content
   if ((props.params.slug?.length ?? 0) < 1) {
@@ -111,6 +111,7 @@ export async function generateStaticParams({
 export const dynamicParams = true
 
 // DEBUG: Set SWR for 60 seconds
+// export const dynamic = 'force-static'
 export const revalidate = 40
 
 // Cache speeds up development mode by deduplicating requests between metadata and main renderer
