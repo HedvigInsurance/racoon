@@ -30,8 +30,8 @@
     "@testing-library/react": "15.0.5",
     "@testing-library/user-event": "14.5.2",
     "@types/jest": "29.5.12",
-    "@types/react": "18.2.79",
-    "@types/react-dom": "18.2.25",
+    "@types/react": "18.3.1",
+    "@types/react-dom": "18.3.0",
     "@typescript-eslint/eslint-plugin": "7.7.1",
     "@typescript-eslint/parser": "7.7.1",
     "babel-jest": "29.7.0",
@@ -58,8 +58,8 @@
     "@vanilla-extract/recipes": "0.5.2",
     "@vanilla-extract/sprinkles": "1.6.1",
     "clsx": "2.1.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "react-wrap-balancer": "1.1.0"
   }
 }
