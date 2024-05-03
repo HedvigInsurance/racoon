@@ -21,7 +21,7 @@ export const getStoryBySlug = async <T extends ISbStoryData>(
   slug: string,
   { locale, version = 'published' }: StoryOptions,
 ): Promise<T> => {
-  const storyblokApi = await getStoryblokApiWithCache()
+  const storyblokApi = getStoryblokApi()
   const fullSlug = slug.length > 0 ? `${locale}/${slug}` : locale
   const { data } = await storyblokApi
     .getStory(
