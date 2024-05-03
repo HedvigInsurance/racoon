@@ -7,6 +7,7 @@ import { Price } from '@/components/Price'
 type Props = {
   expanded: boolean
   price: ComponentProps<typeof Price>
+  className?: string
 }
 
 export const ProductDetailsHeader = ({ expanded, price, ...radixProps }: Props) => {

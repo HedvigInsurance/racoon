@@ -7,6 +7,7 @@ import { PDFViewer } from '../PDFViewer'
 type Props = {
   items: Array<{ title: string; value: string }>
   documents: Array<{ title: string; url: string }>
+  className?: string
 }
 
 export const ProductDetails = ({ items, documents, ...props }: Props) => {
