@@ -112,7 +112,7 @@ export const dynamicParams = true
 
 // DEBUG: Set SWR for 60 seconds
 // export const dynamic = 'auto'
-export const revalidate = 40
+// export const revalidate = 40
 
 // Cache speeds up development mode by deduplicating requests between metadata and main renderer
 const fetchStory = cache(async (locale: RoutingLocale, slug = '') => {
