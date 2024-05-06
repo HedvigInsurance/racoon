@@ -1,8 +1,9 @@
 import { clsx } from 'clsx'
 import Link from 'next/link'
-import type { ComponentProps} from 'react';
+import type { ComponentProps } from 'react'
 import { Children, type ReactNode } from 'react'
 import { Text } from 'ui'
+import { removeSEHomepageLangSegment } from '@/utils/PageLink'
 import { breadcrumbItem, breadcrumbsLink, breadcrumbsList } from './PageBreadcrumbs.css'
 
 export type BreadcrumbListItem = {
@@ -29,7 +30,7 @@ export const PageBreadcrumbs = (props: Props) => {
       <List>
         {props.items.map((item) =>
           item.href ? (
-            <ItemLink key={item.href} href={item.href}>
+            <ItemLink key={item.href} href={removeSEHomepageLangSegment(item.href)}>
               {item.label}
             </ItemLink>
           ) : (

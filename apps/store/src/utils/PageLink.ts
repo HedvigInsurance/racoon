@@ -353,3 +353,15 @@ const REVIEWS_URL: Partial<Record<RoutingLocale, URL>> = {
   se: new URL('/se/hedvig/omdomen', ORIGIN_URL),
   'se-en': new URL('/se-en/hedvig/reviews', ORIGIN_URL),
 }
+
+export const removeSEHomepageLangSegment = (urlString: string): string => {
+  const url = new URL(urlString)
+  const isSwedishHomepage = url.pathname === '/se'
+
+  if (isSwedishHomepage) {
+    url.pathname = '/'
+  }
+
+  // and this part
+  return url.toString()
+}
