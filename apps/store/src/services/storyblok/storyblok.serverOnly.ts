@@ -93,21 +93,31 @@ export const getCmsPageLinks = async (startsWith?: string) => {
   return pageLinks
 }
 
+// See https://www.storyblok.com/docs/api/content-delivery/v2/getting-started/cache-invalidation for caching logic
+//
+// We can rely on storyblok-js-client to hold current `cv` in-memory,
+// but on first start we want to fetch and provide current value
+// to ensure every subsequent request uses `cv` and is therefore safe to cache without expiration.
+//
+// Requests with cv=undefined are
+// - slower since they hit Storyblok server instead of CDN
+// - sometimes result in rate-limit errors when we're rebuilding a lot of pages
+// - generally unsafe to cache since current version can change at any time
 const getStoryblokApiWithCache = async (): Promise<ReturnType<typeof getStoryblokApi>> => {
-  const cacheVersion = await fetchStoryblokCacheVersion()
   const storyblokApi = getStoryblokApi()
-  // fetchStoryblokCacheVersion might be returning from cache, so we want to update current instance
-  storyblokApi.setCacheVersion(cacheVersion)
+  if (!storyblokApi.cacheVersion()) {
+    storyblokApi.setCacheVersion(await fetchStoryblokCacheVersion())
+  }
   return storyblokApi
 }
 
-const cvCacheTag = 'storyblok.cv'
+// Potential optimization: cache: 'force-cache' and rely on webhooks to invalidate
 const fetchStoryblokCacheVersion = async (): Promise<number> => {
   const storyblokApi = getStoryblokApi()
-  await storyblokApi.getStory(
-    'se',
-    {},
-    { cache: 'force-cache', next: { tags: [cvCacheTag], revalidate: 60 } },
-  )
-  return storyblokApi.cacheVersion()
+  const {
+    data: {
+      space: { version },
+    },
+  } = await storyblokApi.get('cdn/spaces/me', {}, { cache: 'no-cache' })
+  return version as number
 }
