@@ -129,10 +129,10 @@ export function CookieConsent() {
 
       {cookieConsent.showBanner && (
         <div className={cookieBanner}>
-          <Space y={1.5}>
-            <div>
+          <Space y={{ base: 1.5, md: 2 }}>
+            <Space y={0.25}>
               <Text color="textNegative">{t('cookieConsent:COOKIE_CONSENT_HEADING')}</Text>
-              <Text color="textTertiary" as="div">
+              <Text as="div" color="textTertiary" size={{ _: 'xs', sm: 'md' }}>
                 {t('cookieConsent:COOKIE_CONSENT_BODY')}
                 <Link
                   href={PageLink.cookiesInfo({ locale }).pathname}
@@ -143,7 +143,7 @@ export function CookieConsent() {
                   {t('common:READ_MORE')}
                 </Link>
               </Text>
-            </div>
+            </Space>
             <div className={buttonGroup}>
               <Button variant="ghost-alt" size="medium" onClick={handleCookieSettings}>
                 {t('cookieConsent:COOKIE_CONSENT_SETTINGS_BUTTON')}
