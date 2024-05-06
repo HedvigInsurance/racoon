@@ -1,0 +1,3 @@
+mutation SendEventBatch($inputList: [EventInput!]!) {
+    sendEventBatch(inputList: $inputList)
+}
