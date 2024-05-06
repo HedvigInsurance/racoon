@@ -2,7 +2,6 @@ import { InputStartDay } from '@/components/InputDay/InputStartDay'
 import {
   type ProductOfferFragment,
   useCancellationRequestedUpdateMutation,
-  usePriceIntentQuery,
   useStartDateUpdateMutation,
   ExternalInsuranceCancellationOption,
 } from '@/services/graphql/generated'
@@ -12,18 +11,14 @@ import { BankSigneringInvalidRenewalDateCancellation } from './BankSigneringInva
 import { IEXCancellation } from './IEXCancellation'
 
 type Props = {
-  priceIntentId: string
+  productOfferIds: Array<string>
   offer: ProductOfferFragment
 }
 
 export const CancellationForm = (props: Props) => {
-  const { data } = usePriceIntentQuery({ variables: { priceIntentId: props.priceIntentId } })
-  if (!data) throw new Error('Cancellation | Missing data')
-
-  const productOfferIds = data.priceIntent.offers.map((item) => item.id)
   const [mutate] = useCancellationRequestedUpdateMutation()
   const handleAutoSwitchChange = (checked: boolean) => {
-    mutate({ variables: { productOfferIds, requested: checked } })
+    mutate({ variables: { productOfferIds: props.productOfferIds, requested: checked } })
   }
 
   const startDate = convertToDate(props.offer.startDate) ?? undefined
@@ -31,7 +26,7 @@ export const CancellationForm = (props: Props) => {
   const handleChangeStartDate = (date: Date) => {
     updateStartDate({
       variables: {
-        productOfferIds,
+        productOfferIds: props.productOfferIds,
         startDate: formatAPIDate(date),
       },
     })
