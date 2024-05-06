@@ -1,5 +1,6 @@
 import { style, keyframes, styleVariants, globalStyle } from '@vanilla-extract/css'
 import { theme } from 'ui/src/theme'
+import { card as widgetProductItem } from '@/features/widget/ProductItem.css'
 
 const paddingRight = '1.25rem'
 
@@ -23,6 +24,11 @@ export const trigger = style({
   ':focus-visible': {
     boxShadow: theme.shadow.focus,
     borderRadius: theme.radius.sm,
+  },
+  selectors: {
+    [`${widgetProductItem} &`]: {
+      backgroundColor: theme.colors.backgroundStandard,
+    },
   },
 })
 
