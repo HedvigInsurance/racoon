@@ -45,7 +45,7 @@ const localeMiddleware = (req: NextRequest): NextResponse | undefined => {
 
       // Set the Swedish homepage path to `/`
       // The `redirectToLocale` function will be invoked with the default locale which is Swedish
-      // URL will rewritten to serve the Swedish page on `/`
+      // URL will be rewritten to serve the Swedish page on `/`
       return NextResponse.redirect(targetUrl, 308)
     }
 
@@ -58,10 +58,10 @@ const localeMiddleware = (req: NextRequest): NextResponse | undefined => {
     targetUrl.pathname = `/${locale}${targetUrl.pathname}`
 
     // This function is invoked when requesting a non-localized route
-    // To redirect it to the relevant localized version
+    // to redirect it to the relevant localized version
     // When called with a the Swedish or default locales
-    // We rewrite the URL instead of redirecting
-    // To display the translated pages without changing the URL
+    // we rewrite the URL instead of redirecting to display
+    // the translated pages without changing the URL
     if (
       locale === locales['sv-SE'].routingLocale ||
       locale === locales[FALLBACK_LOCALE].routingLocale
