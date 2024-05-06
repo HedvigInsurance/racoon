@@ -1,9 +1,12 @@
 import type { Metadata } from 'next'
+import { removeTrailingSlash } from 'next/dist/shared/lib/router/utils/remove-trailing-slash'
 import { notFound } from 'next/navigation'
+import { cache } from 'react'
 import { PageBlock } from '@/blocks/PageBlock'
 import type { PageStory } from '@/services/storyblok/storyblok'
+import { MOST_VISITED_PATHS } from '@/services/storyblok/Storyblok.constant'
 import { getImgSrc, isProductStory } from '@/services/storyblok/Storyblok.helpers'
-import { getStoryBySlug } from '@/services/storyblok/storyblok.serverOnly'
+import { getCmsPageLinks, getStoryBySlug } from '@/services/storyblok/storyblok.serverOnly'
 import { isRoutingLocale, toIsoLocale } from '@/utils/l10n/localeUtils'
 import type { IsoLocale, RoutingLocale } from '@/utils/l10n/types'
 import { ProductCmsPage } from './ProductCmsPage'
@@ -15,7 +18,7 @@ type Props = {
 }
 
 export default async function CmsPage(props: Props) {
-  const story = await fetchStory(props.params)
+  const story = await fetchStory(props.params.locale, props.params.slug?.join('/'))
   // Patching incorrect data from Storyblok for /se-en/
   let { hideBreadcrumbs } = story.content
   if ((props.params.slug?.length ?? 0) < 1) {
@@ -38,7 +41,7 @@ export default async function CmsPage(props: Props) {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const story = await fetchStory(params)
+  const story = await fetchStory(params.locale, params.slug?.join('/'))
   const pageUrl = [params.locale, ...(params.slug ?? [])].join('/')
 
   const alternates = {
@@ -76,14 +79,34 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return result
 }
 
-async function fetchStory(params: CmsPageRoutingParams) {
-  const { locale } = params
-  const slug = (params.slug ?? []).join('/')
+export async function generateStaticParams({
+  params,
+}: {
+  params: Pick<CmsPageRoutingParams, 'locale'>
+}): Promise<Array<{ slug: Array<string> }>> {
+  // TODO: Remove when main CMS route is removed from pages router
+  if (process.env.APP_ROUTER_GENERATE_CMS_PAGES !== 'true') {
+    return []
+  }
+
+  const pageLinks = await getCmsPageLinks(`${params.locale}/`)
+  const mostVisitedLinks = pageLinks.filter((item) =>
+    MOST_VISITED_PATHS.has(`/${removeTrailingSlash(item.link.slug)}`),
+  )
+  const result = mostVisitedLinks.map((link) => ({
+    slug: link.slugParts,
+  }))
+  return result
+}
+
+// Only some routes are statically built, other are resolved dynamically and then cached
+// See https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#dynamicparams
+export const dynamicParams = true
+
+// Cache speeds up development mode by deduplicating requests between metadata and main renderer
+const fetchStory = cache(async (locale: RoutingLocale, slug = '') => {
   try {
-    return await getStoryBySlug<PageStory>(slug, {
-      version: 'published',
-      locale,
-    })
+    return await getStoryBySlug<PageStory>(slug, { locale })
   } catch (err: unknown) {
     if (err != null && typeof err === 'object') {
       const { status } = err as Record<string, any>
@@ -95,4 +118,4 @@ async function fetchStory(params: CmsPageRoutingParams) {
     console.error('Failed to get a story', err)
     throw err
   }
-}
+})

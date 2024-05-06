@@ -27,7 +27,7 @@ const Layout = async ({ children, params: { locale } }: LocalizedLayoutProps) =>
   const [companyReviewsMetadata, productMetadata, globalStory] = await Promise.all([
     fetchCompanyReviewsMetadata(),
     fetchGlobalProductMetadata({ apolloClient }),
-    getStoryBySlug<GlobalStory>('global', { version: 'published', locale }),
+    getStoryBySlug<GlobalStory>('global', { locale }),
   ])
 
   return (

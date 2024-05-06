@@ -1,4 +1,5 @@
 import { type ISbStoryData, type SbBlokData } from '@storyblok/react'
+import type { RoutingLocale } from '@/utils/l10n/types'
 import type { LinkField, ProductStory, WidgetFlowStory } from './storyblok'
 
 export const filterByBlockType = <BlockData extends SbBlokData>(
@@ -86,4 +87,15 @@ export const getLinkRel = (link: Pick<LinkField, 'rel' | 'target'>) => {
   }
 
   return undefined
+}
+
+export type LinkData = Pick<
+  ISbStoryData,
+  'id' | 'slug' | 'name' | 'parent_id' | 'position' | 'uuid' | 'is_startpage'
+> & { is_folder: boolean; path: string; published: boolean; real_path: string }
+
+export type PageLink = {
+  link: LinkData
+  locale: RoutingLocale
+  slugParts: Array<string>
 }

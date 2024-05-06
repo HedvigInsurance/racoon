@@ -84,7 +84,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
 
 export const getStaticPaths: GetStaticPaths = async (context) => {
   if (process.env.SKIP_BUILD_STATIC_GENERATION === 'true') {
-    console.info('Skipping static generation for widget landing pages...')
+    console.info('Pages router widget pages: skipping static generation')
     return { paths: [], fallback: 'blocking' }
   }
 
