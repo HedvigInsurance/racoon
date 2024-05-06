@@ -37,12 +37,7 @@ const localeMiddleware = (req: NextRequest): NextResponse | undefined => {
 
   // Localized route
   if (isRoutingLocale(firstSegment)) {
-    const isSwedish = firstSegment === locales['sv-SE'].routingLocale
-
-    // URL only have a locale
-    const isHomePage = url.pathname.split('/').length === 2
-
-    const isSwedishHomepage = isSwedish && isHomePage
+    const isSwedishHomepage = url.pathname === '/se'
 
     if (isSwedishHomepage) {
       const targetUrl = req.nextUrl.clone()
