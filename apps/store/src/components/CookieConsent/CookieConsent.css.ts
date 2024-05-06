@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { theme } from 'ui'
+import { minWidth, theme } from 'ui'
 import { zIndexes } from '@/utils/zIndex'
 
 export const cookieBanner = style({
@@ -14,14 +14,27 @@ export const cookieBanner = style({
   backgroundColor: theme.colors.dark,
   boxShadow: '0px -2px 4px rgba(0, 0, 0, 0.1)',
   borderRadius: theme.radius.xl,
-  fontSize: '14px',
-  color: '#333',
   zIndex: zIndexes.cookieBanner,
+  lineHeight: 1.5,
+
+  '@media': {
+    [minWidth.xs]: {
+      lineHeight: 1.32,
+    },
+  },
 })
 
 export const buttonGroup = style({
   display: 'flex',
   justifyContent: 'space-between',
+  flexDirection: 'column',
+  gap: theme.space.md,
+
+  '@media': {
+    [minWidth.xs]: {
+      flexDirection: 'row',
+    },
+  },
 })
 
 export const readMoreLink = style({
