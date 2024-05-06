@@ -32,20 +32,16 @@ export async function middleware(req: NextRequest) {
 }
 
 const localeMiddleware = (req: NextRequest): NextResponse | undefined => {
-  const url = new URL(req.url)
-  const firstSegment = url.pathname.split('/')[1]
+  const targetUrl = req.nextUrl.clone()
+  const firstSegment = targetUrl.pathname.split('/')[1]
 
   // Localized route
   if (isRoutingLocale(firstSegment)) {
-    const isSwedishHomepage = url.pathname === '/se'
+    const isSwedishHomepage = targetUrl.pathname === '/se'
 
     if (isSwedishHomepage) {
-      const targetUrl = req.nextUrl.clone()
       targetUrl.pathname = '/'
 
-      // Set the Swedish homepage path to `/`
-      // The `redirectToLocale` function will be invoked with the default locale which is Swedish
-      // URL will be rewritten to serve the Swedish page on `/`
       return NextResponse.redirect(targetUrl, 308)
     }
 
@@ -53,33 +49,26 @@ const localeMiddleware = (req: NextRequest): NextResponse | undefined => {
     return
   }
 
-  const redirectToLocale = (locale: string) => {
-    const targetUrl = req.nextUrl.clone()
-    targetUrl.pathname = `/${locale}${targetUrl.pathname}`
+  // Saved language preference
+  const cookieLocale = req.cookies.get(LOCALE_COOKIE_KEY)?.value
+  if (cookieLocale) {
+    console.info(`Found user preference in cookies: ${cookieLocale}, redirecting`)
 
-    // This function is invoked when requesting a non-localized route
-    // to redirect it to the relevant localized version
-    // When called with a the Swedish or default locales
-    // we rewrite the URL instead of redirecting to display
-    // the translated pages without changing the URL
-    if (
-      locale === locales['sv-SE'].routingLocale ||
-      locale === locales[FALLBACK_LOCALE].routingLocale
-    ) {
-      return NextResponse.rewrite(targetUrl)
-    }
+    const targetUrl = req.nextUrl.clone()
+    targetUrl.pathname = `/${cookieLocale}${targetUrl.pathname}`
 
     return NextResponse.redirect(targetUrl, 308)
   }
 
-  const cookieLocale = req.cookies.get(LOCALE_COOKIE_KEY)?.value
-  if (cookieLocale) {
-    console.info(`Found user preference in cookies: ${cookieLocale}, redirecting`)
-    return redirectToLocale(cookieLocale)
-  }
+  // Root domain
+  if (targetUrl.pathname === '/') {
+    const defaultLocale = locales[FALLBACK_LOCALE].routingLocale
+    console.info(`Routing traffic to /${defaultLocale}`)
 
-  console.info(`Routing visitor from ${req.url} to default locale`)
-  return redirectToLocale(locales[FALLBACK_LOCALE].routingLocale)
+    // Route traffic to the default locale
+    targetUrl.pathname = `/${defaultLocale}${targetUrl.pathname}`
+    return NextResponse.rewrite(targetUrl)
+  }
 }
 
 type Redirect = {
