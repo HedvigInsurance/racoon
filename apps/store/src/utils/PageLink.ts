@@ -354,14 +354,18 @@ const REVIEWS_URL: Partial<Record<RoutingLocale, URL>> = {
   'se-en': new URL('/se-en/hedvig/reviews', ORIGIN_URL),
 }
 
+export const removeTrailingSlash = (url: string) => {
+  return url.endsWith('/') ? url.slice(0, -1) : url
+}
+
 export const removeSEHomepageLangSegment = (urlString: string): string => {
   const url = new URL(urlString)
-  const isSwedishHomepage = url.pathname === '/se'
+
+  const isSwedishHomepage = removeTrailingSlash(url.pathname) === '/se'
 
   if (isSwedishHomepage) {
     url.pathname = '/'
   }
 
-  // and this part
-  return url.toString()
+  return removeTrailingSlash(url.toString())
 }

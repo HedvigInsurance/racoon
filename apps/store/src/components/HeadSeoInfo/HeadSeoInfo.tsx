@@ -6,7 +6,7 @@ import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 import { isBrowser } from '@/utils/env'
 import { organization } from '@/utils/jsonSchema'
 import { getLocaleOrFallback, isRoutingLocale } from '@/utils/l10n/localeUtils'
-import { ORIGIN_URL } from '@/utils/PageLink'
+import { ORIGIN_URL, removeSEHomepageLangSegment } from '@/utils/PageLink'
 
 type Props = {
   story: ISbStoryData<SEOData>
@@ -77,7 +77,7 @@ const AlternateLink = ({ fullSlug }: { fullSlug: string }) => {
     <Head>
       <link
         rel="alternate"
-        href={`${ORIGIN_URL}/${removeTrailingSlash(fullSlug)}`}
+        href={removeSEHomepageLangSegment(`${ORIGIN_URL}/${fullSlug}`)}
         hrefLang={getHrefLang(fullSlug)}
       />
     </Head>
@@ -91,8 +91,4 @@ const getHrefLang = (fullSlug: string) => {
   }
 
   return 'x-default'
-}
-
-const removeTrailingSlash = (url: string) => {
-  return url.endsWith('/') ? url.slice(0, -1) : url
 }
