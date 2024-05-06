@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 import Balancer from 'react-wrap-balancer'
 import type { FontSizeProps } from '../../theme'
 import { type Sprinkles, sprinkles } from '../../theme/sprinkles.css'
-import { textBase, textStrikethrough, textUppercase } from './Text.css'
+import { textBase, textFallbackColor, textStrikethrough, textUppercase } from './Text.css'
 
 type TextStyleProps = {
   align?: Sprinkles['textAlign']
@@ -31,6 +31,8 @@ export const getTextStyles = ({
 }: TextStyleProps) => {
   return clsx(
     textBase,
+    // Fix for vanilla-extract bug where base styles color override the color prop
+    color ? undefined : textFallbackColor,
     sprinkles({ color: color, textAlign: align, fontSize: size }),
     strikethrough && textStrikethrough,
     uppercase && textUppercase,
