@@ -1,5 +1,5 @@
 import 'server-only'
-import type { ISbStoryData } from '@storyblok/react'
+import type { ISbStoryData, StoryblokClient } from '@storyblok/react'
 import { apiPlugin, getStoryblokApi, storyblokInit } from '@storyblok/react/rsc'
 import { draftMode } from 'next/headers'
 import { BLOG_ARTICLE_CONTENT_TYPE } from '@/features/blog/blog.constants'
@@ -22,7 +22,7 @@ export const getStoryBySlug = async <T extends ISbStoryData>(
   slug: string,
   { locale }: RscStoryOptions,
 ): Promise<T> => {
-  const storyblokApi = await getStoryblokApiWithCache()
+  const storyblokApi = getStoryblokApi()
   const fullSlug = slug.length > 0 ? `${locale}/${slug}` : locale
   const { data } = await storyblokApi
     .getStory(
@@ -32,10 +32,7 @@ export const getStoryBySlug = async <T extends ISbStoryData>(
         resolve_links: 'url',
         resolve_relations: `reusableBlockReference.reference,${BLOG_ARTICLE_CONTENT_TYPE}.categories,page.abTestOrigin`,
       },
-      {
-        // Use 'no-cache' for debugging caching issue
-        cache: 'force-cache',
-      },
+      cacheOptions(storyblokApi),
     )
     .catch((err) => {
       console.log(`Failed to get story ${fullSlug}`, err)
@@ -70,13 +67,17 @@ export const getParentStories = async (slug: string, { locale }: RscStoryOptions
 }
 
 export const getCmsPageLinks = async (startsWith?: string) => {
-  const storyblokApi = await getStoryblokApiWithCache()
+  const storyblokApi = getStoryblokApi()
   const {
     data: { links },
-  } = (await storyblokApi.get('cdn/links/', {
-    ...(startsWith && { starts_with: startsWith }),
-    version: 'published',
-  })) as unknown as { data: { links: Record<string, LinkData> } }
+  } = (await storyblokApi.get(
+    'cdn/links/',
+    {
+      ...(startsWith && { starts_with: startsWith }),
+      version: 'published',
+    },
+    cacheOptions(storyblokApi),
+  )) as unknown as { data: { links: Record<string, LinkData> } }
 
   const pageLinks: Array<PageLink> = []
   for (const link of Object.values(links)) {
@@ -94,30 +95,13 @@ export const getCmsPageLinks = async (startsWith?: string) => {
 }
 
 // See https://www.storyblok.com/docs/api/content-delivery/v2/getting-started/cache-invalidation for caching logic
-//
-// We can rely on storyblok-js-client to hold current `cv` in-memory,
-// but on first start we want to fetch and provide current value
-// to ensure every subsequent request uses `cv` and is therefore safe to cache without expiration.
-//
-// Requests with cv=undefined are
-// - slower since they hit Storyblok server instead of CDN
-// - sometimes result in rate-limit errors when we're rebuilding a lot of pages
-// - generally unsafe to cache since current version can change at any time
-const getStoryblokApiWithCache = async (): Promise<ReturnType<typeof getStoryblokApi>> => {
-  const storyblokApi = getStoryblokApi()
-  if (!storyblokApi.cacheVersion()) {
-    storyblokApi.setCacheVersion(await fetchStoryblokCacheVersion())
-  }
-  return storyblokApi
-}
-
-// Potential optimization: cache: 'force-cache' and rely on webhooks to invalidate
-const fetchStoryblokCacheVersion = async (): Promise<number> => {
-  const storyblokApi = getStoryblokApi()
-  const {
-    data: {
-      space: { version },
+const cacheOptions = (storyblokApi: StoryblokClient) => {
+  return {
+    // Use 'no-cache' for debugging caching issue
+    cache: 'force-cache',
+    next: {
+      // Short-lived TTL for current latest (no cache version), treat known cv results as immutable
+      revalidate: storyblokApi.cacheVersion() ? Number.POSITIVE_INFINITY : 60,
     },
-  } = await storyblokApi.get('cdn/spaces/me', {}, { cache: 'no-cache' })
-  return version as number
+  } as const
 }
