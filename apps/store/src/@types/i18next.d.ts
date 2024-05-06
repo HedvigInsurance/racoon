@@ -13,6 +13,7 @@ import type cart from '../../public/locales/en/cart.json'
 import type checkout from '../../public/locales/en/checkout.json'
 import type common from '../../public/locales/en/common.json'
 import type contactUs from '../../public/locales/en/contact-us.json'
+import type cookieConsent from '../../public/locales/en/cookieConsent.json'
 import type memberArea from '../../public/locales/en/memberArea.json'
 import type purchaseForm from '../../public/locales/en/purchase-form.json'
 import type reviews from '../../public/locales/en/reviews.json'
@@ -23,6 +24,7 @@ interface I18nNamespaces {
   bankid: typeof bankid
   cart: typeof cart
   checkout: typeof checkout
+  cookieConsent: typeof cookieConsent
   common: typeof common
   'purchase-form': typeof purchaseForm
   carDealership: typeof carDealership

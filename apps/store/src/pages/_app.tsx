@@ -11,6 +11,7 @@ import { theme } from 'ui'
 import { AppErrorDialog } from '@/components/AppErrorDialog'
 import { BankIdDialogDynamic } from '@/components/BankIdDialog/BankIdDialogDynamic'
 import { ContactUs } from '@/components/ContactUs/ContactUs'
+import { CookieConsent } from '@/components/CookieConsent/CookieConsent'
 import { GlobalBannerDynamic } from '@/components/GlobalBanner/GlobalBannerDynamic'
 import { GTMLoader } from '@/components/GTMLoader'
 import { GlobalLinkStyles } from '@/components/RichText/RichText.styles'
@@ -97,7 +98,8 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       <Head>
         <meta key="viewport" name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <GTMLoader />
+      {Features.enabled('COOKIE_BANNER') && <GTMLoader />}
+      {Features.enabled('COOKIE_BANNER_INP_IMPROVEMENT') && <CookieConsent />}
       <GlobalLinkStyles />
       <OneTrustStyles />
       <PageTransitionProgressBar />
