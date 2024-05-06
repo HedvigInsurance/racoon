@@ -1,7 +1,7 @@
 import type { ISbStoryData } from '@storyblok/js'
 import type { GetServerSideProps } from 'next'
 import { getStoryblokApi } from '@/services/storyblok/api'
-import { ORIGIN_URL, removeTrailingSlash } from '@/utils/PageLink'
+import { ORIGIN_URL, removeSEHomepageLangSegment } from '@/utils/PageLink'
 
 const generateSiteMap = (pages: Array<ISbStoryData>) => {
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -10,7 +10,7 @@ const generateSiteMap = (pages: Array<ISbStoryData>) => {
        .map((page) => {
          return `
           <url>
-            <loc>${`${ORIGIN_URL}/${removeTrailingSlash(page.full_slug)}`}</loc>
+            <loc>${removeSEHomepageLangSegment(`${ORIGIN_URL}/${page.full_slug}`)}</loc>
           </url>
         `
        })
