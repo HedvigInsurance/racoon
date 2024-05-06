@@ -8,12 +8,7 @@ type Props = {
   selectedOffer: Offer
 } & Pick<
   ComponentProps<typeof ProductItem>,
-  | 'shopSessionId'
-  | 'greenVariant'
-  | 'onDelete'
-  | 'defaultExpanded'
-  | 'disableStartDate'
-  | 'children'
+  'shopSessionId' | 'greenVariant' | 'onDelete' | 'defaultExpanded' | 'mode' | 'children'
 >
 
 export const ProductItemContainer = (props: Props) => {
@@ -30,8 +25,8 @@ export const ProductItemContainer = (props: Props) => {
       deductibles={deductibles}
       defaultExpanded={props.defaultExpanded}
       greenVariant={props.greenVariant}
-      disableStartDate={props.disableStartDate ?? false}
       onDelete={props.onDelete}
+      mode={props.mode}
     >
       {props.children}
     </ProductItem>

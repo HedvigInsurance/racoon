@@ -43,7 +43,7 @@ export const ConfirmationPage = (props: Props) => {
                   key={item.id}
                   shopSessionId={props.shopSession.id}
                   selectedOffer={item}
-                  disableStartDate={true}
+                  mode="view"
                 />
               ))}
 
