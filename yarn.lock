@@ -25182,7 +25182,7 @@ __metadata:
     storybook-addon-apollo-client: "npm:6.0.0"
     subscriptions-transport-ws: "npm:0.11.0"
     ts-jest: "npm:29.1.2"
-    tss-react: "npm:4.9.7"
+    tss-react: "npm:4.9.10"
     typescript: "npm:5.4.5"
     ui: "workspace:"
     uuid: "npm:9.0.1"
@@ -26281,9 +26281,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tss-react@npm:4.9.7":
-  version: 4.9.7
-  resolution: "tss-react@npm:4.9.7"
+"tss-react@npm:4.9.10":
+  version: 4.9.10
+  resolution: "tss-react@npm:4.9.10"
   dependencies:
     "@emotion/cache": "npm:*"
     "@emotion/serialize": "npm:*"
@@ -26298,7 +26298,7 @@ __metadata:
       optional: true
     "@mui/material":
       optional: true
-  checksum: 10c0/6640951630bf12fbe9036c2399c64487b41c53c1c3f2d134a33b25b690e5043f670e1ee3d6fef9ef30f0f570c1c11ab3c37a004307ccfbf15e45156fa033e0a2
+  checksum: 10c0/ae8d71b89734647efc6e9c29ed96a3d0eb978b3f3d02e95b9d4f646f94a5655e0a06a2b9e68e32505309a04f1270d41ec48dc28c34fc4a858df4b67bb909a2fa
   languageName: node
   linkType: hard
 
