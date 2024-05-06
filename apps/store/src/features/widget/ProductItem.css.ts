@@ -44,7 +44,7 @@ export const cardHeader = style({
   display: 'grid',
   columnGap: theme.space.md,
   alignItems: 'center',
-  paddingBottom: theme.space.md,
+  paddingBottom: theme.space.lg,
 })
 
 export const cardHeaderRow = style({
