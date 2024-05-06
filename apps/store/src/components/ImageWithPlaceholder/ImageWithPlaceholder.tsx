@@ -1,26 +1,30 @@
-import styled from '@emotion/styled'
-import type { ImageProps } from 'next/image';
+import { clsx } from 'clsx'
+import type { ImageProps } from 'next/image'
 import { default as NextImage } from 'next/image'
+import type { SyntheticEvent } from 'react'
 import { useState } from 'react'
-import { theme, DEFAULT_IMAGE_QUALITY } from 'ui'
+import { DEFAULT_IMAGE_QUALITY } from 'ui'
+import { imageStyles } from './ImageWithPlaceholder.css'
 
-export const ImageWithPlaceholder = ({ ...props }: ImageProps) => {
+export const ImageWithPlaceholder = ({
+  quality,
+  className,
+  onLoad,
+  ...forwardedProps
+}: ImageProps) => {
   const [hasLoaded, setHasLoaded] = useState(false)
 
-  const handleLoad = () => {
+  const handleLoad = (event: SyntheticEvent<HTMLImageElement>) => {
     setHasLoaded(true)
+    onLoad?.(event)
   }
 
-  const imageProps = {
-    quality: DEFAULT_IMAGE_QUALITY,
-    ...props,
-    ...(hasLoaded && { 'data-loaded': true }),
-  } as const
-
-  return <StyledImage {...imageProps} onLoad={handleLoad} />
+  return (
+    <NextImage
+      {...forwardedProps}
+      quality={quality ?? DEFAULT_IMAGE_QUALITY}
+      className={clsx(hasLoaded ? imageStyles.loaded : imageStyles.base, className)}
+      onLoad={handleLoad}
+    />
+  )
 }
-
-const StyledImage = styled(NextImage)({
-  backgroundColor: theme.colors.gray100,
-  '&[data-loaded]': { backgroundColor: 'transparent' },
-})
