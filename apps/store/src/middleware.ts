@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server'
 import { experimentMiddleware } from '@/services/Tracking/experimentMiddleware'
 import { FALLBACK_LOCALE, LOCALE_COOKIE_KEY, locales } from '@/utils/l10n/locales'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
+import type { RoutingLocale } from '@/utils/l10n/types'
 
 export const config = {
   matcher: [
@@ -35,6 +36,20 @@ const localeMiddleware = (req: NextRequest): NextResponse | undefined => {
   const targetUrl = req.nextUrl.clone()
   const firstSegment = targetUrl.pathname.split('/')[1]
 
+  const handleLocaleRouting = (locale: RoutingLocale) => {
+    targetUrl.pathname = `/${locale}${targetUrl.pathname}`
+
+    // Rewrite homepage response to default locale
+    if (locale === locales[FALLBACK_LOCALE].routingLocale) {
+      // Rewrite is like a "behind the scenes" redirect
+      // It displays the given URL without redirecting visitors
+      // https://nextjs.org/docs/app/building-your-application/routing/middleware#nextresponse
+      return NextResponse.rewrite(targetUrl)
+    }
+
+    return NextResponse.redirect(targetUrl, 308)
+  }
+
   // Localized route
   if (isRoutingLocale(firstSegment)) {
     const isSwedishHomepage = targetUrl.pathname === '/se'
@@ -53,21 +68,14 @@ const localeMiddleware = (req: NextRequest): NextResponse | undefined => {
   const cookieLocale = req.cookies.get(LOCALE_COOKIE_KEY)?.value
   if (cookieLocale) {
     console.info(`Found user preference in cookies: ${cookieLocale}, redirecting`)
-
-    const targetUrl = req.nextUrl.clone()
-    targetUrl.pathname = `/${cookieLocale}${targetUrl.pathname}`
-
-    return NextResponse.redirect(targetUrl, 308)
+    return handleLocaleRouting(cookieLocale as RoutingLocale)
   }
 
-  // Root domain
+  // Root domain, use default locale
   if (targetUrl.pathname === '/') {
     const defaultLocale = locales[FALLBACK_LOCALE].routingLocale
     console.info(`Routing traffic to /${defaultLocale}`)
-
-    // Route traffic to the default locale
-    targetUrl.pathname = `/${defaultLocale}${targetUrl.pathname}`
-    return NextResponse.rewrite(targetUrl)
+    return handleLocaleRouting(defaultLocale)
   }
 }
 
