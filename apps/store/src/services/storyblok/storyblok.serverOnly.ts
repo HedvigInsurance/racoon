@@ -111,13 +111,14 @@ const getStoryblokApiWithCache = async (): Promise<ReturnType<typeof getStoryblo
   return storyblokApi
 }
 
-// Potential optimization: cache: 'force-cache' and rely on webhooks to invalidate
+// Potential optimization: add webhooks to invalidate by cache tag
+const cvCacheTag = 'storyblok.cv'
 const fetchStoryblokCacheVersion = async (): Promise<number> => {
   const storyblokApi = getStoryblokApi()
   const {
     data: {
       space: { version },
     },
-  } = await storyblokApi.get('cdn/spaces/me', {}, { cache: 'no-cache' })
+  } = await storyblokApi.get('cdn/spaces/me', {}, { next: { revalidate: 60, tags: [cvCacheTag] } })
   return version as number
 }
