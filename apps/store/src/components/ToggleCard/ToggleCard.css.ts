@@ -1,17 +1,14 @@
-import { style } from '@vanilla-extract/css'
+import { style, fallbackVar } from '@vanilla-extract/css'
 import { theme } from 'ui/src/theme'
-import { card as widgetProductItem } from '@/features/widget/ProductItem.css'
+import { inputBgColor } from 'ui/src/theme/vars.css'
+
+const bgColor = fallbackVar(inputBgColor, theme.colors.opaque1)
 
 export const wrapper = style({
   padding: theme.space.md,
   paddingTop: theme.space.sm,
   borderRadius: theme.radius.md,
-  backgroundColor: theme.colors.opaque1,
-  selectors: {
-    [`${widgetProductItem} &`]: {
-      backgroundColor: theme.colors.backgroundStandard,
-    },
-  },
+  backgroundColor: bgColor,
 })
 
 export const checkboxHeader = style({

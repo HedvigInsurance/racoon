@@ -1,8 +1,9 @@
-import { style, keyframes, styleVariants, globalStyle } from '@vanilla-extract/css'
+import { style, fallbackVar, keyframes, styleVariants, globalStyle } from '@vanilla-extract/css'
 import { theme } from 'ui/src/theme'
-import { card as widgetProductItem } from '@/features/widget/ProductItem.css'
+import { inputBgColor } from 'ui/src/theme/vars.css'
 
 const paddingRight = '1.25rem'
+const bgColor = fallbackVar(inputBgColor, theme.colors.translucent1)
 
 const slideUpAndFadeAnimation = keyframes({
   '0%': { opacity: 0, transform: 'translateY(10px)' },
@@ -19,16 +20,11 @@ export const trigger = style({
   width: '100%',
   height: '4.5rem',
   borderRadius: theme.radius.sm,
-  backgroundColor: theme.colors.translucent1,
+  backgroundColor: bgColor,
   cursor: 'pointer',
   ':focus-visible': {
     boxShadow: theme.shadow.focus,
     borderRadius: theme.radius.sm,
-  },
-  selectors: {
-    [`${widgetProductItem} &`]: {
-      backgroundColor: theme.colors.backgroundStandard,
-    },
   },
 })
 
