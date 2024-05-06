@@ -1,5 +1,6 @@
-import { style } from '@vanilla-extract/css'
+import { style, styleVariants } from '@vanilla-extract/css'
 import { minWidth, theme } from 'ui/src/theme'
+import { inputBgColor } from 'ui/src/theme/vars.css'
 
 export const hoverable = style({
   ':hover': {
@@ -7,7 +8,7 @@ export const hoverable = style({
   },
 })
 
-export const card = style({
+const cardBase = style({
   borderRadius: theme.radius.md,
   padding: theme.space.md,
   paddingBottom: 0,
@@ -25,6 +26,10 @@ export const card = style({
       paddingBottom: `calc(${theme.space.lg} - ${theme.space.md})`,
     },
   },
+})
+export const card = styleVariants({
+  edit: [cardBase, { vars: { [inputBgColor]: theme.colors.backgroundStandard } }],
+  view: [cardBase],
 })
 
 export const cardGreenVariant = style({

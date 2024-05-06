@@ -77,7 +77,7 @@ export const ProductItem = (props: Props) => {
   const pillow = props.selectedOffer.product.pillowImage
 
   return (
-    <div className={clsx(card, props.greenVariant && cardGreenVariant)}>
+    <div className={clsx(card[mode], props.greenVariant && cardGreenVariant)}>
       <div className={hoverable} onClick={handleClickHoverable}>
         <div
           className={cardHeader}
