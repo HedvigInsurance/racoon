@@ -54,9 +54,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:3.9.11":
-  version: 3.9.11
-  resolution: "@apollo/client@npm:3.9.11"
+"@apollo/client@npm:3.10.2":
+  version: 3.10.2
+  resolution: "@apollo/client@npm:3.10.2"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
     "@wry/caches": "npm:^1.0.0"
@@ -66,7 +66,7 @@ __metadata:
     hoist-non-react-statics: "npm:^3.3.2"
     optimism: "npm:^0.18.0"
     prop-types: "npm:^15.7.2"
-    rehackt: "npm:0.0.6"
+    rehackt: "npm:^0.1.0"
     response-iterator: "npm:^0.2.6"
     symbol-observable: "npm:^4.0.0"
     ts-invariant: "npm:^0.10.3"
@@ -87,7 +87,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 10c0/c7657a8e0d62f6d1e0b2da7573e9a9397af879946396e86682166596ffb201c22f7677d11cf65ca2ce97acc8ff2ee8e37c077716cd1b6ae9bb0e3a9cdfdecaf4
+  checksum: 10c0/b0ef2dfbf72494442a037bd74a6d01bcfc37883b121410c61d97766c1383e573c7aa38b298b890f723f018f0c0eb142d4d8a65d25f465085df6d3fa5930826d1
   languageName: node
   linkType: hard
 
@@ -23663,9 +23663,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rehackt@npm:0.0.6":
-  version: 0.0.6
-  resolution: "rehackt@npm:0.0.6"
+"rehackt@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "rehackt@npm:0.1.0"
   peerDependencies:
     "@types/react": "*"
     react: "*"
@@ -23674,7 +23674,7 @@ __metadata:
       optional: true
     react:
       optional: true
-  checksum: 10c0/814c9b80b2680dc0572639ecad1ed1961b23b606e53a00976ee4c4876f6ed736ea702381235ac40ed2a5c826fb55641b46ae23343e4ddd6378ced1da3d51ada7
+  checksum: 10c0/3d838bfee84ec06c976f21027936f3b0fdb7660ab8a2d4d3f19c65e0daa78a268aa81352311352b8576b89a074714b36ae6cd5bdadb6e975eca079f2b342de73
   languageName: node
   linkType: hard
 
@@ -25023,7 +25023,7 @@ __metadata:
   resolution: "store@workspace:apps/store"
   dependencies:
     "@adyen/adyen-web": "npm:3.23.0"
-    "@apollo/client": "npm:3.9.11"
+    "@apollo/client": "npm:3.10.2"
     "@apollo/experimental-nextjs-app-support": "npm:0.10.0"
     "@babel/core": "npm:7.24.5"
     "@babel/preset-env": "npm:7.24.5"
