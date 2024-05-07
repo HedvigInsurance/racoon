@@ -1,6 +1,5 @@
 import { useTranslation } from 'next-i18next'
 import { Text } from 'ui'
-import * as TierLevelRadioGroup from '@/components/TierSelector/TierLevelRadioGroup'
 import * as TierSelector from '@/components/TierSelector/TierSelector'
 import type { ProductOfferFragment } from '@/services/graphql/generated'
 import { useFormatter } from '@/utils/useFormatter'
@@ -36,9 +35,9 @@ export const ProductTierSelector = ({
       </TierSelector.Header>
 
       <TierSelector.Content>
-        <TierLevelRadioGroup.Root value={selectedOffer.id} onValueChange={onValueChange}>
+        <TierSelector.OptionsList value={selectedOffer.id} onValueChange={onValueChange}>
           {offers.map((offer) => (
-            <TierLevelRadioGroup.Item
+            <TierSelector.OptionsListItem
               key={offer.id}
               value={offer.id}
               title={offer.variant.displayNameSubtype || offer.variant.displayName}
@@ -46,7 +45,7 @@ export const ProductTierSelector = ({
               description={getVariantDescription(offer.variant.typeOfContract)}
             />
           ))}
-        </TierLevelRadioGroup.Root>
+        </TierSelector.OptionsList>
       </TierSelector.Content>
     </TierSelector.Root>
   )

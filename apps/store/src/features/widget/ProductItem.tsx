@@ -2,7 +2,7 @@ import { datadogRum } from '@datadog/browser-rum'
 import { clsx } from 'clsx'
 import { useTranslation } from 'next-i18next'
 import React, { useState, useMemo, type ReactNode } from 'react'
-import { CrossIconSmall, LockIcon, Text, theme } from 'ui'
+import { CrossIconSmall, LockIcon, Text, Space, theme } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
 import Collapsible from '@/components/Collapsible/Collapsible'
 import { InputDay } from '@/components/InputDay/InputDay'
@@ -168,7 +168,7 @@ function EditUI(props: EditUIProps) {
   const handleChangeTierLevel = (offerId: string) => addToCart(offerId)
 
   return (
-    <>
+    <Space y={0.25}>
       <CancellationForm productOfferIds={productOfferIds} offer={props.selectedOffer} />
 
       {props.tiers && props.tiers.length > 1 && (
@@ -179,7 +179,7 @@ function EditUI(props: EditUIProps) {
           defaultOpen={false}
         />
       )}
-    </>
+    </Space>
   )
 }
 

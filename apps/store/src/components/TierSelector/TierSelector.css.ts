@@ -1,8 +1,9 @@
 import { style } from '@vanilla-extract/css'
 import { theme } from 'ui/src/theme'
+import { inputBgColor, inputSelectedItemBgColor } from 'ui/src/theme/vars.css'
 
 export const root = style({
-  backgroundColor: theme.colors.translucent1,
+  backgroundColor: inputBgColor,
   borderRadius: theme.radius.sm,
 })
 
@@ -25,6 +26,37 @@ export const triggerIcon = style({
   transition: 'transform 300ms',
   selectors: {
     '[data-state=open] &': { transform: 'rotate(180deg)' },
+  },
+})
+
+export const optionsList = style({
+  paddingBlock: theme.space.md,
+  paddingInline: theme.space.xxs,
+})
+
+export const optionsListItem = style({
+  width: '100%',
+  paddingInline: theme.space.sm,
+  paddingBlock: theme.space.md,
+  borderRadius: theme.radius.md,
+  cursor: 'pointer',
+  selectors: {
+    '&[data-state=checked]': {
+      backgroundColor: inputSelectedItemBgColor,
+    },
+  },
+})
+
+export const optionsListItemHeader = style({
+  display: 'flex',
+  justifyContent: 'space-between',
+})
+
+export const optionsListItemPrice = style({
+  selectors: {
+    '[data-state=checked] &': {
+      color: theme.colors.textPrimary,
+    },
   },
 })
 

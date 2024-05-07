@@ -1,14 +1,12 @@
-import { style, fallbackVar } from '@vanilla-extract/css'
+import { style } from '@vanilla-extract/css'
 import { theme } from 'ui/src/theme'
 import { inputBgColor } from 'ui/src/theme/vars.css'
-
-const bgColor = fallbackVar(inputBgColor, theme.colors.opaque1)
 
 export const wrapper = style({
   padding: theme.space.md,
   paddingTop: theme.space.sm,
   borderRadius: theme.radius.md,
-  backgroundColor: bgColor,
+  backgroundColor: inputBgColor,
 })
 
 export const checkboxHeader = style({

@@ -1,6 +1,6 @@
 import { style, styleVariants } from '@vanilla-extract/css'
 import { minWidth, theme } from 'ui/src/theme'
-import { inputBgColor } from 'ui/src/theme/vars.css'
+import { inputBgColor, inputSelectedItemBgColor } from 'ui/src/theme/vars.css'
 
 export const hoverable = style({
   ':hover': {
@@ -28,7 +28,15 @@ const cardBase = style({
   },
 })
 export const card = styleVariants({
-  edit: [cardBase, { vars: { [inputBgColor]: theme.colors.backgroundStandard } }],
+  edit: [
+    cardBase,
+    {
+      vars: {
+        [inputBgColor]: theme.colors.backgroundStandard,
+        [inputSelectedItemBgColor]: theme.colors.opaque1,
+      },
+    },
+  ],
   view: [cardBase],
 })
 
