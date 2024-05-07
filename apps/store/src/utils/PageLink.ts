@@ -2,6 +2,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { QueryParam as CheckoutPageQueryParam } from '@/components/CheckoutPage/CheckoutPage.constants'
 import { QueryParam as CheckoutTrustlyQueryParam } from '@/components/CheckoutPaymentTrustlyPage/CheckoutPaymentTrustlyPage constants'
 import type { RoutingLocale } from '@/utils/l10n/types'
+import { locales } from './l10n/locales'
 
 class ExtendedURL extends URL {
   constructor(url: string, base?: string) {
@@ -53,6 +54,9 @@ type MemberLoginPage = BaseParams & {
 
 export const PageLink = {
   home: ({ locale }: BaseParams) => {
+    if (locale === locales['sv-SE'].routingLocale) {
+      return new URL(ORIGIN_URL)
+    }
     return new URL(locale, ORIGIN_URL)
   },
   // TODO: we probably want a better setup for locale-specific slugs than just hardcoding them
@@ -348,4 +352,20 @@ const PRIVACY_POLICY_URL: Partial<Record<RoutingLocale, URL>> = {
 const REVIEWS_URL: Partial<Record<RoutingLocale, URL>> = {
   se: new URL('/se/hedvig/omdomen', ORIGIN_URL),
   'se-en': new URL('/se-en/hedvig/reviews', ORIGIN_URL),
+}
+
+export const removeTrailingSlash = (url: string) => {
+  return url.endsWith('/') ? url.slice(0, -1) : url
+}
+
+export const removeSEHomepageLangSegment = (urlString: string): string => {
+  const url = new URL(removeTrailingSlash(urlString))
+
+  const isSwedishHomepage = url.pathname === '/se'
+
+  if (isSwedishHomepage) {
+    url.pathname = '/'
+  }
+
+  return removeTrailingSlash(url.toString())
 }
