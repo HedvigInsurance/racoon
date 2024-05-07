@@ -359,9 +359,9 @@ export const removeTrailingSlash = (url: string) => {
 }
 
 export const removeSEHomepageLangSegment = (urlString: string): string => {
-  const url = new URL(urlString)
+  const url = new URL(removeTrailingSlash(urlString))
 
-  const isSwedishHomepage = removeTrailingSlash(url.pathname) === '/se'
+  const isSwedishHomepage = url.pathname === '/se'
 
   if (isSwedishHomepage) {
     url.pathname = '/'
