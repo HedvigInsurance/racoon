@@ -1,4 +1,5 @@
 import { get as getFromConfig } from '@vercel/edge-config'
+import { removeTrailingSlash } from 'next/dist/shared/lib/router/utils/remove-trailing-slash'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { experimentMiddleware } from '@/services/Tracking/experimentMiddleware'
@@ -33,34 +34,46 @@ export async function middleware(req: NextRequest) {
 }
 
 const localeMiddleware = (req: NextRequest): NextResponse | undefined => {
-  const targetUrl = req.nextUrl.clone()
-  const firstSegment = targetUrl.pathname.split('/')[1]
+  const url = req.nextUrl.clone()
+  const firstSegment = url.pathname.split('/')[1]
 
   const handleLocaleRouting = (locale: RoutingLocale) => {
-    targetUrl.pathname = `/${locale}${targetUrl.pathname}`
+    const targetURL = req.nextUrl.clone()
 
-    // Rewrite homepage response to default locale
-    if (locale === locales[FALLBACK_LOCALE].routingLocale) {
+    // Append locale to the pathname
+    targetURL.pathname = removeTrailingSlash(`/${locale}${targetURL.pathname}`)
+
+    // If are targeting the default language homepage
+    const isDefaultLanguageHomepage =
+      targetURL.pathname === `/${locales[FALLBACK_LOCALE].routingLocale}`
+
+    // Rewrite the response
+    if (isDefaultLanguageHomepage) {
       // Rewrite is like a "behind the scenes" redirect
       // It displays the given URL without redirecting visitors
       // https://nextjs.org/docs/app/building-your-application/routing/middleware#nextresponse
-      return NextResponse.rewrite(targetUrl)
+      return NextResponse.rewrite(targetURL)
     }
 
-    return NextResponse.redirect(targetUrl, 308)
+    // Otherwise redirect to the targeted page
+    return NextResponse.redirect(targetURL, 308)
   }
 
   // Localized route
   if (isRoutingLocale(firstSegment)) {
-    const isSwedishHomepage = targetUrl.pathname === '/se'
+    const isDefaultLanguageHomepage = url.pathname === `/${locales[FALLBACK_LOCALE].routingLocale}`
 
-    if (isSwedishHomepage) {
-      targetUrl.pathname = '/'
+    // If we are on the default language homepage
+    if (isDefaultLanguageHomepage) {
+      const targetURL = req.nextUrl.clone()
 
-      return NextResponse.redirect(targetUrl, 308)
+      // Redirect to the root fomain
+      targetURL.pathname = '/'
+
+      return NextResponse.redirect(targetURL, 308)
     }
 
-    // Serve original route
+    // Otherwise serve original route
     return
   }
 
@@ -71,12 +84,10 @@ const localeMiddleware = (req: NextRequest): NextResponse | undefined => {
     return handleLocaleRouting(cookieLocale as RoutingLocale)
   }
 
-  // Root domain, use default locale
-  if (targetUrl.pathname === '/') {
-    const defaultLocale = locales[FALLBACK_LOCALE].routingLocale
-    console.info(`Routing traffic to /${defaultLocale}`)
-    return handleLocaleRouting(defaultLocale)
-  }
+  // Fallback to default language
+  const defaultLocale = locales[FALLBACK_LOCALE].routingLocale
+  console.info(`Routing traffic to /${defaultLocale}`)
+  return handleLocaleRouting(defaultLocale)
 }
 
 type Redirect = {
