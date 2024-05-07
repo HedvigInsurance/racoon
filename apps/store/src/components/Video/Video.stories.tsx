@@ -20,6 +20,7 @@ export const Default: Story = {
   args: {
     autoPlay: true,
     sources: [{ url: 'https://cdn.hedvig.com/hedvig-dot-com/videos/pillow-hero.webm' }],
+    showControls: true,
   },
 }
 
