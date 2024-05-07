@@ -2,7 +2,7 @@ import { style } from '@vanilla-extract/css'
 import { theme } from 'ui/src/theme'
 
 export const root = style({
-  backgroundColor: theme.colors.opaque1,
+  backgroundColor: theme.colors.translucent1,
   borderRadius: theme.radius.sm,
 })
 
@@ -10,22 +10,18 @@ export const trigger = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  textAlign: 'center',
+  gap: theme.space.sm,
   width: '100%',
-  height: '3rem',
-  borderRadius: theme.radius.xxs,
+  height: '4.5rem',
+  borderRadius: theme.radius.sm,
   paddingInline: theme.space.md,
-})
-
-export const triggerBody = style({
-  display: 'flex',
-  alignContent: 'center',
-  justifyContent: 'space-between',
-  width: '100%',
-  paddingRight: theme.space.md,
+  ':focus-visible': {
+    boxShadow: theme.shadow.focus,
+  },
 })
 
 export const triggerIcon = style({
+  flexShrink: 0,
   transition: 'transform 300ms',
   selectors: {
     '[data-state=open] &': { transform: 'rotate(180deg)' },
@@ -34,11 +30,11 @@ export const triggerIcon = style({
 
 export const separator = style({
   height: 1,
-  marginInline: theme.space.md,
   backgroundColor: theme.colors.borderOpaque2,
 })
 
 export const footer = style({
   paddingInline: theme.space.md,
   paddingBlock: theme.space.sm,
+  textAlign: 'center',
 })

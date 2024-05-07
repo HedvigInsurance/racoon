@@ -1,30 +1,31 @@
-import { type ReactNode } from 'react'
+import { clsx } from 'clsx'
+import { type ReactNode, type ComponentProps } from 'react'
 import { ChevronIcon, theme } from 'ui'
 import Collapsible from '@/components/Collapsible/Collapsible'
-import { root, trigger, triggerBody, triggerIcon, separator, footer } from './TierSelector.css'
+import { root, trigger, triggerIcon, separator, footer } from './TierSelector.css'
 
-type RootProps = { children: ReactNode; defaultOpen?: boolean }
+type RootProps = ComponentProps<typeof Collapsible.Root>
 
-export const Root = ({ children, defaultOpen }: RootProps) => {
-  return (
-    <Collapsible.Root className={root} defaultOpen={defaultOpen}>
-      {children}
-    </Collapsible.Root>
-  )
+export const Root = ({ className, ...delegated }: RootProps) => {
+  return <Collapsible.Root className={clsx(root, className)} {...delegated} />
 }
 
-export const Header = ({ children }: { children: ReactNode }) => {
+type HeaderProps = ComponentProps<typeof Collapsible.Trigger>
+
+export const Header = ({ className, children, ...delegated }: HeaderProps) => {
   return (
-    <Collapsible.Trigger className={trigger}>
-      <div className={triggerBody}>{children}</div>
+    <Collapsible.Trigger className={clsx(trigger, className)} {...delegated}>
+      {children}
       <ChevronIcon className={triggerIcon} size={theme.space.md} />
     </Collapsible.Trigger>
   )
 }
 
-export const Content = ({ children }: { children: ReactNode }) => {
+type ContentProps = ComponentProps<typeof Collapsible.Content>
+
+export const Content = ({ children, ...delegated }: ContentProps) => {
   return (
-    <Collapsible.Content>
+    <Collapsible.Content {...delegated}>
       <Separator />
       {children}
     </Collapsible.Content>
