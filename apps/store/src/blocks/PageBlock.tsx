@@ -3,11 +3,11 @@ import { PageBannerTriggers } from '@/components/Banner/PageBannerTriggers'
 import type { PageStory } from '@/services/storyblok/storyblok'
 import { main } from './PageBlock.css'
 
-type PageBlockProps = {
+type Props = {
   blok: PageStory['content']
 }
 
-export const PageBlock = ({ blok }: PageBlockProps) => {
+export const PageBlock = ({ blok }: Props) => {
   return (
     <>
       <main
