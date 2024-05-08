@@ -79,16 +79,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return result
 }
 
-export async function generateStaticParams({
+// TODO: Restore export generateStaticParams when CMS page migration to app router is done. Right now pages/[locale]/[[...slug]]
+//  shadows non-listed pages when generateStaticParams is provided
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+async function generateStaticParams({
   params,
 }: {
   params: Pick<CmsPageRoutingParams, 'locale'>
 }): Promise<Array<{ slug: Array<string> }>> {
-  // TODO: Remove when main CMS route is removed from pages router
-  if (process.env.APP_ROUTER_GENERATE_CMS_PAGES !== 'true') {
-    return []
-  }
-
   const pageLinks = await getCmsPageLinks(`${params.locale}/`)
   const mostVisitedLinks = pageLinks.filter((item) =>
     MOST_VISITED_PATHS.has(`/${removeTrailingSlash(item.link.slug)}`),
