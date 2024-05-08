@@ -2,7 +2,7 @@ import {
   type BreadcrumbListItem,
   PageBreadcrumbs,
 } from '@/components/PageBreadcrumbs/PageBreadcrumbs'
-import { getParentStories } from '@/services/storyblok/storyblok.serverOnly'
+import { getParentStories } from '@/services/storyblok/storyblok.rsc'
 import { ORIGIN_URL } from '@/utils/PageLink'
 import type { CmsPageRoutingParams } from './page'
 
