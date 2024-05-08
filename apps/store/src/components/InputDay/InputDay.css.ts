@@ -2,7 +2,6 @@ import { style, fallbackVar, keyframes, styleVariants, globalStyle } from '@vani
 import { theme } from 'ui/src/theme'
 import { inputBgColor } from 'ui/src/theme/vars.css'
 
-const paddingRight = '1.25rem'
 const bgColor = fallbackVar(inputBgColor, theme.colors.translucent1)
 
 const slideUpAndFadeAnimation = keyframes({
@@ -16,51 +15,29 @@ const slideDownAndFadeAnimation = keyframes({
 })
 
 export const trigger = style({
-  position: 'relative',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  gap: theme.space.sm,
   width: '100%',
   height: '4.5rem',
   borderRadius: theme.radius.sm,
+  paddingInline: theme.space.md,
   backgroundColor: bgColor,
   cursor: 'pointer',
   ':focus-visible': {
     boxShadow: theme.shadow.focus,
-    borderRadius: theme.radius.sm,
   },
 })
 
 export const label = style({
-  position: 'absolute',
-  left: theme.space.md,
-  top: theme.space.sm,
-  fontSize: theme.fontSizes.xs,
   overflow: 'visible',
   whiteSpace: 'nowrap',
   textOverflow: 'ellipsis',
-  color: theme.colors.textSecondary,
-  selectors: {
-    '&[data-disabled=true]': {
-      color: theme.colors.textSecondary,
-    },
-  },
-})
-
-export const innerWrapper = style({
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'row',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  paddingTop: theme.space.xl,
-  paddingRight: `${paddingRight}`,
-  paddingBottom: theme.space.sm,
-  paddingLeft: theme.space.md,
 })
 
 export const iconWrapper = style({
-  position: 'absolute',
-  right: `${paddingRight}`,
-  top: '50%',
-  transform: 'translateY(-50%)',
+  flexShrink: 0,
 })
 
 const chevronIconBase = style({

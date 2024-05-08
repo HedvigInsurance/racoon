@@ -11,15 +11,7 @@ import { Language } from '@/utils/l10n/types'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { useFormatter } from '@/utils/useFormatter'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
-import {
-  trigger,
-  label,
-  innerWrapper,
-  iconWrapper,
-  chevronIcon,
-  popoverContent,
-  dayPicker,
-} from './InputDay.css'
+import { trigger, label, iconWrapper, chevronIcon, popoverContent, dayPicker } from './InputDay.css'
 
 import 'react-day-picker/dist/style.css'
 
@@ -82,28 +74,26 @@ export const InputDay = (props: InputDayProps) => {
         className={clsx(trigger, props.className)}
         disabled={props.disabled}
       >
-        <label className={label} htmlFor={inputId} data-disabled={props.disabled}>
-          {props.label}
-        </label>
-        <div className={innerWrapper}>
-          {dateValue ? (
-            <Text size="xl">{formatter.fromNow(dateValue)}</Text>
-          ) : (
-            <Text size="xl" color="textTertiary">
-              {t('DATE_INPUT_EMPTY_LABEL')}
+        <div>
+          <label htmlFor={inputId}>
+            <Text className={label} as="span" size="xs" color="textTranslucentSecondary">
+              {props.label}
             </Text>
-          )}
+          </label>
+          <Text size="xl" color={dateValue ? 'textPrimary' : 'textTertiary'}>
+            {dateValue ? formatter.fromNow(dateValue) : t('DATE_INPUT_EMPTY_LABEL')}
+          </Text>
+        </div>
 
-          <div className={iconWrapper}>
-            {/* eslint-disable-next-line no-nested-ternary */}
-            {props.loading ? (
-              <LoadingDots color={theme.colors.textPrimary} />
-            ) : props.disabled ? (
-              <LockIcon size="1rem" color={theme.colors.textSecondary} />
-            ) : (
-              <ChevronIcon className={chevronIcon.animated} size="1rem" />
-            )}
-          </div>
+        <div className={iconWrapper}>
+          {/* eslint-disable-next-line no-nested-ternary */}
+          {props.loading ? (
+            <LoadingDots color={theme.colors.textPrimary} />
+          ) : props.disabled ? (
+            <LockIcon size="1rem" color={theme.colors.textSecondary} />
+          ) : (
+            <ChevronIcon className={chevronIcon.animated} size="1rem" />
+          )}
         </div>
 
         <input
