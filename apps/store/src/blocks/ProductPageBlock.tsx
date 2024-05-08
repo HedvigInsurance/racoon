@@ -1,9 +1,9 @@
 'use client'
 import styled from '@emotion/styled'
-import type { SbBlokData } from '@storyblok/react';
+import type { SbBlokData } from '@storyblok/react'
 import { storyblokEditable, StoryblokComponent } from '@storyblok/react'
 import { motion, useInView, useScroll } from 'framer-motion'
-import type { ReactNode } from 'react';
+import type { ReactNode } from 'react'
 import { useState, useEffect, useRef } from 'react'
 import { theme, mq } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'

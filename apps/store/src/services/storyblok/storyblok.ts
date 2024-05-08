@@ -124,6 +124,10 @@ export type ProductStory = ISbStoryData<
     globalStory: GlobalStory
     hideChat?: boolean
     showAverageRating?: boolean
+    overviewLabel: string
+    coverageLabel: string
+    overview: Array<SbBlokData>
+    coverage: Array<SbBlokData>
   } & SEOData
 >
 
