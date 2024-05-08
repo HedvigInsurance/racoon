@@ -1,8 +1,19 @@
+import * as RadioGroup from '@radix-ui/react-radio-group'
 import { clsx } from 'clsx'
 import { type ReactNode, type ComponentProps } from 'react'
-import { ChevronIcon, theme } from 'ui'
+import { Space, Text, ChevronIcon, theme } from 'ui'
 import Collapsible from '@/components/Collapsible/Collapsible'
-import { root, trigger, triggerIcon, separator, footer } from './TierSelector.css'
+import {
+  root,
+  trigger,
+  triggerIcon,
+  optionsList,
+  optionsListItem,
+  optionsListItemHeader,
+  optionsListItemPrice,
+  separator,
+  footer,
+} from './TierSelector.css'
 
 type RootProps = ComponentProps<typeof Collapsible.Root>
 
@@ -29,6 +40,44 @@ export const Content = ({ children, ...delegated }: ContentProps) => {
       <Separator />
       {children}
     </Collapsible.Content>
+  )
+}
+
+type OptionsListProps = ComponentProps<typeof RadioGroup.Root>
+
+export const OptionsList = ({ className, ...delegated }: OptionsListProps) => {
+  return <RadioGroup.Root className={clsx(optionsList, className)} {...delegated} />
+}
+
+type OptionsListItemProps = ComponentProps<typeof RadioGroup.Item> & {
+  title: string
+  price: string
+  description?: string
+}
+
+export const OptionsListItem = ({
+  className,
+  title,
+  price,
+  description,
+  ...delegated
+}: OptionsListItemProps) => {
+  return (
+    <RadioGroup.Item className={clsx(optionsListItem, className)} {...delegated}>
+      <Space y={0.5}>
+        <div className={optionsListItemHeader}>
+          <Text>{title}</Text>
+          <Text className={optionsListItemPrice} color="textSecondary">
+            {price}
+          </Text>
+        </div>
+        {description && (
+          <Text color="textSecondary" size="xs">
+            {description}
+          </Text>
+        )}
+      </Space>
+    </RadioGroup.Item>
   )
 }
 

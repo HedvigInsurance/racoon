@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { useMemo } from 'react'
 import { Text } from 'ui'
-import * as TierLevelRadioGroup from '@/components/TierSelector/TierLevelRadioGroup'
 import * as TierSelector from '@/components/TierSelector/TierSelector'
 import type { Money, ProductOfferFragment } from '@/services/graphql/generated'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
@@ -61,9 +60,9 @@ export const DeductibleSelector = ({ offers, selectedOffer, onValueChange }: Pro
       </TierSelector.Header>
 
       <TierSelector.Content>
-        <TierLevelRadioGroup.Root value={selectedOffer.id} onValueChange={onValueChange}>
+        <TierSelector.OptionsList value={selectedOffer.id} onValueChange={onValueChange}>
           {deductibleLevels.map((item) => (
-            <TierLevelRadioGroup.Item
+            <TierSelector.OptionsListItem
               key={item.id}
               value={item.id}
               price={formatter.monthlyPrice(item.price)}
@@ -71,7 +70,7 @@ export const DeductibleSelector = ({ offers, selectedOffer, onValueChange }: Pro
               description={item.description}
             />
           ))}
-        </TierLevelRadioGroup.Root>
+        </TierSelector.OptionsList>
         <TierSelector.Footer>
           <Link href={PageLink.deductibleHelp({ locale })} target="_blank" rel="noopener">
             <Text as="span" size="xs">

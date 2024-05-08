@@ -1,6 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/react'
 import { Text } from 'ui'
-import * as TierLevelRadioGroup from './TierLevelRadioGroup'
 import * as TierSelector from './TierSelector'
 
 const meta: Meta<typeof TierSelector.Root> = {
@@ -18,21 +17,21 @@ const Template: StoryFn<typeof TierSelector.Root> = () => {
         <Text>Välj skydd</Text>
       </TierSelector.Header>
       <TierSelector.Content>
-        <TierLevelRadioGroup.Root>
-          <TierLevelRadioGroup.Item
+        <TierSelector.OptionsList>
+          <TierSelector.OptionsListItem
             value="first"
             title="Trafikförsäkring"
             price="289 kr/mån"
             description="Grundläggande skydd för att köra bil"
           />
 
-          <TierLevelRadioGroup.Item
+          <TierSelector.OptionsListItem
             value="second"
             title="Halvförsäkring"
             price="699 kr/mån"
             description="Stöld & inbrott, brand, glasskador, m.m."
           />
-        </TierLevelRadioGroup.Root>
+        </TierSelector.OptionsList>
 
         <TierSelector.Footer>
           <Text size="xs">Läs mer om bilförsäkring</Text>

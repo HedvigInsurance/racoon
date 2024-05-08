@@ -1,8 +1,6 @@
-import { style, fallbackVar, keyframes, styleVariants, globalStyle } from '@vanilla-extract/css'
+import { style, keyframes, styleVariants, globalStyle } from '@vanilla-extract/css'
 import { theme } from 'ui/src/theme'
 import { inputBgColor } from 'ui/src/theme/vars.css'
-
-const bgColor = fallbackVar(inputBgColor, theme.colors.translucent1)
 
 const slideUpAndFadeAnimation = keyframes({
   '0%': { opacity: 0, transform: 'translateY(10px)' },
@@ -23,7 +21,7 @@ export const trigger = style({
   height: '4.5rem',
   borderRadius: theme.radius.sm,
   paddingInline: theme.space.md,
-  backgroundColor: bgColor,
+  backgroundColor: inputBgColor,
   cursor: 'pointer',
   ':focus-visible': {
     boxShadow: theme.shadow.focus,

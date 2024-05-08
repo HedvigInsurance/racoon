@@ -11,6 +11,8 @@ import {
   bodyTextColor,
   footerBgColor,
   headerBgTransparentColor,
+  inputBgColor,
+  inputSelectedItemBgColor,
 } from './theme/vars.css'
 
 globalStyle('*:where(:not(iframe, canvas, img, svg, video):not(svg *))', {
@@ -38,6 +40,8 @@ globalStyle('body', {
     [bodyTextColor]: colors.textPrimary,
     [footerBgColor]: colors.gray100,
     [headerBgTransparentColor]: colors.grayTranslucentDark1000,
+    [inputBgColor]: colors.translucent1,
+    [inputSelectedItemBgColor]: colors.backgroundStandard,
   },
   WebkitFontSmoothing: 'antialiased',
   MozOsxFontSmoothing: 'grayscale',
