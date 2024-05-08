@@ -1,14 +1,12 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import md5 from 'md5'
-import { browserName, deviceType, osName } from 'react-device-detect'
 import {
   type CartFragmentFragment,
   type CountryCode,
   type ProductOfferFragment,
 } from '@/services/graphql/generated'
 import { type EcommerceEvent, pushToGTMDataLayer, initializeGtm, setUserId } from '@/services/gtm'
-import { reportInternalEvent } from '@/services/Tracking/internalEvents'
 import { getAdtractionProductCategories } from './adtraction'
 
 type TrackingProductData = {
@@ -72,21 +70,6 @@ export class Tracking {
 
   public reportAppInit = (countryCode: CountryCode) => {
     initializeGtm(countryCode)
-  }
-
-  #reportedDeviceInfo = false
-  public reportDeviceInfo = () => {
-    if (this.#reportedDeviceInfo) return
-    const payload = {
-      type: TrackingEvent.DeviceInfo,
-      data: {
-        deviceType,
-        osName,
-        browserName,
-      },
-    }
-    reportInternalEvent(payload)
-    this.#reportedDeviceInfo = true
   }
 
   public reportPageView(urlPath: string) {

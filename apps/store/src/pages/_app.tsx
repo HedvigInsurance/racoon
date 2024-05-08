@@ -30,7 +30,7 @@ import { trackExperimentImpression } from '@/services/Tracking/trackExperimentIm
 import { Tracking } from '@/services/Tracking/Tracking'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { trackPageViews } from '@/services/Tracking/trackPageViews'
-import { useReportAndFlushDeviceInfo } from '@/services/Tracking/useReportAndFlushDeviceInfo'
+import { useReportDeviceInfo } from '@/services/Tracking/useReportDeviceInfo'
 import { Features } from '@/utils/Features'
 import { contentFontClassName } from '@/utils/fonts'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
@@ -129,7 +129,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
 
 const ShopSessionTrackingProvider = (props: { children: ReactNode }) => {
   // Outermost component where we have tracking + shopSession
-  useReportAndFlushDeviceInfo()
+  useReportDeviceInfo()
 
   const { shopSession } = useShopSession()
   return <TrackingProvider shopSession={shopSession}>{props.children}</TrackingProvider>
