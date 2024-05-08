@@ -1,5 +1,4 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import styled from '@emotion/styled'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { useMemo } from 'react'
@@ -51,10 +50,14 @@ export const DeductibleSelector = ({ offers, selectedOffer, onValueChange }: Pro
   return (
     <TierSelector.Root defaultOpen={true}>
       <TierSelector.Header>
-        <Text>{t('DEDUCTIBLE_SELECTOR_TITLE')}</Text>
-        {selectedOffer.deductible && (
-          <ToggleText>{selectedOffer.deductible.displayName}</ToggleText>
-        )}
+        <div>
+          <Text size="xs" color="textTranslucentSecondary">
+            {t('DEDUCTIBLE_SELECTOR_TITLE')}
+          </Text>
+          {selectedOffer.deductible && (
+            <Text size="xl">{selectedOffer.deductible.displayName}</Text>
+          )}
+        </div>
       </TierSelector.Header>
 
       <TierSelector.Content>
@@ -80,7 +83,3 @@ export const DeductibleSelector = ({ offers, selectedOffer, onValueChange }: Pro
     </TierSelector.Root>
   )
 }
-
-const ToggleText = styled(Text)({
-  '[data-state=open] &': { display: 'none' },
-})

@@ -3,7 +3,8 @@ import * as RadioGroup from '@radix-ui/react-radio-group'
 import { Space, Text, theme } from 'ui'
 
 export const Root = styled(RadioGroup.Root)({
-  padding: theme.space.xs,
+  paddingBlock: theme.space.md,
+  paddingInline: theme.space.xxs,
 })
 
 type ItemProps = {
@@ -33,13 +34,13 @@ export const Item = ({ title, price, description, value }: ItemProps) => {
 
 const RadioGroupItem = styled(RadioGroup.Item)({
   width: '100%',
-  padding: theme.space.xs,
-  borderRadius: theme.radius.xxs,
+  paddingInline: theme.space.sm,
+  paddingBlock: theme.space.md,
+  borderRadius: theme.radius.md,
   cursor: 'pointer',
 
   '&[data-state=checked]': {
     backgroundColor: theme.colors.backgroundStandard,
-    boxShadow: theme.shadow.default,
   },
 })
 

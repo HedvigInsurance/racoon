@@ -1,4 +1,3 @@
-import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { Text } from 'ui'
 import * as TierLevelRadioGroup from '@/components/TierSelector/TierLevelRadioGroup'
@@ -26,10 +25,14 @@ export const ProductTierSelector = ({
   return (
     <TierSelector.Root defaultOpen={defaultOpen ?? true}>
       <TierSelector.Header>
-        <Text>{t('TIER_SELECTOR_SELECTED_LABEL', { ns: 'purchase-form' })}</Text>
-        <ToggleText>
-          {selectedOffer.variant.displayNameSubtype || selectedOffer.variant.displayName}
-        </ToggleText>
+        <div>
+          <Text size="xs" color="textTranslucentSecondary">
+            {t('TIER_SELECTOR_SELECTED_LABEL', { ns: 'purchase-form' })}
+          </Text>
+          <Text size="xl">
+            {selectedOffer.variant.displayNameSubtype || selectedOffer.variant.displayName}
+          </Text>
+        </div>
       </TierSelector.Header>
 
       <TierSelector.Content>
@@ -76,7 +79,3 @@ const useGetVariantDescription = () => {
     }
   }
 }
-
-const ToggleText = styled(Text)({
-  '[data-state=open] &': { display: 'none' },
-})
