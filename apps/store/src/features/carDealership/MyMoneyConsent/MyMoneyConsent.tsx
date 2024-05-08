@@ -4,7 +4,7 @@ import { useAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import React, { useState } from 'react'
 import { CheckIcon, Text } from 'ui'
-import * as Collapsible from '@/components/Collapsible'
+import Collapsible from '@/components/Collapsible/Collapsible'
 import { concentAcceptedAtom } from './myMoneyConcentAtom'
 import {
   checkboxIndicator,

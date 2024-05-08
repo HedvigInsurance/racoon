@@ -1,15 +1,7 @@
-import * as Collapsible from '@radix-ui/react-collapsible'
 import { type ReactNode } from 'react'
 import { ChevronIcon, theme } from 'ui'
-import {
-  root,
-  trigger,
-  triggerBody,
-  triggerIcon,
-  content,
-  separator,
-  footer,
-} from './TierSelector.css'
+import Collapsible from '@/components/Collapsible/Collapsible'
+import { root, trigger, triggerBody, triggerIcon, separator, footer } from './TierSelector.css'
 
 type RootProps = { children: ReactNode; defaultOpen?: boolean }
 
@@ -32,8 +24,8 @@ export const Header = ({ children }: { children: ReactNode }) => {
 
 export const Content = ({ children }: { children: ReactNode }) => {
   return (
-    <Collapsible.Content className={content}>
-      <hr className={separator} />
+    <Collapsible.Content>
+      <Separator />
       {children}
     </Collapsible.Content>
   )
@@ -42,8 +34,10 @@ export const Content = ({ children }: { children: ReactNode }) => {
 export const Footer = ({ children }: { children: ReactNode }) => {
   return (
     <>
-      <hr className={separator} />
+      <Separator />
       <div className={footer}>{children}</div>
     </>
   )
 }
+
+const Separator = () => <hr className={separator} />
