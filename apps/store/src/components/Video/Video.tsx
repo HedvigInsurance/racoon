@@ -1,12 +1,28 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { keyframes } from '@emotion/react'
-import styled from '@emotion/styled'
+import { assignInlineVars } from '@vanilla-extract/dynamic'
+import clsx from 'clsx'
 import { useInView } from 'framer-motion'
 import React, { useCallback, useEffect, useId, useRef, useState } from 'react'
-import { mq, theme, PlayIcon, PauseIcon, Button } from 'ui'
+import { PlayIcon, PauseIcon, Button } from 'ui'
 import { useDialogEvent } from '@/utils/dialogEvent'
+import {
+  controlButton,
+  soundBar,
+  soundBars,
+  videoBase,
+  videoControls,
+  videoControlsVisibility,
+  videoRoundedCorners,
+  videoWrapper,
+  maxHeightPortraitVar,
+  aspectRatioLandscapeVar,
+  aspectRatioPortraitVar,
+  maxHeightLandscapeVar,
+  heightLandscapeVar,
+  heightPortraitVar,
+} from './Video.css'
 
-enum State {
+export enum State {
   Playing = 'playing',
   Paused = 'paused',
 }
@@ -168,7 +184,7 @@ export const Video = ({
   }
 
   return (
-    <VideoWrapper>
+    <div className={videoWrapper}>
       {/*
     Some special attributes here need more explanation.
     - Safari on iOS only allows autoplay when the video is `muted`.
@@ -177,23 +193,34 @@ export const Video = ({
 
     - We don't want to preload full video.  This is ignored by browsers if autoPlay is set
     */}
-      <StyledVideo
+      <video
+        className={clsx(videoBase, roundedCorners && videoRoundedCorners)}
         ref={videoRef}
         data-poster={poster}
         poster={delegated.autoPlay ? poster : undefined}
         playsInline
         preload="metadata"
-        aspectRatioLandscape={aspectRatioLandscape}
-        aspectRatioPortrait={aspectRatioPortrait}
-        maxHeightLandscape={maxHeightLandscape}
-        maxHeightPortrait={maxHeightPortrait}
-        roundedCorners={roundedCorners}
         onPlaying={handlePlaying}
         onPause={handlePause}
         onEnded={handleVideoEnded}
         muted={muted}
         {...autoplayAttributes}
         {...delegated}
+        style={{
+          ...(poster && {
+            backgroundImage: `url(${poster})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+          }),
+          ...assignInlineVars({
+            [heightPortraitVar]: aspectRatioPortrait === '100' ? '100vh' : null,
+            [maxHeightPortraitVar]: maxHeightPortrait ? `${maxHeightPortrait}vh` : null,
+            [aspectRatioPortraitVar]: aspectRatioPortrait === '100' ? null : aspectRatioPortrait,
+            [heightLandscapeVar]: aspectRatioLandscape === '100' ? '100vh' : null,
+            [maxHeightLandscapeVar]: maxHeightLandscape ? `${maxHeightLandscape}vh` : null,
+            [aspectRatioLandscapeVar]: aspectRatioLandscape === '100' ? null : aspectRatioLandscape,
+          }),
+        }}
       >
         {sources.map((source) => {
           const sourceProps = {
@@ -203,15 +230,17 @@ export const Video = ({
           const videoType = source.url.split('.').pop()
           return <source key={source.url} type={`video/${videoType}`} {...sourceProps} />
         })}
-      </StyledVideo>
+      </video>
       {showControls && (
-        <VideoControls
+        <div
+          className={videoControls}
           data-state={state}
           data-muted={muted}
           onClick={() => playPauseButtonRef.current?.click()}
         >
-          <Controls>
-            <ControlButton
+          <div className={videoControlsVisibility}>
+            <Button
+              className={controlButton}
               ref={playPauseButtonRef}
               onClick={togglePlay}
               variant="secondary"
@@ -222,157 +251,30 @@ export const Video = ({
               <span id={playButtonId} hidden>
                 {state === State.Paused ? 'Play' : 'Pause'}
               </span>
-            </ControlButton>
+            </Button>
             {!hideSoundControl && (
-              <ControlButton
+              <Button
+                className={controlButton}
                 onClick={toggleSound}
                 variant="secondary"
                 size="small"
                 aria-labelledby={muteButtonId}
               >
-                <SoundBars>
-                  <span />
-                  <span />
-                  <span />
-                </SoundBars>
+                <div className={soundBars}>
+                  <span className={soundBar} />
+                  <span className={soundBar} />
+                  <span className={soundBar} />
+                </div>
                 <span id={muteButtonId} hidden>
                   {muted ? 'Mute' : 'Unmute'}
                 </span>
-              </ControlButton>
+              </Button>
             )}
-          </Controls>
-        </VideoControls>
+          </div>
+        </div>
       )}
-    </VideoWrapper>
+    </div>
   )
-}
-
-const VideoWrapper = styled.div({
-  position: 'relative',
-})
-
-const StyledVideo = styled.video<Omit<VideoProps, 'sources'>>(
-  ({
-    poster,
-    aspectRatioLandscape,
-    aspectRatioPortrait,
-    maxHeightLandscape,
-    maxHeightPortrait,
-    roundedCorners,
-  }) => ({
-    width: '100%',
-    objectFit: 'cover',
-    ...(poster && {
-      background: `url(${poster}) no-repeat`,
-      backgroundSize: 'cover',
-    }),
-    ['@media (orientation: portrait)']: {
-      ...(maxHeightPortrait && { maxHeight: `${maxHeightPortrait}vh` }),
-      ...(aspectRatioPortrait && getAspectRatio(aspectRatioPortrait)),
-    },
-    ['@media (orientation: landscape)']: {
-      ...(aspectRatioLandscape && getAspectRatio(aspectRatioLandscape)),
-      ...(maxHeightLandscape && { maxHeight: `${maxHeightLandscape}vh` }),
-    },
-
-    ...(roundedCorners && {
-      borderRadius: theme.radius.md,
-      [mq.lg]: {
-        borderRadius: theme.radius.xl,
-      },
-    }),
-  }),
-)
-
-const VideoControls = styled.div({
-  cursor: 'pointer',
-  position: 'absolute',
-  inset: 0,
-  display: 'flex',
-  flexDirection: 'column',
-  padding: theme.space.md,
-  justifyContent: 'flex-end',
-  alignItems: 'flex-start',
-})
-
-const Controls = styled.div({
-  display: 'flex',
-  gap: theme.space.xs,
-  width: '100%',
-  '@media (hover: hover)': {
-    opacity: 0,
-    visibility: 'hidden',
-    transition: 'all 200ms cubic-bezier(0, 0, 0.2, 1) 2s',
-    [`${VideoControls}[data-state=${State.Paused}] > &, ${VideoControls}:hover > &`]: {
-      opacity: 1,
-      visibility: 'visible',
-      transitionDelay: '0s',
-    },
-  },
-})
-
-const ControlButton = styled(Button)({
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: theme.space.xs,
-  height: '2rem',
-  paddingInline: theme.space.xs,
-  backgroundColor: theme.colors.grayTranslucentDark700,
-
-  '@media (hover: hover)': {
-    ':hover': {
-      backgroundColor: theme.colors.grayTranslucentDark600,
-    },
-  },
-
-  ':active': {
-    backgroundColor: theme.colors.grayTranslucentDark600,
-  },
-})
-
-const soundBarsAnimation = keyframes({
-  '50%': { opacity: 0.2, transform: 'scaleY(.2)' },
-  '100%': { opacity: 1, transform: 'scaleY(0.9)' },
-})
-
-const SoundBars = styled.div({
-  position: 'relative',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  height: '16px',
-  width: '16px',
-  paddingBottom: '2px',
-
-  span: {
-    margin: 'auto 1px 0',
-    height: '14px',
-    width: '2px',
-    borderRadius: '2px',
-    transformOrigin: 'bottom',
-    backgroundColor: theme.colors.gray1000,
-    transition: 'all .4s ease-in-out',
-    '&:nth-of-type(1)': { transform: 'scaleY(.85)', animationDelay: '.4s' },
-    '&:nth-of-type(2)': { transform: 'scaleY(.43)', animationDelay: '.2s' },
-    '&:nth-of-type(3)': { transform: 'scaleY(.72)', animationDelay: '.6s' },
-    animation: `${soundBarsAnimation} 1s 2 alternate`,
-
-    [`${VideoControls}[data-muted=false]${VideoControls}[data-state=${State.Playing}] &`]: {
-      '&:nth-of-type(1)': { transform: 'scaleY(.85)', animationDelay: '.4s' },
-      '&:nth-of-type(2)': { transform: 'scaleY(.43)', animationDelay: '.2s' },
-      '&:nth-of-type(3)': { transform: 'scaleY(.72)', animationDelay: '.6s' },
-      animation: `${soundBarsAnimation} 1s infinite alternate`,
-    },
-  },
-})
-
-const getAspectRatio = (aspectRatio: AspectRatioLandscape | AspectRatioPortrait) => {
-  switch (aspectRatio) {
-    case '100':
-      return { height: '100vh' }
-    default:
-      return { aspectRatio: aspectRatio }
-  }
 }
 
 // TODO: remove this logic when native support for lazy load video poster gets added
