@@ -37,8 +37,8 @@ type AspectRatioPortrait = '4 / 5' | '4 / 6' | '9 / 16' | '100'
 type VideoSize = {
   aspectRatioLandscape?: AspectRatioLandscape
   aspectRatioPortrait?: AspectRatioPortrait
-  maxHeightLandscape?: number
-  maxHeightPortrait?: number
+  maxHeightLandscape?: string
+  maxHeightPortrait?: string
   roundedCorners?: boolean
 }
 
@@ -206,16 +206,26 @@ export const Video = ({
         muted={muted}
         {...autoplayAttributes}
         {...delegated}
-        style={{
-          ...assignInlineVars({
-            [heightPortraitVar]: aspectRatioPortrait === '100' ? '100vh' : null,
-            [maxHeightPortraitVar]: maxHeightPortrait ? `${maxHeightPortrait}vh` : null,
+        style={assignInlineVars({
+          ...(aspectRatioPortrait && {
+            [heightPortraitVar]: aspectRatioPortrait === '100' ? '100vh' : aspectRatioPortrait,
+          }),
+          ...(maxHeightPortrait && {
+            [maxHeightPortraitVar]: `${maxHeightPortrait}vh`,
+          }),
+          ...(aspectRatioPortrait && {
             [aspectRatioPortraitVar]: aspectRatioPortrait === '100' ? null : aspectRatioPortrait,
-            [heightLandscapeVar]: aspectRatioLandscape === '100' ? '100vh' : null,
-            [maxHeightLandscapeVar]: maxHeightLandscape ? `${maxHeightLandscape}vh` : null,
+          }),
+          ...(aspectRatioLandscape && {
+            [heightLandscapeVar]: aspectRatioLandscape === '100' ? '100vh' : aspectRatioLandscape,
+          }),
+          ...(maxHeightLandscape && {
+            [maxHeightLandscapeVar]: `${maxHeightLandscape}vh`,
+          }),
+          ...(aspectRatioLandscape && {
             [aspectRatioLandscapeVar]: aspectRatioLandscape === '100' ? null : aspectRatioLandscape,
           }),
-        }}
+        })}
       >
         {sources.map((source) => {
           const sourceProps = {
