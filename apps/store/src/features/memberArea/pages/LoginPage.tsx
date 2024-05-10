@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 import type { FormEventHandler } from 'react'
 import { BankIdIcon, Button, HedvigLogo, mq, Text, theme } from 'ui'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
@@ -56,6 +57,7 @@ const LoginForm = ({
   onSuccess: () => void
 }) => {
   const { startLogin, currentOperation } = useBankIdContext()
+  const { t } = useTranslation(['memberArea', 'bankid'])
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault()
     const ssn = new FormData(event.currentTarget).get(SSN_FIELD_NAME) as string
@@ -67,12 +69,12 @@ const LoginForm = ({
   return (
     <LoginWrapper>
       <FormWrapper direction="vertical" align="center">
-        <Text>Please log in to continue</Text>
+        <Text>{t('memberArea:LOGIN_HEADING')}</Text>
         <Form onSubmit={handleSubmit}>
           <FieldWrapper>
             <PersonalNumberField
               name={SSN_FIELD_NAME}
-              label="Personal number"
+              label={t('memberArea:LOGIN_SSN_FIELD')}
               autoFocus={true}
               defaultValue={defaultSsn}
               required={true}
@@ -81,7 +83,7 @@ const LoginForm = ({
           <Button type="submit" loading={!!currentOperation}>
             <SpaceFlex space={0.5} align="center">
               <BankIdIcon />
-              Log in with BankID
+              {t('bankid:LOGIN_BANKID')}
             </SpaceFlex>
           </Button>
         </Form>
