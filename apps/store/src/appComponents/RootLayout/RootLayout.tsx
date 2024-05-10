@@ -3,6 +3,7 @@ import { Suspense } from 'react'
 import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import globalCss from 'ui/src/global.css'
 import { TranslationsProvider } from '@/appComponents/providers/TranslationsProvider'
+import { NavigationProgressIndicator } from '@/appComponents/RootLayout/NavigationProgressIndicator'
 import { OrgStructuredData } from '@/appComponents/RootLayout/OrgStructuredData'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { contentFontClassName } from '@/utils/fonts'
@@ -34,6 +35,7 @@ export async function RootLayout({
         <Suspense>
           <DebugError />
         </Suspense>
+        <NavigationProgressIndicator />
 
         <ApolloProvider locale={locale}>
           <ShopSessionProvider>
