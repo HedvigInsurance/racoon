@@ -18,7 +18,10 @@
     "@adyen/adyen-web",
     // Following dependencies are brought in as direct to solve versioning conflicts
     // Renovate should not try to update those
-    "webpack" // storybook
+    "webpack", // storybook
+    // Temporary disable until https://github.com/framer/motion/issues/2656 is fixed
+    // To test, check that Accordion correctly closes and opens with the first click
+    "framer-motion"
   ],
 
   "packageRules": [
