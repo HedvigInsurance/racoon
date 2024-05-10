@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { Suspense } from 'react'
 import { ProductMetadataProvider } from '@/appComponents/providers/ProductMetadataProvider'
 import { StoryblokProvider } from '@/appComponents/providers/StoryblokProvider'
 import { RootLayout } from '@/appComponents/RootLayout/RootLayout'
@@ -12,8 +13,10 @@ import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import type { GlobalStory } from '@/services/storyblok/storyblok'
 import { getStoryBySlug } from '@/services/storyblok/storyblok.rsc'
+import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { locales } from '@/utils/l10n/locales'
 import type { RoutingLocale } from '@/utils/l10n/types'
+import { NavigationTracker } from './NavigationTracker'
 import { StoryblokLayout } from './StoryblokLayout'
 
 export type LocalizedLayoutProps<P = unknown> = P & {
@@ -21,7 +24,6 @@ export type LocalizedLayoutProps<P = unknown> = P & {
   params: { locale: RoutingLocale }
 }
 
-// TODO: How do we cache/invalidate companyReviewsMetadata ?
 const Layout = async ({ children, params: { locale } }: LocalizedLayoutProps) => {
   const apolloClient = getApolloClient(locale)
   const [companyReviewsMetadata, productMetadata, globalStory] = await Promise.all([
@@ -37,11 +39,16 @@ const Layout = async ({ children, params: { locale } }: LocalizedLayoutProps) =>
           <CompanyReviewsMetadataProvider companyReviewsMetadata={companyReviewsMetadata}>
             <ShopSessionProvider>
               <AppErrorProvider>
-                <AppErrorDialog />
-                <GlobalBannerDynamic />
-                <StoryblokProvider>
-                  <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
-                </StoryblokProvider>
+                <TrackingProvider>
+                  <AppErrorDialog />
+                  <GlobalBannerDynamic />
+                  <StoryblokProvider>
+                    <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
+                  </StoryblokProvider>
+                  <Suspense>
+                    <NavigationTracker />
+                  </Suspense>
+                </TrackingProvider>
               </AppErrorProvider>
             </ShopSessionProvider>
           </CompanyReviewsMetadataProvider>
