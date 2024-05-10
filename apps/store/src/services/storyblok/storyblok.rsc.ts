@@ -1,6 +1,7 @@
 import 'server-only'
 import type { ISbStoryData } from '@storyblok/react'
 import { apiPlugin, getStoryblokApi, storyblokInit } from '@storyblok/react/rsc'
+import { revalidateTag } from 'next/cache'
 import { draftMode } from 'next/headers'
 import { BLOG_ARTICLE_CONTENT_TYPE } from '@/features/blog/blog.constants'
 import { LINKS_EXCLUDE_PATHS } from '@/services/storyblok/Storyblok.constant'
@@ -95,10 +96,8 @@ export const getCmsPageLinks = async (startsWith?: string) => {
 
 // See https://www.storyblok.com/docs/api/content-delivery/v2/getting-started/cache-invalidation for caching logic
 //
-// We can rely on storyblok-js-client to hold current `cv` in-memory,
-// but on first start we want to fetch and provide current value
-// to ensure every subsequent request uses `cv` and is therefore safe to cache without expiration.
-//
+// We cannot rely on storyblok-js-client to hold current `cv` in-memory - this works locally, but not on Vercel
+// Therefore we manually provide `cv` if needed to ensure every subsequent request uses it.
 // Requests with cv=undefined are
 // - slower since they hit Storyblok server instead of CDN
 // - sometimes result in rate-limit errors when we're rebuilding a lot of pages
@@ -111,7 +110,6 @@ const getStoryblokApiWithCache = async (): Promise<ReturnType<typeof getStoryblo
   return storyblokApi
 }
 
-// Potential optimization: add webhooks to invalidate by cache tag
 const cvCacheTag = 'storyblok.cv'
 const fetchStoryblokCacheVersion = async (): Promise<number> => {
   const storyblokApi = getStoryblokApi()
@@ -119,6 +117,15 @@ const fetchStoryblokCacheVersion = async (): Promise<number> => {
     data: {
       space: { version },
     },
-  } = await storyblokApi.get('cdn/spaces/me', {}, { next: { revalidate: 60, tags: [cvCacheTag] } })
+  } = await storyblokApi.get(
+    'cdn/spaces/me',
+    {},
+    // Using nextjs fetch cache as a way to pass `cv` between requests.
+    // Revalidation is normally handled through webhook (/api/cms/revalidate), time here serves as fallback to ensure
+    // we never end up with stale value for too long if webhook fails
+    { next: { revalidate: 10 * 60, tags: [cvCacheTag] } },
+  )
   return version as number
 }
+
+export const revalidateCacheVersion = () => revalidateTag(cvCacheTag)
