@@ -207,11 +207,6 @@ export const Video = ({
         {...autoplayAttributes}
         {...delegated}
         style={{
-          ...(poster && {
-            backgroundImage: `url(${poster})`,
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover',
-          }),
           ...assignInlineVars({
             [heightPortraitVar]: aspectRatioPortrait === '100' ? '100vh' : null,
             [maxHeightPortraitVar]: maxHeightPortrait ? `${maxHeightPortrait}vh` : null,
