@@ -1,3 +1,4 @@
+'use client'
 import { type ReactNode, createContext, useMemo } from 'react'
 import { type ProductData } from '@/components/ProductData/ProductData.types'
 import { type PriceIntent } from '@/services/priceIntent/priceIntent.types'
