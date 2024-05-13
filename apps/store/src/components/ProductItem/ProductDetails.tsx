@@ -30,7 +30,7 @@ export const ProductDetails = ({ items, documents, ...props }: Props) => {
       </ul>
 
       <Heading as="h4" variant="standard.18" color="textTranslucentPrimary">
-        {t('DOCUMENTS')}
+        {t('DOCUMENTS_SECTION_LABEL')}
       </Heading>
 
       <ul>
