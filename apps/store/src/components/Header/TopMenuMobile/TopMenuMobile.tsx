@@ -1,32 +1,24 @@
-import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { usePathname } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import type { ReactNode } from 'react'
 import { startTransition, useEffect, useState } from 'react'
-import { AndroidIcon, AppleIcon, Button, theme } from 'ui'
-import { MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/Header.constants'
+import { AndroidIcon, AppleIcon, Button } from 'ui'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { logoWrapper, navigation, navigationPrimaryList } from '../Header.css'
 import { ShoppingCartMenuItem } from '../ShoppingCartMenuItem'
+import { buttonWrapper, contentWrapper, dialogOverlay, topMenuHeader } from './TopMenuMobile.css'
 
-const ButtonWrapper = styled.div({
-  display: 'grid',
-  gridTemplateColumns: '1fr 1fr',
-  columnGap: theme.space.xs,
-  paddingTop: theme.space.lg,
-})
-
-export type TopMenuMobileProps = {
+type Props = {
   defaultValue?: string
   children: ReactNode
 }
 
-export const TopMenuMobile = (props: TopMenuMobileProps) => {
+export function TopMenuMobile(props: Props) {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const [isContentVisible, setIsContentVisible] = useState(false)
@@ -34,7 +26,9 @@ export const TopMenuMobile = (props: TopMenuMobileProps) => {
   useEffect(() => {
     setIsOpen(false)
   }, [pathname])
-  // Poor man's useDeferredValue that waits for underlying dialog's display animation
+  // Poor man's useDeferredValue that waits for the next UI frame
+  // Waiting for next render loop is too early since major part of rendering work happens
+  // in `Presence` inner component after dialog content is rendered
   useEffect(() => {
     const timeoutId = setTimeout(() => setIsContentVisible(isOpen))
     return () => clearTimeout(timeoutId)
@@ -56,8 +50,8 @@ export const TopMenuMobile = (props: TopMenuMobileProps) => {
           </Button>
         </DialogPrimitive.Trigger>
         <DialogContent>
-          <Wrapper>
-            <TopMenuHeader>
+          <div className={contentWrapper}>
+            <div className={topMenuHeader}>
               <div className={logoWrapper}>
                 <LogoHomeLink />
               </div>
@@ -67,12 +61,12 @@ export const TopMenuMobile = (props: TopMenuMobileProps) => {
                 </Button>
               </DialogPrimitive.Close>
               <ShoppingCartMenuItem />
-            </TopMenuHeader>
+            </div>
             {isContentVisible && (
               <NavigationMenuPrimitive.Root className={navigation} defaultValue={defaultValue}>
                 <NavigationMenuPrimitive.List className={navigationPrimaryList}>
                   <div>{children}</div>
-                  <ButtonWrapper>
+                  <div className={buttonWrapper}>
                     <Button
                       as="a"
                       href={getAppStoreLink('apple', locale).toString()}
@@ -99,45 +93,22 @@ export const TopMenuMobile = (props: TopMenuMobileProps) => {
                         Google Play
                       </SpaceFlex>
                     </Button>
-                  </ButtonWrapper>
+                  </div>
                 </NavigationMenuPrimitive.List>
               </NavigationMenuPrimitive.Root>
             )}
-          </Wrapper>
+          </div>
         </DialogContent>
       </DialogPrimitive.Root>
     </>
   )
 }
 
-export const DialogContent = (props: DialogPrimitive.DialogContentProps) => {
+function DialogContent(props: DialogPrimitive.DialogContentProps) {
   return (
     <DialogPrimitive.Portal>
-      <StyledDialogOverlay />
+      <DialogPrimitive.Overlay className={dialogOverlay} />
       <DialogPrimitive.Content {...props} />
     </DialogPrimitive.Portal>
   )
 }
-
-const Wrapper = styled.div({
-  position: 'fixed',
-  top: 0,
-  width: '100%',
-  color: theme.colors.textPrimary,
-})
-
-const TopMenuHeader = styled.div({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  height: MENU_BAR_HEIGHT_MOBILE,
-  paddingInline: theme.space.md,
-  gap: theme.space.xs,
-})
-
-const StyledDialogOverlay = styled(DialogPrimitive.Overlay)({
-  position: 'fixed',
-  inset: 0,
-  top: 0,
-  backgroundColor: theme.colors.light,
-})
