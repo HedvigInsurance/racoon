@@ -1,4 +1,5 @@
 import { useTranslation } from 'next-i18next'
+import { type ReactNode } from 'react'
 import { Text } from 'ui'
 import * as TierSelector from '@/components/TierSelector/TierSelector'
 import type { ProductOfferFragment } from '@/services/graphql/generated'
@@ -9,6 +10,7 @@ type Props = {
   selectedOffer: ProductOfferFragment
   onValueChange: (offerId: string) => void
   defaultOpen?: boolean
+  children?: ReactNode
 }
 
 export const ProductTierSelector = ({
@@ -16,6 +18,7 @@ export const ProductTierSelector = ({
   selectedOffer,
   onValueChange,
   defaultOpen,
+  children,
 }: Props) => {
   const { t } = useTranslation('purchase-form')
   const getVariantDescription = useGetVariantDescription()
@@ -46,6 +49,7 @@ export const ProductTierSelector = ({
             />
           ))}
         </TierSelector.OptionsList>
+        {children}
       </TierSelector.Content>
     </TierSelector.Root>
   )

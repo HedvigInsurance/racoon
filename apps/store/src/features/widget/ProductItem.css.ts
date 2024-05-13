@@ -117,3 +117,7 @@ export const separator = style({
   height: 1,
   backgroundColor: theme.colors.borderOpaque2,
 })
+
+export const compareButtonWrapper = style({
+  padding: theme.space.md,
+})
