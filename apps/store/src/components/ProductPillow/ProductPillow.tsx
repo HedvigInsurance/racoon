@@ -9,12 +9,13 @@ export type ProductPillowProps = {
   label?: string
   image?: string
   url: string
+  priority?: boolean
 }
 
-export const ProductPillow = ({ name, image, url }: ProductPillowProps) => {
+export const ProductPillow = ({ name, image, url, priority }: ProductPillowProps) => {
   return (
     <Link href={url} className={link}>
-      <Pillow src={image} size="large" className={pillow} />
+      <Pillow src={image} priority={priority} size="large" className={pillow} />
       <Text as="span" size="md">
         {name}
       </Text>
