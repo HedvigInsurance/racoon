@@ -1,14 +1,26 @@
 'use client'
 import styled from '@emotion/styled'
+import { useSetAtom } from 'jotai'
+import { useTranslation } from 'next-i18next'
+import { useEffect } from 'react'
 import { mq, theme } from 'ui'
+import { loadOneTrustAtom } from '@/components/CookieConsent/OneTrustAtom'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 
 export const CookieListBlock = () => {
+  const { t } = useTranslation('cookieConsent')
+  const setLoadOneTrust = useSetAtom(loadOneTrustAtom)
+
+  // Load OneTrust script to display the cookie list and handle user preferences
+  useEffect(() => {
+    setLoadOneTrust(true)
+  }, [setLoadOneTrust])
+
   return (
     <GridLayout.Root>
       <GridLayout.Content width={{ base: '1', md: '2/3', xxl: '1/2' }} align={'center'}>
         <PreferenceButton id="ot-sdk-btn" className="ot-sdk-show-settings">
-          Cookies Settings
+          {t('COOKIE_CONSENT_SETTINGS_BUTTON')}
         </PreferenceButton>
         <OneTrustCookieInfo id="ot-sdk-cookie-policy"></OneTrustCookieInfo>
       </GridLayout.Content>
