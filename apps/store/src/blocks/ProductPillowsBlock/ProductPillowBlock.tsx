@@ -10,6 +10,7 @@ export type ProductPillowBlockProps = SbBaseBlockProps<{
   label?: string
   image?: StoryblokAsset
   link: LinkField
+  priority?: boolean
 }>
 
 export const ProductPillowBlock = ({ blok }: ProductPillowBlockProps) => {
@@ -22,6 +23,7 @@ export const ProductPillowBlock = ({ blok }: ProductPillowBlockProps) => {
       name={blok.name}
       label={blok.label}
       image={pillowImage}
+      priority={blok.priority}
       url={url}
       {...storyblokEditable(blok)}
     />
