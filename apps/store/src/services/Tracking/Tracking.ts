@@ -28,11 +28,15 @@ type TrackingOffer = {
 
 type ItemListSource = 'store' | 'recommendations'
 
+// Naming rules:
+// - snake_case for Analytics / ecommerce events (backward compatibility)
+// - camelCase for internal anayltics events
 export enum TrackingEvent {
   AddToCart = 'add_to_cart',
   Adtraction = 'adtraction',
   BeginCheckout = 'begin_checkout',
   DeleteFromCart = 'delete_from_cart',
+  DeviceInfo = 'deviceInfo',
   ExperimentImpression = 'experiment_impression',
   OpenPriceCalculator = 'open_price_calculator',
   PageView = 'virtual_page_view',

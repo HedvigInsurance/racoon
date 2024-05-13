@@ -1,18 +1,9 @@
 'use client'
 
 import { useApolloClient } from '@apollo/client'
-import type {
-  PropsWithChildren} from 'react';
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
-import type { ShopSessionQueryResult} from '@/services/graphql/generated';
+import type { PropsWithChildren } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import type { ShopSessionQueryResult } from '@/services/graphql/generated'
 import { useShopSessionQuery } from '@/services/graphql/generated'
 import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { isBrowser } from '@/utils/env'
@@ -68,8 +59,18 @@ const useShopSessionContextValue = (initialShopSessionId?: string) => {
   const callbacksRef = useRef(new Set<OnReadyCallback>())
   queryResult.onReady = useCallback(
     (callback) => {
-      if (queryResult.shopSession) {
-        callback(queryResult.shopSession)
+      const shopSession = queryResult.shopSession
+      if (shopSession) {
+        // Prevent duplicate invocations in dev mode
+        setTimeout(() => {
+          if (callbacksRef.current.has(callback)) {
+            try {
+              callback(shopSession)
+            } finally {
+              callbacksRef.current.delete(callback)
+            }
+          }
+        })
       }
       callbacksRef.current.add(callback)
       return () => callbacksRef.current.delete(callback)
@@ -89,7 +90,11 @@ const useShopSessionContextValue = (initialShopSessionId?: string) => {
     if (isBrowser()) {
       shopSessionServiceClientSide.getOrCreate({ countryCode }).then((shopSession) => {
         setShopSessionId(shopSession.id)
-        callbacksRef.current.forEach((callback) => callback(shopSession))
+        try {
+          callbacksRef.current.forEach((callback) => callback(shopSession))
+        } finally {
+          callbacksRef.current.clear()
+        }
       })
     }
   }, [shopSessionServiceClientSide, countryCode])
