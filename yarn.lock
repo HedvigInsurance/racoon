@@ -41,22 +41,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client-react-streaming@npm:0.10.0":
-  version: 0.10.0
-  resolution: "@apollo/client-react-streaming@npm:0.10.0"
+"@apollo/client-react-streaming@npm:0.10.1":
+  version: 0.10.1
+  resolution: "@apollo/client-react-streaming@npm:0.10.1"
   dependencies:
     superjson: "npm:^1.12.2 || ^2.0.0"
     ts-invariant: "npm:^0.10.3"
   peerDependencies:
     "@apollo/client": ^3.9.6
     react: ^18
-  checksum: 10c0/b960665331cf52c05e033c91635df41ee311cd910d84b9f41b59be2496760f72591610c3eb746a46f57416f29bea7e2ee47e84e81fc3f0099db5087284f00905
+  checksum: 10c0/0e581ef8687765f00570daf0f1a9305bf26c9324aa51141037c636392b5034e8d5f664cdf0f459f3159f74939da039e5eb6360286df691339f61909110680bad
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:3.10.2":
-  version: 3.10.2
-  resolution: "@apollo/client@npm:3.10.2"
+"@apollo/client@npm:3.10.3":
+  version: 3.10.3
+  resolution: "@apollo/client@npm:3.10.3"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
     "@wry/caches": "npm:^1.0.0"
@@ -87,20 +87,20 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 10c0/b0ef2dfbf72494442a037bd74a6d01bcfc37883b121410c61d97766c1383e573c7aa38b298b890f723f018f0c0eb142d4d8a65d25f465085df6d3fa5930826d1
+  checksum: 10c0/8565d80691d8266d1e2341720219e22affe4f5b4e3020c1c7d4f120ae88f162225c95b65e2c483a35eb6a363b50ebccb12f403d94bc238b56f64d7a9ddcd755a
   languageName: node
   linkType: hard
 
-"@apollo/experimental-nextjs-app-support@npm:0.10.0":
-  version: 0.10.0
-  resolution: "@apollo/experimental-nextjs-app-support@npm:0.10.0"
+"@apollo/experimental-nextjs-app-support@npm:0.10.1":
+  version: 0.10.1
+  resolution: "@apollo/experimental-nextjs-app-support@npm:0.10.1"
   dependencies:
-    "@apollo/client-react-streaming": "npm:0.10.0"
+    "@apollo/client-react-streaming": "npm:0.10.1"
   peerDependencies:
     "@apollo/client": ^3.9.6
     next: ^13.4.1 || ^14.0.0
     react: ^18
-  checksum: 10c0/648f129233cfbd71f019ac5c2b2dc254b1a9a4f6f1f4cc777c2870c8b0ba81e29ba3be4e0320def377b42617ccc09c0798936f9ded7ab9947bde1a2386063f78
+  checksum: 10c0/d46fde855fd08d4c4475e447e762c838037d1014ecd9f3109e4475c033faff5fc517c68684726e012d57306fd0efa0622038f908ff8b8c40df2cdd984eeb371b
   languageName: node
   linkType: hard
 
@@ -25016,8 +25016,8 @@ __metadata:
   resolution: "store@workspace:apps/store"
   dependencies:
     "@adyen/adyen-web": "npm:3.23.0"
-    "@apollo/client": "npm:3.10.2"
-    "@apollo/experimental-nextjs-app-support": "npm:0.10.0"
+    "@apollo/client": "npm:3.10.3"
+    "@apollo/experimental-nextjs-app-support": "npm:0.10.1"
     "@babel/core": "npm:7.24.5"
     "@babel/preset-env": "npm:7.24.5"
     "@babel/preset-react": "npm:7.24.1"
