@@ -274,7 +274,7 @@ export const HeaderBlock = ({ blok, ...headerProps }: HeaderBlockProps) => {
   )
 
   return (
-    <Header key={pathname} {...storyblokEditable(blok)} opaque={isOpen} {...headerProps}>
+    <Header key={pathname} {...storyblokEditable(blok)} {...headerProps}>
       {variant === 'desktop' && (
         <TopMenuDesktop>{blok.navMenuContainer.map(NestedNavigationBlock)}</TopMenuDesktop>
       )}
