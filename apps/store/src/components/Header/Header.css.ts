@@ -8,13 +8,6 @@ import {
   MENU_BAR_HEIGHT_MOBILE,
 } from './Header.constants'
 
-export const rawFocusableStyles = {
-  cursor: 'pointer',
-  '&:focus-visible': {
-    outline: `2px solid ${theme.colors.gray900}`,
-  },
-}
-
 export const focusableStyles = style({
   cursor: 'pointer',
 

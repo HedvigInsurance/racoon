@@ -2,9 +2,8 @@
 import styled from '@emotion/styled'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { storyblokEditable } from '@storyblok/react'
-import { usePathname } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
-import { startTransition, useCallback, useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { mq, Space, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { Header } from '@/components/Header/Header'
@@ -249,17 +248,6 @@ export type HeaderBlockProps = SbBaseBlockProps<{
 // - we render both desktop and mobile menu to allow CSS-only switch between them when window is resized
 // - desktop menu is memoized to avoid rerendering when mobile menu state changes
 export const HeaderBlock = ({ blok, ...headerProps }: HeaderBlockProps) => {
-  const pathname = usePathname()
-  const [isOpen, setIsOpen] = useState(false)
-  // close on navigation
-  useEffect(() => {
-    setIsOpen(false)
-  }, [pathname])
-  const handleOpenChange = useCallback(
-    (newValue: boolean) => startTransition(() => setIsOpen(newValue)),
-    [],
-  )
-
   const variant = useResponsiveVariant('lg')
 
   const productNavItem = useMemo(
@@ -272,18 +260,13 @@ export const HeaderBlock = ({ blok, ...headerProps }: HeaderBlockProps) => {
       )?.name,
     [blok.navMenuContainer],
   )
-
   return (
-    <Header key={pathname} {...storyblokEditable(blok)} {...headerProps}>
+    <Header {...storyblokEditable(blok)} {...headerProps}>
       {variant === 'desktop' && (
         <TopMenuDesktop>{blok.navMenuContainer.map(NestedNavigationBlock)}</TopMenuDesktop>
       )}
       {variant === 'mobile' && (
-        <TopMenuMobile
-          isOpen={isOpen}
-          onOpenChange={handleOpenChange}
-          defaultValue={productNavItem}
-        >
+        <TopMenuMobile defaultValue={productNavItem}>
           {blok.navMenuContainer.map(NestedNavigationBlock)}
         </TopMenuMobile>
       )}
