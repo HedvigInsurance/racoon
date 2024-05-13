@@ -2,7 +2,7 @@
 import type { Transition } from 'framer-motion'
 import { motion } from 'framer-motion'
 import type { ReactNode } from 'react'
-import { bodyBgColor, headerBgTransparentColor } from 'ui/src/theme/vars.css'
+import { bodyBgColor } from 'ui/src/theme/vars.css'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { isBrowser } from '@/utils/env'
 import { useScrollState } from '@/utils/useScrollState'
@@ -33,15 +33,14 @@ type AnimationVariant = keyof typeof ANIMATION_VARIANTS | undefined
 
 type HeaderProps = {
   children: ReactNode
-  opaque?: boolean
 }
 
 export const Header = (props: HeaderProps) => {
-  const { children, opaque = false } = props
+  const { children } = props
   const scrollState = useScrollState({ threshold: MENU_BAR_HEIGHT_PX * 2 })
 
   const initialStyles = {
-    backgroundColor: opaque ? bodyBgColor : headerBgTransparentColor,
+    backgroundColor: bodyBgColor,
   }
 
   let animate: AnimationVariant = undefined

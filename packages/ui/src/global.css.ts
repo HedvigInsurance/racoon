@@ -10,7 +10,6 @@ import {
   bodyBgColor,
   bodyTextColor,
   footerBgColor,
-  headerBgTransparentColor,
   inputBgColor,
   inputSelectedItemBgColor,
 } from './theme/vars.css'
@@ -39,7 +38,6 @@ globalStyle('body', {
     [bodyBgColor]: colors.backgroundStandard,
     [bodyTextColor]: colors.textPrimary,
     [footerBgColor]: colors.gray100,
-    [headerBgTransparentColor]: colors.grayTranslucentDark1000,
     [inputBgColor]: colors.translucent1,
     [inputSelectedItemBgColor]: colors.backgroundStandard,
   },
