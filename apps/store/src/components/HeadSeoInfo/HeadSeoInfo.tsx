@@ -61,24 +61,34 @@ export const HeadSeoInfo = ({ story, robots }: Props) => {
   )
 }
 
+// 1. Always add a self-referring alternate link to a page
+// 2. Add additional alternate links for pages with more than one language variant
+// 3. Only add hreflang to self-referring link if there are more than one alternate links
 const AlternateLinks = ({ story }: { story: ISbStoryData<SEOData> }) => {
   return (
     <>
-      <AlternateLink fullSlug={story.full_slug} />
+      <AlternateLink
+        fullSlug={story.full_slug}
+        hrefLang={story.alternates.length ? getHrefLang(story.full_slug) : null}
+      />
       {story.alternates.map((alternate) => (
-        <AlternateLink key={alternate.id} fullSlug={alternate.full_slug} />
+        <AlternateLink
+          key={alternate.id}
+          fullSlug={alternate.full_slug}
+          hrefLang={getHrefLang(alternate.full_slug)}
+        />
       ))}
     </>
   )
 }
 
-const AlternateLink = ({ fullSlug }: { fullSlug: string }) => {
+const AlternateLink = ({ fullSlug, hrefLang }: { fullSlug: string; hrefLang: string | null }) => {
   return (
     <Head>
       <link
         rel="alternate"
         href={removeSEHomepageLangSegment(`${ORIGIN_URL}/${fullSlug}`)}
-        hrefLang={getHrefLang(fullSlug)}
+        {...(hrefLang && { hrefLang })}
       />
     </Head>
   )
