@@ -11,7 +11,13 @@ import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { logoWrapper, navigation, navigationPrimaryList } from '../Header.css'
 import { ShoppingCartMenuItem } from '../ShoppingCartMenuItem'
-import { buttonWrapper, contentWrapper, dialogOverlay, topMenuHeader } from './TopMenuMobile.css'
+import {
+  buttonTrigger,
+  buttonWrapper,
+  contentWrapper,
+  dialogOverlay,
+  topMenuHeader,
+} from './TopMenuMobile.css'
 
 type Props = {
   defaultValue?: string
@@ -45,7 +51,7 @@ export function TopMenuMobile(props: Props) {
         onOpenChange={(newValue: boolean) => startTransition(() => setIsOpen(newValue))}
       >
         <DialogPrimitive.Trigger asChild={true}>
-          <Button variant="ghost" size="medium">
+          <Button className={buttonTrigger} variant="ghost" size="medium">
             {t('NAV_MENU_DIALOG_OPEN')}
           </Button>
         </DialogPrimitive.Trigger>
@@ -56,7 +62,7 @@ export function TopMenuMobile(props: Props) {
                 <LogoHomeLink />
               </div>
               <DialogPrimitive.Close asChild={true}>
-                <Button variant="ghost" size="medium">
+                <Button className={buttonTrigger} variant="ghost" size="medium">
                   {t('NAV_MENU_DIALOG_CLOSE')}
                 </Button>
               </DialogPrimitive.Close>

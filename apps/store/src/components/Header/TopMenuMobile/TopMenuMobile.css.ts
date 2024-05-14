@@ -16,6 +16,17 @@ export const buttonWrapper = style({
   paddingTop: theme.space.lg,
 })
 
+export const buttonTrigger = style({
+  // Avoid flickering background-color on button when toggling menu on non-hover devices
+  '@media': {
+    '(hover: none)': {
+      ':active': {
+        backgroundColor: 'transparent',
+      },
+    },
+  },
+})
+
 export const topMenuHeader = style({
   display: 'flex',
   alignItems: 'center',
