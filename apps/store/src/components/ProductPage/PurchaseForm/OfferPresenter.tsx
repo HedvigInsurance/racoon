@@ -5,7 +5,7 @@ import { useInView } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import type { RefObject } from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Button, Space, Text, theme } from 'ui'
+import { Button, Space, Text, PlusIcon, theme } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import { ScrollToTopButton } from '@/components/ProductPage/ScrollToButton/ScrollToButton'
@@ -210,7 +210,16 @@ export const OfferPresenter = (props: Props) => {
         </form>
 
         {tiers.length > 1 && (
-          <ComparisonTableModal tiers={tiers} selectedTierId={selectedTier.id} />
+          <SpaceFlex direction="vertical" align="center">
+            <ComparisonTableModal tiers={tiers} selectedTierId={selectedTier.id}>
+              <Button variant="ghost" size="small">
+                <SpaceFlex space={0.5} align="center">
+                  <PlusIcon />
+                  {t('COMPARE_COVERAGE_BUTTON')}
+                </SpaceFlex>
+              </Button>
+            </ComparisonTableModal>
+          </SpaceFlex>
         )}
       </Space>
       <ScrollPast targetRef={scrollPastRef}>

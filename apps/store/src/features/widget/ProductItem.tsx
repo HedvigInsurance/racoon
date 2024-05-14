@@ -9,6 +9,7 @@ import { InputDay } from '@/components/InputDay/InputDay'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Price } from '@/components/Price'
 import { useGetStartDateProps } from '@/components/ProductItem/useGetStartDateProps'
+import { ComparisonTableModal } from '@/components/ProductPage/PurchaseForm/ComparisonTableModal'
 import { ProductTierSelector } from '@/components/ProductPage/PurchaseForm/ProductTierSelector'
 import { Tooltip } from '@/components/Tooltip/Tooltip'
 import { type ProductOfferFragment } from '@/services/graphql/generated'
@@ -27,6 +28,7 @@ import {
   fakeInput,
   fakeInputRow,
   separator,
+  compareButtonWrapper,
 } from './ProductItem.css'
 import { type Offer } from './widget.types'
 
@@ -201,7 +203,15 @@ function EditUI(props: EditUIProps) {
           selectedOffer={props.selectedOffer}
           onValueChange={handleChangeTierLevel}
           defaultOpen={false}
-        />
+        >
+          <div className={compareButtonWrapper}>
+            <ComparisonTableModal tiers={props.tiers} selectedTierId={props.selectedOffer.id}>
+              <Button size="medium" fullWidth={true}>
+                Compare tiers
+              </Button>
+            </ComparisonTableModal>
+          </div>
+        </ProductTierSelector>
       )}
     </Space>
   )

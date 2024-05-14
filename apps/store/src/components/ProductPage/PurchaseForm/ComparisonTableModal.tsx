@@ -1,14 +1,13 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { useMemo } from 'react'
-import { Button, Dialog, PlusIcon } from 'ui'
+import { useMemo, type ReactNode } from 'react'
+import { Button, Dialog } from 'ui'
 import type { Table } from '@/components/ComparisonTable/ComparisonTable.types'
 import { TableMarkers } from '@/components/ComparisonTable/ComparisonTable.types'
 import { DesktopComparisonTable } from '@/components/ComparisonTable/DesktopComparisonTable'
 import { MobileComparisonTable } from '@/components/ComparisonTable/MobileComparisonTable'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import type { ProductOfferFragment } from '@/services/graphql/generated'
 import { sendDialogEvent } from '@/utils/dialogEvent'
 import { useResponsiveVariant } from '@/utils/useResponsiveVariant'
@@ -16,9 +15,10 @@ import { useResponsiveVariant } from '@/utils/useResponsiveVariant'
 type Props = {
   tiers: Array<ProductOfferFragment>
   selectedTierId: string
+  children: ReactNode
 }
 
-export const ComparisonTableModal = ({ tiers, selectedTierId }: Props) => {
+export const ComparisonTableModal = ({ tiers, selectedTierId, children }: Props) => {
   const { t } = useTranslation('purchase-form')
   const variant = useResponsiveVariant('md')
   const { table, selectedTierDisplayName } = useTableData(tiers, selectedTierId)
@@ -29,16 +29,7 @@ export const ComparisonTableModal = ({ tiers, selectedTierId }: Props) => {
 
   return (
     <FullscreenDialog.Root onOpenChange={handleOpenChange}>
-      <SpaceFlex direction="vertical" align="center">
-        <Dialog.Trigger asChild>
-          <Button variant="ghost" size="small">
-            <SpaceFlex space={0.5} align="center">
-              <PlusIcon />
-              {t('COMPARE_COVERAGE_BUTTON')}
-            </SpaceFlex>
-          </Button>
-        </Dialog.Trigger>
-      </SpaceFlex>
+      <Dialog.Trigger asChild>{children}</Dialog.Trigger>
 
       <FullscreenDialog.Modal
         Footer={
