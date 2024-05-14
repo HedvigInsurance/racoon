@@ -8,7 +8,6 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type FormEvent, type MouseEvent, type PropsWithChildren, useState } from 'react'
 import { BankIdIcon, Button, CheckIcon, Heading, mq, Space, Text, theme } from 'ui'
-import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { FormElement } from '@/components/CheckoutPage/CheckoutPage.constants'
 import { useHandleSubmitCheckout } from '@/components/CheckoutPage/useHandleSubmitCheckout'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
@@ -131,6 +130,17 @@ export const SignPage = (props: Props) => {
       })
     }
 
+  const handleEditProductItem = () => {
+    const url = PageLink.widgetCalculatePrice({
+      locale,
+      flow: props.flow,
+      shopSessionId: props.shopSession.id,
+      priceIntentId: props.priceIntent.id,
+    })
+
+    router.push(url)
+  }
+
   return (
     <>
       <Wrapper y={3}>
@@ -155,20 +165,8 @@ export const SignPage = (props: Props) => {
                       shopSessionId={props.shopSession.id}
                       offers={props.priceIntent.offers}
                       selectedOffer={mainOffer}
-                    >
-                      <ButtonNextLink
-                        variant="secondary"
-                        size="medium"
-                        href={PageLink.widgetCalculatePrice({
-                          locale,
-                          flow: props.flow,
-                          shopSessionId: props.shopSession.id,
-                          priceIntentId: props.priceIntent.id,
-                        })}
-                      >
-                        {t('cart:CART_ENTRY_EDIT_BUTTON')}
-                      </ButtonNextLink>
-                    </ProductItemContainer>
+                      onEdit={handleEditProductItem}
+                    />
                   )}
                   <AnimatePresence initial={false}>
                     {crossSellOffers.map((item) => (

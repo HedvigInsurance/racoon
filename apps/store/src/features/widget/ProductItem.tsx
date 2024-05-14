@@ -1,14 +1,13 @@
 import { datadogRum } from '@datadog/browser-rum'
 import { clsx } from 'clsx'
 import { useTranslation } from 'next-i18next'
-import React, { useState, useMemo, type ReactNode } from 'react'
-import { CrossIconSmall, LockIcon, Text, Space, theme } from 'ui'
+import React, { useState, useMemo } from 'react'
+import { CrossIconSmall, LockIcon, Text, Button, Space, theme } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
 import Collapsible from '@/components/Collapsible/Collapsible'
 import { InputDay } from '@/components/InputDay/InputDay'
 import { Pillow } from '@/components/Pillow/Pillow'
-import { ProductDetails } from '@/components/ProductItem/ProductDetails'
-import { ProductDetailsHeader } from '@/components/ProductItem/ProductDetailsHeader'
+import { Price } from '@/components/Price'
 import { useGetStartDateProps } from '@/components/ProductItem/useGetStartDateProps'
 import { ProductTierSelector } from '@/components/ProductPage/PurchaseForm/ProductTierSelector'
 import { Tooltip } from '@/components/Tooltip/Tooltip'
@@ -16,20 +15,22 @@ import { type ProductOfferFragment } from '@/services/graphql/generated'
 import { convertToDate } from '@/utils/date'
 import { getOfferPrice } from '@/utils/getOfferPrice'
 import { useAddToCart } from '@/utils/useAddToCart'
+import { ProductDetails } from './ProductDetails'
 import {
   card,
   cardGreenVariant,
   cardHeader,
   cardHeaderRow,
-  cardFooter,
-  hoverable,
+  priceSection,
   deleteButton,
+  editButton,
   fakeInput,
   fakeInputRow,
-  details,
-  detailsHeader,
+  separator,
 } from './ProductItem.css'
 import { type Offer } from './widget.types'
+
+const DETAILS_SECTION_ID = 'details-section'
 
 type Props = {
   shopSessionId: string
@@ -40,10 +41,10 @@ type Props = {
   greenVariant?: boolean
   defaultExpanded?: boolean
   onDelete?: (event: React.MouseEvent<HTMLButtonElement>) => void
-  children?: ReactNode
+  onEdit?: () => void
 }
 
-export const ProductItem = (props: Props) => {
+export function ProductItem(props: Props) {
   const { mode = 'edit' } = props
 
   const { t } = useTranslation(['cart', 'purchase-form'])
@@ -70,7 +71,7 @@ export const ProductItem = (props: Props) => {
     url: item.url,
   }))
 
-  const handleClickHoverable = () => {
+  const toggleExpandCard = () => {
     setExpanded((prev) => !prev)
   }
 
@@ -78,55 +79,78 @@ export const ProductItem = (props: Props) => {
 
   return (
     <div className={clsx(card[mode], props.greenVariant && cardGreenVariant)}>
-      <div className={hoverable} onClick={handleClickHoverable}>
-        <div
-          className={cardHeader}
-          style={{ gridTemplateColumns: pillow.src ? 'auto 1fr' : '1fr' }}
-        >
-          <Pillow size="small" src={pillow.src} alt="" />
-          <div>
-            <div className={cardHeaderRow}>
-              <Text as="p" size="md" color="textTranslucentPrimary">
-                {props.selectedOffer.product.displayNameFull}
-              </Text>
-
-              {props.onDelete && (
-                <button className={deleteButton} onClick={props.onDelete}>
-                  <CrossIconSmall color={theme.colors.textSecondary} />
-                </button>
-              )}
-            </div>
-            <Text as="p" color="textTranslucentSecondary">
-              {props.selectedOffer.exposure.displayNameShort}
+      <button
+        className={cardHeader}
+        style={{ gridTemplateColumns: pillow.src ? 'auto 1fr' : '1fr' }}
+        onClick={toggleExpandCard}
+        arial-expanded={expanded}
+        aria-controls={DETAILS_SECTION_ID}
+      >
+        <Pillow size="small" src={pillow.src} alt="" />
+        <div>
+          <div className={cardHeaderRow}>
+            <Text as="p" size="md" color="textTranslucentPrimary">
+              {props.selectedOffer.product.displayNameFull}
             </Text>
+
+            {props.onDelete && (
+              <button className={deleteButton} onClick={props.onDelete}>
+                <CrossIconSmall color={theme.colors.textSecondary} />
+              </button>
+            )}
           </div>
+          <Text as="p" color="textTranslucentSecondary">
+            {props.selectedOffer.exposure.displayNameShort}
+          </Text>
         </div>
-      </div>
+      </button>
 
-      {mode === 'edit' && (
-        <EditUI
-          shopSessionId={props.shopSessionId}
-          selectedOffer={props.selectedOffer}
-          tiers={props.tiers}
-          deductibles={props.deductibles}
-        />
-      )}
-      {mode === 'view' && <ViewUI selectedOffer={props.selectedOffer} />}
-
-      <Collapsible.Root open={expanded} onOpenChange={setExpanded}>
-        <Collapsible.Trigger asChild={true}>
-          <ProductDetailsHeader
-            className={detailsHeader}
-            price={getOfferPrice(props.selectedOffer.cost)}
-            expanded={expanded}
+      <Space y={1}>
+        {mode === 'edit' && (
+          <EditUI
+            shopSessionId={props.shopSessionId}
+            selectedOffer={props.selectedOffer}
+            tiers={props.tiers}
+            deductibles={props.deductibles}
           />
-        </Collapsible.Trigger>
-        <Collapsible.Content style={{ cursor: 'initial' }}>
-          <ProductDetails className={details} items={productDetails} documents={productDocuments} />
-        </Collapsible.Content>
-      </Collapsible.Root>
+        )}
+        {mode === 'view' && <ViewUI selectedOffer={props.selectedOffer} />}
 
-      {props.children && <div className={cardFooter}>{props.children}</div>}
+        <Space y={1}>
+          <div className={priceSection}>
+            <Text as="span">{t('MONTHLY_PRICE_LABEL')}</Text>
+            <Price {...getOfferPrice(props.selectedOffer.cost)} />
+          </div>
+
+          <Collapsible.Root id={DETAILS_SECTION_ID} open={expanded} onOpenChange={setExpanded}>
+            <Collapsible.Content style={{ cursor: 'initial' }}>
+              <Space y={1}>
+                <hr className={separator} />
+
+                <ProductDetails items={productDetails} documents={productDocuments} />
+
+                {mode === 'edit' && props.onEdit && (
+                  <Button
+                    className={editButton}
+                    variant="secondary"
+                    size="medium"
+                    fullWidth={true}
+                    onClick={props.onEdit}
+                  >
+                    {t('EDIT_INFORMATION_BUTTON_LABEL')}
+                  </Button>
+                )}
+              </Space>
+            </Collapsible.Content>
+
+            <Collapsible.Trigger asChild={true}>
+              <Button variant="secondary" size="medium" fullWidth={true}>
+                {expanded ? t('HIDE_DETAILS_BUTTON_LABEL') : t('SHOW_DETAILS_BUTTON_LABEL')}
+              </Button>
+            </Collapsible.Trigger>
+          </Collapsible.Root>
+        </Space>
+      </Space>
     </div>
   )
 }

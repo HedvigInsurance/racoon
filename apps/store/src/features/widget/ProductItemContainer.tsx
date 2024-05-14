@@ -8,27 +8,21 @@ type Props = {
   selectedOffer: Offer
 } & Pick<
   ComponentProps<typeof ProductItem>,
-  'shopSessionId' | 'greenVariant' | 'onDelete' | 'defaultExpanded' | 'mode' | 'children'
+  'shopSessionId' | 'greenVariant' | 'onDelete' | 'onEdit' | 'defaultExpanded' | 'mode'
 >
 
-export const ProductItemContainer = (props: Props) => {
+export const ProductItemContainer = ({ offers, selectedOffer, ...delegated }: Props) => {
   const { tiers, deductibles } = useTiersAndDeductibles({
-    offers: props.offers,
-    selectedOffer: props.selectedOffer,
+    offers,
+    selectedOffer,
   })
 
   return (
     <ProductItem
-      shopSessionId={props.shopSessionId}
-      selectedOffer={props.selectedOffer}
+      selectedOffer={selectedOffer}
       tiers={tiers}
       deductibles={deductibles}
-      defaultExpanded={props.defaultExpanded}
-      greenVariant={props.greenVariant}
-      onDelete={props.onDelete}
-      mode={props.mode}
-    >
-      {props.children}
-    </ProductItem>
+      {...delegated}
+    />
   )
 }
