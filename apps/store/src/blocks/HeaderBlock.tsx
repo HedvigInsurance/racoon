@@ -4,7 +4,7 @@ import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { storyblokEditable } from '@storyblok/react'
 import { useTranslation } from 'next-i18next'
 import { useMemo } from 'react'
-import { mq, Space, theme } from 'ui'
+import { Space, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { Header } from '@/components/Header/Header'
 import {
@@ -117,11 +117,11 @@ type ProductNavContainerBlockProps = SbBaseBlockProps<{
   navItems: ExpectedBlockType<NavItemBlockProps>
   buttons: ExpectedBlockType<ButtonBlockProps>
   currentActiveItem?: string
-}>
+}> & { variant: 'mobile' | 'desktop' }
 
 type ProductNavItem = { name: string; url: string; image?: string; label?: string }
 
-export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps) => {
+export const ProductNavContainerBlock = ({ blok, variant }: ProductNavContainerBlockProps) => {
   const locale = useRoutingLocale()
   const { t } = useTranslation()
   const productMetadata = useProductMetadata()
@@ -178,43 +178,42 @@ export const ProductNavContainerBlock = ({ blok }: ProductNavContainerBlockProps
     </div>
   )
 
-  return (
-    <>
-      <MobileWrapper>{content}</MobileWrapper>
-
-      <DesktopOnly>
-        <NavigationMenuPrimitive.Item
-          className={navigationItem}
-          value={blok.name}
-          {...storyblokEditable(blok)}
-        >
-          <Space y={{ base: 1.5, lg: 0 }}>
-            <DesktopOnly>
-              <NavigationTrigger href={PageLink.store({ locale })}>{blok.name}</NavigationTrigger>
-            </DesktopOnly>
-            <NavigationMenuPrimitive.Content className={navigationContent}>
-              {content}
-            </NavigationMenuPrimitive.Content>
-          </Space>
-        </NavigationMenuPrimitive.Item>
-      </DesktopOnly>
-    </>
-  )
+  if (variant === 'mobile') {
+    return <MobileWrapper>{content}</MobileWrapper>
+  } else {
+    return (
+      <NavigationMenuPrimitive.Item
+        className={navigationItem}
+        value={blok.name}
+        {...storyblokEditable(blok)}
+      >
+        <Space y={{ base: 1.5, lg: 0 }}>
+          <NavigationTrigger href={PageLink.store({ locale })}>{blok.name}</NavigationTrigger>
+          <NavigationMenuPrimitive.Content className={navigationContent}>
+            {content}
+          </NavigationMenuPrimitive.Content>
+        </Space>
+      </NavigationMenuPrimitive.Item>
+    )
+  }
 }
 ProductNavContainerBlock.blockName = 'productNavContainer'
 
-const DesktopOnly = styled.div({ display: 'none', [mq.lg]: { display: 'block' } })
 const MobileWrapper = styled.div({
   paddingTop: theme.space.md,
   borderBottom: `1px solid ${theme.colors.borderOpaque1}`,
-  [mq.lg]: { display: 'none' },
 })
 
 const ButtonNextLinkFullWidth = styled(ButtonNextLink)({ width: '100%' })
 
-const NestedNavigationBlock = (block: HeaderBlockProps['blok']['navMenuContainer'][number]) => {
+type NestedNavigationBlockProps = {
+  blok: HeaderBlockProps['blok']['navMenuContainer'][number]
+  variant: 'mobile' | 'desktop'
+}
+
+const NestedNavigationBlock = ({ blok, variant }: NestedNavigationBlockProps) => {
   const navContainer = checkBlockType<NestedNavContainerBlockProps['blok']>(
-    block,
+    blok,
     NestedNavContainerBlock.blockName,
   )
   if (navContainer) {
@@ -222,14 +221,20 @@ const NestedNavigationBlock = (block: HeaderBlockProps['blok']['navMenuContainer
   }
 
   const productNavContainer = checkBlockType<ProductNavContainerBlockProps['blok']>(
-    block,
+    blok,
     ProductNavContainerBlock.blockName,
   )
   if (productNavContainer) {
-    return <ProductNavContainerBlock key={productNavContainer._uid} blok={productNavContainer} />
+    return (
+      <ProductNavContainerBlock
+        key={productNavContainer._uid}
+        blok={productNavContainer}
+        variant={variant}
+      />
+    )
   }
 
-  const navBlock = checkBlockType<NavItemBlockProps['blok']>(block, NavItemBlock.blockName)
+  const navBlock = checkBlockType<NavItemBlockProps['blok']>(blok, NavItemBlock.blockName)
   if (navBlock) return <NavItemBlock key={navBlock._uid} blok={navBlock} />
 
   return null
@@ -263,11 +268,17 @@ export const HeaderBlock = ({ blok, ...headerProps }: HeaderBlockProps) => {
   return (
     <Header {...storyblokEditable(blok)} {...headerProps}>
       {variant === 'desktop' && (
-        <TopMenuDesktop>{blok.navMenuContainer.map(NestedNavigationBlock)}</TopMenuDesktop>
+        <TopMenuDesktop>
+          {blok.navMenuContainer.map((item) => (
+            <NestedNavigationBlock key={item._uid} blok={item} variant="desktop" />
+          ))}
+        </TopMenuDesktop>
       )}
       {variant === 'mobile' && (
         <TopMenuMobile defaultValue={productNavItem}>
-          {blok.navMenuContainer.map(NestedNavigationBlock)}
+          {blok.navMenuContainer.map((item) => (
+            <NestedNavigationBlock key={item._uid} blok={item} variant="mobile" />
+          ))}
         </TopMenuMobile>
       )}
       <ShoppingCartMenuItem />
