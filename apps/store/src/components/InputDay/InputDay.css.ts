@@ -1,5 +1,4 @@
 import { style, keyframes, styleVariants, globalStyle } from '@vanilla-extract/css'
-import { inputBgColor } from 'ui/src/theme/vars.css'
 import { tokens } from 'ui'
 
 const slideUpAndFadeAnimation = keyframes({
@@ -21,7 +20,7 @@ export const trigger = style({
   height: '4.5rem',
   borderRadius: tokens.radius.sm,
   paddingInline: tokens.space.md,
-  backgroundColor: inputBgColor,
+  backgroundColor: tokens.components.input.background.default,
   cursor: 'pointer',
   ':focus-visible': {
     boxShadow: tokens.shadow.focus,
