@@ -1,10 +1,10 @@
 import { style } from '@vanilla-extract/css'
-import { theme } from 'ui'
+import { tokens } from 'ui'
 
 export const articleList = style({
   display: 'grid',
-  rowGap: theme.space.xxxl,
-  columnGap: theme.space.lg,
+  rowGap: tokens.space.xxxl,
+  columnGap: tokens.space.lg,
   gridTemplateColumns: 'repeat(auto-fill, minmax(21rem, 1fr))',
   gridTemplateRows: 'max-content',
 })

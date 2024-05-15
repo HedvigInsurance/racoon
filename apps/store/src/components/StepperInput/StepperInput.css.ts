@@ -1,19 +1,19 @@
 import { style } from '@vanilla-extract/css'
-import { theme } from 'ui/src/theme'
+import { tokens } from 'ui'
 
 export const outerWrapper = style({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  gap: theme.space.md,
+  gap: tokens.space.md,
   width: '100%',
   minHeight: '3rem',
-  paddingInline: theme.space.md,
-  borderRadius: theme.radius.sm,
-  backgroundColor: theme.colors.translucent1,
+  paddingInline: tokens.space.md,
+  borderRadius: tokens.radius.sm,
+  backgroundColor: tokens.colors.translucent1,
   selectors: {
     '&:has(label)': {
-      paddingBlock: theme.space.sm,
+      paddingBlock: tokens.space.sm,
     },
   },
 })
@@ -24,14 +24,14 @@ export const innerWrapper = style({
 })
 
 export const inputLabel = style({
-  fontSize: theme.fontSizes.xs,
-  color: theme.colors.textTranslucentSecondary,
+  fontSize: tokens.fontSizes.xs,
+  color: tokens.colors.textTranslucentSecondary,
   userSelect: 'none',
 })
 
 export const select = style({
-  fontSize: theme.fontSizes.xl,
-  color: theme.colors.textPrimary,
+  fontSize: tokens.fontSizes.xl,
+  color: tokens.colors.textPrimary,
 })
 
 export const stepButton = style({
@@ -41,8 +41,8 @@ export const stepButton = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  color: theme.colors.textPrimary,
+  color: tokens.colors.textPrimary,
   ':disabled': {
-    color: theme.colors.textDisabled,
+    color: tokens.colors.textDisabled,
   },
 })

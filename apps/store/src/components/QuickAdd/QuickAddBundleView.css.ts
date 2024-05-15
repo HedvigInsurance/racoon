@@ -1,16 +1,16 @@
 import { style } from '@vanilla-extract/css'
-import { theme, minWidth } from 'ui/src/theme'
+import { tokens, minWidth } from 'ui'
 
 export const card = style({
-  padding: theme.space.md,
-  border: `1px solid ${theme.colors.borderTranslucent1}`,
-  borderRadius: theme.radius.md,
-  // TODO: replace this to theme.colors.signalbluefill when we update Uikit colors
+  padding: tokens.space.md,
+  border: `1px solid ${tokens.colors.borderTranslucent1}`,
+  borderRadius: tokens.radius.md,
+  // TODO: replace this to tokens.colors.signalbluefill when we update Uikit colors
   backgroundColor: 'hsl(201, 84%, 90%)',
 
   '@media': {
     [minWidth.lg]: {
-      padding: theme.space.lg,
+      padding: tokens.space.lg,
     },
   },
 })
@@ -37,14 +37,14 @@ export const link = style({
 export const alignedBadge = style({
   alignSelf: 'flex-start',
   marginLeft: 'auto',
-  fontSize: theme.fontSizes.xs,
+  fontSize: tokens.fontSizes.xs,
 })
 
 export const priceWrapper = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  marginBottom: theme.space.xl,
+  marginBottom: tokens.space.xl,
 })
 
 export const productDetail = style({
@@ -57,12 +57,12 @@ export const productUsp = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  columnGap: theme.space.xs,
-  paddingBlock: theme.space.md,
+  columnGap: tokens.space.xs,
+  paddingBlock: tokens.space.md,
 
   selectors: {
     '&:not(:last-of-type)': {
-      borderBottom: `1px solid ${theme.colors.borderTranslucent1}`,
+      borderBottom: `1px solid ${tokens.colors.borderTranslucent1}`,
     },
   },
 })

@@ -1,15 +1,15 @@
 import { style } from '@vanilla-extract/css'
-import { theme } from 'ui'
+import { tokens } from 'ui'
 
 export const consentWrapper = style({
   display: 'grid',
   gridTemplateColumns: '1.5rem 1fr',
-  rowGap: theme.space.xxs,
-  columnGap: theme.space.md,
+  rowGap: tokens.space.xxs,
+  columnGap: tokens.space.md,
   alignItems: 'center',
-  padding: theme.space.md,
-  backgroundColor: theme.colors.opaque1,
-  borderRadius: theme.radius.md,
+  padding: tokens.space.md,
+  backgroundColor: tokens.colors.opaque1,
+  borderRadius: tokens.radius.md,
   lineHeight: 1.4,
 })
 
@@ -18,7 +18,7 @@ export const consentBody = style({
 })
 
 export const trigger = style({
-  marginLeft: theme.space.xxs,
+  marginLeft: tokens.space.xxs,
   textDecoration: 'underline',
   textDecorationThickness: '1px',
   textUnderlineOffset: '1.5px',
@@ -33,26 +33,26 @@ export const trigger = style({
 export const checkboxRoot = style({
   display: 'flex',
   placeContent: 'center',
-  backgroundColor: theme.colors.opaque1,
+  backgroundColor: tokens.colors.opaque1,
   width: '1.5rem',
   height: '1.5rem',
-  padding: theme.space.xxs,
-  border: `1.5px solid ${theme.colors.gray500}`,
+  padding: tokens.space.xxs,
+  border: `1.5px solid ${tokens.colors.gray500}`,
   borderRadius: '0.25rem',
   cursor: 'pointer',
 
   ':hover': {
-    backgroundColor: theme.colors.gray300,
+    backgroundColor: tokens.colors.gray300,
   },
 
   ':focus': {
-    borderColor: theme.colors.borderOpaque3,
+    borderColor: tokens.colors.borderOpaque3,
   },
 
   selectors: {
     '&[data-state="checked"]': {
-      backgroundColor: theme.colors.gray1000,
-      borderColor: theme.colors.gray1000,
+      backgroundColor: tokens.colors.gray1000,
+      borderColor: tokens.colors.gray1000,
     },
   },
 })
@@ -60,5 +60,5 @@ export const checkboxRoot = style({
 export const checkboxIndicator = style({
   display: 'flex',
   placeItems: 'center',
-  color: theme.colors.textNegative,
+  color: tokens.colors.textNegative,
 })

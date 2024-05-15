@@ -1,10 +1,10 @@
 import { style } from '@vanilla-extract/css'
-import { theme } from 'ui/src/theme'
+import { tokens } from 'ui'
 
 export const wrapper = style({
   display: 'flex',
   flexDirection: 'column',
-  rowGap: theme.space.md,
+  rowGap: tokens.space.md,
 })
 
 export const listItem = style({
@@ -14,14 +14,14 @@ export const listItem = style({
 })
 
 export const documentLink = style({
-  fontFamily: theme.fonts.standard,
-  fontSize: theme.fontSizes.md,
+  fontFamily: tokens.fonts.standard,
+  fontSize: tokens.fontSizes.md,
   lineHeight: '1.6',
-  color: theme.colors.textTranslucentSecondary,
-  ':hover': { color: theme.colors.textTranslucentPrimary },
+  color: tokens.colors.textTranslucentSecondary,
+  ':hover': { color: tokens.colors.textTranslucentPrimary },
   ':focus-visible': {
-    boxShadow: theme.shadow.focus,
-    borderRadius: theme.space.xxs,
+    boxShadow: tokens.shadow.focus,
+    borderRadius: tokens.space.xxs,
   },
 })
 

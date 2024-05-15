@@ -8,7 +8,7 @@ import { useTranslation } from 'next-i18next'
 import type { ReactNode } from 'react'
 import { Suspense } from 'react'
 import { useCallback, useRef, useState } from 'react'
-import { Button, Heading, mq, Space, theme } from 'ui'
+import { Button, Heading, mq, Space, theme, framerTransitions } from 'ui'
 import type { CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { CartToast } from '@/components/CartNotification/CartToast'
 import type { ProductItemProps } from '@/components/CartNotification/ProductItem'
@@ -185,7 +185,7 @@ const PurchaseFormInner = (props: PurchaseFormProps) => {
           <motion.div
             initial={{ opacity: 0, y: '1vh' }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ...theme.transitions.framer.easeInOutCubic }}
+            transition={{ duration: 0.4, ...framerTransitions.easeInOutCubic }}
           >
             <ProductHeroContainer size="small" compact={true}>
               {editingStateForm}

@@ -1,12 +1,12 @@
 import { style } from '@vanilla-extract/css'
-import { theme, minWidth } from 'ui/src/theme'
+import { tokens, minWidth } from 'ui'
 
 export const wrapper = style({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  gap: theme.space.xxl,
+  gap: tokens.space.xxl,
   aspectRatio: '4 / 5',
   maxWidth: '100%',
   background: `linear-gradient(
@@ -17,8 +17,8 @@ export const wrapper = style({
     hsl(85, 100%, 90%) 70%,
     transparent 100%
   )`,
-  paddingBlock: theme.space[10],
-  paddingInline: theme.space.md,
+  paddingBlock: tokens.space[10],
+  paddingInline: tokens.space.md,
 
   '@media': {
     [minWidth.lg]: {

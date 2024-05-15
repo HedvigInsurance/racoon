@@ -1,10 +1,10 @@
 import { style } from '@vanilla-extract/css'
-import { space } from 'ui/src/theme/space'
+import { tokens } from 'ui'
 
 export const errorWrapper = style({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  marginBottom: space.md,
-  gap: space.md,
+  marginBottom: tokens.space.md,
+  gap: tokens.space.md,
 })

@@ -1,14 +1,14 @@
 import { style } from '@vanilla-extract/css'
-import { theme } from 'ui/src/theme'
+import { tokens } from 'ui'
 
 export const wrapper = style({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  gap: theme.space.md,
-  marginBottom: theme.space.xl,
+  gap: tokens.space.md,
+  marginBottom: tokens.space.xl,
 })
 
 export const disclaimerText = style({
-  paddingInline: theme.space.md,
+  paddingInline: tokens.space.md,
 })

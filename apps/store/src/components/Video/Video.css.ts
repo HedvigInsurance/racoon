@@ -1,5 +1,5 @@
 import { createVar, keyframes, style } from '@vanilla-extract/css'
-import { hoverStyles, minWidth, theme } from 'ui'
+import { hoverStyles, minWidth, tokens } from 'ui'
 
 export const videoWrapper = style({
   position: 'relative',
@@ -30,11 +30,11 @@ export const videoBase = style({
 })
 
 export const videoRoundedCorners = style({
-  borderRadius: theme.radius.md,
+  borderRadius: tokens.radius.md,
 
   '@media': {
     [minWidth.lg]: {
-      borderRadius: theme.radius.xl,
+      borderRadius: tokens.radius.xl,
     },
   },
 })
@@ -44,7 +44,7 @@ export const videoControls = style({
   inset: 0,
   display: 'flex',
   flexDirection: 'column',
-  padding: theme.space.md,
+  padding: tokens.space.md,
   justifyContent: 'flex-end',
   alignItems: 'flex-start',
   cursor: 'pointer',
@@ -52,7 +52,7 @@ export const videoControls = style({
 
 export const videoControlsVisibility = style({
   display: 'flex',
-  gap: theme.space.xs,
+  gap: tokens.space.xs,
   width: '100%',
 
   '@media': {
@@ -74,17 +74,17 @@ export const videoControlsVisibility = style({
 export const controlButton = style({
   display: 'inline-flex',
   alignItems: 'center',
-  gap: theme.space.xs,
+  gap: tokens.space.xs,
   height: '2rem',
-  paddingInline: theme.space.xs,
-  backgroundColor: theme.colors.grayTranslucentDark700,
+  paddingInline: tokens.space.xs,
+  backgroundColor: tokens.colors.grayTranslucentDark700,
 
   ...hoverStyles({
-    backgroundColor: theme.colors.grayTranslucentDark600,
+    backgroundColor: tokens.colors.grayTranslucentDark600,
   }),
 
   ':active': {
-    backgroundColor: theme.colors.grayTranslucentDark600,
+    backgroundColor: tokens.colors.grayTranslucentDark600,
   },
 })
 
@@ -109,7 +109,7 @@ export const soundBar = style({
   width: '2px',
   borderRadius: '2px',
   transformOrigin: 'bottom',
-  backgroundColor: theme.colors.gray1000,
+  backgroundColor: tokens.colors.gray1000,
   transition: 'all .4s ease-in-out',
   animation: `${soundBarsAnimation} 1s 2 alternate`,
 

@@ -1,13 +1,13 @@
 import { style } from '@vanilla-extract/css'
-import { minWidth, theme } from 'ui/src/theme'
 import { footerBgColor } from 'ui/src/theme/vars.css'
+import { minWidth, tokens } from 'ui'
 
 export const wrapperStyle = style({
   backgroundColor: footerBgColor,
-  paddingTop: theme.space.xxl,
+  paddingTop: tokens.space.xxl,
 
   // Clear floating price calculator button
-  paddingBottom: theme.space[10],
+  paddingBottom: tokens.space[10],
 })
 
 export const disclaimerStyle = style({

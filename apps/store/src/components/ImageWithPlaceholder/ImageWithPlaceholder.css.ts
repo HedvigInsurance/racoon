@@ -1,9 +1,9 @@
 import { styleVariants } from '@vanilla-extract/css'
-import { theme } from 'ui/src/theme'
+import { tokens } from 'ui'
 
 export const imageStyles = styleVariants({
   base: {
-    backgroundColor: theme.colors.gray100,
+    backgroundColor: tokens.colors.gray100,
   },
   loaded: {
     backgroundColor: 'transparent',

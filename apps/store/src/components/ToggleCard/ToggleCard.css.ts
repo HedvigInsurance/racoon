@@ -1,24 +1,24 @@
 import { style } from '@vanilla-extract/css'
-import { theme } from 'ui/src/theme'
 import { inputBgColor } from 'ui/src/theme/vars.css'
+import { tokens } from 'ui'
 
 export const wrapper = style({
-  padding: theme.space.md,
-  paddingTop: theme.space.sm,
-  borderRadius: theme.radius.md,
+  padding: tokens.space.md,
+  paddingTop: tokens.space.sm,
+  borderRadius: tokens.radius.md,
   backgroundColor: inputBgColor,
 })
 
 export const checkboxHeader = style({
   display: 'flex',
-  gap: theme.space.sm,
+  gap: tokens.space.sm,
   justifyContent: 'space-between',
   alignItems: 'center',
 })
 
 export const labelText = style({
-  fontFamily: theme.fonts.body,
-  fontSize: theme.fontSizes.md,
+  fontFamily: tokens.fonts.body,
+  fontSize: tokens.fontSizes.md,
   overflow: 'hidden',
   whiteSpace: 'nowrap',
   textOverflow: 'ellipsis',

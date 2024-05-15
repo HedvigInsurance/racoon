@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { useEffect, useRef, type ReactNode } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import type { FontSizeProps, FontSizes } from 'ui'
-import { CheckIcon, theme } from 'ui'
+import { CheckIcon, framerTransitions } from 'ui'
 import { list, listItem, tickerItemWrapper } from './Ticker.css'
 
 export type TickerHeight = {
@@ -32,7 +32,7 @@ const ANIMATION: Variants = {
   original: { y: 0, opacity: 1 },
   pushUp: { y: `-${DRIFT_HEIGHT}`, opacity: 0 },
 }
-const TRANSITION = { duration: DURATION, ...theme.transitions.framer.easeInOutQuint }
+const TRANSITION = { duration: DURATION, ...framerTransitions.easeInOutQuint }
 
 type TickerItemProps = {
   children: React.ReactNode

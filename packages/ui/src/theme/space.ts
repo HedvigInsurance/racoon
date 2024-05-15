@@ -14,7 +14,7 @@ const spaceScale = {
 
 export const space = {
   ...spaceScale,
-  none: 0,
+  none: '0',
   xxxs: spaceScale[0],
   xxs: spaceScale[1],
   xs: spaceScale[2],

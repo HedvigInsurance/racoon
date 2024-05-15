@@ -1,8 +1,8 @@
 import { style } from '@vanilla-extract/css'
-import { theme } from 'ui/src/theme'
+import { tokens } from 'ui'
 
 export const buttonWrapper = style({
   display: 'flex',
   justifyContent: 'center',
-  paddingInline: theme.space.md,
+  paddingInline: tokens.space.md,
 })

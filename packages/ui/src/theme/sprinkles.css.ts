@@ -1,25 +1,25 @@
 import { defineProperties, createSprinkles } from '@vanilla-extract/sprinkles'
+import { tokens } from '../theme'
 import { mediaQueries } from './media'
-import { theme } from './theme'
 import { fontSizes } from './typography'
 
 const textColors = {
-  textPrimary: theme.colors.textPrimary,
-  textSecondary: theme.colors.textSecondary,
-  textSecondaryOnGray: theme.colors.textSecondaryOnGray,
-  textTertiary: theme.colors.textTertiary,
-  textTranslucentPrimary: theme.colors.textTranslucentPrimary,
-  textTranslucentSecondary: theme.colors.textTranslucentSecondary,
-  textTranslucentTertiary: theme.colors.textTranslucentTertiary,
-  textDisabled: theme.colors.textDisabled,
-  textNegative: theme.colors.textNegative,
-  textGreen: theme.colors.textGreen,
-  textAmber: theme.colors.textAmber,
-  textRed: theme.colors.textRed,
-  signalBlueText: theme.colors.signalBlueText,
-  signalRedText: theme.colors.signalRedText,
-  signalGreenText: theme.colors.signalGreenText,
-  signalAmberText: theme.colors.signalAmberText,
+  textPrimary: tokens.colors.textPrimary,
+  textSecondary: tokens.colors.textSecondary,
+  textSecondaryOnGray: tokens.colors.textSecondaryOnGray,
+  textTertiary: tokens.colors.textTertiary,
+  textTranslucentPrimary: tokens.colors.textTranslucentPrimary,
+  textTranslucentSecondary: tokens.colors.textTranslucentSecondary,
+  textTranslucentTertiary: tokens.colors.textTranslucentTertiary,
+  textDisabled: tokens.colors.textDisabled,
+  textNegative: tokens.colors.textNegative,
+  textGreen: tokens.colors.textGreen,
+  textAmber: tokens.colors.textAmber,
+  textRed: tokens.colors.textRed,
+  signalBlueText: tokens.colors.signalBlueText,
+  signalRedText: tokens.colors.signalRedText,
+  signalGreenText: tokens.colors.signalGreenText,
+  signalAmberText: tokens.colors.signalAmberText,
 } as const
 
 const unresponsiveProperties = defineProperties({
@@ -37,16 +37,16 @@ const responsiveProperties = defineProperties({
   defaultCondition: '_',
   properties: {
     fontSize: fontSizes,
-    margin: theme.space,
-    marginTop: theme.space,
-    marginBottom: theme.space,
-    marginLeft: theme.space,
-    marginRight: theme.space,
-    padding: theme.space,
-    paddingTop: theme.space,
-    paddingBottom: theme.space,
-    paddingLeft: theme.space,
-    paddingRight: theme.space,
+    margin: tokens.space,
+    marginTop: tokens.space,
+    marginBottom: tokens.space,
+    marginLeft: tokens.space,
+    marginRight: tokens.space,
+    padding: tokens.space,
+    paddingTop: tokens.space,
+    paddingBottom: tokens.space,
+    paddingLeft: tokens.space,
+    paddingRight: tokens.space,
   },
   shorthands: {
     mx: ['marginLeft', 'marginRight'],

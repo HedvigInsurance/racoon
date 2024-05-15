@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
-import { colors } from 'ui/src/theme'
 import { bodyBgColor, bodyTextColor, footerBgColor } from 'ui/src/theme/vars.css'
+import { tokens } from 'ui'
 
 export const wrapper = style({
   minHeight: '100vh',
@@ -8,9 +8,9 @@ export const wrapper = style({
   selectors: {
     '&:has(main[data-dark-background=true])': {
       vars: {
-        [bodyBgColor]: colors.dark,
-        [bodyTextColor]: colors.textNegative,
-        [footerBgColor]: colors.dark,
+        [bodyBgColor]: tokens.colors.dark,
+        [bodyTextColor]: tokens.colors.textNegative,
+        [footerBgColor]: tokens.colors.dark,
       },
       color: bodyTextColor,
       backgroundColor: bodyBgColor,

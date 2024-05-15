@@ -171,10 +171,10 @@ const ChatWindow = styled.div({
   filter: 'drop-shadow(0px 1px 1px hsl(0deg 0% 0% / 0.15))',
 
   '&[data-state=open]': {
-    animation: `${scaleIn} 250ms ${theme.transitions.css.easeInCubic}`,
+    animation: `${scaleIn} 250ms ${theme.transitions.easeInCubic}`,
   },
   '&[data-state=closed]': {
-    animation: `${scaleOut} 250ms ${theme.transitions.css.easeOutCubic}`,
+    animation: `${scaleOut} 250ms ${theme.transitions.easeOutCubic}`,
   },
 })
 
