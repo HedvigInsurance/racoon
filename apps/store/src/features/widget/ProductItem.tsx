@@ -2,6 +2,7 @@ import { datadogRum } from '@datadog/browser-rum'
 import { clsx } from 'clsx'
 import { useTranslation } from 'next-i18next'
 import React, { useState, useMemo } from 'react'
+import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import { CrossIconSmall, LockIcon, Text, Button, Space, theme } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
 import Collapsible from '@/components/Collapsible/Collapsible'
@@ -127,23 +128,25 @@ export function ProductItem(props: Props) {
 
           <Collapsible.Root id={DETAILS_SECTION_ID} open={expanded} onOpenChange={setExpanded}>
             <Collapsible.Content style={{ cursor: 'initial' }}>
-              <Space y={1}>
-                <hr className={separator} />
+              <hr className={separator} />
 
-                <ProductDetails items={productDetails} documents={productDocuments} />
+              <ProductDetails
+                className={sprinkles({ py: 'md' })}
+                items={productDetails}
+                documents={productDocuments}
+              />
 
-                {mode === 'edit' && props.onEdit && (
-                  <Button
-                    className={editButton}
-                    variant="secondary"
-                    size="medium"
-                    fullWidth={true}
-                    onClick={props.onEdit}
-                  >
-                    {t('EDIT_INFORMATION_BUTTON_LABEL')}
-                  </Button>
-                )}
-              </Space>
+              {mode === 'edit' && props.onEdit && (
+                <Button
+                  className={editButton}
+                  variant="secondary"
+                  size="medium"
+                  fullWidth={true}
+                  onClick={props.onEdit}
+                >
+                  {t('EDIT_INFORMATION_BUTTON_LABEL')}
+                </Button>
+              )}
             </Collapsible.Content>
 
             <Collapsible.Trigger asChild={true}>
