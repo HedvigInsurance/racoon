@@ -106,6 +106,7 @@
   "LABEL_NO": "No",
   "LABEL_YES": "Yes",
   "LOADING_PRICE_ANIMATION_LABEL": "Calculating your price...",
+  "MANUAL_SWITCH_INFO": "Please set your end date at your current insurance company as the start date. Also, don’t forget to cancel your insurance at {{COMPANY_NAME}}",
   "OPEN_PRICE_CALCULATOR_BUTTON": "See your price",
   "PRESENT_OFFER_EDIT_BUTTON": "Edit your info",
   "PRICE_CALCULATOR_SECTION_EDIT_BUTTON": "Edit",

@@ -106,6 +106,7 @@
   "LABEL_NO": "Nej",
   "LABEL_YES": "Ja",
   "LOADING_PRICE_ANIMATION_LABEL": "Ditt pris beräknas...",
+  "MANUAL_SWITCH_INFO": "Vänligen ange ditt slutdatum hos ditt nuvarande försäkringsbolag som startdatum. Glöm inte heller att avbryta din försäkring hos {{COMPANY_NAME}}.",
   "OPEN_PRICE_CALCULATOR_BUTTON": "Se ditt pris",
   "PRESENT_OFFER_EDIT_BUTTON": "Ändra din info",
   "PRICE_CALCULATOR_SECTION_EDIT_BUTTON": "Ändra",
