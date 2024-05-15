@@ -1,9 +1,8 @@
 import { style } from '@vanilla-extract/css'
-import { inputBgColor, inputSelectedItemBgColor } from 'ui/src/theme/vars.css'
 import { tokens } from 'ui'
 
 export const root = style({
-  backgroundColor: inputBgColor,
+  backgroundColor: tokens.components.input.background.default,
   borderRadius: tokens.radius.sm,
 })
 
@@ -42,7 +41,7 @@ export const optionsListItem = style({
   cursor: 'pointer',
   selectors: {
     '&[data-state=checked]': {
-      backgroundColor: inputSelectedItemBgColor,
+      backgroundColor: tokens.components.input.background.selected,
     },
   },
 })
