@@ -2,6 +2,8 @@ import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { Button, Heading, Space, mq, theme } from 'ui'
 import { StaticContent } from '@/components/ConfirmationPage/StaticContent'
+import { SwitchingAssistantSection } from '@/components/ConfirmationPage/SwitchingAssistantSection/SwitchingAssistantSection'
+import type { SwitchingAssistantData } from '@/components/ConfirmationPage/SwitchingAssistantSection/SwitchingAssistantSection.types'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { Discount } from '@/components/ShopBreakdown/Discount'
 import { Divider } from '@/components/ShopBreakdown/ShopBreakdown'
@@ -18,6 +20,7 @@ type Props = {
   title: string
   shopSession: ShopSession
   backToAppButton?: string
+  switching?: SwitchingAssistantData
 }
 
 export const ConfirmationPage = (props: Props) => {
@@ -34,31 +37,35 @@ export const ConfirmationPage = (props: Props) => {
       <GridLayout.Root>
         <GridLayout.Content width="1/3" align="center">
           <Space y={4}>
-            <Heading as="h1" variant="standard.24" align="center">
-              {props.title}
-            </Heading>
-            <Space y={1}>
-              {props.shopSession.cart.entries.map((item) => (
-                <ProductItem
-                  key={item.id}
-                  shopSessionId={props.shopSession.id}
-                  selectedOffer={item}
-                  mode="view"
-                />
-              ))}
+            <Space y={{ base: 3, lg: 4.5 }}>
+              <Heading as="h1" variant="standard.24" align="center">
+                {props.title}
+              </Heading>
+              <Space y={1}>
+                {props.shopSession.cart.entries.map((item) => (
+                  <ProductItem
+                    key={item.id}
+                    shopSessionId={props.shopSession.id}
+                    selectedOffer={item}
+                    mode="view"
+                  />
+                ))}
 
-              {discount && (
-                <>
-                  <Discount {...discount} />
-                  <Divider />
-                </>
-              )}
+                {discount && (
+                  <>
+                    <Discount {...discount} />
+                    <Divider />
+                  </>
+                )}
 
-              <TotalAmountContainer cart={props.shopSession.cart} />
-              {props.backToAppButton && (
-                <Button onClick={handleClickBackToApp}>{props.backToAppButton}</Button>
-              )}
+                <TotalAmountContainer cart={props.shopSession.cart} />
+                {props.backToAppButton && (
+                  <Button onClick={handleClickBackToApp}>{props.backToAppButton}</Button>
+                )}
+              </Space>
             </Space>
+
+            {props.switching && <SwitchingAssistantSection {...props.switching} />}
           </Space>
         </GridLayout.Content>
       </GridLayout.Root>

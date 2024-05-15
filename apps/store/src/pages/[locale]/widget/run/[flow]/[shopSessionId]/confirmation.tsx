@@ -4,6 +4,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { type ComponentProps } from 'react'
 import { fetchConfirmationStory } from '@/components/ConfirmationPage/fetchConfirmationStory'
 import { SuccessAnimation } from '@/components/ConfirmationPage/SuccessAnimation/SuccessAnimation'
+import { fetchSwitchingData } from '@/components/ConfirmationPage/SwitchingAssistantSection/fetchSwitchingData'
 import { ConfirmationPage } from '@/features/widget/ConfirmationPage'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import { hideChatOnPage } from '@/services/CustomerFirst'
@@ -33,13 +34,14 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     locale: context.locale,
   })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient })
-  const [translations, story, confirmationStory] = await Promise.all([
+  const [translations, flowStory, confirmationStory, switchingData] = await Promise.all([
     serverSideTranslations(context.locale),
     getStoryById<WidgetFlowStory>({
       id: context.params.flow,
       version: context.draftMode ? 'draft' : undefined,
     }),
     fetchConfirmationStory(context.locale),
+    fetchSwitchingData(shopSessionService, context.params.shopSessionId),
     shopSessionService.fetchById(context.params.shopSessionId),
   ])
 
@@ -50,7 +52,8 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       ...hideChatOnPage(),
       title: confirmationStory.content.title,
       staticContent: confirmationStory.content,
-      backToAppButton: story.content.backToAppButtonLabel,
+      backToAppButton: flowStory.content.backToAppButtonLabel,
+      ...(switchingData ? { switching: switchingData } : {}),
     },
   })
 }

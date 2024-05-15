@@ -2,11 +2,9 @@ import { useTranslation } from 'next-i18next'
 import { Heading, Space, Text } from 'ui'
 import { CardSkeleton, ContractCard } from '../ContractCard'
 import { useSwitchingContracts } from '../useSwitchingContracts'
+import type { SwitchingAssistantData } from './SwitchingAssistantSection.types'
 
-type Props = {
-  shopSessionOutcomeId: string
-  companyDisplayName: string
-}
+export type Props = SwitchingAssistantData
 
 export const SwitchingAssistantSection = (props: Props) => {
   const { t } = useTranslation('checkout')

@@ -5,6 +5,7 @@ import { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage
 import { type ConfirmationPageProps } from '@/components/ConfirmationPage/ConfirmationPage.types'
 import { fetchConfirmationStory } from '@/components/ConfirmationPage/fetchConfirmationStory'
 import { SuccessAnimation } from '@/components/ConfirmationPage/SuccessAnimation/SuccessAnimation'
+import { fetchSwitchingData } from '@/components/ConfirmationPage/SwitchingAssistantSection/fetchSwitchingData'
 import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
@@ -12,11 +13,9 @@ import {
   CurrentMemberDocument,
   type CurrentMemberQuery,
   type CurrentMemberQueryVariables,
-  type ShopSessionOutcomeFragment,
 } from '@/services/graphql/generated'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
-import type { ShopSessionService } from '@/services/shopSession/ShopSessionService'
 import { type ConfirmationStory } from '@/services/storyblok/storyblok'
 import { Features } from '@/utils/Features'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
@@ -40,9 +39,9 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
     const shopSessionService = setupShopSessionServiceServerSide({ apolloClient, req, res })
     const shopSession = await shopSessionService.fetchById(shopSessionId)
 
-    const [layoutWithMenuProps, outcome, memberPartnerData, story] = await Promise.all([
+    const [layoutWithMenuProps, switchingData, memberPartnerData, story] = await Promise.all([
       getLayoutWithMenuProps(context, apolloClient),
-      fetchOutcomeData(shopSessionService, shopSessionId),
+      fetchSwitchingData(shopSessionService, shopSessionId),
       fetchMemberPartnerData(apolloClient),
       fetchConfirmationStory(locale),
     ])
@@ -59,7 +58,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
         cart: shopSession.cart,
         story,
         memberPartnerData,
-        ...(outcome ? getSwitching(outcome) : {}),
+        ...(switchingData ? { switching: switchingData } : {}),
       },
     })
   } catch (error) {
@@ -103,36 +102,5 @@ const fetchMemberPartnerData = async (apolloClient: ApolloClient<unknown>) => {
     } else {
       throw err
     }
-  }
-}
-
-const fetchOutcomeData = async (shopSessionService: ShopSessionService, shopSessionId: string) => {
-  const shopSessionOutcomeId = await shopSessionService.fetchOutcomeId(shopSessionId)
-  if (!shopSessionOutcomeId) {
-    return null
-  }
-
-  const outcome = await shopSessionService.fetchOutcome(shopSessionOutcomeId)
-  return outcome
-}
-
-const getSwitching = (
-  outcome: ShopSessionOutcomeFragment,
-): Pick<ConfirmationPageProps, 'switching'> | undefined => {
-  const switchingContract = outcome.createdContracts.find(
-    (item) => !!item.externalInsuranceCancellation?.bankSignering,
-  )
-
-  if (!switchingContract) return undefined
-
-  const externalInsurer = switchingContract.externalInsuranceCancellation?.externalInsurer
-
-  if (!externalInsurer) return undefined
-
-  return {
-    switching: {
-      shopSessionOutcomeId: outcome.id,
-      companyDisplayName: externalInsurer.displayName,
-    },
   }
 }
