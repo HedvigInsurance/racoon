@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { type ReactNode, useRef } from 'react'
-import { Heading, mq, theme } from 'ui'
+import { Heading, framerTransitions, mq, theme } from 'ui'
 import { zIndexes } from '@/utils/zIndex'
 import { usePageState } from './usePageState'
 
@@ -74,7 +74,7 @@ const VIDEO_ANIMATION = {
   },
   transition: {
     duration: VIDEO_ANIMATION_DURATION,
-    ...theme.transitions.framer.easeInCubic,
+    ...framerTransitions.easeInCubic,
   },
 } as const
 
@@ -85,7 +85,7 @@ const MESSAGE_ANIMATION = {
     opacity: 1,
     y: 0,
     transition: {
-      ...theme.transitions.framer.easeOutCubic,
+      ...framerTransitions.easeOutCubic,
       duration: MESSAGE_ANIMATION_DURATION,
       delay: VIDEO_ANIMATION_DURATION,
     },
@@ -98,7 +98,7 @@ const WRAPPER_ANIMATION = {
     opacity: 0,
     y: -42,
     transition: {
-      ...theme.transitions.framer.easeInCubic,
+      ...framerTransitions.easeInCubic,
       duration: MESSAGE_ANIMATION_DURATION,
       delay: SHOW_MESSAGE_DURATION,
     },
@@ -112,7 +112,7 @@ const CONTENT_ANIMATION = {
     opacity: 1,
     y: 0,
     transition: {
-      ...theme.transitions.framer.easeOutCubic,
+      ...framerTransitions.easeOutCubic,
       duration: MESSAGE_ANIMATION_DURATION,
       delay: SHOW_MESSAGE_DURATION + MESSAGE_ANIMATION_DURATION,
     },

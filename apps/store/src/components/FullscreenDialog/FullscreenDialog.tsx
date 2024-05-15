@@ -1,6 +1,6 @@
 import { motion, type Transition } from 'framer-motion'
 import { type ReactNode } from 'react'
-import { CrossIcon, Dialog, theme } from 'ui'
+import { CrossIcon, Dialog, framerTransitions } from 'ui'
 import {
   dialogCloseIcon,
   dialogContent,
@@ -67,5 +67,5 @@ export const Trigger = Dialog.Trigger
 
 const ANIMATE_TRANSITION: Transition = {
   duration: 0.5,
-  ...theme.transitions.framer.easeInOutCubic,
+  ...framerTransitions.easeInOutCubic,
 }
