@@ -1,10 +1,10 @@
 import { style } from '@vanilla-extract/css'
-import { theme } from 'ui/src/theme'
+import { themeVars } from 'ui/src/theme'
 
 export const wrapper = style({
   display: 'flex',
   flexDirection: 'column',
-  rowGap: theme.space.md,
+  rowGap: themeVars.space.md,
 })
 
 export const listItem = style({
@@ -14,14 +14,14 @@ export const listItem = style({
 })
 
 export const documentLink = style({
-  fontFamily: theme.fonts.standard,
-  fontSize: theme.fontSizes.md,
+  fontFamily: themeVars.fonts.standard,
+  fontSize: themeVars.fontSizes.md,
   lineHeight: '1.6',
-  color: theme.colors.textTranslucentSecondary,
-  ':hover': { color: theme.colors.textTranslucentPrimary },
+  color: themeVars.colors.textTranslucentSecondary,
+  ':hover': { color: themeVars.colors.textTranslucentPrimary },
   ':focus-visible': {
-    boxShadow: theme.shadow.focus,
-    borderRadius: theme.space.xxs,
+    boxShadow: themeVars.shadow.focus,
+    borderRadius: themeVars.space.xxs,
   },
 })
 

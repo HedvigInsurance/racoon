@@ -1,5 +1,5 @@
 import { globalStyle, style, styleVariants } from '@vanilla-extract/css'
-import { colors, minWidth, theme } from 'ui/src/theme'
+import { colors, minWidth, themeVars } from 'ui/src/theme'
 
 const GridArea = {
   Content: 'content',
@@ -16,33 +16,33 @@ export const bannerRoot = styleVariants({
   `,
     gridTemplateColumns: '1fr auto 1fr',
     alignItems: 'center',
-    paddingBlock: theme.space.sm,
-    paddingInline: theme.space.md,
-    fontSize: theme.fontSizes.xs,
+    paddingBlock: themeVars.space.sm,
+    paddingInline: themeVars.space.md,
+    fontSize: themeVars.fontSizes.xs,
 
-    borderBottom: `0.5px solid ${theme.colors.borderTranslucent1}`,
+    borderBottom: `0.5px solid ${themeVars.colors.borderTranslucent1}`,
 
     '@media': {
       [minWidth.lg]: {
-        paddingInline: theme.space.xl,
+        paddingInline: themeVars.space.xl,
       },
     },
   },
   info: {
-    color: theme.colors.blue800,
-    backgroundColor: theme.colors.blueFill1,
+    color: themeVars.colors.blue800,
+    backgroundColor: themeVars.colors.blueFill1,
   },
   campaign: {
-    color: theme.colors.textGreen,
-    backgroundColor: theme.colors.signalGreenFill,
+    color: themeVars.colors.textGreen,
+    backgroundColor: themeVars.colors.signalGreenFill,
   },
   warning: {
-    color: theme.colors.textAmber,
-    backgroundColor: theme.colors.signalAmberFill,
+    color: themeVars.colors.textAmber,
+    backgroundColor: themeVars.colors.signalAmberFill,
   },
   error: {
-    color: theme.colors.textRed,
-    backgroundColor: theme.colors.signalRedFill,
+    color: themeVars.colors.textRed,
+    backgroundColor: themeVars.colors.signalRedFill,
   },
 })
 
@@ -57,20 +57,20 @@ export const bannerContent = style({
   display: 'grid',
   gridTemplateColumns: 'auto 1fr',
   alignItems: 'center',
-  gap: theme.space.xs,
+  gap: themeVars.space.xs,
 })
 
 globalStyle(`${bannerContent} b`, {
-  color: theme.colors.textPrimary,
+  color: themeVars.colors.textPrimary,
 })
 
 export const bannerCloseButton = style({
   gridArea: GridArea.CloseBtn,
   justifySelf: 'end',
   color: colors.textPrimary,
-  marginLeft: theme.space.xs,
+  marginLeft: themeVars.space.xs,
   cursor: 'pointer',
   ':focus-visible': {
-    outline: `2px solid ${theme.colors.gray900}`,
+    outline: `2px solid ${themeVars.colors.gray900}`,
   },
 })

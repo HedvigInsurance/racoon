@@ -1,13 +1,13 @@
 import { style, styleVariants } from '@vanilla-extract/css'
-import { minWidth, theme } from '../../theme'
+import { minWidth, themeVars } from '../../theme'
 
 export const baseButton = style({
   // opt out of double tap to zoom to immediately respond to taps
   touchAction: 'manipulation',
-  borderRadius: theme.radius.sm,
+  borderRadius: themeVars.radius.sm,
   whiteSpace: 'nowrap',
   lineHeight: 1,
-  transition: `background-color ${theme.transitions.hover}, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s`,
+  transition: `background-color ${themeVars.transitions.hover}, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s`,
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -18,7 +18,7 @@ export const baseButton = style({
   },
 
   ':focus-visible': {
-    boxShadow: theme.shadow.focus,
+    boxShadow: themeVars.shadow.focus,
   },
 })
 
@@ -27,33 +27,33 @@ export const fullWidthStyles = style({
 })
 
 const shadow = style({
-  boxShadow: theme.shadow.default,
+  boxShadow: themeVars.shadow.default,
   backdropFilter: 'blur(30px)',
 })
 
 export const buttonVariant = styleVariants({
   primary: {
-    backgroundColor: theme.colors.gray1000,
-    color: theme.colors.textNegative,
+    backgroundColor: themeVars.colors.gray1000,
+    color: themeVars.colors.textNegative,
 
     '@media (hover: hover)': {
       '&:hover': {
-        backgroundColor: theme.colors.grayTranslucent900,
+        backgroundColor: themeVars.colors.grayTranslucent900,
       },
     },
 
     ':active': {
-      backgroundColor: theme.colors.grayTranslucent900,
+      backgroundColor: themeVars.colors.grayTranslucent900,
     },
 
     ':focus-visible': {
-      boxShadow: theme.shadow.focusAlt,
+      boxShadow: themeVars.shadow.focusAlt,
     },
 
     selectors: {
       '&:disabled:not([data-loading])': {
-        backgroundColor: theme.colors.gray200,
-        color: theme.colors.textDisabled,
+        backgroundColor: themeVars.colors.gray200,
+        color: themeVars.colors.textDisabled,
       },
     },
   },
@@ -61,23 +61,23 @@ export const buttonVariant = styleVariants({
   'primary-alt': [
     shadow,
     {
-      backgroundColor: theme.colors.green50,
-      color: theme.colors.textPrimary,
+      backgroundColor: themeVars.colors.green50,
+      color: themeVars.colors.textPrimary,
 
       '@media (hover: hover)': {
         '&:hover': {
-          backgroundColor: theme.colors.green100,
+          backgroundColor: themeVars.colors.green100,
         },
       },
 
       ':active': {
-        backgroundColor: theme.colors.green100,
+        backgroundColor: themeVars.colors.green100,
       },
 
       selectors: {
         '&:disabled:not([data-loading])': {
-          backgroundColor: theme.colors.gray200,
-          color: theme.colors.textDisabled,
+          backgroundColor: themeVars.colors.gray200,
+          color: themeVars.colors.textDisabled,
           boxShadow: 'none',
           backdropFilter: 'none',
         },
@@ -88,23 +88,23 @@ export const buttonVariant = styleVariants({
   secondary: [
     shadow,
     {
-      backgroundColor: theme.colors.translucent1,
-      color: theme.colors.textPrimary,
+      backgroundColor: themeVars.colors.translucent1,
+      color: themeVars.colors.textPrimary,
 
       '@media (hover: hover)': {
         '&:hover': {
-          backgroundColor: theme.colors.translucent2,
+          backgroundColor: themeVars.colors.translucent2,
         },
       },
 
       ':active': {
-        backgroundColor: theme.colors.translucent2,
+        backgroundColor: themeVars.colors.translucent2,
       },
 
       selectors: {
         '&:disabled:not([data-loading])': {
-          backgroundColor: theme.colors.gray200,
-          color: theme.colors.textDisabled,
+          backgroundColor: themeVars.colors.gray200,
+          color: themeVars.colors.textDisabled,
           boxShadow: 'none',
           backdropFilter: 'none',
         },
@@ -115,60 +115,60 @@ export const buttonVariant = styleVariants({
   'secondary-alt': [
     shadow,
     {
-      backgroundColor: theme.colors.offWhite,
+      backgroundColor: themeVars.colors.offWhite,
 
       '@media (hover: hover)': {
         '&:hover': {
-          backgroundColor: theme.colors.grayTranslucentDark25,
+          backgroundColor: themeVars.colors.grayTranslucentDark25,
         },
       },
 
       ':active': {
-        backgroundColor: theme.colors.offWhite,
+        backgroundColor: themeVars.colors.offWhite,
       },
     },
   ],
 
   ghost: {
     backgroundColor: 'transparent',
-    color: theme.colors.textPrimary,
+    color: themeVars.colors.textPrimary,
 
     '@media (hover: hover)': {
       '&:hover': {
-        backgroundColor: theme.colors.translucent1,
+        backgroundColor: themeVars.colors.translucent1,
       },
     },
 
     ':active': {
-      backgroundColor: theme.colors.gray100,
+      backgroundColor: themeVars.colors.gray100,
     },
 
     selectors: {
       '&:disabled:not([data-loading])': {
-        color: theme.colors.textDisabled,
+        color: themeVars.colors.textDisabled,
         backgroundColor: 'transparent',
       },
     },
   },
   'ghost-alt': {
     backgroundColor: 'transparent',
-    color: theme.colors.textNegative,
+    color: themeVars.colors.textNegative,
 
     '@media (hover: hover)': {
       '&:hover': {
-        backgroundColor: theme.colors.offWhite,
-        color: theme.colors.textPrimary,
+        backgroundColor: themeVars.colors.offWhite,
+        color: themeVars.colors.textPrimary,
       },
     },
 
     ':active': {
-      backgroundColor: theme.colors.gray100,
-      color: theme.colors.textPrimary,
+      backgroundColor: themeVars.colors.gray100,
+      color: themeVars.colors.textPrimary,
     },
 
     selectors: {
       '&:disabled:not([data-loading])': {
-        color: theme.colors.textDisabled,
+        color: themeVars.colors.textDisabled,
         backgroundColor: 'transparent',
       },
     },
@@ -184,23 +184,23 @@ const HEIGHT = {
 const SIZE_STYLES = {
   small: {
     height: HEIGHT.small,
-    paddingInline: theme.space.md,
-    fontSize: theme.fontSizes.xs,
-    borderRadius: theme.radius.xs,
+    paddingInline: themeVars.space.md,
+    fontSize: themeVars.fontSizes.xs,
+    borderRadius: themeVars.radius.xs,
   },
   medium: {
     height: HEIGHT.medium,
-    paddingInline: theme.space.md,
-    fontSize: theme.fontSizes.md,
-    borderRadius: theme.radius.sm,
+    paddingInline: themeVars.space.md,
+    fontSize: themeVars.fontSizes.md,
+    borderRadius: themeVars.radius.sm,
   },
   large: {
     height: HEIGHT.large,
     width: '100%',
-    paddingInline: theme.space.xl,
-    fontSize: theme.fontSizes.md,
+    paddingInline: themeVars.space.xl,
+    fontSize: themeVars.fontSizes.md,
     textAlign: 'center',
-    borderRadius: theme.radius.md,
+    borderRadius: themeVars.radius.md,
   },
 } as const
 
@@ -232,7 +232,7 @@ export const buttonSizeStyles = {
 export const childrenWrapper = style({
   display: 'flex',
   alignItems: 'center',
-  gap: theme.space.xs,
+  gap: themeVars.space.xs,
 })
 
 export const centered = style({

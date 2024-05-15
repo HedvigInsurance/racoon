@@ -1,16 +1,16 @@
 import { style } from '@vanilla-extract/css'
-import { theme } from 'ui/src/theme'
+import { themeVars } from 'ui/src/theme'
 
 export const productUsp = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  columnGap: theme.space.xs,
-  paddingBlock: theme.space.md,
+  columnGap: themeVars.space.xs,
+  paddingBlock: themeVars.space.md,
 
   selectors: {
     '&:not(:last-of-type)': {
-      borderBottom: `1px solid ${theme.colors.borderTranslucent1}`,
+      borderBottom: `1px solid ${themeVars.colors.borderTranslucent1}`,
     },
   },
 })

@@ -1,25 +1,25 @@
 import { defineProperties, createSprinkles } from '@vanilla-extract/sprinkles'
 import { mediaQueries } from './media'
-import { theme } from './theme'
+import { themeVars } from './theme'
 import { fontSizes } from './typography'
 
 const textColors = {
-  textPrimary: theme.colors.textPrimary,
-  textSecondary: theme.colors.textSecondary,
-  textSecondaryOnGray: theme.colors.textSecondaryOnGray,
-  textTertiary: theme.colors.textTertiary,
-  textTranslucentPrimary: theme.colors.textTranslucentPrimary,
-  textTranslucentSecondary: theme.colors.textTranslucentSecondary,
-  textTranslucentTertiary: theme.colors.textTranslucentTertiary,
-  textDisabled: theme.colors.textDisabled,
-  textNegative: theme.colors.textNegative,
-  textGreen: theme.colors.textGreen,
-  textAmber: theme.colors.textAmber,
-  textRed: theme.colors.textRed,
-  signalBlueText: theme.colors.signalBlueText,
-  signalRedText: theme.colors.signalRedText,
-  signalGreenText: theme.colors.signalGreenText,
-  signalAmberText: theme.colors.signalAmberText,
+  textPrimary: themeVars.colors.textPrimary,
+  textSecondary: themeVars.colors.textSecondary,
+  textSecondaryOnGray: themeVars.colors.textSecondaryOnGray,
+  textTertiary: themeVars.colors.textTertiary,
+  textTranslucentPrimary: themeVars.colors.textTranslucentPrimary,
+  textTranslucentSecondary: themeVars.colors.textTranslucentSecondary,
+  textTranslucentTertiary: themeVars.colors.textTranslucentTertiary,
+  textDisabled: themeVars.colors.textDisabled,
+  textNegative: themeVars.colors.textNegative,
+  textGreen: themeVars.colors.textGreen,
+  textAmber: themeVars.colors.textAmber,
+  textRed: themeVars.colors.textRed,
+  signalBlueText: themeVars.colors.signalBlueText,
+  signalRedText: themeVars.colors.signalRedText,
+  signalGreenText: themeVars.colors.signalGreenText,
+  signalAmberText: themeVars.colors.signalAmberText,
 } as const
 
 const unresponsiveProperties = defineProperties({
@@ -37,16 +37,16 @@ const responsiveProperties = defineProperties({
   defaultCondition: '_',
   properties: {
     fontSize: fontSizes,
-    margin: theme.space,
-    marginTop: theme.space,
-    marginBottom: theme.space,
-    marginLeft: theme.space,
-    marginRight: theme.space,
-    padding: theme.space,
-    paddingTop: theme.space,
-    paddingBottom: theme.space,
-    paddingLeft: theme.space,
-    paddingRight: theme.space,
+    margin: themeVars.space,
+    marginTop: themeVars.space,
+    marginBottom: themeVars.space,
+    marginLeft: themeVars.space,
+    marginRight: themeVars.space,
+    padding: themeVars.space,
+    paddingTop: themeVars.space,
+    paddingBottom: themeVars.space,
+    paddingLeft: themeVars.space,
+    paddingRight: themeVars.space,
   },
   shorthands: {
     mx: ['marginLeft', 'marginRight'],

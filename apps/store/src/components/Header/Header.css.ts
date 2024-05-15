@@ -1,5 +1,5 @@
 import { createVar, style } from '@vanilla-extract/css'
-import { minWidth, theme } from 'ui'
+import { minWidth, themeVars } from 'ui'
 import { zIndexes } from '@/utils/zIndex'
 import {
   HEADER_HEIGHT_DESKTOP,
@@ -12,7 +12,7 @@ export const focusableStyles = style({
   cursor: 'pointer',
 
   ':focus-visible': {
-    outline: `2px solid ${theme.colors.gray900}`,
+    outline: `2px solid ${themeVars.colors.gray900}`,
   },
 })
 
@@ -57,12 +57,12 @@ export const wrapper = style({
   zIndex: zIndexes.header,
 
   height: MENU_BAR_HEIGHT_MOBILE,
-  paddingInline: theme.space.md,
+  paddingInline: themeVars.space.md,
 
   '@media': {
     [minWidth.lg]: {
       height: MENU_BAR_HEIGHT_DESKTOP,
-      paddingInline: theme.space.xl,
+      paddingInline: themeVars.space.xl,
     },
   },
 })
@@ -79,15 +79,15 @@ export const contentWrapper = style({
   justifyContent: 'flex-end',
   alignItems: 'center',
   flex: 1,
-  gap: theme.space.xs,
+  gap: themeVars.space.xs,
 })
 
 export const navigation = style({
-  fontSize: theme.fontSizes.xl,
+  fontSize: themeVars.fontSizes.xl,
 
   '@media': {
     [minWidth.lg]: {
-      fontSize: theme.fontSizes.md,
+      fontSize: themeVars.fontSizes.md,
       top: 0,
     },
   },
@@ -104,7 +104,7 @@ export const topMenuDesktop = style([
 export const navigationItem = style({
   selectors: {
     '&:not(:last-child)': {
-      borderBottom: `1px solid ${theme.colors.borderOpaque1}`,
+      borderBottom: `1px solid ${themeVars.colors.borderOpaque1}`,
     },
   },
 
@@ -120,26 +120,26 @@ export const navigationItem = style({
 export const navigationTriggerLink = style([
   focusableStyles,
   {
-    paddingBlock: theme.space.lg,
+    paddingBlock: themeVars.space.lg,
     display: 'flex',
     alignItems: 'center',
-    gap: theme.space.xxxl,
+    gap: themeVars.space.xxxl,
     whiteSpace: 'nowrap',
 
     '@media': {
       [minWidth.lg]: {
-        paddingBlock: theme.space.xs,
-        paddingInline: theme.space.md,
+        paddingBlock: themeVars.space.xs,
+        paddingInline: themeVars.space.md,
 
-        borderRadius: theme.radius.sm,
+        borderRadius: themeVars.radius.sm,
 
         ':hover': {
-          backgroundColor: theme.colors.grayTranslucent100,
+          backgroundColor: themeVars.colors.grayTranslucent100,
         },
 
         selectors: {
           '&[data-state="open"]': {
-            backgroundColor: theme.colors.grayTranslucent100,
+            backgroundColor: themeVars.colors.grayTranslucent100,
           },
         },
       },
@@ -148,18 +148,18 @@ export const navigationTriggerLink = style([
 ])
 
 export const navigationSecondaryItem = style({
-  padding: theme.space.md,
-  marginLeft: theme.space.md,
-  color: theme.colors.textPrimary,
+  padding: themeVars.space.md,
+  marginLeft: themeVars.space.md,
+  color: themeVars.colors.textPrimary,
 
   '@media': {
     [minWidth.lg]: {
-      padding: `${theme.space.xs} ${theme.space.sm}`,
+      padding: `${themeVars.space.xs} ${themeVars.space.sm}`,
       margin: 0,
-      borderRadius: theme.radius.sm,
+      borderRadius: themeVars.radius.sm,
 
       ':hover': {
-        backgroundColor: theme.colors.grayTranslucent100,
+        backgroundColor: themeVars.colors.grayTranslucent100,
       },
     },
   },
@@ -169,20 +169,20 @@ export const navigationContent = style({
   '@media': {
     [minWidth.lg]: {
       position: 'absolute',
-      paddingTop: `calc(${theme.space.sm} + ${theme.space.xs})`,
+      paddingTop: `calc(${themeVars.space.sm} + ${themeVars.space.xs})`,
     },
   },
 })
 
 export const navigationMenuWrapper = style({
-  paddingBottom: theme.space.xl,
+  paddingBottom: themeVars.space.xl,
 
   '@media': {
     [minWidth.lg]: {
-      backgroundColor: theme.colors.light,
-      boxShadow: theme.shadow.default,
-      borderRadius: theme.radius.sm,
-      padding: theme.space.md,
+      backgroundColor: themeVars.colors.light,
+      boxShadow: themeVars.shadow.default,
+      borderRadius: themeVars.radius.sm,
+      padding: themeVars.space.md,
     },
   },
 })
@@ -194,8 +194,8 @@ export const navigationPrimaryList = style({
   inset: `${MENU_BAR_HEIGHT_MOBILE} 0 0 0`,
   display: 'flex',
   flexDirection: 'column',
-  paddingInline: theme.space.md,
-  paddingBottom: theme.space.xl,
+  paddingInline: themeVars.space.md,
+  paddingBottom: themeVars.space.xl,
   overflowY: 'auto',
 
   '@media': {
@@ -204,8 +204,8 @@ export const navigationPrimaryList = style({
       flexDirection: 'row',
       alignItems: 'center',
       height: MENU_BAR_HEIGHT_DESKTOP,
-      padding: theme.space.none,
-      gap: theme.space.xxs,
+      padding: themeVars.space.none,
+      gap: themeVars.space.xxs,
     },
   },
 })
@@ -223,9 +223,9 @@ export const navigationSecondaryList = style({
 export const navigationProductList = style({
   display: 'flex',
   flexDirection: 'column',
-  rowGap: theme.space.xs,
-  fontSize: theme.fontSizes.md,
-  color: theme.colors.textPrimary,
+  rowGap: themeVars.space.xs,
+  fontSize: themeVars.fontSizes.md,
+  color: themeVars.colors.textPrimary,
 
   '@media': {
     [minWidth.lg]: {

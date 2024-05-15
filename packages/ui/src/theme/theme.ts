@@ -22,7 +22,7 @@ export const theme = {
   },
 } as const
 
-export const vanillaTheme = createTheme(theme)
+export const [mainTheme, themeVars] = createTheme(theme)
 
 export const getColor = (color: UIColorKeys) => {
   return theme.colors[color]

@@ -1,5 +1,5 @@
 import { style, styleVariants } from '@vanilla-extract/css'
-import { minWidth, theme } from 'ui/src/theme'
+import { minWidth, themeVars } from 'ui/src/theme'
 
 const HEADER_HEIGHT = '3.5rem'
 const BUTTON_HEIGHT = '3.25rem'
@@ -14,7 +14,7 @@ export const dialogHeader = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-end',
-  paddingInline: theme.space.md,
+  paddingInline: themeVars.space.md,
   height: HEADER_HEIGHT,
   position: 'fixed',
   top: 0,
@@ -24,7 +24,7 @@ export const dialogHeader = style({
 
   '@media': {
     [minWidth.lg]: {
-      paddingInline: theme.space.xl,
+      paddingInline: themeVars.space.xl,
     },
   },
 })
@@ -42,10 +42,10 @@ export const dialogMain = styleVariants({
     dialogMainBase,
     {
       paddingTop: HEADER_HEIGHT,
-      paddingBottom: `calc(${BUTTON_HEIGHT} + ${theme.space.md} * 2)`,
+      paddingBottom: `calc(${BUTTON_HEIGHT} + ${themeVars.space.md} * 2)`,
       '@media': {
         [minWidth.lg]: {
-          paddingBottom: `calc(${BUTTON_HEIGHT} + ${theme.space.xxl} * 2)`,
+          paddingBottom: `calc(${BUTTON_HEIGHT} + ${themeVars.space.xxl} * 2)`,
         },
       },
     },
@@ -57,7 +57,7 @@ export const dialogMain = styleVariants({
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      paddingInline: theme.space.md,
+      paddingInline: themeVars.space.md,
     },
   ],
 })
@@ -71,13 +71,13 @@ export const dialogFooterWrapper = style({
   display: 'grid',
   gridTemplateColumns: 'minmax(0, 24rem)',
   justifyContent: 'center',
-  gap: theme.space.xxs,
-  paddingInline: theme.space.md,
-  paddingBottom: theme.space.md,
+  gap: themeVars.space.xxs,
+  paddingInline: themeVars.space.md,
+  paddingBottom: themeVars.space.md,
 
   '@media': {
     [minWidth.lg]: {
-      paddingBottom: theme.space.xxl,
+      paddingBottom: themeVars.space.xxl,
     },
   },
 })

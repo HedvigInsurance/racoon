@@ -1,19 +1,19 @@
 import { style } from '@vanilla-extract/css'
-import { theme } from 'ui/src/theme'
+import { themeVars } from 'ui/src/theme'
 import { MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/Header.constants'
 
 export const contentWrapper = style({
   position: 'fixed',
   top: 0,
   width: '100%',
-  color: theme.colors.textPrimary,
+  color: themeVars.colors.textPrimary,
 })
 
 export const buttonWrapper = style({
   display: 'grid',
   gridTemplateColumns: '1fr 1fr',
-  columnGap: theme.space.xs,
-  paddingTop: theme.space.lg,
+  columnGap: themeVars.space.xs,
+  paddingTop: themeVars.space.lg,
 })
 
 export const buttonTrigger = style({
@@ -32,13 +32,13 @@ export const topMenuHeader = style({
   alignItems: 'center',
   justifyContent: 'space-between',
   height: MENU_BAR_HEIGHT_MOBILE,
-  paddingInline: theme.space.md,
-  gap: theme.space.xs,
+  paddingInline: themeVars.space.md,
+  gap: themeVars.space.xs,
 })
 
 export const dialogOverlay = style({
   position: 'fixed',
   inset: 0,
   top: 0,
-  backgroundColor: theme.colors.light,
+  backgroundColor: themeVars.colors.light,
 })

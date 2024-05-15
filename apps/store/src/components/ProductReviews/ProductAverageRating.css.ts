@@ -1,27 +1,27 @@
 import { style } from '@vanilla-extract/css'
-import { theme } from 'ui/src/theme'
+import { themeVars } from 'ui/src/theme'
 
 export const wrapper = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  gap: theme.space.xxs,
+  gap: themeVars.space.xxs,
 })
 
 export const trigger = style({
-  color: theme.colors.textSecondary,
-  fontSize: theme.fontSizes.xs,
+  color: themeVars.colors.textSecondary,
+  fontSize: themeVars.fontSizes.xs,
   textDecoration: 'underline',
   cursor: 'pointer',
 
   ':focus-visible': {
-    boxShadow: theme.shadow.focus,
+    boxShadow: themeVars.shadow.focus,
   },
 
   '@media': {
     '(hover: hover)': {
       ':hover': {
-        color: theme.colors.textPrimary,
+        color: themeVars.colors.textPrimary,
       },
     },
   },
@@ -33,5 +33,5 @@ export const certifiedIcon = style({
 })
 
 export const disclaimerText = style({
-  paddingInline: theme.space.md,
+  paddingInline: themeVars.space.md,
 })

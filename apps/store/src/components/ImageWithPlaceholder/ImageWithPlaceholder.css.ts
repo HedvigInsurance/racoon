@@ -1,9 +1,9 @@
 import { styleVariants } from '@vanilla-extract/css'
-import { theme } from 'ui/src/theme'
+import { themeVars } from 'ui/src/theme'
 
 export const imageStyles = styleVariants({
   base: {
-    backgroundColor: theme.colors.gray100,
+    backgroundColor: themeVars.colors.gray100,
   },
   loaded: {
     backgroundColor: 'transparent',

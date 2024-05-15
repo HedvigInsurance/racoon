@@ -1,5 +1,5 @@
 import { style, keyframes, styleVariants, globalStyle } from '@vanilla-extract/css'
-import { theme } from 'ui/src/theme'
+import { themeVars } from 'ui/src/theme'
 import { inputBgColor } from 'ui/src/theme/vars.css'
 
 const slideUpAndFadeAnimation = keyframes({
@@ -16,15 +16,15 @@ export const trigger = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  gap: theme.space.sm,
+  gap: themeVars.space.sm,
   width: '100%',
   height: '4.5rem',
-  borderRadius: theme.radius.sm,
-  paddingInline: theme.space.md,
+  borderRadius: themeVars.radius.sm,
+  paddingInline: themeVars.space.md,
   backgroundColor: inputBgColor,
   cursor: 'pointer',
   ':focus-visible': {
-    boxShadow: theme.shadow.focus,
+    boxShadow: themeVars.shadow.focus,
   },
 })
 
@@ -68,8 +68,8 @@ export const chevronIcon = styleVariants({
 })
 
 export const popoverContent = style({
-  borderRadius: theme.radius.sm,
-  backgroundColor: theme.colors.backgroundStandard,
+  borderRadius: themeVars.radius.sm,
+  backgroundColor: themeVars.colors.backgroundStandard,
   boxShadow: 'rgba(0, 0, 0, 0.06) 0px 2px 12px',
   maxHeight: 'var(--radix-tooltip-content-available-height)',
   animationDuration: '0.6s',
@@ -89,25 +89,25 @@ export const popoverContent = style({
 })
 
 export const dayPicker = style({
-  padding: theme.space.md,
-  fontFamily: theme.fonts.body,
-  color: theme.colors.textPrimary,
+  padding: themeVars.space.md,
+  fontFamily: themeVars.fonts.body,
+  color: themeVars.colors.textPrimary,
 })
 globalStyle(`${dayPicker} .rdp-day, ${dayPicker} .rdp-nav_button`, {
   height: 'calc(var(--rdp-cell-size) * 0.9)',
   width: 'calc(var(--rdp-cell-size) * 0.9)',
-  borderRadius: theme.radius.xs,
+  borderRadius: themeVars.radius.xs,
 })
 globalStyle(`${dayPicker} .rdp-day_today`, {
   fontWeight: 'normal',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  backgroundColor: theme.colors.gray200,
+  backgroundColor: themeVars.colors.gray200,
 })
 globalStyle(`${dayPicker} .rdp-day_today:not(.rdp-day_outside)`, {
   fontWeight: 'normal',
-  backgroundColor: theme.colors.gray200,
+  backgroundColor: themeVars.colors.gray200,
 })
 globalStyle(`${dayPicker} .rdp-day_today[aria-selected=true]`, {
   backgroundColor: 'var(--rdp-accent-color)',
@@ -117,6 +117,6 @@ globalStyle(`${dayPicker} .rdp-caption_label`, {
   borderWidth: 1,
 })
 globalStyle(`${dayPicker} .rdp-head_cell`, {
-  color: theme.colors.textSecondary,
+  color: themeVars.colors.textSecondary,
   fontWeight: 'normal',
 })

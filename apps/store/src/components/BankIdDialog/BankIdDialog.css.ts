@@ -1,11 +1,11 @@
 import { style, createVar } from '@vanilla-extract/css'
-import { theme } from 'ui/src/theme'
+import { themeVars } from 'ui/src/theme'
 
 export const qrCode = style({
-  padding: theme.space.md,
-  borderRadius: theme.radius.md,
-  border: `1px solid ${theme.colors.grayTranslucent200}`,
-  backgroundColor: theme.colors.white,
+  padding: themeVars.space.md,
+  borderRadius: themeVars.radius.md,
+  border: `1px solid ${themeVars.colors.grayTranslucent200}`,
+  backgroundColor: themeVars.colors.white,
 })
 
 export const qrCodeSkeleton = style({
@@ -17,7 +17,7 @@ export const iconWithText = style({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  gap: theme.space.xs,
+  gap: themeVars.space.xs,
 })
 
 export const contentWrapperMaxWidth = createVar()
@@ -38,16 +38,16 @@ export const qrOnAnotherDeviceFooter = style({
 })
 
 export const qrOnAnotherDeviceLink = style({
-  fontSize: theme.fontSizes.md,
-  color: theme.colors.textSecondary,
+  fontSize: themeVars.fontSizes.md,
+  color: themeVars.colors.textSecondary,
   textDecoration: 'underline',
   textUnderlineOffset: 5,
   textDecorationThickness: 1,
   textDecorationColor: 'currentcolor',
   ':hover': {
-    color: theme.colors.textPrimary,
+    color: themeVars.colors.textPrimary,
   },
   ':focus-visible': {
-    outline: `2px solid ${theme.colors.gray900}`,
+    outline: `2px solid ${themeVars.colors.gray900}`,
   },
 })

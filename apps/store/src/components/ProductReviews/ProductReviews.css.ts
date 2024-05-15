@@ -1,9 +1,9 @@
 import { style } from '@vanilla-extract/css'
-import { theme } from 'ui/src/theme'
+import { themeVars } from 'ui/src/theme'
 
 export const wrapper = style({
   vars: {
-    '--padding-x': theme.space.md,
+    '--padding-x': themeVars.space.md,
   },
   width: 'min(calc(28.5rem + var(--padding-x) * 2), 100%)',
   marginInline: 'auto',
@@ -11,8 +11,8 @@ export const wrapper = style({
 })
 
 export const disclaimerText = style({
-  paddingInline: theme.space.md,
-  paddingBottom: theme.space.md,
+  paddingInline: themeVars.space.md,
+  paddingBottom: themeVars.space.md,
 })
 
 export const reviewsDistributionSection = style({

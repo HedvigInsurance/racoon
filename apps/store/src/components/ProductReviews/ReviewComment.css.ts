@@ -1,20 +1,20 @@
 import { style } from '@vanilla-extract/css'
-import { theme, minWidth } from 'ui/src/theme'
+import { themeVars, minWidth } from 'ui/src/theme'
 
 export const wrapper = style({
   display: 'inline-flex',
   flexDirection: 'column',
-  gap: theme.space.xs,
-  padding: theme.space.md,
-  borderRadius: theme.radius.md,
-  backgroundColor: theme.colors.opaque1,
+  gap: themeVars.space.xs,
+  padding: themeVars.space.md,
+  borderRadius: themeVars.radius.md,
+  backgroundColor: themeVars.colors.opaque1,
   width: 'min(40ch, 100%)',
   minHeight: '8.5rem',
 
   '@media': {
     [minWidth.md]: {
-      padding: theme.space.lg,
-      gap: theme.space.md,
+      padding: themeVars.space.lg,
+      gap: themeVars.space.md,
     },
   },
 })
@@ -23,7 +23,7 @@ export const reviewHeader = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  gap: theme.space.xs,
+  gap: themeVars.space.xs,
 })
 
 export const reviewContent = style({
@@ -34,13 +34,13 @@ export const reviewFooter = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  color: theme.colors.textTranslucentSecondary,
+  color: themeVars.colors.textTranslucentSecondary,
 })
 
 export const reviewTag = style({
-  fontSize: theme.fontSizes.xs,
-  paddingBlock: theme.space.xxs,
-  paddingInline: theme.space.xs,
-  borderRadius: theme.radius.xs,
-  backgroundColor: theme.colors.backgroundStandard,
+  fontSize: themeVars.fontSizes.xs,
+  paddingBlock: themeVars.space.xxs,
+  paddingInline: themeVars.space.xs,
+  borderRadius: themeVars.radius.xs,
+  backgroundColor: themeVars.colors.backgroundStandard,
 })
