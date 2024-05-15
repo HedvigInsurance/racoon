@@ -1,23 +1,23 @@
 import { style } from '@vanilla-extract/css'
-import { themeVars } from 'ui/src/theme'
 import { inputBgColor, inputSelectedItemBgColor } from 'ui/src/theme/vars.css'
+import { tokens } from 'ui'
 
 export const root = style({
   backgroundColor: inputBgColor,
-  borderRadius: themeVars.radius.sm,
+  borderRadius: tokens.radius.sm,
 })
 
 export const trigger = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  gap: themeVars.space.sm,
+  gap: tokens.space.sm,
   width: '100%',
   height: '4.5rem',
-  borderRadius: themeVars.radius.sm,
-  paddingInline: themeVars.space.md,
+  borderRadius: tokens.radius.sm,
+  paddingInline: tokens.space.md,
   ':focus-visible': {
-    boxShadow: themeVars.shadow.focus,
+    boxShadow: tokens.shadow.focus,
   },
 })
 
@@ -30,15 +30,15 @@ export const triggerIcon = style({
 })
 
 export const optionsList = style({
-  paddingBlock: themeVars.space.md,
-  paddingInline: themeVars.space.xxs,
+  paddingBlock: tokens.space.md,
+  paddingInline: tokens.space.xxs,
 })
 
 export const optionsListItem = style({
   width: '100%',
-  paddingInline: themeVars.space.sm,
-  paddingBlock: themeVars.space.md,
-  borderRadius: themeVars.radius.md,
+  paddingInline: tokens.space.sm,
+  paddingBlock: tokens.space.md,
+  borderRadius: tokens.radius.md,
   cursor: 'pointer',
   selectors: {
     '&[data-state=checked]': {
@@ -55,18 +55,18 @@ export const optionsListItemHeader = style({
 export const optionsListItemPrice = style({
   selectors: {
     '[data-state=checked] &': {
-      color: themeVars.colors.textPrimary,
+      color: tokens.colors.textPrimary,
     },
   },
 })
 
 export const separator = style({
   height: 1,
-  backgroundColor: themeVars.colors.borderOpaque2,
+  backgroundColor: tokens.colors.borderOpaque2,
 })
 
 export const footer = style({
-  paddingInline: themeVars.space.md,
-  paddingBlock: themeVars.space.sm,
+  paddingInline: tokens.space.md,
+  paddingBlock: tokens.space.sm,
   textAlign: 'center',
 })

@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { minWidth } from 'ui/src/theme'
+import { minWidth } from 'ui'
 
 export const animationWrapper = style({
   width: '5rem',

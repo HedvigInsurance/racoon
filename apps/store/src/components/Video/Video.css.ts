@@ -1,5 +1,5 @@
 import { createVar, keyframes, style } from '@vanilla-extract/css'
-import { hoverStyles, minWidth, themeVars } from 'ui'
+import { hoverStyles, minWidth, tokens } from 'ui'
 
 export const videoWrapper = style({
   position: 'relative',
@@ -30,11 +30,11 @@ export const videoBase = style({
 })
 
 export const videoRoundedCorners = style({
-  borderRadius: themeVars.radius.md,
+  borderRadius: tokens.radius.md,
 
   '@media': {
     [minWidth.lg]: {
-      borderRadius: themeVars.radius.xl,
+      borderRadius: tokens.radius.xl,
     },
   },
 })
@@ -44,7 +44,7 @@ export const videoControls = style({
   inset: 0,
   display: 'flex',
   flexDirection: 'column',
-  padding: themeVars.space.md,
+  padding: tokens.space.md,
   justifyContent: 'flex-end',
   alignItems: 'flex-start',
   cursor: 'pointer',
@@ -52,7 +52,7 @@ export const videoControls = style({
 
 export const videoControlsVisibility = style({
   display: 'flex',
-  gap: themeVars.space.xs,
+  gap: tokens.space.xs,
   width: '100%',
 
   '@media': {
@@ -74,17 +74,17 @@ export const videoControlsVisibility = style({
 export const controlButton = style({
   display: 'inline-flex',
   alignItems: 'center',
-  gap: themeVars.space.xs,
+  gap: tokens.space.xs,
   height: '2rem',
-  paddingInline: themeVars.space.xs,
-  backgroundColor: themeVars.colors.grayTranslucentDark700,
+  paddingInline: tokens.space.xs,
+  backgroundColor: tokens.colors.grayTranslucentDark700,
 
   ...hoverStyles({
-    backgroundColor: themeVars.colors.grayTranslucentDark600,
+    backgroundColor: tokens.colors.grayTranslucentDark600,
   }),
 
   ':active': {
-    backgroundColor: themeVars.colors.grayTranslucentDark600,
+    backgroundColor: tokens.colors.grayTranslucentDark600,
   },
 })
 
@@ -109,7 +109,7 @@ export const soundBar = style({
   width: '2px',
   borderRadius: '2px',
   transformOrigin: 'bottom',
-  backgroundColor: themeVars.colors.gray1000,
+  backgroundColor: tokens.colors.gray1000,
   transition: 'all .4s ease-in-out',
   animation: `${soundBarsAnimation} 1s 2 alternate`,
 

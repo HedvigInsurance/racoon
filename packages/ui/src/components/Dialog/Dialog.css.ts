@@ -1,5 +1,5 @@
 import { keyframes, style, styleVariants } from '@vanilla-extract/css'
-import { animationAllowed, themeVars } from '../../theme'
+import { animationAllowed, tokens } from '../../theme'
 
 const overlayShow = keyframes({
   '0%': { opacity: 0 },
@@ -18,7 +18,7 @@ export const overlay = styleVariants({
     },
   },
   frosted: {
-    backgroundColor: themeVars.colors.backgroundFrostedGlass,
+    backgroundColor: tokens.colors.backgroundFrostedGlass,
     backdropFilter: 'blur(64px)',
   },
 })
@@ -41,7 +41,7 @@ const contentShow = keyframes({
 })
 
 export const dialogWindow = style({
-  backgroundColor: themeVars.colors.white,
+  backgroundColor: tokens.colors.white,
   boxShadow: 'hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px',
   '@media': {
     [animationAllowed]: {

@@ -1,4 +1,5 @@
 export * from './theme'
+export * from './theme.css'
 export * from './media-query'
 export * from './colors/colors'
 export * from './typography'

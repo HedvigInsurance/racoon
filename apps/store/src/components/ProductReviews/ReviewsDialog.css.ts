@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { themeVars } from 'ui/src/theme'
+import { tokens } from 'ui'
 export { dialogContent, dialogCloseBtn, dialogWindow } from './dialogStyles.css'
 
 export const reviewComment = style({
@@ -7,9 +7,9 @@ export const reviewComment = style({
 })
 
 export const latestReviewsLabel = style({
-  paddingInline: themeVars.space.md,
+  paddingInline: tokens.space.md,
 })
 
 export const noReviewsLabel = style({
-  paddingInline: themeVars.space.md,
+  paddingInline: tokens.space.md,
 })

@@ -1,21 +1,21 @@
 import { style } from '@vanilla-extract/css'
-import { themeVars, minWidth } from 'ui'
+import { tokens, minWidth } from 'ui'
 import { focusableStyles } from '../Header.css'
 
 export const navigationLink = style([
   focusableStyles,
   {
     display: 'block',
-    paddingBlock: themeVars.space.lg,
+    paddingBlock: tokens.space.lg,
 
     '@media': {
       [minWidth.lg]: {
-        paddingBlock: themeVars.space.xs,
-        paddingInline: themeVars.space.md,
-        borderRadius: themeVars.radius.sm,
+        paddingBlock: tokens.space.xs,
+        paddingInline: tokens.space.md,
+        borderRadius: tokens.radius.sm,
 
         ':hover': {
-          backgroundColor: themeVars.colors.grayTranslucent100,
+          backgroundColor: tokens.colors.grayTranslucent100,
         },
       },
     },
@@ -26,20 +26,20 @@ export const productNavigationLinkCard = style([
   focusableStyles,
   {
     display: 'flex',
-    columnGap: themeVars.space.sm,
+    columnGap: tokens.space.sm,
     placeItems: 'center',
     flexShrink: 0,
-    paddingBlock: themeVars.space.xs,
+    paddingBlock: tokens.space.xs,
     position: 'relative',
 
     '@media': {
       [minWidth.lg]: {
-        columnGap: themeVars.space.xs,
-        paddingInline: themeVars.space.xs,
-        borderRadius: themeVars.radius.sm,
+        columnGap: tokens.space.xs,
+        paddingInline: tokens.space.xs,
+        borderRadius: tokens.radius.sm,
 
         ':hover': {
-          backgroundColor: themeVars.colors.grayTranslucent100,
+          backgroundColor: tokens.colors.grayTranslucent100,
         },
       },
     },

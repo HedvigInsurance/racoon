@@ -1,13 +1,13 @@
 import { style, styleVariants } from '@vanilla-extract/css'
-import { minWidth, themeVars } from '../../theme'
+import { minWidth, tokens } from '../../theme'
 
 export const baseButton = style({
   // opt out of double tap to zoom to immediately respond to taps
   touchAction: 'manipulation',
-  borderRadius: themeVars.radius.sm,
+  borderRadius: tokens.radius.sm,
   whiteSpace: 'nowrap',
   lineHeight: 1,
-  transition: `background-color ${themeVars.transitions.hover}, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s`,
+  transition: `background-color ${tokens.transitions.hover}, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s`,
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -18,7 +18,7 @@ export const baseButton = style({
   },
 
   ':focus-visible': {
-    boxShadow: themeVars.shadow.focus,
+    boxShadow: tokens.shadow.focus,
   },
 })
 
@@ -27,33 +27,33 @@ export const fullWidthStyles = style({
 })
 
 const shadow = style({
-  boxShadow: themeVars.shadow.default,
+  boxShadow: tokens.shadow.default,
   backdropFilter: 'blur(30px)',
 })
 
 export const buttonVariant = styleVariants({
   primary: {
-    backgroundColor: themeVars.colors.gray1000,
-    color: themeVars.colors.textNegative,
+    backgroundColor: tokens.colors.gray1000,
+    color: tokens.colors.textNegative,
 
     '@media (hover: hover)': {
       '&:hover': {
-        backgroundColor: themeVars.colors.grayTranslucent900,
+        backgroundColor: tokens.colors.grayTranslucent900,
       },
     },
 
     ':active': {
-      backgroundColor: themeVars.colors.grayTranslucent900,
+      backgroundColor: tokens.colors.grayTranslucent900,
     },
 
     ':focus-visible': {
-      boxShadow: themeVars.shadow.focusAlt,
+      boxShadow: tokens.shadow.focusAlt,
     },
 
     selectors: {
       '&:disabled:not([data-loading])': {
-        backgroundColor: themeVars.colors.gray200,
-        color: themeVars.colors.textDisabled,
+        backgroundColor: tokens.colors.gray200,
+        color: tokens.colors.textDisabled,
       },
     },
   },
@@ -61,23 +61,23 @@ export const buttonVariant = styleVariants({
   'primary-alt': [
     shadow,
     {
-      backgroundColor: themeVars.colors.green50,
-      color: themeVars.colors.textPrimary,
+      backgroundColor: tokens.colors.green50,
+      color: tokens.colors.textPrimary,
 
       '@media (hover: hover)': {
         '&:hover': {
-          backgroundColor: themeVars.colors.green100,
+          backgroundColor: tokens.colors.green100,
         },
       },
 
       ':active': {
-        backgroundColor: themeVars.colors.green100,
+        backgroundColor: tokens.colors.green100,
       },
 
       selectors: {
         '&:disabled:not([data-loading])': {
-          backgroundColor: themeVars.colors.gray200,
-          color: themeVars.colors.textDisabled,
+          backgroundColor: tokens.colors.gray200,
+          color: tokens.colors.textDisabled,
           boxShadow: 'none',
           backdropFilter: 'none',
         },
@@ -88,23 +88,23 @@ export const buttonVariant = styleVariants({
   secondary: [
     shadow,
     {
-      backgroundColor: themeVars.colors.translucent1,
-      color: themeVars.colors.textPrimary,
+      backgroundColor: tokens.colors.translucent1,
+      color: tokens.colors.textPrimary,
 
       '@media (hover: hover)': {
         '&:hover': {
-          backgroundColor: themeVars.colors.translucent2,
+          backgroundColor: tokens.colors.translucent2,
         },
       },
 
       ':active': {
-        backgroundColor: themeVars.colors.translucent2,
+        backgroundColor: tokens.colors.translucent2,
       },
 
       selectors: {
         '&:disabled:not([data-loading])': {
-          backgroundColor: themeVars.colors.gray200,
-          color: themeVars.colors.textDisabled,
+          backgroundColor: tokens.colors.gray200,
+          color: tokens.colors.textDisabled,
           boxShadow: 'none',
           backdropFilter: 'none',
         },
@@ -115,60 +115,60 @@ export const buttonVariant = styleVariants({
   'secondary-alt': [
     shadow,
     {
-      backgroundColor: themeVars.colors.offWhite,
+      backgroundColor: tokens.colors.offWhite,
 
       '@media (hover: hover)': {
         '&:hover': {
-          backgroundColor: themeVars.colors.grayTranslucentDark25,
+          backgroundColor: tokens.colors.grayTranslucentDark25,
         },
       },
 
       ':active': {
-        backgroundColor: themeVars.colors.offWhite,
+        backgroundColor: tokens.colors.offWhite,
       },
     },
   ],
 
   ghost: {
     backgroundColor: 'transparent',
-    color: themeVars.colors.textPrimary,
+    color: tokens.colors.textPrimary,
 
     '@media (hover: hover)': {
       '&:hover': {
-        backgroundColor: themeVars.colors.translucent1,
+        backgroundColor: tokens.colors.translucent1,
       },
     },
 
     ':active': {
-      backgroundColor: themeVars.colors.gray100,
+      backgroundColor: tokens.colors.gray100,
     },
 
     selectors: {
       '&:disabled:not([data-loading])': {
-        color: themeVars.colors.textDisabled,
+        color: tokens.colors.textDisabled,
         backgroundColor: 'transparent',
       },
     },
   },
   'ghost-alt': {
     backgroundColor: 'transparent',
-    color: themeVars.colors.textNegative,
+    color: tokens.colors.textNegative,
 
     '@media (hover: hover)': {
       '&:hover': {
-        backgroundColor: themeVars.colors.offWhite,
-        color: themeVars.colors.textPrimary,
+        backgroundColor: tokens.colors.offWhite,
+        color: tokens.colors.textPrimary,
       },
     },
 
     ':active': {
-      backgroundColor: themeVars.colors.gray100,
-      color: themeVars.colors.textPrimary,
+      backgroundColor: tokens.colors.gray100,
+      color: tokens.colors.textPrimary,
     },
 
     selectors: {
       '&:disabled:not([data-loading])': {
-        color: themeVars.colors.textDisabled,
+        color: tokens.colors.textDisabled,
         backgroundColor: 'transparent',
       },
     },
@@ -184,23 +184,23 @@ const HEIGHT = {
 const SIZE_STYLES = {
   small: {
     height: HEIGHT.small,
-    paddingInline: themeVars.space.md,
-    fontSize: themeVars.fontSizes.xs,
-    borderRadius: themeVars.radius.xs,
+    paddingInline: tokens.space.md,
+    fontSize: tokens.fontSizes.xs,
+    borderRadius: tokens.radius.xs,
   },
   medium: {
     height: HEIGHT.medium,
-    paddingInline: themeVars.space.md,
-    fontSize: themeVars.fontSizes.md,
-    borderRadius: themeVars.radius.sm,
+    paddingInline: tokens.space.md,
+    fontSize: tokens.fontSizes.md,
+    borderRadius: tokens.radius.sm,
   },
   large: {
     height: HEIGHT.large,
     width: '100%',
-    paddingInline: themeVars.space.xl,
-    fontSize: themeVars.fontSizes.md,
+    paddingInline: tokens.space.xl,
+    fontSize: tokens.fontSizes.md,
     textAlign: 'center',
-    borderRadius: themeVars.radius.md,
+    borderRadius: tokens.radius.md,
   },
 } as const
 
@@ -232,7 +232,7 @@ export const buttonSizeStyles = {
 export const childrenWrapper = style({
   display: 'flex',
   alignItems: 'center',
-  gap: themeVars.space.xs,
+  gap: tokens.space.xs,
 })
 
 export const centered = style({

@@ -1,5 +1,7 @@
+import clsx from 'clsx'
 import Document, { Head, Html, Main, NextScript } from 'next/document'
 import Script from 'next/script'
+import { mainTheme } from 'ui'
 import { GTMBodyScript } from '@/services/gtm'
 import { Features } from '@/utils/Features'
 import { contentFontClassName } from '@/utils/fonts'
@@ -39,7 +41,7 @@ export default class MyDocument extends Document {
           <meta name="msapplication-TileColor" content="#fafafa" />
         </Head>
         {/* Fallback for pages that don't pass className down to DOM */}
-        <body className={contentFontClassName}>
+        <body className={clsx(contentFontClassName, mainTheme)}>
           <Main />
           <NextScript />
           <GTMBodyScript />

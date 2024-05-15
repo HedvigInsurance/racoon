@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
-import { themeVars } from 'ui/src/theme'
+import { tokens } from 'ui'
 
 export const badge = style({
-  marginBottom: themeVars.space.md,
+  marginBottom: tokens.space.md,
 })

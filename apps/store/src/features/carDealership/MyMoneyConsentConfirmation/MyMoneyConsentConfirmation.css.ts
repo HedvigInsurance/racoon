@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { themeVars } from 'ui'
+import { tokens } from 'ui'
 
 export const consentDialogContent = style({
   width: '100%',
@@ -7,10 +7,10 @@ export const consentDialogContent = style({
 })
 
 export const consentDialogWindow = style({
-  padding: themeVars.space.md,
-  paddingTop: themeVars.space.xl,
-  borderRadius: themeVars.radius.xxs,
-  width: `calc(100% - ${themeVars.space.xs} * 2)`,
+  padding: tokens.space.md,
+  paddingTop: tokens.space.xl,
+  borderRadius: tokens.radius.xxs,
+  width: `calc(100% - ${tokens.space.xs} * 2)`,
   maxWidth: '24rem',
   marginInline: 'auto',
 })
@@ -20,10 +20,10 @@ export const consentDialogMessage = style({
   flexDirection: 'column',
   alignItems: 'center',
   textAlign: 'center',
-  marginBottom: themeVars.space.lg,
+  marginBottom: tokens.space.lg,
 })
 
 export const consentDialogIcon = style({
-  color: themeVars.colors.signalBlueElement,
-  marginBottom: themeVars.space.md,
+  color: tokens.colors.signalBlueElement,
+  marginBottom: tokens.space.md,
 })

@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { themeVars } from 'ui'
+import { tokens } from 'ui'
 
 export const list = style({
   position: 'relative',
@@ -19,5 +19,5 @@ export const tickerItemWrapper = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  gap: themeVars.space.xs,
+  gap: tokens.space.xs,
 })

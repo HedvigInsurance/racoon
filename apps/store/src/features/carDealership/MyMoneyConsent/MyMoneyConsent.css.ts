@@ -1,15 +1,15 @@
 import { style } from '@vanilla-extract/css'
-import { themeVars } from 'ui'
+import { tokens } from 'ui'
 
 export const consentWrapper = style({
   display: 'grid',
   gridTemplateColumns: '1.5rem 1fr',
-  rowGap: themeVars.space.xxs,
-  columnGap: themeVars.space.md,
+  rowGap: tokens.space.xxs,
+  columnGap: tokens.space.md,
   alignItems: 'center',
-  padding: themeVars.space.md,
-  backgroundColor: themeVars.colors.opaque1,
-  borderRadius: themeVars.radius.md,
+  padding: tokens.space.md,
+  backgroundColor: tokens.colors.opaque1,
+  borderRadius: tokens.radius.md,
   lineHeight: 1.4,
 })
 
@@ -18,7 +18,7 @@ export const consentBody = style({
 })
 
 export const trigger = style({
-  marginLeft: themeVars.space.xxs,
+  marginLeft: tokens.space.xxs,
   textDecoration: 'underline',
   textDecorationThickness: '1px',
   textUnderlineOffset: '1.5px',
@@ -33,26 +33,26 @@ export const trigger = style({
 export const checkboxRoot = style({
   display: 'flex',
   placeContent: 'center',
-  backgroundColor: themeVars.colors.opaque1,
+  backgroundColor: tokens.colors.opaque1,
   width: '1.5rem',
   height: '1.5rem',
-  padding: themeVars.space.xxs,
-  border: `1.5px solid ${themeVars.colors.gray500}`,
+  padding: tokens.space.xxs,
+  border: `1.5px solid ${tokens.colors.gray500}`,
   borderRadius: '0.25rem',
   cursor: 'pointer',
 
   ':hover': {
-    backgroundColor: themeVars.colors.gray300,
+    backgroundColor: tokens.colors.gray300,
   },
 
   ':focus': {
-    borderColor: themeVars.colors.borderOpaque3,
+    borderColor: tokens.colors.borderOpaque3,
   },
 
   selectors: {
     '&[data-state="checked"]': {
-      backgroundColor: themeVars.colors.gray1000,
-      borderColor: themeVars.colors.gray1000,
+      backgroundColor: tokens.colors.gray1000,
+      borderColor: tokens.colors.gray1000,
     },
   },
 })
@@ -60,5 +60,5 @@ export const checkboxRoot = style({
 export const checkboxIndicator = style({
   display: 'flex',
   placeItems: 'center',
-  color: themeVars.colors.textNegative,
+  color: tokens.colors.textNegative,
 })

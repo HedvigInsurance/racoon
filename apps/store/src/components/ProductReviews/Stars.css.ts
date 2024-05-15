@@ -1,7 +1,7 @@
 import { style } from '@vanilla-extract/css'
-import { themeVars } from 'ui/src/theme'
+import { tokens } from 'ui'
 
 export const wrapper = style({
   display: 'flex',
-  gap: themeVars.space.xxxs,
+  gap: tokens.space.xxxs,
 })

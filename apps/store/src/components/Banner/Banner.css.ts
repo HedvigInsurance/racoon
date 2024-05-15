@@ -1,5 +1,5 @@
 import { globalStyle, style, styleVariants } from '@vanilla-extract/css'
-import { colors, minWidth, themeVars } from 'ui/src/theme'
+import { colors, minWidth, tokens } from 'ui'
 
 const GridArea = {
   Content: 'content',
@@ -16,33 +16,33 @@ export const bannerRoot = styleVariants({
   `,
     gridTemplateColumns: '1fr auto 1fr',
     alignItems: 'center',
-    paddingBlock: themeVars.space.sm,
-    paddingInline: themeVars.space.md,
-    fontSize: themeVars.fontSizes.xs,
+    paddingBlock: tokens.space.sm,
+    paddingInline: tokens.space.md,
+    fontSize: tokens.fontSizes.xs,
 
-    borderBottom: `0.5px solid ${themeVars.colors.borderTranslucent1}`,
+    borderBottom: `0.5px solid ${tokens.colors.borderTranslucent1}`,
 
     '@media': {
       [minWidth.lg]: {
-        paddingInline: themeVars.space.xl,
+        paddingInline: tokens.space.xl,
       },
     },
   },
   info: {
-    color: themeVars.colors.blue800,
-    backgroundColor: themeVars.colors.blueFill1,
+    color: tokens.colors.blue800,
+    backgroundColor: tokens.colors.blueFill1,
   },
   campaign: {
-    color: themeVars.colors.textGreen,
-    backgroundColor: themeVars.colors.signalGreenFill,
+    color: tokens.colors.textGreen,
+    backgroundColor: tokens.colors.signalGreenFill,
   },
   warning: {
-    color: themeVars.colors.textAmber,
-    backgroundColor: themeVars.colors.signalAmberFill,
+    color: tokens.colors.textAmber,
+    backgroundColor: tokens.colors.signalAmberFill,
   },
   error: {
-    color: themeVars.colors.textRed,
-    backgroundColor: themeVars.colors.signalRedFill,
+    color: tokens.colors.textRed,
+    backgroundColor: tokens.colors.signalRedFill,
   },
 })
 
@@ -57,20 +57,20 @@ export const bannerContent = style({
   display: 'grid',
   gridTemplateColumns: 'auto 1fr',
   alignItems: 'center',
-  gap: themeVars.space.xs,
+  gap: tokens.space.xs,
 })
 
 globalStyle(`${bannerContent} b`, {
-  color: themeVars.colors.textPrimary,
+  color: tokens.colors.textPrimary,
 })
 
 export const bannerCloseButton = style({
   gridArea: GridArea.CloseBtn,
   justifySelf: 'end',
   color: colors.textPrimary,
-  marginLeft: themeVars.space.xs,
+  marginLeft: tokens.space.xs,
   cursor: 'pointer',
   ':focus-visible': {
-    outline: `2px solid ${themeVars.colors.gray900}`,
+    outline: `2px solid ${tokens.colors.gray900}`,
   },
 })

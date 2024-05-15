@@ -1,9 +1,9 @@
 import { style } from '@vanilla-extract/css'
-import { themeVars } from 'ui'
+import { tokens } from 'ui'
 
 export const header = style({
-  marginTop: themeVars.space.xs,
-  marginBottom: themeVars.space.xxs,
+  marginTop: tokens.space.xs,
+  marginBottom: tokens.space.xxs,
 })
 
 export const warningIcon = style({
@@ -12,5 +12,5 @@ export const warningIcon = style({
 
 export const heading = style({
   display: 'inline-block',
-  marginInlineStart: themeVars.space.xxs,
+  marginInlineStart: tokens.space.xxs,
 })

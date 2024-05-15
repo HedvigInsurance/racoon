@@ -1,16 +1,16 @@
 import { style } from '@vanilla-extract/css'
-import { minWidth, themeVars } from 'ui/src/theme'
+import { minWidth, tokens } from 'ui'
 
 export const link = style({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  gap: themeVars.space.sm,
-  padding: `${themeVars.space.sm} ${themeVars.space.md}`,
-  borderRadius: themeVars.radius.sm,
+  gap: tokens.space.sm,
+  padding: `${tokens.space.sm} ${tokens.space.md}`,
+  borderRadius: tokens.radius.sm,
 
   ':focus': {
-    backgroundColor: themeVars.colors.grayTranslucent100,
+    backgroundColor: tokens.colors.grayTranslucent100,
   },
 })
 

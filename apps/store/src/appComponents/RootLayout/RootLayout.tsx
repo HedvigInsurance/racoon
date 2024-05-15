@@ -1,7 +1,9 @@
+import clsx from 'clsx'
 import type { PropsWithChildren } from 'react'
 import { Suspense } from 'react'
 import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import globalCss from 'ui/src/global.css'
+import { mainTheme } from 'ui'
 import { TranslationsProvider } from '@/appComponents/providers/TranslationsProvider'
 import { NavigationProgressIndicator } from '@/appComponents/RootLayout/NavigationProgressIndicator'
 import { OrgStructuredData } from '@/appComponents/RootLayout/OrgStructuredData'
@@ -31,7 +33,7 @@ export async function RootLayout({
       <head>
         <OrgStructuredData />
       </head>
-      <body className={contentFontClassName}>
+      <body className={clsx(contentFontClassName, mainTheme)}>
         <Suspense>
           <DebugError />
         </Suspense>

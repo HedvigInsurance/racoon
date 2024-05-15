@@ -1,8 +1,8 @@
 import { style } from '@vanilla-extract/css'
-import { themeVars } from 'ui/src/theme'
+import { tokens } from 'ui'
 
 export const title = style({
-  gap: themeVars.space.xs,
+  gap: tokens.space.xs,
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

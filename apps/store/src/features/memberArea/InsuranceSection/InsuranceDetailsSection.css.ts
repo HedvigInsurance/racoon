@@ -1,18 +1,18 @@
 import { style } from '@vanilla-extract/css'
-import { themeVars } from 'ui/src/theme'
+import { tokens } from 'ui'
 import { CONTENT_WIDTH } from './InsuranceSection.constants'
 
 export const tabList = style({
   display: 'flex',
-  gap: themeVars.space.xs,
-  marginBottom: themeVars.space.xs,
+  gap: tokens.space.xs,
+  marginBottom: tokens.space.xs,
 })
 
 export const tabButton = style({
   flex: 1,
   selectors: {
     '&[data-state=active]': {
-      backgroundColor: themeVars.colors.translucent2,
+      backgroundColor: tokens.colors.translucent2,
     },
   },
 })
@@ -24,8 +24,8 @@ export const overview = style({
 export const documentsList = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: themeVars.space.md,
-  marginTop: themeVars.space.lg,
+  gap: tokens.space.md,
+  marginTop: tokens.space.lg,
 })
 
 export const row = style({

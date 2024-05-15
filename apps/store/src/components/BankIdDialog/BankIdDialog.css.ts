@@ -1,11 +1,11 @@
 import { style, createVar } from '@vanilla-extract/css'
-import { themeVars } from 'ui/src/theme'
+import { tokens } from 'ui'
 
 export const qrCode = style({
-  padding: themeVars.space.md,
-  borderRadius: themeVars.radius.md,
-  border: `1px solid ${themeVars.colors.grayTranslucent200}`,
-  backgroundColor: themeVars.colors.white,
+  padding: tokens.space.md,
+  borderRadius: tokens.radius.md,
+  border: `1px solid ${tokens.colors.grayTranslucent200}`,
+  backgroundColor: tokens.colors.white,
 })
 
 export const qrCodeSkeleton = style({
@@ -17,7 +17,7 @@ export const iconWithText = style({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  gap: themeVars.space.xs,
+  gap: tokens.space.xs,
 })
 
 export const contentWrapperMaxWidth = createVar()
@@ -38,16 +38,16 @@ export const qrOnAnotherDeviceFooter = style({
 })
 
 export const qrOnAnotherDeviceLink = style({
-  fontSize: themeVars.fontSizes.md,
-  color: themeVars.colors.textSecondary,
+  fontSize: tokens.fontSizes.md,
+  color: tokens.colors.textSecondary,
   textDecoration: 'underline',
   textUnderlineOffset: 5,
   textDecorationThickness: 1,
   textDecorationColor: 'currentcolor',
   ':hover': {
-    color: themeVars.colors.textPrimary,
+    color: tokens.colors.textPrimary,
   },
   ':focus-visible': {
-    outline: `2px solid ${themeVars.colors.gray900}`,
+    outline: `2px solid ${tokens.colors.gray900}`,
   },
 })
