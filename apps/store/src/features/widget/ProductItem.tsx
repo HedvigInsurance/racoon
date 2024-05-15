@@ -8,6 +8,7 @@ import Collapsible from '@/components/Collapsible/Collapsible'
 import { InputDay } from '@/components/InputDay/InputDay'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Price } from '@/components/Price'
+import { useSelectedTypeOfContract } from '@/components/ProductData/ProductDataProvider'
 import { useGetStartDateProps } from '@/components/ProductItem/useGetStartDateProps'
 import { ComparisonTableModal } from '@/components/ProductPage/PurchaseForm/ComparisonTableModal'
 import { ProductTierSelector } from '@/components/ProductPage/PurchaseForm/ProductTierSelector'
@@ -172,6 +173,9 @@ type EditUIProps = {
 }
 
 function EditUI(props: EditUIProps) {
+  const { t } = useTranslation('purchase-form')
+  const [, setSelectedTypeOfContract] = useSelectedTypeOfContract()
+
   const productOfferIds = useMemo(() => {
     const tiersOffersIds = props.tiers?.map((tier) => tier.id) ?? []
     const deductiblesOffersIds = props.deductibles?.map((deductible) => deductible.id) ?? []
@@ -187,8 +191,13 @@ function EditUI(props: EditUIProps) {
   const [addToCart] = useAddToCart({
     shopSessionId: props.shopSessionId,
     entryToReplace: props.selectedOffer.id,
-    onSuccess() {
+    onSuccess(offerId) {
       datadogRum.addAction('Widget | Changed tier level')
+
+      const selectedTier = props.tiers?.find((tier) => tier.id === offerId)
+      if (selectedTier) {
+        setSelectedTypeOfContract(selectedTier.variant.typeOfContract)
+      }
     },
   })
   const handleChangeTierLevel = (offerId: string) => addToCart(offerId)
@@ -207,7 +216,7 @@ function EditUI(props: EditUIProps) {
           <div className={compareButtonWrapper}>
             <ComparisonTableModal tiers={props.tiers} selectedTierId={props.selectedOffer.id}>
               <Button size="medium" fullWidth={true}>
-                Compare tiers
+                {t('COMPARE_COVERAGE_BUTTON')}
               </Button>
             </ComparisonTableModal>
           </div>
