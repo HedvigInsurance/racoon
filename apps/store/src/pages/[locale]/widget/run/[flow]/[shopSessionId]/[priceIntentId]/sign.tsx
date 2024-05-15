@@ -22,6 +22,7 @@ type Props = Omit<ComponentPropsWithoutRef<typeof SignPage>, 'shopSession' | 'pr
   priceIntentId: string
   productData: ProductData
   pageTitle: string
+  initialSelectedTypeOfContract?: string
 }
 
 const NextWidgetSignPage = (props: Props) => {
@@ -42,7 +43,10 @@ const NextWidgetSignPage = (props: Props) => {
       <Head>
         <title>{props.pageTitle}</title>
       </Head>
-      <ProductDataProvider productData={props.productData}>
+      <ProductDataProvider
+        productData={props.productData}
+        selectedTypeOfContract={props.initialSelectedTypeOfContract}
+      >
         <TrackingProvider shopSession={shopSession} productData={props.productData}>
           <SignPage shopSession={shopSession} priceIntent={priceIntent} {...props} />
         </TrackingProvider>
@@ -100,6 +104,8 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       productName: priceIntent.product.name,
       partnerName: story.content.partner,
     })
+    const initialSelectedTypeOfContract =
+      productData.variants.length > 1 ? productData.variants[0].typeOfContract : undefined
 
     return {
       props: {
@@ -115,6 +121,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
         ...hideChatOnPage(),
         productName: priceIntent.product.name,
         productData,
+        initialSelectedTypeOfContract,
         pageTitle: story.content.pageTitle ?? 'Hedvig',
         showBackButton: story.content.showBackButton ?? false,
       },
