@@ -31,7 +31,6 @@ import {
   fakeInputRow,
   separator,
   compareButtonWrapper,
-  cardEditVariant,
 } from './ProductItem.css'
 import { type Offer } from './widget.types'
 
@@ -83,12 +82,7 @@ export function ProductItem(props: Props) {
   const pillow = props.selectedOffer.product.pillowImage
 
   return (
-    <div
-      className={clsx(card, {
-        [cardGreenVariant]: props.greenVariant,
-        [cardEditVariant]: mode === 'edit',
-      })}
-    >
+    <div className={clsx(card[mode], props.greenVariant && cardGreenVariant)}>
       <button
         className={cardHeader}
         style={{ gridTemplateColumns: pillow.src ? 'auto 1fr' : '1fr' }}

@@ -1,11 +1,12 @@
 import { style } from '@vanilla-extract/css'
+import { inputBgColor } from 'ui/src/theme/vars.css'
 import { tokens } from 'ui'
 
 export const wrapper = style({
   padding: tokens.space.md,
   paddingTop: tokens.space.sm,
   borderRadius: tokens.radius.md,
-  backgroundColor: tokens.components.input.background.default,
+  backgroundColor: inputBgColor,
 })
 
 export const checkboxHeader = style({

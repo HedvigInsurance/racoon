@@ -1,4 +1,5 @@
-import { assignVars, style } from '@vanilla-extract/css'
+import { style, styleVariants } from '@vanilla-extract/css'
+import { inputBgColor, inputSelectedItemBgColor } from 'ui/src/theme/vars.css'
 import { minWidth, tokens } from 'ui'
 
 export const cardHeader = style({
@@ -19,7 +20,7 @@ export const cardHeaderRow = style({
   width: '100%',
 })
 
-export const card = style({
+const cardBase = style({
   borderRadius: tokens.radius.md,
   padding: tokens.space.md,
   backgroundColor: tokens.colors.opaque1,
@@ -42,13 +43,17 @@ export const card = style({
     },
   },
 })
-
-// Next step is to reassign these tokens on a `layer` level
-export const cardEditVariant = style({
-  vars: assignVars(tokens.components.input.background, {
-    default: tokens.colors.backgroundStandard,
-    selected: tokens.colors.opaque1,
-  }),
+export const card = styleVariants({
+  edit: [
+    cardBase,
+    {
+      vars: {
+        [inputBgColor]: tokens.colors.backgroundStandard,
+        [inputSelectedItemBgColor]: tokens.colors.opaque1,
+      },
+    },
+  ],
+  view: [cardBase],
 })
 
 export const cardGreenVariant = style({
