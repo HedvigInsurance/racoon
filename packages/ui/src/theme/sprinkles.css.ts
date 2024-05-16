@@ -26,6 +26,8 @@ const unresponsiveProperties = defineProperties({
   properties: {
     textAlign: ['left', 'center', 'right'],
     color: textColors,
+    display: ['flex', 'grid'],
+    flexDirection: ['row', 'column'],
   },
 })
 
