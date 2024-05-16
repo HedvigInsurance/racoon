@@ -6,6 +6,7 @@ fragment PriceIntentCarTrialExtension on PriceIntent {
     ...ProductOffer
   }
   product {
+    id
     name
     displayNameShort
     pageLink

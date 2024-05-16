@@ -11,6 +11,7 @@ fragment PriceIntent on PriceIntent {
     insurelyId
   }
   product {
+    id
     name
     displayNameShort
     pageLink

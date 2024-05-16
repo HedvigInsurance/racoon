@@ -3,7 +3,7 @@ import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useInView } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
-import type { RefObject } from 'react'
+import type { ReactNode, RefObject } from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Button, Space, Text, PlusIcon, theme } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
@@ -11,6 +11,8 @@ import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import { ScrollToTopButton } from '@/components/ProductPage/ScrollToButton/ScrollToButton'
 import { useCartEntryToReplace } from '@/components/ProductPage/useCartEntryToReplace'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { BUNDLE_DISCOUNT_ELIGIBLE_PRODUCT_IDS } from '@/features/bundleDiscount/bundleDiscount'
+import { BundleDiscountOfferTooltip } from '@/features/bundleDiscount/BundleDiscountOfferTooltip'
 import { BankSigneringEvent } from '@/services/bankSignering'
 import type { ProductOfferFragment, RedeemedCampaignFragment } from '@/services/graphql/generated'
 import { ExternalInsuranceCancellationOption } from '@/services/graphql/generated'
@@ -117,6 +119,15 @@ export const OfferPresenter = (props: Props) => {
     selectedOffer,
     shopSession.cart.redeemedCampaign ?? undefined,
   )
+  let discountTooltip: ReactNode = null
+  if (discountTooltipProps != null) {
+    discountTooltip = <DiscountTooltip {...discountTooltipProps} />
+  } else if (
+    shopSession.experiments?.bundleDiscount &&
+    BUNDLE_DISCOUNT_ELIGIBLE_PRODUCT_IDS.has(priceIntent.product.id)
+  ) {
+    discountTooltip = <BundleDiscountOfferTooltip />
+  }
 
   const displayPrice = formatter.monthlyPrice(selectedOffer.cost.net)
 
@@ -152,7 +163,7 @@ export const OfferPresenter = (props: Props) => {
         <form ref={offerRef} onSubmit={handleSubmit}>
           <Space y={2}>
             <SpaceFlex direction="vertical" align="center" space={1}>
-              {discountTooltipProps && <DiscountTooltip {...discountTooltipProps} />}
+              {discountTooltip}
               <Space y={0.5}>
                 <Text as="p" align="center" size="xl">
                   {displayPrice}
