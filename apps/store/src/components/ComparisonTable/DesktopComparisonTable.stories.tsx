@@ -6,12 +6,17 @@ const nbsp = '\u00A0'
 const table: Table = {
   head: [TableMarkers.EmptyHeader, 'Basic', 'Standard', 'Premium'],
   body: [
-    ['Attribute 1', `30${nbsp}000${nbsp}kr`, `60${nbsp}000${nbsp}kr`, `140${nbsp}000${nbsp}kr`],
-    ['Attribute 2', '[*]', '[*]', '[*]'],
-    ['Attribute 3', '[]', '[*]', '[*]'],
-    ['Attribute 4', '[]', '[*]', '[*]'],
-    ['Attribute 5', '[]', '[]', '[*]'],
-    ['Attribute 6', '[]', '[]', '[*]'],
+    [
+      { title: 'Attribute 1' },
+      `30${nbsp}000${nbsp}kr`,
+      `60${nbsp}000${nbsp}kr`,
+      `140${nbsp}000${nbsp}kr`,
+    ],
+    [{ title: 'Attribute 2' }, '[*]', '[*]', '[*]'],
+    [{ title: 'Attribute 3' }, '[]', '[*]', '[*]'],
+    [{ title: 'Attribute 4' }, '[]', '[*]', '[*]'],
+    [{ title: 'Attribute 5', description: 'Some description' }, '[]', '[]', '[*]'],
+    [{ title: 'Attribute 6' }, '[]', '[]', '[*]'],
   ],
 }
 

@@ -31,13 +31,21 @@ export const DesktopComparisonTable = ({ className, head, body, selectedColumn }
 
       <ComparisonTable.Body>
         {body.map((row) => {
-          const [attribute, ...values] = row
+          const [rowTitle, ...values] = row
 
           return (
-            <ComparisonTable.Row key={attribute}>
-              <ComparisonTable.TitleDataCell>{attribute}</ComparisonTable.TitleDataCell>
+            <ComparisonTable.Row key={rowTitle.title}>
+              <ComparisonTable.TitleDataCell
+                style={{ width: '60%' }}
+                title={rowTitle.title}
+                description={rowTitle.description}
+              />
               {values.map((value, index) => (
-                <ComparisonTable.DataCell key={index} active={index + 1 === selectedColumnIndex}>
+                <ComparisonTable.DataCell
+                  key={index}
+                  style={{ width: `calc(40% / ${values.length})` }}
+                  active={index + 1 === selectedColumnIndex}
+                >
                   {getCellValue(value)}
                 </ComparisonTable.DataCell>
               ))}

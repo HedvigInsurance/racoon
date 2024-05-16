@@ -146,7 +146,7 @@ export const ManyPetsMigrationPage = ({
 
                     return (
                       <ComparisonTable.Row key={attribute}>
-                        <ComparisonTable.TitleDataCell>{attribute}</ComparisonTable.TitleDataCell>
+                        <ComparisonTable.TitleDataCell title={attribute} />
                         <ComparisonTable.DataCell>{parsedValue}</ComparisonTable.DataCell>
                         <ComparisonTable.DataCell active={true}>
                           {parsedValue}
