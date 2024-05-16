@@ -8,4 +8,7 @@ fragment ShopSession on ShopSession {
   cart {
     ...CartFragment
   }
+  experiments {
+    bundleDiscount
+  }
 }

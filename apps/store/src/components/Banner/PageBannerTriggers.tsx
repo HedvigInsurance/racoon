@@ -7,6 +7,7 @@ import { useEffect } from 'react'
 import type { ReusableBlockReferenceProps } from '@/blocks/ReusableBlockReference'
 import type { BannerVariant } from '@/components/Banner/Banner.types'
 import { globalBannerAtom } from '@/components/GlobalBanner/globalBannerState'
+import { hasBundleDiscount } from '@/features/bundleDiscount/bundleDiscount'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import type { ExpectedBlockType } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
@@ -35,12 +36,12 @@ export const useCampaignBanner = () => {
   const { shopSession } = useShopSession()
   const setGlobalBanner = useSetAtom(globalBannerAtom)
 
-  const campaign = shopSession?.cart.redeemedCampaign
+  const showCampaignBanner = !!shopSession?.cart.redeemedCampaign && !hasBundleDiscount(shopSession)
   useEffect(() => {
-    if (campaign) {
+    if (showCampaignBanner) {
       setGlobalBanner({ id: 'campaign', content: t('GLOBAL_BANNER_CAMPAIGN'), variant: 'campaign' })
     }
-  }, [campaign, setGlobalBanner, t])
+  }, [showCampaignBanner, setGlobalBanner, t])
 }
 
 type AnnouncementBlok = {
