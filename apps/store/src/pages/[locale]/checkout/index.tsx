@@ -17,10 +17,7 @@ import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { PageLink } from '@/utils/PageLink'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
 
-type NextPageProps = Omit<
-  CheckoutPageProps,
-  'cart' | 'customerAuthenticationStatus' | 'shopSession'
->
+type NextPageProps = Omit<CheckoutPageProps, 'cart' | 'shopSession'>
 
 const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
   const { shopSession } = useShopSession()

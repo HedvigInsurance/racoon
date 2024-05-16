@@ -19,7 +19,6 @@ type Params = {
 
 export const fetchCheckoutSteps = async ({ apolloClient, req, res }: Params) => {
   let showPayment = true
-  // NOTE: Cannot rely on shopSession.customer.authenticationStatus if session is complete (we'd NONE for new members)
   const isAuthenticated = !!getAccessToken({ req, res })
   if (isAuthenticated) {
     const { data } = await apolloClient.query<CurrentMemberQuery, CurrentMemberQueryVariables>({
