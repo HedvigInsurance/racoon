@@ -6,6 +6,7 @@
   "ACCIDENT_OFFER_USP_3": "Valid worldwide, no deductible",
   "ADD_TO_CART_BUTTON_LABEL": "Add to cart",
   "BACK_BUTTON": "Back",
+  "BUNDLE_DISCOUNT_SUMMARY": "Bundle discount {{percentage}} for the first year. You are saving {{totalSaved}} total",
   "CAMPAIGN_CODE_HEADING": "Add discount code",
   "CAMPAIGN_CODE_INPUT_LABEL": "Discount code",
   "CART_EMPTY_SUMMARY": "Your cart is empty",

@@ -1,5 +1,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { type ComponentProps } from 'react'
+import { hasBundleDiscount } from '@/features/bundleDiscount/bundleDiscount'
+import { BundleDiscountSummary } from '@/features/bundleDiscount/BundleDiscountSummary'
 import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useRedeemCampaign, useUnredeemCampaign } from '@/utils/useCampaign'
 import { Discount } from './Discount'
@@ -37,7 +39,14 @@ export const DiscountFieldContainer = (props: Props) => {
 
   const discount = useDiscountProps(redeemedCampaign)
 
-  if (!props.shopSession.cart.campaignsEnabled) {
+  if (hasBundleDiscount(props.shopSession) && redeemedCampaign) {
+    return (
+      <BundleDiscountSummary
+        cost={props.shopSession.cart.cost}
+        redeemedCampaign={redeemedCampaign}
+      />
+    )
+  } else if (!props.shopSession.cart.campaignsEnabled) {
     return discount ? <Discount {...discount} /> : null
   }
 
