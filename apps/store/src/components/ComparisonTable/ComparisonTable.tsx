@@ -1,4 +1,5 @@
-import styled from '@emotion/styled'
+import { clsx } from 'clsx'
+import { type ComponentPropsWithoutRef } from 'react'
 import {
   Text,
   CheckIcon as PerilsCheckIcon,
@@ -6,137 +7,72 @@ import {
   MinusIcon,
   type MinusIconProps,
   theme,
-  mq,
 } from 'ui'
+import { table, row, header, activeHeader, cell, activeCell, aligner } from './ComparisonTable.css'
 
-export const Root = styled.table({
-  width: '100%',
-  borderCollapse: 'collapse',
-})
+export function Root({ className, ...props }: ComponentPropsWithoutRef<'table'>) {
+  return <table className={clsx(table, className)} {...props} />
+}
 
-export const Head = styled.thead({})
-export const Body = styled.tbody({})
+export function Head(props: ComponentPropsWithoutRef<'thead'>) {
+  return <thead {...props} />
+}
 
-export const Row = styled.tr({
-  ':not(:last-child)': {
-    borderBottom: `1px solid ${theme.colors.borderTranslucent2}`,
-  },
+export function Body(props: ComponentPropsWithoutRef<'tbody'>) {
+  return <tbody {...props} />
+}
 
-  ':last-child': {
-    td: {
-      borderBottomLeftRadius: theme.radius.xxs,
-      borderBottomRightRadius: theme.radius.xxs,
-    },
-  },
-})
+export function Row({ className, ...props }: ComponentPropsWithoutRef<'tr'>) {
+  return <tr className={clsx(row, className)} {...props} />
+}
 
-type HeaderProps = { children?: React.ReactNode; className?: string; active?: boolean }
+type HeaderProps = ComponentPropsWithoutRef<'th'> & { active?: boolean }
 
-export const Header = ({ children, active, ...props }: HeaderProps) => {
-  if (!children) return <TableHeader {...props} />
-
-  const Component = active ? ActiveTableHeader : TableHeader
+export function Header({ children, active, ...props }: HeaderProps) {
   return (
-    <Component {...props}>
-      <Text as="span" size="xs" color="textSecondary" align="center">
-        {children}
-      </Text>
-    </Component>
+    <th className={clsx(header, active && activeHeader)} {...props}>
+      {children && (
+        <Text as="span" size="xs" color="textSecondary" align="center">
+          {children}
+        </Text>
+      )}
+    </th>
   )
 }
 
-const TableHeader = styled.th({
-  paddingBlock: theme.space.sm,
-  paddingInline: theme.space.xs,
-  textAlign: 'center',
-
-  [mq.lg]: {
-    paddingBlock: theme.space.md,
-    paddingInline: theme.space.sm,
-  },
-})
-
-const ActiveTableHeader = styled(TableHeader)({
-  backgroundColor: theme.colors.green100,
-  borderTopLeftRadius: theme.radius.xxs,
-  borderTopRightRadius: theme.radius.xxs,
-})
-
-type TitleDataCellProps = { children: React.ReactNode; className?: string }
-
-export const TitleDataCell = ({ children, ...props }: TitleDataCellProps) => {
+export function TitleDataCell({ className, children, ...props }: ComponentPropsWithoutRef<'td'>) {
   return (
-    <StyledTitleDataCell {...props}>
+    <td className={clsx(cell, className)} {...props}>
       <Text as="span" size={{ _: 'sm', lg: 'md' }}>
         {children}
       </Text>
-    </StyledTitleDataCell>
+    </td>
   )
 }
 
-type DataCellProps = {
-  children: React.ReactNode
+type DataCellProps = ComponentPropsWithoutRef<'td'> & {
   alignment?: 'left' | 'center' | 'right'
-  className?: string
   active?: boolean
 }
 
-export const DataCell = ({ children, active, alignment = 'center', ...props }: DataCellProps) => {
-  const Component = active ? ActiveTableDataCell : TableDataCell
+export function DataCell({
+  className,
+  children,
+  active,
+  alignment = 'center',
+  ...props
+}: DataCellProps) {
   return (
-    <Component {...props}>
-      <Aligned data-alignment={alignment}>{children}</Aligned>
-    </Component>
+    <td className={clsx(cell, active && activeCell, className)} {...props}>
+      <span className={aligner[alignment]}>{children}</span>
+    </td>
   )
 }
 
-const TableDataCell = styled.td({
-  paddingBlock: theme.space.sm,
-  paddingInline: theme.space.xs,
-  verticalAlign: 'top',
-  minWidth: '2.5rem',
-  color: theme.colors.textSecondary,
+export function CheckIcon(props: PerilsCheckIconProps) {
+  return <PerilsCheckIcon size="1rem" {...props} />
+}
 
-  [mq.lg]: {
-    minWidth: '4rem',
-    paddingBlock: theme.space.md,
-    paddingInline: theme.space.sm,
-  },
-})
-
-const StyledTitleDataCell = styled(TableDataCell)({
-  minWidth: 'revert',
-  paddingInline: 0,
-
-  [mq.lg]: {
-    paddingInline: 0,
-  },
-})
-
-const ActiveTableDataCell = styled(TableDataCell)({
-  backgroundColor: theme.colors.green100,
-})
-
-const Aligned = styled.span({
-  display: 'flex',
-
-  '&[data-alignment="left"]': {
-    justifyContent: 'flex-start',
-  },
-
-  '&[data-alignment="center"]': {
-    justifyContent: 'center',
-    // Make sure text gets centered when wrapped into multiple lines
-    textAlign: 'center',
-  },
-
-  '&[data-alignment="right"]': {
-    justifyContent: 'flex-end',
-  },
-})
-
-export const CheckIcon = (props: PerilsCheckIconProps) => <PerilsCheckIcon size="1rem" {...props} />
-
-export const MissingIcon = (props: MinusIconProps) => {
+export function MissingIcon(props: MinusIconProps) {
   return <MinusIcon size="1.25rem" color={theme.colors.gray500} {...props} />
 }
