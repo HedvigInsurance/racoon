@@ -70,14 +70,14 @@ export const aligner = styleVariants({
   },
 })
 
-export const collapisableTrigger = style({
+export const collapsibleTrigger = style({
   display: 'flex',
   alignItems: 'center',
   gap: TRIGGER_ICON_GAP,
   width: '100%',
 })
 
-export const collapisableContent = style({
+export const collapsibleContent = style({
   maxWidth: '45ch',
   paddingLeft: `calc(${TRIGGER_ICON_SIZE} + ${TRIGGER_ICON_GAP})`,
 })
