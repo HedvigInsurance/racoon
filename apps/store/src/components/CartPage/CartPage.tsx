@@ -2,7 +2,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import type { ReactNode} from 'react';
+import type { ReactNode } from 'react'
 import { useEffect } from 'react'
 import { Heading, mq, Space, Text, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
@@ -17,6 +17,7 @@ import { QuickAddOfferContainer } from '@/components/QuickAdd/QuickAddOfferConta
 import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
 import { Divider, ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
+import { BundleDiscountExtraProductLinks } from '@/features/bundleDiscount/BundleDiscountExtraProductLinks'
 import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
@@ -71,6 +72,8 @@ export const CartPage = () => {
                   <TotalAmountContainer cart={shopSession.cart} />
                 </ShopBreakdown>
               </Space>
+
+              {shopSession.experiments?.bundleDiscount && <BundleDiscountExtraProductLinks />}
 
               {offerRecommendation && (
                 <QuickAddOfferContainer

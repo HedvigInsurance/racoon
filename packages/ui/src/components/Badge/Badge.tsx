@@ -5,7 +5,13 @@ import { badge, badgeBgColorVar } from './Badge.css'
 
 type BadgeColors = Pick<
   UIColors,
-  'blueFill1' | 'blueFill2' | 'blueFill3' | 'green50' | 'signalAmberHighlight' | 'pinkFill1'
+  | 'blueFill1'
+  | 'blueFill2'
+  | 'blueFill3'
+  | 'green50'
+  | 'signalAmberHighlight'
+  | 'signalGreenFill'
+  | 'pinkFill1'
 >
 
 export type BadgeProps = {

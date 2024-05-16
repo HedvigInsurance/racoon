@@ -28,6 +28,7 @@ const unresponsiveProperties = defineProperties({
     color: textColors,
     display: ['flex', 'grid'],
     flexDirection: ['row', 'column'],
+    flexGrow: [1],
   },
 })
 
