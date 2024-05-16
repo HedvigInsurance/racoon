@@ -28,6 +28,11 @@ export const getUserRedirect = (
 
   if (!data) return fallbackRedirect
 
+  // Ignore campaign code if it cannot be changed (partner session, active bundle discount, etc)
+  if (data.shopSession.cart.campaignsEnabled === false) {
+    delete userParams.campaignCode
+  }
+
   if (hasAddedCartEntries(data)) {
     return {
       type: RedirectType.Cart,

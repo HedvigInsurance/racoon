@@ -5,6 +5,7 @@ query ShopSessionRetargeting($shopSessionId: UUID!) {
       entries {
         id
       }
+      campaignsEnabled
     }
     priceIntents(filters: { uniqueConfirmed: true }) {
       ...RetargetingPriceIntent
