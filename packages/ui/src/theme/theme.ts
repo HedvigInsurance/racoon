@@ -19,6 +19,14 @@ export const theme = {
     focus: `0 0 0 2px ${colors.textPrimary}`,
     focusAlt: `0 0 0 2px ${colors.signalBlueElement}`,
   },
+  components: {
+    input: {
+      background: {
+        default: colors.translucent1,
+        selected: colors.backgroundStandard,
+      },
+    },
+  },
 } as const
 
 export const getColor = (color: UIColorKeys) => {
