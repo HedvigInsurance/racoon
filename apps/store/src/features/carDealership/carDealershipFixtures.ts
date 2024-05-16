@@ -1,12 +1,6 @@
 // TODO: Remove this file as soon we start to get data from the API
-import type {
-  Peril,
-  PriceIntent,
-  ShopSession} from '@/services/graphql/generated';
-import {
-  CurrencyCode,
-  ShopSessionAuthenticationStatus,
-} from '@/services/graphql/generated'
+import type { Peril, PriceIntent, ShopSession } from '@/services/graphql/generated'
+import { CurrencyCode } from '@/services/graphql/generated'
 
 export type TrialExtension = {
   id: string
@@ -94,7 +88,6 @@ export const CAR_TRIAL_DATA_QUERY = {
 
     customer: {
       ssn: '199001011234',
-      authenticationStatus: ShopSessionAuthenticationStatus.None,
     },
 
     cart: {
