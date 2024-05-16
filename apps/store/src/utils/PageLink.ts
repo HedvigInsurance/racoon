@@ -55,7 +55,7 @@ type MemberLoginPage = BaseParams & {
 export const PageLink = {
   home: ({ locale }: BaseParams) => {
     if (locale === locales['sv-SE'].routingLocale) {
-      return new URL(ORIGIN_URL)
+      return new URL('/', ORIGIN_URL)
     }
     return new URL(locale, ORIGIN_URL)
   },
