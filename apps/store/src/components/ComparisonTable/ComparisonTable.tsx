@@ -3,12 +3,25 @@ import { type ComponentPropsWithoutRef } from 'react'
 import {
   Text,
   CheckIcon as PerilsCheckIcon,
-  type CheckIconProps as PerilsCheckIconProps,
   MinusIcon,
-  type MinusIconProps,
+  ChevronIcon,
   theme,
+  type CheckIconProps as PerilsCheckIconProps,
+  type MinusIconProps,
 } from 'ui'
-import { table, row, header, activeHeader, cell, activeCell, aligner } from './ComparisonTable.css'
+import Collapsible from '@/components/Collapsible/Collapsible'
+import {
+  table,
+  row,
+  header,
+  activeHeader,
+  cell,
+  activeCell,
+  aligner,
+  collapisableTrigger,
+  collapisableContent,
+  triggerIcon,
+} from './ComparisonTable.css'
 
 export function Root({ className, ...props }: ComponentPropsWithoutRef<'table'>) {
   return <table className={clsx(table, className)} {...props} />
@@ -40,12 +53,37 @@ export function Header({ children, active, ...props }: HeaderProps) {
   )
 }
 
-export function TitleDataCell({ className, children, ...props }: ComponentPropsWithoutRef<'td'>) {
+type TitleDataCellProps = Omit<ComponentPropsWithoutRef<'td'>, 'children'> & {
+  title: string
+  description?: string
+}
+
+export function TitleDataCell({ className, title, description, ...props }: TitleDataCellProps) {
+  const Title = (
+    <Text className={title} as="span" size={{ _: 'xs', lg: 'md' }} color="textPrimary">
+      {title}
+    </Text>
+  )
+  const Children = description ? (
+    <Collapsible.Root>
+      <Collapsible.Trigger className={collapisableTrigger}>
+        <ChevronIcon className={triggerIcon} />
+        {Title}
+      </Collapsible.Trigger>
+
+      <Collapsible.Content className={collapisableContent}>
+        <Text className="description" as="span" size="xs" color="textSecondary">
+          {description}
+        </Text>
+      </Collapsible.Content>
+    </Collapsible.Root>
+  ) : (
+    Title
+  )
+
   return (
     <td className={clsx(cell, className)} {...props}>
-      <Text as="span" size={{ _: 'sm', lg: 'md' }}>
-        {children}
-      </Text>
+      {Children}
     </td>
   )
 }

@@ -2,8 +2,12 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useMemo, type ReactNode } from 'react'
 import { Button, Dialog } from 'ui'
-import type { Table } from '@/components/ComparisonTable/ComparisonTable.types'
-import { TableMarkers } from '@/components/ComparisonTable/ComparisonTable.types'
+import {
+  TableMarkers,
+  type Table,
+  type Head,
+  type Body,
+} from '@/components/ComparisonTable/ComparisonTable.types'
 import { DesktopComparisonTable } from '@/components/ComparisonTable/DesktopComparisonTable'
 import { MobileComparisonTable } from '@/components/ComparisonTable/MobileComparisonTable'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
@@ -43,7 +47,7 @@ export const ComparisonTableModal = ({ tiers, selectedTierId, children }: Props)
         }
       >
         <Grid>
-          <GridLayout.Content align="center" width={{ md: '2/3', xl: '1/2', xxl: '1/3' }}>
+          <GridLayout.Content align="center" width={{ md: '2/3', xxl: '1/2' }}>
             {variant === 'mobile' && (
               <MobileComparisonTable {...table} defaultSelectedColumn={selectedTierDisplayName} />
             )}
@@ -57,12 +61,23 @@ export const ComparisonTableModal = ({ tiers, selectedTierId, children }: Props)
   )
 }
 
-const removeDuplicates = <T,>(arr: Array<T>): Array<T> => Array.from(new Set(arr))
+const removeDuplicatesByTitle = <T extends { title: string }>(arr: Array<T>): Array<T> => {
+  const seenTitles = new Set<string>()
+  return arr.filter((item) => {
+    if (!seenTitles.has(item.title)) {
+      seenTitles.add(item.title)
+      return true
+    }
 
-const getUniquePerilTitles = (tiers: Array<ProductOfferFragment>) => {
-  const allPerils = tiers.flatMap((item) => item.variant.perils)
-  const perilTitles = allPerils.map((item) => item.title)
-  return removeDuplicates(perilTitles)
+    return false
+  })
+}
+
+const getUniquePerils = (tiers: Array<ProductOfferFragment>) => {
+  const allPerils = tiers
+    .flatMap((item) => item.variant.perils)
+    .map(({ title, description }) => ({ title, description }))
+  return removeDuplicatesByTitle(allPerils)
 }
 
 const offerHasPeril = (offer: ProductOfferFragment, perilTitle: string) =>
@@ -97,7 +112,7 @@ const useTableData = (tiers: Array<ProductOfferFragment>, selectedTierId: string
   const getVeryShortVariantDisplayName = useGetVeryShortVariantDisplayName()
 
   const table = useMemo<Table>(() => {
-    const head = [
+    const head: Head = [
       TableMarkers.EmptyHeader,
       ...tiers.map((tier) => {
         const headerValue = getVeryShortVariantDisplayName(tier.variant.typeOfContract) ?? ''
@@ -111,10 +126,10 @@ const useTableData = (tiers: Array<ProductOfferFragment>, selectedTierId: string
         return headerValue
       }),
     ]
-    const body = getUniquePerilTitles(tiers).map((title) => [
-      title,
+    const body: Body = getUniquePerils(tiers).map((peril) => [
+      { title: peril.title, description: peril.description },
       ...tiers.map((tier) =>
-        offerHasPeril(tier, title) ? TableMarkers.Covered : TableMarkers.NotCovered,
+        offerHasPeril(tier, peril.title) ? TableMarkers.Covered : TableMarkers.NotCovered,
       ),
     ])
 

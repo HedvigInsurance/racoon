@@ -27,7 +27,7 @@ export const Default: Story = {
       </ComparisonTable.Head>
       <ComparisonTable.Body>
         <ComparisonTable.Row>
-          <ComparisonTable.TitleDataCell>Personskador</ComparisonTable.TitleDataCell>
+          <ComparisonTable.TitleDataCell title="Personskador" />
           <ComparisonTable.DataCell>
             <ComparisonTable.CheckIcon />
           </ComparisonTable.DataCell>
@@ -39,7 +39,7 @@ export const Default: Story = {
           </ComparisonTable.DataCell>
         </ComparisonTable.Row>
         <ComparisonTable.Row>
-          <ComparisonTable.TitleDataCell>Andras skada</ComparisonTable.TitleDataCell>
+          <ComparisonTable.TitleDataCell title="Andras skada" />
           <ComparisonTable.DataCell>
             <ComparisonTable.CheckIcon />
           </ComparisonTable.DataCell>
@@ -51,7 +51,7 @@ export const Default: Story = {
           </ComparisonTable.DataCell>
         </ComparisonTable.Row>
         <ComparisonTable.Row>
-          <ComparisonTable.TitleDataCell>Stöld & inbrott</ComparisonTable.TitleDataCell>
+          <ComparisonTable.TitleDataCell title="Stöld & inbrott" />
           <ComparisonTable.DataCell>
             <ComparisonTable.CheckIcon />
           </ComparisonTable.DataCell>

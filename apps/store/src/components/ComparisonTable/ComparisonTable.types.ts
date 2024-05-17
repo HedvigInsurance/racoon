@@ -4,7 +4,9 @@ export const TableMarkers = {
   NotCovered: '[]',
 } as const
 
-type Row = Array<string>
+type RowTitle = { title: string; description?: string }
+
+type Row = [RowTitle, ...Array<string>]
 
 export type Head = Array<string>
 

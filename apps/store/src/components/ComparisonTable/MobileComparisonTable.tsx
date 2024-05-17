@@ -58,12 +58,18 @@ export const MobileComparisonTable = ({
             <ComparisonTable.Root>
               <ComparisonTable.Body>
                 {body.map((row) => {
-                  const attribute = row[0]
-                  const value = row[selectedColumnIndex]
+                  const [rowTitle, ...values] = row
+                  // 'selectedColumnIndex' is defined taking the whole table into account. However
+                  // 'values' is a subset of the table without the first column, so we need to subtract 1
+                  // from the index.
+                  const value = values[selectedColumnIndex - 1]
 
                   return (
-                    <ComparisonTable.Row key={attribute}>
-                      <ComparisonTable.TitleDataCell>{attribute}</ComparisonTable.TitleDataCell>
+                    <ComparisonTable.Row key={rowTitle.title}>
+                      <ComparisonTable.TitleDataCell
+                        title={rowTitle.title}
+                        description={rowTitle.description}
+                      />
                       <ComparisonTable.DataCell alignment="right">
                         {getCellValue(value)}
                       </ComparisonTable.DataCell>

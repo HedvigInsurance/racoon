@@ -20,13 +20,21 @@ type Props = SbBaseBlockProps<{
 export const ComparisonTableBlock = ({ blok }: Props) => {
   const variant = useResponsiveVariant('md')
 
-  const table = useMemo<Table>(
-    () => ({
-      head: blok.table.thead.map((item) => item.value),
-      body: blok.table.tbody.map((row) => row.body.map(({ value }) => value)),
-    }),
-    [blok],
-  )
+  const table = useMemo<Table>(() => {
+    const head: Table['head'] = blok.table.thead.map((item) => item.value)
+    // We currently don't support descriptions for first column items in storyblok
+    // so bellow we're just formatting the data accordingly to match 'Table' type
+    const body: Table['body'] = blok.table.tbody.map((row) => {
+      const [{ value: rowTitle }, ...remainingValues] = row.body
+      const values = remainingValues.map(({ value }) => value)
+      return [{ title: rowTitle }, ...values]
+    })
+
+    return {
+      head,
+      body,
+    }
+  }, [blok])
 
   return (
     <GridLayout.Root>

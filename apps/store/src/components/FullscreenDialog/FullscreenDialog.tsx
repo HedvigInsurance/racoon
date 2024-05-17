@@ -18,7 +18,7 @@ type Props = {
 
 export const Modal = ({ children, Header, Footer, center = false }: Props) => {
   return (
-    <Dialog.Content className={dialogContent} frostedOverlay={true}>
+    <Dialog.Content className={dialogContent} frostedOverlay>
       {Header ?? (
         <header className={dialogHeader}>
           <Dialog.Close className={dialogCloseIcon}>
