@@ -25139,7 +25139,7 @@ __metadata:
     webpack: "npm:5.76.2"
     whatwg-fetch: "npm:3.6.20"
     zen-observable-ts: "npm:1.2.5"
-    zod: "npm:3.23.6"
+    zod: "npm:3.23.8"
   languageName: unknown
   linkType: soft
 
@@ -27898,9 +27898,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:3.23.6":
-  version: 3.23.6
-  resolution: "zod@npm:3.23.6"
-  checksum: 10c0/9181606c656235cf6454c60ded6ec783226acafc0206844e9729b4d3c1c6ade411b195fa2590e882d3368c82580a44869567f7aebab005bf8d8476db6186d43f
+"zod@npm:3.23.8":
+  version: 3.23.8
+  resolution: "zod@npm:3.23.8"
+  checksum: 10c0/8f14c87d6b1b53c944c25ce7a28616896319d95bc46a9660fe441adc0ed0a81253b02b5abdaeffedbeb23bdd25a0bf1c29d2c12dd919aef6447652dd295e3e69
   languageName: node
   linkType: hard
