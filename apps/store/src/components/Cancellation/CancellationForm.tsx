@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next'
 import { InputStartDay } from '@/components/InputDay/InputStartDay'
 import {
   type ProductOfferFragment,
@@ -6,6 +7,7 @@ import {
   ExternalInsuranceCancellationOption,
 } from '@/services/graphql/generated'
 import { convertToDate, formatAPIDate } from '@/utils/date'
+import { InfoCard } from '../InfoCard/InfoCard'
 import { BankSigneringCancellation } from './BankSigneringCancellation'
 import { BankSigneringInvalidRenewalDateCancellation } from './BankSigneringInvalidRenewalDateCancellation'
 import { IEXCancellation } from './IEXCancellation'
@@ -22,6 +24,8 @@ export const CancellationForm = (props: Props) => {
   }
 
   const startDate = convertToDate(props.offer.startDate) ?? undefined
+  const { t } = useTranslation('purchase-form')
+
   const [updateStartDate, updateStartDateResult] = useStartDateUpdateMutation()
   const handleChangeStartDate = (date: Date) => {
     updateStartDate({
@@ -38,20 +42,28 @@ export const CancellationForm = (props: Props) => {
     loading: updateStartDateResult.loading,
   }
 
+  const switcherCompanyName = props.offer.cancellation.externalInsurer?.displayName
+
   const autoSwitchProps = {
     requested: props.offer.cancellation.requested,
     onAutoSwitchChange: handleAutoSwitchChange,
-    companyName: props.offer.cancellation.externalInsurer?.displayName ?? 'Unknown',
+    companyName: switcherCompanyName ?? 'Unknown',
   }
 
   switch (props.offer.cancellation.option) {
     case ExternalInsuranceCancellationOption.None:
       return (
-        <InputStartDay
-          date={startDate}
-          onChange={handleChangeStartDate}
-          loading={updateStartDateResult.loading}
-        />
+        <>
+          {switcherCompanyName && (
+            <InfoCard>{t('MANUAL_SWITCH_INFO', { COMPANY_NAME: switcherCompanyName })}</InfoCard>
+          )}
+
+          <InputStartDay
+            date={startDate}
+            onChange={handleChangeStartDate}
+            loading={updateStartDateResult.loading}
+          />
+        </>
       )
 
     case ExternalInsuranceCancellationOption.Iex:
