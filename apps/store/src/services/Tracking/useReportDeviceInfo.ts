@@ -21,6 +21,9 @@ export const useReportDeviceInfo = () => {
         if (reportedRef.current) return
         reportedRef.current = true
 
+        // Ignore few ancient browsers, universal support for randomUUID appeared in 2021
+        if (typeof crypto.randomUUID !== 'function') return
+
         const deviceInfoEvent = {
           type: TrackingEvent.DeviceInfo,
           data: {
