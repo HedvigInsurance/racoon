@@ -17,6 +17,7 @@ import { QuickAddOfferContainer } from '@/components/QuickAdd/QuickAddOfferConta
 import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
 import { Divider, ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
+import { BUNDLE_DISCOUNT_PERCENTAGE } from '@/features/bundleDiscount/bundleDiscount'
 import { BundleDiscountExtraProductLinks } from '@/features/bundleDiscount/BundleDiscountExtraProductLinks'
 import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
@@ -71,9 +72,20 @@ export const CartPage = () => {
                   <Divider />
                   <TotalAmountContainer cart={shopSession.cart} />
                 </ShopBreakdown>
-              </Space>
 
-              {shopSession.experiments?.bundleDiscount && <BundleDiscountExtraProductLinks />}
+                {shopSession.experiments?.bundleDiscount && (
+                  <BundleDiscountExtraProductLinks>
+                    <Text>
+                      <Text>{t('BUNDLE_DISCOUNT_QUICK_LINKS_TITLE')}</Text>
+                      <Text color="textSecondary">
+                        {t('BUNDLE_DISCOUNT_QUICK_LINKS_SUBTITLE', {
+                          percentage: BUNDLE_DISCOUNT_PERCENTAGE,
+                        })}
+                      </Text>
+                    </Text>
+                  </BundleDiscountExtraProductLinks>
+                )}
+              </Space>
 
               {offerRecommendation && (
                 <QuickAddOfferContainer
@@ -168,7 +180,10 @@ const LoadingState = () => {
   )
 }
 
-type EmptyStateProps = { shopSession: ShopSession; children: ReactNode }
+type EmptyStateProps = {
+  shopSession: ShopSession
+  children: ReactNode
+}
 
 const EmptyState = (props: EmptyStateProps) => {
   const { t } = useTranslation('cart')

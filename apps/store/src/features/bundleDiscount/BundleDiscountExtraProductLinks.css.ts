@@ -2,7 +2,6 @@ import { style } from '@vanilla-extract/css'
 import { hoverStyles, theme, tokens } from 'ui/src/theme'
 
 export const bundleDiscountLinkCard = style({
-  marginBlock: theme.space.md,
   display: 'flex',
   flexDirection: 'row',
 

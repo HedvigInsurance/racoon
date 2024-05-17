@@ -3,13 +3,21 @@ import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useTranslation } from 'next-i18next'
+import type { ReactNode } from 'react'
 import { forwardRef, useImperativeHandle, useState } from 'react'
 import { Button, mq, Space, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { MENU_BAR_HEIGHT_DESKTOP } from '@/components/Header/Header.constants'
+import {
+  BUNDLE_DISCOUNT_PERCENTAGE,
+  hasBundleDiscount,
+} from '@/features/bundleDiscount/bundleDiscount'
+import { BundleDiscountExtraProductLinks } from '@/features/bundleDiscount/BundleDiscountExtraProductLinks'
+import { BundleDiscountSummary } from '@/features/bundleDiscount/BundleDiscountSummary'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
-import type { ProductItemProps } from './ProductItem';
+import type { ProductItemProps } from './ProductItem'
 import { ProductItem } from './ProductItem'
 
 export type CartToastAttributes = {
@@ -42,12 +50,25 @@ type Props = ProductItemProps & {
 export const CartNotificationContent = ({ onClose, ...productItemProps }: Props) => {
   const { t } = useTranslation('purchase-form')
   const locale = useRoutingLocale()
+  const { shopSession } = useShopSession()
+  if (!shopSession) return null
 
   const handleClose = () => onClose()
 
   const handleClickLink = (type: 'Primary' | 'Secondary') => () => {
     datadogRum.addAction(`CartToast Link ${type}`)
   }
+
+  let bundleDiscountHeader: ReactNode
+  if (hasBundleDiscount(shopSession)) {
+    bundleDiscountHeader = (
+      <BundleDiscountSummary>
+        {t('BUNDLE_DISCOUNT_CART_TOAST_SUMMARY', {
+          percentage: BUNDLE_DISCOUNT_PERCENTAGE,
+        })}
+      </BundleDiscountSummary>
+    )
+  } // Use default header from the cart page otherwise
 
   return (
     <DialogPrimitive.Portal>
@@ -56,6 +77,11 @@ export const CartNotificationContent = ({ onClose, ...productItemProps }: Props)
         <DialogPrimitive.Content onEscapeKeyDown={handleClose} onInteractOutside={handleClose}>
           <DialogContentWrapper>
             <ProductItem {...productItemProps} />
+            {shopSession.experiments?.bundleDiscount && (
+              <BundleDiscountExtraProductLinks>
+                {bundleDiscountHeader}
+              </BundleDiscountExtraProductLinks>
+            )}
             <Space y={0.5}>
               <ButtonNextLink
                 href={PageLink.cart({ locale }).pathname}
@@ -101,7 +127,7 @@ const DialogContentWrapper = styled.div({
 
   display: 'flex',
   flexDirection: 'column',
-  gap: theme.space.lg,
+  gap: theme.space.md,
 
   paddingInline: theme.space.md,
   paddingTop: theme.space.lg,

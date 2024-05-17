@@ -17,5 +17,5 @@ export function BundleDiscountOfferTooltip() {
   ).length
   const key =
     numberOfEligibleCartItems === 0 ? 'BUNDLE_DISCOUNT_FIRST_OFFER' : 'BUNDLE_DISCOUNT_SECOND_OFFER'
-  return <DiscountTooltip>{t(key, { percentage: BUNDLE_DISCOUNT_PERCENTAGE })}</DiscountTooltip>
+  return <DiscountTooltip subtitle={t(key, { percentage: BUNDLE_DISCOUNT_PERCENTAGE })} />
 }
