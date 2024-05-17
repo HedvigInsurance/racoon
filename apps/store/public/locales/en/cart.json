@@ -9,7 +9,7 @@
   "BUNDLE_DISCOUNT_QUICK_LINKS_LABEL": "Get a discount",
   "BUNDLE_DISCOUNT_QUICK_LINKS_SUBTITLE": "Get {{percentage}} off your entire purchase",
   "BUNDLE_DISCOUNT_QUICK_LINKS_TITLE": "Add more insurances",
-  "BUNDLE_DISCOUNT_SUMMARY": "Bundle discount {{percentage}} for the first year. You are saving {{totalSaved}} total",
+  "BUNDLE_DISCOUNT_SUMMARY": "You get a {{percentage}} bundle discount and save {{totalSaved}} for the first year.",
   "CAMPAIGN_CODE_HEADING": "Add discount code",
   "CAMPAIGN_CODE_INPUT_LABEL": "Discount code",
   "CART_EMPTY_SUMMARY": "Your cart is empty",
