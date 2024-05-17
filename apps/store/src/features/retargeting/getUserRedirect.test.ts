@@ -3,7 +3,12 @@ import type { ShopSessionRetargetingQuery } from '@/services/graphql/generated'
 import { RedirectType, getUserRedirect } from './getUserRedirect'
 import type { UserParams } from './retargeting.types'
 
-const userParams: UserParams = { shopSessionId: '123', locale: 'se', queryParams: [] }
+const userParams: UserParams = {
+  shopSessionId: '123',
+  locale: 'se',
+  campaignCode: 'discount123',
+  queryParams: [],
+}
 
 test('should return fallback redirect if no data is provided', () => {
   // Arrange
@@ -23,6 +28,7 @@ test('should return cart redirect if cart is not empty', () => {
       id: '123',
       cart: {
         entries: [{ id: '123:offer1' }],
+        campaignsEnabled: true,
       },
       priceIntents: [
         {
@@ -40,6 +46,7 @@ test('should return cart redirect if cart is not empty', () => {
 
   // Assert
   expect(result.type).toEqual(RedirectType.Cart)
+  expect(result.url.searchParams.keys()).toContain('code')
 })
 
 test('should return product redirect if single product is present', () => {
@@ -50,6 +57,7 @@ test('should return product redirect if single product is present', () => {
       id: '123',
       cart: {
         entries: [],
+        campaignsEnabled: true,
       },
       priceIntents: [
         {
@@ -75,7 +83,7 @@ test('should return modified cart if multiple price intents with different expos
   const data: ShopSessionRetargetingQuery = {
     shopSession: {
       id: '123',
-      cart: { entries: [] },
+      cart: { entries: [], campaignsEnabled: true },
       priceIntents: [
         {
           id: '123',
@@ -108,3 +116,22 @@ const FAKE_OFFER = {
     },
   },
 }
+
+test('ignore campaign code if campaigns are disabled', () => {
+  const data: ShopSessionRetargetingQuery = {
+    shopSession: {
+      id: '123',
+      cart: { entries: [], campaignsEnabled: false },
+      priceIntents: [
+        {
+          id: '123',
+          product: { name: 'SE_CAR' },
+          data: { registrationNumber: 'FRE123' },
+          defaultOffer: FAKE_OFFER,
+        },
+      ],
+    },
+  }
+  const result = getUserRedirect(userParams, data)
+  expect(result.url.searchParams.keys()).not.toContain('code')
+})
