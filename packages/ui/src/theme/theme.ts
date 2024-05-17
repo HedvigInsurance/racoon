@@ -26,6 +26,15 @@ export const theme = {
         selected: colors.backgroundStandard,
       },
     },
+    table: {
+      cell: {
+        background: {
+          default: 'inherit',
+          // TODO: change this to theme.colors.signalGreenFill when we update UI kit colors
+          active: 'hsl(95, 74%, 85%)',
+        },
+      },
+    },
   },
 } as const
 
