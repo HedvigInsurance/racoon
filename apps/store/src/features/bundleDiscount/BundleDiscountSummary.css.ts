@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { colors, theme } from 'ui/src/theme'
+import { theme } from 'ui/src/theme'
 
 export const bundleDiscountSummary = style({
   display: 'flex',
@@ -12,5 +12,4 @@ export const bundleDiscountSummary = style({
 
   padding: theme.space.sm,
   gap: theme.space.sm,
-  color: colors.textSecondaryOnGray,
 })

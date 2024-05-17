@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { Text, theme } from 'ui'
 
 type Props = {
-  children: string
+  children?: string
   subtitle?: string
   color?: 'green' | 'gray'
 }
@@ -13,9 +13,11 @@ export const DiscountTooltip = ({ children, subtitle, color = 'green' }: Props) 
   return (
     <Root>
       <Bubble>
-        <Text size="xs" color="textPrimary" align="center">
-          {children}
-        </Text>
+        {children && (
+          <Text size="xs" color="textPrimary" align="center">
+            {children}
+          </Text>
+        )}
         {subtitle && (
           <Text size="xs" color="textSecondaryOnGray" align="center">
             {subtitle}
