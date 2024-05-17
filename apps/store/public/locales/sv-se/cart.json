@@ -9,7 +9,7 @@
   "BUNDLE_DISCOUNT_QUICK_LINKS_LABEL": "Få rabatt",
   "BUNDLE_DISCOUNT_QUICK_LINKS_SUBTITLE": "Få {{percentage}} rabatt på hela ditt köp",
   "BUNDLE_DISCOUNT_QUICK_LINKS_TITLE": "Lägg till fler försäkringar",
-  "BUNDLE_DISCOUNT_SUMMARY": "Paketrabatt {{percentage}} för det första året. Du sparar totalt {{totalSaved}}",
+  "BUNDLE_DISCOUNT_SUMMARY": "Du har fått {{percentage}} paketrabatt och sparar {{totalSaved}} det första året.",
   "CAMPAIGN_CODE_HEADING": "Lägg till rabattkod",
   "CAMPAIGN_CODE_INPUT_LABEL": "Rabattkod",
   "CART_EMPTY_SUMMARY": "Din varukorg är tom",
