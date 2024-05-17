@@ -18,8 +18,8 @@ import {
   cell,
   activeCell,
   aligner,
-  collapisableTrigger,
-  collapisableContent,
+  collapsibleTrigger,
+  collapsibleContent,
   triggerIcon,
 } from './ComparisonTable.css'
 
@@ -66,13 +66,13 @@ export function TitleDataCell({ className, title, description, ...props }: Title
   )
   const Children = description ? (
     <Collapsible.Root>
-      <Collapsible.Trigger className={collapisableTrigger}>
+      <Collapsible.Trigger className={collapsibleTrigger}>
         <ChevronIcon className={triggerIcon} />
         {Title}
       </Collapsible.Trigger>
 
-      <Collapsible.Content className={collapisableContent}>
-        <Text className="description" as="span" size="xs" color="textSecondary">
+      <Collapsible.Content className={collapsibleContent}>
+        <Text as="span" size="xs" color="textSecondary">
           {description}
         </Text>
       </Collapsible.Content>

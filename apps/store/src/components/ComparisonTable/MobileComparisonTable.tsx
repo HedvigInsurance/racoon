@@ -1,12 +1,12 @@
-import styled from '@emotion/styled'
 import * as RadixTabs from '@radix-ui/react-tabs'
+import { clsx } from 'clsx'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { theme } from 'ui'
 import { Button } from 'ui'
 import * as ComparisonTable from '@/components/ComparisonTable/ComparisonTable'
 import { getCellValue } from './ComparisonTable.helpers'
 import { type Head, type Body, TableMarkers } from './ComparisonTable.types'
+import { tabsRoot, tabsList, tabButton } from './MobileComparisonTable.css'
 
 export type MobileComparisonTableProps = {
   head: Head
@@ -31,24 +31,24 @@ export const MobileComparisonTable = ({
   })
 
   return (
-    <TabsRoot
-      className={className}
+    <RadixTabs.Root
+      className={clsx(tabsRoot, className)}
       defaultValue={defaultSelectedColumn ?? head[selectedColumnIndex]}
       onValueChange={(value) => setSelectedColumnIndex(head.findIndex((tier) => tier === value))}
     >
-      <TabsList>
+      <RadixTabs.List className={tabsList}>
         {head.map((headerValue) => {
           if (headerValue === TableMarkers.EmptyHeader) return null
 
           return (
-            <RadixTabs.Trigger key={headerValue} value={headerValue} asChild>
-              <TabButton variant="secondary" size="medium">
+            <RadixTabs.Trigger key={headerValue} value={headerValue} asChild={true}>
+              <Button className={tabButton} variant="secondary" size="small">
                 {headerValue}
-              </TabButton>
+              </Button>
             </RadixTabs.Trigger>
           )
         })}
-      </TabsList>
+      </RadixTabs.List>
 
       {head.map((headerValue) => {
         if (headerValue === TableMarkers.EmptyHeader) return null
@@ -81,29 +81,9 @@ export const MobileComparisonTable = ({
           </TabContent>
         )
       })}
-    </TabsRoot>
+    </RadixTabs.Root>
   )
 }
-
-const TabsRoot = styled(RadixTabs.Root)({
-  paddingInline: theme.space.xs,
-  marginInline: 'auto',
-  width: 'min(100%, 21.875rem)',
-})
-
-const TabsList = styled(RadixTabs.List)({
-  display: 'flex',
-  gap: theme.space.xs,
-  paddingBottom: theme.space.sm,
-  overflowX: 'auto',
-})
-
-const TabButton = styled(Button)({
-  flex: 1,
-  '&[data-state=active]': {
-    backgroundColor: theme.colors.translucent2,
-  },
-})
 
 const TabContent = ({ children, ...others }: RadixTabs.TabsContentProps) => {
   return (
