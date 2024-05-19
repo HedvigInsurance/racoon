@@ -54,9 +54,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:3.10.3":
-  version: 3.10.3
-  resolution: "@apollo/client@npm:3.10.3"
+"@apollo/client@npm:3.10.4":
+  version: 3.10.4
+  resolution: "@apollo/client@npm:3.10.4"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
     "@wry/caches": "npm:^1.0.0"
@@ -87,7 +87,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 10c0/8565d80691d8266d1e2341720219e22affe4f5b4e3020c1c7d4f120ae88f162225c95b65e2c483a35eb6a363b50ebccb12f403d94bc238b56f64d7a9ddcd755a
+  checksum: 10c0/057af5534db5e454957b2922fa973ccaa1b159d4cb39964b0a7fdbaeb07c779ca14eb680caa9579dfdbd85554ca7c5e9981d79ad1e6924ccef57e4acf6c67988
   languageName: node
   linkType: hard
 
@@ -25016,7 +25016,7 @@ __metadata:
   resolution: "store@workspace:apps/store"
   dependencies:
     "@adyen/adyen-web": "npm:3.23.0"
-    "@apollo/client": "npm:3.10.3"
+    "@apollo/client": "npm:3.10.4"
     "@apollo/experimental-nextjs-app-support": "npm:0.10.1"
     "@babel/core": "npm:7.24.5"
     "@babel/preset-env": "npm:7.24.5"
