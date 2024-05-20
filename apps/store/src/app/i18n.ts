@@ -1,4 +1,4 @@
-import type { BackendModule, CallbackError, InitOptions, Resource } from 'i18next';
+import type { BackendModule, CallbackError, InitOptions, Resource } from 'i18next'
 import { createInstance } from 'i18next'
 import type { I18n } from 'next-i18next'
 import { initReactI18next } from 'react-i18next/initReactI18next'
@@ -14,6 +14,7 @@ const allNamespaces = [
   'cart',
   'checkout',
   'contact-us',
+  'cookieConsent',
   'memberArea',
   'purchase-form',
   'reviews',
