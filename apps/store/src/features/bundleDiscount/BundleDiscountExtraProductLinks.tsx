@@ -45,13 +45,13 @@ export function BundleDiscountExtraProductLinks({ children }: Props) {
 function BundleDiscountExtraProductLinksDefaultHeader() {
   const { t } = useTranslation('cart')
   return (
-    <Text>
+    <div>
       <Text>{t('BUNDLE_DISCOUNT_QUICK_LINKS_TITLE')}</Text>
       <Text color="textSecondary">
         {t('BUNDLE_DISCOUNT_QUICK_LINKS_SUBTITLE', {
           percentage: BUNDLE_DISCOUNT_PERCENTAGE,
         })}
       </Text>
-    </Text>
+    </div>
   )
 }

@@ -5,7 +5,7 @@ import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useTranslation } from 'next-i18next'
 import type { ReactNode } from 'react'
 import { forwardRef, useImperativeHandle, useState } from 'react'
-import { Button, mq, Space, theme } from 'ui'
+import { Button, mq, Space, Text, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { MENU_BAR_HEIGHT_DESKTOP } from '@/components/Header/Header.constants'
 import {
@@ -48,7 +48,7 @@ type Props = ProductItemProps & {
 }
 
 export const CartNotificationContent = ({ onClose, ...productItemProps }: Props) => {
-  const { t } = useTranslation('purchase-form')
+  const { t } = useTranslation(['purchase-form', 'cart'])
   const locale = useRoutingLocale()
   const { shopSession } = useShopSession()
   if (!shopSession) return null
@@ -68,7 +68,19 @@ export const CartNotificationContent = ({ onClose, ...productItemProps }: Props)
         })}
       </BundleDiscountSummary>
     )
-  } // Use default header from the cart page otherwise
+  } else {
+    // This is awkward, but we're duplicating default header just to have different subtitle
+    bundleDiscountHeader = (
+      <div>
+        <Text>{t('BUNDLE_DISCOUNT_QUICK_LINKS_TITLE', { ns: 'cart' })}</Text>
+        <Text color="textSecondary">
+          {t('BUNDLE_DISCOUNT_CART_TOAST_QUICK_LINKS_SUBTITLE', {
+            percentage: BUNDLE_DISCOUNT_PERCENTAGE,
+          })}
+        </Text>
+      </div>
+    )
+  }
 
   return (
     <DialogPrimitive.Portal>
