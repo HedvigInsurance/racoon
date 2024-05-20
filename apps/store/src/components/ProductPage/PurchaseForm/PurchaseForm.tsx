@@ -3,7 +3,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import type { ReactNode } from 'react'
 import { Suspense } from 'react'
@@ -232,6 +232,7 @@ type LayoutProps = {
 }
 
 const Layout = ({ children }: LayoutProps) => {
+  const pathname = usePathname()
   const toastRef = useRef<CartToastAttributes | null>(null)
   const notifyProductAdded = (item: ProductItemProps) => {
     toastRef.current?.publish(item)
@@ -240,7 +241,8 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <PurchaseFormTop>{children(notifyProductAdded)}</PurchaseFormTop>
-      <CartToast ref={toastRef} />
+      {/* key=pathname makes sure we re-init the toast if current page changes */}
+      <CartToast key={pathname} ref={toastRef} />
     </>
   )
 }
