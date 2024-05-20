@@ -69,6 +69,7 @@ export class Tracking {
   private logger = datadogLogs.getLogger(Tracking.LOGGER_NAME)!
 
   public reportAppInit = (countryCode: CountryCode) => {
+    console.debug(`app init, country=${countryCode}`)
     initializeGtm(countryCode)
   }
 

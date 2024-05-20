@@ -18,7 +18,7 @@ import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { Features } from '@/utils/Features'
 import { locales } from '@/utils/l10n/locales'
 import type { RoutingLocale } from '@/utils/l10n/types'
-import { NavigationTracker } from './NavigationTracker'
+import { AppTrackingTriggers } from './AppTrackingTriggers'
 import { StoryblokLayout } from './StoryblokLayout'
 
 export type LocalizedLayoutProps<P = unknown> = P & {
@@ -48,7 +48,7 @@ const Layout = async ({ children, params: { locale } }: LocalizedLayoutProps) =>
                     <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
                   </StoryblokProvider>
                   <Suspense>
-                    <NavigationTracker />
+                    <AppTrackingTriggers />
                   </Suspense>
                 </TrackingProvider>
               </AppErrorProvider>
