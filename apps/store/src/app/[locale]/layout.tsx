@@ -4,6 +4,7 @@ import { ProductMetadataProvider } from '@/appComponents/providers/ProductMetada
 import { StoryblokProvider } from '@/appComponents/providers/StoryblokProvider'
 import { RootLayout } from '@/appComponents/RootLayout/RootLayout'
 import { AppErrorDialog } from '@/components/AppErrorDialog'
+import { CookieConsent } from '@/components/CookieConsent/CookieConsent'
 import { GlobalBannerDynamic } from '@/components/GlobalBanner/GlobalBannerDynamic'
 import { fetchGlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { CompanyReviewsMetadataProvider } from '@/features/memberReviews/CompanyReviewsMetadataProvider'
@@ -14,6 +15,7 @@ import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import type { GlobalStory } from '@/services/storyblok/storyblok'
 import { getStoryBySlug } from '@/services/storyblok/storyblok.rsc'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
+import { Features } from '@/utils/Features'
 import { locales } from '@/utils/l10n/locales'
 import type { RoutingLocale } from '@/utils/l10n/types'
 import { NavigationTracker } from './NavigationTracker'
@@ -53,6 +55,7 @@ const Layout = async ({ children, params: { locale } }: LocalizedLayoutProps) =>
             </ShopSessionProvider>
           </CompanyReviewsMetadataProvider>
         </ProductMetadataProvider>
+        {Features.enabled('COOKIE_BANNER_INP_IMPROVEMENT') && <CookieConsent />}
       </RootLayout>
     </>
   )
