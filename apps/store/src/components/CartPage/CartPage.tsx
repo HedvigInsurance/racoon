@@ -88,11 +88,16 @@ export const CartPage = () => {
               </Space>
 
               {offerRecommendation && (
-                <QuickAddOfferContainer
-                  cart={shopSession.cart}
-                  shopSessionId={shopSession.id}
-                  {...offerRecommendation}
-                />
+                <Space y={1}>
+                  <Heading variant="standard.18" as={'h2'}>
+                    {t('QUICK_ADD_BUNDLE_HEADER')}
+                  </Heading>
+                  <QuickAddOfferContainer
+                    cart={shopSession.cart}
+                    shopSessionId={shopSession.id}
+                    {...offerRecommendation}
+                  />
+                </Space>
               )}
               <CheckoutButton />
             </Space>
