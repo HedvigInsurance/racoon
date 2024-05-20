@@ -72,6 +72,9 @@ export function CookieConsent() {
           ...prevState,
           initializeGtm: true,
         }))
+
+        // Omit loading OneTrust script after updated consent
+        setLoadOneTrust(false)
       }
 
       if (cookieConsent.action === 'openSettings') {
@@ -89,6 +92,9 @@ export function CookieConsent() {
             ...prevState,
             initializeGtm: true,
           }))
+
+          // Omit loading OneTrust script after updated consent
+          setLoadOneTrust(false)
         })
       }
     }
