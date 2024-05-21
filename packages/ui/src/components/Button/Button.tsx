@@ -63,6 +63,7 @@ export const Button: PolymorphicComponent = forwardRef(function Button<
       data-loading={loading}
       disabled={isDisabled}
       rel={componentRel}
+      target={target}
       ref={ref}
       {...props}
     >
