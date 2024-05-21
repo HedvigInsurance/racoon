@@ -75,14 +75,14 @@ export const CartPage = () => {
 
                 {shopSession.experiments?.bundleDiscount && (
                   <BundleDiscountExtraProductLinks>
-                    <Text>
+                    <div>
                       <Text>{t('BUNDLE_DISCOUNT_QUICK_LINKS_TITLE')}</Text>
                       <Text color="textSecondary">
                         {t('BUNDLE_DISCOUNT_QUICK_LINKS_SUBTITLE', {
                           percentage: BUNDLE_DISCOUNT_PERCENTAGE,
                         })}
                       </Text>
-                    </Text>
+                    </div>
                   </BundleDiscountExtraProductLinks>
                 )}
               </Space>

@@ -10,6 +10,8 @@
   "MENU_ITEM_LABEL_INSURANCE": "Dina försäkringar",
   "MENU_ITEM_LABEL_PAYMENT": "Betalning",
   "PAYMENTS_CONNECTION_TITLE": "Kopplad betalning",
+  "PAYMENTS_DIRECT_DEBIT_BUTTON": "Koppla bankkonto",
+  "PAYMENTS_DIRECT_DEBIT_REPLACE_BUTTON": "Ändra bankkonto",
   "PAYMENTS_DISCOUNT_LABEL": "Rabatt",
   "PAYMENTS_FREE_UNTIL": "Gratis till och med",
   "PAYMENTS_MONTLY_COST": "Månadskostnad",

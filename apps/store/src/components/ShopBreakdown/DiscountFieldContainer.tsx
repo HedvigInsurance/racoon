@@ -40,12 +40,7 @@ export const DiscountFieldContainer = (props: Props) => {
   const discount = useDiscountProps(redeemedCampaign)
 
   if (hasBundleDiscount(props.shopSession) && redeemedCampaign) {
-    return (
-      <BundleDiscountCartSummary
-        cost={props.shopSession.cart.cost}
-        redeemedCampaign={redeemedCampaign}
-      />
-    )
+    return <BundleDiscountCartSummary cart={props.shopSession.cart} />
   } else if (!props.shopSession.cart.campaignsEnabled) {
     return discount ? <Discount {...discount} /> : null
   }

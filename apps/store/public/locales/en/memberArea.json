@@ -10,6 +10,8 @@
   "MENU_ITEM_LABEL_INSURANCE": "Your insurances",
   "MENU_ITEM_LABEL_PAYMENT": "Payment",
   "PAYMENTS_CONNECTION_TITLE": "Payment connection",
+  "PAYMENTS_DIRECT_DEBIT_BUTTON": "Connect card",
+  "PAYMENTS_DIRECT_DEBIT_REPLACE_BUTTON": "Change card",
   "PAYMENTS_DISCOUNT_LABEL": "Discount",
   "PAYMENTS_FREE_UNTIL": "Free until",
   "PAYMENTS_MONTLY_COST": "Monthly cost",
