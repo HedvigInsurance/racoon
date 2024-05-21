@@ -21,7 +21,10 @@
     "webpack", // storybook
     // Temporary disable until https://github.com/framer/motion/issues/2656 is fixed
     // To test, check that Accordion correctly closes and opens with the first click
-    "framer-motion"
+    "framer-motion",
+    // Temporary disable until yarn PnP compat is fixed
+    // https://github.com/lifeiscontent/storybook-addon-apollo-client/issues/116
+    "storybook-addon-apollo-client"
   ],
 
   "packageRules": [
