@@ -121,8 +121,7 @@ export const ContactUs = () => {
                     target="_blank"
                     variant="secondary"
                   >
-                    <span>{t('FAQ_OPTION_LABEL')}</span>
-                    <span>{t('FAQ_OPTION_VALUE')}</span>
+                    <span>{t('FAQ_OPTION')}</span>
                   </Button>
 
                   <Button
@@ -132,8 +131,7 @@ export const ContactUs = () => {
                     target="_blank"
                     variant="secondary"
                   >
-                    <span>{t('TELEPHONE_OPTION_LABEL')}</span>
-                    <span>{t('TELEPHONE_OPTION_VALUE')}</span>
+                    <span>{t('TELEPHONE_OPTION')}</span>
                   </Button>
                   <Button
                     as="a"
