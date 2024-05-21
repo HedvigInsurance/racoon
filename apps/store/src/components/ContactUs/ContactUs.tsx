@@ -136,7 +136,7 @@ export const ContactUs = () => {
                   <Button
                     as="a"
                     data-dd-action-name="Contact us | email"
-                    href={PageLink.help({ locale }).pathname}
+                    href={PageLink.emailUs({ locale }).pathname}
                     target="_blank"
                     variant="secondary"
                   >
