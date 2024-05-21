@@ -1,7 +1,6 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as Popover from '@radix-ui/react-popover'
-import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
 import {
@@ -70,71 +69,74 @@ export const ContactUs = () => {
               </CloseButton>
             </Header>
 
-            <Content y={2}>
-              <div>
-                <Text as="p" align="center" balance={true}>
-                  {t('ALREADY_MEMBER_HEADING')}
-                </Text>
-                <Text as="p" align="center" balance={true}>
-                  {t('ALREADY_MEMBER_SUB_HEADING')}
-                </Text>
-              </div>
+            <Content y={2.5}>
+              <Space y={1}>
+                <div>
+                  <Text as="p" align="center" balance={true}>
+                    {t('ALREADY_MEMBER_HEADING')}
+                  </Text>
+                  <Text as="p" align="center" balance={true}>
+                    {t('ALREADY_MEMBER_SUB_HEADING')}
+                  </Text>
+                </div>
 
-              <AppButtons>
-                <Button
-                  as="a"
-                  data-dd-action-name="Contact us | IOS App"
-                  href={getAppStoreLink('apple', locale).toString()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variant="secondary"
-                  size="small"
-                  Icon={<AppleIcon size="18px" />}
-                >
-                  App Store
-                </Button>
+                <AppButtons>
+                  <Button
+                    as="a"
+                    data-dd-action-name="Contact us | IOS App"
+                    href={getAppStoreLink('apple', locale).toString()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="secondary"
+                    size="small"
+                    Icon={<AppleIcon size="18px" />}
+                  >
+                    App Store
+                  </Button>
 
-                <Button
-                  as="a"
-                  data-dd-action-name="Contact us | Android App"
-                  href={getAppStoreLink('google', locale).toString()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variant="secondary"
-                  size="small"
-                  Icon={<AndroidIcon size="18px" />}
-                >
-                  Google Play
-                </Button>
-              </AppButtons>
+                  <Button
+                    as="a"
+                    data-dd-action-name="Contact us | Android App"
+                    href={getAppStoreLink('google', locale).toString()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="secondary"
+                    size="small"
+                    Icon={<AndroidIcon size="18px" />}
+                  >
+                    Google Play
+                  </Button>
+                </AppButtons>
+              </Space>
 
-              <Paper>
-                <Space y={1}>
-                  <Heading as="h1" variant="standard.18" align="center">
-                    {t('CHAT_HEADING')}
-                  </Heading>
+              <Space y={1}>
+                <Heading as="h1" variant="standard.18" align="center">
+                  {t('CHAT_HEADING')}
+                </Heading>
+                <Space y={0.5}>
+                  <Button
+                    as="a"
+                    data-dd-action-name="Contact us | faq"
+                    href={PageLink.faq({ locale }).pathname}
+                    target="_blank"
+                    variant="secondary"
+                  >
+                    <span>{t('FAQ_OPTION_LABEL')}</span>
+                    <span>{t('FAQ_OPTION_VALUE')}</span>
+                  </Button>
 
-                  <Space y={0.5}>
-                    <LinkButton
-                      data-dd-action-name="Contact us | faq"
-                      href={PageLink.faq({ locale }).pathname}
-                      target="_blank"
-                    >
-                      <span>{t('FAQ_OPTION_LABEL')}</span>
-                      <span>{t('FAQ_OPTION_VALUE')}</span>
-                    </LinkButton>
-
-                    <LinkButton
-                      data-dd-action-name="Contact us | phone"
-                      href={PageLink.help({ locale }).pathname}
-                      target="_blank"
-                    >
-                      <span>{t('TELEPHONE_OPTION_LABEL')}</span>
-                      <span>{t('TELEPHONE_OPTION_VALUE')}</span>
-                    </LinkButton>
-                  </Space>
+                  <Button
+                    as="a"
+                    data-dd-action-name="Contact us | phone"
+                    href={PageLink.help({ locale }).pathname}
+                    target="_blank"
+                    variant="secondary"
+                  >
+                    <span>{t('TELEPHONE_OPTION_LABEL')}</span>
+                    <span>{t('TELEPHONE_OPTION_VALUE')}</span>
+                  </Button>
                 </Space>
-              </Paper>
+              </Space>
             </Content>
           </ChatWindow>
         </Popover.Content>
@@ -196,38 +198,9 @@ const CloseButton = styled(Popover.Close)({
 })
 
 const Content = styled(Space)({
-  padding: theme.space.md,
-  overflowY: 'auto',
-})
-
-const Paper = styled.div({
-  padding: theme.space.md,
-  borderRadius: theme.radius.xs,
-  boxShadow: theme.shadow.default,
-  backgroundColor: theme.colors.offWhite,
-})
-
-const LinkButton = styled(Link)({
-  display: 'flex',
-  justifyContent: 'space-between',
-  gap: theme.space.sm,
-  fontSize: theme.fontSizes.sm,
-  border: `1px solid ${theme.colors.gray200}`,
-  borderRadius: theme.radius.sm,
-  paddingBlock: theme.space.md,
+  paddingBlock: theme.space.xl,
   paddingInline: theme.space.md,
-
-  '&[aria-disabled=true]': {
-    pointerEvents: 'none',
-    color: theme.colors.textTertiary,
-  },
-
-  '@media(hover: hover)': {
-    '&:not([aria-disabled=true]):hover': {
-      cursor: 'pointer',
-      backgroundColor: theme.colors.gray200,
-    },
-  },
+  overflowY: 'auto',
 })
 
 const AppButtons = styled.div({
