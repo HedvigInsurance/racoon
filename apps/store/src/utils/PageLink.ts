@@ -110,10 +110,19 @@ export const PageLink = {
     }
     return url
   },
+
   help: ({ locale }: { locale: RoutingLocale }) => {
     const url = HELP_URL[locale]
     if (!url) {
       datadogLogs.logger.error('Missing help page link for locale', { locale })
+      return PageLink.home({ locale })
+    }
+    return url
+  },
+  emailUs: ({ locale }: { locale: RoutingLocale }) => {
+    const url = EMAIL_US_URL[locale]
+    if (!url) {
+      datadogLogs.logger.error('Missing email us link for locale', { locale })
       return PageLink.home({ locale })
     }
     return url
@@ -337,6 +346,11 @@ const FAQ_URL: Partial<Record<RoutingLocale, URL>> = {
 const HELP_URL: Partial<Record<RoutingLocale, URL>> = {
   se: new URL('/se/hjalp', ORIGIN_URL),
   'se-en': new URL('/se-en/help', ORIGIN_URL),
+}
+
+const EMAIL_US_URL: Partial<Record<RoutingLocale, URL>> = {
+  se: new URL('/se/hjalp/mejla-oss', ORIGIN_URL),
+  'se-en': new URL('/se-en/help/email-us', ORIGIN_URL),
 }
 
 const DEDUCTIBLE_HELP_URL: Partial<Record<RoutingLocale, URL>> = {

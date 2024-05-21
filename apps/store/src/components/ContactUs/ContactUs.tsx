@@ -135,6 +135,15 @@ export const ContactUs = () => {
                     <span>{t('TELEPHONE_OPTION_LABEL')}</span>
                     <span>{t('TELEPHONE_OPTION_VALUE')}</span>
                   </Button>
+                  <Button
+                    as="a"
+                    data-dd-action-name="Contact us | email"
+                    href={PageLink.help({ locale }).pathname}
+                    target="_blank"
+                    variant="secondary"
+                  >
+                    <span>{t('EMAIL_OPTION')}</span>
+                  </Button>
                 </Space>
               </Space>
             </Content>
