@@ -75,9 +75,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           }
         : undefined,
     },
-    // Prevent indexing until we're ready to replace pages/[[...slug]]
-    robots: 'noindex, nofollow',
-    // robots: story.content.robots,
+    robots: story.content.robots,
     title,
   }
   return result
@@ -119,10 +117,7 @@ const normalizePageUrl = (url: string) =>
     // Special case - this is the only path where we keep trailing slash, NextJs will crash otherwise
     .replace(/^se$/, '/')
 
-// TODO: Restore export generateStaticParams when CMS page migration to app router is done. Right now pages/[locale]/[[...slug]]
-//  shadows non-listed pages when generateStaticParams is provided
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function generateStaticParams({
+export async function generateStaticParams({
   params,
 }: {
   params: Pick<CmsPageRoutingParams, 'locale'>

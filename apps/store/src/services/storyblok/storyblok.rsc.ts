@@ -18,9 +18,8 @@ import type { RoutingLocale } from '@/utils/l10n/types'
 // https://www.storyblok.com/tp/add-a-headless-cms-to-next-js-13-in-5-minutes
 
 // Default cache policy assumes that anything we fetch with `cv` is immutable
-// We're passing it explicitly to avoid being affected by changing defaults in Next 15
 const STORYBLOK_CACHE_SETTINGS = {
-  cache: 'force-cache',
+  // Sets cache: 'force-cache' automatically
   next: {
     revalidate: Infinity,
   },
