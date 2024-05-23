@@ -1,14 +1,14 @@
-import styled from '@emotion/styled'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import type { FormEventHandler } from 'react'
-import { BankIdIcon, Button, HedvigLogo, mq, Text, theme } from 'ui'
+import { BankIdIcon, Button, HedvigLogo, Text } from 'ui'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Video } from '@/components/Video/Video'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { singleQueryParam } from '@/utils/singleQueryParam'
+import { fieldWrapper, form, formWrapper, grid, loginVideo, loginWrapper } from './LoginPage.css'
 
 const SSN_FIELD_NAME = 'ssn'
 
@@ -27,8 +27,9 @@ export const LoginPage = () => {
         <title>Hedvig member login</title>
         <meta name="robots" content="noindex,follow" />
       </Head>
-      <Grid>
-        <LoginVideo
+      <div className={grid}>
+        <Video
+          className={loginVideo}
           autoPlay={true}
           showControls={false}
           sources={[
@@ -44,7 +45,7 @@ export const LoginPage = () => {
           defaultSsn={singleQueryParam(router.query, SSN_FIELD_NAME)}
           onSuccess={handleLoginSuccess}
         />
-      </Grid>
+      </div>
     </>
   )
 }
@@ -67,11 +68,11 @@ const LoginForm = ({
     })
   }
   return (
-    <LoginWrapper>
-      <FormWrapper direction="vertical" align="center">
+    <div className={loginWrapper}>
+      <div className={formWrapper}>
         <Text>{t('memberArea:LOGIN_HEADING')}</Text>
-        <Form onSubmit={handleSubmit}>
-          <FieldWrapper>
+        <form className={form} onSubmit={handleSubmit}>
+          <div className={fieldWrapper}>
             <PersonalNumberField
               name={SSN_FIELD_NAME}
               label={t('memberArea:LOGIN_SSN_FIELD')}
@@ -79,58 +80,16 @@ const LoginForm = ({
               defaultValue={defaultSsn}
               required={true}
             />
-          </FieldWrapper>
+          </div>
           <Button type="submit" loading={!!currentOperation}>
             <SpaceFlex space={0.5} align="center">
               <BankIdIcon />
               {t('bankid:LOGIN_BANKID')}
             </SpaceFlex>
           </Button>
-        </Form>
-      </FormWrapper>
+        </form>
+      </div>
       <HedvigLogo />
-    </LoginWrapper>
+    </div>
   )
 }
-
-const Grid = styled.div({
-  display: 'grid',
-  gridTemplateRows: '1fr 1fr',
-  justifyItems: 'center',
-  height: '100vh',
-
-  [mq.lg]: {
-    gridTemplateColumns: '550px 1fr',
-    gridTemplateRows: 'auto',
-    alignItems: 'stretch',
-  },
-})
-
-const LoginVideo = styled(Video)({
-  position: 'relative',
-  width: '100%',
-  height: '100%',
-})
-
-const LoginWrapper = styled.div({
-  display: 'grid',
-  gridTemplateRows: '1fr 200px',
-  alignItems: 'center',
-  justifyItems: 'center',
-  [mq.lg]: {
-    order: -1,
-  },
-})
-
-const FormWrapper = styled(SpaceFlex)({
-  marginTop: theme.space.xxxl,
-})
-
-const Form = styled.form({
-  minWidth: '20rem',
-})
-
-const FieldWrapper = styled.div({
-  marginTop: theme.space.lg,
-  marginBottom: theme.space.xxs,
-})
