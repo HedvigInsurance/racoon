@@ -8,7 +8,13 @@ import type { PageStory } from '@/services/storyblok/storyblok'
 import { MOST_VISITED_PATHS } from '@/services/storyblok/Storyblok.constant'
 import { getImgSrc, isProductStory } from '@/services/storyblok/Storyblok.helpers'
 import { getCmsPageLinks, getStoryBySlug } from '@/services/storyblok/storyblok.rsc'
-import { isRoutingLocale, toIsoLocale } from '@/utils/l10n/localeUtils'
+import { locales } from '@/utils/l10n/locales'
+import {
+  getHrefLang,
+  getLocaleOrFallback,
+  isRoutingLocale,
+  toIsoLocale,
+} from '@/utils/l10n/localeUtils'
 import type { IsoLocale, RoutingLocale } from '@/utils/l10n/types'
 import { ProductCmsPage } from './ProductCmsPage'
 import { StoryBreadcrumbs } from './StoryBreadcrumbs'
@@ -45,19 +51,32 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const story = await fetchStory(params.locale, params.slug?.join('/'))
   const pageUrl = [params.locale, ...(params.slug ?? [])].join('/')
 
+  const swedishAlternate = story.alternates.find(
+    (link) => getHrefLang(link.full_slug) === getLocaleOrFallback(locales['sv-SE'].locale).locale,
+  )
+
+  const defaultAlternateSlug = swedishAlternate ? swedishAlternate.full_slug : pageUrl
+
   const alternates = {
     canonical: story.content.canonicalUrl || pageUrl,
-    languages: {
-      [toIsoLocale(params.locale)]: pageUrl,
-    } as Record<IsoLocale, string>,
+    languages: {} as Record<IsoLocale | 'x-default', string>,
   }
+
+  // Only add self referring alternates when alternates are available
+  if (story.alternates.length > 0) {
+    alternates.languages[toIsoLocale(params.locale)] = pageUrl
+    alternates.languages['x-default'] = defaultAlternateSlug
+  }
+
   for (const alt of story.alternates) {
     const routingLocale = alt.full_slug.split('/')[0]
     if (!isRoutingLocale(routingLocale)) continue
     alternates.languages[toIsoLocale(routingLocale)] = alt.full_slug
   }
+
   const description = story.content.seoMetaDescription
   const title = story.content.seoTitle
+
   const result: Metadata = {
     alternates,
     description,
