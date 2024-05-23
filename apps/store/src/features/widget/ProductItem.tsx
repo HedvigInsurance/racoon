@@ -12,6 +12,7 @@ import { Price } from '@/components/Price'
 import { useSelectedTypeOfContract } from '@/components/ProductData/ProductDataProvider'
 import { useGetStartDateProps } from '@/components/ProductItem/useGetStartDateProps'
 import { ComparisonTableModal } from '@/components/ProductPage/PurchaseForm/ComparisonTableModal'
+import { DeductibleSelector } from '@/components/ProductPage/PurchaseForm/DeductibleSelector'
 import { ProductTierSelector } from '@/components/ProductPage/PurchaseForm/ProductTierSelector'
 import { Tooltip } from '@/components/Tooltip/Tooltip'
 import { type ProductOfferFragment } from '@/services/graphql/generated'
@@ -209,7 +210,11 @@ function EditUI(props: EditUIProps) {
       }
     },
   })
+
   const handleChangeTierLevel = (offerId: string) => addToCart(offerId)
+
+  const isPetProduct = props.selectedOffer.product.name.includes('_PET_')
+  const shouldShowDeductibles = isPetProduct && props.deductibles && props.deductibles.length > 1
 
   return (
     <Space y={0.25}>
@@ -230,6 +235,14 @@ function EditUI(props: EditUIProps) {
             </ComparisonTableModal>
           </div>
         </ProductTierSelector>
+      )}
+
+      {shouldShowDeductibles && (
+        <DeductibleSelector
+          offers={props.deductibles ?? []}
+          selectedOffer={props.selectedOffer}
+          onValueChange={handleChangeTierLevel}
+        />
       )}
     </Space>
   )

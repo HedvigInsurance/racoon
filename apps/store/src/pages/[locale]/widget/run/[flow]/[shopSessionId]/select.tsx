@@ -1,6 +1,6 @@
 import { stringify } from 'querystring'
 import { type ApolloClient, type NormalizedCacheObject } from '@apollo/client'
-import type { Redirect } from 'next';
+import type { Redirect } from 'next'
 import { type GetServerSideProps, type GetServerSidePropsContext } from 'next'
 import Head from 'next/head'
 import { useTranslation } from 'next-i18next'
