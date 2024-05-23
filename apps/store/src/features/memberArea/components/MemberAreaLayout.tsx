@@ -12,7 +12,7 @@ import { useMemberAreaMemberInfoQuery } from '@/services/graphql/generated'
 import type { GlobalStory, PageStory } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 import { CONTENT_WIDTH } from '../InsuranceSection/InsuranceSection.constants'
-import { MenuLoadingState, Menu } from './Menu'
+import { Menu, MenuLoadingState } from './Menu/Menu'
 
 type Props = {
   children: ReactElement<{
