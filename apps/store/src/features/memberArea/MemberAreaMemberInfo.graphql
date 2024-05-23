@@ -9,6 +9,10 @@ query MemberAreaMemberInfo {
     ssn
     paymentInformation {
       status
+      connection {
+        descriptor
+        displayName
+      }
     }
     insuranceCost {
       ...MemberInsuranceCost
