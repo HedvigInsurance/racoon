@@ -99,13 +99,18 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       throw new Error(`Widget Sign | No Price Intent: ${context.params.priceIntentId}`)
     }
 
+    const partnerName = story.content.partner
+    const productName = priceIntent.product.name
+    const isApartmentContract = productName.includes('_APARTMENT_')
+
     const productData = await fetchProductData({
       apolloClient,
-      productName: priceIntent.product.name,
-      partnerName: story.content.partner,
+      productName,
+      ...(isApartmentContract ? { partnerName } : {}),
     })
+
     const initialSelectedTypeOfContract =
-      productData.variants.length > 1 ? productData.variants[0].typeOfContract : undefined
+      productData.variants.length > 1 ? productData.variants[0].typeOfContract : null
 
     return {
       props: {
@@ -121,7 +126,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
         ...hideChatOnPage(),
         productName: priceIntent.product.name,
         productData,
-        initialSelectedTypeOfContract,
+        ...(initialSelectedTypeOfContract ? { initialSelectedTypeOfContract } : {}),
         pageTitle: story.content.pageTitle ?? 'Hedvig',
         showBackButton: story.content.showBackButton ?? false,
       },
