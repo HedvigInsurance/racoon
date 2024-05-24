@@ -55,6 +55,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     (link) => getHrefLang(link.full_slug) === getLocaleOrFallback(locales['sv-SE'].locale).locale,
   )
 
+  // There is no `swedishAlternate` when we are on a Swedish page
   const defaultAlternateSlug = swedishAlternate ? swedishAlternate.full_slug : pageUrl
 
   const alternates = {

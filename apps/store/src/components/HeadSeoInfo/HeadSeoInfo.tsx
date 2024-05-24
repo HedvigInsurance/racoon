@@ -71,6 +71,7 @@ const AlternateLinks = ({ story }: { story: ISbStoryData<SEOData> }) => {
     (link) => getHrefLang(link.full_slug) === getLocaleOrFallback(locales['sv-SE'].locale).locale,
   )
 
+  // There is no `swedishAlternate` when we are on a Swedish page
   const defaultAlternateSlug = swedishAlternate ? swedishAlternate.full_slug : story.full_slug
 
   return (
