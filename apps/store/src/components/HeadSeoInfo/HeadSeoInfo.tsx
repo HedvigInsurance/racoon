@@ -5,7 +5,8 @@ import type { SEOData } from '@/services/storyblok/storyblok'
 import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 import { isBrowser } from '@/utils/env'
 import { organization } from '@/utils/jsonSchema'
-import { getLocaleOrFallback, isRoutingLocale } from '@/utils/l10n/localeUtils'
+import { locales } from '@/utils/l10n/locales'
+import { getHrefLang, getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 import { ORIGIN_URL, removeSEHomepageLangSegment } from '@/utils/PageLink'
 
 type Props = {
@@ -56,21 +57,32 @@ export const HeadSeoInfo = ({ story, robots }: Props) => {
       </Head>
       {/* Must include link to self along with other variants */}
 
-      <AlternateLinks story={story} />
+      {story.alternates.length > 0 ? <AlternateLinks story={story} /> : null}
     </>
   )
 }
 
-// 1. Always add a self-referring alternate link to a page
+// 1. Add a self-referring alternate link with language
+// 2. When available refer to Swedish alternate as default
 // 2. Add additional alternate links for pages with more than one language variant
 // 3. Only add hreflang to self-referring link if there are more than one alternate links
 const AlternateLinks = ({ story }: { story: ISbStoryData<SEOData> }) => {
+  const swedishAlternate = story.alternates.find(
+    (link) => getHrefLang(link.full_slug) === getLocaleOrFallback(locales['sv-SE'].locale).locale,
+  )
+
+  // There is no `swedishAlternate` when we are on a Swedish page
+  const defaultAlternateSlug = swedishAlternate ? swedishAlternate.full_slug : story.full_slug
+
   return (
     <>
       <AlternateLink
         fullSlug={story.full_slug}
         hrefLang={story.alternates.length ? getHrefLang(story.full_slug) : null}
       />
+
+      <AlternateLink fullSlug={defaultAlternateSlug} hrefLang="x-default" />
+
       {story.alternates.map((alternate) => (
         <AlternateLink
           key={alternate.id}
@@ -92,13 +104,4 @@ const AlternateLink = ({ fullSlug, hrefLang }: { fullSlug: string; hrefLang: str
       />
     </Head>
   )
-}
-
-const getHrefLang = (fullSlug: string) => {
-  const slugLocale = fullSlug.split('/')[0]
-  if (isRoutingLocale(slugLocale)) {
-    return getLocaleOrFallback(slugLocale).locale
-  }
-
-  return 'x-default'
 }

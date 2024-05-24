@@ -1,15 +1,8 @@
 import type { TFunction } from 'next-i18next'
-import type { LocaleData} from '@/utils/l10n/locales';
+import type { LocaleData } from '@/utils/l10n/locales'
 import { FALLBACK_LOCALE, locales } from '@/utils/l10n/locales'
-import type {
-  CountryLabel,
-  IsoLocale,
-  RoutingLocale,
-  UiLocale} from '@/utils/l10n/types';
-import {
-  CountryCode,
-  Language
-} from '@/utils/l10n/types'
+import type { CountryLabel, IsoLocale, RoutingLocale, UiLocale } from '@/utils/l10n/types'
+import { CountryCode, Language } from '@/utils/l10n/types'
 
 const routingToIsoLocales = {} as { [key in RoutingLocale]: IsoLocale }
 const isoToRoutingLocales = {} as { [key in IsoLocale]: RoutingLocale }
@@ -81,4 +74,13 @@ export const translateLanguageName = (language: Language, t: TFunction) => {
     default:
       return `MISSING ${language}`
   }
+}
+
+export const getHrefLang = (fullSlug: string) => {
+  const slugLocale = fullSlug.split('/')[0]
+  if (isRoutingLocale(slugLocale)) {
+    return getLocaleOrFallback(slugLocale).locale
+  }
+
+  return 'x-default'
 }
