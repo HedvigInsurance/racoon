@@ -92,7 +92,7 @@
     "@babel/preset-env": "7.24.5",
     "@babel/preset-react": "7.24.1",
     "@babel/preset-typescript": "7.24.1",
-    "@datadog/datadog-ci": "2.34.0",
+    "@datadog/datadog-ci": "2.35.0",
     "@emotion/babel-plugin": "11.11.0",
     "@graphql-codegen/cli": "5.0.2",
     "@graphql-codegen/client-preset": "4.2.6",
