@@ -192,6 +192,7 @@ export const OfferPresenter = (props: Props) => {
                   offers={deductibles}
                   selectedOffer={selectedOffer}
                   onValueChange={handleOfferChange}
+                  defaultOpen={true}
                 />
               )}
 

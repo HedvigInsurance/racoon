@@ -1,31 +1,29 @@
 import { useTranslation } from 'next-i18next'
-import { type ReactNode } from 'react'
+import type { ComponentPropsWithoutRef } from 'react'
 import { Text } from 'ui'
 import * as TierSelector from '@/components/TierSelector/TierSelector'
 import type { ProductOfferFragment } from '@/services/graphql/generated'
 import { useFormatter } from '@/utils/useFormatter'
 
-type Props = {
+type Props = ComponentPropsWithoutRef<typeof TierSelector.Root> & {
   offers: Array<ProductOfferFragment>
   selectedOffer: ProductOfferFragment
   onValueChange: (offerId: string) => void
-  defaultOpen?: boolean
-  children?: ReactNode
 }
 
 export const ProductTierSelector = ({
   offers,
   selectedOffer,
   onValueChange,
-  defaultOpen,
   children,
+  ...props
 }: Props) => {
   const { t } = useTranslation('purchase-form')
   const getVariantDescription = useGetVariantDescription()
   const formatter = useFormatter()
 
   return (
-    <TierSelector.Root defaultOpen={defaultOpen ?? true}>
+    <TierSelector.Root {...props}>
       <TierSelector.Header>
         <div>
           <Text size="xs" color="textTranslucentSecondary">

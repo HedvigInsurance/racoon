@@ -214,7 +214,7 @@ function EditUI(props: EditUIProps) {
   const handleChangeTierLevel = (offerId: string) => addToCart(offerId)
 
   const isPetProduct = props.selectedOffer.product.name.includes('_PET_')
-  const shouldShowDeductibles = isPetProduct && props.deductibles && props.deductibles.length > 1
+  const shouldShowDeductibles = isPetProduct && !!props.deductibles && props.deductibles.length > 1
 
   return (
     <Space y={0.25}>
@@ -225,7 +225,6 @@ function EditUI(props: EditUIProps) {
           offers={props.tiers}
           selectedOffer={props.selectedOffer}
           onValueChange={handleChangeTierLevel}
-          defaultOpen={false}
         >
           <div className={compareButtonWrapper}>
             <ComparisonTableModal tiers={props.tiers} selectedTierId={props.selectedOffer.id}>

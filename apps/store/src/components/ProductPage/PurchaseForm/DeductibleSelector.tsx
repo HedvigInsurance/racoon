@@ -1,6 +1,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
+import type { ComponentPropsWithoutRef } from 'react'
 import { useMemo } from 'react'
 import { Text } from 'ui'
 import * as TierSelector from '@/components/TierSelector/TierSelector'
@@ -16,13 +17,19 @@ type Deductible = {
   description: string
 }
 
-type Props = {
+type Props = ComponentPropsWithoutRef<typeof TierSelector.Root> & {
   offers: Array<ProductOfferFragment>
   selectedOffer: ProductOfferFragment
   onValueChange: (offerId: string) => void
 }
 
-export const DeductibleSelector = ({ offers, selectedOffer, onValueChange }: Props) => {
+export const DeductibleSelector = ({
+  offers,
+  selectedOffer,
+  onValueChange,
+  children,
+  ...props
+}: Props) => {
   const { t } = useTranslation('purchase-form')
   const locale = useRoutingLocale()
   const formatter = useFormatter()
@@ -47,7 +54,7 @@ export const DeductibleSelector = ({ offers, selectedOffer, onValueChange }: Pro
   }, [offers])
 
   return (
-    <TierSelector.Root defaultOpen={true}>
+    <TierSelector.Root {...props}>
       <TierSelector.Header>
         <div>
           <Text size="xs" color="textTranslucentSecondary">
@@ -71,6 +78,7 @@ export const DeductibleSelector = ({ offers, selectedOffer, onValueChange }: Pro
             />
           ))}
         </TierSelector.OptionsList>
+        {children}
         <TierSelector.Footer>
           <Link href={PageLink.deductibleHelp({ locale })} target="_blank" rel="noopener">
             <Text as="span" size="xs">
