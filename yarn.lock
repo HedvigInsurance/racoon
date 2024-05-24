@@ -8726,9 +8726,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-designs@npm:8.0.1":
-  version: 8.0.1
-  resolution: "@storybook/addon-designs@npm:8.0.1"
+"@storybook/addon-designs@npm:8.0.2":
+  version: 8.0.2
+  resolution: "@storybook/addon-designs@npm:8.0.2"
   dependencies:
     "@figspec/react": "npm:^1.0.0"
   peerDependencies:
@@ -8748,7 +8748,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 10c0/e9235e5bfa0e06be1639f7f9f736cc8d5f7cb76f250a94a8d0f0c73f01c0378a5a3f4aefc315344f271f30ad454eb69e20824df0d0b6912e835acaf014728ca3
+  checksum: 10c0/1a009d0f1daf0a3c0e2b2c7cc7f1c02b8c2e43fb063753d77ba46515ada8168da11f1126d29fda136847da65911c6f78ca96dcc7524fad98bf165726c5c2b579
   languageName: node
   linkType: hard
 
@@ -24569,7 +24569,7 @@ __metadata:
     "@storyblok/js": "npm:3.0.8"
     "@storyblok/react": "npm:3.0.10"
     "@storybook/addon-actions": "npm:8.1.1"
-    "@storybook/addon-designs": "npm:8.0.1"
+    "@storybook/addon-designs": "npm:8.0.2"
     "@storybook/addon-essentials": "npm:8.1.1"
     "@storybook/addon-links": "npm:8.1.1"
     "@storybook/addon-viewport": "npm:8.1.1"
