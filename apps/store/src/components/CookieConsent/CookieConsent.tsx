@@ -39,10 +39,11 @@ export function CookieConsent() {
   const { t } = useTranslation(['cookieConsent', 'common'])
   const locale = useRoutingLocale()
 
-  // Make sure we don't show the cookie banner or load GTM before we have read the OneTrust cookie
+  // 1. Make sure we don't show the cookie banner before we have read the OneTrust cookie
+  // 2. Initialize GTM on initial load to ensure consent values are sent from the start
   const [cookieConsent, setCookieConsent] = useState<CookieConsent>({
     showBanner: false,
-    initializeGtm: false,
+    initializeGtm: true,
     action: null,
   })
 
