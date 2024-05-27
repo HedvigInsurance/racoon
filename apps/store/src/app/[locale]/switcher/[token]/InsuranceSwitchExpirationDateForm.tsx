@@ -9,11 +9,11 @@ import { SubmitButton } from '@/appComponents/SubmitButton'
 import { ErrorMessages } from '@/components/FormErrors/ErrorMessages'
 import { InputDay } from '@/components/InputDay/InputDay'
 import {
+  checkbox,
   checkboxIndicator,
   checkboxRoot,
-  consentWrapper,
-} from '@/features/carDealership/MyMoneyConsent/MyMoneyConsent.css'
-import { wrapper } from './InsuranceSwitcherExpirationDateForm.css'
+  wrapper,
+} from './InsuranceSwitcherExpirationDateForm.css'
 import { submitSwitchConfirmation } from './submitSwitchConfirmation'
 
 type Props = {
@@ -32,7 +32,7 @@ export default function InsuranceSwitchExpirationDateForm({ switchToken }: Props
         <Space y={0.25}>
           <InputDay name="expiryDate" label="Expiry Date" required={true} />
 
-          <div className={consentWrapper}>
+          <div className={checkbox}>
             <Checkbox.Root id="confirmation" name="confirmation" className={checkboxRoot} required>
               <Checkbox.Indicator className={checkboxIndicator}>
                 <CheckIcon size="1rem" />
