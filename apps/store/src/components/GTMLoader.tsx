@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { GTMAppScript, gtmGtag } from '@/services/gtm'
+import { GTMAppScript, gtmGtag, pushToGTMDataLayer } from '@/services/gtm'
 
 export type OneTrustApi = {
   OnConsentChanged: (callback: () => void) => void
@@ -89,6 +89,14 @@ export function useSaveConsent() {
       personalization_storage: consentGroups.required,
       functionality_storage: consentGroups.required,
       security_storage: consentGroups.required,
+    })
+
+    pushToGTMDataLayer({
+      event: 'OneTrustGroupsUpdated',
+      OnetrustActiveGroups: activeGroups,
+      eventData: {
+        event_category: 'manual OneTrust',
+      },
     })
   }, [])
 

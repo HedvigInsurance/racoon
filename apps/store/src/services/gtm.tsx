@@ -55,6 +55,7 @@ type DataLayerObject = {
   ecommerce?: GTMEcommerceData
   shopSession?: GTMShopSessionData
   user_id?: string
+  OnetrustActiveGroups?: string
 }
 
 type DataLayerArray = Array<unknown>

@@ -56,6 +56,14 @@ export function CookieConsent() {
     }))
   }, [cookieValue])
 
+  useEffect(() => {
+    // Save/update consent continously when consent is given
+    if (!cookieConsent.showBanner) {
+      saveConsent()
+      console.log('run save consent')
+    }
+  })
+
   const handleOneTrustLoaded = () => {
     ;(window as any).OptanonWrapper = function () {
       const OneTrust = (window as any).OneTrust as OneTrustApi
@@ -73,6 +81,8 @@ export function CookieConsent() {
           ...prevState,
           initializeGtm: true,
         }))
+
+        setLoadOneTrust(false)
       }
 
       if (cookieConsent.action === 'openSettings') {
@@ -90,6 +100,8 @@ export function CookieConsent() {
             ...prevState,
             initializeGtm: true,
           }))
+
+          setLoadOneTrust(false)
         })
       }
     }
