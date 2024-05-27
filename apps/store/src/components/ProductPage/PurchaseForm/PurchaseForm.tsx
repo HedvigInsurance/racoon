@@ -54,9 +54,16 @@ export type PurchaseFormProps = {
   showAverageRating?: boolean
 }
 
+// TODO: Merge Layout here
 export function PurchaseForm(props: PurchaseFormProps) {
   return (
-    <Suspense>
+    <Suspense
+      fallback={
+        <Layout>
+          {() => <IdleState loading={true} showAverageRating={props.showAverageRating} />}
+        </Layout>
+      }
+    >
       <PriceIntentContextProvider>
         <ProductPageTrackingProvider>
           <PurchaseFormInner {...props} />
