@@ -54,26 +54,37 @@ export type PurchaseFormProps = {
   showAverageRating?: boolean
 }
 
-// TODO: Merge Layout here
 export function PurchaseForm(props: PurchaseFormProps) {
+  const pathname = usePathname()
+  const toastRef = useRef<CartToastAttributes | null>(null)
+  const notifyProductAdded = (item: ProductItemProps) => {
+    toastRef.current?.publish(item)
+  }
+
   return (
-    <Suspense
-      fallback={
-        <Layout>
-          {() => <IdleState loading={true} showAverageRating={props.showAverageRating} />}
-        </Layout>
-      }
-    >
-      <PriceIntentContextProvider>
-        <ProductPageTrackingProvider>
-          <PurchaseFormInner {...props} />
-        </ProductPageTrackingProvider>
-      </PriceIntentContextProvider>
-    </Suspense>
+    <>
+      <PurchaseFormTop>
+        <Suspense
+          fallback={<IdleState loading={true} showAverageRating={props.showAverageRating} />}
+        >
+          <PriceIntentContextProvider>
+            <ProductPageTrackingProvider>
+              <PurchaseFormInner {...props} notifyProductAdded={notifyProductAdded} />
+            </ProductPageTrackingProvider>
+          </PriceIntentContextProvider>
+        </Suspense>
+      </PurchaseFormTop>
+      {/* key=pathname makes sure we re-init the toast if current page changes */}
+      <CartToast key={pathname} ref={toastRef} />
+    </>
   )
 }
 
-const PurchaseFormInner = (props: PurchaseFormProps) => {
+type PurchaseFormInnerProps = PurchaseFormProps & {
+  notifyProductAdded: (item: ProductItemProps) => void
+}
+
+const PurchaseFormInner = (props: PurchaseFormInnerProps) => {
   const { t } = useTranslation('purchase-form')
   const { priceTemplate } = useProductPageContext()
   const productData = useProductData()
@@ -123,133 +134,107 @@ const PurchaseFormInner = (props: PurchaseFormProps) => {
     !isLarge && window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   }
 
-  return (
-    <Layout>
-      {(notifyProductAdded) => {
-        const isReady = !!(shopSession && priceIntent)
-        if (!isReady) {
-          return <IdleState loading={true} showAverageRating={props.showAverageRating} />
-        } else if (formState.state === 'IDLE') {
-          if (selectedOffer == null) {
-            return <IdleState onClick={handleOpen} showAverageRating={props.showAverageRating} />
-          } else {
-            const handleAddedToCart = async (item: ProductOfferFragment, nextUrl?: string) => {
-              try {
-                await createNewPriceIntent(shopSession)
-              } catch (error) {
-                datadogLogs.logger.error('Failed to create new price intent', {
-                  error,
-                  priceTemplate: priceTemplate.name,
-                  shopSessionId: shopSession.id,
-                })
-                console.error('Failed to create new price intent', error)
-              }
-
-              if (nextUrl) {
-                return router.push(nextUrl)
-              }
-
-              notifyProductAdded({
-                name: productData.displayNameFull,
-                price: formatter.monthlyPrice(item.cost.net),
-                pillowSrc: productData.pillowImage.src,
-                description:
-                  !item.cancellation.requested ||
-                  item.cancellation.option ===
-                    ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate
-                    ? t('CART_ENTRY_DATE_LABEL', {
-                        date: formatter.fromNow(new Date(item.startDate)),
-                        ns: 'cart',
-                      })
-                    : t('CART_ENTRY_AUTO_SWITCH', { ns: 'cart' }),
-              })
-            }
-
-            return (
-              <ProductHeroContainer size="large" compact={true}>
-                <ShowOfferState
-                  shopSession={shopSession}
-                  priceIntent={priceIntent}
-                  onAddedToCart={handleAddedToCart}
-                  onClickEdit={editForm}
-                  selectedOffer={selectedOffer}
-                />
-              </ProductHeroContainer>
-            )
-          }
+  const isReady = !!(shopSession && priceIntent)
+  if (!isReady) {
+    return <IdleState loading={true} showAverageRating={props.showAverageRating} />
+  } else if (formState.state === 'IDLE') {
+    if (selectedOffer == null) {
+      return <IdleState onClick={handleOpen} showAverageRating={props.showAverageRating} />
+    } else {
+      const handleAddedToCart = async (item: ProductOfferFragment, nextUrl?: string) => {
+        try {
+          await createNewPriceIntent(shopSession)
+        } catch (error) {
+          datadogLogs.logger.error('Failed to create new price intent', {
+            error,
+            priceTemplate: priceTemplate.name,
+            shopSessionId: shopSession.id,
+          })
+          console.error('Failed to create new price intent', error)
         }
 
-        const editingStateForm = (
-          <EditingState
+        if (nextUrl) {
+          return router.push(nextUrl)
+        }
+
+        props.notifyProductAdded({
+          name: productData.displayNameFull,
+          price: formatter.monthlyPrice(item.cost.net),
+          pillowSrc: productData.pillowImage.src,
+          description:
+            !item.cancellation.requested ||
+            item.cancellation.option ===
+              ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate
+              ? t('CART_ENTRY_DATE_LABEL', {
+                  date: formatter.fromNow(new Date(item.startDate)),
+                  ns: 'cart',
+                })
+              : t('CART_ENTRY_AUTO_SWITCH', { ns: 'cart' }),
+        })
+      }
+
+      return (
+        <ProductHeroContainer size="large" compact={true}>
+          <ShowOfferState
             shopSession={shopSession}
             priceIntent={priceIntent}
-            priceTemplate={priceTemplate}
-            onComplete={handleComplete}
+            onAddedToCart={handleAddedToCart}
+            onClickEdit={editForm}
+            selectedOffer={selectedOffer}
           />
-        )
-
-        const editor = isLarge ? (
-          <motion.div
-            initial={{ opacity: 0, y: '1vh' }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ...framerTransitions.easeInOutCubic }}
-          >
-            <ProductHeroContainer size="small" compact={true}>
-              {editingStateForm}
-            </ProductHeroContainer>
-          </motion.div>
-        ) : (
-          <PriceCalculatorDialog
-            isOpen
-            toggleDialog={() => setFormState('IDLE')}
-            header={
-              <SpaceFlex direction="vertical" align="center" space={0.5}>
-                <Pillow size="large" {...productData.pillowImage} />
-                <Heading as="h2" variant="standard.18">
-                  {productData.displayNameShort}
-                </Heading>
-              </SpaceFlex>
-            }
-          >
-            {editingStateForm}
-          </PriceCalculatorDialog>
-        )
-
-        return (
-          <>
-            {formState.state !== 'ERROR' && editor}
-
-            <PurchaseFormErrorDialog
-              open={formState.state === 'ERROR'}
-              onOpenChange={() => {
-                setFormState('IDLE')
-              }}
-              onEditClick={editForm}
-              errorMessage={formState.errorMsg}
-            />
-          </>
-        )
-      }}
-    </Layout>
-  )
-}
-
-type LayoutProps = {
-  children: (notifyProductAdded: (item: ProductItemProps) => void) => ReactNode
-}
-
-const Layout = ({ children }: LayoutProps) => {
-  const pathname = usePathname()
-  const toastRef = useRef<CartToastAttributes | null>(null)
-  const notifyProductAdded = (item: ProductItemProps) => {
-    toastRef.current?.publish(item)
+        </ProductHeroContainer>
+      )
+    }
   }
+
+  const editingStateForm = (
+    <EditingState
+      shopSession={shopSession}
+      priceIntent={priceIntent}
+      priceTemplate={priceTemplate}
+      onComplete={handleComplete}
+    />
+  )
+
+  const editor = isLarge ? (
+    <motion.div
+      initial={{ opacity: 0, y: '1vh' }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ...framerTransitions.easeInOutCubic }}
+    >
+      <ProductHeroContainer size="small" compact={true}>
+        {editingStateForm}
+      </ProductHeroContainer>
+    </motion.div>
+  ) : (
+    <PriceCalculatorDialog
+      isOpen
+      toggleDialog={() => setFormState('IDLE')}
+      header={
+        <SpaceFlex direction="vertical" align="center" space={0.5}>
+          <Pillow size="large" {...productData.pillowImage} />
+          <Heading as="h2" variant="standard.18">
+            {productData.displayNameShort}
+          </Heading>
+        </SpaceFlex>
+      }
+    >
+      {editingStateForm}
+    </PriceCalculatorDialog>
+  )
 
   return (
     <>
-      <PurchaseFormTop>{children(notifyProductAdded)}</PurchaseFormTop>
-      {/* key=pathname makes sure we re-init the toast if current page changes */}
-      <CartToast key={pathname} ref={toastRef} />
+      {formState.state !== 'ERROR' && editor}
+
+      <PurchaseFormErrorDialog
+        open={formState.state === 'ERROR'}
+        onOpenChange={() => {
+          setFormState('IDLE')
+        }}
+        onEditClick={editForm}
+        errorMessage={formState.errorMsg}
+      />
     </>
   )
 }
