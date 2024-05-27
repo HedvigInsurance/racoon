@@ -1,14 +1,14 @@
 'use client'
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
-import styled from '@emotion/styled'
+import { clsx } from 'clsx'
 import { motion } from 'framer-motion'
 import { usePathname, useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import type { ReactNode } from 'react'
 import { Suspense } from 'react'
 import { useCallback, useRef, useState } from 'react'
-import { Button, Heading, mq, Space, theme, framerTransitions } from 'ui'
+import { Button, Heading, Space, framerTransitions } from 'ui'
 import type { CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { CartToast } from '@/components/CartNotification/CartToast'
 import type { ProductItemProps } from '@/components/CartNotification/ProductItem'
@@ -22,6 +22,14 @@ import {
 } from '@/components/ProductPage/PriceIntentContext'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { ProductPageTrackingProvider } from '@/components/ProductPage/ProductPageTrackingProvider'
+import {
+  purchaseFormHeroWrapper,
+  purchaseFormPriceLoaderWrapper,
+  purchaseFormResponsiveBlock,
+  purchaseFormSection,
+  purchaseFormStickyButtonWrapper,
+  purchaseFormTop,
+} from '@/components/ProductPage/PurchaseForm/PurchaseForm.css'
 import {
   useIsPriceCalculatorExpanded,
   useOpenPriceCalculatorQueryParam,
@@ -63,7 +71,7 @@ export function PurchaseForm(props: PurchaseFormProps) {
 
   return (
     <>
-      <PurchaseFormTop>
+      <div className={purchaseFormTop}>
         <Suspense
           fallback={<IdleState loading={true} showAverageRating={props.showAverageRating} />}
         >
@@ -73,7 +81,7 @@ export function PurchaseForm(props: PurchaseFormProps) {
             </ProductPageTrackingProvider>
           </PriceIntentContextProvider>
         </Suspense>
-      </PurchaseFormTop>
+      </div>
       {/* key=pathname makes sure we re-init the toast if current page changes */}
       <CartToast key={pathname} ref={toastRef} />
     </>
@@ -248,9 +256,15 @@ type ProductHeroContainerProps = {
 const ProductHeroContainer = (props: ProductHeroContainerProps) => {
   const { content } = useProductPageContext()
   const productData = useProductData()
-
   return (
-    <ProductHeroWrapper compact={props.compact ?? false}>
+    <div
+      className={clsx(
+        purchaseFormResponsiveBlock,
+        purchaseFormSection,
+        purchaseFormHeroWrapper.base,
+        props.compact ? purchaseFormHeroWrapper.compact : purchaseFormHeroWrapper.full,
+      )}
+    >
       <ProductHero
         name={content.product.name}
         description={content.product.description}
@@ -261,7 +275,7 @@ const ProductHeroContainer = (props: ProductHeroContainerProps) => {
         size={props.size}
       />
       {props.children}
-    </ProductHeroWrapper>
+    </div>
   )
 }
 
@@ -287,9 +301,9 @@ const IdleState = ({ loading, onClick, showAverageRating }: IdleStateProps) => {
         </ProductHeroContainer>
       </div>
       <ScrollPast targetRef={ref}>
-        <StickyButtonWrapper>
+        <div className={purchaseFormStickyButtonWrapper}>
           <Button onClick={onClick}>{t('OPEN_PRICE_CALCULATOR_BUTTON')}</Button>
-        </StickyButtonWrapper>
+        </div>
       </ScrollPast>
     </>
   )
@@ -353,11 +367,11 @@ const EditingState = (props: EditingStateProps) => {
   }
 
   return isLoadingPrice ? (
-    <PriceLoaderWrapper>
+    <div className={purchaseFormPriceLoaderWrapper}>
       <PriceLoader />
-    </PriceLoaderWrapper>
+    </div>
   ) : (
-    <PriceCalculatorWrapper>
+    <div className={purchaseFormResponsiveBlock}>
       <PriceCalculatorDynamic
         key={priceIntent.id}
         priceIntent={priceIntent}
@@ -365,15 +379,9 @@ const EditingState = (props: EditingStateProps) => {
         priceTemplate={priceTemplate}
         onConfirm={handleConfirm}
       />
-    </PriceCalculatorWrapper>
+    </div>
   )
 }
-
-const PriceLoaderWrapper = styled.div({
-  paddingTop: theme.space.xxl,
-  maxWidth: '16rem',
-  marginInline: 'auto',
-})
 
 type ShowOfferStateProps = {
   priceIntent: PriceIntent
@@ -388,7 +396,7 @@ const ShowOfferState = (props: ShowOfferStateProps) => {
   const scrollPastRef = useRef<HTMLDivElement | null>(null)
 
   return (
-    <SectionWrapper ref={scrollPastRef}>
+    <div className={clsx(purchaseFormResponsiveBlock, purchaseFormSection)} ref={scrollPastRef}>
       <OfferPresenterDynamic
         priceIntent={priceIntent}
         shopSession={shopSession}
@@ -397,56 +405,6 @@ const ShowOfferState = (props: ShowOfferStateProps) => {
         onClickEdit={onClickEdit}
         selectedOffer={selectedOffer}
       />
-    </SectionWrapper>
+    </div>
   )
 }
-
-const PURCHASE_FORM_MAX_WIDTH = '21rem'
-
-const PurchaseFormTop = styled.div({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  gap: theme.space.xl,
-  minHeight: '80vh',
-  paddingInline: theme.space.md,
-  paddingBottom: theme.space.xl,
-
-  [mq.lg]: { minHeight: 'revert' },
-})
-
-const StickyButtonWrapper = styled.div({
-  paddingInline: theme.space.md,
-  [mq.lg]: {
-    display: 'none',
-  },
-})
-
-const SectionWrapper = styled.div({
-  position: 'relative',
-  width: '100%',
-  [mq.sm]: {
-    maxWidth: PURCHASE_FORM_MAX_WIDTH,
-    margin: '0 auto',
-  },
-})
-
-const ProductHeroWrapper = styled(SectionWrapper)<{ compact: boolean }>(
-  {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-  ({ compact }) => ({
-    rowGap: compact ? theme.space.xl : theme.space[9],
-  }),
-)
-
-const PriceCalculatorWrapper = styled.div({
-  width: '100%',
-  [mq.sm]: {
-    maxWidth: PURCHASE_FORM_MAX_WIDTH,
-    margin: '0 auto',
-  },
-})
