@@ -21,6 +21,7 @@ import {
   usePriceIntent,
 } from '@/components/ProductPage/PriceIntentContext'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
+import { ProductPageDebugDialog } from '@/components/ProductPage/ProductPageDebugDialog'
 import { ProductPageTrackingProvider } from '@/components/ProductPage/ProductPageTrackingProvider'
 import {
   purchaseFormHeroWrapper,
@@ -78,6 +79,7 @@ export function PurchaseForm(props: PurchaseFormProps) {
           <PriceIntentContextProvider>
             <ProductPageTrackingProvider>
               <PurchaseFormInner {...props} notifyProductAdded={notifyProductAdded} />
+              <ProductPageDebugDialog />
             </ProductPageTrackingProvider>
           </PriceIntentContextProvider>
         </Suspense>

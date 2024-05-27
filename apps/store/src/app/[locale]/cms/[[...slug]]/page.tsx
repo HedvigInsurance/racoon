@@ -4,6 +4,7 @@ import { removeTrailingSlash } from 'next/dist/shared/lib/router/utils/remove-tr
 import { notFound } from 'next/navigation'
 import { cache } from 'react'
 import { storyblokBridgeOptions } from '@/appComponents/storyblokBridgeOptions'
+import { DefaultDebugDialog } from '@/components/DebugDialog/DefaultDebugDialog'
 import type { PageStory } from '@/services/storyblok/storyblok'
 import { MOST_VISITED_PATHS } from '@/services/storyblok/Storyblok.constant'
 import { getImgSrc, isProductStory } from '@/services/storyblok/Storyblok.helpers'
@@ -43,6 +44,7 @@ export default async function CmsPage(props: Props) {
     <>
       <StoryblokStory story={story} bridgeOptions={storyblokBridgeOptions} />
       {!hideBreadcrumbs && <StoryBreadcrumbs params={props.params} currentPageTitle={story.name} />}
+      <DefaultDebugDialog />
     </>
   )
 }

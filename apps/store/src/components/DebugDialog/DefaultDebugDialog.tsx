@@ -1,3 +1,5 @@
+'use client'
+
 import { Space } from 'ui'
 import { DebugDialog } from '@/components/DebugDialog/DebugDialog'
 import { DebugShopSessionSection } from '@/components/DebugDialog/DebugShopSessionSection'

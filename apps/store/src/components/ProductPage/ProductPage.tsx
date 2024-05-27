@@ -7,9 +7,9 @@ import { PriceIntentContextProvider } from '@/components/ProductPage/PriceIntent
 import { ProductPageTrackingProvider } from '@/components/ProductPage/ProductPageTrackingProvider'
 import { ProductPageViewTracker } from '@/components/ProductPage/ProductPageViewTrack'
 import { ProductReviewsMetadataProvider } from '@/features/memberReviews/ProductReviewsMetadataProvider'
-import { PageDebugDialog } from './PageDebugDialog'
 import { type ProductPageProps } from './ProductPage.types'
 import { ProductPageContextProvider } from './ProductPageContext'
+import { ProductPageDebugDialog } from './ProductPageDebugDialog'
 
 export const ProductPage = ({ story, ...props }: ProductPageProps) => {
   return (
@@ -23,7 +23,7 @@ export const ProductPage = ({ story, ...props }: ProductPageProps) => {
             <ProductReviewsMetadataProvider productReviewsMetadata={props.productReviewsMetadata}>
               <StoryblokComponent blok={story.content} />
               {props.breadcrumbs && <PageBreadcrumbs items={props.breadcrumbs} />}
-              <PageDebugDialog />
+              <ProductPageDebugDialog />
               <ProductPageViewTracker />
               <PageBannerTriggers blok={story.content} />
             </ProductReviewsMetadataProvider>
