@@ -4,7 +4,7 @@ import * as Checkbox from '@radix-ui/react-checkbox'
 import clsx from 'clsx'
 import { useFormState } from 'react-dom'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
-import { Badge, CheckIcon, Space, Text } from 'ui'
+import { CheckIcon, Space, Text } from 'ui'
 import { SubmitButton } from '@/appComponents/SubmitButton'
 import { ErrorMessages } from '@/components/FormErrors/ErrorMessages'
 import { InputDay } from '@/components/InputDay/InputDay'
@@ -26,10 +26,7 @@ export default function InsuranceSwitchExpirationDateForm({ switchToken }: Props
   return (
     <div className={clsx(wrapper, sprinkles({ py: 'xxxl' }))}>
       <Text className={sprinkles({ mb: 'md' })}>
-        Please enter expiration date related to agreement number
-        <Badge as="span" className={sprinkles({ marginLeft: 'xxs' })}>
-          {switchToken}
-        </Badge>
+        Please enter expiration date and check the box below to confirm cancellation.
       </Text>
       <form action={formAction}>
         <Space y={0.25}>

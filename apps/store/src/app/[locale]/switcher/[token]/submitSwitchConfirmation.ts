@@ -1,6 +1,15 @@
 'use server'
 
 import type { FormStateWithErrors } from 'app/types/formStateTypes'
+import { getApolloClient } from '@/services/apollo/app-router/rscClient'
+import {
+  SwitchConfirmationDocument,
+  type SwitchConfirmationMutation,
+  type SwitchConfirmationMutationVariables,
+} from '@/services/graphql/generated'
+import type { RoutingLocale } from '@/utils/l10n/types'
+
+const DEFAULT_LOCALE: RoutingLocale = 'se-en'
 
 export const submitSwitchConfirmation = async (
   _: FormStateWithErrors,
@@ -17,12 +26,18 @@ export const submitSwitchConfirmation = async (
     }
   }
 
-  console.log({ expiryDate, token })
+  const apolloClient = getApolloClient(DEFAULT_LOCALE)
 
-  // Make TS happy
-  await Promise.resolve()
-
-  return {
-    fields: { expiryDate, token },
+  try {
+    await apolloClient.mutate<SwitchConfirmationMutation, SwitchConfirmationMutationVariables>({
+      mutation: SwitchConfirmationDocument,
+      variables: { switcherCaseCompleteId: token, currentExpiryDate: expiryDate },
+    })
+  } catch (error) {
+    return {
+      errors: {
+        generic: ['Something went wrong while submitting!'],
+      },
+    }
   }
 }
