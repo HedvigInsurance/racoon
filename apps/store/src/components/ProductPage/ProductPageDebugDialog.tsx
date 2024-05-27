@@ -11,7 +11,7 @@ import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { usePriceIntent } from './PriceIntentContext'
 
-export const PageDebugDialog = () => {
+export function ProductPageDebugDialog() {
   return (
     <DebugDialog>
       <Space y={0.25}>
@@ -23,7 +23,7 @@ export const PageDebugDialog = () => {
   )
 }
 
-const LinkToOfferSection = () => {
+function LinkToOfferSection() {
   const locale = useRoutingLocale()
   const { shopSession } = useShopSession()
   const [priceIntent] = usePriceIntent()

@@ -4,7 +4,6 @@ import { BankIdDialog } from '@/components/BankIdDialog/BankIdDialog'
 import { PageBannerTriggers } from '@/components/Banner/PageBannerTriggers'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
-import { PageDebugDialog } from '@/components/ProductPage/PageDebugDialog'
 import { ProductPageContextProvider } from '@/components/ProductPage/ProductPageContext'
 import { ProductPageViewTracker } from '@/components/ProductPage/ProductPageViewTrack'
 import { fetchProductReviewsMetadata } from '@/features/memberReviews/memberReviews'
@@ -51,7 +50,6 @@ export const ProductCmsPage = async ({ locale, story }: ProductCmsPageProps) => 
         <ProductReviewsMetadataProvider productReviewsMetadata={productReviewsMetadata}>
           <BankIdContextProvider>
             <StoryblokStory story={story} bridgeOptions={storyblokBridgeOptions} />
-            <PageDebugDialog />
             <ProductPageViewTracker />
             <PageBannerTriggers blok={story.content} />
             <BankIdDialog />
