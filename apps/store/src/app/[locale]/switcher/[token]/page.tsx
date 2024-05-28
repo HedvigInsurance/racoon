@@ -1,5 +1,10 @@
+import type { RoutingLocale } from '@/utils/l10n/types'
 import InsuranceSwitchExpirationDateForm from './InsuranceSwitchExpirationDateForm'
 
-export default function InsuranceSwitchExpirationDate({ params }: { params: { token: string } }) {
-  return <InsuranceSwitchExpirationDateForm switchToken={params.token} />
+type Props = {
+  params: { id: string; locale: RoutingLocale }
+}
+
+export default function InsuranceSwitchExpirationDate({ params }: Props) {
+  return <InsuranceSwitchExpirationDateForm id={params.id} locale={params.locale} />
 }

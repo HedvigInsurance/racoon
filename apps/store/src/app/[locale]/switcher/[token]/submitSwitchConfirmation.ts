@@ -7,6 +7,7 @@ import {
   type SwitchConfirmationMutationVariables,
 } from '@/services/graphql/generated'
 import type { RoutingLocale } from '@/utils/l10n/types'
+import { initTranslationsServerSide } from 'app/i18n'
 import type { FormStateWithErrors } from 'app/types/formStateTypes'
 
 const DEFAULT_LOCALE: RoutingLocale = 'se-en'
@@ -16,12 +17,15 @@ export const submitSwitchConfirmation = async (
   formData: FormData,
 ): Promise<FormStateWithErrors> => {
   const expiryDate = formData.get('expiryDate') as string
-  const token = formData.get('token') as string
+  const id = formData.get('id') as string
+  const locale = formData.get('locale') as string
+
+  const { t } = await initTranslationsServerSide(locale)
 
   if (!expiryDate) {
     return {
       errors: {
-        generic: ['Make sure to select an expiration date'],
+        generic: [t('contractSwitchConfirmationForm:SWITCH_CONFIRMATION_FORM_DATE_MISSING')],
       },
     }
   }
@@ -31,12 +35,12 @@ export const submitSwitchConfirmation = async (
   try {
     await apolloClient.mutate<SwitchConfirmationMutation, SwitchConfirmationMutationVariables>({
       mutation: SwitchConfirmationDocument,
-      variables: { switcherCaseCompleteId: token, currentExpiryDate: expiryDate },
+      variables: { switcherCaseCompleteId: id, currentExpiryDate: expiryDate },
     })
   } catch (error) {
     return {
       errors: {
-        generic: ['Something went wrong while submitting!'],
+        generic: [t('contractSwitchConfirmationForm:SWITCH_CONFIRMATION_FORM_ERROR')],
       },
     }
   }
@@ -45,7 +49,7 @@ export const submitSwitchConfirmation = async (
     messages: [
       {
         type: 'success',
-        content: 'Thank you!',
+        content: t('contractSwitchConfirmationForm:SWITCH_CONFIRMATION_FORM_SUCCESS'),
       },
     ],
   }
