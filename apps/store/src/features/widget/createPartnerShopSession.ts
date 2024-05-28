@@ -1,15 +1,7 @@
 import { type ApolloClient } from '@apollo/client'
-import { type VariablesOf } from '@graphql-typed-document-node/core'
-import { graphql } from '@/services/graphql'
+import type { VariablesOf } from '@graphql-typed-document-node/core'
+import { ShopSessionCreatePartnerDocument } from '@/services/graphql/graphql'
 import { SearchParam } from './parseSearchParams'
-
-const ShopSessionCreatePartnerDocument = graphql(/* GraphQL */ `
-  mutation ShopSessionCreatePartner($input: ShopSessionCreatePartnerInput!) {
-    shopSessionCreatePartner(input: $input) {
-      id
-    }
-  }
-`)
 
 type MutationVariables = VariablesOf<typeof ShopSessionCreatePartnerDocument>['input']
 

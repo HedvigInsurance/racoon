@@ -1,0 +1,5 @@
+mutation ShopSessionCreatePartner($input: ShopSessionCreatePartnerInput!) {
+    shopSessionCreatePartner(input: $input) {
+        id
+    }
+}
