@@ -101,12 +101,11 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 
     const partnerName = story.content.partner
     const productName = priceIntent.product.name
-    const isApartmentContract = productName.includes('_APARTMENT_')
 
     const productData = await fetchProductData({
       apolloClient,
       productName,
-      ...(isApartmentContract ? { partnerName } : {}),
+      partnerName,
     })
 
     const initialSelectedTypeOfContract =
