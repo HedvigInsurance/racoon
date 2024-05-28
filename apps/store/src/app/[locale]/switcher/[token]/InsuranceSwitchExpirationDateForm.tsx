@@ -7,6 +7,7 @@ import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import { CheckIcon, Space, Text } from 'ui'
 import { SubmitButton } from '@/appComponents/SubmitButton'
 import { ErrorMessages } from '@/components/FormErrors/ErrorMessages'
+import { CampaignCard } from '@/components/InfoCard/InfoCard'
 import { InputDay } from '@/components/InputDay/InputDay'
 import {
   checkbox,
@@ -49,6 +50,14 @@ export default function InsuranceSwitchExpirationDateForm({ switchToken }: Props
           <input type="text" name="token" value={switchToken} hidden />
 
           <SubmitButton>Submit expiration date</SubmitButton>
+
+          {state?.messages
+            ? state.messages.map((message) => (
+                <CampaignCard key={message.content}>
+                  <span className={sprinkles({ mt: 'xxxs' })}>{message.content}</span>
+                </CampaignCard>
+              ))
+            : null}
           <ErrorMessages errors={state?.errors?.generic} />
         </Space>
       </form>
