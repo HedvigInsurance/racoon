@@ -1,6 +1,5 @@
 'use server'
 
-import type { FormStateWithErrors } from 'app/types/formStateTypes'
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
 import {
   SwitchConfirmationDocument,
@@ -8,6 +7,7 @@ import {
   type SwitchConfirmationMutationVariables,
 } from '@/services/graphql/generated'
 import type { RoutingLocale } from '@/utils/l10n/types'
+import type { FormStateWithErrors } from 'app/types/formStateTypes'
 
 const DEFAULT_LOCALE: RoutingLocale = 'se-en'
 
