@@ -88,10 +88,10 @@
     "zod": "3.23.8"
   },
   "devDependencies": {
-    "@babel/core": "7.24.5",
-    "@babel/preset-env": "7.24.5",
-    "@babel/preset-react": "7.24.1",
-    "@babel/preset-typescript": "7.24.1",
+    "@babel/core": "7.24.6",
+    "@babel/preset-env": "7.24.6",
+    "@babel/preset-react": "7.24.6",
+    "@babel/preset-typescript": "7.24.6",
     "@datadog/datadog-ci": "2.35.0",
     "@emotion/babel-plugin": "11.11.0",
     "@graphql-codegen/cli": "5.0.2",
