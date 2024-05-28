@@ -28,12 +28,12 @@ export default function InsuranceSwitchExpirationDateForm({ switchToken }: Props
 
   return (
     <div className={clsx(wrapper, sprinkles({ py: 'xxxl' }))}>
-      <Text className={sprinkles({ mb: 'md' })}>{t('SWITCHONFIRMATION_FORM_INTRO')}</Text>
+      <Text className={sprinkles({ mb: 'md' })}>{t('SWITCH_CONFIRMATION_FORM_INTRO')}</Text>
       <form action={formAction}>
         <Space y={0.25}>
           <InputDay
             name="expiryDate"
-            label={t('SWITCHONFIRMATION_FORM_DATE_LABEL')}
+            label={t('SWITCH_CONFIRMATION_FORM_DATE_LABEL')}
             required={true}
           />
 
@@ -45,13 +45,13 @@ export default function InsuranceSwitchExpirationDateForm({ switchToken }: Props
             </Checkbox.Root>
 
             <Text size="md">
-              <label htmlFor="confirmation">{t('SWITCHONFIRMATION_FORM_CHECK_LABEL')}</label>
+              <label htmlFor="confirmation">{t('SWITCH_CONFIRMATION_FORM_CHECK_LABEL')}</label>
             </Text>
           </div>
 
           <input type="text" name="token" value={switchToken} hidden />
 
-          <SubmitButton>{t('SWITCHONFIRMATION_FORM_SUBMIT')}</SubmitButton>
+          <SubmitButton>{t('SWITCH_CONFIRMATION_FORM_SUBMIT')}</SubmitButton>
 
           {state?.messages
             ? state.messages.map((message) => (
