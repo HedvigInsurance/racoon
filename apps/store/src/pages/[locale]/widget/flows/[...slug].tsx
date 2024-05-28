@@ -40,6 +40,7 @@ export const getServerSideProps: GetServerSideProps<any, Params> = async (contex
     apolloClient,
     countryCode: getCountryByLocale(context.locale).countryCode,
     partnerName: flowMetadata.partnerName,
+    campaignCode: flowMetadata.campaignCode,
     searchParams: url.searchParams,
   })
 

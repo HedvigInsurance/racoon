@@ -25,7 +25,7 @@ type FetchFlowMetadataParams = {
   draftMode?: boolean
 }
 
-type FlowMetadata = { flow: string; partnerName: string }
+type FlowMetadata = { flow: string; partnerName: string; campaignCode?: string }
 
 export const fetchFlowMetadata = async (
   params: FetchFlowMetadataParams,
@@ -35,10 +35,13 @@ export const fetchFlowMetadata = async (
     locale: params.locale,
     version: params.draftMode ? 'draft' : undefined,
   })
-  const flow = String(story.id)
 
   if (isWidgetFlowStory(story)) {
-    return { flow, partnerName: story.content.partner }
+    return {
+      flow: String(story.id),
+      partnerName: story.content.partner,
+      campaignCode: story.content.campaignCode,
+    }
   }
 
   console.warn('Story is not a widget flow story:', story.slug)
