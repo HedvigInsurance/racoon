@@ -2,6 +2,7 @@
 
 import * as Checkbox from '@radix-ui/react-checkbox'
 import clsx from 'clsx'
+import { useTranslation } from 'next-i18next'
 import { useFormState } from 'react-dom'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import { CheckIcon, Space, Text } from 'ui'
@@ -22,16 +23,19 @@ type Props = {
 }
 
 export default function InsuranceSwitchExpirationDateForm({ switchToken }: Props) {
+  const { t } = useTranslation('contractSwitchConfirmationForm')
   const [state, formAction] = useFormState(submitSwitchConfirmation, null)
 
   return (
     <div className={clsx(wrapper, sprinkles({ py: 'xxxl' }))}>
-      <Text className={sprinkles({ mb: 'md' })}>
-        Please enter expiration date and check the box below to confirm cancellation.
-      </Text>
+      <Text className={sprinkles({ mb: 'md' })}>{t('SWITCHONFIRMATION_FORM_INTRO')}</Text>
       <form action={formAction}>
         <Space y={0.25}>
-          <InputDay name="expiryDate" label="Expiry Date" required={true} />
+          <InputDay
+            name="expiryDate"
+            label={t('SWITCHONFIRMATION_FORM_DATE_LABEL')}
+            required={true}
+          />
 
           <div className={checkbox}>
             <Checkbox.Root id="confirmation" name="confirmation" className={checkboxRoot} required>
@@ -41,15 +45,13 @@ export default function InsuranceSwitchExpirationDateForm({ switchToken }: Props
             </Checkbox.Root>
 
             <Text size="md">
-              <label htmlFor="confirmation">
-                I confirm we have cancelled the insurance on our side.
-              </label>
+              <label htmlFor="confirmation">{t('SWITCHONFIRMATION_FORM_CHECK_LABEL')}</label>
             </Text>
           </div>
 
           <input type="text" name="token" value={switchToken} hidden />
 
-          <SubmitButton>Submit expiration date</SubmitButton>
+          <SubmitButton>{t('SWITCHONFIRMATION_FORM_SUBMIT')}</SubmitButton>
 
           {state?.messages
             ? state.messages.map((message) => (

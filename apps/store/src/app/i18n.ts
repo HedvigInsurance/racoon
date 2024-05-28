@@ -14,6 +14,7 @@ const allNamespaces = [
   'cart',
   'checkout',
   'contact-us',
+  'contractSwitchConfirmationForm',
   'cookieConsent',
   'memberArea',
   'purchase-form',
