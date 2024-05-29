@@ -1,6 +1,7 @@
 import { type Meta, type StoryFn } from '@storybook/react'
 import { BankIdState } from '@/services/bankId/bankId.types'
 import { BankIdContext, type BankIdContextValue } from '@/services/bankId/BankIdContext'
+import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { BankIdDialog } from './BankIdDialog'
 
 export default {
@@ -23,9 +24,11 @@ const defaultContextValue: BankIdContextValue = {
 
 const Template: StoryFn<BankIdContextValue> = (contextValue) => {
   return (
-    <BankIdContext.Provider value={contextValue}>
-      <BankIdDialog />
-    </BankIdContext.Provider>
+    <ShopSessionProvider>
+      <BankIdContext.Provider value={contextValue}>
+        <BankIdDialog />
+      </BankIdContext.Provider>
+    </ShopSessionProvider>
   )
 }
 
