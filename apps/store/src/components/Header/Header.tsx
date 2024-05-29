@@ -7,7 +7,7 @@ import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { isBrowser } from '@/utils/env'
 import { useScrollState } from '@/utils/useScrollState'
 import { MENU_BAR_HEIGHT_PX } from './Header.constants'
-import { contentWrapper, ghostWrapper, logoWrapper, wrapper } from './Header.css'
+import { menuWrapper, ghostWrapper, logoWrapper, wrapper, contentWrapper } from './Header.css'
 
 const ANIMATION_VARIANTS = {
   SLIDE_IN: {
@@ -66,10 +66,12 @@ export const Header = (props: PropsWithChildren<unknown>) => {
         animate={animate}
         transition={TRANSITION}
       >
-        <div className={logoWrapper}>
-          <LogoHomeLink />
+        <div className={contentWrapper}>
+          <div className={logoWrapper}>
+            <LogoHomeLink />
+          </div>
+          {children ? <div className={menuWrapper}>{children}</div> : null}
         </div>
-        {children ? <div className={contentWrapper}>{children}</div> : null}
       </motion.header>
     </div>
   )
