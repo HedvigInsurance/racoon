@@ -42,11 +42,6 @@ module.exports = {
             group: 'internal',
             position: 'before',
           },
-          {
-            pattern: 'app/**',
-            group: 'internal',
-            position: 'before',
-          },
         ],
         pathGroupsExcludedImportTypes: ['internal'],
       },
