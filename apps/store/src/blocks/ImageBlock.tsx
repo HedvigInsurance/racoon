@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import type { ImageProps } from 'next/image'
 import { ConditionalWrapper, mq, theme, DEFAULT_IMAGE_QUALITY } from 'ui'
-import type { HeadingBlockProps } from '@/blocks/HeadingBlock';
+import type { HeadingBlockProps } from '@/blocks/HeadingBlock'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWithPlaceholder'

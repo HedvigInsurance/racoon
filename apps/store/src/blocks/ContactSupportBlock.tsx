@@ -1,7 +1,7 @@
 'use client'
 
 import { storyblokEditable } from '@storyblok/react'
-import type { ContactSupportProps } from '@/components/ContactSupport/ContactSupport';
+import type { ContactSupportProps } from '@/components/ContactSupport/ContactSupport'
 import { ContactSupport } from '@/components/ContactSupport/ContactSupport'
 import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 

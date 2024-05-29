@@ -2,7 +2,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import type { ReactNode} from 'react';
+import type { ReactNode } from 'react'
 import { useMemo, type FormEventHandler, useState } from 'react'
 import { Button, Heading, Space, Text, mq, theme } from 'ui'
 import { CardSkeleton, ContractCard } from '@/components/ConfirmationPage/ContractCard'

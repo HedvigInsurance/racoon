@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { theme, mq } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import type { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
-import type { CardLinkBlockProps } from './CardLinkBlock';
+import type { CardLinkBlockProps } from './CardLinkBlock'
 import { CardLinkBlock } from './CardLinkBlock'
 
 type CardLinkListBlockProps = SbBaseBlockProps<{

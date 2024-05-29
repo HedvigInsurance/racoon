@@ -1,7 +1,7 @@
 'use client'
 
 import styled from '@emotion/styled'
-import type { SbBlokData} from '@storyblok/react';
+import type { SbBlokData } from '@storyblok/react'
 import { StoryblokComponent } from '@storyblok/react'
 import { ConditionalWrapper, mq, theme } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'

@@ -2,11 +2,8 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useCallback, useState } from 'react'
 import { ChangeSsnWarningDialog } from '@/components/ChangeSsnWarningDialog/ChangeSsnWarningDialog'
-import type {
-  Props as PersonalNumberFieldProps} from '@/components/PersonalNumberField/PersonalNumberField';
-import {
-  PersonalNumberField
-} from '@/components/PersonalNumberField/PersonalNumberField'
+import type { Props as PersonalNumberFieldProps } from '@/components/PersonalNumberField/PersonalNumberField'
+import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 
 type Props = Omit<PersonalNumberFieldProps, 'label'> & { label?: string }
 

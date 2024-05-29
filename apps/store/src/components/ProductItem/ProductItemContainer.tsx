@@ -1,5 +1,5 @@
 import { useTranslation } from 'next-i18next'
-import type { ComponentProps } from 'react';
+import type { ComponentProps } from 'react'
 import { useMemo, type ReactNode } from 'react'
 import { type ProductOfferFragment } from '@/services/graphql/generated'
 import { getOfferPrice } from '@/utils/getOfferPrice'

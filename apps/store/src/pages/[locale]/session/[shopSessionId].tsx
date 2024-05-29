@@ -2,10 +2,9 @@ import type { GetServerSideProps, NextPage } from 'next'
 import { initializeApolloServerSide } from '@/services/apollo/client'
 import type {
   RedeemCampaignMutation,
-  RedeemCampaignMutationVariables} from '@/services/graphql/generated';
-import {
-  RedeemCampaignDocument
+  RedeemCampaignMutationVariables,
 } from '@/services/graphql/generated'
+import { RedeemCampaignDocument } from '@/services/graphql/generated'
 import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'

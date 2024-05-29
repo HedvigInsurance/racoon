@@ -19,11 +19,9 @@ import type {
   Money,
   ProductOfferFragment,
   ShopSessionQuery,
-  ShopSessionQueryVariables} from '@/services/graphql/generated';
-import {
-  ManyPetsMigrationOffersDocument,
-  ShopSessionDocument
+  ShopSessionQueryVariables,
 } from '@/services/graphql/generated'
+import { ManyPetsMigrationOffersDocument, ShopSessionDocument } from '@/services/graphql/generated'
 import { getStoryBySlug } from '@/services/storyblok/storyblok'
 import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { Features } from '@/utils/Features'

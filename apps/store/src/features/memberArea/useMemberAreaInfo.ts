@@ -1,8 +1,5 @@
-import type {
-  MemberAreaMemberInfoQuery} from '@/services/graphql/generated';
-import {
-  useMemberAreaMemberInfoQuery,
-} from '@/services/graphql/generated'
+import type { MemberAreaMemberInfoQuery } from '@/services/graphql/generated'
+import { useMemberAreaMemberInfoQuery } from '@/services/graphql/generated'
 
 export const useMemberAreaInfo = (): MemberAreaMemberInfoQuery['currentMember'] => {
   const { data } = useMemberAreaMemberInfoQuery()

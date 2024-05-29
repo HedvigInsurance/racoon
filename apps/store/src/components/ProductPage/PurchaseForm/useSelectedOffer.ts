@@ -1,5 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import type { SetStateAction} from 'jotai';
+import type { SetStateAction } from 'jotai'
 import { atom, useAtom } from 'jotai'
 import { useCallback } from 'react'
 import type { ProductOfferFragment } from '@/services/graphql/generated'

@@ -1,5 +1,5 @@
 import type { CSSObject } from '@emotion/styled'
-import type { Level } from 'ui';
+import type { Level } from 'ui'
 import { mq } from 'ui'
 
 type PartialRecord<K extends keyof any, T> = Partial<Record<K, T>>

@@ -1,13 +1,8 @@
 import { useTranslation } from 'next-i18next'
 import { useCallback } from 'react'
 import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
-import type {
-  CampaignDiscount,
-  CartCost,
-  Money} from '@/services/graphql/generated';
-import {
-  CampaignDiscountType
-} from '@/services/graphql/generated'
+import type { CampaignDiscount, CartCost, Money } from '@/services/graphql/generated'
+import { CampaignDiscountType } from '@/services/graphql/generated'
 import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useFormatter } from '@/utils/useFormatter'
 

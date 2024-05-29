@@ -3,7 +3,11 @@ import type { ISbStoryData } from '@storyblok/react'
 import { apiPlugin, getStoryblokApi, storyblokInit } from '@storyblok/react/rsc'
 import { revalidateTag } from 'next/cache'
 import { draftMode } from 'next/headers'
-import { BLOG_ARTICLE_CONTENT_TYPE } from '@/features/blog/blog.constants'
+import {
+  BLOG_ARTICLE_CATEGORY_CONTENT_TYPE,
+  BLOG_ARTICLE_CONTENT_TYPE,
+} from '@/features/blog/blog.constants'
+import type { BlogArticleContentType } from '@/features/blog/blog.types'
 import { LINKS_EXCLUDE_PATHS } from '@/services/storyblok/Storyblok.constant'
 import type { LinkData, PageLink } from '@/services/storyblok/Storyblok.helpers'
 import { storyblokComponents } from '@/services/storyblok/storyblokComponents'
@@ -129,3 +133,35 @@ const fetchStoryblokCacheVersion = async (): Promise<number> => {
 }
 
 export const revalidateCacheVersion = () => revalidateTag(cvCacheTag)
+
+export const getBlogCategories = async (locale: RoutingLocale) => {
+  const storyblokApi = await getStoryblokApiWithCache()
+  const response = await storyblokApi.getStories({
+    content_type: BLOG_ARTICLE_CATEGORY_CONTENT_TYPE,
+    starts_with: `${locale}/`,
+    version: getVersion(),
+  })
+  return response.data.stories.map((item) => ({
+    id: item.uuid,
+    name: item.name,
+    href: item.full_slug,
+  }))
+}
+
+export const getBlogArticles = async (locale: RoutingLocale) => {
+  const storyblokApi = await getStoryblokApiWithCache()
+  const response = await storyblokApi.getStories({
+    content_type: BLOG_ARTICLE_CONTENT_TYPE,
+    starts_with: `${locale}/`,
+    resolve_relations: `${BLOG_ARTICLE_CONTENT_TYPE}.categories`,
+    per_page: 100,
+    version: getVersion(),
+  })
+
+  if (response.total > response.perPage) {
+    // TODO: Implement pagination once we have more than 100 articles
+    throw new Error('Too many blog articles to fetch in one request')
+  }
+
+  return response.data.stories as Array<BlogArticleContentType>
+}

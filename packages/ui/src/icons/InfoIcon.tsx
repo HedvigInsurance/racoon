@@ -1,4 +1,4 @@
-import type { IconRootProps } from './Root';
+import type { IconRootProps } from './Root'
 import { IconRoot } from './Root'
 
 export const InfoIcon = ({ className, color = 'currentColor', size = '1rem' }: IconRootProps) => (

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import type { ReactNode} from 'react';
+import type { ReactNode } from 'react'
 import { useMemo } from 'react'
 import { Heading, InfoIcon, Text, theme } from 'ui'
 import { Tooltip } from '@/components/Tooltip/Tooltip'

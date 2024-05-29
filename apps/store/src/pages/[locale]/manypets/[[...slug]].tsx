@@ -4,13 +4,8 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { DefaultDebugDialog } from '@/components/DebugDialog/DefaultDebugDialog'
 import { HeadSeoInfo } from '@/components/HeadSeoInfo/HeadSeoInfo'
 import { STORYBLOK_MANYPETS_FOLDER_SLUG } from '@/features/manyPets/manyPets.constants'
-import type {
-  PageStory,
-  StoryblokQueryParams} from '@/services/storyblok/storyblok';
-import {
-  getRevalidate,
-  getStoryBySlug
-} from '@/services/storyblok/storyblok'
+import type { PageStory, StoryblokQueryParams } from '@/services/storyblok/storyblok'
+import { getRevalidate, getStoryBySlug } from '@/services/storyblok/storyblok'
 import { STORY_PROP_NAME } from '@/services/storyblok/Storyblok.constant'
 import { Features } from '@/utils/Features'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'

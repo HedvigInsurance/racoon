@@ -1,6 +1,6 @@
 import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
-import type { ReactNode } from 'react';
+import type { ReactNode } from 'react'
 import { forwardRef } from 'react'
 
 type SpaceFlexProps = {

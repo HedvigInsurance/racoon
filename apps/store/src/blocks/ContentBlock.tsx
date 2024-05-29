@@ -1,6 +1,6 @@
 'use client'
 import styled from '@emotion/styled'
-import type { ISbRichtext} from '@storyblok/react';
+import type { ISbRichtext } from '@storyblok/react'
 import { renderRichText, storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
 import { Space, Badge, mq, theme } from 'ui'

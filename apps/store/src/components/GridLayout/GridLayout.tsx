@@ -1,11 +1,11 @@
 'use client'
 
 import isPropValid from '@emotion/is-prop-valid'
-import type { StyledOptions } from '@emotion/styled';
+import type { StyledOptions } from '@emotion/styled'
 import styled from '@emotion/styled'
 import { mq, theme } from 'ui'
 import { MAX_WIDTH } from './GridLayout.constants'
-import type { ContentAlignment, ContentWidth } from './GridLayout.helper';
+import type { ContentAlignment, ContentWidth } from './GridLayout.helper'
 import { getGridLayout } from './GridLayout.helper'
 
 export const Root = styled.div({

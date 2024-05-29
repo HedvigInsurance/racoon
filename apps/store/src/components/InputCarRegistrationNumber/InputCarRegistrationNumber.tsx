@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes} from 'react';
+import type { InputHTMLAttributes } from 'react'
 import { useState } from 'react'
 import { TextField } from '@/components/TextField/TextField'
 

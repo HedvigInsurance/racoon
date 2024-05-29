@@ -1,4 +1,4 @@
-import type { NextRequest} from 'next/server';
+import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { EXPERIMENT_COOKIE_NAME, type ExperimentVariant } from './experiment.constants'
 import { getExperimentVariant, getCurrentExperiment } from './experiment.helpers'

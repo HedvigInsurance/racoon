@@ -6,10 +6,9 @@ import { Combobox } from '@/components/Combobox/Combobox'
 import { PriceIntentAnimal, usePriceIntentAvailableBreedsQuery } from '@/services/graphql/generated'
 import type {
   PetDogBreedsField as InputFieldPetDogBreeds,
-  Breed} from '@/services/PriceCalculator/Field.types';
-import {
-  MIXED_BREED_OPTION_ID,
+  Breed,
 } from '@/services/PriceCalculator/Field.types'
+import { MIXED_BREED_OPTION_ID } from '@/services/PriceCalculator/Field.types'
 import { MixedBreedPicker } from './MixedBreedPicker/MixedBreedPicker'
 
 type Props = {

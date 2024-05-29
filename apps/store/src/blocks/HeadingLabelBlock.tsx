@@ -1,7 +1,7 @@
 'use client'
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import type { BadgeProps} from 'ui';
+import type { BadgeProps } from 'ui'
 import { ConditionalWrapper, Badge, theme } from 'ui'
 import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
