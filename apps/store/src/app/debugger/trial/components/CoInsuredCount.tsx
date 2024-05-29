@@ -1,7 +1,7 @@
 'use client'
 
+import { Field } from '@/app/debugger/trial/debuggerTrial.types'
 import { StepperInput } from '@/components/StepperInput/StepperInput'
-import { Field } from 'app/debugger/trial/debuggerTrial.types'
 
 export function CoInsuredCount() {
   return (

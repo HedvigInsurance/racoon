@@ -1,9 +1,9 @@
 'use server'
 
 import { redirect } from 'next/navigation'
+import type { FormStateWithErrors } from '@/app/types/formStateTypes'
 import { createCarDealershipTrial } from '@/features/carDealership/DebuggerCarTrial/createCarDealershipTrial'
 import { Field } from '@/features/carDealership/DebuggerCarTrial/debuggerCarTrial.types'
-import type { FormStateWithErrors } from 'app/types/formStateTypes'
 
 export const createCarTrial = async (
   _: FormStateWithErrors,
