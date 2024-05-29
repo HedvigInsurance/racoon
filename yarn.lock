@@ -7852,14 +7852,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lottiefiles/react-lottie-player@npm:3.5.3":
-  version: 3.5.3
-  resolution: "@lottiefiles/react-lottie-player@npm:3.5.3"
+"@lottiefiles/react-lottie-player@npm:3.5.4":
+  version: 3.5.4
+  resolution: "@lottiefiles/react-lottie-player@npm:3.5.4"
   dependencies:
-    lottie-web: "npm:^5.10.2"
+    lottie-web: "npm:^5.12.2"
   peerDependencies:
     react: 16 - 18
-  checksum: 10c0/db32ff9e0594b6244eaf39a54190dad81c79339b4437abda1f122c354bd2aaf3235e565af1e036aa32bba53bda9401ceac942a5ac59295a091146c8bc8836f85
+  checksum: 10c0/fbd154c1291648d1c652e37cbd95e71991a48c6c6da2f1de7cc632fd6c4b4e5ab35336ee788cf65f01c036dae89f7cfbe89638c6ee6048590b0c9a671289e480
   languageName: node
   linkType: hard
 
@@ -21259,10 +21259,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lottie-web@npm:^5.10.2":
-  version: 5.10.2
-  resolution: "lottie-web@npm:5.10.2"
-  checksum: 10c0/af5175c5b2977eac980b397bf31298d66267739dc7b8eadf7394bb9d93a81ed5dc6d09c08dc418c0cb15753dd44a33ee518b4bd50c25c800cba022544931ae35
+"lottie-web@npm:^5.12.2":
+  version: 5.12.2
+  resolution: "lottie-web@npm:5.12.2"
+  checksum: 10c0/0aeaf631b10a76afd025df70c2a1486543530708e07a316946c08e55891dac483ffbaf2bf3648ae0b9c54c733118a0a086fd150aa76f7848606214c67ad72c30
   languageName: node
   linkType: hard
 
@@ -25652,7 +25652,7 @@ __metadata:
     "@graphql-codegen/typescript-react-apollo": "npm:4.3.0"
     "@graphql-typed-document-node/core": "npm:3.2.0"
     "@jest/globals": "npm:29.7.0"
-    "@lottiefiles/react-lottie-player": "npm:3.5.3"
+    "@lottiefiles/react-lottie-player": "npm:3.5.4"
     "@next/bundle-analyzer": "npm:14.2.3"
     "@opentelemetry/api": "npm:1.8.0"
     "@opentelemetry/api-logs": "npm:0.51.1"
