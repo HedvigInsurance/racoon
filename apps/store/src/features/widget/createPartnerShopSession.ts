@@ -16,7 +16,7 @@ type MutationVariables = VariablesOf<typeof ShopSessionCreatePartnerDocument>['i
 type CreatePartnerShopSessionParams = {
   apolloClient: ApolloClient<unknown>
   searchParams: URLSearchParams
-} & Pick<MutationVariables, 'countryCode' | 'partnerName'>
+} & Pick<MutationVariables, 'countryCode' | 'partnerName' | 'campaignCode'>
 
 export const createPartnerShopSession = async (
   params: CreatePartnerShopSessionParams,
@@ -37,6 +37,7 @@ export const createPartnerShopSession = async (
       input: {
         countryCode: params.countryCode,
         partnerName: params.partnerName,
+        campaignCode: params.campaignCode,
         initiatedFrom: 'WIDGET',
         ...variables,
       },
