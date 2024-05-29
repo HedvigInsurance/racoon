@@ -53,13 +53,11 @@ export default function InsuranceSwitchExpirationDateForm({ id, locale }: Props)
 
           <SubmitButton>{t('SWITCH_CONFIRMATION_FORM_SUBMIT')}</SubmitButton>
 
-          {state?.messages
-            ? state.messages.map((message) => (
-                <CampaignCard key={message.content}>
-                  <span className={sprinkles({ mt: 'xxxs' })}>{message.content}</span>
-                </CampaignCard>
-              ))
-            : null}
+          {state?.messages?.map((message) => (
+            <CampaignCard key={message.content}>
+              <span className={sprinkles({ mt: 'xxxs' })}>{message.content}</span>
+            </CampaignCard>
+          )) ?? null}
           <ErrorMessages errors={state?.errors?.generic} />
         </Space>
       </form>
