@@ -1,0 +1,9 @@
+{
+  "SWITCH_CONFIRMATION_FORM_CHECK_LABEL": "I confirm we have cancelled the insurance on our side.",
+  "SWITCH_CONFIRMATION_FORM_DATE_LABEL": "Expiry Date",
+  "SWITCH_CONFIRMATION_FORM_DATE_MISSING": "Make sure to select the expiry date",
+  "SWITCH_CONFIRMATION_FORM_ERROR": "Something went wrong while submitting!",
+  "SWITCH_CONFIRMATION_FORM_INTRO": "Please enter expiration date and check the box below to confirm cancellation.",
+  "SWITCH_CONFIRMATION_FORM_SUBMIT": "Submit expiration date",
+  "SWITCH_CONFIRMATION_FORM_SUCCESS": "Thank you!"
+}

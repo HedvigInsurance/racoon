@@ -1,0 +1,9 @@
+{
+  "SWITCH_CONFIRMATION_FORM_CHECK_LABEL": "Jag bekräftar att vi har annullerat försäkringen från vår sida.",
+  "SWITCH_CONFIRMATION_FORM_DATE_LABEL": "Utgångsdatum",
+  "SWITCH_CONFIRMATION_FORM_DATE_MISSING": "Se till att välja utgångsdatumet",
+  "SWITCH_CONFIRMATION_FORM_ERROR": "Något gick fel!",
+  "SWITCH_CONFIRMATION_FORM_INTRO": "Vänligen ange utgångsdatum och markera rutan nedan för att bekräfta avbokningen.",
+  "SWITCH_CONFIRMATION_FORM_SUBMIT": "Skicka in utgångsdatum",
+  "SWITCH_CONFIRMATION_FORM_SUCCESS": "Tack!"
+}
