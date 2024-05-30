@@ -47,7 +47,7 @@ type MessageProps = ComponentProps<typeof Text>
 
 function Message({ children, className, ...props }: MessageProps) {
   return (
-    <Text className={clsx(messageStyles, className)} {...props}>
+    <Text className={clsx(messageStyles, className)} size="sm" {...props}>
       {children}
     </Text>
   )
