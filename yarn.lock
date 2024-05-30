@@ -11989,12 +11989,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/dynamic@npm:2.1.0":
-  version: 2.1.0
-  resolution: "@vanilla-extract/dynamic@npm:2.1.0"
+"@vanilla-extract/dynamic@npm:2.1.1":
+  version: 2.1.1
+  resolution: "@vanilla-extract/dynamic@npm:2.1.1"
   dependencies:
-    "@vanilla-extract/private": "npm:^1.0.3"
-  checksum: 10c0/dcb8149bd815c4be75184f90e350750b6bc16ffdb5841f62f7211385478589dc0a0b261a442011149c2edbdbd83a956a425eec94f6c735f269a1cdb310541a66
+    "@vanilla-extract/private": "npm:^1.0.5"
+  checksum: 10c0/0c353b6326e73054a5ca1cfbb02e865cd8853e88976d7f53794e91ccf3fdfcab18211ad93750927b05c8d57e3816c1e56b55a8e24ad7f616b5e627339a3d36b6
   languageName: node
   linkType: hard
 
@@ -12026,13 +12026,6 @@ __metadata:
   peerDependencies:
     next: ">=12.1.7"
   checksum: 10c0/d6a293345f9d9d229e2338f5db1d277c8eab79f1e7b99e5d92207e2ffb1e1b1205ccba848fc7b620dda98733c7c7ba8ef4097425fef79aeeedbaca720c2f88f4
-  languageName: node
-  linkType: hard
-
-"@vanilla-extract/private@npm:^1.0.3":
-  version: 1.0.3
-  resolution: "@vanilla-extract/private@npm:1.0.3"
-  checksum: 10c0/62a74cb4fce877debb8043cda8b9efb8ca142b56d6a64525929a16a6e6c4f9bc181a6ea099b5b6ed08d0c7b3e8389b7e05f7fe9b4b0fae6eb74c2a69cb6ee2f7
   languageName: node
   linkType: hard
 
@@ -25665,7 +25658,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:7.10.0"
     "@typescript-eslint/parser": "npm:7.10.0"
     "@vanilla-extract/css": "npm:1.15.2"
-    "@vanilla-extract/dynamic": "npm:2.1.0"
+    "@vanilla-extract/dynamic": "npm:2.1.1"
     "@vanilla-extract/next-plugin": "npm:2.4.1"
     "@vanilla-extract/recipes": "npm:0.5.2"
     "@vanilla-extract/sprinkles": "npm:1.6.1"
@@ -27187,7 +27180,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:7.10.0"
     "@typescript-eslint/parser": "npm:7.10.0"
     "@vanilla-extract/css": "npm:1.15.2"
-    "@vanilla-extract/dynamic": "npm:2.1.0"
+    "@vanilla-extract/dynamic": "npm:2.1.1"
     "@vanilla-extract/recipes": "npm:0.5.2"
     "@vanilla-extract/sprinkles": "npm:1.6.1"
     babel-jest: "npm:29.7.0"
