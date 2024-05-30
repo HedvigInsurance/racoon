@@ -2,11 +2,13 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useInView } from 'framer-motion'
+import { usePathname, useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
-import type { ReactNode, RefObject } from 'react'
+import type { MouseEventHandler, ReactNode, RefObject } from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Button, Space, Text, PlusIcon, theme } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
+import { usePriceIntent } from '@/components/ProductPage/PriceIntentContext'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import { ScrollToTopButton } from '@/components/ProductPage/ScrollToButton/ScrollToButton'
 import { useCartEntryToReplace } from '@/components/ProductPage/useCartEntryToReplace'
@@ -41,14 +43,13 @@ type Props = {
   shopSession: ShopSession
   selectedOffer: ProductOfferFragment
   scrollPastRef: RefObject<HTMLElement>
-  // TODO: Use better type
-  onAddedToCart: (productOffer: ProductOfferFragment, nextUrl?: string) => void
   onClickEdit: () => void
+  notifyProductAdded: (item: ProductOfferFragment) => void
 }
 
 export const OfferPresenter = (props: Props) => {
-  const { priceIntent, shopSession, scrollPastRef, onAddedToCart, onClickEdit, selectedOffer } =
-    props
+  const { priceIntent, shopSession, scrollPastRef, onClickEdit, selectedOffer } = props
+  const [, , resetPriceIntent] = usePriceIntent()
   const [, setSelectedOffer] = useSelectedOffer()
   const { t } = useTranslation('purchase-form')
   const formatter = useFormatter()
@@ -80,6 +81,8 @@ export const OfferPresenter = (props: Props) => {
   }, [selectedOffer, tracking, isInView])
 
   const entryToReplace = useCartEntryToReplace()
+  // Awkward solution to varying post-success behavior between addToCart and goToCheckout
+  const onSuccessRef = useRef<(addedProductOffer: ProductOfferFragment) => void>(() => {})
   const [addToCart, loadingAddToCart] = useAddToCart({
     shopSessionId: shopSession.id,
     entryToReplace: entryToReplace?.id,
@@ -90,12 +93,7 @@ export const OfferPresenter = (props: Props) => {
         throw new Error(`Unknown offer added to cart: ${productOfferId}`)
       }
 
-      let nextUrl: string | undefined = undefined
       tracking.reportAddToCart(addedProductOffer, 'store')
-      if (addToCartRedirect === AddToCartRedirect.Checkout) {
-        tracking.reportBeginCheckout(shopSession.cart)
-        nextUrl = PageLink.checkout({ locale, expandCart: true }).toRelative()
-      }
 
       const isBankSignering =
         addedProductOffer.cancellation.option === ExternalInsuranceCancellationOption.Banksignering
@@ -105,15 +103,9 @@ export const OfferPresenter = (props: Props) => {
           datadogRum.addAction(BankSigneringEvent.Requested)
         }
       }
-
-      onAddedToCart(addedProductOffer, nextUrl)
+      onSuccessRef.current(addedProductOffer)
     },
   })
-
-  const handleClickSubmit = (redirect: AddToCartRedirect) => () => {
-    datadogRum.addAction(`PriceCalculator AddToCart ${redirect}`)
-    setAddToCartRedirect(redirect)
-  }
 
   const discountTooltipProps = useDiscountTooltipProps(
     selectedOffer,
@@ -152,74 +144,103 @@ export const OfferPresenter = (props: Props) => {
     [props.priceIntent.offers],
   )
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleAddToCart: MouseEventHandler = (event) => {
     event.preventDefault()
+    datadogRum.addAction(`PriceCalculator AddToCart Cart`)
+    setAddToCartRedirect(AddToCartRedirect.Cart)
+    onSuccessRef.current = (addedProductOffer: ProductOfferFragment) => {
+      props.notifyProductAdded(addedProductOffer)
+      resetPriceIntent()
+    }
     addToCart(selectedOffer.id)
   }
 
+  const router = useRouter()
+  const [isNavigatingToCheckout, setNavigatingToCheckout] = useState(false)
+  const handleGoToCheckout: MouseEventHandler = (event) => {
+    event.preventDefault()
+    datadogRum.addAction(`PriceCalculator AddToCart Checkout`)
+    setAddToCartRedirect(AddToCartRedirect.Checkout)
+    onSuccessRef.current = () => {
+      setNavigatingToCheckout(true)
+      const nextUrl = PageLink.checkout({ locale, expandCart: true }).toRelative()
+      tracking.reportBeginCheckout(shopSession.cart)
+      router.push(nextUrl)
+    }
+    addToCart(selectedOffer.id)
+  }
+
+  const pathname = usePathname()
+  const initialPathnameRef = useRef(pathname)
+  useEffect(() => {
+    // Finished navigating to checkout page, we can clean up now
+    if (isNavigatingToCheckout && initialPathnameRef.current !== pathname) {
+      resetPriceIntent()
+    }
+  }, [isNavigatingToCheckout, pathname, resetPriceIntent])
+
   return (
     <>
-      <Space y={1}>
-        <form ref={offerRef} onSubmit={handleSubmit}>
-          <Space y={2}>
-            <SpaceFlex direction="vertical" align="center" space={1}>
-              {discountTooltip}
-              <Space y={0.5}>
-                <Text as="p" align="center" size="xl">
-                  {displayPrice}
-                </Text>
-                <Centered>
-                  <TextButton onClick={onClickEdit}>
-                    <Text align="center" size="xs" color="textSecondary" as="span">
-                      {t('PRESENT_OFFER_EDIT_BUTTON')}
-                    </Text>
-                  </TextButton>
-                </Centered>
-              </Space>
-            </SpaceFlex>
-
-            <Space y={0.25}>
-              {tiers.length > 1 && (
-                <ProductTierSelector
-                  offers={tiers}
-                  selectedOffer={selectedTier}
-                  onValueChange={handleOfferChange}
-                />
-              )}
-
-              {deductibles.length > 1 && (
-                <DeductibleSelector
-                  offers={deductibles}
-                  selectedOffer={selectedOffer}
-                  onValueChange={handleOfferChange}
-                  defaultOpen={true}
-                />
-              )}
-
-              <CancellationForm productOfferIds={productOfferIds} offer={selectedOffer} />
-
-              <Button
-                type="submit"
-                variant="primary"
-                onClick={handleClickSubmit(AddToCartRedirect.Cart)}
-                loading={loadingAddToCart && addToCartRedirect === AddToCartRedirect.Cart}
-                disabled={loadingAddToCart}
-              >
-                {t('ADD_TO_CART_BUTTON_LABEL')}
-              </Button>
-
-              <Button
-                type="submit"
-                variant="primary-alt"
-                onClick={handleClickSubmit(AddToCartRedirect.Checkout)}
-                loading={loadingAddToCart && addToCartRedirect === AddToCartRedirect.Checkout}
-                disabled={loadingAddToCart}
-              >
-                {t('QUICK_CHECKOUT_BUTTON_LABEL')}
-              </Button>
+      <Space ref={offerRef} y={1}>
+        <Space y={2}>
+          <SpaceFlex direction="vertical" align="center" space={1}>
+            {discountTooltip}
+            <Space y={0.5}>
+              <Text as="p" align="center" size="xl">
+                {displayPrice}
+              </Text>
+              <Centered>
+                <TextButton onClick={onClickEdit}>
+                  <Text align="center" size="xs" color="textSecondary" as="span">
+                    {t('PRESENT_OFFER_EDIT_BUTTON')}
+                  </Text>
+                </TextButton>
+              </Centered>
             </Space>
+          </SpaceFlex>
+
+          <Space y={0.25}>
+            {tiers.length > 1 && (
+              <ProductTierSelector
+                offers={tiers}
+                selectedOffer={selectedTier}
+                onValueChange={handleOfferChange}
+              />
+            )}
+
+            {deductibles.length > 1 && (
+              <DeductibleSelector
+                offers={deductibles}
+                selectedOffer={selectedOffer}
+                onValueChange={handleOfferChange}
+                defaultOpen={true}
+              />
+            )}
+
+            <CancellationForm productOfferIds={productOfferIds} offer={selectedOffer} />
+
+            <Button
+              variant="primary"
+              onClick={handleAddToCart}
+              loading={loadingAddToCart && addToCartRedirect === AddToCartRedirect.Cart}
+              disabled={loadingAddToCart}
+            >
+              {t('ADD_TO_CART_BUTTON_LABEL')}
+            </Button>
+
+            <Button
+              variant="primary-alt"
+              onClick={handleGoToCheckout}
+              loading={
+                isNavigatingToCheckout ||
+                (loadingAddToCart && addToCartRedirect === AddToCartRedirect.Checkout)
+              }
+              disabled={loadingAddToCart}
+            >
+              {t('QUICK_CHECKOUT_BUTTON_LABEL')}
+            </Button>
           </Space>
-        </form>
+        </Space>
 
         {tiers.length > 1 && (
           <SpaceFlex direction="vertical" align="center">
