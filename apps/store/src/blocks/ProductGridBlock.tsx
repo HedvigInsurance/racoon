@@ -1,9 +1,7 @@
 'use client'
 
-import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
-import { mq, theme } from 'ui'
 import type { ProductCardBlockProps } from '@/blocks/ProductCardBlock'
 import { ProductCardBlock } from '@/blocks/ProductCardBlock'
 import { ProductGrid } from '@/components/ProductGrid/ProductGrid'
@@ -20,18 +18,8 @@ export const ProductGridBlock = ({ blok }: ProductGridBlockProps) => {
     [blok.items],
   )
   return (
-    <Wrapper>
-      <ProductGrid title={blok.title} items={items} {...storyblokEditable(blok)}>
-        {(nestedBlock) => <ProductCardBlock key={nestedBlock.key} blok={nestedBlock} />}
-      </ProductGrid>
-    </Wrapper>
+    <ProductGrid title={blok.title} items={items} {...storyblokEditable(blok)}>
+      {(nestedBlock) => <ProductCardBlock key={nestedBlock.key} blok={nestedBlock} />}
+    </ProductGrid>
   )
 }
-
-const Wrapper = styled.div({
-  paddingInline: theme.space.xs,
-
-  [mq.md]: {
-    paddingInline: theme.space.lg,
-  },
-})

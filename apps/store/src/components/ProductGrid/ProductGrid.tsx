@@ -1,7 +1,6 @@
-import styled from '@emotion/styled'
 import { Fragment } from 'react'
-import { mq, Space, theme } from 'ui'
-import { MAX_WIDTH } from '../GridLayout/GridLayout.constants'
+import { Space, Text } from 'ui'
+import { productGrid } from './ProductGrid.css'
 
 export type ProductGridProps<Item> = {
   title?: string
@@ -15,37 +14,17 @@ export const ProductGrid = <ItemType extends { key: string }>({
   children,
 }: ProductGridProps<ItemType>) => {
   return (
-    <Wrapper y={1.5}>
-      {title && <Title>{title}</Title>}
-      <Grid>
+    <Space y={1.5}>
+      {title && (
+        <Text align="center" color="textSecondary" size="xs" uppercase={true}>
+          {title}
+        </Text>
+      )}
+      <div className={productGrid}>
         {items.map((item) => (
           <Fragment key={item.key}>{children(item)}</Fragment>
         ))}
-      </Grid>
-    </Wrapper>
+      </div>
+    </Space>
   )
 }
-
-const Wrapper = styled(Space)({
-  maxWidth: MAX_WIDTH,
-  height: '100%',
-  marginInline: 'auto',
-})
-
-const Title = styled.p({
-  fontSize: theme.fontSizes.xs,
-  color: theme.colors.gray600,
-  textTransform: 'uppercase',
-  textAlign: 'center',
-})
-
-const Grid = styled.div({
-  display: 'grid',
-  gap: `${theme.space.xxxl} ${theme.space.xs}`,
-  alignItems: 'end',
-  gridTemplateColumns: `repeat(auto-fit, minmax(20rem, 1fr))`,
-
-  [mq.md]: {
-    gap: '2rem 1rem',
-  },
-})

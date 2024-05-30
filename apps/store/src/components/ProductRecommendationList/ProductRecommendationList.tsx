@@ -1,10 +1,10 @@
-import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { Heading, mq, Space, theme } from 'ui'
+import { Heading, Space } from 'ui'
 import type { ImageSize } from '@/blocks/ProductCardBlock'
 import { ProductCard } from '@/components/ProductCard/ProductCard'
 import type { ProductRecommendationFragment } from '@/services/graphql/generated'
 import { getStoryblokImageSize } from '@/services/storyblok/Storyblok.helpers'
+import { productGrid } from '../ProductGrid/ProductGrid.css'
 
 type Props = {
   recommendations: Array<ProductRecommendationFragment>
@@ -14,17 +14,17 @@ export const ProductRecommendationList = ({ recommendations }: Props) => {
   const { t } = useTranslation('cart')
 
   return (
-    <Wrapper y={{ base: 1.5, md: 3 }}>
+    <Space y={{ base: 1.5, md: 3 }}>
       <Heading as="h2" variant="standard.24" align="center">
         {t('RECOMMENDATIONS_HEADING')}
       </Heading>
 
-      <List>
+      <div className={productGrid}>
         {recommendations.map((item) => (
           <FeaturedProduct key={item.id} recommendation={item} />
         ))}
-      </List>
-    </Wrapper>
+      </div>
+    </Space>
   )
 }
 
@@ -63,22 +63,3 @@ const calculateAspectRatio = ({
   // TODO: properly evaluate aspect ratio
   return `${width} / ${height}` as ImageSize['aspectRatio']
 }
-
-const Wrapper = styled(Space)({
-  paddingInline: theme.space.xs,
-  [mq.lg]: { paddingInline: theme.space.lg },
-})
-
-// TODO: reuse styles as product grid
-const List = styled.div({
-  display: 'grid',
-  rowGap: theme.space.xxxl,
-  columnGap: theme.space.xs,
-  alignItems: 'end',
-  gridTemplateColumns: `repeat(auto-fit, minmax(20rem, 1fr))`,
-
-  [mq.md]: {
-    rowGap: theme.space.xl,
-    columnGap: theme.space.md,
-  },
-})
