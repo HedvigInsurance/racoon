@@ -16,10 +16,13 @@ type BaseProps = {
   Icon?: ReactNode
 }
 
-export type Props<C extends React.ElementType> = PolymorphicComponentPropsWithRef<C, BaseProps>
+export type ButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
+  C,
+  BaseProps
+>
 
 type PolymorphicComponent = <C extends React.ElementType = 'button'>(
-  props: Props<C>,
+  props: ButtonProps<C>,
 ) => ReactNode | null
 
 export const Button: PolymorphicComponent = forwardRef(function Button<
@@ -38,7 +41,7 @@ export const Button: PolymorphicComponent = forwardRef(function Button<
     children,
     Icon,
     ...props
-  }: Props<C>,
+  }: ButtonProps<C>,
   ref?: PolymorphicRef<C>,
 ) {
   const sizeStyles = getButtonSizeStyles(size)
