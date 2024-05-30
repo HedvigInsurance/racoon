@@ -17,6 +17,15 @@ import type { RoutingLocale } from '@/utils/l10n/types'
 // Overall app router setup for Storyblok based on
 // https://www.storyblok.com/tp/add-a-headless-cms-to-next-js-13-in-5-minutes
 
+// Default cache policy assumes that anything we fetch with `cv` is immutable
+// We're passing it explicitly to avoid being affected by changing defaults in Next 15
+const STORYBLOK_CACHE_SETTINGS = {
+  cache: 'force-cache',
+  next: {
+    revalidate: Infinity,
+  },
+} as const
+
 storyblokInit({
   accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
   use: [apiPlugin],
@@ -37,10 +46,7 @@ export const getStoryBySlug = async <T extends ISbStoryData>(
         resolve_links: 'url',
         resolve_relations: `reusableBlockReference.reference,${BLOG_ARTICLE_CONTENT_TYPE}.categories,page.abTestOrigin`,
       },
-      {
-        // Use 'no-cache' for debugging caching issue
-        cache: 'force-cache',
-      },
+      STORYBLOK_CACHE_SETTINGS,
     )
     .catch((err) => {
       console.log(`Failed to get story ${fullSlug}`, err)
@@ -78,10 +84,14 @@ export const getCmsPageLinks = async (startsWith?: string) => {
   const storyblokApi = await getStoryblokApiWithCache()
   const {
     data: { links },
-  } = (await storyblokApi.get('cdn/links/', {
-    ...(startsWith && { starts_with: startsWith }),
-    version: 'published',
-  })) as unknown as { data: { links: Record<string, LinkData> } }
+  } = (await storyblokApi.get(
+    'cdn/links/',
+    {
+      ...(startsWith && { starts_with: startsWith }),
+      version: 'published',
+    },
+    STORYBLOK_CACHE_SETTINGS,
+  )) as unknown as { data: { links: Record<string, LinkData> } }
 
   const pageLinks: Array<PageLink> = []
   for (const link of Object.values(links)) {
@@ -136,11 +146,14 @@ export const revalidateCacheVersion = () => revalidateTag(cvCacheTag)
 
 export const getBlogCategories = async (locale: RoutingLocale) => {
   const storyblokApi = await getStoryblokApiWithCache()
-  const response = await storyblokApi.getStories({
-    content_type: BLOG_ARTICLE_CATEGORY_CONTENT_TYPE,
-    starts_with: `${locale}/`,
-    version: getVersion(),
-  })
+  const response = await storyblokApi.getStories(
+    {
+      content_type: BLOG_ARTICLE_CATEGORY_CONTENT_TYPE,
+      starts_with: `${locale}/`,
+      version: getVersion(),
+    },
+    STORYBLOK_CACHE_SETTINGS,
+  )
   return response.data.stories.map((item) => ({
     id: item.uuid,
     name: item.name,
@@ -150,13 +163,16 @@ export const getBlogCategories = async (locale: RoutingLocale) => {
 
 export const getBlogArticles = async (locale: RoutingLocale) => {
   const storyblokApi = await getStoryblokApiWithCache()
-  const response = await storyblokApi.getStories({
-    content_type: BLOG_ARTICLE_CONTENT_TYPE,
-    starts_with: `${locale}/`,
-    resolve_relations: `${BLOG_ARTICLE_CONTENT_TYPE}.categories`,
-    per_page: 100,
-    version: getVersion(),
-  })
+  const response = await storyblokApi.getStories(
+    {
+      content_type: BLOG_ARTICLE_CONTENT_TYPE,
+      starts_with: `${locale}/`,
+      resolve_relations: `${BLOG_ARTICLE_CONTENT_TYPE}.categories`,
+      per_page: 100,
+      version: getVersion(),
+    },
+    STORYBLOK_CACHE_SETTINGS,
+  )
 
   if (response.total > response.perPage) {
     // TODO: Implement pagination once we have more than 100 articles
