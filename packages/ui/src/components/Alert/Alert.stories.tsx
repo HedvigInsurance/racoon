@@ -12,7 +12,7 @@ const iconNameMap = {
 
 const iconArg: ArgTypes = {
   icon: {
-    options: ['InfoIcon', 'WarningTriangleIcon', 'CheckIcon', 'success'],
+    options: ['InfoIcon', 'WarningTriangleIcon', 'CheckIcon', 'StarIcon'],
     control: 'select',
   },
 }
