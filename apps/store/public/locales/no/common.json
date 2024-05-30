@@ -8,5 +8,6 @@
   "LANGUAGE_LABEL_no": "Norsk",
   "MONTHLY_PRICE": "{{displayAmount}}/mnd",
   "NAV_MENU_DIALOG_OPEN": "Menu",
-  "NAV_MENU_DIALOG_CLOSE": "Lukk"
+  "NAV_MENU_DIALOG_CLOSE": "Lukk",
+  "READ_MORE": "Les mer"
 }
