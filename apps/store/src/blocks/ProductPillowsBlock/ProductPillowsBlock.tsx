@@ -4,7 +4,7 @@ import { storyblokEditable } from '@storyblok/react'
 import { mq, theme } from 'ui'
 import type { SbBaseBlockProps, ExpectedBlockType } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
-import type { ProductPillowBlockProps } from './ProductPillowBlock';
+import type { ProductPillowBlockProps } from './ProductPillowBlock'
 import { ProductPillowBlock } from './ProductPillowBlock'
 
 export type ProductPillowsBlockProps = SbBaseBlockProps<{

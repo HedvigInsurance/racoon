@@ -1,8 +1,5 @@
-import type {
-  ShopSessionCustomerFragment} from '@/services/graphql/generated';
-import {
-  ShopSessionCustomerMissingField,
-} from '@/services/graphql/generated'
+import type { ShopSessionCustomerFragment } from '@/services/graphql/generated'
+import { ShopSessionCustomerMissingField } from '@/services/graphql/generated'
 
 export const getShouldCollectEmail = (customer?: ShopSessionCustomerFragment | null) => {
   return customer == null || customer.missingFields.includes(ShopSessionCustomerMissingField.Email)

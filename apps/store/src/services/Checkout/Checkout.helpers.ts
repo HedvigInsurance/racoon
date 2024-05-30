@@ -2,10 +2,9 @@ import type { ApolloClient } from '@apollo/client'
 import type { GetServerSidePropsContext } from 'next'
 import type {
   ShopSessionSigningQuery,
-  ShopSessionSigningQueryVariables} from '@/services/graphql/generated';
-import {
-  ShopSessionSigningDocument
+  ShopSessionSigningQueryVariables,
 } from '@/services/graphql/generated'
+import { ShopSessionSigningDocument } from '@/services/graphql/generated'
 
 type FetchParams = ShopSessionSigningQueryVariables & {
   apolloClient: ApolloClient<unknown>

@@ -1,8 +1,8 @@
 'use client'
 import styled from '@emotion/styled'
-import type { SbBlokData} from '@storyblok/react';
+import type { SbBlokData } from '@storyblok/react'
 import { StoryblokComponent, storyblokEditable } from '@storyblok/react'
-import type { ComponentProps} from 'react';
+import type { ComponentProps } from 'react'
 import { useState } from 'react'
 import { Button, theme } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'

@@ -2,7 +2,7 @@ import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.hel
 import type { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import type { PriceIntentService } from '@/services/priceIntent/PriceIntentService'
-import type { WidgetFlowStory} from '@/services/storyblok/storyblok';
+import type { WidgetFlowStory } from '@/services/storyblok/storyblok'
 import { getStoryById } from '@/services/storyblok/storyblok'
 import { parsePriceIntentDataSearchParams } from './parseSearchParams'
 

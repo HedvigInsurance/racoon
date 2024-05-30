@@ -1,7 +1,7 @@
 'use client'
 
 import styled from '@emotion/styled'
-import type { ISbRichtext} from '@storyblok/react';
+import type { ISbRichtext } from '@storyblok/react'
 import { renderRichText } from '@storyblok/react'
 import { Heading, theme } from 'ui'
 import * as Timeline from '@/components/Timeline/Timeline'

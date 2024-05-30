@@ -2,7 +2,7 @@
 
 import { type CSSObject } from '@emotion/styled'
 import styled from '@emotion/styled'
-import type { Level} from '../theme';
+import type { Level } from '../theme'
 import { mq } from '../theme'
 
 type PartialRecord<K extends keyof any, T> = Partial<Record<K, T>>

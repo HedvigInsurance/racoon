@@ -1,4 +1,4 @@
-import type { ConfirmationStory} from '@/services/storyblok/storyblok';
+import type { ConfirmationStory } from '@/services/storyblok/storyblok'
 import { getStoryBySlug } from '@/services/storyblok/storyblok'
 import type { RoutingLocale } from '@/utils/l10n/types'
 

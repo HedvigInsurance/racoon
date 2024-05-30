@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import * as AccordionPrimitives from '@radix-ui/react-accordion'
 import { motion } from 'framer-motion'
-import type { PropsWithChildren, ReactElement } from 'react';
+import type { PropsWithChildren, ReactElement } from 'react'
 import { forwardRef } from 'react'
 import { MinusIcon, mq, PlusIcon, theme } from 'ui'
 

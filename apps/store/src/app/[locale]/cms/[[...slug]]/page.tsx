@@ -1,6 +1,5 @@
 import { StoryblokStory } from '@storyblok/react/rsc'
 import type { Metadata } from 'next'
-import { removeTrailingSlash } from 'next/dist/shared/lib/router/utils/remove-trailing-slash'
 import { notFound } from 'next/navigation'
 import { cache } from 'react'
 import { storyblokBridgeOptions } from '@/appComponents/storyblokBridgeOptions'
@@ -17,6 +16,8 @@ import {
   toIsoLocale,
 } from '@/utils/l10n/localeUtils'
 import type { IsoLocale, RoutingLocale } from '@/utils/l10n/types'
+import { removeTrailingSlash } from '@/utils/PageLink'
+import { BlogStoryContainer } from './BlogStoryContainer'
 import { ProductCmsPage } from './ProductCmsPage'
 import { StoryBreadcrumbs } from './StoryBreadcrumbs'
 
@@ -27,6 +28,8 @@ type Props = {
 
 export default async function CmsPage(props: Props) {
   const story = await fetchStory(props.params.locale, props.params.slug?.join('/'))
+
+  // TODO: Solve in Storyblok and remove workaround
   // Patching incorrect data from Storyblok for /se-en/
   let { hideBreadcrumbs } = story.content
   if ((props.params.slug?.length ?? 0) < 1) {
@@ -42,7 +45,9 @@ export default async function CmsPage(props: Props) {
   }
   return (
     <>
-      <StoryblokStory story={story} bridgeOptions={storyblokBridgeOptions} />
+      <BlogStoryContainer locale={props.params.locale} story={story}>
+        <StoryblokStory story={story} bridgeOptions={storyblokBridgeOptions} />
+      </BlogStoryContainer>
       {!hideBreadcrumbs && <StoryBreadcrumbs params={props.params} currentPageTitle={story.name} />}
       <DefaultDebugDialog />
     </>

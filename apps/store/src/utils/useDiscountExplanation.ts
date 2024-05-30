@@ -1,5 +1,5 @@
 import { useTranslation } from 'next-i18next'
-import type { CampaignDiscount} from '@/services/graphql/generated';
+import type { CampaignDiscount } from '@/services/graphql/generated'
 import { CampaignDiscountType } from '@/services/graphql/generated'
 import { useFormatter } from './useFormatter'
 

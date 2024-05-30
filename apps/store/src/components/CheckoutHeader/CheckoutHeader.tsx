@@ -7,7 +7,7 @@ import {
   MENU_BAR_HEIGHT_DESKTOP,
 } from '@/components/Header/Header.constants'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
-import type { BreadcrumbsProps } from './Breadcrumbs';
+import type { BreadcrumbsProps } from './Breadcrumbs'
 import { Breadcrumbs } from './Breadcrumbs'
 
 type Props = BreadcrumbsProps & {

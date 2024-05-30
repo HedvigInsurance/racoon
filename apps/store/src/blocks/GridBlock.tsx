@@ -1,5 +1,5 @@
 'use client'
-import type { CSSObject } from '@emotion/styled';
+import type { CSSObject } from '@emotion/styled'
 import styled from '@emotion/styled'
 import { StoryblokComponent, storyblokEditable } from '@storyblok/react'
 import { mq, theme } from 'ui'

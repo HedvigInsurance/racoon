@@ -1,9 +1,9 @@
 'use client'
 
 import Personnummer from 'personnummer'
-import type { InputHTMLAttributes} from 'react';
+import type { InputHTMLAttributes } from 'react'
 import { useState } from 'react'
-import type { Props as TextFieldProps } from '@/components/TextField/TextField';
+import type { Props as TextFieldProps } from '@/components/TextField/TextField'
 import { TextField } from '@/components/TextField/TextField'
 
 export type Props = Omit<
