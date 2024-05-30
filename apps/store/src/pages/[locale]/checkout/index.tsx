@@ -1,10 +1,16 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import type { SSRConfig } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { ProductMetadataProvider } from '@/appComponents/providers/ProductMetadataProvider'
 import type { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
 import { fetchCheckoutSteps } from '@/components/CheckoutHeader/CheckoutHeader.helpers'
 import CheckoutPage from '@/components/CheckoutPage/CheckoutPage'
 import type { CheckoutPageProps } from '@/components/CheckoutPage/CheckoutPage.types'
+import type { GlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
+import {
+  fetchGlobalProductMetadata,
+  GLOBAL_PRODUCT_METADATA_PROP_NAME,
+} from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import { fetchCurrentShopSessionSigning } from '@/services/Checkout/Checkout.helpers'
 import type { ShopSessionSigning } from '@/services/graphql/generated'
@@ -24,7 +30,11 @@ const NextCheckoutPage: NextPage<NextPageProps> = (props) => {
 
   if (!shopSession?.customer) return null
 
-  return <CheckoutPage {...props} shopSession={shopSession} />
+  return (
+    <ProductMetadataProvider productMetadata={props[GLOBAL_PRODUCT_METADATA_PROP_NAME]}>
+      <CheckoutPage {...props} shopSession={shopSession} />
+    </ProductMetadataProvider>
+  )
 }
 
 export const getServerSideProps: GetServerSideProps<NextPageProps> = async (context) => {
@@ -37,10 +47,11 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
   } as const
 
   const apolloClient = await initializeApolloServerSide({ req, res, locale })
-  let shopSession: ShopSession, translations: SSRConfig
+  let shopSession: ShopSession, productMetadata: GlobalProductMetadata, translations: SSRConfig
   try {
-    ;[shopSession, translations] = await Promise.all([
+    ;[shopSession, productMetadata, translations] = await Promise.all([
       getCurrentShopSessionServerSide({ apolloClient, req, res }),
+      fetchGlobalProductMetadata({ apolloClient }),
       serverSideTranslations(locale),
     ])
   } catch (error) {
@@ -72,6 +83,7 @@ export const getServerSideProps: GetServerSideProps<NextPageProps> = async (cont
 
   const pageProps: NextPageProps = {
     ...translations,
+    [GLOBAL_PRODUCT_METADATA_PROP_NAME]: productMetadata,
     [SHOP_SESSION_PROP_NAME]: shopSession.id,
     ssn: customer.ssn,
     shouldCollectEmail: getShouldCollectEmail(customer),
