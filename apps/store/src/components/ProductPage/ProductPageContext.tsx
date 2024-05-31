@@ -1,5 +1,5 @@
 'use client'
-import type { PropsWithChildren} from 'react';
+import type { PropsWithChildren } from 'react'
 import { createContext, useContext, useMemo } from 'react'
 import { useProductData } from '../ProductData/ProductDataProvider'
 import type { ProductPageProps } from './ProductPage.types'

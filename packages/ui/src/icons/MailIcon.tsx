@@ -1,4 +1,4 @@
-import type { IconRootProps } from './Root';
+import type { IconRootProps } from './Root'
 import { IconRoot } from './Root'
 
 export const MailIcon = ({ className, size = '1.5rem' }: IconRootProps) => (

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import type { StoryObj} from '@storybook/react';
+import type { StoryObj } from '@storybook/react'
 import { type Meta } from '@storybook/react'
 import { theme } from 'ui'
 import { FetchInsurancePrompt } from './FetchInsurancePrompt'

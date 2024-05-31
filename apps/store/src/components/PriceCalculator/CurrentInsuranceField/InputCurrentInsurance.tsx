@@ -1,6 +1,6 @@
 import { datadogRum } from '@datadog/browser-rum'
 import { useTranslation } from 'next-i18next'
-import type { ChangeEventHandler} from 'react';
+import type { ChangeEventHandler } from 'react'
 import { useState } from 'react'
 import { Space } from 'ui'
 import { InputSelect } from '@/components/InputSelect/InputSelect'

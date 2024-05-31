@@ -11,7 +11,7 @@ import { makeAbsolute } from '@/services/storyblok/Storyblok.helpers'
 import { useFormatter } from '@/utils/useFormatter'
 import { BLOG_ARTICLE_CONTENT_TYPE } from './blog.constants'
 import { convertToBlogArticleCategory } from './blog.helpers'
-import type { BlogArticleCategory} from './blog.types';
+import type { BlogArticleCategory } from './blog.types'
 import { type BlogArticleContentType } from './blog.types'
 
 type Props = SbBaseBlockProps<BlogArticleContentType['content']>

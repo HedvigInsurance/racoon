@@ -1,5 +1,5 @@
 import { type CSSObject } from '@emotion/styled'
-import type { Level} from './media-query';
+import type { Level } from './media-query'
 import { mq } from './media-query'
 
 export enum HedvigFont {

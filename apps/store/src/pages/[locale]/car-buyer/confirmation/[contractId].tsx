@@ -7,11 +7,10 @@ import { STORYBLOK_CAR_DEALERSHIP_FOLDER_SLUG } from '@/features/carDealership/c
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import type {
   CarTrialExtensionQuery,
-  CarTrialExtensionQueryVariables} from '@/services/graphql/generated';
-import {
-  CarTrialExtensionDocument
+  CarTrialExtensionQueryVariables,
 } from '@/services/graphql/generated'
-import type { ConfirmationStory} from '@/services/storyblok/storyblok';
+import { CarTrialExtensionDocument } from '@/services/graphql/generated'
+import type { ConfirmationStory } from '@/services/storyblok/storyblok'
 import { getStoryBySlug } from '@/services/storyblok/storyblok'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'

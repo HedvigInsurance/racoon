@@ -1,10 +1,10 @@
 'use client'
 import styled from '@emotion/styled'
-import type { SbBlokData} from '@storyblok/react';
+import type { SbBlokData } from '@storyblok/react'
 import { storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
 import { theme } from 'ui'
-import type { TextBlockProps } from '@/blocks/TextBlock';
+import type { TextBlockProps } from '@/blocks/TextBlock'
 import { TextBlock } from '@/blocks/TextBlock'
 import * as CheckList from '@/components/CheckList/CheckList'
 import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'

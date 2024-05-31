@@ -5,7 +5,8 @@ import type { Score, ReviewsMetadata, ReviewsByScore } from './memberReviews.typ
 import type {
   averageRatingSchema,
   reviewCommentsSchema,
-  commentByScoreSchema} from './memberReviews.utils';
+  commentByScoreSchema,
+} from './memberReviews.utils'
 import {
   validateLatestReviews,
   validateProductReviewsComments,

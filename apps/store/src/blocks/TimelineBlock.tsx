@@ -1,5 +1,5 @@
 'use client'
-import type { TimelineItemBlockProps } from '@/blocks/TimelineItemBlock';
+import type { TimelineItemBlockProps } from '@/blocks/TimelineItemBlock'
 import { TimelineItemBlock } from '@/blocks/TimelineItemBlock'
 import * as Timeline from '@/components//Timeline/Timeline'
 import type { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'

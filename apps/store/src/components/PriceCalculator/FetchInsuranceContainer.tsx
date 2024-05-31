@@ -1,4 +1,4 @@
-import type { ComponentProps} from 'react';
+import type { ComponentProps } from 'react'
 import { type ReactNode } from 'react'
 import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { Features } from '@/utils/Features'

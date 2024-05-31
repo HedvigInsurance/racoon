@@ -2,10 +2,9 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { initializeApolloServerSide } from '@/services/apollo/client'
 import type {
   RedeemCampaignMutation,
-  RedeemCampaignMutationVariables} from '@/services/graphql/generated';
-import {
-  RedeemCampaignDocument
+  RedeemCampaignMutationVariables,
 } from '@/services/graphql/generated'
+import { RedeemCampaignDocument } from '@/services/graphql/generated'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { getPathnameFromUrl } from '@/utils/getPathnameFromUrl'

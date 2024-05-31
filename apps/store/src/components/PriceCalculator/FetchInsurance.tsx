@@ -4,8 +4,7 @@ import styled from '@emotion/styled'
 import { type ComponentProps, useCallback, useState, useMemo } from 'react'
 import { Dialog, Text, theme } from 'ui'
 import { FetchInsurancePrompt } from '@/components/FetchInsurancePrompt/FetchInsurancePrompt'
-import type {
-  ExternalInsurer} from '@/services/graphql/generated';
+import type { ExternalInsurer } from '@/services/graphql/generated'
 import {
   useInsurelyDataCollectionCreateMutation,
   usePriceIntentInsurelyUpdateMutation,

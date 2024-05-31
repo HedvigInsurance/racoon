@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import type { FormEventHandler} from 'react';
+import type { FormEventHandler } from 'react'
 import { useState } from 'react'
 import {
   Button,

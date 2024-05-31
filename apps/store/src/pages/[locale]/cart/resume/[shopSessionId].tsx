@@ -6,7 +6,7 @@ import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
-import type { PageStory } from '@/services/storyblok/storyblok';
+import type { PageStory } from '@/services/storyblok/storyblok'
 import { getStoryBySlug } from '@/services/storyblok/storyblok'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'

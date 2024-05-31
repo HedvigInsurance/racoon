@@ -1,4 +1,4 @@
-import type { CountryData } from '@/utils/l10n/countries';
+import type { CountryData } from '@/utils/l10n/countries'
 import { countries } from '@/utils/l10n/countries'
 import { locales } from '@/utils/l10n/locales'
 import { toIsoLocale } from '@/utils/l10n/localeUtils'

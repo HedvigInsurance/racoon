@@ -2,15 +2,8 @@
 
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-import type {
-  ChangeEventHandler,
-  InputHTMLAttributes,
-  MouseEventHandler} from 'react';
-import {
-  useId,
-  useRef,
-  useState,
-} from 'react'
+import type { ChangeEventHandler, InputHTMLAttributes, MouseEventHandler } from 'react'
+import { useId, useRef, useState } from 'react'
 import { CrossIconSmall, LockIcon, Space, Text, WarningTriangleIcon, theme } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 

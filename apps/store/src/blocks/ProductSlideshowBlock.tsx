@@ -6,7 +6,7 @@ import { theme } from 'ui'
 import { Slideshow } from '@/components/Slideshow/Slideshow'
 import type { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
-import type { TopPickCardBlockProps } from './TopPickCardBlock';
+import type { TopPickCardBlockProps } from './TopPickCardBlock'
 import { TopPickCardBlock } from './TopPickCardBlock'
 
 type ProductSlideshowBlockProps = SbBaseBlockProps<{

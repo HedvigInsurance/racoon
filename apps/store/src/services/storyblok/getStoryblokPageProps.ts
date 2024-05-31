@@ -6,7 +6,7 @@ import { fetchCompanyReviewsMetadata } from '@/features/memberReviews/memberRevi
 import { type RoutingLocale } from '@/utils/l10n/types'
 import { initializeApollo } from '../apollo/client'
 import { hideChatOnPage } from '../CustomerFirst'
-import type { PageStory, ProductStory} from './storyblok';
+import type { PageStory, ProductStory } from './storyblok'
 import { getStoryBySlug } from './storyblok'
 import { STORY_PROP_NAME } from './Storyblok.constant'
 

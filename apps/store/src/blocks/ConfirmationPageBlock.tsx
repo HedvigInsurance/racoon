@@ -1,5 +1,5 @@
 'use client'
-import type { SbBlokData } from '@storyblok/react';
+import type { SbBlokData } from '@storyblok/react'
 import { storyblokEditable, StoryblokComponent } from '@storyblok/react'
 import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 

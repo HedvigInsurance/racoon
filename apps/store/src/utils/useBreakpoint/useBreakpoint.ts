@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useState } from 'react'
-import type { Level} from 'ui';
+import type { Level } from 'ui'
 import { getMediaQueryBreakpoint } from 'ui'
 
 /**
