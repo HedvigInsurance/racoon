@@ -8,6 +8,7 @@ export class ServerCookiePersister implements SimplePersister {
     private readonly cookieKey: string,
     private readonly request: CookieParams['req'],
     private readonly response: CookieParams['res'],
+    private readonly cookieMaxAgeSeconds: number,
   ) {}
 
   public save(value: string, cookieKey = this.cookieKey, options?: DefaultOptions) {
@@ -27,7 +28,7 @@ export class ServerCookiePersister implements SimplePersister {
   }
 
   private defaultOptions(): DefaultOptions {
-    return { path: '/', req: this.request, res: this.response }
+    return { path: '/', req: this.request, res: this.response, maxAge: this.cookieMaxAgeSeconds }
   }
 
   public getAll() {
