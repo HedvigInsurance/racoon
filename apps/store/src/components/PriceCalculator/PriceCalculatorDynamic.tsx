@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import { Skeleton } from '@/components/Skeleton'
+import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { SpaceFlex } from '../SpaceFlex/SpaceFlex'
 import { sectionSkeleton, skeletonWrapper } from './PriceCalculatorDynamic.css'
 

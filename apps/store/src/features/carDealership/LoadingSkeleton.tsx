@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { Space } from 'ui'
 import { ProductItemSkeleton } from '@/components/ProductItem/ProductItem'
-import { Skeleton } from '@/components/Skeleton'
+import { Skeleton } from '@/components/Skeleton/Skeleton'
 
 export const LoadingSkeleton = () => {
   return (

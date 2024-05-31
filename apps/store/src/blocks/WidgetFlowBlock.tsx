@@ -5,7 +5,7 @@ import { StoryblokComponent, storyblokEditable, type SbBlokData } from '@storybl
 import { Space } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { ProductItemSkeleton } from '@/components/ProductItem/ProductItem'
-import { Skeleton } from '@/components/Skeleton'
+import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
