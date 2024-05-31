@@ -10,7 +10,6 @@ import { SubmitButton } from '@/appComponents/SubmitButton'
 import { ErrorMessages } from '@/components/FormErrors/ErrorMessages'
 import { CampaignCard } from '@/components/InfoCard/InfoCard'
 import { InputDay } from '@/components/InputDay/InputDay'
-import type { RoutingLocale } from '@/utils/l10n/types'
 import {
   checkbox,
   checkboxIndicator,
@@ -19,9 +18,9 @@ import {
 } from './InsuranceSwitcherExpirationDateForm.css'
 import { submitSwitchConfirmation } from './submitSwitchConfirmation'
 
-type Props = { id: string; locale: RoutingLocale }
+type Props = { id: string }
 
-export default function InsuranceSwitchExpirationDateForm({ id, locale }: Props) {
+export default function InsuranceSwitchExpirationDateForm({ id }: Props) {
   const { t } = useTranslation('contractSwitchConfirmationForm')
   const [state, formAction] = useFormState(submitSwitchConfirmation, null)
 
@@ -49,7 +48,6 @@ export default function InsuranceSwitchExpirationDateForm({ id, locale }: Props)
           </div>
 
           <input type="text" name="id" value={id} hidden />
-          <input type="text" name="locale" value={locale} hidden />
 
           <SubmitButton>{t('SWITCH_CONFIRMATION_FORM_SUBMIT')}</SubmitButton>
 
