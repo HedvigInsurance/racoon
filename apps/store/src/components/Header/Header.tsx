@@ -1,7 +1,7 @@
 'use client'
 import type { Transition } from 'framer-motion'
 import { motion } from 'framer-motion'
-import type { ReactNode } from 'react'
+import type { PropsWithChildren } from 'react'
 import { bodyBgColor } from 'ui/src/theme/vars.css'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { isBrowser } from '@/utils/env'
@@ -31,11 +31,7 @@ const TRANSITION: Transition = { ease: [0.65, 0.05, 0.36, 1] }
 
 type AnimationVariant = keyof typeof ANIMATION_VARIANTS | undefined
 
-type HeaderProps = {
-  children: ReactNode
-}
-
-export const Header = (props: HeaderProps) => {
+export const Header = (props: PropsWithChildren<unknown>) => {
   const { children } = props
   const scrollState = useScrollState({ threshold: MENU_BAR_HEIGHT_PX * 2 })
 
@@ -73,7 +69,7 @@ export const Header = (props: HeaderProps) => {
         <div className={logoWrapper}>
           <LogoHomeLink />
         </div>
-        <div className={contentWrapper}>{children}</div>
+        {children ? <div className={contentWrapper}>{children}</div> : null}
       </motion.header>
     </div>
   )
