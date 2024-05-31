@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 import type { ComponentProps, ElementType } from 'react'
 import type { IconRootProps } from '../../icons'
-import type { ButtonProps } from '../Button/Button'
 import { Button } from '../Button/Button'
 import { Text } from '../Text/Text'
 import {
@@ -63,7 +62,7 @@ function Actions({ children, className, ...props }: ActionsProps) {
   )
 }
 
-type ActionProps = ButtonProps<'button'>
+type ActionProps = ComponentProps<typeof Button<'button'>>
 
 function Action({ children, className, ...props }: ActionProps) {
   return (
