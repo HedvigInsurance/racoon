@@ -2,7 +2,7 @@
 
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
-import { useMemo } from 'react'
+import { Suspense, useEffect, useMemo, useState } from 'react'
 import { Space } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
@@ -14,14 +14,12 @@ import { BLOG_ARTICLE_LIST_BLOCK } from '../blog.constants'
 import { useBlogArticleTeasers } from '../useBlog'
 import { buttonWrapper, inlineButtonLink, articleList } from './BlogArticleListBlock.css'
 
-const SHOW_ALL_QUERY_PARAM = 'showAll'
-
 type Props = SbBaseBlockProps<{
   categories?: Array<string>
   initiallyVisibleCount?: number
 }>
 
-export const BlogArticleListBlock = (props: Props) => {
+export function BlogArticleListBlock(props: Props) {
   const { t } = useTranslation()
   const formatter = useFormatter()
 
@@ -36,12 +34,8 @@ export const BlogArticleListBlock = (props: Props) => {
   }, [teaserList, props.blok.categories])
 
   const pathname = usePathname()
-  const searchParams = useSearchParams()
-
   const initiallyVisibleCount = props.blok.initiallyVisibleCount ?? 12
-  const showAll =
-    filteredTeaserList.length <= initiallyVisibleCount ||
-    searchParams?.has(SHOW_ALL_QUERY_PARAM, '1')
+  const [showAll, setShowAll] = useState(filteredTeaserList.length <= initiallyVisibleCount)
 
   const visibleTeaserList = showAll
     ? filteredTeaserList
@@ -84,7 +78,28 @@ export const BlogArticleListBlock = (props: Props) => {
           )}
         </Space>
       </GridLayout.Content>
+      <Suspense>
+        {/*
+          We rely on useSearchParams hook, and the code that listens to it has to be inside Suspense boundary.
+          Alternative way is to have client-side effect that reads window.location, but it won't be reactive.
+          Which is fine if you never change the param while on the page, but not here when we need to handle "Show All" button
+         */}
+        <ShowAllQueryTrigger setShowAll={setShowAll} />
+      </Suspense>
     </GridLayout.Root>
   )
 }
+
 BlogArticleListBlock.blockName = BLOG_ARTICLE_LIST_BLOCK
+
+const SHOW_ALL_QUERY_PARAM = 'showAll'
+
+function ShowAllQueryTrigger({ setShowAll }: { setShowAll: (value: boolean) => void }) {
+  const searchParams = useSearchParams()
+  useEffect(() => {
+    if (searchParams?.has(SHOW_ALL_QUERY_PARAM, '1')) {
+      setShowAll(true)
+    }
+  }, [searchParams, setShowAll])
+  return null
+}

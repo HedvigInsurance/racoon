@@ -22,7 +22,7 @@ const allNamespaces = [
   'widget',
 ]
 
-const allLocales = ['en', 'dk-en', 'no-en', 'se-en', 'se', 'sv-se']
+const allLocales = ['en', 'dk', 'dk-en', 'no', 'no-en', 'se-en', 'se', 'sv-se']
 
 export const initTranslations = async (
   locale: string,
@@ -48,6 +48,8 @@ export const initTranslations = async (
     supportedLngs: allLocales,
     preload: resources ? [] : preload,
     resources,
+    // It's a safe default when result it not fed into `dangerouslySetInnerHTML` which we currently never do
+    interpolation: { escapeValue: false },
     ...nextI18nextConfig,
   }
   await i18n.init(options)

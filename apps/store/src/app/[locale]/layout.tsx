@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation'
 import type { ReactNode } from 'react'
 import { Suspense } from 'react'
 import { ProductMetadataProvider } from '@/appComponents/providers/ProductMetadataProvider'
@@ -11,12 +12,12 @@ import { CompanyReviewsMetadataProvider } from '@/features/memberReviews/Company
 import { fetchCompanyReviewsMetadata } from '@/features/memberReviews/memberReviews'
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
 import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
-import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import type { GlobalStory } from '@/services/storyblok/storyblok'
 import { getStoryBySlug } from '@/services/storyblok/storyblok.rsc'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { Features } from '@/utils/Features'
 import { locales } from '@/utils/l10n/locales'
+import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import type { RoutingLocale } from '@/utils/l10n/types'
 import { AppTrackingTriggers } from './AppTrackingTriggers'
 import { StoryblokLayout } from './StoryblokLayout'
@@ -27,6 +28,12 @@ export type LocalizedLayoutProps<P = unknown> = P & {
 }
 
 const Layout = async ({ children, params: { locale } }: LocalizedLayoutProps) => {
+  // GOTCHA: We cannot exclude unknown locales with `dynamicParams = false` since it apparently overrides
+  // `dynamicParams` in `[[...slug]]` child dir which breaks our desired CMS rendering config
+  // NextJs issue: https://github.com/vercel/next.js/issues/42940
+  if (!isRoutingLocale(locale)) {
+    return notFound()
+  }
   const apolloClient = getApolloClient(locale)
   const [companyReviewsMetadata, productMetadata, globalStory] = await Promise.all([
     fetchCompanyReviewsMetadata(),
@@ -39,20 +46,18 @@ const Layout = async ({ children, params: { locale } }: LocalizedLayoutProps) =>
       <RootLayout locale={locale}>
         <ProductMetadataProvider productMetadata={productMetadata}>
           <CompanyReviewsMetadataProvider companyReviewsMetadata={companyReviewsMetadata}>
-            <ShopSessionProvider>
-              <AppErrorProvider>
-                <TrackingProvider>
-                  <AppErrorDialog />
-                  <GlobalBannerDynamic />
-                  <StoryblokProvider>
-                    <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
-                  </StoryblokProvider>
-                  <Suspense>
-                    <AppTrackingTriggers />
-                  </Suspense>
-                </TrackingProvider>
-              </AppErrorProvider>
-            </ShopSessionProvider>
+            <AppErrorProvider>
+              <TrackingProvider>
+                <AppErrorDialog />
+                <GlobalBannerDynamic />
+                <StoryblokProvider>
+                  <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
+                </StoryblokProvider>
+                <Suspense>
+                  <AppTrackingTriggers />
+                </Suspense>
+              </TrackingProvider>
+            </AppErrorProvider>
           </CompanyReviewsMetadataProvider>
         </ProductMetadataProvider>
         {Features.enabled('COOKIE_BANNER_INP_IMPROVEMENT') && <CookieConsent />}
@@ -60,8 +65,6 @@ const Layout = async ({ children, params: { locale } }: LocalizedLayoutProps) =>
     </>
   )
 }
-
-export const dynamicParams = false
 
 export const generateStaticParams = () => {
   return Object.values(locales).map(({ routingLocale }) => ({ locale: routingLocale }))

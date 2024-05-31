@@ -27,9 +27,6 @@ export async function GET(request: Request) {
   // Redirect to the path from the fetched post
   // We don't redirect to searchParams.slug as that might lead to open redirect vulnerabilities
   targetUrl.pathname = `/${story.full_slug}`
-  // Patch to use app router test endpoint
-  // TODO: Remove after migration
-  targetUrl.pathname = targetUrl.pathname.replace(/^\/(se|se-en)\//, '/$1/cms/')
   // We need to keep original search params for live editing to work, just remove secret
   targetUrl.searchParams.delete('secret')
   console.debug(`Previewing ${targetUrl.pathname}, version=${version}`)
