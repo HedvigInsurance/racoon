@@ -1,4 +1,4 @@
-import { createVar, globalStyle, style } from '@vanilla-extract/css'
+import { createVar, style } from '@vanilla-extract/css'
 import { recipe } from '@vanilla-extract/recipes'
 import { tokens } from '../../theme'
 
@@ -54,10 +54,7 @@ export const rootStyles = recipe({
 
 export const iconStyles = style({
   marginTop: tokens.space.xxs,
-})
-
-globalStyle(`${iconStyles} path`, {
-  fill: AlertElement,
+  color: AlertElement,
 })
 
 export const bodyStyles = style({
