@@ -3,7 +3,7 @@ import type { CountryCode } from '@/services/graphql/generated'
 import { CookiePersister } from '@/services/persister/CookiePersister'
 import { ServerCookiePersister } from '@/services/persister/ServerCookiePersister'
 import type { CookieParams } from '@/utils/types'
-import { COOKIE_KEY_SHOP_SESSION } from './ShopSession.constants'
+import { SHOP_SESSION_COOKIE_MAX_AGE, SHOP_SESSION_COOKIE_NAME } from './ShopSession.constants'
 import { ShopSessionService } from './ShopSessionService'
 
 type Params = CookieParams & {
@@ -33,18 +33,27 @@ export const getShopSessionServerSide = async (params: GetShopSessionParams) => 
 type GetShopSessionParams = Params & { countryCode: CountryCode }
 
 export const setupShopSessionServiceClientSide = (apolloClient: ApolloClient<unknown>) => {
-  return new ShopSessionService(new CookiePersister(COOKIE_KEY_SHOP_SESSION), apolloClient)
+  return new ShopSessionService(
+    new CookiePersister(SHOP_SESSION_COOKIE_NAME, SHOP_SESSION_COOKIE_MAX_AGE),
+    apolloClient,
+  )
 }
 
 export const setupShopSessionServiceServerSide = (params: Omit<Params, 'locale'>) => {
   const { req, res, apolloClient } = params
   return new ShopSessionService(
-    new ServerCookiePersister(COOKIE_KEY_SHOP_SESSION, req, res),
+    new ServerCookiePersister(SHOP_SESSION_COOKIE_NAME, req, res, SHOP_SESSION_COOKIE_MAX_AGE),
     apolloClient,
   )
 }
 
 export const getShopSessionId = ({ req, res }: CookieParams = {}) => {
-  if (req && res) return new ServerCookiePersister(COOKIE_KEY_SHOP_SESSION, req, res).fetch()
-  return new CookiePersister(COOKIE_KEY_SHOP_SESSION).fetch()
+  if (req && res)
+    return new ServerCookiePersister(
+      SHOP_SESSION_COOKIE_NAME,
+      req,
+      res,
+      SHOP_SESSION_COOKIE_MAX_AGE,
+    ).fetch()
+  return new CookiePersister(SHOP_SESSION_COOKIE_NAME, SHOP_SESSION_COOKIE_MAX_AGE).fetch()
 }

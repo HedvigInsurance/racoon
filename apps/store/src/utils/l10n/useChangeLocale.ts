@@ -3,6 +3,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 import { CookiePersister } from '@/services/persister/CookiePersister'
+import { SHOP_SESSION_COOKIE_MAX_AGE } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
 import { LOCALE_COOKIE_KEY, LOCALE_COOKIE_MAX_AGE } from '@/utils/l10n/locales'
@@ -19,7 +20,7 @@ export const useChangeLocale = () => {
       try {
         const routingLocale = toRoutingLocale(newLocale)
 
-        const cookiePersister = new CookiePersister(LOCALE_COOKIE_KEY)
+        const cookiePersister = new CookiePersister(LOCALE_COOKIE_KEY, SHOP_SESSION_COOKIE_MAX_AGE)
         cookiePersister.save(routingLocale, undefined, { maxAge: LOCALE_COOKIE_MAX_AGE })
 
         // TODO: this doesn't handle changing country + cross domain

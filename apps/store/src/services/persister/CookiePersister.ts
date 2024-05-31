@@ -3,7 +3,10 @@ import type { OptionsType } from 'cookies-next/lib/types'
 import type { SimplePersister } from './Persister.types'
 
 export class CookiePersister implements SimplePersister {
-  constructor(private readonly cookieKey: string) {}
+  constructor(
+    private readonly cookieKey: string,
+    private readonly cookieMaxAgeSeconds: number,
+  ) {}
 
   public save(value: string, cookieKey = this.cookieKey, options?: OptionsType) {
     setCookie(cookieKey, value, { ...this.defaultOptions(), ...options })
@@ -20,7 +23,7 @@ export class CookiePersister implements SimplePersister {
   }
 
   private defaultOptions() {
-    return { path: '/' }
+    return { path: '/', maxAge: this.cookieMaxAgeSeconds }
   }
 
   public getAll() {

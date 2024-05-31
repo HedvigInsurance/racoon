@@ -22,6 +22,7 @@ import {
 import { CookiePersister } from '@/services/persister/CookiePersister'
 import type { SimplePersister } from '@/services/persister/Persister.types'
 import type { Template } from '@/services/PriceCalculator/PriceCalculator.types'
+import { SHOP_SESSION_COOKIE_MAX_AGE } from '@/services/shopSession/ShopSession.constants'
 import { ServerCookiePersister } from '../persister/ServerCookiePersister'
 import type { PriceIntent, PriceIntentCreateParams } from './priceIntent.types'
 
@@ -182,7 +183,7 @@ let PRICE_INTENT_SERVICE: PriceIntentService | null = null
 export const priceIntentServiceInitClientSide = (apolloClient: ApolloClient<unknown>) => {
   if (!PRICE_INTENT_SERVICE) {
     PRICE_INTENT_SERVICE = new PriceIntentService(
-      new CookiePersister('UNUSED_DEFAULT_KEY'),
+      new CookiePersister('UNUSED_DEFAULT_KEY', SHOP_SESSION_COOKIE_MAX_AGE),
       apolloClient,
     )
   }
@@ -198,7 +199,7 @@ type ServerSideParams = {
 
 export const priceIntentServiceInitServerSide = ({ req, res, apolloClient }: ServerSideParams) => {
   return new PriceIntentService(
-    new ServerCookiePersister('UNUSED_DEFAULT_KEY', req, res),
+    new ServerCookiePersister('UNUSED_DEFAULT_KEY', req, res, SHOP_SESSION_COOKIE_MAX_AGE),
     apolloClient,
   )
 }
