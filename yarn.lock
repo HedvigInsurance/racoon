@@ -12036,12 +12036,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/recipes@npm:0.5.2":
-  version: 0.5.2
-  resolution: "@vanilla-extract/recipes@npm:0.5.2"
+"@vanilla-extract/recipes@npm:0.5.3":
+  version: 0.5.3
+  resolution: "@vanilla-extract/recipes@npm:0.5.3"
   peerDependencies:
     "@vanilla-extract/css": ^1.0.0
-  checksum: 10c0/0ec9965ec731a90624c911763afba8a94f631e33d3444b1b403047e8c6009bb83e3201f848c029c9642408653aa50369432016800b53f6865296dcb7e24de7d7
+  checksum: 10c0/1a8a155c53031efeafd67e0e429bb766049a61ca1dda8dfc6144f09882ccf7058557d6a89c2454cd2726452fedd5110a55a4d89a5f1e2846d815eca095494aea
   languageName: node
   linkType: hard
 
@@ -25660,7 +25660,7 @@ __metadata:
     "@vanilla-extract/css": "npm:1.15.2"
     "@vanilla-extract/dynamic": "npm:2.1.1"
     "@vanilla-extract/next-plugin": "npm:2.4.1"
-    "@vanilla-extract/recipes": "npm:0.5.2"
+    "@vanilla-extract/recipes": "npm:0.5.3"
     "@vanilla-extract/sprinkles": "npm:1.6.1"
     "@vanilla-extract/webpack-plugin": "npm:2.3.9"
     "@vercel/edge-config": "npm:1.1.0"
@@ -27181,7 +27181,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:7.10.0"
     "@vanilla-extract/css": "npm:1.15.2"
     "@vanilla-extract/dynamic": "npm:2.1.1"
-    "@vanilla-extract/recipes": "npm:0.5.2"
+    "@vanilla-extract/recipes": "npm:0.5.3"
     "@vanilla-extract/sprinkles": "npm:1.6.1"
     babel-jest: "npm:29.7.0"
     babel-loader: "npm:9.1.3"
