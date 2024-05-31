@@ -56,37 +56,13 @@ export default async function CmsPage(props: Props) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const story = await fetchStory(params.locale, params.slug?.join('/'))
-  const pageUrl = [params.locale, ...(params.slug ?? [])].join('/')
-
-  const swedishAlternate = story.alternates.find(
-    (link) => getHrefLang(link.full_slug) === getLocaleOrFallback(locales['sv-SE'].locale).locale,
-  )
-
-  // There is no `swedishAlternate` when we are on a Swedish page
-  const defaultAlternateSlug = swedishAlternate ? swedishAlternate.full_slug : pageUrl
-
-  const alternates = {
-    canonical: story.content.canonicalUrl || pageUrl,
-    languages: {} as Record<IsoLocale | 'x-default', string>,
-  }
-
-  // Only add self referring alternates when alternates are available
-  if (story.alternates.length > 0) {
-    alternates.languages[toIsoLocale(params.locale)] = pageUrl
-    alternates.languages['x-default'] = defaultAlternateSlug
-  }
-
-  for (const alt of story.alternates) {
-    const routingLocale = alt.full_slug.split('/')[0]
-    if (!isRoutingLocale(routingLocale)) continue
-    alternates.languages[toIsoLocale(routingLocale)] = alt.full_slug
-  }
+  const pageUrl = normalizePageUrl([params.locale, ...(params.slug ?? [])].join('/'))
 
   const description = story.content.seoMetaDescription
   const title = story.content.seoTitle
 
   const result: Metadata = {
-    alternates,
+    alternates: getAlternates(story, pageUrl, params.locale),
     description,
     openGraph: {
       type: 'website',
@@ -106,6 +82,42 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
   return result
 }
+
+// 1. Always provide canonical
+// 2. Only provide language alternates if there are multiple languages
+// 3. When available refer to Swedish alternate as default
+const getAlternates = (story: PageStory, pageUrl: string, locale: RoutingLocale) => {
+  const alternates = {
+    canonical: normalizePageUrl(story.content.canonicalUrl || pageUrl),
+    languages: {} as Record<IsoLocale | 'x-default', string>,
+  }
+
+  if (story.alternates.length > 0) {
+    const swedishAlternate = story.alternates.find(
+      (link) => getHrefLang(link.full_slug) === getLocaleOrFallback(locales['sv-SE'].locale).locale,
+    )
+    // There is no `swedishAlternate` when we are on a Swedish page
+    const defaultAlternateSlug = swedishAlternate
+      ? normalizePageUrl(swedishAlternate.full_slug)
+      : pageUrl
+
+    alternates.languages[toIsoLocale(locale)] = pageUrl
+    alternates.languages['x-default'] = defaultAlternateSlug
+    for (const alt of story.alternates) {
+      const routingLocale = alt.full_slug.split('/')[0]
+      if (!isRoutingLocale(routingLocale)) continue
+      alternates.languages[toIsoLocale(routingLocale)] = normalizePageUrl(alt.full_slug)
+    }
+  }
+
+  return alternates
+}
+
+const normalizePageUrl = (url: string) =>
+  removeTrailingSlash(url)
+    // Apply home page rewrite to /se
+    // Special case - this is the only path where we keep trailing slash, NextJs will crash otherwise
+    .replace(/^se$/, '/')
 
 // TODO: Restore export generateStaticParams when CMS page migration to app router is done. Right now pages/[locale]/[[...slug]]
 //  shadows non-listed pages when generateStaticParams is provided
