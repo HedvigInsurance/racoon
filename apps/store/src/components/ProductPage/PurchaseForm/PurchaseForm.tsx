@@ -3,7 +3,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import { clsx } from 'clsx'
 import { motion } from 'framer-motion'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import type { ReactNode } from 'react'
 import { Suspense } from 'react'
@@ -11,7 +11,6 @@ import { useCallback, useRef, useState } from 'react'
 import { Button, Heading, Space, framerTransitions } from 'ui'
 import type { CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { CartToast } from '@/components/CartNotification/CartToast'
-import type { ProductItemProps } from '@/components/CartNotification/ProductItem'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceCalculatorDynamic } from '@/components/PriceCalculator/PriceCalculatorDynamic'
 import { completePriceLoader, PriceLoader } from '@/components/PriceLoader'
@@ -64,10 +63,28 @@ export type PurchaseFormProps = {
 }
 
 export function PurchaseForm(props: PurchaseFormProps) {
+  const { t } = useTranslation('purchase-form')
   const pathname = usePathname()
+  const productData = useProductData()
+  const formatter = useFormatter()
+
   const toastRef = useRef<CartToastAttributes | null>(null)
-  const notifyProductAdded = (item: ProductItemProps) => {
-    toastRef.current?.publish(item)
+  const notifyProductAdded = (item: ProductOfferFragment) => {
+    const description =
+      !item.cancellation.requested ||
+      item.cancellation.option ===
+        ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate
+        ? t('CART_ENTRY_DATE_LABEL', {
+            date: formatter.fromNow(new Date(item.startDate)),
+            ns: 'cart',
+          })
+        : t('CART_ENTRY_AUTO_SWITCH', { ns: 'cart' })
+    toastRef.current?.publish({
+      name: productData.displayNameFull,
+      price: formatter.monthlyPrice(item.cost.net),
+      pillowSrc: productData.pillowImage.src,
+      description,
+    })
   }
 
   return (
@@ -91,20 +108,17 @@ export function PurchaseForm(props: PurchaseFormProps) {
 }
 
 type PurchaseFormInnerProps = PurchaseFormProps & {
-  notifyProductAdded: (item: ProductItemProps) => void
+  notifyProductAdded: (item: ProductOfferFragment) => void
 }
 
 const PurchaseFormInner = (props: PurchaseFormInnerProps) => {
-  const { t } = useTranslation('purchase-form')
   const { priceTemplate } = useProductPageContext()
   const productData = useProductData()
   const { shopSession } = useShopSession()
-  const formatter = useFormatter()
-  const [priceIntent, , createNewPriceIntent] = usePriceIntent()
+  const [priceIntent] = usePriceIntent()
   const [selectedOffer] = useSelectedOffer()
   const tracking = useTracking()
   const isLarge = useBreakpoint('lg')
-  const router = useRouter()
 
   const isPriceCalculatorExpanded = useIsPriceCalculatorExpanded()
   const [formState, setFormState] = usePurchaseFormState(
@@ -151,45 +165,13 @@ const PurchaseFormInner = (props: PurchaseFormInnerProps) => {
     if (selectedOffer == null) {
       return <IdleState onClick={handleOpen} showAverageRating={props.showAverageRating} />
     } else {
-      const handleAddedToCart = async (item: ProductOfferFragment, nextUrl?: string) => {
-        try {
-          await createNewPriceIntent(shopSession)
-        } catch (error) {
-          datadogLogs.logger.error('Failed to create new price intent', {
-            error,
-            priceTemplate: priceTemplate.name,
-            shopSessionId: shopSession.id,
-          })
-          console.error('Failed to create new price intent', error)
-        }
-
-        if (nextUrl) {
-          return router.push(nextUrl)
-        }
-
-        props.notifyProductAdded({
-          name: productData.displayNameFull,
-          price: formatter.monthlyPrice(item.cost.net),
-          pillowSrc: productData.pillowImage.src,
-          description:
-            !item.cancellation.requested ||
-            item.cancellation.option ===
-              ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate
-              ? t('CART_ENTRY_DATE_LABEL', {
-                  date: formatter.fromNow(new Date(item.startDate)),
-                  ns: 'cart',
-                })
-              : t('CART_ENTRY_AUTO_SWITCH', { ns: 'cart' }),
-        })
-      }
-
       return (
         <ProductHeroContainer size="large" compact={true}>
           <ShowOfferState
             shopSession={shopSession}
             priceIntent={priceIntent}
-            onAddedToCart={handleAddedToCart}
             onClickEdit={editForm}
+            notifyProductAdded={props.notifyProductAdded}
             selectedOffer={selectedOffer}
           />
         </ProductHeroContainer>
@@ -388,13 +370,13 @@ const EditingState = (props: EditingStateProps) => {
 type ShowOfferStateProps = {
   priceIntent: PriceIntent
   shopSession: ShopSession
-  onAddedToCart: (item: ProductOfferFragment, nextUrl?: string) => void
   onClickEdit: () => void
+  notifyProductAdded: (item: ProductOfferFragment) => void
   selectedOffer: ProductOfferFragment
 }
 
 const ShowOfferState = (props: ShowOfferStateProps) => {
-  const { shopSession, priceIntent, selectedOffer, onAddedToCart, onClickEdit } = props
+  const { shopSession, priceIntent, selectedOffer, onClickEdit, notifyProductAdded } = props
   const scrollPastRef = useRef<HTMLDivElement | null>(null)
 
   return (
@@ -403,9 +385,9 @@ const ShowOfferState = (props: ShowOfferStateProps) => {
         priceIntent={priceIntent}
         shopSession={shopSession}
         scrollPastRef={scrollPastRef}
-        onAddedToCart={onAddedToCart}
         onClickEdit={onClickEdit}
         selectedOffer={selectedOffer}
+        notifyProductAdded={notifyProductAdded}
       />
     </div>
   )
