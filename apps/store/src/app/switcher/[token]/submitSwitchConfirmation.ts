@@ -8,9 +8,10 @@ import {
   type SwitchConfirmationMutation,
   type SwitchConfirmationMutationVariables,
 } from '@/services/graphql/generated'
+import { locales } from '@/utils/l10n/locales'
 import type { RoutingLocale } from '@/utils/l10n/types'
 
-const DEFAULT_LOCALE: RoutingLocale = 'se-en'
+const DEFAULT_LOCALE: RoutingLocale = locales['sv-SE'].routingLocale
 
 export const submitSwitchConfirmation = async (
   _: FormStateWithErrors,
@@ -18,9 +19,8 @@ export const submitSwitchConfirmation = async (
 ): Promise<FormStateWithErrors> => {
   const expiryDate = formData.get('expiryDate') as string
   const id = formData.get('id') as string
-  const locale = formData.get('locale') as string
 
-  const { t } = await initTranslationsServerSide(locale)
+  const { t } = await initTranslationsServerSide(DEFAULT_LOCALE)
 
   if (!expiryDate) {
     return {
