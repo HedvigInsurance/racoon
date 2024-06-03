@@ -24,6 +24,8 @@ export default function InsuranceSwitchExpirationDateForm({ id }: Props) {
   const { t } = useTranslation('contractSwitchConfirmationForm')
   const [state, formAction] = useFormState(submitSwitchConfirmation, null)
 
+  console.log({ id })
+
   return (
     <div className={clsx(wrapper, sprinkles({ py: 'xxxl' }))}>
       <Text className={sprinkles({ mb: 'md' })}>{t('SWITCH_CONFIRMATION_FORM_INTRO')}</Text>
@@ -47,7 +49,7 @@ export default function InsuranceSwitchExpirationDateForm({ id }: Props) {
             </Text>
           </div>
 
-          <input type="text" name="id" value={id} hidden />
+          <input type="text" name="id" defaultValue={id} hidden />
 
           <SubmitButton>{t('SWITCH_CONFIRMATION_FORM_SUBMIT')}</SubmitButton>
 

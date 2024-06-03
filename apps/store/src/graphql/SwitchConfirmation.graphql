@@ -1,5 +1,5 @@
-mutation SwitchConfirmation($switcherCaseCompleteId: UUID!, $currentExpiryDate: Date!) {
-  switcherCaseComplete(id: $switcherCaseCompleteId, currentExpiryDate: $currentExpiryDate) {
+mutation SwitchConfirmation($id: UUID!, $currentExpiryDate: Date!) {
+  switcherCaseComplete(id: $id, currentExpiryDate: $currentExpiryDate) {
     userError {
       message
     }

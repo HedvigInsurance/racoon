@@ -33,9 +33,11 @@ export const submitSwitchConfirmation = async (
   const apolloClient = getApolloClient(DEFAULT_LOCALE)
 
   try {
+    console.log({ id })
+
     await apolloClient.mutate<SwitchConfirmationMutation, SwitchConfirmationMutationVariables>({
       mutation: SwitchConfirmationDocument,
-      variables: { switcherCaseCompleteId: id, currentExpiryDate: expiryDate },
+      variables: { id, currentExpiryDate: expiryDate },
     })
   } catch (error) {
     return {
