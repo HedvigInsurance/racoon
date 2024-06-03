@@ -1,7 +1,6 @@
-import { Heading, Space, Text } from 'ui'
+import { Heading, Text } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { pillow } from './ProductHero.css'
+import { pillow, textWrapper, wrapper } from './ProductHero.css'
 
 type Props = {
   name: string
@@ -12,7 +11,7 @@ type Props = {
 
 export const ProductHero = (props: Props) => {
   return (
-    <SpaceFlex space={1} direction="vertical" align="center">
+    <div className={wrapper}>
       <Pillow
         className={pillow}
         size={props.size === 'small' ? 'large' : 'xxlarge'}
@@ -20,14 +19,14 @@ export const ProductHero = (props: Props) => {
         priority={true}
       />
 
-      <Space y={0.75}>
+      <div className={textWrapper}>
         <Heading as="h1" variant="standard.24" align="center">
           {props.name}
         </Heading>
         <Text size="xs" color="textSecondary" align="center">
           {props.description}
         </Text>
-      </Space>
-    </SpaceFlex>
+      </div>
+    </div>
   )
 }
