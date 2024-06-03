@@ -51,7 +51,7 @@
     "@vanilla-extract/dynamic": "2.1.1",
     "@vanilla-extract/recipes": "0.5.3",
     "@vanilla-extract/sprinkles": "1.6.2",
-    "@vercel/edge-config": "1.1.0",
+    "@vercel/edge-config": "1.1.1",
     "@vercel/kv": "1.0.1",
     "@vercel/otel": "1.8.2",
     "ajv": "8.13.0",
