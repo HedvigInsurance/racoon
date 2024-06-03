@@ -56,7 +56,7 @@ export function QuickAddOfferContainer(props: Props) {
     return (
       <QuickAddEditableView
         shopSessionId={props.shopSessionId}
-        offer={props.offer}
+        initialOffer={props.offer}
         pillow={props.product.pillowImage}
         title={props.product.displayNameFull}
         subtitle={t('USP_NO_BINDING_TIME')}
