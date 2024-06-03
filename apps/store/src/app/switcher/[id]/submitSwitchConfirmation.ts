@@ -65,6 +65,7 @@ export const submitSwitchConfirmation = async (
   }
 
   return {
+    messages,
     errors: {
       generic: errors,
     },
