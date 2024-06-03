@@ -24,6 +24,7 @@ const textColors = {
 
 const unresponsiveProperties = defineProperties({
   properties: {
+    alignItems: ['flex-start', 'center', 'flex-end'],
     textAlign: ['left', 'center', 'right'],
     color: textColors,
     display: ['flex', 'grid'],
