@@ -1,6 +1,11 @@
 import { style } from '@vanilla-extract/css'
 import { tokens } from 'ui'
 
+export const handledMessage = style({
+  maxWidth: '400px',
+  margin: 'auto',
+})
+
 export const wrapper = style({
   maxWidth: '400px',
   margin: 'auto',

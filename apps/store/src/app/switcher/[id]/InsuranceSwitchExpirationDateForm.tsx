@@ -8,8 +8,8 @@ import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import { CheckIcon, Space, Text } from 'ui'
 import { SubmitButton } from '@/appComponents/SubmitButton'
 import { ErrorMessages } from '@/components/FormErrors/ErrorMessages'
-import { CampaignCard } from '@/components/InfoCard/InfoCard'
 import { InputDay } from '@/components/InputDay/InputDay'
+import { HandledMessage } from './HandledMessage'
 import {
   checkbox,
   checkboxIndicator,
@@ -24,7 +24,7 @@ export default function InsuranceSwitchExpirationDateForm({ id }: Props) {
   const { t } = useTranslation('contractSwitchConfirmationForm')
   const [state, formAction] = useFormState(submitSwitchConfirmation, null)
 
-  console.log({ id })
+  const isSuccessful = state?.messages?.find((message) => message.type === 'success')
 
   return (
     <div className={clsx(wrapper, sprinkles({ py: 'xxxl' }))}>
@@ -53,11 +53,8 @@ export default function InsuranceSwitchExpirationDateForm({ id }: Props) {
 
           <SubmitButton>{t('SWITCH_CONFIRMATION_FORM_SUBMIT')}</SubmitButton>
 
-          {state?.messages?.map((message) => (
-            <CampaignCard key={message.content}>
-              <span className={sprinkles({ mt: 'xxxs' })}>{message.content}</span>
-            </CampaignCard>
-          )) ?? null}
+          {isSuccessful ? <HandledMessage /> : null}
+
           <ErrorMessages errors={state?.errors?.generic} />
         </Space>
       </form>
