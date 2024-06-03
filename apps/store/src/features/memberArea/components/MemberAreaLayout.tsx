@@ -7,7 +7,7 @@ import type {
   GLOBAL_PRODUCT_METADATA_PROP_NAME,
   GlobalProductMetadata,
 } from '@/components/LayoutWithMenu/fetchProductMetadata'
-import { Skeleton } from '@/components/Skeleton'
+import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { useMemberAreaMemberInfoQuery } from '@/services/graphql/generated'
 import type { GlobalStory, PageStory } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'

@@ -1,6 +1,5 @@
-import { keyframes } from '@emotion/react'
-import styled from '@emotion/styled'
-import { theme } from 'ui'
+import { keyframes, style } from '@vanilla-extract/css'
+import { theme } from 'ui/src/theme'
 
 const pulsingAnimation = keyframes({
   '0%': { opacity: 0.5 },
@@ -8,7 +7,7 @@ const pulsingAnimation = keyframes({
   '100%': { opacity: 0.5 },
 })
 
-export const Skeleton = styled.div({
+export const skeleton = style({
   backgroundColor: theme.colors.grayTranslucent100,
   borderRadius: theme.radius.sm,
   animation: `${pulsingAnimation} 1.5s ease-in-out infinite`,
