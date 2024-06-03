@@ -7,6 +7,11 @@ import { ProductGrid } from './ProductGrid'
 const meta: Meta<typeof ProductGrid> = {
   component: ProductGrid,
   argTypes: {},
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
 }
 
 export default meta
