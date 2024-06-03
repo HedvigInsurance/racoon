@@ -20511,9 +20511,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jotai@npm:2.8.0":
-  version: 2.8.0
-  resolution: "jotai@npm:2.8.0"
+"jotai@npm:2.8.2":
+  version: 2.8.2
+  resolution: "jotai@npm:2.8.2"
   peerDependencies:
     "@types/react": ">=17.0.0"
     react: ">=17.0.0"
@@ -20522,7 +20522,7 @@ __metadata:
       optional: true
     react:
       optional: true
-  checksum: 10c0/6b2f59749530478163e41b8b1260b99cdab533541a5b9b2dcd885f2ab440391c5ee7855d627cbe28e043b9bcd736d44837b4a8ab20a2761176bba92e623a284e
+  checksum: 10c0/72bb7da2b94cfe98cdec4f53dfca81bbf5797be1397fdce744e124a1221336c788ef4d8aa33d7174abc4119ce3c90ddb1ced254d9663020cb34fe263f650cf17
   languageName: node
   linkType: hard
 
@@ -25688,7 +25688,7 @@ __metadata:
     i18next-parser: "npm:8.13.0"
     jest: "npm:29.7.0"
     jest-environment-jsdom: "npm:29.7.0"
-    jotai: "npm:2.8.0"
+    jotai: "npm:2.8.2"
     jwt-decode: "npm:4.0.0"
     md5: "npm:2.3.0"
     mini-css-extract-plugin: "npm:2.9.0"
