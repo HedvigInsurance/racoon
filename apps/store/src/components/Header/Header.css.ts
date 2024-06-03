@@ -1,6 +1,7 @@
 import { createVar, style } from '@vanilla-extract/css'
 import { minWidth, tokens } from 'ui'
 import { zIndexes } from '@/utils/zIndex'
+import { MAX_WIDTH } from '../GridLayout/GridLayout.constants'
 import {
   HEADER_HEIGHT_DESKTOP,
   HEADER_HEIGHT_MOBILE,
@@ -48,21 +49,25 @@ export const ghostWrapper = style({
 })
 
 export const wrapper = style({
+  top: 0,
+  zIndex: zIndexes.header,
   width: '100%',
+})
+
+export const contentWrapper = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-
-  top: 0,
-  zIndex: zIndexes.header,
-
-  height: MENU_BAR_HEIGHT_MOBILE,
+  maxWidth: MAX_WIDTH,
+  marginInline: 'auto',
   paddingInline: tokens.space.md,
+  height: MENU_BAR_HEIGHT_MOBILE,
 
   '@media': {
     [minWidth.lg]: {
       height: MENU_BAR_HEIGHT_DESKTOP,
-      paddingInline: tokens.space.xl,
+
+      paddingInline: tokens.space.lg,
     },
   },
 })
@@ -73,7 +78,7 @@ export const logoWrapper = style({
   flex: 1,
 })
 
-export const contentWrapper = style({
+export const menuWrapper = style({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'flex-end',
