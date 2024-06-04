@@ -5,55 +5,43 @@ import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useTranslation } from 'next-i18next'
 import type { ReactNode } from 'react'
 import { forwardRef, useImperativeHandle, useState } from 'react'
-import { Button, mq, Space, Text, theme } from 'ui'
+import { Button, mq, Text, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { MENU_BAR_HEIGHT_DESKTOP } from '@/components/Header/Header.constants'
+import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import {
   BUNDLE_DISCOUNT_PERCENTAGE,
   hasBundleDiscount,
 } from '@/features/bundleDiscount/bundleDiscount'
 import { BundleDiscountExtraProductLinks } from '@/features/bundleDiscount/BundleDiscountExtraProductLinks'
 import { BundleDiscountSummary } from '@/features/bundleDiscount/BundleDiscountSummary'
+import type { CartFragmentFragment } from '@/services/graphql/generated'
+import { ExternalInsuranceCancellationOption } from '@/services/graphql/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
-import type { ProductItemProps } from './ProductItem'
+import { useFormatter } from '@/utils/useFormatter'
 import { ProductItem } from './ProductItem'
 
 export type CartToastAttributes = {
-  publish: (product: ProductItemProps) => void
+  show: () => void
 }
 
 export const CartToast = forwardRef<CartToastAttributes>((_, forwardedRef) => {
-  const [product, setProduct] = useState<ProductItemProps | null>(null)
-
-  const isOpen = product !== null
-  const handleClose = () => setProduct(null)
+  const [isOpen, setOpen] = useState(false)
+  const handleClose = () => setOpen(false)
 
   useImperativeHandle(forwardedRef, () => ({
-    publish: (product: ProductItemProps) => setProduct(product),
+    show() {
+      setOpen(true)
+    },
   }))
 
-  return (
-    <DialogPrimitive.Root open={isOpen}>
-      {product && <CartNotificationContent onClose={handleClose} {...product} />}
-    </DialogPrimitive.Root>
-  )
-})
-
-CartToast.displayName = 'CartToast'
-
-type Props = ProductItemProps & {
-  onClose: () => void
-}
-
-export const CartNotificationContent = ({ onClose, ...productItemProps }: Props) => {
   const { t } = useTranslation(['purchase-form', 'cart'])
   const locale = useRoutingLocale()
   const { shopSession } = useShopSession()
-  if (!shopSession) return null
-
-  const handleClose = () => onClose()
+  const { cart } = shopSession ?? {}
+  if (shopSession == null || cart == null) return null
 
   const handleClickLink = (type: 'Primary' | 'Secondary') => () => {
     datadogRum.addAction(`CartToast Link ${type}`)
@@ -83,36 +71,71 @@ export const CartNotificationContent = ({ onClose, ...productItemProps }: Props)
   }
 
   return (
-    <DialogPrimitive.Portal>
-      <StyledOverlay />
-      <StyledContentWrapper>
-        <DialogPrimitive.Content onEscapeKeyDown={handleClose} onInteractOutside={handleClose}>
-          <DialogContentWrapper>
-            <ProductItem {...productItemProps} />
-            {shopSession.experiments?.bundleDiscount && (
-              <BundleDiscountExtraProductLinks>
-                {bundleDiscountHeader}
-              </BundleDiscountExtraProductLinks>
-            )}
-            <Space y={0.5}>
-              <ButtonNextLink
-                href={PageLink.cart({ locale }).pathname}
-                variant="primary"
-                onClick={handleClickLink('Primary')}
-              >
-                {t('CART_TOAST_PRIMARY_LINK')}
-              </ButtonNextLink>
+    <DialogPrimitive.Root open={isOpen}>
+      <DialogPrimitive.Portal>
+        <StyledOverlay />
+        <StyledContentWrapper>
+          <DialogPrimitive.Content onEscapeKeyDown={handleClose} onInteractOutside={handleClose}>
+            <DialogContentWrapper>
+              {cart.entries.map((entry) => (
+                <CartToastItem key={entry.id} item={entry} />
+              ))}
+              {shopSession.experiments?.bundleDiscount && (
+                <BundleDiscountWrapper>
+                  <BundleDiscountExtraProductLinks>
+                    {bundleDiscountHeader}
+                  </BundleDiscountExtraProductLinks>
+                </BundleDiscountWrapper>
+              )}
+              <SpaceFlex space={0.5} direction={'vertical'}>
+                <ButtonNextLink
+                  href={PageLink.cart({ locale }).pathname}
+                  variant="primary"
+                  onClick={handleClickLink('Primary')}
+                >
+                  {t('CART_TOAST_PRIMARY_LINK')}
+                </ButtonNextLink>
 
-              <Button onClick={handleClose} variant="ghost">
-                {t('DIALOG_CLOSE', { ns: 'common' })}
-              </Button>
-            </Space>
-          </DialogContentWrapper>
-        </DialogPrimitive.Content>
-      </StyledContentWrapper>
-    </DialogPrimitive.Portal>
+                <Button onClick={handleClose} variant="ghost">
+                  {t('DIALOG_CLOSE', { ns: 'common' })}
+                </Button>
+              </SpaceFlex>
+            </DialogContentWrapper>
+          </DialogPrimitive.Content>
+        </StyledContentWrapper>
+      </DialogPrimitive.Portal>
+    </DialogPrimitive.Root>
+  )
+})
+
+CartToast.displayName = 'CartToast'
+
+function CartToastItem({ item }: { item: CartFragmentFragment['entries'][number] }) {
+  const { t } = useTranslation(['purchase-form', 'cart'])
+  const formatter = useFormatter()
+  const description =
+    !item.cancellation.requested ||
+    item.cancellation.option === ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate
+      ? t('CART_ENTRY_DATE_LABEL', {
+          date: formatter.fromNow(new Date(item.startDate)),
+          ns: 'cart',
+        })
+      : t('CART_ENTRY_AUTO_SWITCH', { ns: 'cart' })
+  return (
+    <ProductItem
+      name={item.product.displayNameFull}
+      pillowSrc={item.product.pillowImage.src}
+      price={formatter.monthlyPrice(item.cost.net)}
+      description={description}
+    />
   )
 }
+
+const BundleDiscountWrapper = styled.div({
+  gap: theme.space.md,
+  display: 'flex',
+  flexDirection: 'column',
+})
 
 const overlayShow = keyframes({
   '0%': { opacity: 0 },
@@ -139,10 +162,10 @@ const DialogContentWrapper = styled.div({
 
   display: 'flex',
   flexDirection: 'column',
-  gap: theme.space.md,
+  gap: theme.space.lg,
 
-  paddingInline: theme.space.md,
   paddingTop: theme.space.lg,
+  paddingInline: theme.space.md,
   paddingBottom: theme.space.xs,
 
   borderBottomLeftRadius: theme.radius.md,
