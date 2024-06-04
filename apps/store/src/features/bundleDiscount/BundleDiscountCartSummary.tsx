@@ -1,5 +1,8 @@
+import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import type { ReactNode } from 'react'
+import { BUNDLE_DISCOUNT_PROMO_PAGE_PATH } from '@/features/bundleDiscount/bundleDiscount'
+import { learnMoreLink } from '@/features/bundleDiscount/BundleDiscountSummary.css'
 import type { CartFragmentFragment } from '@/services/graphql/generated'
 import { useFormatter } from '@/utils/useFormatter'
 import { BundleDiscountSummary } from './BundleDiscountSummary'
@@ -42,5 +45,12 @@ export function BundleDiscountCartSummary({ cart }: Props) {
     })
   }
 
-  return <BundleDiscountSummary>{content}</BundleDiscountSummary>
+  return (
+    <BundleDiscountSummary>
+      {content}{' '}
+      <Link href={BUNDLE_DISCOUNT_PROMO_PAGE_PATH} className={learnMoreLink}>
+        {t('READ_MORE', { ns: 'common' })}
+      </Link>
+    </BundleDiscountSummary>
+  )
 }
