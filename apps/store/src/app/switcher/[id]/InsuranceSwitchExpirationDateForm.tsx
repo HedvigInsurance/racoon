@@ -24,7 +24,7 @@ export default function InsuranceSwitchExpirationDateForm({ id }: Props) {
   const { t } = useTranslation('contractSwitchConfirmationForm')
   const [state, formAction] = useFormState(submitSwitchConfirmation, null)
 
-  const isSuccessful = state?.messages?.find((message) => message.type === 'success')
+  const isSuccessful = state?.messages?.some((message) => message.type === 'success')
 
   return (
     <div className={clsx(wrapper, sprinkles({ py: 'xxxl' }))}>
