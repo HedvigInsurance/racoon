@@ -49,7 +49,6 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { sendDialogEvent } from '@/utils/dialogEvent'
 import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
-import { useFormatter } from '@/utils/useFormatter'
 import { ScrollPast } from '../ScrollPast/ScrollPast'
 import { loadOfferPresenter, OfferPresenterDynamic } from './OfferPresenterDynamic'
 import { PriceCalculatorDialog } from './PriceCalculatorDialog'
@@ -63,28 +62,11 @@ export type PurchaseFormProps = {
 }
 
 export function PurchaseForm(props: PurchaseFormProps) {
-  const { t } = useTranslation('purchase-form')
   const pathname = usePathname()
-  const productData = useProductData()
-  const formatter = useFormatter()
 
   const toastRef = useRef<CartToastAttributes | null>(null)
-  const notifyProductAdded = (item: ProductOfferFragment) => {
-    const description =
-      !item.cancellation.requested ||
-      item.cancellation.option ===
-        ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate
-        ? t('CART_ENTRY_DATE_LABEL', {
-            date: formatter.fromNow(new Date(item.startDate)),
-            ns: 'cart',
-          })
-        : t('CART_ENTRY_AUTO_SWITCH', { ns: 'cart' })
-    toastRef.current?.publish({
-      name: productData.displayNameFull,
-      price: formatter.monthlyPrice(item.cost.net),
-      pillowSrc: productData.pillowImage.src,
-      description,
-    })
+  const notifyProductAdded = () => {
+    toastRef.current?.show()
   }
 
   return (
