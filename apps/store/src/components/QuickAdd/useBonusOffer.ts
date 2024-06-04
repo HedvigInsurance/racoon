@@ -1,23 +1,18 @@
 import { datadogLogs } from '@datadog/browser-logs'
+import type { ProductRecommendationFragment } from '@/services/graphql/generated'
 import {
   type OfferRecommendationFragment,
-  type ProductRecommendationFragment,
   type ProductRecommendationsQuery,
   useProductRecommendationsQuery,
 } from '@/services/graphql/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 
 type OfferRecommendation = {
-  product: ProductRecommendationFragment
   offer: OfferRecommendationFragment
+  product: ProductRecommendationFragment
 }
 
-type ReturnType = {
-  productRecommendations: Array<ProductRecommendationFragment> | null
-  offerRecommendation: OfferRecommendation | null
-}
-
-export const useProductRecommendations = (customShopSessionId?: string): ReturnType => {
+export const useBonusOffer = (customShopSessionId?: string): OfferRecommendation | null => {
   const { shopSession } = useShopSession()
   const shopSessionId = customShopSessionId ?? shopSession?.id
 
@@ -36,17 +31,9 @@ export const useProductRecommendations = (customShopSessionId?: string): ReturnT
     },
   })
 
-  const productRecommendations = result.data ? getProductRecommendations(result.data) : null
-  const offerRecommendations = result.data ? getOfferRecommendations(result.data) : []
-  const offerRecommendation = offerRecommendations[0] ?? null
+  const offers = result.data ? getOfferRecommendations(result.data) : []
 
-  return { productRecommendations, offerRecommendation } as const
-}
-
-const getProductRecommendations = (
-  data: ProductRecommendationsQuery,
-): Array<ProductRecommendationFragment> => {
-  return data.shopSession.recommendations.map((item) => item.product)
+  return offers[0] ?? null
 }
 
 const getOfferRecommendations = (data: ProductRecommendationsQuery): Array<OfferRecommendation> => {

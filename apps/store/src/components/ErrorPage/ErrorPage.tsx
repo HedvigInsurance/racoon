@@ -1,22 +1,14 @@
 import { css, Global, keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { theme } from 'ui'
-import { ProductRecommendationList } from '@/components/ProductRecommendationList/ProductRecommendationList'
-import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
 
 type ErrorPageProps = { children: React.ReactNode }
 
 export const ErrorPage = ({ children }: ErrorPageProps) => {
-  const { productRecommendations } = useProductRecommendations()
-
   return (
     <Layout>
       <Global styles={animation} />
       <Wrapper>{children}</Wrapper>
-
-      {productRecommendations && productRecommendations.length > 0 && (
-        <ProductRecommendationList recommendations={productRecommendations} />
-      )}
     </Layout>
   )
 }
