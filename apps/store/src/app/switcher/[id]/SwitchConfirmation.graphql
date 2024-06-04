@@ -1,6 +1,7 @@
 mutation SwitcherCaseComplete($id: UUID!, $currentExpiryDate: Date!) {
   switcherCaseComplete(id: $id, currentExpiryDate: $currentExpiryDate) {
     switcherCase {
+      id
       isCompleted
     }
     userError {
@@ -11,6 +12,7 @@ mutation SwitcherCaseComplete($id: UUID!, $currentExpiryDate: Date!) {
 
 query SwitcherCase($id: UUID!) {
   switcherCase(id: $id) {
+    id
     isCompleted
   }
 }
