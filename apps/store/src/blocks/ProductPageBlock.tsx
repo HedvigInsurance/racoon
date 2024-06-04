@@ -2,9 +2,10 @@
 import styled from '@emotion/styled'
 import type { SbBlokData } from '@storyblok/react'
 import { storyblokEditable, StoryblokComponent } from '@storyblok/react'
-import { motion, useInView, useScroll } from 'framer-motion'
+import { motion, useScroll } from 'framer-motion'
 import type { ReactNode } from 'react'
-import { useState, useEffect, useRef } from 'react'
+import { startTransition } from 'react'
+import { useCallback, useState, useEffect, useRef } from 'react'
 import { theme, mq } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { MAX_WIDTH } from '@/components/GridLayout/GridLayout.constants'
@@ -14,6 +15,7 @@ import {
   type PurchaseFormProps,
 } from '@/components/ProductPage/PurchaseForm/PurchaseForm'
 import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { useIdleCallback } from '@/utils/useIdleCallback'
 import { zIndexes } from '@/utils/zIndex'
 
 export const NAVIGATION_LIST_HEIGHT = '2.5rem'
@@ -85,9 +87,7 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
         </GridLayout.Content>
       </Grid>
 
-      {blok.body.map((nestedBlock) => (
-        <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
-      ))}
+      <ContentSection blocks={blok.body} />
     </main>
   )
 }
@@ -261,14 +261,35 @@ const useActiveSectionChangeListener = (
 // Optimization:
 // Perils list could be hundreds of DOM elements (400+ for Apartment rent) and if we lazy-render it, page load time of product pages improves
 const CoverageSection = (props: { blocks: Array<SbBlokData> }) => {
-  const ref = useRef(null)
-  const cameIntoView = useInView(ref, { once: true })
+  const shouldRenderContent = useRenderLazily()
   return (
-    <section id="coverage" ref={ref}>
-      {cameIntoView &&
+    <section id="coverage">
+      {shouldRenderContent &&
         props.blocks.map((nestedBlock) => (
           <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
         ))}
     </section>
   )
+}
+
+// Optimization
+// Lazy rendering, same as CoverageSection above
+const ContentSection = (props: { blocks: Array<SbBlokData> }) => {
+  const shouldRenderContent = useRenderLazily()
+  return (
+    <>
+      {shouldRenderContent &&
+        props.blocks.map((nestedBlock) => (
+          <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
+        ))}
+    </>
+  )
+}
+
+const useRenderLazily = () => {
+  const [shouldRender, setShouldRender] = useState(false)
+  // Callback need to be stable to avoid rerender loop
+  const makeVisible = useCallback(() => startTransition(() => setShouldRender(true)), [])
+  useIdleCallback(makeVisible)
+  return shouldRender
 }
