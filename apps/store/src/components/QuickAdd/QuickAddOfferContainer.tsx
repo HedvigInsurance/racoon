@@ -1,4 +1,5 @@
 import { useTranslation } from 'next-i18next'
+import type { ReactNode } from 'react'
 import { Button, Heading, Text, theme } from 'ui'
 import { Perils } from '@/components/Perils/Perils'
 import { Pillow } from '@/components/Pillow/Pillow'
@@ -16,6 +17,7 @@ import { ProductUsp } from './ProductUsp'
 import { QuickAddBundleView } from './QuickAddBundleView'
 import { QuickAddEditableView } from './QuickAddEditableView'
 import { QuickAddInfoDialog } from './QuickAddInfoDialog'
+import { quickAddSection } from './QuickAddOfferContainer.css'
 import { useAddRecommendationOfferToCart } from './useAddRecommendationOfferToCart'
 import { useShowQuickAdd } from './useShowQuickAdd'
 
@@ -50,10 +52,12 @@ export function QuickAddOfferContainer(props: Props) {
 
   if (!show) return null
 
+  let content: ReactNode
+
   const homeInsuranceInCart =
     props.cart.entries.find((entry) => HOME_INSURANCES.includes(entry.product.name)) ?? null
   if (!homeInsuranceInCart && Features.enabled('CROSS_SELL_CARD_V2')) {
-    return (
+    content = (
       <QuickAddEditableView
         shopSessionId={props.shopSessionId}
         initialOffer={props.offer}
@@ -71,66 +75,74 @@ export function QuickAddOfferContainer(props: Props) {
         }
       />
     )
-  }
+  } else {
+    const householdSize = parseInt(props.offer.priceIntentData[CO_INSURED_DATA_KEY] || 0, 10) + 1
+    const title = homeInsuranceInCart
+      ? t('QUICK_ADD_TITLE', { product: props.product.displayNameShort })
+      : props.product.displayNameFull
+    const subtitle = t('QUICK_ADD_HOUSEHOLD_SIZE', { count: householdSize })
+    const price = getOfferPrice(props.offer.cost)
+    const primaryPillow = homeInsuranceInCart
+      ? homeInsuranceInCart.product.pillowImage
+      : props.product.pillowImage
+    const secondaryPillow = homeInsuranceInCart ? props.product.pillowImage : undefined
 
-  const householdSize = parseInt(props.offer.priceIntentData[CO_INSURED_DATA_KEY] || 0, 10) + 1
-  const title = homeInsuranceInCart
-    ? t('QUICK_ADD_TITLE', { product: props.product.displayNameShort })
-    : props.product.displayNameFull
-  const subtitle = t('QUICK_ADD_HOUSEHOLD_SIZE', { count: householdSize })
-  const price = getOfferPrice(props.offer.cost)
-  const primaryPillow = homeInsuranceInCart
-    ? homeInsuranceInCart.product.pillowImage
-    : props.product.pillowImage
-  const secondaryPillow = homeInsuranceInCart ? props.product.pillowImage : undefined
-
-  return (
-    <QuickAddBundleView
-      title={title}
-      subtitle={subtitle}
-      primaryPillow={primaryPillow}
-      secondaryPillow={secondaryPillow}
-      href={props.product.pageLink}
-      price={price}
-      badge={{ children: t('QUICK_ADD_BADGE_LABEL') }}
-      Body={
-        <>
-          <Text as="p" color="textTranslucentSecondary">
-            {t('ACCIDENT_OFFER_DESCRIPTION_BUNDLE')}
-            <QuickAddInfoDialog
-              Header={
-                <>
-                  <Pillow size="xlarge" {...props.product.pillowImage} />
-                  <Heading as="h1" variant="standard.18" mt={theme.space.md}>
-                    {props.product.displayNameFull}
-                  </Heading>
-                  <Price color="textTranslucentSecondary" {...price} />
-                </>
-              }
+    content = (
+      <QuickAddBundleView
+        title={title}
+        subtitle={subtitle}
+        primaryPillow={primaryPillow}
+        secondaryPillow={secondaryPillow}
+        href={props.product.pageLink}
+        price={price}
+        badge={{ children: t('QUICK_ADD_BADGE_LABEL') }}
+        Body={
+          <>
+            <Text as="p" color="textTranslucentSecondary">
+              {t('ACCIDENT_OFFER_DESCRIPTION_BUNDLE')}
+              <QuickAddInfoDialog
+                Header={
+                  <>
+                    <Pillow size="xlarge" {...props.product.pillowImage} />
+                    <Heading as="h1" variant="standard.18" mt={theme.space.md}>
+                      {props.product.displayNameFull}
+                    </Heading>
+                    <Price color="textTranslucentSecondary" {...price} />
+                  </>
+                }
+              >
+                <Perils items={props.offer.variant.perils} />
+              </QuickAddInfoDialog>
+            </Text>
+            <ul>
+              <ProductUsp>{t('ACCIDENT_OFFER_USP_1')}</ProductUsp>
+              <ProductUsp>{t('ACCIDENT_OFFER_USP_2')}</ProductUsp>
+              <ProductUsp>{t('ACCIDENT_OFFER_USP_3')}</ProductUsp>
+            </ul>
+          </>
+        }
+        Footer={
+          <SpaceFlex space={0.5}>
+            <DismissButton variant="secondary" fullWidth={true} />
+            <Button
+              size="medium"
+              fullWidth={true}
+              onClick={() => addOfferToCart(props.offer)}
+              loading={loading}
             >
-              <Perils items={props.offer.variant.perils} />
-            </QuickAddInfoDialog>
-          </Text>
-          <ul>
-            <ProductUsp>{t('ACCIDENT_OFFER_USP_1')}</ProductUsp>
-            <ProductUsp>{t('ACCIDENT_OFFER_USP_2')}</ProductUsp>
-            <ProductUsp>{t('ACCIDENT_OFFER_USP_3')}</ProductUsp>
-          </ul>
-        </>
-      }
-      Footer={
-        <SpaceFlex space={0.5}>
-          <DismissButton variant="secondary" fullWidth={true} />
-          <Button
-            size="medium"
-            fullWidth={true}
-            onClick={() => addOfferToCart(props.offer)}
-            loading={loading}
-          >
-            {t('QUICK_ADD_BUTTON_BUNDLE')}
-          </Button>
-        </SpaceFlex>
-      }
-    />
+              {t('QUICK_ADD_BUTTON_BUNDLE')}
+            </Button>
+          </SpaceFlex>
+        }
+      />
+    )
+  }
+  return (
+    <div className={quickAddSection}>
+      <Heading variant="standard.18" as={'h2'}>
+        {t('QUICK_ADD_BUNDLE_HEADER')}
+      </Heading>
+      {content}
+    </div>
   )
 }
