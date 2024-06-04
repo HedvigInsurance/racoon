@@ -40,8 +40,5 @@ export const globalBannerAtom = atom(
 
 const currentBannerAtom = atom<BannerWithId | null>(null)
 
-export const dismissedBannerIdAtom = atomWithStorage<string | null>(
-  'dismissedGlobalBannerId',
-  null,
-  createJSONStorage(() => window.sessionStorage),
-)
+const storage = createJSONStorage<string | null>(() => sessionStorage)
+export const dismissedBannerIdAtom = atomWithStorage('dismissedGlobalBannerId', null, storage)
