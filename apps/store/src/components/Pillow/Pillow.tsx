@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import Image from 'next/image'
+import { memo } from 'react'
 import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 
 type PillowProps = {
@@ -10,7 +11,7 @@ type PillowProps = {
   className?: string
 }
 
-export const Pillow = ({ alt, src, priority, ...props }: PillowProps) => {
+export const Pillow = memo(({ alt, src, priority, ...props }: PillowProps) => {
   if (!src) return <FallbackPillow {...props} size={props.size} />
   return (
     <StyledImage
@@ -24,7 +25,8 @@ export const Pillow = ({ alt, src, priority, ...props }: PillowProps) => {
       quality={70}
     />
   )
-}
+})
+Pillow.displayName = 'Pillow'
 
 const StyledImage = styled(Image)<PillowProps>(({ size = 'medium' }) => getSize(size))
 

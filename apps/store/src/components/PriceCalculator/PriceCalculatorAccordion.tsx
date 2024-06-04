@@ -1,7 +1,7 @@
 import { datadogRum } from '@datadog/browser-rum'
 import { useRouter } from 'next/navigation'
 import { type ReactNode, useCallback, useState } from 'react'
-import { SsnSeSection } from '@/components/PriceCalculator/SsnSeSection'
+import { SSN_SE_SECTION_ID, SsnSeSection } from '@/components/PriceCalculator/SsnSeSection'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import type { Form, FormSection } from '@/services/PriceCalculator/PriceCalculator.types'
 import type { ShopSession } from '@/services/shopSession/ShopSession.types'
@@ -31,7 +31,7 @@ export const PriceCalculatorAccordion = ({
 
   const handleActiveSectionChange = useCallback(
     (sectionId: string) => {
-      if (sectionId === SsnSeSection.sectionId && shopSession.customer?.ssn) {
+      if (sectionId === SSN_SE_SECTION_ID && shopSession.customer?.ssn) {
         setShowChangeSsnDialog(true)
       } else {
         onActiveSectionChange(sectionId)
@@ -40,14 +40,15 @@ export const PriceCalculatorAccordion = ({
     [onActiveSectionChange, shopSession.customer?.ssn],
   )
 
+  const ssnSectionNextIndex =
+    form.sections.findIndex((section) => section.id === SSN_SE_SECTION_ID) + 1
+  const ssnSectionNextId = form.sections[ssnSectionNextIndex]?.id
   const handleSsnSectionCompleted = useCallback(() => {
-    const nextSectionIndex =
-      form.sections.findIndex((section) => section.id === SsnSeSection.sectionId) + 1
-    if (!form.sections[nextSectionIndex]) {
-      throw new Error(`Failed to find section after ${SsnSeSection.sectionId}`)
+    if (!ssnSectionNextId) {
+      throw new Error(`Failed to find section after ${SSN_SE_SECTION_ID}`)
     }
-    onActiveSectionChange(form.sections[nextSectionIndex].id)
-  }, [form.sections, onActiveSectionChange])
+    onActiveSectionChange(ssnSectionNextId)
+  }, [ssnSectionNextId, onActiveSectionChange])
 
   const handleAcceptChangeSsn = useCallback(() => {
     datadogRum.addAction('Cleared shopSession to change SSN in price calculator', {
@@ -77,9 +78,13 @@ export const PriceCalculatorAccordion = ({
       >
         {form.sections.map((section, index) => {
           let content
-          if (section.id === SsnSeSection.sectionId) {
+          if (section.id === SSN_SE_SECTION_ID) {
             content = (
-              <SsnSeSection shopSession={shopSession} onCompleted={handleSsnSectionCompleted} />
+              <SsnSeSection
+                shopSessionId={shopSession.id}
+                ssn={shopSession.customer?.ssn}
+                onCompleted={handleSsnSectionCompleted}
+              />
             )
           } else {
             content = children(section, index)

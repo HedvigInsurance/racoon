@@ -5,7 +5,8 @@ import { clsx } from 'clsx'
 import { motion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
-import type { ReactNode } from 'react'
+import type { ReactNode} from 'react';
+import { useMemo } from 'react'
 import { Suspense } from 'react'
 import { useCallback, useRef, useState } from 'react'
 import { Button, Heading, Space, framerTransitions } from 'ui'
@@ -222,6 +223,13 @@ type ProductHeroContainerProps = {
 const ProductHeroContainer = (props: ProductHeroContainerProps) => {
   const { content } = useProductPageContext()
   const productData = useProductData()
+  const pillow = useMemo(
+    () => ({
+      src: productData.pillowImage.src,
+      alt: productData.pillowImage.alt ?? undefined,
+    }),
+    [productData],
+  )
   return (
     <div
       className={clsx(
@@ -234,10 +242,7 @@ const ProductHeroContainer = (props: ProductHeroContainerProps) => {
       <ProductHero
         name={content.product.name}
         description={content.product.description}
-        pillow={{
-          src: productData.pillowImage.src,
-          alt: productData.pillowImage.alt ?? undefined,
-        }}
+        pillow={pillow}
         size={props.size}
       />
       {props.children}
