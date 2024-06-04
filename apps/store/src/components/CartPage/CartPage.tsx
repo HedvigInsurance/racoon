@@ -11,9 +11,8 @@ import { EditActionButton } from '@/components/ProductItem/EditActionButton'
 import { ProductItemSkeleton } from '@/components/ProductItem/ProductItem'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { RemoveActionButton } from '@/components/ProductItem/RemoveActionButton'
-import { ProductRecommendationList } from '@/components/ProductRecommendationList/ProductRecommendationList'
-import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
 import { QuickAddOfferContainer } from '@/components/QuickAdd/QuickAddOfferContainer'
+import { useBonusOffer } from '@/components/QuickAdd/useBonusOffer'
 import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
 import { Divider, ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
@@ -31,16 +30,12 @@ export const CartPage = () => {
   const { t } = useTranslation('cart')
   const { shopSession } = useShopSession()
   const router = useRouter()
-  const { productRecommendations, offerRecommendation } = useProductRecommendations()
+  const offerRecommendation = useBonusOffer()
 
   if (!shopSession || !router.isReady) return <LoadingState />
 
-  const productRecommendationList = productRecommendations && (
-    <ProductRecommendationList recommendations={productRecommendations} />
-  )
-
   if (shopSession.cart.entries.length === 0) {
-    return <EmptyState shopSession={shopSession}>{productRecommendationList}</EmptyState>
+    return <EmptyState shopSession={shopSession} />
   }
 
   return (
@@ -98,8 +93,6 @@ export const CartPage = () => {
             </Space>
           </GridLayout.Content>
         </GridLayout.Root>
-
-        {productRecommendationList}
       </Space>
 
       <PageDebugDialog />
@@ -182,7 +175,7 @@ const LoadingState = () => {
 
 type EmptyStateProps = {
   shopSession: ShopSession
-  children: ReactNode
+  children?: ReactNode
 }
 
 const EmptyState = (props: EmptyStateProps) => {

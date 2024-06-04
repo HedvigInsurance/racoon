@@ -15,8 +15,8 @@ import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNu
 import { EditActionButton } from '@/components/ProductItem/EditActionButton'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { RemoveActionButton } from '@/components/ProductItem/RemoveActionButton'
-import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
 import { QuickAddOfferContainer } from '@/components/QuickAdd/QuickAddOfferContainer'
+import { useBonusOffer } from '@/components/QuickAdd/useBonusOffer'
 import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
 import { Divider, ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
@@ -52,7 +52,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
     }
   }
 
-  const { offerRecommendation } = useProductRecommendations()
+  const offerRecommendation = useBonusOffer()
 
   return (
     <>

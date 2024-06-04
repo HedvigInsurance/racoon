@@ -13,8 +13,8 @@ import { useHandleSubmitCheckout } from '@/components/CheckoutPage/useHandleSubm
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
-import { useProductRecommendations } from '@/components/ProductRecommendationList/useProductRecommendations'
 import { QuickAddOfferContainer } from '@/components/QuickAdd/QuickAddOfferContainer'
+import { useBonusOffer } from '@/components/QuickAdd/useBonusOffer'
 import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
 import { Divider, ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
@@ -53,7 +53,7 @@ export const SignPage = (props: Props) => {
   const { t } = useTranslation(['widget', 'checkout', 'cart'])
   const locale = useRoutingLocale()
 
-  const { offerRecommendation } = useProductRecommendations(props.shopSession.id)
+  const offerRecommendation = useBonusOffer(props.shopSession.id)
 
   const [fetchCurrentMember] = useCurrentMemberLazyQuery()
   const [showSignError, setShowSignError] = useState(false)

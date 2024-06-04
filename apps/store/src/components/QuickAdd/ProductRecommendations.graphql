@@ -1,0 +1,67 @@
+query ProductRecommendations($shopSessionId: UUID!) {
+  shopSession(id: $shopSessionId) {
+    id
+    recommendations {
+      product {
+        ...ProductRecommendation
+      }
+      offer {
+        ...OfferRecommendation
+      }
+    }
+  }
+}
+
+fragment ProductRecommendation on Product {
+  id
+  name
+  displayNameFull
+  displayNameShort
+  pageLink
+  pillowImage {
+    id
+    src
+    alt
+  }
+  featuredImage {
+    id
+    src
+    alt
+  }
+}
+
+fragment OfferRecommendation on ProductOffer {
+  id
+  startDate
+  priceIntentData
+  displayItems {
+    key
+    displayTitle
+    displayValue
+  }
+  product {
+    id
+    name
+    displayNameFull
+  }
+  variant {
+    typeOfContract
+    perils {
+      ...Peril
+    }
+  }
+  cost {
+    gross {
+      amount
+      currencyCode
+    }
+    net {
+      amount
+      currencyCode
+    }
+    discount {
+      amount
+      currencyCode
+    }
+  }
+}
