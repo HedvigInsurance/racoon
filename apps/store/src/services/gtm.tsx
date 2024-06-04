@@ -51,6 +51,7 @@ type DataLayerObject = {
   userProperties?: GTMUserProperties
   offerData?: Record<string, unknown>
   eventData?: Record<string, string>
+  OnetrustActiveGroups?: string
   pageData?: GTMPageData
   ecommerce?: GTMEcommerceData
   shopSession?: GTMShopSessionData
@@ -133,6 +134,12 @@ export const initializeGtm = (countryCode: CountryCode) => {
       country: countryCode,
       environment: getGtmEnvironment(),
     },
+  })
+
+  // Update OneTrust active groups for necessary category on app init
+  pushToGTMDataLayer({
+    event: 'OneTrustGroupsUpdated',
+    OnetrustActiveGroups: ',C0001,',
   })
 }
 
