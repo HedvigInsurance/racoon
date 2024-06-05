@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { theme } from 'ui/src/theme'
+import { hoverStyles, theme } from 'ui/src/theme'
 
 export const bundleDiscountSummary = style({
   display: 'flex',
@@ -12,4 +12,11 @@ export const bundleDiscountSummary = style({
 
   padding: theme.space.sm,
   gap: theme.space.sm,
+})
+
+export const learnMoreLink = style({
+  color: theme.colors.textPrimary,
+  ...hoverStyles({
+    textDecoration: 'underline',
+  }),
 })
