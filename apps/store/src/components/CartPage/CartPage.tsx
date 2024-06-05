@@ -1,5 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import type { ReactNode } from 'react'
@@ -16,7 +17,11 @@ import { useBonusOffer } from '@/components/QuickAdd/useBonusOffer'
 import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
 import { Divider, ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
-import { BUNDLE_DISCOUNT_PERCENTAGE } from '@/features/bundleDiscount/bundleDiscount'
+import {
+  BUNDLE_DISCOUNT_PERCENTAGE,
+  BUNDLE_DISCOUNT_PROMO_PAGE_PATH,
+  shouldShowBundleDiscountInfo,
+} from '@/features/bundleDiscount/bundleDiscount'
 import { BundleDiscountExtraProductLinks } from '@/features/bundleDiscount/BundleDiscountExtraProductLinks'
 import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
@@ -24,6 +29,7 @@ import { useTracking } from '@/services/Tracking/useTracking'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { QueryParam } from './CartPage.constants'
+import { link } from './CartPage.css'
 import { PageDebugDialog } from './PageDebugDialog'
 
 export const CartPage = () => {
@@ -68,14 +74,21 @@ export const CartPage = () => {
                   <TotalAmountContainer cart={shopSession.cart} />
                 </ShopBreakdown>
 
-                {shopSession.experiments?.bundleDiscount && (
+                {shouldShowBundleDiscountInfo(shopSession) && (
                   <BundleDiscountExtraProductLinks>
                     <div>
                       <Text>{t('BUNDLE_DISCOUNT_QUICK_LINKS_TITLE')}</Text>
                       <Text color="textSecondary">
                         {t('BUNDLE_DISCOUNT_QUICK_LINKS_SUBTITLE', {
                           percentage: BUNDLE_DISCOUNT_PERCENTAGE,
-                        })}
+                        })}{' '}
+                        <Link
+                          href={BUNDLE_DISCOUNT_PROMO_PAGE_PATH}
+                          target="_blank"
+                          className={link}
+                        >
+                          {t('READ_MORE', { ns: 'common' })}
+                        </Link>
                       </Text>
                     </div>
                   </BundleDiscountExtraProductLinks>
@@ -143,7 +156,7 @@ const ViewCartTrackTrigger = () => {
 
 const PageWrapper = styled.div({
   paddingTop: theme.space.md,
-  paddingBottom: theme.space.xxl,
+  paddingBottom: '150px',
   minHeight: '100vh',
 
   [mq.sm]: {

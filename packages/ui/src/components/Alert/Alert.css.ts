@@ -55,6 +55,7 @@ export const rootStyles = recipe({
 export const iconStyles = style({
   marginTop: tokens.space.xxs,
   color: AlertElement,
+  flexShrink: 0,
 })
 
 export const bodyStyles = style({

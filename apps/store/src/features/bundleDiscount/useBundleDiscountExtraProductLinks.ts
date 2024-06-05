@@ -25,8 +25,8 @@ const bundleExtraProductGroups = [
       'se-en': 'Home insurance',
     },
     subtitle: {
-      se: 'Alltid med drulle',
-      'se-en': 'Always with drulle',
+      se: 'Drulle ingår',
+      'se-en': 'Drulle included',
     },
   },
   {
@@ -38,7 +38,7 @@ const bundleExtraProductGroups = [
     },
     subtitle: {
       se: 'Flexibelt skydd',
-      'se-en': 'Flexible protection',
+      'se-en': 'Easy to use',
     },
   },
   {
@@ -49,7 +49,7 @@ const bundleExtraProductGroups = [
       'se-en': 'Pet insurance',
     },
     subtitle: {
-      se: 'För hund och katt',
+      se: 'Hund eller katt',
       'se-en': 'For dog and cat',
     },
   },

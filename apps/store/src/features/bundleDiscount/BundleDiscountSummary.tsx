@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react'
-import { CampaignIcon, theme, Text } from 'ui'
-import { bundleDiscountSummary } from '@/features/bundleDiscount/BundleDiscountSummary.css'
+import { Alert } from 'ui'
 
 type Props = {
   children: ReactNode
@@ -8,11 +7,12 @@ type Props = {
 
 export function BundleDiscountSummary({ children }: Props) {
   return (
-    <div className={bundleDiscountSummary}>
-      <CampaignIcon color={theme.colors.signalGreenElement} size={theme.fontSizes.sm} />
-      <Text color="textSecondaryOnGray" size="sm">
-        {children}
-      </Text>
-    </div>
+    <Alert.Root variant="success">
+      <Alert.Body>
+        <Alert.Message color="textSecondaryOnGray" size="sm">
+          {children}
+        </Alert.Message>
+      </Alert.Body>
+    </Alert.Root>
   )
 }

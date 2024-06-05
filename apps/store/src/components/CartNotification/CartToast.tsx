@@ -12,6 +12,7 @@ import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import {
   BUNDLE_DISCOUNT_PERCENTAGE,
   hasBundleDiscount,
+  shouldShowBundleDiscountInfo,
 } from '@/features/bundleDiscount/bundleDiscount'
 import { BundleDiscountExtraProductLinks } from '@/features/bundleDiscount/BundleDiscountExtraProductLinks'
 import { BundleDiscountSummary } from '@/features/bundleDiscount/BundleDiscountSummary'
@@ -80,7 +81,7 @@ export const CartToast = forwardRef<CartToastAttributes>((_, forwardedRef) => {
               {cart.entries.map((entry) => (
                 <CartToastItem key={entry.id} item={entry} />
               ))}
-              {shopSession.experiments?.bundleDiscount && (
+              {shouldShowBundleDiscountInfo(shopSession) && (
                 <BundleDiscountWrapper>
                   <BundleDiscountExtraProductLinks>
                     {bundleDiscountHeader}
