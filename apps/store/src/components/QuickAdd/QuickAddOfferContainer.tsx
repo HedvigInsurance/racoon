@@ -1,3 +1,4 @@
+import { getCookie } from 'cookies-next'
 import { useTranslation } from 'next-i18next'
 import type { ReactNode } from 'react'
 import { Button, Heading, Text, theme } from 'ui'
@@ -10,7 +11,10 @@ import {
   type OfferRecommendationFragment,
   type ProductRecommendationFragment,
 } from '@/services/graphql/generated'
-import { Features } from '@/utils/Features'
+import { EXPERIMENT_COOKIE_NAME } from '@/services/Tracking/experiment.constants'
+import { getExperimentVariant } from '@/services/Tracking/experiment.helpers'
+import { trackExperimentImpression } from '@/services/Tracking/trackExperimentImpression'
+import { useTracking } from '@/services/Tracking/useTracking'
 import { getOfferPrice } from '@/utils/getOfferPrice'
 import { DismissButton } from './DismissButton'
 import { ProductUsp } from './ProductUsp'
@@ -40,6 +44,7 @@ type Props = {
 export function QuickAddOfferContainer(props: Props) {
   const { t } = useTranslation('cart')
   const [show] = useShowQuickAdd()
+  const tracking = useTracking()
   const [addOfferToCart, loading] = useAddRecommendationOfferToCart({
     shopSessionId: props.shopSessionId,
   })
@@ -56,7 +61,12 @@ export function QuickAddOfferContainer(props: Props) {
 
   const homeInsuranceInCart =
     props.cart.entries.find((entry) => HOME_INSURANCES.includes(entry.product.name)) ?? null
-  if (!homeInsuranceInCart && Features.enabled('CROSS_SELL_CARD_V2')) {
+
+  const experimentCookie = getCookie(EXPERIMENT_COOKIE_NAME)
+  const experimentVariant = getExperimentVariant(experimentCookie)
+  const showDefaultVariant = !experimentVariant || experimentVariant.id === 0
+
+  if (showDefaultVariant) {
     content = (
       <QuickAddEditableView
         shopSessionId={props.shopSessionId}
@@ -75,7 +85,7 @@ export function QuickAddOfferContainer(props: Props) {
         }
       />
     )
-  } else {
+  } else if (experimentVariant.id === 1) {
     const householdSize = parseInt(props.offer.priceIntentData[CO_INSURED_DATA_KEY] || 0, 10) + 1
     const title = homeInsuranceInCart
       ? t('QUICK_ADD_TITLE', { product: props.product.displayNameShort })
@@ -137,6 +147,9 @@ export function QuickAddOfferContainer(props: Props) {
       />
     )
   }
+
+  trackExperimentImpression(tracking)
+
   return (
     <div className={quickAddSection}>
       <Heading variant="standard.18" as={'h2'}>
