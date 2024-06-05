@@ -4,7 +4,8 @@ export const getCurrentExperiment = (): Experiment | undefined => {
   return CURRENT_EXPERIMENT
 }
 
-export const getExperimentVariant = (cookieValue: string): ExperimentVariant | undefined => {
+export const getExperimentVariant = (cookieValue?: string): ExperimentVariant | undefined => {
+  if (!cookieValue) return
   const currentExperiment = getCurrentExperiment()
   if (!currentExperiment) return
 
@@ -37,4 +38,8 @@ export const experimentImpressionVariantId = (
   variant: ExperimentVariant,
 ) => {
   return `${experiment.id}.${variant.id}`
+}
+
+export const getExperimentId = (experimentVariant: string) => {
+  return experimentVariant.split('.')[0]
 }

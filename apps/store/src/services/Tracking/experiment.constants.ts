@@ -5,7 +5,7 @@ export type Experiment = {
   id: string
   name: string
   variants: Array<ExperimentVariant>
-  slug: string
+  slug?: string
 }
 
 export type ExperimentVariant = {
