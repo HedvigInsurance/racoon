@@ -41,16 +41,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client-react-streaming@npm:0.10.1":
-  version: 0.10.1
-  resolution: "@apollo/client-react-streaming@npm:0.10.1"
+"@apollo/client-react-streaming@npm:0.11.0":
+  version: 0.11.0
+  resolution: "@apollo/client-react-streaming@npm:0.11.0"
   dependencies:
-    superjson: "npm:^1.12.2 || ^2.0.0"
     ts-invariant: "npm:^0.10.3"
   peerDependencies:
-    "@apollo/client": ^3.9.6
+    "@apollo/client": ^3.10.4
     react: ^18
-  checksum: 10c0/0e581ef8687765f00570daf0f1a9305bf26c9324aa51141037c636392b5034e8d5f664cdf0f459f3159f74939da039e5eb6360286df691339f61909110680bad
+  checksum: 10c0/199b0cb65ea51362edfa95e0e4bed259a533486396192101525a44b68d981ccc063e9c90d61c2aab28cb169d19c110134974346e1e165fc7106dda8313586ed8
   languageName: node
   linkType: hard
 
@@ -91,16 +90,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/experimental-nextjs-app-support@npm:0.10.1":
-  version: 0.10.1
-  resolution: "@apollo/experimental-nextjs-app-support@npm:0.10.1"
+"@apollo/experimental-nextjs-app-support@npm:0.11.0":
+  version: 0.11.0
+  resolution: "@apollo/experimental-nextjs-app-support@npm:0.11.0"
   dependencies:
-    "@apollo/client-react-streaming": "npm:0.10.1"
+    "@apollo/client-react-streaming": "npm:0.11.0"
   peerDependencies:
-    "@apollo/client": ^3.9.6
-    next: ^13.4.1 || ^14.0.0
+    "@apollo/client": ^3.10.4
+    next: ^13.4.1 || ^14.0.0 || 15.0.0-rc.0
     react: ^18
-  checksum: 10c0/d46fde855fd08d4c4475e447e762c838037d1014ecd9f3109e4475c033faff5fc517c68684726e012d57306fd0efa0622038f908ff8b8c40df2cdd984eeb371b
+  checksum: 10c0/b9cfbd8ee45f2e55961eac9d3a3bf22283c08e3a1a252c86afd456c9c7830b78ce5e1e14aa872a274d4495a1770d70dae2bc220bcdfd7ca6b0a90c957b352dcb
   languageName: node
   linkType: hard
 
@@ -14766,15 +14765,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"copy-anything@npm:^3.0.2":
-  version: 3.0.5
-  resolution: "copy-anything@npm:3.0.5"
-  dependencies:
-    is-what: "npm:^4.1.8"
-  checksum: 10c0/01eadd500c7e1db71d32d95a3bfaaedcb839ef891c741f6305ab0461398056133de08f2d1bf4c392b364e7bdb7ce498513896e137a7a183ac2516b065c28a4fe
-  languageName: node
-  linkType: hard
-
 "core-js-compat@npm:^3.31.0":
   version: 3.31.1
   resolution: "core-js-compat@npm:3.31.1"
@@ -19728,13 +19718,6 @@ __metadata:
     call-bind: "npm:^1.0.2"
     get-intrinsic: "npm:^1.1.1"
   checksum: 10c0/ef5136bd446ae4603229b897f73efd0720c6ab3ec6cc05c8d5c4b51aa9f95164713c4cad0a22ff1fedf04865ff86cae4648bc1d5eead4b6388e1150525af1cc1
-  languageName: node
-  linkType: hard
-
-"is-what@npm:^4.1.8":
-  version: 4.1.15
-  resolution: "is-what@npm:4.1.15"
-  checksum: 10c0/7d9bab85977d8352684a7b046cfee8d68e23029f0d6d5b4b7f366cf6c83dee39903e412b655ebf155dc9706d4d1bce02f6351f75a1426381961b4155394082db
   languageName: node
   linkType: hard
 
@@ -25578,7 +25561,7 @@ __metadata:
   dependencies:
     "@adyen/adyen-web": "npm:3.23.0"
     "@apollo/client": "npm:3.10.4"
-    "@apollo/experimental-nextjs-app-support": "npm:0.10.1"
+    "@apollo/experimental-nextjs-app-support": "npm:0.11.0"
     "@babel/core": "npm:7.24.6"
     "@babel/preset-env": "npm:7.24.6"
     "@babel/preset-react": "npm:7.24.6"
@@ -26125,15 +26108,6 @@ __metadata:
   peerDependencies:
     graphql: ^15.7.2 || ^16.0.0
   checksum: 10c0/697441333e59b6932bff51212e29f8dcac477badb067971bd94c30c5f3f7a2e2ea72fb1a21f3c1abbf32774da01515aa24739e620be45f6d576784bd96fd10da
-  languageName: node
-  linkType: hard
-
-"superjson@npm:^1.12.2 || ^2.0.0":
-  version: 2.2.1
-  resolution: "superjson@npm:2.2.1"
-  dependencies:
-    copy-anything: "npm:^3.0.2"
-  checksum: 10c0/5d8202c955170bd98ef2647f712754ac54d2d007923cfdb53a4b035304d8964b8c41d5eff41ee277896e2ac32e06abb009b571f1589416b729fe40216320cc7a
   languageName: node
   linkType: hard
 
