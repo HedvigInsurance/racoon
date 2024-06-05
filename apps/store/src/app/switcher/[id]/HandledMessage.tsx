@@ -14,7 +14,7 @@ export function HandledMessage(props: Props) {
     <Alert.Root variant="success" className={handledMessage} {...props}>
       <Alert.Icon icon={CheckIcon} />
       <Alert.Body>
-        <Alert.Message>{t('SWITCH_CONFIRMATION_FORM_SUCCESS')}</Alert.Message>
+        <Alert.Message>{t('SWITCH_CONFIRMATION_FORM_HANDLED')}</Alert.Message>
       </Alert.Body>
     </Alert.Root>
   )
