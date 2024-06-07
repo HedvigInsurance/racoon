@@ -3,7 +3,7 @@
   "SWITCH_CONFIRMATION_FORM_DATE_LABEL": "Huvudförfallodatum",
   "SWITCH_CONFIRMATION_FORM_DATE_MISSING": "Se till att välja huvudförfallodatum",
   "SWITCH_CONFIRMATION_FORM_ERROR": "Något gick fel!",
-  "SWITCH_CONFIRMATION_FORM_HANDLED": "Tack! Vi har tagit emot er bekräftelsen av uppsägningen.",
+  "SWITCH_CONFIRMATION_FORM_HANDLED": "Vi har redan tagit emot er bekräftelse av uppsägningen för denna medlem. Antingen via er eller direkt via medlemmen. ",
   "SWITCH_CONFIRMATION_FORM_INTRO": "Vänligen ange huvudförfallodatum för hemförsäkringen och markera rutan för att bekräfta.",
   "SWITCH_CONFIRMATION_FORM_SUBMIT": "Skicka in",
   "SWITCH_CONFIRMATION_FORM_SUCCESS": "Tack! Vi har tagit emot er bekräftelsen av uppsägningen."
