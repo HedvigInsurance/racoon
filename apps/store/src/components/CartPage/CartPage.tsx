@@ -20,16 +20,17 @@ import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountCont
 import {
   BUNDLE_DISCOUNT_PERCENTAGE,
   BUNDLE_DISCOUNT_PROMO_PAGE_PATH,
-  shouldShowBundleDiscountInfo,
+  hasBundleDiscount,
+  hasCartItemsEligibleForBundleDiscount,
 } from '@/features/bundleDiscount/bundleDiscount'
 import { BundleDiscountExtraProductLinks } from '@/features/bundleDiscount/BundleDiscountExtraProductLinks'
+import { readMoreLink } from '@/features/bundleDiscount/BundleDiscountSummary.css'
 import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { QueryParam } from './CartPage.constants'
-import { link } from './CartPage.css'
 import { PageDebugDialog } from './PageDebugDialog'
 
 export const CartPage = () => {
@@ -43,6 +44,11 @@ export const CartPage = () => {
   if (shopSession.cart.entries.length === 0) {
     return <EmptyState shopSession={shopSession} />
   }
+
+  // - Do not show if only accident is in the cart (confusing)
+  // - Do not show if there's a discount already (mostly not relevant anymore)
+  const shouldShowBundleDiscountProducts =
+    hasCartItemsEligibleForBundleDiscount(shopSession) && !hasBundleDiscount(shopSession)
 
   return (
     <PageWrapper>
@@ -74,7 +80,7 @@ export const CartPage = () => {
                   <TotalAmountContainer cart={shopSession.cart} />
                 </ShopBreakdown>
 
-                {shouldShowBundleDiscountInfo(shopSession) && (
+                {shouldShowBundleDiscountProducts && (
                   <BundleDiscountExtraProductLinks>
                     <div>
                       <Text>{t('BUNDLE_DISCOUNT_QUICK_LINKS_TITLE')}</Text>
@@ -85,7 +91,7 @@ export const CartPage = () => {
                         <Link
                           href={BUNDLE_DISCOUNT_PROMO_PAGE_PATH}
                           target="_blank"
-                          className={link}
+                          className={readMoreLink}
                         >
                           {t('READ_MORE', { ns: 'common' })}
                         </Link>

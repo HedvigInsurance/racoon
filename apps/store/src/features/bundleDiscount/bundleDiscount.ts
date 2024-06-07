@@ -19,7 +19,7 @@ export const BUNDLE_DISCOUNT_ELIGIBLE_PRODUCT_IDS = new Set([
 // Only Swedish
 export const BUNDLE_DISCOUNT_PROMO_PAGE_PATH = '/se/hedvig/flerkopsrabatt'
 
-export const shouldShowBundleDiscountInfo = (shopSession: ShopSession) => {
+export const hasCartItemsEligibleForBundleDiscount = (shopSession: ShopSession) => {
   return (
     shopSession.experiments?.bundleDiscount &&
     // Another special case to ignore - only accident in cart
