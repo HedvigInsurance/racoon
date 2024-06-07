@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { Alert } from 'ui'
+import { Alert, CampaignIcon } from 'ui'
 
 type Props = {
   children: ReactNode
@@ -8,6 +8,7 @@ type Props = {
 export function BundleDiscountSummary({ children }: Props) {
   return (
     <Alert.Root variant="success">
+      <Alert.Icon icon={CampaignIcon} />
       <Alert.Body>
         <Alert.Message color="textSecondaryOnGray" size="sm">
           {children}

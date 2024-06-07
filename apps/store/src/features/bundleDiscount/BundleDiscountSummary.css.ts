@@ -1,9 +1,9 @@
 import { style } from '@vanilla-extract/css'
-import { hoverStyles, theme } from 'ui/src/theme'
+import { hoverStyles } from 'ui/src/theme'
 
-export const learnMoreLink = style({
-  color: theme.colors.textPrimary,
+export const readMoreLink = style({
+  textDecoration: 'underline',
   ...hoverStyles({
-    textDecoration: 'underline',
+    opacity: 0.7,
   }),
 })
