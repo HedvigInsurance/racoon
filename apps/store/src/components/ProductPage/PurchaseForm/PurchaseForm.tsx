@@ -5,7 +5,7 @@ import { clsx } from 'clsx'
 import { motion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
-import type { ReactNode} from 'react';
+import type { ReactNode } from 'react'
 import { useMemo } from 'react'
 import { Suspense } from 'react'
 import { useCallback, useRef, useState } from 'react'

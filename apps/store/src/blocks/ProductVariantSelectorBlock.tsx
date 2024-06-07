@@ -2,10 +2,10 @@
 
 import styled from '@emotion/styled'
 import { ConditionalWrapper, theme, mq } from 'ui'
+import { NAVIGATION_LIST_HEIGHT } from '@/blocks/ProductPageBlock/ProductPageSectionNav'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { ProductVariantSelector } from '@/components/ProductVariantSelector/ProductVariantSelector'
 import { zIndexes } from '@/utils/zIndex'
-import { NAVIGATION_LIST_HEIGHT } from './ProductPageBlock'
 
 type ProductVariantSelectorBlockProps = {
   nested?: boolean
