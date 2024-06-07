@@ -1,17 +1,16 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useTranslation } from 'next-i18next'
-import { type FormEventHandler } from 'react'
+import { type FormEventHandler, memo } from 'react'
 import { Button, Space } from 'ui'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { useShopSessionCustomerUpdateMutation } from '@/services/graphql/generated'
-import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useErrorMessage } from '@/utils/useErrorMessage'
 
 const SsnFieldName = 'ssn'
 
-type Props = { shopSession: ShopSession; onCompleted: () => void }
+type Props = { shopSessionId: string; ssn?: string | null; onCompleted: () => void }
 
-export const SsnSeSection = ({ shopSession, onCompleted }: Props) => {
+export const SsnSeSection = memo(({ shopSessionId, ssn, onCompleted }: Props) => {
   const { t } = useTranslation('purchase-form')
   const [updateCustomer, result] = useShopSessionCustomerUpdateMutation({
     // priceIntent.suggestedData may be updated based on customer.ssn
@@ -32,7 +31,7 @@ export const SsnSeSection = ({ shopSession, onCompleted }: Props) => {
     event.preventDefault()
     const ssn = event.currentTarget[SsnFieldName].value
     if (typeof ssn !== 'string') throw new Error('No SSN found in SSN section form')
-    updateCustomer({ variables: { input: { shopSessionId: shopSession.id, ssn } } })
+    updateCustomer({ variables: { input: { shopSessionId: shopSessionId, ssn } } })
   }
 
   const errorMessage = useErrorMessage(result.error)
@@ -43,7 +42,7 @@ export const SsnSeSection = ({ shopSession, onCompleted }: Props) => {
         <PersonalNumberField
           label={t('FIELD_SSN_SE_LABEL')}
           name={SsnFieldName}
-          defaultValue={shopSession.customer?.ssn ?? ''}
+          defaultValue={ssn ?? ''}
           required={true}
           warning={!!errorMessage}
           message={errorMessage}
@@ -54,6 +53,7 @@ export const SsnSeSection = ({ shopSession, onCompleted }: Props) => {
       </Space>
     </form>
   )
-}
+})
+SsnSeSection.displayName = 'SsnSeSection'
 
-SsnSeSection.sectionId = 'ssn-se'
+export const SSN_SE_SECTION_ID = 'ssn-se'

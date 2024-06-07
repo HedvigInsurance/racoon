@@ -1,6 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useTranslation } from 'next-i18next'
-import { startTransition } from 'react'
+import { startTransition, useCallback } from 'react'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { usePriceIntentDataUpdateMutation } from '@/services/graphql/generated'
 import type { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
@@ -37,40 +37,46 @@ export const useHandleSubmitPriceCalculator = (params: Params) => {
     },
   })
 
-  const handleSubmit = async (data: JSONData) => {
-    const [customerData, priceIntentData] = separateCustomerData(data)
-    if (customerData) {
-      datadogLogs.logger.warn("Submitting customer data out of section isn't supported", {
-        shopSessionId: params.shopSession.id,
-        priceIntentId: params.priceIntent.id,
+  const handleSubmit = useCallback(
+    async (data: JSONData) => {
+      const [customerData, priceIntentData] = separateCustomerData(data)
+      if (customerData) {
+        datadogLogs.logger.warn("Submitting customer data out of section isn't supported", {
+          shopSessionId: params.shopSession.id,
+          priceIntentId: params.priceIntent.id,
+        })
+      }
+      return await updateData({
+        variables: {
+          priceIntentId: params.priceIntent.id,
+          data: priceIntentData,
+          customer: { shopSessionId: params.shopSession.id },
+        },
       })
-    }
-    return await updateData({
-      variables: {
-        priceIntentId: params.priceIntent.id,
-        data: priceIntentData,
-        customer: { shopSessionId: params.shopSession.id },
-      },
-    })
-  }
+    },
+    [params.priceIntent.id, params.shopSession.id, updateData],
+  )
 
   // NOTE: We probably want to refactor this in the future and stop editing priceIntent and customer data as a mix
   // We should refactor this when current solution becomes a problem
-  const handleSubmitSection = (data: JSONData) => {
-    const [customerData, priceIntentData] = separateCustomerData(data)
+  const handleSubmitSection = useCallback(
+    (data: JSONData) => {
+      const [customerData, priceIntentData] = separateCustomerData(data)
 
-    if (priceIntentData) {
-      startTransition(() => {
-        updateData({
-          variables: {
-            priceIntentId: params.priceIntent.id,
-            data: priceIntentData,
-            customer: { shopSessionId: params.shopSession.id, ...customerData },
-          },
+      if (priceIntentData) {
+        startTransition(() => {
+          updateData({
+            variables: {
+              priceIntentId: params.priceIntent.id,
+              data: priceIntentData,
+              customer: { shopSessionId: params.shopSession.id, ...customerData },
+            },
+          })
         })
-      })
-    }
-  }
+      }
+    },
+    [params.priceIntent.id, params.shopSession.id, updateData],
+  )
 
   return [handleSubmit, handleSubmitSection, loading] as const
 }

@@ -2,6 +2,7 @@
 
 import Personnummer from 'personnummer'
 import type { InputHTMLAttributes } from 'react'
+import { memo } from 'react'
 import { useState } from 'react'
 import type { Props as TextFieldProps } from '@/components/TextField/TextField'
 import { TextField } from '@/components/TextField/TextField'
@@ -19,7 +20,7 @@ export type Props = Omit<
  * Personal Number input field.
  * Only supports Swedish personal numbers.
  */
-export const PersonalNumberField = (props: Props) => {
+export const PersonalNumberField = memo((props: Props) => {
   const { value: propValue, defaultValue, label, warning, onClear, ...baseProps } = props
 
   const [value, setValue] = useState(() => {
@@ -59,4 +60,5 @@ export const PersonalNumberField = (props: Props) => {
       )}
     </>
   )
-}
+})
+PersonalNumberField.displayName = 'PersonalNumberField'
