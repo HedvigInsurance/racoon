@@ -48,7 +48,7 @@ export function BundleDiscountCartSummary({ cart }: Props) {
   return (
     <BundleDiscountSummary>
       {content}{' '}
-      <Link href={BUNDLE_DISCOUNT_PROMO_PAGE_PATH} className={learnMoreLink}>
+      <Link href={BUNDLE_DISCOUNT_PROMO_PAGE_PATH} target="_blank" className={learnMoreLink}>
         {t('READ_MORE', { ns: 'common' })}
       </Link>
     </BundleDiscountSummary>
