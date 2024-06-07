@@ -202,6 +202,7 @@ export const OfferPresenter = (props: Props) => {
           <Space y={0.25}>
             {tiers.length > 1 && (
               <ProductTierSelector
+                defaultOpen={true}
                 offers={tiers}
                 selectedOffer={selectedTier}
                 onValueChange={handleOfferChange}
