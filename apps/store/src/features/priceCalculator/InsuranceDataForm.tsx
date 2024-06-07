@@ -1,5 +1,6 @@
 'use client'
 
+import { datadogRum } from '@datadog/browser-rum'
 import { useAtomValue, useSetAtom } from 'jotai'
 import { type FormEventHandler, type ReactNode } from 'react'
 import { Heading, yStack } from 'ui'
@@ -121,9 +122,10 @@ function InsuranceDataSection({ section }: InsuranceDataSectionProps) {
       }
 
       if (priceIntent.warning) {
+        console.log('TODO: show priceIntent.warning')
         // TODO: restore warning handling
         // showPriceIntentWarning(true)
-        // datadogRum.addAction('Show PriceIntent Warning')
+        datadogRum.addAction('Show PriceIntent Warning')
       } else {
         goToNextSection()
       }

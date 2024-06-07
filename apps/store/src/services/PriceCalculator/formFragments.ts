@@ -196,6 +196,21 @@ export const yourAddressSection: TemplateSection = {
   },
 }
 
+export const yourAddressSectionV2: TemplateSection = {
+  id: 'your-address',
+  title: { key: tKey('SECTION_TITLE_YOUR_INFORMATION') },
+  subtitle: { key: tKey('SECTION_SUBTITLE_YOUR_INFORMATION') },
+  submitLabel: { key: tKey('SUBMIT_LABEL_FINISH') },
+  items: [
+    { field: streetAddressField, layout: LAYOUT.FULL_WIDTH },
+    { field: postalCodeField, layout: LAYOUT.FULL_WIDTH },
+    { field: emailField, layout: LAYOUT.FULL_WIDTH },
+  ],
+  preview: {
+    fieldName: streetAddressField.name,
+  },
+}
+
 export const yourAddressSectionWithlivingSpace: TemplateSection = {
   id: 'your-address',
   title: { key: tKey('SECTION_TITLE_YOUR_ADDRESS') },
