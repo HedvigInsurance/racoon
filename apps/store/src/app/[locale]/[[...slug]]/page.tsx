@@ -1,13 +1,17 @@
 import { StoryblokStory } from '@storyblok/react/rsc'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import type { ReactNode } from 'react';
 import { cache } from 'react'
 import { storyblokBridgeOptions } from '@/appComponents/storyblokBridgeOptions'
+import { ContactUs } from '@/components/ContactUs/ContactUs'
 import { DefaultDebugDialog } from '@/components/DebugDialog/DefaultDebugDialog'
+import { CustomerFirstScript } from '@/services/CustomerFirst'
 import type { PageStory } from '@/services/storyblok/storyblok'
 import { MOST_VISITED_PATHS } from '@/services/storyblok/Storyblok.constant'
 import { getImgSrc, isProductStory } from '@/services/storyblok/Storyblok.helpers'
 import { getCmsPageLinks, getStoryBySlug } from '@/services/storyblok/storyblok.rsc'
+import { Features } from '@/utils/Features'
 import { locales } from '@/utils/l10n/locales'
 import {
   getHrefLang,
@@ -29,17 +33,17 @@ type Props = {
 export default async function CmsPage(props: Props) {
   const story = await fetchStory(props.params.locale, props.params.slug?.join('/'))
 
-  // TODO: Solve in Storyblok and remove workaround
-  // Patching incorrect data from Storyblok for /se-en/
-  let { hideBreadcrumbs } = story.content
-  if ((props.params.slug?.length ?? 0) < 1) {
-    hideBreadcrumbs = true
+  const { hideBreadcrumbs, hideChat } = story.content
+  let chat: ReactNode = null
+  if (!hideChat) {
+    chat = Features.enabled('CUSTOM_CHAT') ? <ContactUs /> : <CustomerFirstScript />
   }
   if (isProductStory(story)) {
     return (
       <>
         <ProductCmsPage locale={props.params.locale} story={story} />
         <StoryBreadcrumbs params={props.params} currentPageTitle={story.name} />
+        {chat}
       </>
     )
   }
@@ -49,6 +53,7 @@ export default async function CmsPage(props: Props) {
         <StoryblokStory story={story} bridgeOptions={storyblokBridgeOptions} />
       </BlogStoryContainer>
       {!hideBreadcrumbs && <StoryBreadcrumbs params={props.params} currentPageTitle={story.name} />}
+      {chat}
       <DefaultDebugDialog />
     </>
   )

@@ -1,3 +1,4 @@
+'use client'
 import { Global } from '@emotion/react'
 import { atom, useAtom } from 'jotai'
 import Script from 'next/script'
