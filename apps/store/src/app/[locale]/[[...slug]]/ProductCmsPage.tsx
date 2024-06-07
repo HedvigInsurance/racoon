@@ -1,5 +1,4 @@
-import { StoryblokStory } from '@storyblok/react/rsc'
-import { storyblokBridgeOptions } from '@/appComponents/storyblokBridgeOptions'
+import { StoryWithPreviewSupport } from '@/app/[locale]/[[...slug]]/StoryWithPreviewSupport'
 import { BankIdDialog } from '@/components/BankIdDialog/BankIdDialog'
 import { PageBannerTriggers } from '@/components/Banner/PageBannerTriggers'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
@@ -49,7 +48,7 @@ export const ProductCmsPage = async ({ locale, story }: ProductCmsPageProps) => 
       <ProductPageContextProvider story={story} priceTemplate={priceTemplate}>
         <ProductReviewsMetadataProvider productReviewsMetadata={productReviewsMetadata}>
           <BankIdContextProvider>
-            <StoryblokStory story={story} bridgeOptions={storyblokBridgeOptions} />
+            <StoryWithPreviewSupport story={story} />
             <ProductPageViewTracker />
             <PageBannerTriggers blok={story.content} />
             <BankIdDialog />

@@ -1,12 +1,18 @@
 import type { SbBlokData } from '@storyblok/react'
 import { StoryblokComponent, storyblokEditable } from '@storyblok/react'
-import * as GridLayout from '@/components/GridLayout/GridLayout'
+import { ProductPageSectionNav } from '@/blocks/ProductPageBlock/ProductPageSectionNav'
 import {
   PurchaseForm,
   type PurchaseFormProps,
 } from '@/components/ProductPage/PurchaseForm/PurchaseForm'
 import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
-import { gridOverview, gridRoot, purchaseFormWrapper } from './ProductPageBlock.css'
+import {
+  gridOverview,
+  gridRoot,
+  gridPurchaseForm,
+  gridCoverage,
+  purchaseFormWrapper,
+} from './ProductPageBlock.css'
 import { ContentSection, CoverageSection } from './Sections'
 
 export type ProductPageBlockProps = SbBaseBlockProps<
@@ -22,25 +28,30 @@ export type ProductPageBlockProps = SbBaseBlockProps<
 export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
   return (
     <main {...storyblokEditable(blok)}>
-      <GridLayout.Root className={gridRoot}>
-        <GridLayout.Content width="1/2" align="right">
+      <ProductPageSectionNav
+        overviewLabel={blok.overviewLabel}
+        coverageLabel={blok.coverageLabel}
+      />
+
+      <div className={gridRoot}>
+        <div className={gridPurchaseForm}>
           <div className={purchaseFormWrapper}>
             <PurchaseForm showAverageRating={blok.showAverageRating} />
           </div>
-        </GridLayout.Content>
+        </div>
 
-        <GridLayout.Content width="1/2" align="left" className={gridOverview}>
+        <div className={gridOverview}>
           <section id="overview">
             {blok.overview.map((nestedBlock) => (
               <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />
             ))}
           </section>
-        </GridLayout.Content>
+        </div>
 
-        <GridLayout.Content width="1" align="center">
+        <div className={gridCoverage}>
           <CoverageSection blocks={blok.coverage} />
-        </GridLayout.Content>
-      </GridLayout.Root>
+        </div>
+      </div>
 
       <ContentSection blocks={blok.body} />
     </main>
