@@ -1,12 +1,12 @@
 'use server'
 
 import { initTranslationsServerSide } from '@/app/i18n'
-import type { FormStateWithErrors } from '@/app/types/formStateTypes'
+import type { FormStateWithErrors, Message } from '@/app/types/formStateTypes'
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
 import {
-  SwitchConfirmationDocument,
-  type SwitchConfirmationMutation,
-  type SwitchConfirmationMutationVariables,
+  SwitcherCaseCompleteDocument,
+  type SwitcherCaseCompleteMutation,
+  type SwitcherCaseCompleteMutationVariables,
 } from '@/services/graphql/generated'
 import { locales } from '@/utils/l10n/locales'
 import type { RoutingLocale } from '@/utils/l10n/types'
@@ -25,34 +25,49 @@ export const submitSwitchConfirmation = async (
   if (!expiryDate) {
     return {
       errors: {
-        generic: [t('contractSwitchConfirmationForm:SWITCH_CONFIRMATION_FORM_DATE_MISSING')],
+        generic: [
+          t('SWITCH_CONFIRMATION_FORM_DATE_MISSING', { ns: 'contractSwitchConfirmationForm' }),
+        ],
       },
     }
   }
 
   const apolloClient = getApolloClient(DEFAULT_LOCALE)
 
-  try {
-    console.log({ id })
+  const messages: Array<Message> = []
+  const errors: Array<string> = []
 
-    await apolloClient.mutate<SwitchConfirmationMutation, SwitchConfirmationMutationVariables>({
-      mutation: SwitchConfirmationDocument,
+  try {
+    const { data } = await apolloClient.mutate<
+      SwitcherCaseCompleteMutation,
+      SwitcherCaseCompleteMutationVariables
+    >({
+      mutation: SwitcherCaseCompleteDocument,
       variables: { id, currentExpiryDate: expiryDate },
     })
-  } catch (error) {
-    return {
-      errors: {
-        generic: [t('contractSwitchConfirmationForm:SWITCH_CONFIRMATION_FORM_ERROR')],
-      },
+
+    const { isCompleted } = data?.switcherCaseComplete.switcherCase ?? {}
+
+    if (isCompleted) {
+      messages.push({
+        type: 'success',
+        content: t('SWITCH_CONFIRMATION_FORM_SUCCESS', { ns: 'contractSwitchConfirmationForm' }),
+      })
     }
+
+    const userError = data?.switcherCaseComplete.userError?.message
+
+    if (userError) {
+      errors.push(userError)
+    }
+  } catch (error) {
+    errors.push(t('SWITCH_CONFIRMATION_FORM_ERROR', { ns: 'contractSwitchConfirmationForm' }))
   }
 
   return {
-    messages: [
-      {
-        type: 'success',
-        content: t('contractSwitchConfirmationForm:SWITCH_CONFIRMATION_FORM_SUCCESS'),
-      },
-    ],
+    messages,
+    errors: {
+      generic: errors,
+    },
   }
 }
