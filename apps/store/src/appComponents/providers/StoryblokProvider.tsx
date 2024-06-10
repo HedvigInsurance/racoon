@@ -1,12 +1,14 @@
 'use client'
 import { apiPlugin, storyblokInit } from '@storyblok/react/rsc'
 import type { PropsWithChildren } from 'react'
-import { storyblokComponents } from '@/services/storyblok/storyblokComponents'
+import { commonStoryblokComponents } from '@/services/storyblok/commonStoryblokComponents'
 
 storyblokInit({
   accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
   use: [apiPlugin],
-  components: storyblokComponents,
+  components: {
+    ...commonStoryblokComponents,
+  },
 })
 
 // The main purpose of this component is to call storyblokInit client-side
