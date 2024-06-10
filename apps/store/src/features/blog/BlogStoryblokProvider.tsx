@@ -1,3 +1,5 @@
+'use client'
+
 import { setComponents } from '@storyblok/react'
 import type { ReactNode } from 'react'
 import { blogBlocks } from '@/features/blog/blogBlocks'

@@ -4,7 +4,9 @@ import type { SbBlokData } from '@storyblok/react'
 import type { ReactNode } from 'react'
 import {
   BLOG_ARTICLE_CATEGORIES_PAGE_PROP,
+  BLOG_ARTICLE_CATEGORY_CONTENT_TYPE,
   BLOG_ARTICLE_CATEGORY_LIST_BLOCK,
+  BLOG_ARTICLE_CONTENT_TYPE,
   BLOG_ARTICLE_LIST_BLOCK,
   BLOG_ARTICLE_TEASERS_PAGE_PROP,
 } from '@/features/blog/blog.constants'
@@ -12,6 +14,7 @@ import { convertToBlogArticleCategory } from '@/features/blog/blog.helpers'
 import type { BlogArticleContentType, BlogArticleTeaser } from '@/features/blog/blog.types'
 import type { BlogPageProps } from '@/features/blog/BlogContextProvider'
 import { BlogContextProvider } from '@/features/blog/BlogContextProvider'
+import { BlogStoryblokProvider } from '@/features/blog/BlogStoryblokProvider'
 import { getImgSrc, getStoryblokImageSize } from '@/services/storyblok/Storyblok.helpers'
 import { getBlogArticles, getBlogCategories } from '@/services/storyblok/storyblok.rsc'
 import type { RoutingLocale } from '@/utils/l10n/types'
@@ -40,7 +43,16 @@ export async function BlogStoryContainer({ locale, story, children }: Props) {
     )
   }
   await Promise.all(requests)
-  return <BlogContextProvider blogPageProps={blogPageProps}>{children}</BlogContextProvider>
+
+  const isBlogArticlePage = story.content.component === BLOG_ARTICLE_CONTENT_TYPE
+  const isBlogCategoryPage = story.content.component === BLOG_ARTICLE_CATEGORY_CONTENT_TYPE
+  const shouldLoadBlogBlocks = isBlogArticlePage || isBlogCategoryPage
+
+  return (
+    <BlogContextProvider blogPageProps={blogPageProps}>
+      {shouldLoadBlogBlocks ? <BlogStoryblokProvider>{children}</BlogStoryblokProvider> : children}
+    </BlogContextProvider>
+  )
 }
 
 const findBlock = (story: ISbStoryData, component: string) => {
