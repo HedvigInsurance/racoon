@@ -5,7 +5,6 @@ import type {
   BLOG_ARTICLE_TEASERS_PAGE_PROP,
 } from '@/features/blog/blog.constants'
 import type { BlogArticleCategory, BlogArticleTeaser } from '@/features/blog/blog.types'
-import { BlogStoryblokProvider } from '@/features/blog/BlogStoryblokProvider'
 import { BlogContext, parseBlogContext } from '@/features/blog/useBlog'
 
 type Props = {
@@ -19,11 +18,9 @@ export type BlogPageProps = {
 }
 
 export function BlogContextProvider({ blogPageProps, children }: Props) {
-  const hasBlogContext = Object.values(blogPageProps ?? {}).some(Boolean)
-
   return (
     <BlogContext.Provider value={parseBlogContext(blogPageProps ?? {})}>
-      {hasBlogContext ? <BlogStoryblokProvider>{children}</BlogStoryblokProvider> : children}
+      {children}
     </BlogContext.Provider>
   )
 }
