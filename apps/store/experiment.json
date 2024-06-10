@@ -1,6 +1,5 @@
 {
-  "name": "Start page",
-  "slug": "/se",
+  "name": "Quick Add Experiment",
   "variants": [
     {
       "name": "Original",
@@ -10,8 +9,7 @@
     {
       "name": "Variant",
       "id": 1,
-      "weight": 50,
-      "slug": "/start"
+      "weight": 50
     }
   ]
 }
