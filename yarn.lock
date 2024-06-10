@@ -11951,12 +11951,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@upstash/redis@npm:1.25.1":
-  version: 1.25.1
-  resolution: "@upstash/redis@npm:1.25.1"
+"@upstash/redis@npm:^1.31.3":
+  version: 1.31.3
+  resolution: "@upstash/redis@npm:1.31.3"
   dependencies:
     crypto-js: "npm:^4.2.0"
-  checksum: 10c0/f065bad9963cd9541a64d1b3651739098df08ee211ae7e738c496a45a04358509d4b19f478867beb72755bab796b3fc247536bf29beb5baf9c29acf152070f32
+  checksum: 10c0/132d3eecaed26f24c471267ec39ffb0a27af768f77d36b7900b5262820a8c3ede695113d975f15c93112540691ec20881686e16819881801947c49ce5c152cd2
   languageName: node
   linkType: hard
 
@@ -12089,12 +12089,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vercel/kv@npm:1.0.1":
-  version: 1.0.1
-  resolution: "@vercel/kv@npm:1.0.1"
+"@vercel/kv@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@vercel/kv@npm:2.0.0"
   dependencies:
-    "@upstash/redis": "npm:1.25.1"
-  checksum: 10c0/a699cad9c49062f54e11a8901503788f847b3cdc188fa55b262d3dc0d031a39027898d70243d9270bcf1a0d68e6c7bc5222717552f717e13a6f31d399b858cf1
+    "@upstash/redis": "npm:^1.31.3"
+  checksum: 10c0/4b05600727d97342631f07850df76487ac0b9160bdf40e2ff8b3908cc71ee277ff555b0e67bd7b2f7d84ef158be8608400a8eaf6eb1c5e2a2678f9d8ef67f6af
   languageName: node
   linkType: hard
 
@@ -25626,7 +25626,7 @@ __metadata:
     "@vanilla-extract/sprinkles": "npm:1.6.2"
     "@vanilla-extract/webpack-plugin": "npm:2.3.9"
     "@vercel/edge-config": "npm:1.1.1"
-    "@vercel/kv": "npm:1.0.1"
+    "@vercel/kv": "npm:2.0.0"
     "@vercel/otel": "npm:1.8.3"
     ajv: "npm:8.14.0"
     apollo-link-timeout: "npm:4.0.0"
