@@ -168,7 +168,7 @@ const securityHeaders = [
 const getExperimentVariantRedirects = () => {
   if (typeof process.env.NEXT_PUBLIC_EXPERIMENT_ID !== 'string') return []
 
-  const variantSlug = experimentJson.variants.find((item) => item.slug).slug
+  const variantSlug = experimentJson.variants.find((item) => item.slug)?.slug
   if (!variantSlug) return []
 
   return [

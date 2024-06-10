@@ -49,8 +49,11 @@ export const experimentMiddleware = (req: NextRequest) => {
   const currentExperiment = getCurrentExperiment()
   if (!currentExperiment) return
 
-  const slug = currentExperiment.slug.replace(req.nextUrl.locale, '')
-  if (req.nextUrl.pathname !== slug) return
+  const isPageExperiment = currentExperiment.slug !== undefined
+
+  // Return if it's a page experiment and the slug doesn't match
+  const slug = currentExperiment.slug?.replace(req.nextUrl.locale, '')
+  if (isPageExperiment && req.nextUrl.pathname !== slug) return
 
   let assignedVariant = getAssignedVariant(req)
 
@@ -64,7 +67,8 @@ export const experimentMiddleware = (req: NextRequest) => {
 
   const url = req.nextUrl
 
-  if (assignedVariant.variant.id !== 0) {
+  // Do url rewrite if it's a page experiment and variant is not the default page
+  if (isPageExperiment && assignedVariant.variant.id !== 0) {
     if (!assignedVariant.variant.slug) {
       throw new Error(`No slug found for variant: ${assignedVariant.variant.name}`)
     }
@@ -72,7 +76,7 @@ export const experimentMiddleware = (req: NextRequest) => {
     url.pathname = assignedVariant.variant.slug
   }
 
-  const response = NextResponse.rewrite(url)
+  const response = isPageExperiment ? NextResponse.rewrite(url) : NextResponse.next()
 
   if (!req.cookies.has(EXPERIMENT_COOKIE_NAME)) {
     console.debug(`AB test | setting cookie: ${assignedVariant.cookieValue}`)
