@@ -52,7 +52,7 @@
     "@vanilla-extract/recipes": "0.5.3",
     "@vanilla-extract/sprinkles": "1.6.2",
     "@vercel/edge-config": "1.1.1",
-    "@vercel/kv": "1.0.1",
+    "@vercel/kv": "2.0.0",
     "@vercel/otel": "1.8.3",
     "ajv": "8.14.0",
     "apollo-link-timeout": "4.0.0",
