@@ -28,10 +28,12 @@ export function TopMenuMobile(props: Props) {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const [isContentVisible, setIsContentVisible] = useState(false)
+
   // Close on navigation
   useEffect(() => {
     setIsOpen(false)
   }, [pathname])
+
   // Poor man's useDeferredValue that waits for the next UI frame
   // Waiting for next render loop is too early since major part of rendering work happens
   // in `Presence` inner component after dialog content is rendered
@@ -43,70 +45,69 @@ export function TopMenuMobile(props: Props) {
   const { children, defaultValue } = props
   const { t } = useTranslation('common')
   const locale = useRoutingLocale()
+
   return (
-    <>
-      <DialogPrimitive.Root
-        defaultOpen={false}
-        open={isOpen}
-        onOpenChange={(newValue: boolean) => startTransition(() => setIsOpen(newValue))}
-      >
-        <DialogPrimitive.Trigger asChild={true}>
-          <Button className={buttonTrigger} variant="ghost" size="medium">
-            {t('NAV_MENU_DIALOG_OPEN')}
-          </Button>
-        </DialogPrimitive.Trigger>
-        <DialogContent>
-          <div className={contentWrapper}>
-            <div className={topMenuHeader}>
-              <div className={logoWrapper}>
-                <LogoHomeLink />
-              </div>
-              <DialogPrimitive.Close asChild={true}>
-                <Button className={buttonTrigger} variant="ghost" size="medium">
-                  {t('NAV_MENU_DIALOG_CLOSE')}
-                </Button>
-              </DialogPrimitive.Close>
-              <ShoppingCartMenuItem />
+    <DialogPrimitive.Root
+      defaultOpen={false}
+      open={isOpen}
+      onOpenChange={(newValue: boolean) => startTransition(() => setIsOpen(newValue))}
+    >
+      <DialogPrimitive.Trigger asChild={true}>
+        <Button className={buttonTrigger} variant="ghost" size="medium">
+          {t('NAV_MENU_DIALOG_OPEN')}
+        </Button>
+      </DialogPrimitive.Trigger>
+      <DialogContent>
+        <div className={contentWrapper}>
+          <div className={topMenuHeader}>
+            <div className={logoWrapper}>
+              <LogoHomeLink />
             </div>
-            {isContentVisible && (
-              <NavigationMenuPrimitive.Root className={navigation} defaultValue={defaultValue}>
-                <NavigationMenuPrimitive.List className={navigationPrimaryList}>
-                  <div>{children}</div>
-                  <div className={buttonWrapper}>
-                    <Button
-                      as="a"
-                      href={getAppStoreLink('apple', locale).toString()}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      variant="secondary"
-                      size="medium"
-                    >
-                      <SpaceFlex space={0.5} align="center">
-                        <AppleIcon />
-                        App Store
-                      </SpaceFlex>
-                    </Button>
-                    <Button
-                      as="a"
-                      href={getAppStoreLink('google', locale).toString()}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      variant="secondary"
-                      size="medium"
-                    >
-                      <SpaceFlex space={0.5} align="center">
-                        <AndroidIcon />
-                        Google Play
-                      </SpaceFlex>
-                    </Button>
-                  </div>
-                </NavigationMenuPrimitive.List>
-              </NavigationMenuPrimitive.Root>
-            )}
+            <DialogPrimitive.Close asChild={true}>
+              <Button className={buttonTrigger} variant="ghost" size="medium">
+                {t('NAV_MENU_DIALOG_CLOSE')}
+              </Button>
+            </DialogPrimitive.Close>
+            <ShoppingCartMenuItem />
           </div>
-        </DialogContent>
-      </DialogPrimitive.Root>
-    </>
+          {isContentVisible && (
+            <NavigationMenuPrimitive.Root className={navigation} defaultValue={defaultValue}>
+              <NavigationMenuPrimitive.List className={navigationPrimaryList}>
+                <div>{children}</div>
+                <div className={buttonWrapper}>
+                  <Button
+                    as="a"
+                    href={getAppStoreLink('apple', locale).toString()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="secondary"
+                    size="medium"
+                  >
+                    <SpaceFlex space={0.5} align="center">
+                      <AppleIcon />
+                      App Store
+                    </SpaceFlex>
+                  </Button>
+                  <Button
+                    as="a"
+                    href={getAppStoreLink('google', locale).toString()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="secondary"
+                    size="medium"
+                  >
+                    <SpaceFlex space={0.5} align="center">
+                      <AndroidIcon />
+                      Google Play
+                    </SpaceFlex>
+                  </Button>
+                </div>
+              </NavigationMenuPrimitive.List>
+            </NavigationMenuPrimitive.Root>
+          )}
+        </div>
+      </DialogContent>
+    </DialogPrimitive.Root>
   )
 }
 
