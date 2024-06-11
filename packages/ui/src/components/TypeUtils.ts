@@ -8,7 +8,7 @@ type PropsToOmit<C extends React.ElementType, P> = keyof (AsProp<C> & P)
 
 export type PolymorphicRef<C extends React.ElementType> = React.ComponentPropsWithRef<C>['ref']
 
-export type PolymorphicComponentsProp<
+export type PolymorphicComponentsProps<
   C extends React.ElementType,
   Props = Record<string, never>,
 > = React.PropsWithChildren<Props & AsProp<C>> &
@@ -17,4 +17,4 @@ export type PolymorphicComponentsProp<
 export type PolymorphicComponentPropsWithRef<
   C extends React.ElementType,
   Props = Record<string, never>,
-> = PolymorphicComponentsProp<C, Props> & { ref?: PolymorphicRef<C> }
+> = PolymorphicComponentsProps<C, Props> & { ref?: PolymorphicRef<C> }

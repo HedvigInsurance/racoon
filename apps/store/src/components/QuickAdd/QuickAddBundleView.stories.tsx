@@ -1,5 +1,6 @@
 import { type Meta, type StoryObj } from '@storybook/react'
-import { Button, Heading, Text, theme } from 'ui'
+import { sprinkles } from 'ui/src/theme/sprinkles.css'
+import { Button, Heading, Text } from 'ui'
 import { Perils } from '@/components/Perils/Perils'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Price } from '@/components/Price'
@@ -141,7 +142,7 @@ export const Default: Story = {
                   size="xlarge"
                   src="https://assets.hedvig.com/f/165473/832x832/1bb4813dd1/hedvig-pillows-accident.png"
                 />
-                <Heading as="h1" variant="standard.18" mt={theme.space.md}>
+                <Heading className={sprinkles({ mt: 'md' })} as="h1" variant="standard.18">
                   Accident insurance
                 </Heading>
                 <Price

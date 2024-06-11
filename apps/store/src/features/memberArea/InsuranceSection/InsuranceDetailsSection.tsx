@@ -2,7 +2,8 @@ import * as RadixTabs from '@radix-ui/react-tabs'
 import router, { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { useCallback } from 'react'
-import { Button, Heading, Space, Text, theme } from 'ui'
+import { sprinkles } from 'ui/src/theme/sprinkles.css'
+import { Button, Heading, Space, Text } from 'ui'
 import { InsuranceDocumentLink } from '@/components/InsuranceDocumentLink'
 import { Perils } from '@/components/Perils/Perils'
 import type { MemberContractFragment } from '@/services/graphql/generated'
@@ -68,7 +69,7 @@ const InsuranceTabs = ({ contract }: InsuranceTabsProps) => {
       </RadixTabs.List>
 
       <RadixTabs.TabsContent value="overview">
-        <Heading as="h2" variant="standard.24" mt={theme.space.lg}>
+        <Heading as="h2" className={sprinkles({ mt: 'md' })} variant="standard.24">
           {t('INSURANCE_DETAILS_TAB_OVERVIEW')}
         </Heading>
         {contract.currentAgreement.displayItems.map((displayItem) => (

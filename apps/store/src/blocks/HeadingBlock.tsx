@@ -21,13 +21,19 @@ export type HeadingBlockProps = SbBaseBlockProps<{
 }>
 
 export const HeadingBlock = ({ blok, nested }: HeadingBlockProps) => {
+  // Gotcha: we may get emtpy string from Storyblok for 'color' and 'textAlignment', this should handled safely
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+  const color = blok.color || 'textPrimary'
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+  const align = blok.textAlignment || 'center'
+
   return (
     <ConditionalWrapper condition={!nested} wrapWith={(children) => <Wrapper>{children}</Wrapper>}>
       <Heading
         as={blok.as}
         variant={{ _: blok.variant ?? 'standard.32', md: blok.variantDesktop ?? 'standard.40' }}
-        color={blok.color}
-        align={blok.textAlignment}
+        color={color}
+        align={align}
         balance={blok.balance}
         {...storyblokEditable(blok)}
       >
