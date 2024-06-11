@@ -11,10 +11,10 @@ export const stack = ({ direction = 'column', gap = 'md', ...params }: StackPatt
 
 type DirectedStackPatternParams = Omit<StackPatternParams, 'direction'>
 
-export const hStack = (params: DirectedStackPatternParams) => {
+export const xStack = (params: DirectedStackPatternParams) => {
   return stack({ direction: 'row', ...params })
 }
 
-export const vStack = (params: DirectedStackPatternParams) => {
+export const yStack = (params: DirectedStackPatternParams) => {
   return stack({ direction: 'column', ...params })
 }
