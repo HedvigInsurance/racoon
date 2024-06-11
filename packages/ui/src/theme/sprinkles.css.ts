@@ -52,6 +52,7 @@ const responsiveProperties = defineProperties({
     paddingBottom: tokens.space,
     paddingLeft: tokens.space,
     paddingRight: tokens.space,
+    gap: tokens.space,
   },
   shorthands: {
     mx: ['marginLeft', 'marginRight'],
