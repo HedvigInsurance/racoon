@@ -4,8 +4,6 @@ import { Suspense } from 'react'
 import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import globalCss from 'ui/src/global.css'
 import { mainTheme } from 'ui'
-import { initTranslations } from '@/app/i18n'
-import { TranslationsProvider } from '@/appComponents/providers/TranslationsProvider'
 import { NavigationProgressIndicator } from '@/appComponents/RootLayout/NavigationProgressIndicator'
 import { OrgStructuredData } from '@/appComponents/RootLayout/OrgStructuredData'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
@@ -20,12 +18,10 @@ import { DebugError } from './DebugError'
 const noop = (val: any) => {}
 noop(globalCss)
 
-export async function RootLayout({
+export function RootLayout({
   locale = 'se',
   children,
 }: PropsWithChildren<{ locale?: RoutingLocale }>) {
-  const { resources } = await initTranslations(locale)
-
   return (
     <html lang={getLocaleOrFallback(locale).htmlLang}>
       {/* False alert, next/head does now work with app router */}
@@ -41,9 +37,7 @@ export async function RootLayout({
 
         <ApolloProvider locale={locale}>
           <ShopSessionProvider>
-            <TranslationsProvider locale={locale} resources={resources}>
-              <BalancerProvider>{children}</BalancerProvider>
-            </TranslationsProvider>
+            <BalancerProvider>{children}</BalancerProvider>
           </ShopSessionProvider>
         </ApolloProvider>
       </body>
