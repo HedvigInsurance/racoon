@@ -1,6 +1,6 @@
-import { Heading, Text } from 'ui'
+import { Heading, Text, yStack } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
-import { pillow, textWrapper, wrapper } from './ProductHero.css'
+import { pillow } from './ProductHero.css'
 
 type Props = {
   name: string
@@ -11,7 +11,7 @@ type Props = {
 
 export const ProductHero = (props: Props) => {
   return (
-    <div className={wrapper}>
+    <div className={yStack({ gap: 'md' })}>
       <Pillow
         className={pillow}
         size={props.size === 'small' ? 'large' : 'xxlarge'}
@@ -19,7 +19,7 @@ export const ProductHero = (props: Props) => {
         priority={true}
       />
 
-      <div className={textWrapper}>
+      <div className={yStack({ gap: 'sm' })}>
         <Heading as="h1" variant="standard.24" align="center">
           {props.name}
         </Heading>
