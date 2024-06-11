@@ -1,7 +1,8 @@
 import { getCookie } from 'cookies-next'
 import { useTranslation } from 'next-i18next'
 import type { ReactNode } from 'react'
-import { Button, Heading, Text, theme } from 'ui'
+import { sprinkles } from 'ui/src/theme/sprinkles.css'
+import { Button, Heading, Text } from 'ui'
 import { Perils } from '@/components/Perils/Perils'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Price } from '@/components/Price'
@@ -114,7 +115,7 @@ export function QuickAddOfferContainer(props: Props) {
                 Header={
                   <>
                     <Pillow size="xlarge" {...props.product.pillowImage} />
-                    <Heading as="h1" variant="standard.18" mt={theme.space.md}>
+                    <Heading as="h1" className={sprinkles({ mt: 'md' })} variant="standard.18">
                       {props.product.displayNameFull}
                     </Heading>
                     <Price color="textTranslucentSecondary" {...price} />

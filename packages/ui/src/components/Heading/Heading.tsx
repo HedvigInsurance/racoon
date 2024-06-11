@@ -1,15 +1,15 @@
 'use client'
 
-import isPropValid from '@emotion/is-prop-valid'
-import styled from '@emotion/styled'
-import React from 'react'
+import { clsx } from 'clsx'
 import Balancer from 'react-wrap-balancer'
-import type { Margins, UIColors } from '../../theme'
-import { getColor, getMargins, theme } from '../../theme'
-import type { HeadingVariant } from './Heading.helpers'
-import { getHeadingVariantStyles } from './Heading.helpers'
+import type { UIColors, Level } from '../../theme'
+import { sprinkles } from '../../theme/sprinkles.css'
+import type { PolymorphicComponentsProps } from '../TypeUtils'
+import { responsiveVariantStyles } from './Heading.css'
 
-export type { PossibleHeadingVariant } from './Heading.helpers'
+type StandardHeadingSize = '18' | '20' | '24' | '32' | '40' | '48' | '56' | '72' | '96'
+type SerifHeadingSize = Exclude<StandardHeadingSize, '18'>
+export type PossibleHeadingVariant = `standard.${StandardHeadingSize}` | `serif.${SerifHeadingSize}`
 
 type HeadingColors = Pick<
   UIColors,
@@ -21,50 +21,38 @@ type HeadingColors = Pick<
   | 'textTranslucentTertiary'
 >
 
-export type HeadingProps = Margins & {
-  as: 'h1' | 'h2' | 'h3' | 'h4' | 'p'
-  color?: keyof HeadingColors
-  children: React.ReactNode
-  variant?: HeadingVariant
-  align?: 'center' | 'left' | 'right'
-  balance?: boolean
-}
-
-const elementConfig = {
-  shouldForwardProp: (prop: string) => isPropValid(prop) && prop !== 'color',
-}
-
-type HeadingBaseProps = Pick<HeadingProps, 'color' | 'variant' | 'align'> & Margins
-
-const HeadingBase = styled(
-  'h2',
-  elementConfig,
-)<HeadingBaseProps>(({ color, variant, align, ...props }) => {
-  // GOTCHA: We may get empty string from Storyblok, this should be handled safely
-  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-  variant = variant || 'standard.32'
-  return {
-    color: color ? getColor(color) : 'currentColor',
-    fontFamily: theme.fonts.heading,
-    fontWeight: 400,
-    lineHeight: 1.2,
-    textAlign: align ?? 'left',
-    whiteSpace: 'pre-wrap',
-    ...getMargins(props),
-    ...getHeadingVariantStyles(variant),
+export type HeadingProps = PolymorphicComponentsProps<
+  'h1' | 'h2' | 'h3' | 'h4' | 'p',
+  {
+    color?: keyof HeadingColors
+    variant?: PossibleHeadingVariant | Partial<Record<Level | '_', PossibleHeadingVariant>>
+    align?: 'center' | 'left' | 'right'
+    balance?: boolean
   }
-})
+>
 
-export const Heading = ({
+export function Heading({
   as,
-  color,
-  children,
-  variant,
-  align,
+  className,
+  color = 'textPrimary',
+  variant = 'standard.32',
+  align = 'left',
   balance,
+  children,
   ...rest
-}: HeadingProps) => (
-  <HeadingBase as={as} color={color} variant={variant} align={align} {...rest}>
-    {!balance ? children : <Balancer>{children}</Balancer>}
-  </HeadingBase>
-)
+}: HeadingProps) {
+  const Component = as ?? 'h2'
+
+  return (
+    <Component
+      className={clsx(
+        responsiveVariantStyles(variant),
+        sprinkles({ color, textAlign: align }),
+        className,
+      )}
+      {...rest}
+    >
+      {balance ? <Balancer>{children}</Balancer> : children}
+    </Component>
+  )
+}

@@ -13,6 +13,9 @@ export { Badge, type BadgeProps } from './components/Badge/Badge'
 export { ConditionalWrapper } from './components/ConditionalWrapper'
 export * from './components/ThemeProvider'
 
+export { responsiveVariants } from './utils/responsiveVariants/responsiveVariants'
+export * from './utils/responsiveVariants/repsonsiveVariants.types'
+
 export * from './icons'
 
 export * from './theme'
