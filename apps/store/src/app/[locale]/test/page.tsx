@@ -2,7 +2,7 @@ import { Suspense } from 'react'
 import { fetchGlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
 import type { RoutingLocale } from '@/utils/l10n/types'
-import { initTranslationsServerSide } from '../../i18n'
+import { initTranslations } from '../../i18n'
 import { ClientComponent } from './ClientComponent'
 import { wrapper } from './styles.css'
 
@@ -11,7 +11,7 @@ type Props = {
 }
 
 const Page = async (props: Props) => {
-  const { t } = await initTranslationsServerSide(props.params.locale)
+  const { t } = await initTranslations(props.params.locale)
   // Same graphql request as in layout, only one network request gets executed thanks to Apollo SSR cache
   const apolloClient = getApolloClient(props.params.locale)
   const productMetadata = await fetchGlobalProductMetadata({ apolloClient })
