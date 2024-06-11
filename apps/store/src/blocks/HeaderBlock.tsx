@@ -187,12 +187,10 @@ export const ProductNavContainerBlock = ({ blok, variant }: ProductNavContainerB
         value={blok.name}
         {...storyblokEditable(blok)}
       >
-        <Space y={{ base: 1.5, lg: 0 }}>
-          <NavigationTrigger href={PageLink.store({ locale })}>{blok.name}</NavigationTrigger>
-          <NavigationMenuPrimitive.Content className={navigationContent}>
-            {content}
-          </NavigationMenuPrimitive.Content>
-        </Space>
+        <NavigationTrigger href={PageLink.store({ locale })}>{blok.name}</NavigationTrigger>
+        <NavigationMenuPrimitive.Content className={navigationContent}>
+          {content}
+        </NavigationMenuPrimitive.Content>
       </NavigationMenuPrimitive.Item>
     )
   }
@@ -244,15 +242,11 @@ export type HeaderBlockProps = SbBaseBlockProps<{
   navMenuContainer: ExpectedBlockType<
     NestedNavContainerBlockProps | NavItemBlockProps | ProductNavContainerBlockProps
   >
-}> & {
-  static?: boolean
-}
+}>
 
 // Performance considerations
 // - this block is important for site-wide INP since it's present on most pages and is used often
-// - we render both desktop and mobile menu to allow CSS-only switch between them when window is resized
-// - desktop menu is memoized to avoid rerendering when mobile menu state changes
-export const HeaderBlock = ({ blok, ...headerProps }: HeaderBlockProps) => {
+export const HeaderBlock = ({ blok }: HeaderBlockProps) => {
   const variant = useResponsiveVariant('lg')
 
   const productNavItem = useMemo(
@@ -266,7 +260,7 @@ export const HeaderBlock = ({ blok, ...headerProps }: HeaderBlockProps) => {
     [blok.navMenuContainer],
   )
   return (
-    <Header {...storyblokEditable(blok)} {...headerProps}>
+    <Header {...storyblokEditable(blok)}>
       {variant === 'desktop' && (
         <TopMenuDesktop>
           {blok.navMenuContainer.map((item) => (

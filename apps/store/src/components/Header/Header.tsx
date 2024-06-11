@@ -58,7 +58,7 @@ export const Header = (props: PropsWithChildren<unknown>) => {
   }
 
   return (
-    <div style={initialStyles} className={ghostWrapper}>
+    <div className={ghostWrapper}>
       <motion.header
         className={wrapper}
         initial={initialStyles}
