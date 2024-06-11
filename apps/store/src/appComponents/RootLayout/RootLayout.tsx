@@ -25,6 +25,9 @@ export async function RootLayout({
   children,
 }: PropsWithChildren<{ locale?: RoutingLocale }>) {
   const { resources } = await initTranslationsServerSide(locale)
+  console.debug(
+    `Loaded translations, languages=${Object.keys(resources)} bytes=${JSON.stringify(resources).length}`,
+  )
 
   return (
     <html lang={getLocaleOrFallback(locale).htmlLang}>
@@ -41,7 +44,7 @@ export async function RootLayout({
 
         <ApolloProvider locale={locale}>
           <ShopSessionProvider>
-            <TranslationsProvider locale={locale} resources={resources}>
+            <TranslationsProvider locale={locale} resources={undefined}>
               <BalancerProvider>{children}</BalancerProvider>
             </TranslationsProvider>
           </ShopSessionProvider>

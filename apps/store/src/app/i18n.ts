@@ -32,7 +32,7 @@ export const initTranslations = async (
   const i18n = i18nInstance ?? createInstance()
   i18n.use(initReactI18next)
   if (resources === undefined) {
-    i18n.use(requireTranslationsBackend)
+    i18n.use(loadTranslationsClientSideBackend)
   }
 
   const preload = [locale]
@@ -50,6 +50,9 @@ export const initTranslations = async (
     resources,
     // It's a safe default when result it not fed into `dangerouslySetInnerHTML` which we currently never do
     interpolation: { escapeValue: false },
+    // We always provide translations in advance, no need to wait for their load client-side
+    // https://react.i18next.com/latest/usetranslation-hook#not-using-suspense
+    react: { useSuspense: false },
     ...nextI18nextConfig,
   }
   await i18n.init(options)
@@ -61,7 +64,7 @@ export const initTranslations = async (
   }
 }
 
-const requireTranslationsBackend: BackendModule = {
+const loadTranslationsClientSideBackend: BackendModule = {
   type: 'backend',
   async read(language, namespace, callback) {
     try {

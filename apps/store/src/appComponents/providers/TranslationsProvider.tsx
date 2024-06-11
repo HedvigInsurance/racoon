@@ -12,7 +12,7 @@ import type { RoutingLocale } from '@/utils/l10n/types'
 type Props = {
   children: ReactNode
   locale: RoutingLocale
-  resources: Resource
+  resources?: Resource
 }
 
 export const TranslationsProvider = ({ children, locale, resources }: Props) => {
