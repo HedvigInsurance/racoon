@@ -4,7 +4,7 @@ import { Suspense } from 'react'
 import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import globalCss from 'ui/src/global.css'
 import { mainTheme } from 'ui'
-import { initTranslationsServerSide } from '@/app/i18n'
+import { initTranslations } from '@/app/i18n'
 import { TranslationsProvider } from '@/appComponents/providers/TranslationsProvider'
 import { NavigationProgressIndicator } from '@/appComponents/RootLayout/NavigationProgressIndicator'
 import { OrgStructuredData } from '@/appComponents/RootLayout/OrgStructuredData'
@@ -24,7 +24,7 @@ export async function RootLayout({
   locale = 'se',
   children,
 }: PropsWithChildren<{ locale?: RoutingLocale }>) {
-  const { resources } = await initTranslationsServerSide(locale)
+  const { resources } = await initTranslations(locale)
 
   return (
     <html lang={getLocaleOrFallback(locale).htmlLang}>

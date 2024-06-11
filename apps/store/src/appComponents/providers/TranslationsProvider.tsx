@@ -12,14 +12,14 @@ import type { RoutingLocale } from '@/utils/l10n/types'
 type Props = {
   children: ReactNode
   locale: RoutingLocale
-  resources: Resource
+  resources?: Resource
 }
 
 export const TranslationsProvider = ({ children, locale, resources }: Props) => {
   const i18nRef = useRef<I18n>()
   if (i18nRef.current == null) {
     i18nRef.current = createInstance()
-    initTranslations(locale, i18nRef.current, resources)
+    initTranslations(locale, { i18nInstance: i18nRef.current, resources })
   }
 
   return <I18nextProvider i18n={i18nRef.current}>{children}</I18nextProvider>
