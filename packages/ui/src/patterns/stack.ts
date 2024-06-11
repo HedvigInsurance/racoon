@@ -1,5 +1,5 @@
-import type { Sprinkles } from './sprinkles.css'
-import { sprinkles } from './sprinkles.css'
+import type { Sprinkles } from '../theme/sprinkles.css'
+import { sprinkles } from '../theme/sprinkles.css'
 
 type StackPatternParams = {
   direction?: 'row' | 'column'
