@@ -11,8 +11,7 @@ import { navigationItem, navigationProductList, wrapper } from './Header.css'
 import { NavigationLink, ProductNavigationLink } from './NavigationLink/NavigationLink'
 import { NavigationTrigger } from './NavigationTrigger'
 import { ShoppingBagIcon } from './ShoppingBagIcon'
-import { TopMenuDesktop } from './TopMenuDesktop/TopMenuDesktop'
-import { TopMenuMobile } from './TopMenuMobile/TopMenuMobile'
+import { TopMenu } from './TopMenu/TopMenu'
 
 export default {
   component: Header,
@@ -82,13 +81,9 @@ const Template: StoryFn<TopMenuProps> = (props) => {
   return (
     <>
       <motion.header className={wrapper}>
-        <TopMenuDesktop>
+        <TopMenu>
           <MockedNavItems />
-        </TopMenuDesktop>
-
-        <TopMenuMobile>
-          <MockedNavItems />
-        </TopMenuMobile>
+        </TopMenu>
 
         <MockedShoppingCartMenuItem count={props.count} />
       </motion.header>

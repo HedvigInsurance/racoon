@@ -22,7 +22,7 @@ import {
 } from '@/components/Header/NavigationLink/NavigationLink'
 import { NavigationTrigger } from '@/components/Header/NavigationTrigger'
 import { ShoppingCartMenuItem } from '@/components/Header/ShoppingCartMenuItem'
-import { TopMenuDesktop } from '@/components/Header/TopMenuDesktop/TopMenuDesktop'
+import { TopMenu } from '@/components/Header/TopMenu/TopMenu'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
 import type {
   ExpectedBlockType,
@@ -257,11 +257,11 @@ export const HeaderBlock = ({ blok }: HeaderBlockProps) => {
   )
   return (
     <Header {...storyblokEditable(blok)}>
-      <TopMenuDesktop defaultValue={productNavItem}>
+      <TopMenu defaultValue={productNavItem}>
         {blok.navMenuContainer.map((item) => (
           <NestedNavigationBlock key={item._uid} blok={item} />
         ))}
-      </TopMenuDesktop>
+      </TopMenu>
 
       <ShoppingCartMenuItem />
     </Header>
