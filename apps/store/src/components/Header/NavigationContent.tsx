@@ -12,7 +12,7 @@ export function NavigationContent({ className, ...forwardedProps }: NavigationMe
       {...forwardedProps}
       // For SEO reasons, we want to force the content to be mounted so navigation links are
       // accessible to search engines.
-      forceMount={true}
+      // forceMount={true}
     />
   )
 }
