@@ -1,6 +1,6 @@
 'use server'
 
-import { initTranslationsServerSide } from '@/app/i18n'
+import { initTranslations } from '@/app/i18n'
 import type { FormStateWithErrors, Message } from '@/app/types/formStateTypes'
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
 import {
@@ -20,7 +20,7 @@ export const submitSwitchConfirmation = async (
   const expiryDate = formData.get('expiryDate') as string
   const id = formData.get('id') as string
 
-  const { t } = await initTranslationsServerSide(DEFAULT_LOCALE)
+  const { t } = await initTranslations(DEFAULT_LOCALE)
 
   if (!expiryDate) {
     return {
