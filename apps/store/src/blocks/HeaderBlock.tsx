@@ -8,13 +8,13 @@ import { Space, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { Header } from '@/components/Header/Header'
 import {
-  navigationContent,
   navigationItem,
   navigationMenuWrapper,
   navigationProductList,
   navigationSecondaryItem,
   navigationSecondaryList,
 } from '@/components/Header/Header.css'
+import { NavigationContent } from '@/components/Header/NavigationContent'
 import {
   NavigationLink,
   ProductNavigationLink,
@@ -23,7 +23,6 @@ import {
 import { NavigationTrigger } from '@/components/Header/NavigationTrigger'
 import { ShoppingCartMenuItem } from '@/components/Header/ShoppingCartMenuItem'
 import { TopMenuDesktop } from '@/components/Header/TopMenuDesktop/TopMenuDesktop'
-import { TopMenuMobile } from '@/components/Header/TopMenuMobile/TopMenuMobile'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
 import type {
   ExpectedBlockType,
@@ -85,7 +84,7 @@ export const NestedNavContainerBlock = ({ blok }: NestedNavContainerBlockProps) 
       <NavigationTrigger href={getLinkFieldURL(firstNavItem.link, firstNavItem.name)}>
         {blok.name}
       </NavigationTrigger>
-      <NavigationMenuPrimitive.Content className={navigationContent}>
+      <NavigationContent>
         <div className={navigationMenuWrapper}>
           <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
             <NavigationMenuPrimitive.List className={navigationSecondaryList}>
@@ -106,7 +105,7 @@ export const NestedNavContainerBlock = ({ blok }: NestedNavContainerBlockProps) 
             </NavigationMenuPrimitive.List>
           </NavigationMenuPrimitive.Sub>
         </div>
-      </NavigationMenuPrimitive.Content>
+      </NavigationContent>
     </NavigationMenuPrimitive.Item>
   )
 }
@@ -188,9 +187,7 @@ export const ProductNavContainerBlock = ({ blok, variant }: ProductNavContainerB
         {...storyblokEditable(blok)}
       >
         <NavigationTrigger href={PageLink.store({ locale })}>{blok.name}</NavigationTrigger>
-        <NavigationMenuPrimitive.Content className={navigationContent}>
-          {content}
-        </NavigationMenuPrimitive.Content>
+        <NavigationContent>{content}</NavigationContent>
       </NavigationMenuPrimitive.Item>
     )
   }
@@ -206,10 +203,11 @@ const ButtonNextLinkFullWidth = styled(ButtonNextLink)({ width: '100%' })
 
 type NestedNavigationBlockProps = {
   blok: HeaderBlockProps['blok']['navMenuContainer'][number]
-  variant: 'mobile' | 'desktop'
 }
 
-const NestedNavigationBlock = ({ blok, variant }: NestedNavigationBlockProps) => {
+const NestedNavigationBlock = ({ blok }: NestedNavigationBlockProps) => {
+  const variant = useResponsiveVariant('lg')
+
   const navContainer = checkBlockType<NestedNavContainerBlockProps['blok']>(
     blok,
     NestedNavContainerBlock.blockName,
@@ -227,7 +225,7 @@ const NestedNavigationBlock = ({ blok, variant }: NestedNavigationBlockProps) =>
       <ProductNavContainerBlock
         key={productNavContainer._uid}
         blok={productNavContainer}
-        variant={variant}
+        variant={variant === 'mobile' ? 'mobile' : 'desktop'}
       />
     )
   }
@@ -247,8 +245,6 @@ export type HeaderBlockProps = SbBaseBlockProps<{
 // Performance considerations
 // - this block is important for site-wide INP since it's present on most pages and is used often
 export const HeaderBlock = ({ blok }: HeaderBlockProps) => {
-  const variant = useResponsiveVariant('lg')
-
   const productNavItem = useMemo(
     () =>
       blok.navMenuContainer.find((item) =>
@@ -261,20 +257,12 @@ export const HeaderBlock = ({ blok }: HeaderBlockProps) => {
   )
   return (
     <Header {...storyblokEditable(blok)}>
-      {variant === 'desktop' && (
-        <TopMenuDesktop>
-          {blok.navMenuContainer.map((item) => (
-            <NestedNavigationBlock key={item._uid} blok={item} variant="desktop" />
-          ))}
-        </TopMenuDesktop>
-      )}
-      {variant === 'mobile' && (
-        <TopMenuMobile defaultValue={productNavItem}>
-          {blok.navMenuContainer.map((item) => (
-            <NestedNavigationBlock key={item._uid} blok={item} variant="mobile" />
-          ))}
-        </TopMenuMobile>
-      )}
+      <TopMenuDesktop defaultValue={productNavItem}>
+        {blok.navMenuContainer.map((item) => (
+          <NestedNavigationBlock key={item._uid} blok={item} />
+        ))}
+      </TopMenuDesktop>
+
       <ShoppingCartMenuItem />
     </Header>
   )

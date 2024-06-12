@@ -101,8 +101,16 @@ export const navigation = style({
 export const topMenuDesktop = style([
   navigation,
   {
-    // Ensure menu is left-aligned while cart item is right-aligned
-    flexGrow: 1,
+    // Visually hide menu on mobile. It still needs to be present in the DOM for SEO purposes
+    display: 'none',
+
+    '@media': {
+      [minWidth.lg]: {
+        display: 'revert',
+        // Ensure menu is left-aligned while cart item is right-aligned
+        flexGrow: 1,
+      },
+    },
   },
 ])
 
@@ -171,6 +179,15 @@ export const navigationSecondaryItem = style({
 })
 
 export const navigationContent = style({
+  // For SEO reasons, navigation content get's always mounted and it's appearance is toggled via CSS
+  selectors: {
+    '&[data-state="open"]': {
+      display: 'block',
+    },
+    '&[data-state="closed"]': {
+      display: 'none',
+    },
+  },
   '@media': {
     [minWidth.lg]: {
       position: 'absolute',
