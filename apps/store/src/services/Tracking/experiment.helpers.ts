@@ -1,15 +1,26 @@
-import { CURRENT_EXPERIMENT, type Experiment, type ExperimentVariant } from './experiment.constants'
+import { getCookie } from 'cookies-next'
+import type {
+  ExperimentConfig} from './experiment.constants';
+import {
+  CURRENT_EXPERIMENTS,
+  EXPERIMENT_COOKIE_NAME,
+  Experiments,
+  type Experiment,
+  type ExperimentVariant,
+} from './experiment.constants'
 
-export const getCurrentExperiment = (): Experiment | undefined => {
-  return CURRENT_EXPERIMENT
+export const getCurrentExperiments = (): Array<Experiment> | undefined => {
+  return CURRENT_EXPERIMENTS
 }
 
 export const getExperimentVariant = (cookieValue?: string): ExperimentVariant | undefined => {
   if (!cookieValue) return
-  const currentExperiment = getCurrentExperiment()
-  if (!currentExperiment) return
 
   const [experimentId, rawVariantId] = cookieValue.split('.')
+  const currentExperiments = getCurrentExperiments()
+  const currentExperiment = currentExperiments?.find((experiment) => experiment.id === experimentId)
+
+  if (!currentExperiment) return
 
   if (experimentId !== currentExperiment.id) {
     console.info(
@@ -31,6 +42,17 @@ export const getExperimentVariant = (cookieValue?: string): ExperimentVariant | 
   }
 
   return variant
+}
+
+export const getExperimentVariantByName = (
+  experimentName: ExperimentConfig,
+): ExperimentVariant | undefined => {
+  const experimentId = Experiments.getId(experimentName)
+  if (!experimentId) return
+
+  const cookieValue = getCookie(`${EXPERIMENT_COOKIE_NAME}:${experimentId}`)
+
+  return getExperimentVariant(cookieValue)
 }
 
 export const experimentImpressionVariantId = (

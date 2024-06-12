@@ -1,4 +1,3 @@
-import { getCookie } from 'cookies-next'
 import { useTranslation } from 'next-i18next'
 import type { ReactNode } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
@@ -12,8 +11,8 @@ import {
   type OfferRecommendationFragment,
   type ProductRecommendationFragment,
 } from '@/services/graphql/generated'
-import { EXPERIMENT_COOKIE_NAME } from '@/services/Tracking/experiment.constants'
-import { getExperimentVariant } from '@/services/Tracking/experiment.helpers'
+import { Experiments } from '@/services/Tracking/experiment.constants'
+import { getExperimentVariantByName } from '@/services/Tracking/experiment.helpers'
 import { trackExperimentImpression } from '@/services/Tracking/trackExperimentImpression'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { getOfferPrice } from '@/utils/getOfferPrice'
@@ -63,8 +62,7 @@ export function QuickAddOfferContainer(props: Props) {
   const homeInsuranceInCart =
     props.cart.entries.find((entry) => HOME_INSURANCES.includes(entry.product.name)) ?? null
 
-  const experimentCookie = getCookie(EXPERIMENT_COOKIE_NAME)
-  const experimentVariant = getExperimentVariant(experimentCookie)
+  const experimentVariant = getExperimentVariantByName('QUICK_ADD')
   const showDefaultVariant = !experimentVariant || experimentVariant.id === 0
 
   if (showDefaultVariant) {
@@ -149,7 +147,7 @@ export function QuickAddOfferContainer(props: Props) {
     )
   }
 
-  trackExperimentImpression(tracking)
+  trackExperimentImpression(Experiments.getId('QUICK_ADD'), tracking)
 
   return (
     <div className={quickAddSection}>
