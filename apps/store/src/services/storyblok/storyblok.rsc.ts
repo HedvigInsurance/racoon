@@ -110,15 +110,18 @@ export const getCmsPageLinks = async (startsWith?: string) => {
 // See https://www.storyblok.com/docs/api/content-delivery/v2/getting-started/cache-invalidation for caching logic
 //
 // We cannot rely on storyblok-js-client to hold current `cv` in-memory - this works locally, but not on Vercel
-// Therefore we manually provide `cv` if needed to ensure every subsequent request uses it.
+// Also, there's no reliable way to update the value from /api/cms/revalidate webhook
+// Therefore we manually provide `cv` to ensure every subsequent request uses it.
 // Requests with cv=undefined are
 // - slower since they hit Storyblok server instead of CDN
 // - sometimes result in rate-limit errors when we're rebuilding a lot of pages
 // - generally unsafe to cache since current version can change at any time
 const getStoryblokApiWithCache = async (): Promise<ReturnType<typeof getStoryblokApi>> => {
   const storyblokApi = getStoryblokApi()
-  if (!storyblokApi.cacheVersion()) {
-    storyblokApi.setCacheVersion(await fetchStoryblokCacheVersion())
+  const cacheVersion = await fetchStoryblokCacheVersion()
+  if (storyblokApi.cacheVersion() != cacheVersion) {
+    console.debug('Got new storyblok cache version', cacheVersion)
+    storyblokApi.setCacheVersion(cacheVersion)
   }
   return storyblokApi
 }
@@ -132,11 +135,12 @@ const fetchStoryblokCacheVersion = async (): Promise<number> => {
     },
   } = await storyblokApi.get(
     'cdn/spaces/me',
-    {},
+    // GOTCHA: Make sure we don't pass previous cv, we'll never get value one otherwise
+    { cv: -1 },
     // Using nextjs fetch cache as a way to pass `cv` between requests.
     // Revalidation is normally handled through webhook (/api/cms/revalidate), time here serves as fallback to ensure
     // we never end up with stale value for too long if webhook fails
-    { next: { revalidate: 10 * 60, tags: [cvCacheTag] } },
+    { next: { revalidate: 60, tags: [cvCacheTag] } },
   )
   return version as number
 }

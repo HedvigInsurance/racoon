@@ -11,6 +11,11 @@ type WebhookBody = {
 }
 
 export async function POST(request: Request) {
+  // Delay between revalidations helps with avoiding Vercel cache instability
+  // https://github.com/vercel/next.js/issues/55960
+  // https://github.com/vercel/next.js/issues/60834
+  const delay = () => new Promise((resolve) => setTimeout(resolve, 1000))
+
   const signature = request.headers.get('webhook-signature')
   const bodyText = await request.text()
   if (getSignature(bodyText) !== signature) {
@@ -27,12 +32,16 @@ export async function POST(request: Request) {
   console.log('Storyblok webhook received, revalidating cacheVersion', payload)
   revalidateCacheVersion()
   if (payload.full_slug) {
+    await delay()
     // Only handles edit-in-place revalidation.
     // Moving and deleting stories may keep original one available until next redeploy
     // if it's one of statically built pages
-    console.log(`Revalidating path ${payload.full_slug}`)
-    revalidatePath(payload.full_slug)
+    const updatedPath = `/${payload.full_slug}`
+    console.log(`Revalidating path ${updatedPath}`)
+    revalidatePath(updatedPath, 'page')
   }
+  // Finally, wait to let revalidation finish behind the scenes
+  await delay()
   return new Response(null, { status: 204 })
 }
 

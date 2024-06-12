@@ -1,7 +1,7 @@
 import { StoryblokStory } from '@storyblok/react/rsc'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import type { ReactNode } from 'react';
+import type { ReactNode } from 'react'
 import { cache } from 'react'
 import { storyblokBridgeOptions } from '@/appComponents/storyblokBridgeOptions'
 import { ContactUs } from '@/components/ContactUs/ContactUs'
