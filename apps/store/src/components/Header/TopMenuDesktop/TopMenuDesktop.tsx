@@ -1,17 +1,18 @@
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { usePathname } from 'next/navigation'
-import React, { useEffect } from 'react'
+import { useState, useEffect, type ReactNode } from 'react'
 import { navigationPrimaryList, topMenuDesktop } from '../Header.css'
 
 export type TopMenuDesktopProps = {
-  children: React.ReactNode
+  children: ReactNode
 }
 
 export const TopMenuDesktop = ({ children }: TopMenuDesktopProps) => {
-  const [activeItem, setActiveItem] = React.useState('')
+  const [activeItem, setActiveItem] = useState('')
   const pathname = usePathname()
+
   useEffect(() => {
-    ;() => setActiveItem('')
+    setActiveItem('')
   }, [pathname])
 
   return (
