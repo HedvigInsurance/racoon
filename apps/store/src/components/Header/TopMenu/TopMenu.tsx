@@ -10,7 +10,7 @@ export type TopMenuDesktopProps = {
   defaultValue?: string
 }
 
-export const TopMenuDesktop = ({ children, defaultValue }: TopMenuDesktopProps) => {
+export const TopMenu = ({ children, defaultValue }: TopMenuDesktopProps) => {
   const [activeItem, setActiveItem] = useState('')
   const pathname = usePathname()
   const variant = useResponsiveVariant('lg')
@@ -21,6 +21,8 @@ export const TopMenuDesktop = ({ children, defaultValue }: TopMenuDesktopProps) 
 
   return (
     <>
+      {/* 'Desktop' menu is always rendered for SEO reasons so navigation links becomes acessible */}
+      {/* in the markup */}
       <NavigationMenuPrimitive.Root
         className={topMenuDesktop}
         value={activeItem}
