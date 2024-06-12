@@ -1,5 +1,5 @@
 export const EXPERIMENT_COOKIE_NAME = 'hedvig-experiment'
-import experimentJson from '../../../experiment.json'
+import quickAddExperiment from '../../../experiments/quickAdd.json'
 
 export type Experiment = {
   id: string
@@ -15,11 +15,25 @@ export type ExperimentVariant = {
   slug?: string
 }
 
-const EXPERIMENT_ID = process.env.NEXT_PUBLIC_EXPERIMENT_ID
+const experimentConfig = {
+  QUICK_ADD: process.env.NEXT_PUBLIC_EXPERIMENT_ID_QUICK_ADD,
+} as const
 
-export const CURRENT_EXPERIMENT: Experiment | undefined = EXPERIMENT_ID
-  ? {
-      ...experimentJson,
-      id: EXPERIMENT_ID,
-    }
-  : undefined
+export type ExperimentConfig = keyof typeof experimentConfig
+
+export const Experiments = {
+  getId(experiment: ExperimentConfig) {
+    return experimentConfig[experiment]
+  },
+}
+
+export const CURRENT_EXPERIMENTS: Array<Experiment> | undefined = [
+  ...(experimentConfig.QUICK_ADD
+    ? [
+        {
+          id: experimentConfig.QUICK_ADD,
+          ...quickAddExperiment,
+        },
+      ]
+    : []),
+]

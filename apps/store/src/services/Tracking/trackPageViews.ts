@@ -1,5 +1,4 @@
 import router from 'next/router'
-import { trackExperimentImpression } from '@/services/Tracking/trackExperimentImpression'
 import { type Tracking } from '@/services/Tracking/Tracking'
 
 export const trackPageViews = (tracking: Tracking) => {
@@ -8,7 +7,6 @@ export const trackPageViews = (tracking: Tracking) => {
     router.events.on('routeChangeComplete', (url: string, { shallow = false } = {}) => {
       if (!shallow) {
         tracking.reportPageView(url)
-        trackExperimentImpression(tracking)
       }
     })
   })
