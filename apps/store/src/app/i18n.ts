@@ -52,12 +52,13 @@ export const initTranslations = async (
     lng: locale,
     ns: ns ?? allNamespaces,
     supportedLngs: allLocales,
-    preload,
+    preload: [],
     resources,
     // It's a safe default when result it not fed into `dangerouslySetInnerHTML` which we currently never do
     interpolation: { escapeValue: false },
-    // We always provide translations in advance, no need to wait for their load client-side
+    // We almost always provide translations in advance, no need to wait for their load client-side
     // https://react.i18next.com/latest/usetranslation-hook#not-using-suspense
+    // Also, turning it to true on 404 page leads to endless loop when initializing
     react: { useSuspense: false },
     ...nextI18nextConfig,
   }
@@ -79,7 +80,13 @@ const importBackend: BackendModule = {
       // If we pass it down completely, we double JSON size that is transferred to client component tree
       callback(null, resourceModule.default)
     } catch (err: unknown) {
-      callback(err as CallbackError, null)
+      if (typeof err === 'object' && (err as any).code === 'MODULE_NOT_FOUND') {
+        // When loading translations client-side, we may miss some namespaces in fallback languages. This is safe to ignore
+        // console.log(`Translation module not found, lang=${language} ns=${namespace}`)
+        callback(null, {})
+      } else {
+        callback(err as CallbackError, null)
+      }
     }
   },
   init: () => {},

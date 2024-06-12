@@ -3,18 +3,15 @@ import { useParams, usePathname } from 'next/navigation'
 import { useEffect } from 'react'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
-import { FALLBACK_LOCALE } from '@/utils/l10n/locales'
-import { toRoutingLocale } from '@/utils/l10n/localeUtils'
+import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 import type { RoutingLocale } from '@/utils/l10n/types'
 
 export function AppTrackingTriggers() {
   const tracking = useTracking()
 
-  const { locale = toRoutingLocale(FALLBACK_LOCALE) } = useParams() ?? {}
+  const locale = getLocaleOrFallback(useParams()?.locale as RoutingLocale | undefined).routingLocale
   useEffect(() => {
-    if (locale) {
-      tracking.reportAppInit(getCountryByLocale(locale as RoutingLocale).countryCode)
-    }
+    tracking.reportAppInit(getCountryByLocale(locale).countryCode)
   }, [locale, tracking])
 
   const pathname = usePathname()
