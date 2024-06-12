@@ -54,7 +54,7 @@
     "@vercel/edge-config": "1.1.1",
     "@vercel/kv": "2.0.0",
     "@vercel/otel": "1.8.3",
-    "ajv": "8.14.0",
+    "ajv": "8.16.0",
     "apollo-link-timeout": "4.0.0",
     "clone-deep": "4.0.1",
     "clsx": "2.1.1",
