@@ -1,6 +1,6 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "tasks": {
+  "pipeline": {
     "codegen": {
       "inputs": ["src/graphql/*.graphql", "codegen.yml"],
       "outputs": ["src/services/**/generated.ts", "src/services/apollo/types.ts"]
