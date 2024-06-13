@@ -89,18 +89,18 @@ export const NestedNavContainerBlock = ({ blok }: NestedNavContainerBlockProps) 
           <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
             <NavigationMenuPrimitive.List className={navigationSecondaryList}>
               {filteredNavItems.map((nestedBlock) => (
-                <SecondaryNavigationLink
+                <NavigationMenuPrimitive.Item
                   key={nestedBlock._uid}
-                  href={getLinkFieldURL(nestedBlock.link, nestedBlock.name)}
+                  className={navigationSecondaryItem}
+                  value={nestedBlock.name}
+                  {...storyblokEditable(nestedBlock)}
                 >
-                  <NavigationMenuPrimitive.Item
-                    className={navigationSecondaryItem}
-                    value={nestedBlock.name}
-                    {...storyblokEditable(nestedBlock)}
+                  <SecondaryNavigationLink
+                    href={getLinkFieldURL(nestedBlock.link, nestedBlock.name)}
                   >
                     {nestedBlock.name}
-                  </NavigationMenuPrimitive.Item>
-                </SecondaryNavigationLink>
+                  </SecondaryNavigationLink>
+                </NavigationMenuPrimitive.Item>
               ))}
             </NavigationMenuPrimitive.List>
           </NavigationMenuPrimitive.Sub>
