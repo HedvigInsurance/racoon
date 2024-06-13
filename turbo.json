@@ -1,6 +1,6 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "pipeline": {
+  "tasks": {
     "codegen": {
       "inputs": ["src/graphql/*.graphql", "codegen.yml"],
       "outputs": ["src/services/**/generated.ts", "src/services/apollo/types.ts"]
@@ -10,7 +10,9 @@
       "outputs": [],
       "cache": false
     },
-    "lint:fix": { "cache": false },
+    "lint:fix": {
+      "cache": false
+    },
     "typecheck": {
       "dependsOn": ["codegen"],
       "outputs": []
