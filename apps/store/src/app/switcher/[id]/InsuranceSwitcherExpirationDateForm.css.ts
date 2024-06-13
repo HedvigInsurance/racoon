@@ -4,6 +4,7 @@ import { tokens } from 'ui'
 export const handledMessage = style({
   maxWidth: '400px',
   margin: 'auto',
+  paddingBlock: tokens.space.xxxl,
 })
 
 export const wrapper = style({

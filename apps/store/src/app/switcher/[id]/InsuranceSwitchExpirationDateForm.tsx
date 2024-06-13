@@ -1,7 +1,6 @@
 'use client'
 
 import * as Checkbox from '@radix-ui/react-checkbox'
-import clsx from 'clsx'
 import { useTranslation } from 'next-i18next'
 import { useFormState } from 'react-dom'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
@@ -27,7 +26,7 @@ export default function InsuranceSwitchExpirationDateForm({ id }: Props) {
   const isSuccessful = state?.messages?.some((message) => message.type === 'success')
 
   return (
-    <div className={clsx(wrapper, sprinkles({ py: 'xxxl' }))}>
+    <div className={wrapper}>
       <Text className={sprinkles({ mb: 'md' })}>{t('SWITCH_CONFIRMATION_FORM_INTRO')}</Text>
       <form action={formAction}>
         <Space y={0.25}>
