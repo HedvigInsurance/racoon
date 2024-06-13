@@ -26,7 +26,6 @@ import { OneTrustStyles } from '@/services/OneTrust'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { ShopSessionProvider, useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { initStoryblok } from '@/services/storyblok/storyblok'
-import { trackExperimentImpression } from '@/services/Tracking/trackExperimentImpression'
 import { Tracking } from '@/services/Tracking/Tracking'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { trackPageViews } from '@/services/Tracking/trackPageViews'
@@ -72,7 +71,6 @@ if (typeof window !== 'undefined') {
     const { countryCode } = getCountryByLocale(routingLocale)
     tracking.reportAppInit(countryCode)
 
-    trackExperimentImpression(tracking)
     trackPageViews(tracking)
   })
 }

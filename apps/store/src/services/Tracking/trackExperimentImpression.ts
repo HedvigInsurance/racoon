@@ -1,27 +1,17 @@
 import { getCookie } from 'cookies-next'
 import { type Tracking } from '@/services/Tracking/Tracking'
 import { EXPERIMENT_COOKIE_NAME } from './experiment.constants'
-import {
-  experimentImpressionVariantId,
-  getCurrentExperiment,
-  getExperimentVariant,
-} from './experiment.helpers'
+import { getExperimentVariant } from './experiment.helpers'
 
-export const trackExperimentImpression = (tracking: Tracking) => {
+export const trackExperimentImpression = (experimentId: string | undefined, tracking: Tracking) => {
   if (typeof window === 'undefined') return
-  const currentExperiment = getCurrentExperiment()
-  if (!currentExperiment) return
+  if (!experimentId) return
 
-  if (currentExperiment.slug && window.location.pathname !== currentExperiment.slug) return
-
-  const cookieValue = getCookie(EXPERIMENT_COOKIE_NAME)
+  const cookieValue = getCookie(`${EXPERIMENT_COOKIE_NAME}:${experimentId}`)
   if (typeof cookieValue !== 'string') return
 
   const experimentVariant = getExperimentVariant(cookieValue)
   if (!experimentVariant) return
 
-  tracking.reportExperimentImpression(
-    currentExperiment.id,
-    experimentImpressionVariantId(currentExperiment, experimentVariant),
-  )
+  tracking.reportExperimentImpression(experimentId, cookieValue)
 }
