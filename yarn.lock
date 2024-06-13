@@ -8082,19 +8082,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@opentelemetry/api-logs@npm:0.51.1":
-  version: 0.51.1
-  resolution: "@opentelemetry/api-logs@npm:0.51.1"
+"@opentelemetry/api-logs@npm:0.52.0":
+  version: 0.52.0
+  resolution: "@opentelemetry/api-logs@npm:0.52.0"
   dependencies:
     "@opentelemetry/api": "npm:^1.0.0"
-  checksum: 10c0/bb469406a1b6f8310c2623b66688d1187731f55516fe3866090ac048d0f58ff88e7d2ad050378d66ca9ce9074529385c884c3a47a8200275abf4dd83b0eaf90a
+  checksum: 10c0/7871daac39000d56bd82e0fef25ddb3a531b6ce35740386a5e8800523ef4c5363ef585febd951ac08f15ecf71899ff4c62429518353a12c2c177cf3bf7354513
   languageName: node
   linkType: hard
 
-"@opentelemetry/api@npm:1.8.0":
-  version: 1.8.0
-  resolution: "@opentelemetry/api@npm:1.8.0"
-  checksum: 10c0/66d5504bfbf9c19a14ea549f5fca975a73a5e1e8a1e40a6dc2d662893c942b9ba66c009262816dee2b9ffd0267acd707ec692eba20db11a09d4ee114c00dc161
+"@opentelemetry/api@npm:1.9.0":
+  version: 1.9.0
+  resolution: "@opentelemetry/api@npm:1.9.0"
+  checksum: 10c0/9aae2fe6e8a3a3eeb6c1fdef78e1939cf05a0f37f8a4fae4d6bf2e09eb1e06f966ece85805626e01ba5fab48072b94f19b835449e58b6d26720ee19a58298add
   languageName: node
   linkType: hard
 
@@ -25537,8 +25537,8 @@ __metadata:
     "@jest/globals": "npm:29.7.0"
     "@lottiefiles/react-lottie-player": "npm:3.5.4"
     "@next/bundle-analyzer": "npm:14.2.3"
-    "@opentelemetry/api": "npm:1.8.0"
-    "@opentelemetry/api-logs": "npm:0.51.1"
+    "@opentelemetry/api": "npm:1.9.0"
+    "@opentelemetry/api-logs": "npm:0.52.0"
     "@radix-ui/react-accordion": "npm:1.1.2"
     "@radix-ui/react-checkbox": "npm:1.0.4"
     "@radix-ui/react-collapsible": "npm:1.0.3"
