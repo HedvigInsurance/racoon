@@ -11,7 +11,10 @@ type AssignedVariant = {
   cookieValue: string
 }
 
-const assignVariant = (experiment: Experiment): AssignedVariant | undefined => {
+const assignVariant = (
+  experimentId: string,
+  experiment: Experiment,
+): AssignedVariant | undefined => {
   let number = Math.random() * 100
 
   const variant = experiment.variants.find((variant) => {
@@ -26,7 +29,7 @@ const assignVariant = (experiment: Experiment): AssignedVariant | undefined => {
 
   return {
     variant,
-    cookieValue: `${experiment.id}.${variant.id}`,
+    cookieValue: `${experimentId}.${variant.id}`,
   }
 }
 
@@ -53,17 +56,22 @@ export const experimentMiddleware = (req: NextRequest): NextResponse | undefined
   const response = NextResponse.next()
 
   // Loop over experiments and set experiment cookie if not already set
-  currentExperiments.forEach((currentExperiment) => {
-    let assignedVariant = getAssignedVariant(req, currentExperiment.id)
+  for (const [currentExperimentId, currentExperiment] of Object.entries(currentExperiments)) {
+    let assignedVariant = getAssignedVariant(req, currentExperimentId)
+
     if (!assignedVariant) {
-      assignedVariant = assignVariant(currentExperiment)
+      assignedVariant = assignVariant(currentExperimentId, currentExperiment)
       if (!assignedVariant) return
-      console.debug(`AB test | assigning variant: ${assignedVariant.variant.name}`)
+      console.debug(
+        `AB test | assigning variant: ${currentExperiment.name} - ${assignedVariant.variant.name}`,
+      )
     } else {
-      console.debug(`AB test | found assigned variant: ${assignedVariant.variant.name}`)
+      console.debug(
+        `AB test | found assigned variant: ${currentExperiment.name} - ${assignedVariant.variant.name}`,
+      )
     }
 
-    const experimentCookie = `${EXPERIMENT_COOKIE_NAME}:${currentExperiment.id}`
+    const experimentCookie = `${EXPERIMENT_COOKIE_NAME}:${currentExperimentId}`
 
     if (!req.cookies.has(experimentCookie)) {
       console.debug(`AB test | setting cookie: ${experimentCookie}`)
@@ -71,7 +79,7 @@ export const experimentMiddleware = (req: NextRequest): NextResponse | undefined
         maxAge: ONE_WEEK,
       })
     }
-  })
+  }
 
   return response
 }

@@ -1,5 +1,5 @@
 {
-  "name": "Quick Add Experiment",
+  "name": "Accident Quick Add Card",
   "variants": [
     {
       "name": "Original",
@@ -7,7 +7,7 @@
       "weight": 50
     },
     {
-      "name": "Variant",
+      "name": "Variant 1",
       "id": 1,
       "weight": 50
     }

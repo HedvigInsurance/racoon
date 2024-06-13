@@ -2,7 +2,6 @@ export const EXPERIMENT_COOKIE_NAME = 'hedvig-experiment'
 import quickAddExperiment from '../../../experiments/quickAdd.json'
 
 export type Experiment = {
-  id: string
   name: string
   variants: Array<ExperimentVariant>
   slug?: string
@@ -27,13 +26,8 @@ export const Experiments = {
   },
 }
 
-export const CURRENT_EXPERIMENTS: Array<Experiment> | undefined = [
-  ...(experimentConfig.QUICK_ADD
-    ? [
-        {
-          id: experimentConfig.QUICK_ADD,
-          ...quickAddExperiment,
-        },
-      ]
-    : []),
-]
+export type CurrentExperiments = Record<string, Experiment>
+
+export const CURRENT_EXPERIMENTS: CurrentExperiments = {
+  ...(experimentConfig.QUICK_ADD && { [experimentConfig.QUICK_ADD]: quickAddExperiment }),
+}
