@@ -24,13 +24,16 @@ export const useReportDeviceInfo = () => {
         // Ignore few ancient browsers, universal support for randomUUID appeared in 2021
         if (typeof crypto.randomUUID !== 'function') return
 
+        const data = {
+          deviceType,
+          osName,
+          browserName,
+        }
+        // console.debug('deviceInfo', data)
+
         const deviceInfoEvent = {
           type: TrackingEvent.DeviceInfo,
-          data: {
-            deviceType,
-            osName,
-            browserName,
-          },
+          data,
           id: crypto.randomUUID(),
           sessionId: shopSession.id,
           clientTimestamp: new Date().toISOString(),
