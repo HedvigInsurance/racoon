@@ -12005,6 +12005,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vanilla-extract/css@npm:^1.15.3":
+  version: 1.15.3
+  resolution: "@vanilla-extract/css@npm:1.15.3"
+  dependencies:
+    "@emotion/hash": "npm:^0.9.0"
+    "@vanilla-extract/private": "npm:^1.0.5"
+    css-what: "npm:^6.1.0"
+    cssesc: "npm:^3.0.0"
+    csstype: "npm:^3.0.7"
+    dedent: "npm:^1.5.3"
+    deep-object-diff: "npm:^1.1.9"
+    deepmerge: "npm:^4.2.2"
+    media-query-parser: "npm:^2.0.2"
+    modern-ahocorasick: "npm:^1.0.0"
+    picocolors: "npm:^1.0.0"
+  checksum: 10c0/57c53e961bc0a273fa792c65c1b6cc6ce45d8f0d3c8b239df6ece4fbf2c58d09764ed70773bf25582e3cc6789ccce2b920c33d177ef276f63c6604c85dbc5c01
+  languageName: node
+  linkType: hard
+
 "@vanilla-extract/dynamic@npm:2.1.1":
   version: 2.1.1
   resolution: "@vanilla-extract/dynamic@npm:2.1.1"
@@ -12034,14 +12053,34 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/next-plugin@npm:2.4.1":
-  version: 2.4.1
-  resolution: "@vanilla-extract/next-plugin@npm:2.4.1"
+"@vanilla-extract/integration@npm:^7.1.6":
+  version: 7.1.6
+  resolution: "@vanilla-extract/integration@npm:7.1.6"
   dependencies:
-    "@vanilla-extract/webpack-plugin": "npm:^2.3.9"
+    "@babel/core": "npm:^7.23.9"
+    "@babel/plugin-syntax-typescript": "npm:^7.23.3"
+    "@vanilla-extract/babel-plugin-debug-ids": "npm:^1.0.6"
+    "@vanilla-extract/css": "npm:^1.15.3"
+    dedent: "npm:^1.5.3"
+    esbuild: "npm:esbuild@~0.17.6 || ~0.18.0 || ~0.19.0"
+    eval: "npm:0.1.8"
+    find-up: "npm:^5.0.0"
+    javascript-stringify: "npm:^2.0.1"
+    mlly: "npm:^1.4.2"
+    vite: "npm:^5.0.11"
+    vite-node: "npm:^1.2.0"
+  checksum: 10c0/0e7ce448bf062d3ea6b9afca98e910e3bcc9663f3b2e8b475249add114cac9257c882dc70249b18f646711f97300ff40dcb6bd7abaf93aab3ffaf58b6f7a35f4
+  languageName: node
+  linkType: hard
+
+"@vanilla-extract/next-plugin@npm:2.4.2":
+  version: 2.4.2
+  resolution: "@vanilla-extract/next-plugin@npm:2.4.2"
+  dependencies:
+    "@vanilla-extract/webpack-plugin": "npm:^2.3.10"
   peerDependencies:
     next: ">=12.1.7"
-  checksum: 10c0/d6a293345f9d9d229e2338f5db1d277c8eab79f1e7b99e5d92207e2ffb1e1b1205ccba848fc7b620dda98733c7c7ba8ef4097425fef79aeeedbaca720c2f88f4
+  checksum: 10c0/9cb9493071ee899817ab3aaf90ddca0b099630320d01f05c13a6197d3030935691db4403b1ff0c2a84617bae6711c06119b8e5de1425fb02639e845d6f017ad8
   languageName: node
   linkType: hard
 
@@ -12070,7 +12109,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/webpack-plugin@npm:2.3.9, @vanilla-extract/webpack-plugin@npm:^2.3.9":
+"@vanilla-extract/webpack-plugin@npm:2.3.9":
   version: 2.3.9
   resolution: "@vanilla-extract/webpack-plugin@npm:2.3.9"
   dependencies:
@@ -12081,6 +12120,20 @@ __metadata:
   peerDependencies:
     webpack: ^4.30.0 || ^5.20.2
   checksum: 10c0/cb653e440a0ecfbb2fcfc962ccb581d25914742227188081e1d9a1a75eb208a41272bd1306ab72e70f4a2773ec3dbad2dcf242abbfe0e819e3354533d982d18a
+  languageName: node
+  linkType: hard
+
+"@vanilla-extract/webpack-plugin@npm:^2.3.10":
+  version: 2.3.10
+  resolution: "@vanilla-extract/webpack-plugin@npm:2.3.10"
+  dependencies:
+    "@vanilla-extract/integration": "npm:^7.1.6"
+    debug: "npm:^4.3.1"
+    loader-utils: "npm:^2.0.0"
+    picocolors: "npm:^1.0.0"
+  peerDependencies:
+    webpack: ^4.30.0 || ^5.20.2
+  checksum: 10c0/23c563151cc58b6a1dfc977aa0e762df1d4ee8913aeac75e21d12a080598d24b7e90fd8b2ab4df8c875dfd593e3a97ef27f7de092f9ae38c350f1166f7bb23b2
   languageName: node
   linkType: hard
 
@@ -25615,7 +25668,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:7.13.0"
     "@vanilla-extract/css": "npm:1.15.2"
     "@vanilla-extract/dynamic": "npm:2.1.1"
-    "@vanilla-extract/next-plugin": "npm:2.4.1"
+    "@vanilla-extract/next-plugin": "npm:2.4.2"
     "@vanilla-extract/recipes": "npm:0.5.3"
     "@vanilla-extract/sprinkles": "npm:1.6.2"
     "@vanilla-extract/webpack-plugin": "npm:2.3.9"
