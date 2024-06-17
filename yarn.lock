@@ -10794,10 +10794,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc-jotai/react-refresh@npm:0.1.0":
-  version: 0.1.0
-  resolution: "@swc-jotai/react-refresh@npm:0.1.0"
-  checksum: 10c0/c83a70d810a3aba305846ba702d391db85bd129a4691d2f7c557464e102a604341e6fbad5810b7f089f1c7692b2d0c7573d53698b5de1e1eb76f7bbfce4bca28
+"@swc-jotai/react-refresh@npm:0.1.1":
+  version: 0.1.1
+  resolution: "@swc-jotai/react-refresh@npm:0.1.1"
+  checksum: 10c0/169a02fc4bf7a65e891c390076ef2df8c8b2d57e151e8cce2773dccdd6e5a0e9a97e9234c0550de55841fde28caa8947715934f65d2fb8221920663e60b6e7a8
   languageName: node
   linkType: hard
 
@@ -25599,7 +25599,7 @@ __metadata:
     "@storybook/addon-viewport": "npm:8.1.6"
     "@storybook/nextjs": "npm:8.1.6"
     "@storybook/react": "npm:8.1.6"
-    "@swc-jotai/react-refresh": "npm:0.1.0"
+    "@swc-jotai/react-refresh": "npm:0.1.1"
     "@testing-library/dom": "npm:10.1.0"
     "@testing-library/jest-dom": "npm:6.4.6"
     "@testing-library/react": "npm:16.0.0"
