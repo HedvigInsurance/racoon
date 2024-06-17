@@ -1,11 +1,14 @@
-import { useContext, useMemo } from 'react'
+import { useContext, useRef } from 'react'
 import { Tracking } from './Tracking'
 import { TrackingContext } from './TrackingContext'
 
 export const useTracking = () => {
   const data = useContext(TrackingContext)
 
-  return useMemo(() => {
-    return new Tracking(data)
-  }, [data])
+  // Optimization: keep single instance then update context in-place
+  // Makes sure returned value is stable and callbacks depending on it are not recreated
+  // every time something in the context changes
+  const trackingRef = useRef(new Tracking())
+  trackingRef.current.context = data
+  return trackingRef.current
 }

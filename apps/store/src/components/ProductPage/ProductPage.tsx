@@ -4,7 +4,7 @@ import { PageBannerTriggers } from '@/components/Banner/PageBannerTriggers'
 import { PageBreadcrumbs } from '@/components/PageBreadcrumbs/PageBreadcrumbs'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
 import { PriceIntentContextProvider } from '@/components/ProductPage/PriceIntentContext'
-import { ProductPageTrackingProvider } from '@/components/ProductPage/ProductPageTrackingProvider'
+import { PriceIntentTrackingProvider } from '@/components/ProductPage/PriceIntentTrackingProvider'
 import { ProductPageViewTracker } from '@/components/ProductPage/ProductPageViewTrack'
 import { ProductReviewsMetadataProvider } from '@/features/memberReviews/ProductReviewsMetadataProvider'
 import { type ProductPageProps } from './ProductPage.types'
@@ -19,7 +19,7 @@ export const ProductPage = ({ story, ...props }: ProductPageProps) => {
     >
       <ProductPageContextProvider {...props} story={story}>
         <PriceIntentContextProvider>
-          <ProductPageTrackingProvider>
+          <PriceIntentTrackingProvider>
             <ProductReviewsMetadataProvider productReviewsMetadata={props.productReviewsMetadata}>
               <StoryblokComponent blok={story.content} />
               {props.breadcrumbs && <PageBreadcrumbs items={props.breadcrumbs} />}
@@ -27,7 +27,7 @@ export const ProductPage = ({ story, ...props }: ProductPageProps) => {
               <ProductPageViewTracker />
               <PageBannerTriggers blok={story.content} />
             </ProductReviewsMetadataProvider>
-          </ProductPageTrackingProvider>
+          </PriceIntentTrackingProvider>
         </PriceIntentContextProvider>
       </ProductPageContextProvider>
     </ProductDataProvider>

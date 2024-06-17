@@ -5,7 +5,6 @@ import { PageBannerTriggers } from '@/components/Banner/PageBannerTriggers'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
 import { ProductPageContextProvider } from '@/components/ProductPage/ProductPageContext'
-import { ProductPageViewTracker } from '@/components/ProductPage/ProductPageViewTrack'
 import { fetchProductReviewsMetadata } from '@/features/memberReviews/memberReviews'
 import { ProductReviewsMetadataProvider } from '@/features/memberReviews/ProductReviewsMetadataProvider'
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
@@ -50,7 +49,6 @@ export const ProductCmsPage = async ({ locale, story }: ProductCmsPageProps) => 
         <ProductReviewsMetadataProvider productReviewsMetadata={productReviewsMetadata}>
           <BankIdContextProvider>
             <StoryblokStory story={story} bridgeOptions={storyblokBridgeOptions} />
-            <ProductPageViewTracker />
             <PageBannerTriggers blok={story.content} />
             <BankIdDialog />
           </BankIdContextProvider>

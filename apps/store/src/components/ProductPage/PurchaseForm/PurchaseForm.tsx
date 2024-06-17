@@ -5,7 +5,7 @@ import { clsx } from 'clsx'
 import { motion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
-import type { ReactNode} from 'react';
+import type { ReactNode } from 'react'
 import { useMemo } from 'react'
 import { Suspense } from 'react'
 import { useCallback, useRef, useState } from 'react'
@@ -20,9 +20,10 @@ import {
   PriceIntentContextProvider,
   usePriceIntent,
 } from '@/components/ProductPage/PriceIntentContext'
+import { PriceIntentTrackingProvider } from '@/components/ProductPage/PriceIntentTrackingProvider'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { ProductPageDebugDialog } from '@/components/ProductPage/ProductPageDebugDialog'
-import { ProductPageTrackingProvider } from '@/components/ProductPage/ProductPageTrackingProvider'
+import { ProductPageViewTracker } from '@/components/ProductPage/ProductPageViewTrack'
 import {
   purchaseFormHeroWrapper,
   purchaseFormPriceLoaderWrapper,
@@ -77,10 +78,11 @@ export function PurchaseForm(props: PurchaseFormProps) {
           fallback={<IdleState loading={true} showAverageRating={props.showAverageRating} />}
         >
           <PriceIntentContextProvider>
-            <ProductPageTrackingProvider>
+            <PriceIntentTrackingProvider>
               <PurchaseFormInner {...props} notifyProductAdded={notifyProductAdded} />
               <ProductPageDebugDialog />
-            </ProductPageTrackingProvider>
+              <ProductPageViewTracker />
+            </PriceIntentTrackingProvider>
           </PriceIntentContextProvider>
         </Suspense>
       </div>
