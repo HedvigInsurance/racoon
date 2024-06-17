@@ -5,6 +5,7 @@ export const gray = {
   200: 'hsl(0, 0%, 92%)',
   300: 'hsl(0, 0%, 88%)',
   400: 'hsl(0, 0%, 81%)',
+  450: 'hsl(0, 0%, 77%)',
   500: 'hsl(0, 0%, 71%)',
   600: 'hsl(0, 0%, 59%)',
   700: 'hsl(0, 0%, 44%)',
@@ -45,16 +46,16 @@ export const grayTranslucentDark = {
 } as const
 
 export const green = {
-  50: 'hsl(85, 100%, 90%)',
-  100: 'hsl(85, 73%, 87%)',
-  200: 'hsl(85, 60%, 84%)',
-  300: 'hsl(85, 46%, 80%)',
-  400: 'hsl(85, 44%, 76%)',
-  500: 'hsl(85, 40%, 70%)',
+  50: 'hsl(95, 100%, 90%)',
+  100: 'hsl(95, 74%, 85%)',
+  200: 'hsl(95, 61%, 80%)',
+  300: 'hsl(95, 45%, 77%)',
+  400: 'hsl(95, 40%, 74%)',
+  500: 'hsl(95, 35%, 71%)',
   600: 'hsl(140, 70%, 47%)',
-  700: 'hsl(100, 20%, 45%)',
-  800: 'hsl(100, 22%, 32%)',
-  900: 'hsl(100, 22%, 22%)',
+  700: 'hsl(95, 20%, 45%)',
+  800: 'hsl(95, 22%, 32%)',
+  900: 'hsl(95, 22%, 22%)',
 } as const
 
 export const yellow = {
@@ -374,12 +375,16 @@ export const colors = {
   buttonPrimary: gray[1000],
   buttonPrimaryHover: gray[900],
   buttonPrimaryDisabled: gray[400],
-  buttonPrimaryAlt: green[50],
+  buttonPrimaryAlt: green[100],
   buttonPrimaryAltHover: green[200],
-  buttonPrimaryAltDisabled: gray[400],
-  buttonSecondary: gray[50],
-  buttonSecondaryHover: gray[300],
-  buttonSecondaryDisabled: gray[50],
+  buttonSecondary: grayTranslucent[200],
+  buttonSecondaryHover: grayTranslucent[300],
+  buttonSecondaryAlt: gray[25],
+  buttonSecondaryHoverAlt: grayTranslucentDark[500],
+  buttonGhostHover: grayTranslucent[100],
+  buttonGhostAltHover: gray[25],
+  buttonDisabled: gray[100],
+  buttonDisabledText: gray[500],
 } as const
 
 export type UIColors = typeof colors
