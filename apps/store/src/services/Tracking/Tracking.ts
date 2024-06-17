@@ -5,6 +5,7 @@ import {
   type CartFragmentFragment,
   type CountryCode,
   type ProductOfferFragment,
+  type ShopSessionExperiments,
 } from '@/services/graphql/generated'
 import { type EcommerceEvent, pushToGTMDataLayer, initializeGtm, setUserId } from '@/services/gtm'
 import { getAdtractionProductCategories } from './adtraction'
@@ -37,6 +38,7 @@ export enum TrackingEvent {
   BeginCheckout = 'begin_checkout',
   DeleteFromCart = 'delete_from_cart',
   DeviceInfo = 'deviceInfo',
+  // Website-driven experiments, as configured in experiment.json
   ExperimentImpression = 'experiment_impression',
   OpenPriceCalculator = 'open_price_calculator',
   PageView = 'virtual_page_view',
@@ -44,9 +46,12 @@ export enum TrackingEvent {
   SelectItem = 'select_item',
   ViewCart = 'view_cart',
   ViewItem = 'view_item',
+  ViewPromotion = 'view_promotion',
   InsurelyPrompted = 'insurely_prompted',
   InsurelyAccepted = 'insurely_accepted',
   InsurelyCorrectlyFetched = 'insurely_correctly_fetched',
+  // Backend-driven experiments as defined in shopSession.experiments
+  ShopSessionExperiments = 'shop_session_experiments',
 }
 
 type TrackingContext = Partial<{
@@ -246,6 +251,24 @@ export class Tracking {
         this.context,
       ),
     )
+  }
+
+  public reportShopSessionExperiments(experiments: Partial<ShopSessionExperiments>) {
+    const event = TrackingEvent.ShopSessionExperiments
+    // { exp_a: true, exp_b: false} => ['exp_a']
+    const activeExperiments = Object.keys(experiments).filter(
+      (key) => !!experiments[key as keyof ShopSessionExperiments],
+    )
+    const data = {
+      active_experiments: activeExperiments,
+      ...this.shopSessionData(),
+    }
+    this.logger.log(event, data)
+    datadogRum.addAction(event, data)
+    pushToGTMDataLayer({
+      event,
+      ...data,
+    })
   }
 
   // Google Analytics ecommerce events
