@@ -118,7 +118,7 @@ export const OfferPresenter = (props: Props) => {
     shopSession.experiments?.bundleDiscount &&
     BUNDLE_DISCOUNT_ELIGIBLE_PRODUCT_IDS.has(priceIntent.product.id)
   ) {
-    discountTooltip = <BundleDiscountOfferTooltip />
+    discountTooltip = <BundleDiscountOfferTooltip offer={selectedOffer} />
   }
 
   const displayPrice = formatter.monthlyPrice(selectedOffer.cost.net)
