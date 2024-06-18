@@ -46,6 +46,7 @@ import { ReusableBlockReference } from '@/blocks/ReusableBlockReference'
 import { RichTextBlock } from '@/blocks/RichTextBlock/RichTextBlock'
 import { SelectInsuranceGridBlock } from '@/blocks/SelectInsuranceGridBlock'
 import { SpacerBlock } from '@/blocks/SpacerBlock'
+import { StoryCarouselBlock } from '@/blocks/StoryCarouselBlock'
 import { TabsBlock } from '@/blocks/TabsBlock'
 import { TextBlock } from '@/blocks/TextBlock'
 import { TextContentBlock } from '@/blocks/TextContentBlock'
@@ -121,5 +122,6 @@ export const commonStoryblokComponents = {
   videoBlock: VideoBlock,
   widgetFlow: WidgetFlowBlock,
   widgetFlowStartButton: WidgetFlowStartButtonBlock,
+  storyCarousel: StoryCarouselBlock,
   ...blockAliases,
 }
