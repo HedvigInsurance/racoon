@@ -2,6 +2,7 @@
 import { useParams, usePathname } from 'next/navigation'
 import { useEffect } from 'react'
 import { useReportDeviceInfo } from '@/services/Tracking/useReportDeviceInfo'
+import { useReportShopSessionExperiments } from '@/services/Tracking/useReportShopSessionExperiments'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
 import { FALLBACK_LOCALE } from '@/utils/l10n/locales'
@@ -11,6 +12,7 @@ import type { RoutingLocale } from '@/utils/l10n/types'
 export function AppTrackingTriggers() {
   const tracking = useTracking()
   useReportDeviceInfo()
+  useReportShopSessionExperiments()
 
   const { locale = toRoutingLocale(FALLBACK_LOCALE) } = useParams() ?? {}
   useEffect(() => {

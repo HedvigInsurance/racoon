@@ -2,6 +2,7 @@ import { type ReactNode, Suspense } from 'react'
 import { AppTrackingTriggers } from '@/app/[locale]/AppTrackingTriggers'
 import { StoryblokLayout } from '@/app/[locale]/StoryblokLayout'
 import { ProductMetadataProvider } from '@/appComponents/providers/ProductMetadataProvider'
+import { ShopSessionTrackingProvider } from '@/appComponents/providers/ShopSessionTrackingProvider'
 import { StoryblokProvider } from '@/appComponents/providers/StoryblokProvider'
 import { RootLayout } from '@/appComponents/RootLayout/RootLayout'
 import { AppErrorDialog } from '@/components/AppErrorDialog'
@@ -14,7 +15,6 @@ import { getApolloClient } from '@/services/apollo/app-router/rscClient'
 import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
 import { type GlobalStory } from '@/services/storyblok/storyblok'
 import { getStoryBySlug } from '@/services/storyblok/storyblok.rsc'
-import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { Features } from '@/utils/Features'
 import { type RoutingLocale } from '@/utils/l10n/types'
 
@@ -36,18 +36,18 @@ export async function StoreLayout({ locale, children }: StoreLayoutProps) {
     <RootLayout locale={locale}>
       <ProductMetadataProvider productMetadata={productMetadata}>
         <CompanyReviewsMetadataProvider companyReviewsMetadata={companyReviewsMetadata}>
-          <AppErrorProvider>
-            <TrackingProvider>
+          <ShopSessionTrackingProvider>
+            <AppErrorProvider>
               <AppErrorDialog />
               <GlobalBannerDynamic />
               <StoryblokProvider>
                 <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
               </StoryblokProvider>
-              <Suspense>
-                <AppTrackingTriggers />
-              </Suspense>
-            </TrackingProvider>
-          </AppErrorProvider>
+            </AppErrorProvider>
+            <Suspense>
+              <AppTrackingTriggers />
+            </Suspense>
+          </ShopSessionTrackingProvider>
         </CompanyReviewsMetadataProvider>
       </ProductMetadataProvider>
       {Features.enabled('COOKIE_BANNER_INP_IMPROVEMENT') && <CookieConsent />}

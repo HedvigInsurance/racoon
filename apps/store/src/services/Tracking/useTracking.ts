@@ -2,7 +2,7 @@ import { useContext, useRef } from 'react'
 import { Tracking } from './Tracking'
 import { TrackingContext } from './TrackingContext'
 
-export const useTracking = () => {
+export const useTracking = (): Tracking => {
   const data = useContext(TrackingContext)
 
   // Optimization: keep single instance then update context in-place

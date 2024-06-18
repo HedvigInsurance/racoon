@@ -50,7 +50,7 @@ type DataLayerObject = {
   event?: string
   userProperties?: GTMUserProperties
   offerData?: Record<string, unknown>
-  eventData?: Record<string, string>
+  eventData?: Record<string, unknown>
   OnetrustActiveGroups?: string
   pageData?: GTMPageData
   ecommerce?: GTMEcommerceData
