@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/react'
-import { Space, CheckIcon } from 'ui'
+import { CheckIcon, yStack } from 'ui'
 import { Button } from './Button'
 
 const meta: Meta<typeof Button> = {
@@ -11,8 +11,8 @@ export default meta
 
 const Template: StoryFn<typeof Button> = (props) => {
   return (
-    <Space y={2} style={{ maxWidth: '20rem' }}>
-      <Space y={1}>
+    <div className={yStack({ gap: 'xl' })}>
+      <div className={yStack({ gap: 'md' })}>
         <div>
           <Button {...props} variant="primary" />
         </div>
@@ -28,9 +28,9 @@ const Template: StoryFn<typeof Button> = (props) => {
         <div>
           <Button {...props} variant="ghost" />
         </div>
-      </Space>
+      </div>
 
-      <Space y={1}>
+      <div className={yStack({ gap: 'md' })}>
         <div>
           <Button {...props} variant="primary" disabled />
         </div>
@@ -46,9 +46,9 @@ const Template: StoryFn<typeof Button> = (props) => {
         <div>
           <Button {...props} variant="ghost" disabled />
         </div>
-      </Space>
+      </div>
 
-      <Space y={1}>
+      <div className={yStack({ gap: 'md' })}>
         <div>
           <Button {...props} variant="primary" loading />
         </div>
@@ -64,8 +64,8 @@ const Template: StoryFn<typeof Button> = (props) => {
         <div>
           <Button {...props} variant="ghost" loading />
         </div>
-      </Space>
-    </Space>
+      </div>
+    </div>
   )
 }
 

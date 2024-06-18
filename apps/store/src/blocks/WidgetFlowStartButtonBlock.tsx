@@ -43,6 +43,7 @@ function StartButton({ href, children, ...forwardedProps }: StartButtonProps) {
       href={targetHref}
       onClick={() => setLoading(true)}
       variant="primary"
+      fullWidth={true}
       size="large"
       loading={loading}
     >

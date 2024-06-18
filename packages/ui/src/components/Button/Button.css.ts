@@ -191,7 +191,7 @@ const SIZE_STYLES = {
   },
   large: {
     height: HEIGHT.large,
-    width: '100%',
+    minWidth: '18.75rem',
     paddingInline: tokens.space.xl,
     fontSize: tokens.fontSizes.md,
     textAlign: 'center',

@@ -13,6 +13,7 @@ export type ButtonBlockProps = SbBaseBlockProps<{
   link: LinkField
   variant: ComponentProps<typeof Button>['variant']
   size: ComponentProps<typeof Button>['size']
+  fullWidth?: boolean
 }>
 
 export const ButtonBlock = ({ blok, nested }: ButtonBlockProps) => {
@@ -22,6 +23,7 @@ export const ButtonBlock = ({ blok, nested }: ButtonBlockProps) => {
       href={getLinkFieldURL(blok.link, blok.text)}
       variant={blok.variant ?? 'primary'}
       size={blok.size ?? 'medium'}
+      fullWidth={blok.fullWidth}
       target={blok.link.target}
       rel={blok.link.rel}
       title={blok.link.title}
