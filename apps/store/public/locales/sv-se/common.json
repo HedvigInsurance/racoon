@@ -42,6 +42,8 @@
   "PRODUCT_REVIEWS_DISCLAIMER": "Dessa omdömen har samlats in via inbjudan till alla medlemmar som haft ett skadeärende hos Hedvig.",
   "READ_MORE": "Läs mer",
   "SELECT_INSURANCE": "Välj försäkring",
+  "STORY_CAROUSEL_NEXT_BUTTON_LABEL": "Nästa bild",
+  "STORY_CAROUSEL_PREVIOUS_BUTTON_LABEL": "Föregående bild",
   "TRUSTPILOT_REVIEWS_TAB_LABEL": "Trustpilot ({{score}})",
   "UNKNOWN_ERROR_MESSAGE": "Något gick fel, försök igen."
 }

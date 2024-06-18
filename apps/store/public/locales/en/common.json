@@ -45,6 +45,8 @@
   "PRODUCT_REVIEWS_DISCLAIMER": "These reviews have been collected through invitation to members who have had a claim with Hedvig",
   "READ_MORE": "Read more",
   "SELECT_INSURANCE": "Select insurance",
+  "STORY_CAROUSEL_NEXT_BUTTON_LABEL": "Next image",
+  "STORY_CAROUSEL_PREVIOUS_BUTTON_LABEL": "Previous image",
   "TRUSTPILOT_REVIEWS_TAB_LABEL": "Trustpilot ({{score}})",
   "UNKNOWN_ERROR_MESSAGE": "Something went wrong, please try again."
 }
