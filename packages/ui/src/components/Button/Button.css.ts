@@ -26,11 +26,6 @@ export const fullWidthStyles = style({
   width: '100%',
 })
 
-const shadow = style({
-  boxShadow: tokens.shadow.default,
-  backdropFilter: 'blur(30px)',
-})
-
 export const buttonVariant = styleVariants({
   primary: {
     backgroundColor: tokens.colors.buttonPrimary,
@@ -59,7 +54,6 @@ export const buttonVariant = styleVariants({
   },
 
   'primary-alt': [
-    shadow,
     {
       backgroundColor: tokens.colors.buttonPrimaryAlt,
       color: tokens.colors.textPrimary,
@@ -78,15 +72,12 @@ export const buttonVariant = styleVariants({
         '&:disabled:not([data-loading])': {
           backgroundColor: tokens.colors.buttonDisabled,
           color: tokens.colors.buttonDisabledText,
-          boxShadow: 'none',
-          backdropFilter: 'none',
         },
       },
     },
   ],
 
   secondary: [
-    shadow,
     {
       backgroundColor: tokens.colors.buttonSecondary,
       color: tokens.colors.textPrimary,
@@ -105,15 +96,12 @@ export const buttonVariant = styleVariants({
         '&:disabled:not([data-loading])': {
           backgroundColor: tokens.colors.buttonDisabled,
           color: tokens.colors.buttonDisabledText,
-          boxShadow: 'none',
-          backdropFilter: 'none',
         },
       },
     },
   ],
 
   'secondary-alt': [
-    shadow,
     {
       backgroundColor: tokens.colors.buttonSecondaryAlt,
 
@@ -131,8 +119,6 @@ export const buttonVariant = styleVariants({
         '&:disabled:not([data-loading])': {
           backgroundColor: tokens.colors.buttonDisabled,
           color: tokens.colors.buttonDisabledText,
-          boxShadow: 'none',
-          backdropFilter: 'none',
         },
       },
     },
