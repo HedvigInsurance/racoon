@@ -4,7 +4,7 @@ import { usePriceIntent } from '@/components/ProductPage/PriceIntentContext'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 
-export const ProductPageTrackingProvider = (props: { children: React.ReactNode }) => {
+export const PriceIntentTrackingProvider = (props: { children: React.ReactNode }) => {
   const { shopSession } = useShopSession()
   const [priceIntent] = usePriceIntent()
   const productData = useProductData()
