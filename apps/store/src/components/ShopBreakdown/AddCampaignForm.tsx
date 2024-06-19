@@ -35,7 +35,7 @@ export const AddCampaignForm = (props: Props) => {
           message={props.errorMessage}
           required={true}
         />
-        <Button type="submit" variant="primary-alt" loading={props.loading}>
+        <Button type="submit" variant="primary-alt" loading={props.loading} fullWidth={true}>
           {t('CHECKOUT_ADD_DISCOUNT_BUTTON')}
         </Button>
       </Wrapper>

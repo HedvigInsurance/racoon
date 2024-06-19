@@ -60,11 +60,11 @@ export const RemoveActionButton = (props: Props) => {
         center={true}
         Footer={
           <>
-            <Button onClick={handleClickRemove} loading={result.loading}>
+            <Button onClick={handleClickRemove} loading={result.loading} fullWidth={true}>
               {t('REMOVE_ENTRY_MODAL_CONFIRM_BUTTON')}
             </Button>
             <FullscreenDialog.Close asChild={true}>
-              <Button type="button" variant="ghost">
+              <Button type="button" variant="ghost" fullWidth={true}>
                 {t('REMOVE_ENTRY_MODAL_CANCEL_BUTTON')}
               </Button>
             </FullscreenDialog.Close>

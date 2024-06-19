@@ -312,7 +312,7 @@ const Wrapper = styled(Space)({
 type SignButtonProps = PropsWithChildren<{ loading: boolean; showBankIdIcon: boolean }>
 const SignButton = ({ children, loading, showBankIdIcon }: SignButtonProps) => {
   return (
-    <Button type="submit" loading={loading}>
+    <Button type="submit" loading={loading} fullWidth={true}>
       <StyledSignButtonContent>
         {showBankIdIcon && <BankIdIcon color="white" />}
         {children}

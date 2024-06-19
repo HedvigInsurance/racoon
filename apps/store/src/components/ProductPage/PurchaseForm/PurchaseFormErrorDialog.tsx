@@ -19,11 +19,11 @@ export const PurchaseFormErrorDialog = (props: Props) => {
         center={true}
         Footer={
           <>
-            <Button type="button" onClick={props.onEditClick}>
+            <Button type="button" onClick={props.onEditClick} fullWidth={true}>
               {t('GENERAL_ERROR_DIALOG_PRIMARY_BUTTON')}
             </Button>
             <FullscreenDialog.Close asChild={true}>
-              <Button type="button" variant="ghost">
+              <Button type="button" variant="ghost" fullWidth={true}>
                 {t('DIALOG_BUTTON_CANCEL', { ns: 'common' })}
               </Button>
             </FullscreenDialog.Close>

@@ -23,7 +23,7 @@ export const AppErrorDialog = () => {
         Footer={
           <>
             <FullscreenDialog.Close asChild>
-              <Button type="button" variant="primary">
+              <Button type="button" variant="primary" fullWidth={true}>
                 {t('ERROR_DIALOG_CLOSE')}
               </Button>
             </FullscreenDialog.Close>

@@ -98,7 +98,7 @@ export const CarBuyerValidationPage = (props: Props) => {
                     options={TIER_OPTIONS}
                   />
                   <Space y={0.5}>
-                    <Button type="submit" loading={state.type === 'LOADING'}>
+                    <Button type="submit" loading={state.type === 'LOADING'} fullWidth={true}>
                       Validera kund
                     </Button>
                     <Text as="p" size="xs" align="center" color="textSecondary">

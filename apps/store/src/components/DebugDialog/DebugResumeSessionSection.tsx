@@ -34,7 +34,7 @@ export function DebugResumeSessionSection() {
         <TextField name={INPUT_NAME} label="Resume shop session" variant="small" />
       </div>
 
-      <Button variant="secondary" size="medium" type="submit">
+      <Button variant="secondary" size="medium" type="submit" fullWidth={true}>
         Go
       </Button>
     </Layout>

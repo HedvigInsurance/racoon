@@ -20,7 +20,7 @@ export const ConfirmPayWithoutExtensionButton = (props: Props) => {
   return (
     <FullScreenDialog.Root>
       <FullScreenDialog.Trigger asChild={true}>
-        <Button variant="primary">
+        <Button variant="primary" fullWidth={true}>
           <SpaceFlex space={0.5} align="center">
             <BankIdIcon />
             {t('CONNECT_PAYMENT_BUTTON')}
@@ -32,9 +32,11 @@ export const ConfirmPayWithoutExtensionButton = (props: Props) => {
         center={true}
         Footer={
           <>
-            <Button onClick={handleClick}>{t('PAY_WITHOUT_EXTENSION_DIALOG_CONFIRM')}</Button>
+            <Button onClick={handleClick} fullWidth={true}>
+              {t('PAY_WITHOUT_EXTENSION_DIALOG_CONFIRM')}
+            </Button>
             <FullScreenDialog.Close asChild={true}>
-              <Button type="button" variant="ghost">
+              <Button type="button" variant="ghost" fullWidth={true}>
                 {t('PAY_WITHOUT_EXTENSION_DIALOG_CANCEL')}
               </Button>
             </FullScreenDialog.Close>

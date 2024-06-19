@@ -12,7 +12,7 @@ import { useFormatter } from '@/utils/useFormatter'
 import { ArticleTeaser } from '../ArticleTeaser/ArticleTeaser'
 import { BLOG_ARTICLE_LIST_BLOCK } from '../blog.constants'
 import { useBlogArticleTeasers } from '../useBlog'
-import { buttonWrapper, inlineButtonLink, articleList } from './BlogArticleListBlock.css'
+import { buttonWrapper, articleList } from './BlogArticleListBlock.css'
 
 type Props = SbBaseBlockProps<{
   categories?: Array<string>
@@ -67,7 +67,6 @@ export function BlogArticleListBlock(props: Props) {
           {!showAll && (
             <div className={buttonWrapper}>
               <ButtonNextLink
-                className={inlineButtonLink}
                 href={`${pathname}?${SHOW_ALL_QUERY_PARAM}=1`}
                 shallow={true}
                 scroll={false}

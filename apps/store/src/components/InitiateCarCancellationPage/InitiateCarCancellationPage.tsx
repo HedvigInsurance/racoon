@@ -130,7 +130,9 @@ const LoginForm = (props: { ssn?: string; onSuccess: () => void }) => {
           required={true}
           defaultValue={props.ssn}
         />
-        <Button type="submit">{t('LOGIN_BUTTON_TEXT')}</Button>
+        <Button type="submit" fullWidth={true}>
+          {t('LOGIN_BUTTON_TEXT')}
+        </Button>
       </Space>
     </form>
   )

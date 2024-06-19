@@ -24,7 +24,9 @@ const Page = (props: Props) => {
   return (
     <Layout title={title}>
       <form method="POST" action={authUrl}>
-        <Button type="submit">{startButton}</Button>
+        <Button type="submit" fullWidth={true}>
+          {startButton}
+        </Button>
       </form>
     </Layout>
   )

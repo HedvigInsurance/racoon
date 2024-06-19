@@ -150,6 +150,7 @@ const CheckoutButton = () => {
     <ButtonNextLink
       href={PageLink.checkout({ locale, expandCart: true }).toRelative()}
       onClick={handleClickCheckout}
+      fullWidth={true}
     >
       {t('CHECKOUT_BUTTON')}
     </ButtonNextLink>
@@ -232,7 +233,7 @@ const EmptyState = (props: EmptyStateProps) => {
                       {t('CART_EMPTY_SUMMARY')}
                     </Text>
                   </Space>
-                  <ButtonNextLink href={PageLink.store({ locale })}>
+                  <ButtonNextLink href={PageLink.store({ locale })} fullWidth={true}>
                     {t('GO_TO_STORE_BUTTON')}
                   </ButtonNextLink>
                 </Space>

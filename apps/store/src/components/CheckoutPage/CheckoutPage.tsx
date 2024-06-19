@@ -289,7 +289,7 @@ const TextLink = styled(Link)({
 type SignButtonProps = PropsWithChildren<{ loading: boolean }>
 const SignButton = ({ children, loading }: SignButtonProps) => {
   return (
-    <Button type="submit" loading={loading}>
+    <Button type="submit" loading={loading} fullWidth={true}>
       <StyledSignButtonContent>
         <BankIdIcon color="white" />
         {children}

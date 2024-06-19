@@ -47,7 +47,7 @@ export const PaymentConnection = ({ startButtonText }: { startButtonText: string
 
   return (
     <>
-      <Button loading={result.loading} onClick={handleClickStart}>
+      <Button loading={result.loading} onClick={handleClickStart} fullWidth={true}>
         {startButtonText}
       </Button>
 

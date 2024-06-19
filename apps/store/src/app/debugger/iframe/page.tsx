@@ -31,7 +31,7 @@ function IFrameDebuggerPage({ searchParams }: Props) {
         <form method="GET">
           <Space y={0.25}>
             <TextField name="url" label="Iframe URL" defaultValue={url} />
-            <Button type="submit" variant="primary-alt">
+            <Button type="submit" variant="primary-alt" fullWidth={true}>
               Reload
             </Button>
           </Space>
