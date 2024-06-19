@@ -1,7 +1,7 @@
 import * as process from 'process'
 import type { ISbStoriesParams, ISbStoryData, SbBlokData, StoryblokClient } from '@storyblok/react'
 import { apiPlugin, getStoryblokApi, storyblokInit } from '@storyblok/react'
-import type { FooterBlockProps } from '@/blocks/FooterBlock'
+import type { FooterBlockProps } from '@/blocks/FooterBlock/FooterBlock'
 import type { HeaderBlockProps } from '@/blocks/HeaderBlock/HeaderBlock'
 import type { ReusableBlockReferenceProps } from '@/blocks/ReusableBlockReference'
 import { type ContentAlignment, type ContentWidth } from '@/components/GridLayout/GridLayout.helper'

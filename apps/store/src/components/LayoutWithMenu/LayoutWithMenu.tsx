@@ -1,6 +1,6 @@
 import { clsx } from 'clsx'
 import { type ReactElement } from 'react'
-import { FooterBlock } from '@/blocks/FooterBlock'
+import { FooterBlock } from '@/blocks/FooterBlock/FooterBlock'
 import { HeaderBlock } from '@/blocks/HeaderBlock/HeaderBlock'
 import { wrapper } from '@/components/LayoutWithMenu/LayoutWithMenu.css'
 import type { GlobalStory } from '@/services/storyblok/storyblok'
