@@ -26,8 +26,10 @@ export const WarningPrompt = ({ header, message, onClickConfirm, onClickEdit }: 
         </SpaceFlex>
 
         <Space y={0.25}>
-          <Button onClick={onClickConfirm}>{t('PRICE_INTENT_WARNING_ACCEPT_BUTTON_LABEL')}</Button>
-          <Button onClick={onClickEdit} variant="ghost">
+          <Button onClick={onClickConfirm} fullWidth={true}>
+            {t('PRICE_INTENT_WARNING_ACCEPT_BUTTON_LABEL')}
+          </Button>
+          <Button onClick={onClickEdit} variant="ghost" fullWidth={true}>
             {t('PRICE_INTENT_WARNING_EDIT_BUTTON_LABEL')}
           </Button>
         </Space>

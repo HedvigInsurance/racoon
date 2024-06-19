@@ -60,7 +60,9 @@ export const ConfirmationPage = (props: Props) => {
 
                 <TotalAmountContainer cart={props.shopSession.cart} />
                 {props.backToAppButton && (
-                  <Button onClick={handleClickBackToApp}>{props.backToAppButton}</Button>
+                  <Button onClick={handleClickBackToApp} fullWidth={true}>
+                    {props.backToAppButton}
+                  </Button>
                 )}
               </Space>
             </Space>

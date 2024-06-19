@@ -13,5 +13,3 @@ export const buttonWrapper = style({
   display: 'flex',
   justifyContent: 'center',
 })
-
-export const inlineButtonLink = style({ width: 'auto' })

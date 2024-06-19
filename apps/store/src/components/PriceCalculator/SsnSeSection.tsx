@@ -47,7 +47,7 @@ export const SsnSeSection = memo(({ shopSessionId, ssn, onCompleted }: Props) =>
           warning={!!errorMessage}
           message={errorMessage}
         />
-        <Button type="submit" loading={result.loading}>
+        <Button type="submit" loading={result.loading} fullWidth={true}>
           {t('SUBMIT_LABEL_PROCEED')}
         </Button>
       </Space>

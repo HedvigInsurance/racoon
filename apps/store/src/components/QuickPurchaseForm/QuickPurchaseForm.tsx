@@ -57,7 +57,7 @@ export const QuickPurchaseForm = ({
         message={error?.ssn}
         hidden={!showSsnField}
       />
-      <Button type="submit" loading={submitting}>
+      <Button type="submit" loading={submitting} fullWidth={true}>
         {t('BUTTON_LABEL_GET_PRICE')}
       </Button>
       {error?.general && <GeneralErrorMessage>{error.general}</GeneralErrorMessage>}

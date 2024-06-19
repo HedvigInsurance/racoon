@@ -165,7 +165,13 @@ export const ExtraBuildingsField = ({
                   </InputRadio.Root>
                 </Space>
 
-                <Button type="submit" variant="primary" loading={loading} disabled={loading}>
+                <Button
+                  type="submit"
+                  variant="primary"
+                  loading={loading}
+                  disabled={loading}
+                  fullWidth={true}
+                >
                   <SpaceFlex space={0.5} align="center">
                     <PlusIcon size="1rem" />
                     <div>{t('FIELD_EXTRA_BUILDINGS_MODAL_ADD')}</div>

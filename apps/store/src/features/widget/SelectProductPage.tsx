@@ -103,7 +103,12 @@ export const SelectProductPage = (props: Props) => {
                   </Space>
                 </RadioOptionList.Root>
 
-                <CustomButton type="submit" variant="primary" aria-disabled={!productName}>
+                <CustomButton
+                  type="submit"
+                  variant="primary"
+                  aria-disabled={!productName}
+                  fullWidth={true}
+                >
                   {t('SELECT_CONTINUE_BUTTON')}
                 </CustomButton>
               </Space>

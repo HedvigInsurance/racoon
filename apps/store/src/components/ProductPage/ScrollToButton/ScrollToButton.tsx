@@ -12,7 +12,7 @@ export const ScrollToTopButton = ({ children, type }: ScrollToTopButtonProps) =>
 
   return (
     <Wrapper>
-      <Button type={type} onClick={handleClick}>
+      <Button type={type} onClick={handleClick} fullWidth={true}>
         {children}
       </Button>
     </Wrapper>

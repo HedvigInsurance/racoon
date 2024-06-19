@@ -39,7 +39,7 @@ export const ComparisonTableModal = ({ tiers, selectedTierId, children }: Props)
         Footer={
           <>
             <FullscreenDialog.Close asChild>
-              <Button type="button" variant="secondary">
+              <Button type="button" variant="secondary" fullWidth={true}>
                 {t('CLOSE_COMPARISON_MODAL')}
               </Button>
             </FullscreenDialog.Close>

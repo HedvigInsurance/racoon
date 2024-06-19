@@ -213,7 +213,7 @@ export const TrialExtensionForm = ({
 type SignButtonProps = ComponentPropsWithoutRef<typeof Button>
 const SignButton = ({ children, ...props }: SignButtonProps) => {
   return (
-    <Button {...props}>
+    <Button fullWidth={true} {...props}>
       <SpaceFlex space={0.5} align="center">
         <BankIdIcon />
         {children}

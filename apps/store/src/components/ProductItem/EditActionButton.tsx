@@ -41,11 +41,11 @@ export const EditActionButton = (props: Props) => {
         center={true}
         Footer={
           <>
-            <Button onClick={handleConfirmEdit} loading={state === 'loading'}>
+            <Button onClick={handleConfirmEdit} loading={state === 'loading'} fullWidth={true}>
               {t('EDIT_CONFIRMATION_MODAL_CONTINUE')}
             </Button>
             <FullscreenDialog.Close asChild={true}>
-              <Button type="button" variant="ghost">
+              <Button type="button" variant="ghost" fullWidth={true}>
                 {t('EDIT_CONFIRMATION_MODAL_CANCEL')}
               </Button>
             </FullscreenDialog.Close>

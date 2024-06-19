@@ -225,6 +225,7 @@ export const OfferPresenter = (props: Props) => {
               onClick={handleAddToCart}
               loading={loadingAddToCart && addToCartRedirect === AddToCartRedirect.Cart}
               disabled={loadingAddToCart}
+              fullWidth={true}
             >
               {t('ADD_TO_CART_BUTTON_LABEL')}
             </Button>
@@ -237,6 +238,7 @@ export const OfferPresenter = (props: Props) => {
                 (loadingAddToCart && addToCartRedirect === AddToCartRedirect.Checkout)
               }
               disabled={loadingAddToCart}
+              fullWidth={true}
             >
               {t('QUICK_CHECKOUT_BUTTON_LABEL')}
             </Button>

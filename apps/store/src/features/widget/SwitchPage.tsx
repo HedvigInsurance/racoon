@@ -72,6 +72,7 @@ export const SwitchPage = (props: Props) => {
                     shopSessionId: props.shopSession.id,
                     priceIntentId: props.priceIntent.id,
                   })}
+                  fullWidth={true}
                 >
                   {t('widget:SELECT_CONTINUE_BUTTON')}
                 </ButtonNextLink>

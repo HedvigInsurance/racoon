@@ -15,7 +15,11 @@ export const BankIdLoginForm = ({ state, title, onLoginStart }: Props) => {
   }
   return (
     <form onSubmit={handleSubmit}>
-      <Button type="submit" loading={state !== BankIdState.Idle && state !== BankIdState.Error}>
+      <Button
+        type="submit"
+        loading={state !== BankIdState.Idle && state !== BankIdState.Error}
+        fullWidth={true}
+      >
         <ButtonContent>
           <BankIdIcon color="white" />
           {title}

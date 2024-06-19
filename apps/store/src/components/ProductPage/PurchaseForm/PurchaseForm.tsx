@@ -266,7 +266,7 @@ const IdleState = ({ loading, onClick, showAverageRating }: IdleStateProps) => {
       <div ref={ref}>
         <ProductHeroContainer size="large">
           <Space y={1}>
-            <Button loading={loading} onClick={onClick}>
+            <Button loading={loading} onClick={onClick} fullWidth={true}>
               {t('OPEN_PRICE_CALCULATOR_BUTTON')}
             </Button>
             {showAverageRating && <ProductAverageRating />}
@@ -275,7 +275,9 @@ const IdleState = ({ loading, onClick, showAverageRating }: IdleStateProps) => {
       </div>
       <ScrollPast targetRef={ref}>
         <div className={purchaseFormStickyButtonWrapper}>
-          <Button onClick={onClick}>{t('OPEN_PRICE_CALCULATOR_BUTTON')}</Button>
+          <Button onClick={onClick} fullWidth={true}>
+            {t('OPEN_PRICE_CALCULATOR_BUTTON')}
+          </Button>
         </div>
       </ScrollPast>
     </>

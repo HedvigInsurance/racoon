@@ -55,7 +55,7 @@ export const ForeverPage = ({ code: initialCode }: Props) => {
                 message={errorMessage}
                 warning={!!errorMessage}
               />
-              <Button type="submit" loading={showLoading}>
+              <Button type="submit" loading={showLoading} fullWidth={true}>
                 {t('FOREVER_PAGE_BTN_LABEL')}
               </Button>
             </Space>

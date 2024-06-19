@@ -43,10 +43,10 @@ export function MyMoneyConsentConfirmation({ children, loading, onClose, onConti
 
           <SpaceFlex space={0.5} direction="vertical">
             <Dialog.Close asChild>
-              <Button>{t('MY_MONEY_CONSENT_CONFIRMATION_BACK_BUTTON')}</Button>
+              <Button fullWidth={true}>{t('MY_MONEY_CONSENT_CONFIRMATION_BACK_BUTTON')}</Button>
             </Dialog.Close>
 
-            <Button onClick={onContinue} loading={loading} variant="ghost">
+            <Button fullWidth={true} onClick={onContinue} loading={loading} variant="ghost">
               {t('MY_MONEY_CONSENT_CONFIRMATION_CONTINUE_BUTTON')}
             </Button>
           </SpaceFlex>

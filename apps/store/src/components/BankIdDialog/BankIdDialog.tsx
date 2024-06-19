@@ -96,7 +96,7 @@ export function BankIdDialog() {
                 })
               }
             />
-            <Button variant="ghost" onClick={cancelLogin}>
+            <Button variant="ghost" onClick={cancelLogin} fullWidth={true}>
               {t('LOGIN_BANKID_SKIP')}
             </Button>
           </>
@@ -142,7 +142,9 @@ export function BankIdDialog() {
               </div>
 
               <FullscreenDialog.Close asChild>
-                <Button variant="ghost">{t('BANKID_CANCEL')}</Button>
+                <Button variant="ghost" fullWidth={true}>
+                  {t('BANKID_CANCEL')}
+                </Button>
               </FullscreenDialog.Close>
             </Space>
           </Space>
@@ -202,7 +204,9 @@ export function BankIdDialog() {
         )
         Footer = (
           <FullscreenDialog.Close asChild>
-            <Button variant="ghost">{t('BANKID_CANCEL')}</Button>
+            <Button variant="ghost" fullWidth={true}>
+              {t('BANKID_CANCEL')}
+            </Button>
           </FullscreenDialog.Close>
         )
         break

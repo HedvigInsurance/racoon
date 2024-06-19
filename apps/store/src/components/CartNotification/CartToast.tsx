@@ -93,11 +93,12 @@ export const CartToast = forwardRef<CartToastAttributes>((_, forwardedRef) => {
                   href={PageLink.cart({ locale }).pathname}
                   variant="primary"
                   onClick={handleClickLink('Primary')}
+                  fullWidth={true}
                 >
                   {t('CART_TOAST_PRIMARY_LINK')}
                 </ButtonNextLink>
 
-                <Button onClick={handleClose} variant="ghost">
+                <Button onClick={handleClose} variant="ghost" fullWidth={true}>
                   {t('DIALOG_CLOSE', { ns: 'common' })}
                 </Button>
               </SpaceFlex>

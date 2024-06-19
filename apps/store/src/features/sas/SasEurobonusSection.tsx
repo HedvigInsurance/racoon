@@ -58,7 +58,7 @@ export const SasEurobonusSection = ({
           <Text>{t('SAS_BONUS_NUMBER_SAVED')}</Text>
         </SpaceFlex>
       ) : (
-        <Button type="submit" loading={state === 'loading'}>
+        <Button type="submit" loading={state === 'loading'} fullWidth={true}>
           {t('SAS_BONUS_NUMBER_SAVE_BUTTON')}
         </Button>
       )}

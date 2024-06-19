@@ -81,7 +81,7 @@ const LoginForm = ({
               required={true}
             />
           </div>
-          <Button type="submit" loading={!!currentOperation}>
+          <Button type="submit" loading={!!currentOperation} fullWidth={true}>
             <SpaceFlex space={0.5} align="center">
               <BankIdIcon />
               {t('bankid:LOGIN_BANKID')}

@@ -47,7 +47,9 @@ const Page = () => {
         <form onSubmit={handleSubmit}>
           <IframePlaceholder>
             <WideSpace y={0.5}>
-              <Button loading={loading}>{t('FLOW_ACTIVATION_BUTTON')}</Button>
+              <Button loading={loading} fullWidth={true}>
+                {t('FLOW_ACTIVATION_BUTTON')}
+              </Button>
             </WideSpace>
           </IframePlaceholder>
         </form>

@@ -8,7 +8,7 @@ export function SubmitButton({ children, ...props }: ComponentPropsWithoutRef<'b
   const { pending } = useFormStatus()
 
   return (
-    <Button type="submit" loading={pending} disabled={pending} {...props}>
+    <Button type="submit" loading={pending} disabled={pending} fullWidth={true} {...props}>
       {children}
     </Button>
   )

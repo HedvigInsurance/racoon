@@ -101,7 +101,7 @@ export const ManyPetsMigrationPage = ({
                 <TotalAmount currencyCode={totalCost.currencyCode} amount={totalCost.amount} />
                 {latestAdoptionDate && <LatestAdoptionNote date={latestAdoptionDate} />}
 
-                <SignButton ref={signButtonRef} type="submit" loading={loading}>
+                <SignButton ref={signButtonRef} type="submit" loading={loading} fullWidth={true}>
                   {signButtonContent}
                 </SignButton>
 
