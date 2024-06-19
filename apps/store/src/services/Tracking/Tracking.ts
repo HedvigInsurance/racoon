@@ -272,6 +272,27 @@ export class Tracking {
     })
   }
 
+  public reportViewPromotion(options: ViewPromotionOptions) {
+    const event = TrackingEvent.ViewPromotion
+    const data = {
+      ecommerce: {
+        promotion_id: options.promotionId,
+        creative_name: options.creativeName,
+        items: [
+          {
+            item_id: options.productId,
+            item_name: options.productName,
+            item_variant: options.productVariant,
+            price: options.priceAmount,
+          },
+        ],
+      },
+      ...this.shopSessionData(),
+      ...this.sessionData(),
+    }
+    this.reportEcommerceEvent({ event, ...data })
+  }
+
   // Google Analytics ecommerce events
   // https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm
   private reportEcommerceEvent(ecommerceEvent: EcommerceEvent) {
@@ -319,6 +340,15 @@ const offerToEcommerceEvent = ({
     ...Tracking.shopSessionData(context),
     ...Tracking.sessionData(context),
   } as const
+}
+
+type ViewPromotionOptions = {
+  promotionId: string
+  creativeName: string
+  productId: string
+  productName: string
+  productVariant?: string
+  priceAmount?: number
 }
 
 // NOTE: Intentionally not adding coupon field, there's no good mapping between our model and analytics

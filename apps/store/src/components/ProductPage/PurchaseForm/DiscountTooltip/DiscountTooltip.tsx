@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { forwardRef } from 'react'
 import { Text, theme } from 'ui'
 
 type Props = {
@@ -7,26 +8,29 @@ type Props = {
   color?: 'green' | 'gray'
 }
 
-export const DiscountTooltip = ({ children, subtitle, color = 'green' }: Props) => {
-  const Bubble = color === 'green' ? GreenBubble : GrayBubble
+export const DiscountTooltip = forwardRef<HTMLDivElement, Props>(
+  ({ children, subtitle, color = 'green' }, ref) => {
+    const Bubble = color === 'green' ? GreenBubble : GrayBubble
 
-  return (
-    <Root>
-      <Bubble>
-        {children && (
-          <Text size="xs" color="textPrimary" align="center">
-            {children}
-          </Text>
-        )}
-        {subtitle && (
-          <Text size="xs" color="textSecondaryOnGray" align="center">
-            {subtitle}
-          </Text>
-        )}
-      </Bubble>
-    </Root>
-  )
-}
+    return (
+      <Root ref={ref}>
+        <Bubble>
+          {children && (
+            <Text size="xs" color="textPrimary" align="center">
+              {children}
+            </Text>
+          )}
+          {subtitle && (
+            <Text size="xs" color="textSecondaryOnGray" align="center">
+              {subtitle}
+            </Text>
+          )}
+        </Bubble>
+      </Root>
+    )
+  },
+)
+DiscountTooltip.displayName = 'discountTooltip'
 
 const TIP_HEIGHT = '0.625rem'
 const HALF_TIP_WIDTH = '0.625rem'
