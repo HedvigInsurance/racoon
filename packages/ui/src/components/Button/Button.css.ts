@@ -26,24 +26,19 @@ export const fullWidthStyles = style({
   width: '100%',
 })
 
-const shadow = style({
-  boxShadow: tokens.shadow.default,
-  backdropFilter: 'blur(30px)',
-})
-
 export const buttonVariant = styleVariants({
   primary: {
-    backgroundColor: tokens.colors.gray1000,
+    backgroundColor: tokens.colors.buttonPrimary,
     color: tokens.colors.textNegative,
 
     '@media (hover: hover)': {
       '&:hover': {
-        backgroundColor: tokens.colors.grayTranslucent900,
+        backgroundColor: tokens.colors.buttonPrimaryHover,
       },
     },
 
     ':active': {
-      backgroundColor: tokens.colors.grayTranslucent900,
+      backgroundColor: tokens.colors.buttonPrimaryHover,
     },
 
     ':focus-visible': {
@@ -52,79 +47,79 @@ export const buttonVariant = styleVariants({
 
     selectors: {
       '&:disabled:not([data-loading])': {
-        backgroundColor: tokens.colors.gray200,
-        color: tokens.colors.textDisabled,
+        backgroundColor: tokens.colors.buttonDisabled,
+        color: tokens.colors.buttonDisabledText,
       },
     },
   },
 
   'primary-alt': [
-    shadow,
     {
-      backgroundColor: tokens.colors.green50,
+      backgroundColor: tokens.colors.buttonPrimaryAlt,
       color: tokens.colors.textPrimary,
 
       '@media (hover: hover)': {
         '&:hover': {
-          backgroundColor: tokens.colors.green100,
+          backgroundColor: tokens.colors.buttonPrimaryAltHover,
         },
       },
 
       ':active': {
-        backgroundColor: tokens.colors.green100,
+        backgroundColor: tokens.colors.buttonPrimaryAltHover,
       },
 
       selectors: {
         '&:disabled:not([data-loading])': {
-          backgroundColor: tokens.colors.gray200,
-          color: tokens.colors.textDisabled,
-          boxShadow: 'none',
-          backdropFilter: 'none',
+          backgroundColor: tokens.colors.buttonDisabled,
+          color: tokens.colors.buttonDisabledText,
         },
       },
     },
   ],
 
   secondary: [
-    shadow,
     {
-      backgroundColor: tokens.colors.translucent1,
+      backgroundColor: tokens.colors.buttonSecondary,
       color: tokens.colors.textPrimary,
 
       '@media (hover: hover)': {
         '&:hover': {
-          backgroundColor: tokens.colors.translucent2,
+          backgroundColor: tokens.colors.buttonSecondaryHover,
         },
       },
 
       ':active': {
-        backgroundColor: tokens.colors.translucent2,
+        backgroundColor: tokens.colors.buttonSecondaryHover,
       },
 
       selectors: {
         '&:disabled:not([data-loading])': {
-          backgroundColor: tokens.colors.gray200,
-          color: tokens.colors.textDisabled,
-          boxShadow: 'none',
-          backdropFilter: 'none',
+          backgroundColor: tokens.colors.buttonDisabled,
+          color: tokens.colors.buttonDisabledText,
         },
       },
     },
   ],
 
   'secondary-alt': [
-    shadow,
     {
-      backgroundColor: tokens.colors.offWhite,
+      backgroundColor: tokens.colors.buttonSecondaryAlt,
 
       '@media (hover: hover)': {
         '&:hover': {
-          backgroundColor: tokens.colors.grayTranslucentDark25,
+          backgroundColor: tokens.colors.buttonSecondaryHoverAlt,
         },
       },
 
       ':active': {
-        backgroundColor: tokens.colors.offWhite,
+        backgroundColor: tokens.colors.buttonDisabled,
+      },
+
+      selectors: {
+        '&:disabled:not([data-loading])': {
+          backgroundColor: tokens.colors.buttonDisabled,
+          color: tokens.colors.buttonDisabledText,
+        },
       },
     },
   ],
@@ -135,17 +130,17 @@ export const buttonVariant = styleVariants({
 
     '@media (hover: hover)': {
       '&:hover': {
-        backgroundColor: tokens.colors.translucent1,
+        backgroundColor: tokens.colors.buttonGhostHover,
       },
     },
 
     ':active': {
-      backgroundColor: tokens.colors.gray100,
+      backgroundColor: tokens.colors.buttonGhostHover,
     },
 
     selectors: {
       '&:disabled:not([data-loading])': {
-        color: tokens.colors.textDisabled,
+        color: tokens.colors.buttonDisabledText,
         backgroundColor: 'transparent',
       },
     },
@@ -156,19 +151,19 @@ export const buttonVariant = styleVariants({
 
     '@media (hover: hover)': {
       '&:hover': {
-        backgroundColor: tokens.colors.offWhite,
+        backgroundColor: tokens.colors.buttonGhostAltHover,
         color: tokens.colors.textPrimary,
       },
     },
 
     ':active': {
-      backgroundColor: tokens.colors.gray100,
+      backgroundColor: tokens.colors.buttonGhostAltHover,
       color: tokens.colors.textPrimary,
     },
 
     selectors: {
       '&:disabled:not([data-loading])': {
-        color: tokens.colors.textDisabled,
+        color: tokens.colors.buttonDisabledText,
         backgroundColor: 'transparent',
       },
     },
