@@ -12103,18 +12103,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vercel/edge-config@npm:1.1.1":
-  version: 1.1.1
-  resolution: "@vercel/edge-config@npm:1.1.1"
+"@vercel/edge-config@npm:1.2.0":
+  version: 1.2.0
+  resolution: "@vercel/edge-config@npm:1.2.0"
   dependencies:
     "@vercel/edge-config-fs": "npm:0.1.0"
-    ts-essentials: "npm:9.4.1"
   peerDependencies:
     "@opentelemetry/api": ^1.7.0
   peerDependenciesMeta:
     "@opentelemetry/api":
       optional: true
-  checksum: 10c0/fb68f23d84f5f276c4193de69db72a93792676f7456eb0ab7dd812d8d0460e70b1386830ee03c14674436242366a8065bf0c3d0b67ab941abeb36062da2493c1
+  checksum: 10c0/62059ba038767136e730e7ea3bdd32744e69555d00ec3cea91b737650978c1cd9930260ffcb1c6c75965d874ab8da0834ece72fc7e2578a4a12ef5ab885158d1
   languageName: node
   linkType: hard
 
@@ -25638,7 +25637,7 @@ __metadata:
     "@vanilla-extract/recipes": "npm:0.5.3"
     "@vanilla-extract/sprinkles": "npm:1.6.2"
     "@vanilla-extract/webpack-plugin": "npm:2.3.10"
-    "@vercel/edge-config": "npm:1.1.1"
+    "@vercel/edge-config": "npm:1.2.0"
     "@vercel/kv": "npm:2.0.0"
     "@vercel/otel": "npm:1.8.3"
     ajv: "npm:8.16.0"
@@ -26619,18 +26618,6 @@ __metadata:
   version: 2.2.0
   resolution: "ts-dedent@npm:2.2.0"
   checksum: 10c0/175adea838468cc2ff7d5e97f970dcb798bbcb623f29c6088cb21aa2880d207c5784be81ab1741f56b9ac37840cbaba0c0d79f7f8b67ffe61c02634cafa5c303
-  languageName: node
-  linkType: hard
-
-"ts-essentials@npm:9.4.1":
-  version: 9.4.1
-  resolution: "ts-essentials@npm:9.4.1"
-  peerDependencies:
-    typescript: ">=4.1.0"
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 10c0/03f195f1f8935c5e72615e05d5ca160aeb987ba23e1f7ffad2dc4ac47604a6931621bf120279c3325513894a2040cee01070f4df95c1e3bac6435c25339eb519
   languageName: node
   linkType: hard
 
