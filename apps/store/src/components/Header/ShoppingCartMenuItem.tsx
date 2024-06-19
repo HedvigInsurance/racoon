@@ -1,3 +1,4 @@
+'use client'
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { theme } from 'ui'

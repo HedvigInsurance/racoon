@@ -1,3 +1,4 @@
+'use client'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect, type ReactNode } from 'react'

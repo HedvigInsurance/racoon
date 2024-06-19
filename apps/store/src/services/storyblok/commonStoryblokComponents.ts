@@ -14,12 +14,10 @@ import { CookieListBlock } from '@/blocks/CookieListBlock'
 import { DownloadableContentItemBlock } from '@/blocks/DownloadableContentItemBlock'
 import { FooterBlock, FooterLinkBlock, FooterSectionBlock } from '@/blocks/FooterBlock'
 import { GridBlock } from '@/blocks/GridBlock'
-import {
-  HeaderBlock,
-  NavItemBlock,
-  NestedNavContainerBlock,
-  ProductNavContainerBlock,
-} from '@/blocks/HeaderBlock'
+import { HeaderBlock } from '@/blocks/HeaderBlock/HeaderBlock'
+import { NavItemBlock } from '@/blocks/HeaderBlock/NavItemBlock'
+import { NestedNavContainerBlock } from '@/blocks/HeaderBlock/NestedNavContainerBlock'
+import { ProductNavContainerBlock } from '@/blocks/HeaderBlock/ProductNavContainerBlock'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import { HeadingLabelBlock } from '@/blocks/HeadingLabelBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'

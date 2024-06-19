@@ -1,7 +1,7 @@
 import { clsx } from 'clsx'
 import type { ReactNode } from 'react'
 import { FooterBlock } from '@/blocks/FooterBlock'
-import { HeaderBlock } from '@/blocks/HeaderBlock'
+import { HeaderBlock } from '@/blocks/HeaderBlock/HeaderBlock'
 import type { GlobalStory } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
 import { wrapper } from './StoryblokLayout.css'
