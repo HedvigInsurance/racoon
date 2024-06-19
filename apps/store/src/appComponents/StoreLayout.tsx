@@ -23,7 +23,7 @@ type StoreLayoutProps = {
   children: ReactNode
 }
 
-// Used in global not-found page and in CMS pages
+// Does not use routing params directly, so can be used outside of app/[locale] if needed - just pass locale explicitly
 export async function StoreLayout({ locale, children }: StoreLayoutProps) {
   const apolloClient = getApolloClient(locale)
   const [companyReviewsMetadata, productMetadata, globalStory] = await Promise.all([
