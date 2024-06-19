@@ -1,7 +1,6 @@
 import { initTranslations } from '@/app/i18n'
 import { TranslationsProvider } from '@/appComponents/providers/TranslationsProvider'
 import { NotFoundPageContent } from '@/appComponents/RootLayout/NotFoundPageContent'
-import { StoreLayout } from '@/appComponents/StoreLayout'
 import { FALLBACK_LOCALE } from '@/utils/l10n/locales' // Fallback to se/not-found
 import { toRoutingLocale } from '@/utils/l10n/localeUtils'
 
@@ -14,9 +13,7 @@ export default async function RootNotFoundPage() {
   const { resources } = await initTranslations(locale, { ns: ['common'] })
   return (
     <TranslationsProvider locale={locale} resources={resources}>
-      <StoreLayout locale={locale}>
-        <NotFoundPageContent />
-      </StoreLayout>
+      <NotFoundPageContent />
     </TranslationsProvider>
   )
 }
