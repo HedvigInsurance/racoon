@@ -97,6 +97,7 @@ export class Tracking {
         experiment_id: experimentId,
         variant_id: variantId,
       },
+      ...Tracking.sessionData(this.context),
     }
     console.debug(event.event, variantId)
     pushToGTMDataLayer(event)

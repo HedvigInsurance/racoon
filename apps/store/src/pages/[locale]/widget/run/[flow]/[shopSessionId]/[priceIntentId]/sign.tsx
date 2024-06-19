@@ -23,6 +23,7 @@ type Props = Omit<ComponentPropsWithoutRef<typeof SignPage>, 'shopSession' | 'pr
   productData: ProductData
   pageTitle: string
   initialSelectedTypeOfContract?: string
+  partner?: string
 }
 
 const NextWidgetSignPage = (props: Props) => {
@@ -47,7 +48,11 @@ const NextWidgetSignPage = (props: Props) => {
         productData={props.productData}
         selectedTypeOfContract={props.initialSelectedTypeOfContract}
       >
-        <TrackingProvider shopSession={shopSession} productData={props.productData}>
+        <TrackingProvider
+          shopSession={shopSession}
+          productData={props.productData}
+          partner={props.partner}
+        >
           <SignPage shopSession={shopSession} priceIntent={priceIntent} {...props} />
         </TrackingProvider>
       </ProductDataProvider>
@@ -120,6 +125,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
         shopSessionId: context.params.shopSessionId,
         content: story.content.checkoutPageContent,
         flow: context.params.flow,
+        partner: partnerName,
         priceIntentId: priceIntent.id,
         // TODO: check if we want to control this via CMS
         ...hideChatOnPage(),
