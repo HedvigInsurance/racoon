@@ -1,6 +1,6 @@
 import { storyblokEditable } from '@storyblok/react'
 import Link from 'next/link'
-import { Space, Text } from 'ui'
+import { Text, yStack } from 'ui'
 import { LanguageSelectForm } from '@/blocks/FooterBlock/LanguageSelectForm'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import type { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
@@ -43,16 +43,16 @@ type FooterSectionProps = SbBaseBlockProps<{
 export const FooterSectionBlock = ({ blok }: FooterSectionProps) => {
   const filteredFooterLinks = filterByBlockType(blok.footerLinks, FooterLinkBlock.blockName)
   return (
-    <Space y={1.5} {...storyblokEditable(blok)}>
+    <div className={yStack({ gap: 'lg' })} {...storyblokEditable(blok)}>
       <Text size="sm" color="textSecondary">
         {blok.title}
       </Text>
-      <Space y={0.5}>
+      <div className={yStack({ gap: 'xs' })}>
         {filteredFooterLinks.map((nestedBlock) => (
           <FooterLinkBlock key={nestedBlock._uid} blok={nestedBlock} />
         ))}
-      </Space>
-    </Space>
+      </div>
+    </div>
   )
 }
 FooterSectionBlock.blockName = 'footerSection' as const

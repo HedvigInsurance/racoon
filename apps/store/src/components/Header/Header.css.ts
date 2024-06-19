@@ -196,8 +196,10 @@ export const navigationContent = style({
   },
 })
 
+// Same component reused between mobile and desktop menus
 export const navigationMenuWrapper = style({
   paddingBottom: tokens.space.xl,
+  rowGap: tokens.space.lg,
 
   '@media': {
     [minWidth.lg]: {
@@ -205,6 +207,7 @@ export const navigationMenuWrapper = style({
       boxShadow: tokens.shadow.default,
       borderRadius: tokens.radius.sm,
       padding: tokens.space.md,
+      rowGap: tokens.space.md,
     },
   },
 })
