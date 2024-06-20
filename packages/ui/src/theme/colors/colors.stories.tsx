@@ -1,5 +1,6 @@
-import styled from '@emotion/styled'
-import { theme } from '../theme'
+import { Heading } from '../../components/Heading/Heading'
+import { Text } from '../../components/Text/Text'
+import { sprinkles } from '../sprinkles.css'
 import {
   amber,
   blue,
@@ -15,6 +16,13 @@ import {
   teal,
   yellow,
 } from './colors'
+import {
+  colorBg,
+  colorGrid,
+  colorInfo,
+  colorSwatch,
+  translucentWrapper,
+} from './colors.stories.css'
 
 export default {
   title: 'Theme / Colors',
@@ -29,31 +37,30 @@ type Props = {
 
 const Palette = ({ colors, name, prefix, suffix }: Props) => (
   <>
-    <ColorName>{name}</ColorName>
-    <ColorGrid>
+    <Heading className={sprinkles({ mb: 'md' })}>{name}</Heading>
+    <div className={colorGrid}>
       {Object.entries(colors).map((color) => (
-        <div key={color[0]}>
-          <ColorSwatch hue={color[1]} />
-          <HueName>{`${prefix ?? name}-${color[0]} ${suffix ?? ''}`}</HueName>
-          <HueValue>{color[1]}</HueValue>
+        <div className={colorSwatch} key={color[0]}>
+          <div className={colorBg} style={{ backgroundColor: color[1] }} />
+          <div className={colorInfo}>
+            <Text size="sm">{`${prefix ?? name}-${color[0]} ${suffix ?? ''}`}</Text>
+            <Text size="sm" color="textSecondary">
+              {color[1]}
+            </Text>
+          </div>
         </div>
       ))}
-    </ColorGrid>
+    </div>
   </>
 )
 
 export const Colors = () => (
   <>
-    <Palette name="Gray" prefix="G" colors={gray} />
-    <Palette name="Gray Translucent Light Mode" prefix="G" suffix="T L" colors={grayTranslucent} />
-    <TranslucentWrapper>
-      <Palette
-        name="Gray Translucent Dark Mode"
-        prefix="G"
-        suffix="T D"
-        colors={grayTranslucentDark}
-      />
-    </TranslucentWrapper>
+    <Palette name="Grayscale Opaque" prefix="G" colors={gray} />
+    <Palette name="Gray Translucent Light Mode" prefix="G" colors={grayTranslucent} />
+    <div className={translucentWrapper}>
+      <Palette name="Gray Translucent Dark Mode" prefix="G" colors={grayTranslucentDark} />
+    </div>
     <Palette name="Green" colors={green} />
     <Palette name="Yellow" colors={yellow} />
     <Palette name="Amber" colors={amber} />
@@ -72,43 +79,3 @@ export const Colors = () => (
     <Palette name="Signal Red" colors={signal.red} />
   </>
 )
-
-const ColorGrid = styled.div({
-  display: 'flex',
-  flexWrap: 'wrap',
-  gap: '2rem 1rem',
-  marginBottom: '3rem',
-})
-
-const ColorName = styled.h2({
-  marginBottom: '1rem',
-  fontSize: '2rem',
-})
-
-const ColorSwatch = styled.div<{ hue: string }>(({ hue }) => ({
-  width: 216,
-  height: 150,
-  backgroundColor: hue,
-  overflow: 'hidden',
-  border: '1px solid hsla(0, 0%, 0%, 0.1)',
-  borderRadius: theme.radius.md,
-}))
-
-const HueName = styled.p({
-  marginTop: '0.5rem',
-  marginBottom: '0.25rem',
-  fontSize: '1.125rem',
-})
-
-const HueValue = styled.p({
-  color: theme.colors.textSecondary,
-  textTransform: 'uppercase',
-})
-
-const TranslucentWrapper = styled.div({
-  color: gray[25],
-  marginBottom: '3rem',
-  marginInline: '-1rem',
-  padding: '1rem',
-  backgroundColor: gray[1000],
-})
