@@ -38,9 +38,9 @@ const initDatadog = () => {
       // Must exclude console origin to avoid endless loop.  Feel free to experiment with other values
       if (event.origin === 'logger') {
         if (event.logger?.name === Tracking.LOGGER_NAME) {
-          console[event.status]('tracking event', event.message, event)
+          console.log('tracking event', event.message, event)
         } else {
-          console[event.status](event.message)
+          console.log(event.message)
         }
       }
       return true
