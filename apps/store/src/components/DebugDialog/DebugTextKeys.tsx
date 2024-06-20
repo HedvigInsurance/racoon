@@ -10,7 +10,7 @@ export const DebugTextKeys = () => {
   debugUrl.searchParams.set('debug', isDebugTextkeys ? 'none' : 'textkeys')
 
   return (
-    <ButtonNextLink variant="secondary" href={debugUrl} replace={true}>
+    <ButtonNextLink variant="secondary" href={debugUrl} replace={true} fullWidth={true}>
       {isDebugTextkeys ? 'Reset' : 'Debug'} text keys
     </ButtonNextLink>
   )

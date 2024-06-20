@@ -32,8 +32,10 @@ export const FetchInsurancePrompt = ({ company, onClickConfirm, onClickSkip }: P
 
       <Space y={1}>
         <Space y={0.25}>
-          <Button onClick={onClickConfirm}>{t('FETCH_INSURANCE_PROMPT_BUTTON_CONFIRM')}</Button>
-          <Button variant="ghost" onClick={onClickSkip}>
+          <Button onClick={onClickConfirm} fullWidth={true}>
+            {t('FETCH_INSURANCE_PROMPT_BUTTON_CONFIRM')}
+          </Button>
+          <Button variant="ghost" onClick={onClickSkip} fullWidth={true}>
             {t('FETCH_INSURANCE_PROMPT_BUTTON_SKIP')}
           </Button>
         </Space>
