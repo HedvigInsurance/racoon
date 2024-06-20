@@ -12,12 +12,7 @@ import { ContactSupportBlock } from '@/blocks/ContactSupportBlock'
 import { ContentBlock } from '@/blocks/ContentBlock'
 import { CookieListBlock } from '@/blocks/CookieListBlock'
 import { DownloadableContentItemBlock } from '@/blocks/DownloadableContentItemBlock'
-import { FooterBlock, FooterLinkBlock, FooterSectionBlock } from '@/blocks/FooterBlock/FooterBlock'
 import { GridBlock } from '@/blocks/GridBlock'
-import { HeaderBlock } from '@/blocks/HeaderBlock/HeaderBlock'
-import { NavItemBlock } from '@/blocks/HeaderBlock/NavItemBlock'
-import { NestedNavContainerBlock } from '@/blocks/HeaderBlock/NestedNavContainerBlock'
-import { ProductNavContainerBlock } from '@/blocks/HeaderBlock/ProductNavContainerBlock'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import { HeadingLabelBlock } from '@/blocks/HeadingLabelBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
@@ -74,11 +69,7 @@ export const commonStoryblokComponents = {
   content: ContentBlock,
   cookieList: CookieListBlock,
   downloadableContentItem: DownloadableContentItemBlock,
-  footer: FooterBlock,
-  footerLink: FooterLinkBlock,
-  footerSection: FooterSectionBlock,
   grid: GridBlock,
-  header: HeaderBlock,
   heading: HeadingBlock,
   headingLabel: HeadingLabelBlock,
   hero: HeroBlock,
@@ -89,15 +80,12 @@ export const commonStoryblokComponents = {
   insurableLimits: InsurableLimitsBlock,
   mediaList: MediaListBlock,
   modal: ModalBlock,
-  navItem: NavItemBlock,
-  nestedNavContainer: NestedNavContainerBlock,
   page: PageBlock,
   perils: PerilsBlock,
   product: ProductPageBlock,
   productCard: ProductCardBlock,
   productDocuments: ProductDocumentsBlock,
   productGrid: ProductGridBlock,
-  productNavContainer: ProductNavContainerBlock,
   productPillow: ProductPillowBlock,
   productPillows: ProductPillowsBlock,
   productReviews: ProductReviewsBlock,
