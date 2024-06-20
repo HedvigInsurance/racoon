@@ -76,11 +76,16 @@ const PendingContractCard = (props: ContractCardProps) => {
               target="_blank"
               rel="noreferrer"
               onClick={handleClickOpen(props.id)}
+              fullWidth={true}
             >
               {t('SWITCHING_ASSISTANT_BANK_SIGNERING_LINK')}
             </ButtonNextLink>
           ) : (
-            <Button onClick={handleClickInitiate(props.id)} loading={result.loading}>
+            <Button
+              onClick={handleClickInitiate(props.id)}
+              loading={result.loading}
+              fullWidth={true}
+            >
               {t('FLOW_ACTIVATION_BUTTON', { ns: 'common' })}
             </Button>
           )}

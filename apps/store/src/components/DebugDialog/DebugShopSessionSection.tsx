@@ -15,7 +15,12 @@ export const DebugShopSessionSection = () => {
     <Space y={0.25}>
       <CopyToClipboard label="Shop Session">{shopSession.id}</CopyToClipboard>
 
-      <Button as="a" variant="secondary" href={PageLink.apiSessionReset({ next: pathname }).href}>
+      <Button
+        as="a"
+        variant="secondary"
+        href={PageLink.apiSessionReset({ next: pathname }).href}
+        fullWidth={true}
+      >
         Reset Shop Session
       </Button>
 
