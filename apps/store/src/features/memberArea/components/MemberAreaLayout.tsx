@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import Head from 'next/head'
 import type { ReactElement } from 'react'
 import { mq, theme } from 'ui'
-import { HeaderBlock } from '@/blocks/HeaderBlock'
+import { HeaderBlock } from '@/blocks/HeaderBlock/HeaderBlock'
 import type {
   GLOBAL_PRODUCT_METADATA_PROP_NAME,
   GlobalProductMetadata,
