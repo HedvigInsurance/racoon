@@ -1,9 +1,7 @@
 'use client'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { storyblokEditable } from '@storyblok/react'
-import { clsx } from 'clsx'
 import { useTranslation } from 'next-i18next'
-import { Space } from 'ui'
 import type { ButtonBlockProps } from '@/blocks/ButtonBlock'
 import { NavItemBlock, type NavItemBlockProps } from '@/blocks/HeaderBlock/NavItemBlock'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
@@ -58,32 +56,26 @@ export const ProductNavContainerBlock = ({ blok, variant }: ProductNavContainerB
   })
 
   const content = (
-    <div className={clsx(navigationMenuWrapper)}>
-      <Space y={{ base: 1.5, lg: 1 }}>
-        <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
-          <NavigationMenuPrimitive.List className={navigationProductList}>
-            {productNavItems.map((item) => (
-              <NavigationMenuPrimitive.Item key={item.name} value={item.name}>
-                <ProductNavigationLink
-                  href={item.url}
-                  pillowImageSrc={item.image}
-                  label={item.label}
-                >
-                  {item.name}
-                </ProductNavigationLink>
-              </NavigationMenuPrimitive.Item>
-            ))}
-          </NavigationMenuPrimitive.List>
-        </NavigationMenuPrimitive.Sub>
-        <ButtonNextLink
-          href={PageLink.store({ locale })}
-          variant="secondary"
-          size="medium"
-          fullWidth={true}
-        >
-          {t('NAVIGATION_STORE_LINK')}
-        </ButtonNextLink>
-      </Space>
+    <div className={navigationMenuWrapper}>
+      <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
+        <NavigationMenuPrimitive.List className={navigationProductList}>
+          {productNavItems.map((item) => (
+            <NavigationMenuPrimitive.Item key={item.name} value={item.name}>
+              <ProductNavigationLink href={item.url} pillowImageSrc={item.image} label={item.label}>
+                {item.name}
+              </ProductNavigationLink>
+            </NavigationMenuPrimitive.Item>
+          ))}
+        </NavigationMenuPrimitive.List>
+      </NavigationMenuPrimitive.Sub>
+      <ButtonNextLink
+        href={PageLink.store({ locale })}
+        variant="secondary"
+        size="medium"
+        fullWidth={true}
+      >
+        {t('NAVIGATION_STORE_LINK')}
+      </ButtonNextLink>
     </div>
   )
 
