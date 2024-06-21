@@ -11391,12 +11391,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:20.14.2":
-  version: 20.14.2
-  resolution: "@types/node@npm:20.14.2"
+"@types/node@npm:20.14.4":
+  version: 20.14.4
+  resolution: "@types/node@npm:20.14.4"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: 10c0/2d86e5f2227aaa42212e82ea0affe72799111b888ff900916376450b02b09b963ca888b20d9c332d8d2b833ed4781987867a38eaa2e4863fa8439071468b0a6f
+  checksum: 10c0/2244be2e66e19377a491bfc279b52bc3f598c2e31d683d2388f4a16dbf6e81ad0032fde01770c4babcc73a31609e23fa0e5864dffc5830e9f457db250bd08b33
   languageName: node
   linkType: hard
 
@@ -25624,7 +25624,7 @@ __metadata:
     "@testing-library/user-event": "npm:14.5.2"
     "@types/clone-deep": "npm:4.0.4"
     "@types/md5": "npm:2.3.5"
-    "@types/node": "npm:20.14.2"
+    "@types/node": "npm:20.14.4"
     "@types/nprogress": "npm:0.2.3"
     "@types/react": "npm:18.3.3"
     "@types/react-dom": "npm:18.3.0"
