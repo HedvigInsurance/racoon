@@ -5307,9 +5307,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datadog/datadog-ci@npm:2.37.0":
-  version: 2.37.0
-  resolution: "@datadog/datadog-ci@npm:2.37.0"
+"@datadog/datadog-ci@npm:2.38.1":
+  version: 2.38.1
+  resolution: "@datadog/datadog-ci@npm:2.38.1"
   dependencies:
     "@aws-sdk/client-cloudwatch-logs": "npm:^3.537.0"
     "@aws-sdk/client-iam": "npm:^3.535.0"
@@ -5354,12 +5354,12 @@ __metadata:
     tiny-async-pool: "npm:^2.1.0"
     typanion: "npm:^3.14.0"
     uuid: "npm:^9.0.0"
-    ws: "npm:7.4.6"
+    ws: "npm:^7.5.10"
     xml2js: "npm:0.5.0"
     yamux-js: "npm:0.1.2"
   bin:
     datadog-ci: dist/cli.js
-  checksum: 10c0/d71660f1d3aba7fc5a2af0da14c70947e2776d866a79e39f8bceb1470fcb624c4916b6f54ff268f2dc7fa9363d051215d9b70e11cce4a7dd758b0ba51a70ce1f
+  checksum: 10c0/d36be09259e65c0278c1e232bd14695f0bd3f59492395359250b3701c0f4b9433255ffde30b61e14725c5eef28bf730bb7ee8118038964b45071e514e5f720d6
   languageName: node
   linkType: hard
 
@@ -25580,7 +25580,7 @@ __metadata:
     "@babel/preset-typescript": "npm:7.24.7"
     "@datadog/browser-logs": "npm:5.21.0"
     "@datadog/browser-rum": "npm:5.21.0"
-    "@datadog/datadog-ci": "npm:2.37.0"
+    "@datadog/datadog-ci": "npm:2.38.1"
     "@emotion/babel-plugin": "npm:11.11.0"
     "@emotion/is-prop-valid": "npm:1.2.2"
     "@emotion/react": "npm:11.11.4"
@@ -28153,21 +28153,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:7.4.6":
-  version: 7.4.6
-  resolution: "ws@npm:7.4.6"
-  peerDependencies:
-    bufferutil: ^4.0.1
-    utf-8-validate: ^5.0.2
-  peerDependenciesMeta:
-    bufferutil:
-      optional: true
-    utf-8-validate:
-      optional: true
-  checksum: 10c0/4b44b59bbc0549c852fb2f0cdb48e40e122a1b6078aeed3d65557cbeb7d37dda7a4f0027afba2e6a7a695de17701226d02b23bd15c97b0837808c16345c62f8e
-  languageName: node
-  linkType: hard
-
 "ws@npm:8.13.0, ws@npm:^8.12.0":
   version: 8.13.0
   resolution: "ws@npm:8.13.0"
@@ -28210,6 +28195,21 @@ __metadata:
     utf-8-validate:
       optional: true
   checksum: 10c0/aec4ef4eb65821a7dde7b44790f8699cfafb7978c9b080f6d7a98a7f8fc0ce674c027073a78574c94786ba7112cc90fa2cc94fc224ceba4d4b1030cff9662494
+  languageName: node
+  linkType: hard
+
+"ws@npm:^7.5.10":
+  version: 7.5.10
+  resolution: "ws@npm:7.5.10"
+  peerDependencies:
+    bufferutil: ^4.0.1
+    utf-8-validate: ^5.0.2
+  peerDependenciesMeta:
+    bufferutil:
+      optional: true
+    utf-8-validate:
+      optional: true
+  checksum: 10c0/bd7d5f4aaf04fae7960c23dcb6c6375d525e00f795dd20b9385902bd008c40a94d3db3ce97d878acc7573df852056ca546328b27b39f47609f80fb22a0a9b61d
   languageName: node
   linkType: hard
 
