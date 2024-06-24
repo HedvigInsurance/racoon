@@ -1,7 +1,7 @@
 import { clsx } from 'clsx'
 import type { ComponentPropsWithoutRef } from 'react'
 import { type ReactNode } from 'react'
-import { InfoIcon, CampaignIcon, WarningTriangleIcon, CrossIconSmall, theme } from 'ui'
+import { InfoIcon, CampaignIcon, WarningTriangleIcon, CrossIconSmall, tokens } from 'ui'
 import {
   bannerCloseButton,
   bannerContent,
@@ -40,16 +40,18 @@ const Icon = ({ variant, ...others }: IconProps) => {
   let icon: ReactNode = null
   switch (variant) {
     case 'info':
-      icon = <InfoIcon color={theme.colors.blue600} size={size} {...others} />
+      icon = <InfoIcon color={tokens.colors.signalBlueElement} size={size} {...others} />
       break
     case 'campaign':
-      icon = <CampaignIcon color={theme.colors.signalGreenElement} size={size} {...others} />
+      icon = <CampaignIcon color={tokens.colors.signalGreenElement} size={size} {...others} />
       break
     case 'warning':
-      icon = <WarningTriangleIcon color={theme.colors.signalAmberElement} size={size} {...others} />
+      icon = (
+        <WarningTriangleIcon color={tokens.colors.signalAmberElement} size={size} {...others} />
+      )
       break
     case 'error':
-      icon = <WarningTriangleIcon color={theme.colors.signalRedElement} size={size} {...others} />
+      icon = <WarningTriangleIcon color={tokens.colors.signalRedElement} size={size} {...others} />
       break
   }
 
