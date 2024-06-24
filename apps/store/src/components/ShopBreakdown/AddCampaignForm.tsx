@@ -30,7 +30,7 @@ export const AddCampaignForm = (props: Props) => {
         <UppercaseTextField
           name={FORM_CAMPAIGN_CODE}
           label={t('CAMPAIGN_CODE_INPUT_LABEL')}
-          variant="small"
+          size="small"
           warning={!!props.errorMessage}
           message={props.errorMessage}
           required={true}
