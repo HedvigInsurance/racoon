@@ -31,7 +31,7 @@ export function DebugResumeSessionSection() {
   return (
     <Layout onSubmit={handleSubmit}>
       <div style={{ flex: 1 }}>
-        <TextField name={INPUT_NAME} label="Resume shop session" variant="small" />
+        <TextField name={INPUT_NAME} label="Resume shop session" size="small" />
       </div>
 
       <Button variant="secondary" size="medium" type="submit" fullWidth={true}>

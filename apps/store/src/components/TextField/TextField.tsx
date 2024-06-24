@@ -16,12 +16,12 @@ import {
 
 type BaseInputProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
-  'onAnimationStart' | 'onDragStart' | 'onDragEnd' | 'onDrag' | 'onChange'
+  'onAnimationStart' | 'onDragStart' | 'onDragEnd' | 'onDrag' | 'onChange' | 'size'
 >
 
 export type Props = BaseInputProps & {
   label: string
-  variant?: 'small' | 'large'
+  size?: 'small' | 'large'
   suffix?: string
   warning?: boolean
   message?: string
@@ -34,7 +34,7 @@ export const TextField = (props: Props) => {
   const {
     defaultValue,
     label,
-    variant = 'large',
+    size = 'large',
     suffix,
     warning = false,
     message,
@@ -70,7 +70,7 @@ export const TextField = (props: Props) => {
   return (
     <div className={yStack({ gap: 'xxs' })}>
       <div
-        className={wrapper[variant]}
+        className={wrapper[size]}
         {...animationProps}
         data-active={!!inputValue || !!inputProps.placeholder}
         data-warning={warning}
@@ -79,15 +79,15 @@ export const TextField = (props: Props) => {
         onClick={handleClickWrapper}
       >
         <label
-          className={inputLabel[variant]}
+          className={inputLabel[size]}
           htmlFor={identifier}
           data-disabled={inputProps.disabled}
         >
           {label}
         </label>
-        <div className={inputWrapper[variant]}>
+        <div className={inputWrapper[size]}>
           <input
-            className={input[variant]}
+            className={input[size]}
             {...inputProps}
             id={identifier}
             ref={inputRef}
@@ -97,7 +97,7 @@ export const TextField = (props: Props) => {
             aria-label={label}
           />
           {suffix && inputValue && (
-            <Text as="span" size={variant === 'large' ? 'xl' : 'lg'} color="textSecondary">
+            <Text as="span" size={size === 'large' ? 'xl' : 'lg'} color="textSecondary">
               {suffix}
             </Text>
           )}

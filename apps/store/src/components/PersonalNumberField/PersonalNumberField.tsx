@@ -9,7 +9,7 @@ import { TextField } from '@/components/TextField/TextField'
 
 export type Props = Omit<
   InputHTMLAttributes<HTMLInputElement>,
-  'onAnimationStart' | 'onDragStart' | 'onDragEnd' | 'onDrag'
+  'onAnimationStart' | 'onDragStart' | 'onDragEnd' | 'onDrag' | 'size'
 > & {
   label: string
   warning?: boolean
