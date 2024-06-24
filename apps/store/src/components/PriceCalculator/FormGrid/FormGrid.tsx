@@ -1,20 +1,8 @@
-import styled from '@emotion/styled'
+import { assignInlineVars } from '@vanilla-extract/dynamic'
 import type { ReactNode } from 'react'
-import { theme } from 'ui'
 import type { InputField } from '@/services/PriceCalculator/Field.types'
 import type { SectionItem } from '@/services/PriceCalculator/PriceCalculator.types'
-
-const Grid = styled.div({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(6, 1fr)',
-  gap: theme.space.xxs,
-})
-
-type GridItemProps = { columnSpan: number }
-
-const GridItem = styled.div<GridItemProps>(({ columnSpan }) => ({
-  gridColumn: `span ${columnSpan}`,
-}))
+import { columnSpan, grid, gridItem } from './FormGrid.css'
 
 type FormSectionProps = {
   items: Array<SectionItem>
@@ -23,12 +11,18 @@ type FormSectionProps = {
 
 export const FormGrid = ({ items, children }: FormSectionProps) => {
   return (
-    <Grid>
+    <div className={grid}>
       {items.map((item, index) => (
-        <GridItem key={item.field.name} columnSpan={item.layout.columnSpan}>
+        <div
+          className={gridItem}
+          key={item.field.name}
+          style={assignInlineVars({
+            [columnSpan]: `${item.layout.columnSpan}`,
+          })}
+        >
           {children(item.field, index)}
-        </GridItem>
+        </div>
       ))}
-    </Grid>
+    </div>
   )
 }
