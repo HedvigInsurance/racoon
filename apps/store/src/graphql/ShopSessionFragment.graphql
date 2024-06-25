@@ -6,7 +6,7 @@ fragment ShopSession on ShopSession {
     ...ShopSessionCustomer
   }
   cart {
-    ...CartFragment
+    ...Cart
   }
   experiments {
     bundleDiscount

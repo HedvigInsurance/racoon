@@ -2,7 +2,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import md5 from 'md5'
 import {
-  type CartFragmentFragment,
+  type CartFragment,
   type CountryCode,
   type ProductOfferFragment,
   type ShopSessionExperiments,
@@ -119,7 +119,7 @@ export class Tracking {
     )
   }
 
-  public reportAdtractionEvent(cart: CartFragmentFragment, customerEmail: string) {
+  public reportAdtractionEvent(cart: CartFragment, customerEmail: string) {
     const event = TrackingEvent.Adtraction
     // We currently only support 1 campaign code
     const campaignCode = cart.redeemedCampaign?.code
@@ -170,11 +170,11 @@ export class Tracking {
     )
   }
 
-  public reportViewCart(cart: CartFragmentFragment) {
+  public reportViewCart(cart: CartFragment) {
     this.reportEcommerceEvent(cartToEcommerceEvent(TrackingEvent.ViewCart, cart, this.context))
   }
 
-  public reportBeginCheckout(cart: CartFragmentFragment) {
+  public reportBeginCheckout(cart: CartFragment) {
     this.reportEcommerceEvent(cartToEcommerceEvent(TrackingEvent.BeginCheckout, cart, this.context))
   }
 
@@ -183,7 +183,7 @@ export class Tracking {
     memberId,
     customer,
   }: {
-    cart: CartFragmentFragment
+    cart: CartFragment
     memberId: string
     customer: {
       email: string
@@ -355,7 +355,7 @@ type ViewPromotionOptions = {
 // Let's figure it out later when/if it becomes a priority
 const cartToEcommerceEvent = (
   event: TrackingEvent,
-  cart: CartFragmentFragment,
+  cart: CartFragment,
   context: TrackingContext,
 ): EcommerceEvent => {
   return {
@@ -401,7 +401,7 @@ const productDataToEcommerceEvent = (
 const getLegacyUserData = async (
   context: TrackingContext,
   customerData: { email: string; firstName?: string; lastName?: string },
-  cart: CartFragmentFragment,
+  cart: CartFragment,
 ) => {
   if (!customerData.email) return {}
   const email = await hashValue(normalizeEmail(customerData.email))

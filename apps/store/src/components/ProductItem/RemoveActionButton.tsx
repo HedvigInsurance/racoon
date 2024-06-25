@@ -4,7 +4,7 @@ import { Button, Dialog, Text } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import {
-  type CartFragmentFragment,
+  type CartFragment,
   ProductRecommendationsDocument,
   ShopSessionDocument,
   useCartEntryRemoveMutation,
@@ -17,7 +17,7 @@ type Props = {
   shopSessionId: string
   offer: ProductOfferFragment
   title: string
-  onCompleted?: (cart: CartFragmentFragment) => void
+  onCompleted?: (cart: CartFragment) => void
 }
 
 export const RemoveActionButton = (props: Props) => {

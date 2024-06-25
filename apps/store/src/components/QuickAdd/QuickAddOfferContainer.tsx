@@ -6,7 +6,7 @@ import { Perils } from '@/components/Perils/Perils'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Price } from '@/components/Price'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import type { CartFragmentFragment } from '@/services/graphql/generated'
+import type { CartFragment } from '@/services/graphql/generated'
 import {
   type OfferRecommendationFragment,
   type ProductRecommendationFragment,
@@ -36,7 +36,7 @@ const ACCIDENT_INSURANCE = 'SE_ACCIDENT'
 
 type Props = {
   shopSessionId: string
-  cart: CartFragmentFragment
+  cart: CartFragment
   offer: OfferRecommendationFragment
   product: ProductRecommendationFragment
 }
