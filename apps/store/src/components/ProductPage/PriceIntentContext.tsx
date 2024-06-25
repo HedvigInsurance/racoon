@@ -1,19 +1,19 @@
 'use client'
 import { useApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
-import type { PropsWithChildren } from 'react'
+import { type PropsWithChildren, useRef } from 'react'
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { useCartEntryToReplace } from '@/components/ProductPage/useCartEntryToReplace'
-import type {
-  PriceIntentFragment,
-  PriceIntentQueryResult,
-  ProductOfferFragment,
+import {
+  type CartFragment,
+  type PriceIntentFragment,
+  type PriceIntentQueryResult,
+  type ProductOfferFragment,
 } from '@/services/graphql/generated'
 import { usePriceIntentQuery } from '@/services/graphql/generated'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
-import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { getOffersByPrice } from '@/utils/getOffersByPrice'
 import { usePreloadedPriceIntentId } from './PurchaseForm/usePreloadedPriceIntentId'
@@ -38,34 +38,51 @@ const usePriceIntentContextValue = () => {
   const productData = useProductData()
   const apolloClient = useApolloClient()
   const { onReady, shopSession } = useShopSession()
+  const shopSessionId = shopSession?.id
 
   const [, setSelectedOffer] = useSelectedOffer()
   const entryToReplace = useCartEntryToReplace()
   const preloadedPriceIntentId = usePreloadedPriceIntentId()
   const [priceIntentId, setPriceIntentId] = useState<string | null>(preloadedPriceIntentId ?? null)
 
+  const cartRef = useRef<CartFragment>()
+  cartRef.current = shopSession?.cart
+
   const updatePriceIntent = useCallback(
-    async (shopSession: ShopSession) => {
+    async (shopSessionId: string) => {
       const service = priceIntentServiceInitClientSide(apolloClient)
       // TODO: We have potential data source conflict here - priceTemplate updates immediately on client-side navigation,
       // productData is somewhat delayed due to useEffect logic in ProductDataProvider
       // This is currently solved by eventually stabilizing, but ideally we should not be relying
       // on delayed effects to bring those 2 in sync
-      const priceIntent = await service.getOrCreate({
+      let priceIntent = await service.getOrCreate({
         priceTemplate,
         productName: productData.name,
-        shopSessionId: shopSession.id,
+        shopSessionId,
       })
+      // Use new priceIntent if
+      //  - one of current one's offers are added to cart
+      //  - and we're not in 'edit cart item' mode
+      // This may happen during app -> pages router navigation when using "go to checkout" button in purchase form
+      const cartPriceIntentIds = new Set(cartRef.current?.entries.map((item) => item.priceIntentId))
+      if (entryToReplace == null && cartPriceIntentIds.has(priceIntent.id)) {
+        console.log('Current priceIntent used in one of cart items, creating new one')
+        priceIntent = await service.create({
+          priceTemplate,
+          productName: productData.name,
+          shopSessionId,
+        })
+      }
       setPriceIntentId(priceIntent.id)
     },
-    [apolloClient, priceTemplate, productData.name],
+    [apolloClient, entryToReplace, priceTemplate, productData.name],
   )
 
   const result = usePriceIntentQuery({
     skip: !priceIntentId,
     variables: priceIntentId ? { priceIntentId } : undefined,
     onCompleted(data) {
-      if (!shopSession) {
+      if (!shopSessionId) {
         datadogLogs.logger.warn('ShopSession not ready when price intent query completed', {
           priceIntentId,
         })
@@ -74,14 +91,13 @@ const usePriceIntentContextValue = () => {
 
       if (data.priceIntent.product.name !== productData.name) {
         setPriceIntentId(null)
-        updatePriceIntent(shopSession)
+        updatePriceIntent(shopSessionId)
         return
       }
     },
   })
   const priceIntent = result.data?.priceIntent
 
-  const shopSessionId = shopSession?.id
   const resetPriceIntent = useCallback(() => {
     if (shopSessionId == null) return
     priceIntentServiceInitClientSide(apolloClient).clear(priceTemplate.name, shopSessionId)
@@ -91,17 +107,18 @@ const usePriceIntentContextValue = () => {
 
   // Sync with current product page (if any)
   useEffect(() => {
-    if (!shopSession) return
-    updatePriceIntent(shopSession)
-  }, [shopSession, updatePriceIntent, priceIntentId])
+    if (!shopSessionId) return
+    updatePriceIntent(shopSessionId)
+  }, [shopSessionId, updatePriceIntent])
 
+  // TODO: Check if effect above covers this scenatio
   // Fallback for initial opening of product page where we're getting shopSession as the last piece of data
   // Everything else is created server-side and statically, shopSession dynamically client-side in this scenario
   useEffect(
     () =>
       onReady((shopSession) => {
         if (priceIntentId) return
-        updatePriceIntent(shopSession)
+        updatePriceIntent(shopSession.id)
       }),
     [onReady, priceIntentId, updatePriceIntent],
   )
