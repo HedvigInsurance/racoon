@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router'
 import { useEffect, useRef } from 'react'
+import { SearchParam } from './parseSearchParams'
 import { publishWidgetEvent } from './publishWidgetEvent'
-import { EXTERNAL_REQUEST_ID_QUERY_PARAM } from './widget.constants'
 
 export const usePublishWidgetInitEvent = () => {
   const router = useRouter()
 
-  const requestId = router.query[EXTERNAL_REQUEST_ID_QUERY_PARAM]
+  const requestId = router.query[SearchParam.ExternalRequestId]
   const widgetLoadedSent = useRef(false)
 
   useEffect(() => {
