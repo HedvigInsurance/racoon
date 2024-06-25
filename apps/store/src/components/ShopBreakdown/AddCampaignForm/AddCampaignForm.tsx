@@ -1,8 +1,8 @@
-import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import type { FormEventHandler } from 'react'
-import { Button, theme } from 'ui'
+import { Button } from 'ui'
 import { TextField } from '@/components/TextField/TextField'
+import { wrapper } from './AddCampaignForm.css'
 
 const FORM_CAMPAIGN_CODE = 'campaignCode'
 
@@ -26,27 +26,20 @@ export const AddCampaignForm = (props: Props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Wrapper>
-        <UppercaseTextField
+      <div className={wrapper}>
+        <TextField
           name={FORM_CAMPAIGN_CODE}
           label={t('CAMPAIGN_CODE_INPUT_LABEL')}
           size="small"
           warning={!!props.errorMessage}
           message={props.errorMessage}
           required={true}
+          upperCaseInput={true}
         />
         <Button type="submit" variant="primary-alt" loading={props.loading} fullWidth={true}>
           {t('CHECKOUT_ADD_DISCOUNT_BUTTON')}
         </Button>
-      </Wrapper>
+      </div>
     </form>
   )
 }
-
-const Wrapper = styled.div({
-  display: 'grid',
-  gridTemplateColumns: '1fr minmax(33%, min-content)',
-  gap: theme.space.xs,
-})
-
-const UppercaseTextField = styled(TextField)({ textTransform: 'uppercase' })

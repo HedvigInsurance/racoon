@@ -1,5 +1,6 @@
 'use client'
 
+import clsx from 'clsx'
 import type { ChangeEventHandler, InputHTMLAttributes, MouseEventHandler } from 'react'
 import { useId, useRef, useState } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
@@ -11,6 +12,7 @@ import {
   inputLabel,
   inputWrapper,
   messageWithIcon,
+  upperCaseInputStyle,
   wrapper,
 } from './TextField.css'
 
@@ -27,6 +29,7 @@ export type Props = BaseInputProps & {
   message?: string
   onValueChange?: (value: string) => void
   onClear?: () => void
+  upperCaseInput?: boolean
 }
 
 export const TextField = (props: Props) => {
@@ -41,6 +44,7 @@ export const TextField = (props: Props) => {
     id,
     onValueChange,
     onClear,
+    upperCaseInput,
     ...inputProps
   } = props
   const [value, setValue] = useState(defaultValue || '')
@@ -87,7 +91,7 @@ export const TextField = (props: Props) => {
         </label>
         <div className={inputWrapper[size]}>
           <input
-            className={input[size]}
+            className={clsx(input[size], upperCaseInput && upperCaseInputStyle)}
             {...inputProps}
             id={identifier}
             ref={inputRef}
