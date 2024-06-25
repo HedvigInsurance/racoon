@@ -1,5 +1,5 @@
 import { createVar, style } from '@vanilla-extract/css'
-import { minWidth, tokens } from 'ui'
+import { minWidth, tokens, yStack } from 'ui'
 import { zIndexes } from '@/utils/zIndex'
 import { MAX_WIDTH } from '../GridLayout/GridLayout.constants'
 import {
@@ -245,20 +245,18 @@ export const navigationSecondaryList = style({
   },
 })
 
-export const navigationProductList = style({
-  display: 'flex',
-  flexDirection: 'column',
-  rowGap: tokens.space.xs,
-  fontSize: tokens.fontSizes.md,
-  color: tokens.colors.textPrimary,
+export const navigationProductList = style([
+  yStack({ gap: 'xs' }),
+  {
+    marginBottom: tokens.space.lg,
+    fontSize: tokens.fontSizes.md,
+    color: tokens.colors.textPrimary,
 
-  '@media': {
-    [minWidth.lg]: {
-      minWidth: '16rem',
-      columnGap: 0,
-      gridTemplateColumns: 'none',
-      gridAutoColumns: '7.5rem',
-      gridAutoFlow: 'column',
+    '@media': {
+      [minWidth.lg]: {
+        minWidth: '16rem',
+        marginBottom: tokens.space.md,
+      },
     },
   },
-})
+])
