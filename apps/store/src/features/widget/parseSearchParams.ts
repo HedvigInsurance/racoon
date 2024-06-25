@@ -1,6 +1,5 @@
 import Personnummer from 'personnummer'
 import { type ShopSessionCustomerUpdateInput } from '@/services/graphql/graphql'
-import { EXTERNAL_REQUEST_ID_QUERY_PARAM } from './widget.constants'
 
 // Search Params from Partner Widget
 export enum SearchParam {
@@ -31,7 +30,7 @@ export enum SearchParam {
 
   // Shop Session Create Partner Data
   ExternalMemberId = 'externalMemberId',
-  ExternalRequestId = EXTERNAL_REQUEST_ID_QUERY_PARAM,
+  ExternalRequestId = 'requestId',
 }
 
 type CustomerData = Omit<ShopSessionCustomerUpdateInput, 'shopSessionId'>
