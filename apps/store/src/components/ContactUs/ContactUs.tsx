@@ -1,6 +1,5 @@
 'use client'
-import { keyframes } from '@emotion/react'
-import styled from '@emotion/styled'
+
 import * as Popover from '@radix-ui/react-popover'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
@@ -11,37 +10,22 @@ import {
   Heading,
   HedvigSymbol,
   MinusIcon,
-  Space,
   Text,
-  theme,
+  yStack,
+  xStack,
 } from 'ui'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useResponsiveVariant } from '@/utils/useResponsiveVariant'
-import { zIndexes } from '@/utils/zIndex'
-
-const scaleIn = keyframes({
-  from: {
-    opacity: 0,
-    transform: 'scale(0)',
-  },
-  to: {
-    opacity: 1,
-    transform: 'scale(1)',
-  },
-})
-
-const scaleOut = keyframes({
-  from: {
-    opacity: 1,
-    transform: 'scale(1)',
-  },
-  to: {
-    opacity: 0,
-    transform: 'scale(0)',
-  },
-})
+import {
+  chatWindow,
+  contactUsButton,
+  statusIcon,
+  header,
+  closeButton,
+  content,
+} from './ContactUs.css'
 
 export const ContactUs = () => {
   const variant = useResponsiveVariant('lg')
@@ -54,24 +38,29 @@ export const ContactUs = () => {
   return (
     <Popover.Root open={open} onOpenChange={setOpen}>
       <Popover.Trigger asChild={true}>
-        <ContactUsButton Icon={<Status />} variant="secondary" size="medium">
+        <Button
+          className={contactUsButton}
+          Icon={<span className={statusIcon} />}
+          variant="secondary"
+          size="medium"
+        >
           {t('CONTACT_US_BUTTON_LABEL')}
-        </ContactUsButton>
+        </Button>
       </Popover.Trigger>
 
       <Popover.Portal>
         <Popover.Content side="bottom" align="end" sideOffset={8} asChild={true}>
-          <ChatWindow>
-            <Header>
+          <div className={chatWindow}>
+            <header className={header}>
               <HedvigSymbol size="24px" />
               <Text as="span">Hedvig</Text>
-              <CloseButton>
+              <Popover.Close className={closeButton}>
                 <MinusIcon size="18px" />
-              </CloseButton>
-            </Header>
+              </Popover.Close>
+            </header>
 
-            <Content y={2.5}>
-              <Space y={1}>
+            <div className={content}>
+              <div className={yStack({ gap: 'md' })}>
                 <div>
                   <Text as="p" align="center" balance={true}>
                     {t('ALREADY_MEMBER_HEADING')}
@@ -81,7 +70,9 @@ export const ContactUs = () => {
                   </Text>
                 </div>
 
-                <AppButtons>
+                <div
+                  className={xStack({ alignItems: 'center', justifyContent: 'center', gap: 'md' })}
+                >
                   <Button
                     as="a"
                     data-dd-action-name="Contact us | IOS App"
@@ -107,14 +98,14 @@ export const ContactUs = () => {
                   >
                     Google Play
                   </Button>
-                </AppButtons>
-              </Space>
+                </div>
+              </div>
 
-              <Space y={1}>
+              <div className={yStack({ gap: 'md' })}>
                 <Heading as="h1" variant="standard.18" align="center">
                   {t('CHAT_HEADING')}
                 </Heading>
-                <Space y={0.5}>
+                <div className={yStack({ alignItems: 'center', gap: 'xs' })}>
                   <Button
                     as="a"
                     data-dd-action-name="Contact us | faq"
@@ -143,77 +134,12 @@ export const ContactUs = () => {
                   >
                     <span>{t('EMAIL_OPTION')}</span>
                   </Button>
-                </Space>
-              </Space>
-            </Content>
-          </ChatWindow>
+                </div>
+              </div>
+            </div>
+          </div>
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>
   )
 }
-
-const ContactUsButton = styled(Button)({
-  position: 'fixed',
-  right: theme.space.lg,
-  bottom: theme.space.lg,
-  width: 'auto',
-  zIndex: zIndexes.contactUs,
-})
-
-const Status = styled.span({
-  flex: '0 0 auto',
-  display: 'inline-block',
-  width: 14,
-  aspectRatio: '1 / 1',
-  borderRadius: '50%',
-  backgroundColor: theme.colors.signalBlueElement,
-})
-
-const ChatWindow = styled.div({
-  display: 'grid',
-  gridTemplateRows: '55px 1fr',
-  height: 500,
-  aspectRatio: '4 / 5',
-  backgroundColor: theme.colors.offWhite,
-  borderRadius: theme.radius.md,
-  transformOrigin: 'var(--radix-popover-content-transform-origin)',
-  filter: 'drop-shadow(0px 1px 1px hsl(0deg 0% 0% / 0.15))',
-
-  '&[data-state=open]': {
-    animation: `${scaleIn} 250ms ${theme.transitions.easeInCubic}`,
-  },
-  '&[data-state=closed]': {
-    animation: `${scaleOut} 250ms ${theme.transitions.easeOutCubic}`,
-  },
-})
-
-const Header = styled.header({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  gap: theme.space.xs,
-  color: theme.colors.white,
-  backgroundColor: theme.colors.black,
-  paddingBlock: theme.space.sm,
-  paddingInline: theme.space.md,
-  borderTopLeftRadius: 'inherit',
-  borderTopRightRadius: 'inherit',
-})
-
-const CloseButton = styled(Popover.Close)({
-  cursor: 'pointer',
-})
-
-const Content = styled(Space)({
-  paddingBlock: theme.space.xl,
-  paddingInline: theme.space.md,
-  overflowY: 'auto',
-})
-
-const AppButtons = styled.div({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: theme.space.md,
-})

@@ -3,21 +3,30 @@ import { storyblokEditable } from '@storyblok/react'
 import { useSearchParams } from 'next/navigation'
 import type { ReactNode } from 'react'
 import { Suspense, useEffect, useState } from 'react'
-import { ButtonNextLink } from '@/components/ButtonNextLink'
+import { ButtonNextLink, type ButtonNextLinkProps } from '@/components/ButtonNextLink'
 import type { LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 import { mergeSearchParams } from '@/utils/mergeSearchParams'
 
-type Props = SbBaseBlockProps<{
-  text: string
-  link: LinkField
-}>
+type Props = SbBaseBlockProps<
+  {
+    text: string
+    link: LinkField
+  } & Pick<StartButtonProps, 'size' | 'fullWidth'>
+>
 
 export function WidgetFlowStartButtonBlock({ blok }: Props) {
+  const { link, text, fullWidth = true, size = 'large' } = blok
+
   return (
     <Suspense>
-      <StartButton {...storyblokEditable(blok)} href={getLinkFieldURL(blok.link)}>
-        {blok.text}
+      <StartButton
+        {...storyblokEditable(blok)}
+        href={getLinkFieldURL(link)}
+        size={size}
+        fullWidth={fullWidth}
+      >
+        {text}
       </StartButton>
     </Suspense>
   )
@@ -26,6 +35,8 @@ export function WidgetFlowStartButtonBlock({ blok }: Props) {
 type StartButtonProps = {
   href: string
   children: ReactNode
+  size: ButtonNextLinkProps['size']
+  fullWidth: ButtonNextLinkProps['fullWidth']
 } & ReturnType<typeof storyblokEditable>
 
 function StartButton({ href, children, ...forwardedProps }: StartButtonProps) {
@@ -43,8 +54,6 @@ function StartButton({ href, children, ...forwardedProps }: StartButtonProps) {
       href={targetHref}
       onClick={() => setLoading(true)}
       variant="primary"
-      fullWidth={true}
-      size="large"
       loading={loading}
     >
       {children}
