@@ -1,4 +1,4 @@
-import { style, keyframes, styleVariants } from '@vanilla-extract/css'
+import { style, keyframes, styleVariants, createVar, fallbackVar } from '@vanilla-extract/css'
 import { tokens, xStack } from 'ui'
 
 const warningAnimation = keyframes({
@@ -42,9 +42,37 @@ export const baseWrapper = style({
   },
 })
 
+const labelTransform = createVar()
+const labelOverflow = createVar()
+
 export const wrapper = styleVariants({
-  small: [baseWrapper, { height: '3.5rem' }],
-  large: [baseWrapper, { height: '4.5rem' }],
+  small: [
+    baseWrapper,
+    {
+      height: '3.5rem',
+      selectors: {
+        ['&:focus-within, &[data-active=true]']: {
+          vars: {
+            [labelTransform]: `translate(calc(${tokens.space.md} * 0.2), -0.6rem) scale(0.8)`,
+          },
+        },
+      },
+    },
+  ],
+  large: [
+    baseWrapper,
+    {
+      height: '4.5rem',
+      selectors: {
+        ['&:focus-within, &[data-active=true]']: {
+          vars: {
+            [labelTransform]: `translate(calc(${tokens.space.md} * 0.4), -0.6rem) scale(0.6)`,
+            [labelOverflow]: 'visible',
+          },
+        },
+      },
+    },
+  ],
 })
 
 export const baseLabel = style({
@@ -78,23 +106,15 @@ export const inputLabel = styleVariants({
     baseLabel,
     {
       fontSize: tokens.fontSizes.lg,
-      selectors: {
-        [`${baseWrapper}:focus-within > &, ${baseWrapper}[data-active=true] > &`]: {
-          transform: `translate(calc(${tokens.space.md} * 0.2), -0.6rem) scale(0.8)`,
-        },
-      },
+      transform: fallbackVar(labelTransform, 'none'),
     },
   ],
   large: [
     baseLabel,
     {
       fontSize: tokens.fontSizes.xl,
-      selectors: {
-        [`${baseWrapper}:focus-within > &, ${baseWrapper}[data-active=true] > &`]: {
-          overflow: 'visible',
-          transform: `translate(calc(${tokens.space.md} * 0.4), -0.6rem) scale(0.6)`,
-        },
-      },
+      transform: fallbackVar(labelTransform, 'none'),
+      overflow: fallbackVar(labelOverflow, 'hidden'),
     },
   ],
 })
