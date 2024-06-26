@@ -2,7 +2,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useInView } from 'framer-motion'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import type { MouseEventHandler, ReactNode, RefObject } from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
@@ -169,15 +169,6 @@ export const OfferPresenter = (props: Props) => {
     }
     addToCart(selectedOffer.id)
   }
-
-  const pathname = usePathname()
-  const initialPathnameRef = useRef(pathname)
-  useEffect(() => {
-    // Finished navigating to checkout page, we can clean up now
-    if (isNavigatingToCheckout && initialPathnameRef.current !== pathname) {
-      resetPriceIntent()
-    }
-  }, [isNavigatingToCheckout, pathname, resetPriceIntent])
 
   return (
     <>
