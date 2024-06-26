@@ -1,17 +1,16 @@
-import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import type { FormEventHandler } from 'react'
 import { useState } from 'react'
-import { Button, mq, Space, theme } from 'ui'
+import { Button, Space } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
-import { HEADER_HEIGHT_MOBILE, HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header.constants'
 import { TextField } from '@/components/TextField/TextField'
 import { TextWithLink } from '@/components/TextWithLink'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useRedeemCampaign } from '@/utils/useCampaign'
+import { layout } from './ForeverPage.css'
 import { usePrintTextEffect } from './usePrintTextEffect'
 
 export type Props = { code: string }
@@ -41,12 +40,12 @@ export const ForeverPage = ({ code: initialCode }: Props) => {
   }
 
   return (
-    <Layout>
+    <div className={layout}>
       <GridLayout.Root as="main">
         <GridLayout.Content width="1/3" align="center">
           <form onSubmit={handleSubmit}>
             <Space y={errorMessage ? 1 : 0.25}>
-              <UppercaseTextField
+              <TextField
                 name="code"
                 label={t('FOREVER_PAGE_INPUT_TEXT')}
                 value={code}
@@ -54,6 +53,7 @@ export const ForeverPage = ({ code: initialCode }: Props) => {
                 required={true}
                 message={errorMessage}
                 warning={!!errorMessage}
+                upperCaseInput={true}
               />
               <Button type="submit" loading={showLoading} fullWidth={true}>
                 {t('FOREVER_PAGE_BTN_LABEL')}
@@ -75,24 +75,6 @@ export const ForeverPage = ({ code: initialCode }: Props) => {
           </TextWithLink>
         </GridLayout.Content>
       </GridLayout.Root>
-    </Layout>
+    </div>
   )
 }
-
-const Layout = styled.div({
-  '--header-height': HEADER_HEIGHT_MOBILE,
-  display: 'grid',
-  gridTemplateRows: '1fr auto',
-  alignItems: 'center',
-  height: 'calc(100vh - var(--header-height))',
-  paddingBlock: theme.space.md,
-
-  [mq.lg]: {
-    '--header-height': HEADER_HEIGHT_DESKTOP,
-    paddingBlock: theme.space.xl,
-  },
-})
-
-const UppercaseTextField = styled(TextField)({
-  textTransform: 'uppercase',
-})
