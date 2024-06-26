@@ -98,6 +98,14 @@ export type SEOData = {
   seoMetaOgImage?: StoryblokAsset
   abTestOrigin?: PageStory
   canonicalUrl?: string
+  type?: 'Article' | 'NewsArticle' | 'BlogPosting' | 'ProfilePage'
+  image?: StoryblokAsset
+  headline?: string
+  datePublished?: string
+  dateModified?: string
+  authorType?: 'Person' | 'Organization'
+  authorName?: string
+  authorLink?: LinkField
 }
 
 export type PageStory = ISbStoryData<
