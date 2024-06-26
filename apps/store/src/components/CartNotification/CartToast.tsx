@@ -16,7 +16,7 @@ import {
 } from '@/features/bundleDiscount/bundleDiscount'
 import { BundleDiscountExtraProductLinks } from '@/features/bundleDiscount/BundleDiscountExtraProductLinks'
 import { BundleDiscountSummary } from '@/features/bundleDiscount/BundleDiscountSummary'
-import type { CartFragmentFragment } from '@/services/graphql/generated'
+import type { CartFragment } from '@/services/graphql/generated'
 import { ExternalInsuranceCancellationOption } from '@/services/graphql/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
@@ -112,7 +112,7 @@ export const CartToast = forwardRef<CartToastAttributes>((_, forwardedRef) => {
 
 CartToast.displayName = 'CartToast'
 
-function CartToastItem({ item }: { item: CartFragmentFragment['entries'][number] }) {
+function CartToastItem({ item }: { item: CartFragment['entries'][number] }) {
   const { t } = useTranslation(['purchase-form', 'cart'])
   const formatter = useFormatter()
   const description =

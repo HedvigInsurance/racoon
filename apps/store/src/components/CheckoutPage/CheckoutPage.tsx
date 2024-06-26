@@ -24,7 +24,7 @@ import { TextField } from '@/components/TextField/TextField'
 import { TextWithLink } from '@/components/TextWithLink'
 import { SIGN_FORM_ID } from '@/constants/sign.constants'
 import type {
-  CartFragmentFragment,
+  CartFragment,
   CurrentMemberQuery,
   CurrentMemberQueryVariables,
 } from '@/services/graphql/generated'
@@ -46,7 +46,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
   const [showSignError, setShowSignError] = useState(false)
   const router = useRouter()
 
-  const handleRemoveCartEntry = (cart: CartFragmentFragment) => {
+  const handleRemoveCartEntry = (cart: CartFragment) => {
     if (cart.entries.length === 0) {
       router.push(PageLink.cart({ locale }).pathname)
     }

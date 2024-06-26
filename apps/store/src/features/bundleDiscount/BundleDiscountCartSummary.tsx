@@ -3,12 +3,12 @@ import { useTranslation } from 'next-i18next'
 import type { ReactNode } from 'react'
 import { BUNDLE_DISCOUNT_PROMO_PAGE_PATH } from '@/features/bundleDiscount/bundleDiscount'
 import { readMoreLink } from '@/features/bundleDiscount/BundleDiscountSummary.css'
-import type { CartFragmentFragment } from '@/services/graphql/generated'
+import type { CartFragment } from '@/services/graphql/generated'
 import { useFormatter } from '@/utils/useFormatter'
 import { BundleDiscountSummary } from './BundleDiscountSummary'
 
 type Props = {
-  cart: CartFragmentFragment
+  cart: CartFragment
 }
 
 export function BundleDiscountCartSummary({ cart }: Props) {
