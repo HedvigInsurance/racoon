@@ -6,7 +6,7 @@ import { CopyToClipboard } from '@/components/DebugDialog/CopyToClipboard'
 import { DebugDialog } from '@/components/DebugDialog/DebugDialog'
 import { DebugShopSessionSection } from '@/components/DebugDialog/DebugShopSessionSection'
 import { DebugTextKeys } from '@/components/DebugDialog/DebugTextKeys'
-import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { useShopSession, useShopSessionId } from '@/services/shopSession/ShopSessionContext'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 
@@ -40,16 +40,16 @@ const LinkToCartSection = () => {
 }
 
 const LinkToRetargetingSection = () => {
-  const { shopSession } = useShopSession()
+  const shopSessionId = useShopSessionId()
   const locale = useRoutingLocale()
   const retargetingLink = useMemo(() => {
-    if (!shopSession) return null
+    if (shopSessionId == null) return null
 
     return PageLink.retargeting({
       locale,
-      shopSessionId: shopSession.id,
+      shopSessionId,
     }).toString()
-  }, [shopSession, locale])
+  }, [shopSessionId, locale])
 
   return <CopyToClipboard label="Copy re-targeting link">{retargetingLink ?? ''}</CopyToClipboard>
 }

@@ -83,7 +83,7 @@ export const ManyPetsMigrationPage = ({
   )
 
   return (
-    <TrackingProvider shopSession={migrationSessionQueryResult.data?.shopSession}>
+    <TrackingProvider shopSessionId={migrationSessionId}>
       {announcement}
       <main>
         {preOfferContent}

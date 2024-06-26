@@ -12,7 +12,6 @@ import { SelectProductPage } from '@/features/widget/SelectProductPage'
 import { createPriceIntent, getWidgetPriceTemplate } from '@/features/widget/widget.helpers'
 import { initializeApolloServerSide } from '@/services/apollo/client'
 import { hideChatOnPage } from '@/services/CustomerFirst'
-import { useShopSessionQuery } from '@/services/graphql/generated'
 import type { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
@@ -107,14 +106,13 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
 
 const NextPage = ({ partner, ...rest }: Props) => {
   const { t } = useTranslation('widget')
-  const { data } = useShopSessionQuery({ variables: { shopSessionId: rest.shopSessionId } })
 
   return (
     <>
       <Head>
         <title>{`Hedvig | ${t('SELECT_PAGE_TITLE')}`}</title>
       </Head>
-      <TrackingProvider shopSession={data?.shopSession} partner={partner}>
+      <TrackingProvider shopSessionId={rest.shopSessionId} partner={partner}>
         <SelectProductPage {...rest} />
       </TrackingProvider>
     </>

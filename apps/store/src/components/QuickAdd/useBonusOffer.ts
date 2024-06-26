@@ -5,7 +5,7 @@ import {
   type ProductRecommendationsQuery,
   useProductRecommendationsQuery,
 } from '@/services/graphql/generated'
-import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { useShopSessionId } from '@/services/shopSession/ShopSessionContext'
 
 type OfferRecommendation = {
   offer: OfferRecommendationFragment
@@ -13,13 +13,13 @@ type OfferRecommendation = {
 }
 
 export const useBonusOffer = (customShopSessionId?: string): OfferRecommendation | null => {
-  const { shopSession } = useShopSession()
-  const shopSessionId = customShopSessionId ?? shopSession?.id
+  const currentShopSessionId = useShopSessionId()
+  const shopSessionId = customShopSessionId ?? currentShopSessionId
 
   const result = useProductRecommendationsQuery({
     fetchPolicy: 'cache-and-network',
     variables: shopSessionId ? { shopSessionId } : undefined,
-    skip: !shopSessionId,
+    skip: shopSessionId == null,
     onCompleted(data) {
       const offerRecommendations = getOfferRecommendations(data)
       if (offerRecommendations.length > 1) {

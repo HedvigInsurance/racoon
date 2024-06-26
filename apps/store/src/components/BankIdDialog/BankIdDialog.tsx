@@ -23,7 +23,7 @@ import type { BankIdOperation } from '@/services/bankId/bankId.types'
 import { BankIdState } from '@/services/bankId/bankId.types'
 import { bankIdLogger } from '@/services/bankId/bankId.utils'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
-import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { useShopSessionId } from '@/services/shopSession/ShopSessionContext'
 import { wait } from '@/utils/wait'
 import {
   qrCode,
@@ -37,7 +37,7 @@ import {
 
 export function BankIdDialog() {
   const { t } = useTranslation('bankid')
-  const { shopSession } = useShopSession()
+  const shopSessionId = useShopSessionId()
   const { startLogin, cancelLogin, cancelCheckoutSign, currentOperation } = useBankIdContext()
 
   useTriggerBankIdOnSameDevice(currentOperation)
@@ -52,7 +52,7 @@ export function BankIdDialog() {
       cancelCurrentOperation()
 
       const logPrefix = currentOperation.type === 'login' ? 'Login' : 'Sign'
-      const logMessageContext = shopSession ? { shopSessionId: shopSession.id } : undefined
+      const logMessageContext = shopSessionId ? { shopSessionId } : undefined
       bankIdLogger.info(`${logPrefix} | Operation cancelled`, logMessageContext)
     }
   }

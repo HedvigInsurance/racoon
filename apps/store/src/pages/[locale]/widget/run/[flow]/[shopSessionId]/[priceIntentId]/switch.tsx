@@ -86,7 +86,7 @@ const Page = (props: Props) => {
       <Head>
         <title>{`Hedvig | ${t('CALCULATE_PRICE_PAGE_TITLE')}`}</title>
       </Head>
-      <TrackingProvider shopSession={shopSession} priceIntent={priceIntent}>
+      <TrackingProvider shopSessionId={props.shopSessionId} priceIntent={priceIntent}>
         <SwitchPage {...props} shopSession={shopSession} priceIntent={priceIntent} />
       </TrackingProvider>
     </>
