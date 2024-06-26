@@ -44,7 +44,8 @@ export const baseWrapper = style({
 
 export const wrapper = styleVariants({
   small: [baseWrapper, { height: '3.5rem' }],
-  large: [baseWrapper, { height: '4.5rem' }],
+  medium: [baseWrapper, { height: '4rem' }],
+  large: [baseWrapper, { height: '4rem' }],
 })
 
 export const baseLabel = style({
@@ -60,7 +61,7 @@ export const baseLabel = style({
   transformOrigin: 'top left',
   transition: 'transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms',
   transform: 'translate(0, 0) scale(1)',
-  paddingInline: tokens.space.md,
+  marginInline: tokens.space.md,
 
   selectors: {
     '&&[data-disabled=true]': {
@@ -77,10 +78,21 @@ export const inputLabel = styleVariants({
   small: [
     baseLabel,
     {
-      fontSize: tokens.fontSizes.lg,
+      fontSize: tokens.fontSizes.md,
       selectors: {
         [`${baseWrapper}:focus-within > &, ${baseWrapper}[data-active=true] > &`]: {
-          transform: `translate(calc(${tokens.space.md} * 0.2), -0.6rem) scale(0.8)`,
+          transform: `translateY(-0.4rem) scale(0.8)`,
+        },
+      },
+    },
+  ],
+  medium: [
+    baseLabel,
+    {
+      fontSize: tokens.fontSizes.md,
+      selectors: {
+        [`${baseWrapper}:focus-within > &, ${baseWrapper}[data-active=true] > &`]: {
+          transform: `translateY(-0.5rem) scale(0.8)`,
         },
       },
     },
@@ -92,7 +104,7 @@ export const inputLabel = styleVariants({
       selectors: {
         [`${baseWrapper}:focus-within > &, ${baseWrapper}[data-active=true] > &`]: {
           overflow: 'visible',
-          transform: `translate(calc(${tokens.space.md} * 0.4), -0.6rem) scale(0.6)`,
+          transform: `translateY(-0.6rem) scale(0.6)`,
         },
       },
     },
@@ -108,7 +120,8 @@ export const baseInputWrapper = style([
 ])
 
 export const inputWrapper = styleVariants({
-  small: [baseInputWrapper, { bottom: '0.3125rem' }],
+  small: [baseInputWrapper, { bottom: '0.46875rem' }],
+  medium: [baseInputWrapper, { bottom: '0.78125rem' }],
   large: [baseInputWrapper, { bottom: '0.625rem' }],
 })
 
@@ -136,7 +149,8 @@ export const upperCaseInputStyle = style({
 })
 
 export const input = styleVariants({
-  small: [baseInput, { fontSize: tokens.fontSizes.lg }],
+  small: [baseInput, { fontSize: tokens.fontSizes.md }],
+  medium: [baseInput, { fontSize: tokens.fontSizes.md }],
   large: [baseInput, { fontSize: tokens.fontSizes.xl }],
 })
 
