@@ -8395,33 +8395,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@radix-ui/react-collapsible@npm:1.0.3":
-  version: 1.0.3
-  resolution: "@radix-ui/react-collapsible@npm:1.0.3"
-  dependencies:
-    "@babel/runtime": "npm:^7.13.10"
-    "@radix-ui/primitive": "npm:1.0.1"
-    "@radix-ui/react-compose-refs": "npm:1.0.1"
-    "@radix-ui/react-context": "npm:1.0.1"
-    "@radix-ui/react-id": "npm:1.0.1"
-    "@radix-ui/react-presence": "npm:1.0.1"
-    "@radix-ui/react-primitive": "npm:1.0.3"
-    "@radix-ui/react-use-controllable-state": "npm:1.0.1"
-    "@radix-ui/react-use-layout-effect": "npm:1.0.1"
-  peerDependencies:
-    "@types/react": "*"
-    "@types/react-dom": "*"
-    react: ^16.8 || ^17.0 || ^18.0
-    react-dom: ^16.8 || ^17.0 || ^18.0
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-    "@types/react-dom":
-      optional: true
-  checksum: 10c0/7bc3e601e3fa84991bdf46ea1bdb725760942f8facadf42f05808abc7a1399c6ab90a00c70699367026afbd8afba0254ff9634f9d1e05b24ae452d9e0524d328
-  languageName: node
-  linkType: hard
-
 "@radix-ui/react-collapsible@npm:1.1.0":
   version: 1.1.0
   resolution: "@radix-ui/react-collapsible@npm:1.1.0"
@@ -25829,7 +25802,7 @@ __metadata:
     "@opentelemetry/api-logs": "npm:0.52.1"
     "@radix-ui/react-accordion": "npm:1.2.0"
     "@radix-ui/react-checkbox": "npm:1.1.0"
-    "@radix-ui/react-collapsible": "npm:1.0.3"
+    "@radix-ui/react-collapsible": "npm:1.1.0"
     "@radix-ui/react-dialog": "npm:1.0.5"
     "@radix-ui/react-navigation-menu": "npm:1.1.4"
     "@radix-ui/react-popover": "npm:1.0.7"
