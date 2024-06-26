@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Text, theme } from 'ui'
 import Collapsible from '@/components/Collapsible/Collapsible'
 import { Switch } from '@/components/Switch'
-import { AddCampaignForm } from './AddCampaignForm'
+import { AddCampaignForm } from './AddCampaignForm/AddCampaignForm'
 import { AddedCampaignForm } from './AddedCampaignForm'
 
 type Props = {

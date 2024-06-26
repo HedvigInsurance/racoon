@@ -131,6 +131,10 @@ export const baseInput = style({
   },
 })
 
+export const upperCaseInputStyle = style({
+  textTransform: 'uppercase',
+})
+
 export const input = styleVariants({
   small: [baseInput, { fontSize: tokens.fontSizes.lg }],
   large: [baseInput, { fontSize: tokens.fontSizes.xl }],
