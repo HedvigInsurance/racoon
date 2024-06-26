@@ -36,6 +36,8 @@ export const Large = {
     label: 'Name',
     variant: 'large',
     defaultValue: 'John Sculley',
+    type: 'text',
+    inputMode: 'text',
   },
 }
 
@@ -45,6 +47,8 @@ export const Small = {
     label: 'Address',
     variant: 'small',
     defaultValue: '786 Franklin Ave.',
+    type: 'text',
+    inputMode: 'text',
   },
 }
 
