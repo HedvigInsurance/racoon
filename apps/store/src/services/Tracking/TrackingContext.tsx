@@ -2,7 +2,6 @@
 import { type ReactNode, createContext, useMemo } from 'react'
 import { type ProductData } from '@/components/ProductData/ProductData.types'
 import { type PriceIntent } from '@/services/priceIntent/priceIntent.types'
-import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useCurrentCountry } from '@/utils/l10n/useCurrentCountry'
 import { type Tracking } from './Tracking'
 
@@ -10,32 +9,32 @@ export const TrackingContext = createContext<Tracking['context']>({})
 
 type Props = {
   children: ReactNode
-  shopSession?: ShopSession
+  shopSessionId?: string | null
   priceIntent?: PriceIntent
   productData?: ProductData
   partner?: string
 }
 
-export const TrackingProvider = (props: Props) => {
+export const TrackingProvider = ({
+  children,
+  partner,
+  shopSessionId,
+  productData,
+  priceIntent,
+}: Props) => {
   const { countryCode } = useCurrentCountry()
 
   const data = useMemo<Tracking['context']>(() => {
     return {
-      shopSessionId: props.shopSession?.id,
-      ...parsePriceIntentData(props.priceIntent?.data ?? {}),
-      ...(props.productData && parseProductData(props.productData)),
-      partner: props.partner,
+      shopSessionId: shopSessionId ?? undefined,
+      ...parsePriceIntentData(priceIntent?.data ?? {}),
+      ...(productData && parseProductData(productData)),
+      partner,
       countryCode,
     }
-  }, [
-    props.shopSession?.id,
-    props.priceIntent?.data,
-    props.productData,
-    props.partner,
-    countryCode,
-  ])
+  }, [shopSessionId, priceIntent?.data, productData, partner, countryCode])
 
-  return <TrackingContext.Provider value={data}>{props.children}</TrackingContext.Provider>
+  return <TrackingContext.Provider value={data}>{children}</TrackingContext.Provider>
 }
 
 const parsePriceIntentData = (data: Record<string, unknown>): Tracking['context'] => {

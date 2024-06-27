@@ -49,7 +49,7 @@ const NextWidgetSignPage = (props: Props) => {
         selectedTypeOfContract={props.initialSelectedTypeOfContract}
       >
         <TrackingProvider
-          shopSession={shopSession}
+          shopSessionId={props.shopSessionId}
           productData={props.productData}
           partner={props.partner}
         >

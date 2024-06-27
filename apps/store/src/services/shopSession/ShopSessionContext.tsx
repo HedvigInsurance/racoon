@@ -24,7 +24,13 @@ type Props = PropsWithChildren<{ shopSessionId?: string }>
 
 export const ShopSessionProvider = ({ children, shopSessionId: initialShopSessionId }: Props) => {
   const contextValue = useShopSessionContextValue(initialShopSessionId)
-  return <ShopSessionContext.Provider value={contextValue}>{children}</ShopSessionContext.Provider>
+  return (
+    <ShopSessionContext.Provider value={contextValue}>
+      <ShopSessionIdContext.Provider value={contextValue.shopSession?.id ?? null}>
+        {children}
+      </ShopSessionIdContext.Provider>
+    </ShopSessionContext.Provider>
+  )
 }
 
 export const useShopSession = (): ShopSessionResult => {
@@ -106,4 +112,12 @@ const useShopSessionContextValue = (initialShopSessionId?: string) => {
   queryResult.shopSession = shopSession?.countryCode === countryCode ? shopSession : undefined
 
   return queryResult
+}
+
+// Optimization: single-field context that allows consuming just sessionId
+// Unlike full ShopSessionContext, almost never triggers rerender since ID rarely changes
+export const ShopSessionIdContext = createContext<string | null>(null)
+
+export const useShopSessionId = (): string | null => {
+  return useContext(ShopSessionIdContext)
 }

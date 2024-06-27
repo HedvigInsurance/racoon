@@ -6,7 +6,7 @@ import { Button, Space } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { TextField } from '@/components/TextField/TextField'
 import { TextWithLink } from '@/components/TextWithLink'
-import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { useShopSessionId } from '@/services/shopSession/ShopSessionContext'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useRedeemCampaign } from '@/utils/useCampaign'
@@ -22,11 +22,11 @@ export const ForeverPage = ({ code: initialCode }: Props) => {
   const [code, setCode] = useState('')
   usePrintTextEffect({ value: initialCode, onValueChange: setCode })
 
-  const { shopSession } = useShopSession()
+  const shopSessionId = useShopSessionId()
   const locale = useRoutingLocale()
   const redirectUrl = PageLink.store({ locale })
   const [addCampaign, { errorMessage, loading, called }] = useRedeemCampaign({
-    shopSessionId: shopSession?.id ?? '',
+    shopSessionId: shopSessionId ?? '',
     onCompleted() {
       router.push(redirectUrl)
     },

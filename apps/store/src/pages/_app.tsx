@@ -24,7 +24,7 @@ import { useInitDatadogAfterInteractive } from '@/services/logger/client'
 import { PageTransitionProgressBar } from '@/services/nprogress/pageTransition'
 import { OneTrustStyles } from '@/services/OneTrust'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
-import { ShopSessionProvider, useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { ShopSessionProvider, useShopSessionId } from '@/services/shopSession/ShopSessionContext'
 import { initStoryblok } from '@/services/storyblok/storyblok'
 import { Tracking } from '@/services/Tracking/Tracking'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
@@ -129,8 +129,8 @@ const ShopSessionTrackingProvider = (props: { children: ReactNode }) => {
   // Outermost component where we have tracking + shopSession
   useReportDeviceInfo()
 
-  const { shopSession } = useShopSession()
-  return <TrackingProvider shopSession={shopSession}>{props.children}</TrackingProvider>
+  const shopSessionId = useShopSessionId()
+  return <TrackingProvider shopSessionId={shopSessionId}>{props.children}</TrackingProvider>
 }
 
 export default appWithTranslation(MyApp)
