@@ -46,7 +46,7 @@
     "@radix-ui/react-tooltip": "1.0.7",
     "@storyblok/js": "3.0.8",
     "@storyblok/react": "3.0.10",
-    "@types/uuid": "9.0.8",
+    "@types/uuid": "10.0.0",
     "@vanilla-extract/css": "1.15.3",
     "@vanilla-extract/dynamic": "2.1.1",
     "@vanilla-extract/recipes": "0.5.3",
