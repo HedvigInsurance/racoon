@@ -45,10 +45,12 @@ export const ChangeSsnWarningDialog = ({ open, onAccept, onDecline }: Props) => 
           </>
         }
       >
-        <Text className={title}>
-          <WarningTriangleIcon size="1em" color={theme.colors.amber600} />
-          {t('CHANGE_SSN_TITLE')}
-        </Text>
+        <FullscreenDialog.Title>
+          <Text className={title}>
+            <WarningTriangleIcon size="1em" color={theme.colors.amber600} />
+            {t('CHANGE_SSN_TITLE')}
+          </Text>
+        </FullscreenDialog.Title>
         <Text color="textSecondary" align="center">
           {t('CHANGE_SSN_DESCRIPTION')}
         </Text>

@@ -35,7 +35,7 @@ export const PriceCalculatorDialog = ({ children, header, isOpen, toggleDialog }
   )
 }
 
-const HeaderWrapper = styled.div({
+const HeaderWrapper = styled(Dialog.Title)({
   paddingTop: theme.space.xxxl,
 })
 
