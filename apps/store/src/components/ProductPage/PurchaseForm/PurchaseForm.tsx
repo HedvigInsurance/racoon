@@ -13,6 +13,10 @@ import { Button, Heading, Space, framerTransitions } from 'ui'
 import type { CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { CartToast } from '@/components/CartNotification/CartToast'
 import { Pillow } from '@/components/Pillow/Pillow'
+import {
+  useIsPriceCalculatorStateReady,
+  useSyncPriceCalculatorState,
+} from '@/components/PriceCalculator/priceCalculatorAtoms'
 import { PriceCalculatorDynamic } from '@/components/PriceCalculator/PriceCalculatorDynamic'
 import { completePriceLoader, PriceLoader } from '@/components/PriceLoader'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
@@ -24,7 +28,6 @@ import { PriceIntentTrackingProvider } from '@/components/ProductPage/PriceInten
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { ProductPageDebugDialog } from '@/components/ProductPage/ProductPageDebugDialog'
 import { ProductPageViewTracker } from '@/components/ProductPage/ProductPageViewTrack'
-import { usePriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
 import {
   purchaseFormHeroWrapper,
   purchaseFormPriceLoaderWrapper,
@@ -45,7 +48,6 @@ import {
   ExternalInsuranceCancellationOption,
   usePriceIntentConfirmMutation,
 } from '@/services/graphql/generated'
-import type { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
@@ -98,7 +100,6 @@ type PurchaseFormInnerProps = PurchaseFormProps & {
 }
 
 const PurchaseFormInner = (props: PurchaseFormInnerProps) => {
-  const priceTemplate = usePriceTemplate()
   const productData = useProductData()
   const { shopSession } = useShopSession()
   const [priceIntent] = usePriceIntent()
@@ -144,7 +145,7 @@ const PurchaseFormInner = (props: PurchaseFormInnerProps) => {
     !isLarge && window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   }
 
-  const isReady = !!(shopSession && priceIntent)
+  const isReady = shopSession != null && priceIntent != null
   if (!isReady) {
     return <IdleState loading={true} showAverageRating={props.showAverageRating} />
   } else if (formState.state === 'IDLE') {
@@ -165,14 +166,7 @@ const PurchaseFormInner = (props: PurchaseFormInnerProps) => {
     }
   }
 
-  const editingStateForm = (
-    <EditingState
-      shopSession={shopSession}
-      priceIntent={priceIntent}
-      priceTemplate={priceTemplate}
-      onComplete={handleComplete}
-    />
-  )
+  const editingStateForm = <EditingState priceIntent={priceIntent} onComplete={handleComplete} />
 
   const editor = isLarge ? (
     <motion.div
@@ -286,15 +280,15 @@ const IdleState = ({ loading, onClick, showAverageRating }: IdleStateProps) => {
 }
 
 type EditingStateProps = {
-  shopSession: ShopSession
   priceIntent: PriceIntent
-  priceTemplate: Template
   onComplete: (error?: string) => void
 }
 
 const EditingState = (props: EditingStateProps) => {
-  const { shopSession, priceIntent, onComplete, priceTemplate } = props
+  const { priceIntent, onComplete } = props
   const { t } = useTranslation('purchase-form')
+
+  useSyncPriceCalculatorState(priceIntent)
 
   const priceLoaderPromise = useRef<Promise<unknown> | null>(null)
   const [confirmPriceIntent, result] = usePriceIntentConfirmMutation({
@@ -342,19 +336,19 @@ const EditingState = (props: EditingStateProps) => {
     ])
   }
 
-  return isLoadingPrice ? (
-    <div className={purchaseFormPriceLoaderWrapper}>
-      <PriceLoader />
-    </div>
-  ) : (
+  const isReady = useIsPriceCalculatorStateReady()
+  if (!isReady) {
+    return null
+  } else if (isLoadingPrice) {
+    return (
+      <div className={purchaseFormPriceLoaderWrapper}>
+        <PriceLoader />
+      </div>
+    )
+  }
+  return (
     <div className={purchaseFormResponsiveBlock}>
-      <PriceCalculatorDynamic
-        key={priceIntent.id}
-        priceIntent={priceIntent}
-        shopSession={shopSession}
-        priceTemplate={priceTemplate}
-        onConfirm={handleConfirm}
-      />
+      <PriceCalculatorDynamic key={priceIntent.id} onConfirm={handleConfirm} />
     </div>
   )
 }

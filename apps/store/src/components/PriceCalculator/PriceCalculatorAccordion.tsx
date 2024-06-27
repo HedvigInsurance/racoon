@@ -1,58 +1,48 @@
 import { datadogRum } from '@datadog/browser-rum'
+import { useAtom, useAtomValue } from 'jotai'
 import { useRouter } from 'next/navigation'
 import { type ReactNode, useCallback, useState } from 'react'
+import {
+  activeFormSectionIdAtom,
+  priceCalculatorFormAtom,
+  shopSessionCustomerAtom,
+} from '@/components/PriceCalculator/priceCalculatorAtoms'
 import { SSN_SE_SECTION_ID, SsnSeSection } from '@/components/PriceCalculator/SsnSeSection'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
-import type { Form, FormSection } from '@/services/PriceCalculator/PriceCalculator.types'
-import type { ShopSession } from '@/services/shopSession/ShopSession.types'
+import type { FormSection } from '@/services/PriceCalculator/PriceCalculator.types'
+import { useShopSessionId } from '@/services/shopSession/ShopSessionContext'
 import { ChangeSsnWarningDialog } from '../ChangeSsnWarningDialog/ChangeSsnWarningDialog'
 import * as Accordion from './Accordion'
 import { PriceCalculatorAccordionSection } from './PriceCalculatorAccordionSection'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
 type Props = {
-  activeSectionId?: string
   children: (section: FormSection, index: number) => ReactNode
-  form: Form
-  shopSession: ShopSession
-  onActiveSectionChange: (sectionId: string) => void
 }
 
-export const PriceCalculatorAccordion = ({
-  form,
-  children,
-  activeSectionId,
-  onActiveSectionChange,
-  shopSession,
-}: Props) => {
+export const PriceCalculatorAccordion = ({ children }: Props) => {
+  const shopSessionId = useShopSessionId()!
+  const [activeSectionId, setActiveSectionId] = useAtom(activeFormSectionIdAtom)
+  const shopSessionCustomer = useAtomValue(shopSessionCustomerAtom)
+  const form = useAtomValue(priceCalculatorFormAtom)
   const router = useRouter()
   const translateLabel = useTranslateFieldLabel()
   const [showChangeSsnDialog, setShowChangeSsnDialog] = useState(false)
 
   const handleActiveSectionChange = useCallback(
     (sectionId: string) => {
-      if (sectionId === SSN_SE_SECTION_ID && shopSession.customer?.ssn) {
+      if (sectionId === SSN_SE_SECTION_ID && shopSessionCustomer?.ssn) {
         setShowChangeSsnDialog(true)
       } else {
-        onActiveSectionChange(sectionId)
+        setActiveSectionId(sectionId)
       }
     },
-    [onActiveSectionChange, shopSession.customer?.ssn],
+    [setActiveSectionId, shopSessionCustomer?.ssn],
   )
-
-  const ssnSectionNextIndex =
-    form.sections.findIndex((section) => section.id === SSN_SE_SECTION_ID) + 1
-  const ssnSectionNextId = form.sections[ssnSectionNextIndex]?.id
-  const handleSsnSectionCompleted = useCallback(() => {
-    if (!ssnSectionNextId) {
-      throw new Error(`Failed to find section after ${SSN_SE_SECTION_ID}`)
-    }
-    onActiveSectionChange(ssnSectionNextId)
-  }, [ssnSectionNextId, onActiveSectionChange])
 
   const handleAcceptChangeSsn = useCallback(() => {
     datadogRum.addAction('Cleared shopSession to change SSN in price calculator', {
-      shopSessionId: shopSession.id,
+      shopSessionId,
     })
 
     const url = new URL(window.location.href)
@@ -62,7 +52,7 @@ export const PriceCalculatorAccordion = ({
 
     router.replace(url.toString())
     setShowChangeSsnDialog(false)
-  }, [shopSession, router])
+  }, [shopSessionId, router])
 
   const handleDeclineChangeSsn = useCallback(() => {
     setShowChangeSsnDialog(false)
@@ -79,14 +69,9 @@ export const PriceCalculatorAccordion = ({
         {form.sections.map((section, index) => {
           let content
           if (section.id === SSN_SE_SECTION_ID) {
-            content = (
-              <SsnSeSection
-                shopSessionId={shopSession.id}
-                ssn={shopSession.customer?.ssn}
-                onCompleted={handleSsnSectionCompleted}
-              />
-            )
+            content = <SsnSeSection />
           } else {
+            // TODO: Render inline instead
             content = children(section, index)
           }
 
