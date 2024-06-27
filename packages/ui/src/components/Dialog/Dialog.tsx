@@ -24,6 +24,9 @@ export const Content = (props: ContentProps) => {
           className={props.className}
           onEscapeKeyDown={handleClose}
           onInteractOutside={(e) => e.preventDefault()}
+          // Prevents accessibility warning from radix
+          // Adding non-visible descriptions everywhere is not a priority right now
+          aria-describedby={undefined}
         >
           {props.children}
         </DialogPrimitive.Content>

@@ -64,6 +64,7 @@ export function AnimateContentWrapper({ children }: { children: ReactNode }) {
 export const Root = Dialog.Root
 export const Close = Dialog.Close
 export const Trigger = Dialog.Trigger
+export const Title = Dialog.Title
 
 const ANIMATE_TRANSITION: Transition = {
   duration: 0.5,
