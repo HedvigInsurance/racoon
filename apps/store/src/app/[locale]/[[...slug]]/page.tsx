@@ -1,9 +1,7 @@
-import { StoryblokStory } from '@storyblok/react/rsc'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import type { ReactNode } from 'react'
 import { cache } from 'react'
-import { storyblokBridgeOptions } from '@/appComponents/storyblokBridgeOptions'
 import { ContactUs } from '@/components/ContactUs/ContactUs'
 import { DefaultDebugDialog } from '@/components/DebugDialog/DefaultDebugDialog'
 import { CustomerFirstScript } from '@/services/CustomerFirst'
@@ -21,7 +19,7 @@ import {
 } from '@/utils/l10n/localeUtils'
 import type { IsoLocale, RoutingLocale } from '@/utils/l10n/types'
 import { removeTrailingSlash } from '@/utils/PageLink'
-import { BlogStoryContainer } from './BlogStoryContainer'
+import { ContentCmsPage } from './ContentCmsPage'
 import { ProductCmsPage } from './ProductCmsPage'
 import { StoryBreadcrumbs } from './StoryBreadcrumbs'
 
@@ -49,9 +47,7 @@ export default async function CmsPage(props: Props) {
   }
   return (
     <>
-      <BlogStoryContainer locale={props.params.locale} story={story}>
-        <StoryblokStory story={story} bridgeOptions={storyblokBridgeOptions} />
-      </BlogStoryContainer>
+      <ContentCmsPage locale={props.params.locale} story={story} />
       {!hideBreadcrumbs && <StoryBreadcrumbs params={props.params} currentPageTitle={story.name} />}
       {chat}
       <DefaultDebugDialog />
