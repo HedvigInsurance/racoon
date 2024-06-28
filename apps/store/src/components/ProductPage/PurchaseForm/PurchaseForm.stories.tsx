@@ -12,6 +12,11 @@ import { PurchaseForm } from './PurchaseForm'
 
 const meta: Meta<typeof PurchaseForm> = {
   title: 'Purchase Form / Purchase Form',
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
 }
 
 export default meta
