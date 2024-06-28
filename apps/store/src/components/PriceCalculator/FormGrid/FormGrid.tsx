@@ -1,15 +1,14 @@
 import { assignInlineVars } from '@vanilla-extract/dynamic'
-import type { ReactNode } from 'react'
-import type { InputField } from '@/services/PriceCalculator/Field.types'
+import { AutomaticField } from '@/components/PriceCalculator/AutomaticField'
 import type { SectionItem } from '@/services/PriceCalculator/PriceCalculator.types'
 import { columnSpan, grid, gridItem } from './FormGrid.css'
 
 type FormSectionProps = {
   items: Array<SectionItem>
-  children(field: InputField, index: number): ReactNode
+  autofocusFirst?: boolean
 }
 
-export const FormGrid = ({ items, children }: FormSectionProps) => {
+export const FormGrid = ({ items, autofocusFirst }: FormSectionProps) => {
   return (
     <div className={grid}>
       {items.map((item, index) => (
@@ -20,7 +19,7 @@ export const FormGrid = ({ items, children }: FormSectionProps) => {
             [columnSpan]: `${item.layout.columnSpan}`,
           })}
         >
-          {children(item.field, index)}
+          <AutomaticField field={item.field} autoFocus={autofocusFirst && index === 0} />
         </div>
       ))}
     </div>
