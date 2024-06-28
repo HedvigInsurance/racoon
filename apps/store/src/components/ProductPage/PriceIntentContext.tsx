@@ -4,7 +4,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { type PropsWithChildren, useRef } from 'react'
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
-import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
+import { usePriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
 import { useCartEntryToReplace } from '@/components/ProductPage/useCartEntryToReplace'
 import {
   type CartFragment,
@@ -34,7 +34,7 @@ export const PriceIntentContextProvider = ({ children }: Props) => {
 }
 
 const usePriceIntentContextValue = () => {
-  const { priceTemplate } = useProductPageContext()
+  const priceTemplate = usePriceTemplate()
   const productData = useProductData()
   const apolloClient = useApolloClient()
   const { onReady, shopSession } = useShopSession()

@@ -1,10 +1,12 @@
 'use client'
+import { useHydrateAtoms } from 'jotai/utils'
 import type { PropsWithChildren } from 'react'
 import { createContext, useContext, useMemo } from 'react'
+import { priceTemplateAtom } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
 import { useProductData } from '../ProductData/ProductDataProvider'
 import type { ProductPageProps } from './ProductPage.types'
 
-type ProductPageContextData = Pick<ProductPageProps, 'priceTemplate'> & {
+type ProductPageContextData = {
   content: {
     product: {
       name: string
@@ -19,10 +21,11 @@ const ProductPageContext = createContext<ProductPageContextData | null>(null)
 type Props = PropsWithChildren<Pick<ProductPageProps, 'priceTemplate' | 'story'>>
 
 export const ProductPageContextProvider = ({ children, story, priceTemplate }: Props) => {
+  useHydrateAtoms([[priceTemplateAtom, priceTemplate]])
+
   const productData = useProductData()
   const contextValue = useMemo(
     () => ({
-      priceTemplate,
       content: {
         product: {
           name: story.content.name || productData.displayNameShort,
@@ -31,7 +34,7 @@ export const ProductPageContextProvider = ({ children, story, priceTemplate }: P
         },
       },
     }),
-    [priceTemplate, productData, story.content],
+    [productData, story.content],
   )
   return <ProductPageContext.Provider value={contextValue}>{children}</ProductPageContext.Provider>
 }
