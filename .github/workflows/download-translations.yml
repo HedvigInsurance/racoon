@@ -39,6 +39,8 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
+          # We can't rely on GITHUB_TOKEN here otherwise no other wofkflows will be triggered as a side effect of this one
+          token: ${{ secrets.UPDATE_TRANSLATIONS_TOKEN }}
           commit-message: |
             ci: update translations from Lokalise
           title: |
