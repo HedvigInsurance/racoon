@@ -40,6 +40,7 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
           required={field.required}
           defaultValue={field.value ?? field.defaultValue}
           autoFocus={autoFocus}
+          suffix={field.suffix}
         />
       )
 
@@ -57,6 +58,7 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
           required={field.required}
           defaultValue={field.value ?? field.defaultValue}
           autoFocus={autoFocus}
+          suffix={field.suffix}
         />
       )
 

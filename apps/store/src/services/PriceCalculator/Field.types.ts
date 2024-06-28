@@ -18,6 +18,7 @@ export type TextField = BaseField<string> & {
   maxLength?: number
   inputMode?: 'text' | 'numeric' | 'tel' | 'email'
   inputType?: 'text' | 'tel' | 'email'
+  suffix?: string
 }
 
 export type NumberField = BaseField<number> & {
