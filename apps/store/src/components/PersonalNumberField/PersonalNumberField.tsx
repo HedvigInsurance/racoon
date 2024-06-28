@@ -52,7 +52,7 @@ export const PersonalNumberField = memo((props: Props) => {
           minLength={10}
           maxLength={13}
           // https://github.com/personnummer/js
-          pattern="^(\d{2}){0,1}(\d{2})(\d{2})(\d{2})([+-]?)((?!000)\d{3})(\d)$"
+          pattern="^(\d{2}){0,1}(\d{2})(\d{2})(\d{2})([+\-]?)((?!000)\d{3})(\d)$"
           onValueChange={handleValueChange}
           onClear={onClear}
           warning={warning}
