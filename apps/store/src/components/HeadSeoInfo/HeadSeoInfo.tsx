@@ -7,7 +7,7 @@ import { isBrowser } from '@/utils/env'
 import { organization } from '@/utils/jsonSchema'
 import { locales } from '@/utils/l10n/locales'
 import { getHrefLang, getLocaleOrFallback } from '@/utils/l10n/localeUtils'
-import { ORIGIN_URL, removeSEHomepageLangSegment } from '@/utils/PageLink'
+import { ORIGIN_URL, removeSEHomepageLangSegment } from '@/utils/url'
 
 type Props = {
   story: ISbStoryData<SEOData>

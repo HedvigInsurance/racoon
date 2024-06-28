@@ -18,7 +18,7 @@ import {
   toIsoLocale,
 } from '@/utils/l10n/localeUtils'
 import type { IsoLocale, RoutingLocale } from '@/utils/l10n/types'
-import { removeTrailingSlash } from '@/utils/PageLink'
+import { removeTrailingSlash } from '@/utils/url'
 import { ContentCmsPage } from './ContentCmsPage'
 import { ProductCmsPage } from './ProductCmsPage'
 import { StoryBreadcrumbs } from './StoryBreadcrumbs'

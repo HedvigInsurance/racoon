@@ -4,7 +4,8 @@ import { useRouter } from 'next/router'
 import { useEffect, useMemo } from 'react'
 import { type RoutingLocale } from '@/utils/l10n/types'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
-import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
+import { PageLink } from '@/utils/PageLink'
+import { ORIGIN_URL } from '@/utils/url'
 import { QueryParam } from './retargeting.constants'
 
 export const useApiRedirectEffect = () => {

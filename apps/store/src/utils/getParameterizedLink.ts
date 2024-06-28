@@ -1,4 +1,4 @@
-import { ORIGIN_URL } from '@/utils/PageLink'
+import { ORIGIN_URL } from '@/utils/url'
 
 type Parameter = [param: string, value: string]
 

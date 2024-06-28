@@ -1,5 +1,5 @@
 import type { ParsedUrlQuery } from 'querystring'
-import { ORIGIN_URL } from './PageLink'
+import { ORIGIN_URL } from './url'
 
 export const mergeParsedUrlQuery = (linkUrl: string, search: ParsedUrlQuery): string => {
   const url = new URL(linkUrl, ORIGIN_URL)

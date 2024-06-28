@@ -1,7 +1,8 @@
 import { type NextApiRequest, type NextApiResponse } from 'next'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
-import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
+import { PageLink } from '@/utils/PageLink'
 import { resetSessionServerSide } from '@/utils/resetSessionServerSide'
+import { ORIGIN_URL } from '@/utils/url'
 
 /**
  * Reset current ShopSession and navigate to the next page.

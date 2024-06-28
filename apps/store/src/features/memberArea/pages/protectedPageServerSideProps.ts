@@ -4,8 +4,8 @@ import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWit
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import { getAccessToken } from '@/services/authApi/persist'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
-import { ORIGIN_URL } from '@/utils/PageLink'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
+import { ORIGIN_URL } from '@/utils/url'
 
 // Add props here when they appear
 type PageProps = {

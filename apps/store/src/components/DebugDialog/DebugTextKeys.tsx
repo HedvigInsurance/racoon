@@ -1,6 +1,6 @@
 import { usePathname, useSearchParams } from 'next/navigation'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
-import { ORIGIN_URL } from '@/utils/PageLink'
+import { ORIGIN_URL } from '@/utils/url'
 
 export const DebugTextKeys = () => {
   const pathname = usePathname()

@@ -10,8 +10,9 @@ import { getAccessToken, resetAuthTokens } from '@/services/authApi/persist'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import type { RoutingLocale } from '@/utils/l10n/types'
-import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
+import { PageLink } from '@/utils/PageLink'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
+import { ORIGIN_URL } from '@/utils/url'
 
 type Params = { slug: Array<string> }
 

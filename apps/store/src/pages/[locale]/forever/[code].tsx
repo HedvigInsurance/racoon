@@ -5,8 +5,8 @@ import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWit
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import type { RoutingLocale } from '@/utils/l10n/types'
-import { ORIGIN_URL } from '@/utils/PageLink'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
+import { ORIGIN_URL } from '@/utils/url'
 
 type Params = { code: string }
 type Props = ForeverPageProps & { canonicalUrl: string }

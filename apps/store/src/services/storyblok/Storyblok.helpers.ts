@@ -1,6 +1,6 @@
 import { type ISbStoryData, type SbBlokData } from '@storyblok/react'
 import type { RoutingLocale } from '@/utils/l10n/types'
-import { makeAbsolute } from '@/utils/url'
+import { makeAbsolute, appendAnchor } from '@/utils/url'
 import type { LinkField, ProductStory, WidgetFlowStory } from './storyblok'
 
 export const filterByBlockType = <BlockData extends SbBlokData>(
@@ -43,8 +43,6 @@ export const getLinkFieldURL = (link: LinkField, linkText?: string) => {
 
   return makeAbsolute(appendAnchor(link.cached_url, link.anchor))
 }
-
-const appendAnchor = (url: string, anchor?: string) => (anchor ? `${url}#${anchor}` : url)
 
 export const isProductStory = (story: ISbStoryData): story is ProductStory => {
   return story.content.component === 'product'

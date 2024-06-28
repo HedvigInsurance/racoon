@@ -1,7 +1,7 @@
 import type { ISbStoryData } from '@storyblok/js'
 import type { GetServerSideProps } from 'next'
 import { getStoryblokApi } from '@/services/storyblok/api'
-import { ORIGIN_URL, removeSEHomepageLangSegment } from '@/utils/PageLink'
+import { ORIGIN_URL, removeSEHomepageLangSegment } from '@/utils/url'
 
 const generateSiteMap = (pages: Array<ISbStoryData>) => {
   return `<?xml version="1.0" encoding="UTF-8"?>

@@ -3,7 +3,7 @@
 import { redirect } from 'next/navigation'
 import { createTrial, getPartner, getTrialData } from '@/app/debugger/trial/debuggerTrial.utils'
 import type { FormStateWithErrors } from '@/app/types/formStateTypes'
-import { ORIGIN_URL } from '@/utils/PageLink'
+import { ORIGIN_URL } from '@/utils/url'
 
 const LOCAL_URL = new URL(ORIGIN_URL)
 

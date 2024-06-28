@@ -11,8 +11,9 @@ import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSe
 import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import type { RoutingLocale } from '@/utils/l10n/types'
-import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
+import { PageLink } from '@/utils/PageLink'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
+import { ORIGIN_URL } from '@/utils/url'
 
 type Props = Record<string, unknown>
 type Params = { shopSessionId: string }
