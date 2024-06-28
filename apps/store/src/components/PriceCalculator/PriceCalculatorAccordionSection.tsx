@@ -1,4 +1,3 @@
-import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import type { ReactNode } from 'react'
 import { useMemo } from 'react'
@@ -7,6 +6,13 @@ import { Tooltip } from '@/components/Tooltip/Tooltip'
 import type { Label, SectionItem } from '@/services/PriceCalculator/PriceCalculator.types'
 import { useAutoFormat } from '@/utils/useFormatter'
 import * as Accordion from './Accordion'
+import {
+  grid,
+  gridEdit,
+  gridIcon,
+  gridPreview,
+  gridTitle,
+} from './PriceCalculatorAccordionSection.css'
 import { StepIcon } from './StepIcon'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
@@ -55,20 +61,19 @@ export const PriceCalculatorAccordionSection = (props: Props) => {
   return (
     <Accordion.Item value={props.value}>
       <Accordion.Header>
-        <Grid>
-          <GridIcon>
+        <div className={grid}>
+          <div className={gridIcon}>
             <StepIcon state={stepIconState} />
-          </GridIcon>
+          </div>
 
-          <GridTitle>
-            <Heading
-              as="h3"
-              variant="standard.18"
-              color={showMutedHeading ? 'textSecondary' : 'textPrimary'}
-            >
-              {props.title}
-            </Heading>
-          </GridTitle>
+          <Heading
+            as="h3"
+            variant="standard.18"
+            color={showMutedHeading ? 'textSecondary' : 'textPrimary'}
+            className={gridTitle}
+          >
+            {props.title}
+          </Heading>
 
           {props.tooltip && !showEditButton && (
             <Tooltip message={translateLabel(props.tooltip)}>
@@ -78,18 +83,18 @@ export const PriceCalculatorAccordionSection = (props: Props) => {
             </Tooltip>
           )}
 
-          <GridEdit hidden={!showEditButton}>
+          <div className={gridEdit} hidden={!showEditButton}>
             <Accordion.Trigger>
               <Text size="md" color="textPrimary">
                 {t('PRICE_CALCULATOR_SECTION_EDIT_BUTTON')}
               </Text>
             </Accordion.Trigger>
-          </GridEdit>
+          </div>
 
-          <GridPreview hidden={props.active || !previewText}>
+          <div className={gridPreview} hidden={props.active || !previewText}>
             <Text color="textSecondary">{previewText}</Text>
-          </GridPreview>
-        </Grid>
+          </div>
+        </div>
       </Accordion.Header>
       <Accordion.Content>{props.children}</Accordion.Content>
     </Accordion.Item>
@@ -103,27 +108,3 @@ const parseTranslateOptions = (value: unknown) => {
     if (!isNaN(intValue)) return { count: intValue }
   }
 }
-
-enum Area {
-  Icon = 'icon',
-  Title = 'title',
-  Edit = 'edit',
-  Preview = 'preview',
-}
-
-const Grid = styled.div({
-  display: 'grid',
-  gridTemplateColumns: 'auto 1fr auto',
-  gridTemplateRows: 'auto auto',
-  gridTemplateAreas: `
-    "${Area.Icon} ${Area.Title}   ${Area.Edit}"
-    ".            ${Area.Preview} ${Area.Preview}"
-  `,
-  columnGap: theme.space.xs,
-  alignItems: 'center',
-})
-
-const GridIcon = styled.div({ gridArea: Area.Icon, paddingTop: 1 })
-const GridTitle = styled.div({ gridArea: Area.Title })
-const GridEdit = styled.div({ gridArea: Area.Edit })
-const GridPreview = styled.div({ gridArea: Area.Preview })
