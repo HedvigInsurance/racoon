@@ -4,6 +4,7 @@ import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataH
 import { type LinkType, ProductCard } from '@/components/ProductCard/ProductCard'
 import type { LinkField, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { getImgSrc, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
+import { isSameLink } from '@/utils/url'
 
 export type ImageSize = {
   aspectRatio?: '1 / 1' | '3 / 2' | '4 / 3' | '5 / 4' | '2 / 3' | '3 / 4' | '4 / 5'
@@ -41,12 +42,6 @@ export const ProductCardBlock = ({ blok }: ProductCardBlockProps) => {
       {...storyblokEditable(blok)}
     />
   )
-}
-
-// Make sure /se-en/products/home == se-en/products/home
-const isSameLink = (a: string, b: string) => {
-  const normalize = (url: string) => url.replace(/^\//, '')
-  return normalize(a) === normalize(b)
 }
 
 const getLinkType = (

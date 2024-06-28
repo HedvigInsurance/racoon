@@ -13,6 +13,7 @@ import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataH
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import { SelectInsuranceGrid } from '@/components/SelectInsuranceGrid/SelectInsuranceGrid'
 import { getParameterizedLink } from '@/utils/getParameterizedLink'
+import { isSameLink } from '@/utils/url'
 
 type ImageProps = {
   src: string
@@ -105,7 +106,7 @@ const CategoryCTA = ({ link }: Pick<ProductCardProps, 'link'>) => {
   const { t } = useTranslation('common')
 
   const productsByCategory = (products ?? [])
-    .filter((product) => product.categoryPageLink === link.url)
+    .filter((product) => product.categoryPageLink && isSameLink(product.categoryPageLink, link.url))
     .map((product) => ({
       ...product,
       pageLink: getParameterizedLink(product.pageLink, [[OPEN_PRICE_CALCULATOR_QUERY_PARAM, '1']]),

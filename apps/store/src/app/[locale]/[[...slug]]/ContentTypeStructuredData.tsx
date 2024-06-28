@@ -1,5 +1,6 @@
 import { formatISO } from 'date-fns'
 import { type PageStory } from '@/services/storyblok/storyblok'
+import { getLinkFieldURL, getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 
 export function ContentTypeStructuredData({ story }: { story: PageStory }) {
   const { type } = story.content
@@ -24,6 +25,7 @@ export function ContentTypeStructuredData({ story }: { story: PageStory }) {
 function ArticleStructuredData({ story }: { story: PageStory }) {
   const { type, image, headline, datePublished, dateModified, authorType, authorName, authorLink } =
     story.content
+  const authorLinkUrl = authorLink ? getLinkFieldURL(authorLink) : undefined
 
   return (
     <script
@@ -34,11 +36,11 @@ function ArticleStructuredData({ story }: { story: PageStory }) {
           '@context': 'https://schema.org',
           '@type': type,
           ...(headline && { headline }),
-          ...(image && { image: image.filename }),
+          ...(image && { image: getImgSrc(image.filename) }),
           ...(datePublished && { datePublished: formatDate(datePublished) }),
           ...(dateModified && { dateModified: formatDate(dateModified) }),
           ...(authorType && {
-            author: { '@type': authorType, name: authorName, url: authorLink?.url },
+            author: { '@type': authorType, name: authorName, url: authorLinkUrl },
           }),
         }),
       }}
@@ -54,7 +56,7 @@ function ProfilePageStructuredData({ story }: { story: PageStory }) {
       ? {
           '@type': 'Person',
           name: authorName,
-          image: image?.filename,
+          image: image ? getImgSrc(image.filename) : undefined,
         }
       : undefined
 
