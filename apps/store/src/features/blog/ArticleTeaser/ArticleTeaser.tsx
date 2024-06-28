@@ -3,7 +3,7 @@ import NextImage, { type ImageProps } from 'next/image'
 import Link from 'next/link'
 import { type ReactNode } from 'react'
 import { Heading, Space, Text, theme } from 'ui'
-import { makeAbsolute } from '@/services/storyblok/Storyblok.helpers'
+import { makeAbsolute } from '@/utils/url'
 
 type Props = {
   children: ReactNode

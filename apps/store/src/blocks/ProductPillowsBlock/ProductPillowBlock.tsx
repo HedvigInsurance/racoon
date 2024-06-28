@@ -4,6 +4,7 @@ import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataH
 import { ProductPillow } from '@/components/ProductPillow/ProductPillow'
 import type { LinkField, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
+import { isSameLink } from '@/utils/url'
 
 export type ProductPillowBlockProps = SbBaseBlockProps<{
   name: string
@@ -30,9 +31,3 @@ export const ProductPillowBlock = ({ blok }: ProductPillowBlockProps) => {
   )
 }
 ProductPillowBlock.blockName = 'productPillow'
-
-// Make sure /se-en/products/home == se-en/products/home
-const isSameLink = (a: string, b: string) => {
-  const normalize = (url: string) => url.replace(/^\//, '')
-  return normalize(a) === normalize(b)
-}
