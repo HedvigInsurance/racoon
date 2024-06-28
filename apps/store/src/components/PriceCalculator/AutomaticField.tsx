@@ -18,12 +18,11 @@ import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 type Props = {
   field: InputFieldType
   onSubmit: (data: JSONData) => Promise<unknown>
-  loading: boolean
   autoFocus?: boolean
   priceIntent: PriceIntent
 }
 
-export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocus }: Props) => {
+export const AutomaticField = ({ field, priceIntent, onSubmit, autoFocus }: Props) => {
   const translateLabel = useTranslateFieldLabel()
 
   switch (field.type) {
@@ -134,7 +133,6 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
             name: buildingOption.label,
           }))}
           onSubmit={onSubmit}
-          loading={loading}
         />
       )
 
@@ -167,10 +165,10 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, loading, autoFocu
       )
 
     case 'pet-cat-breeds':
-      return <PetCatBreedsField field={field} loading={loading} />
+      return <PetCatBreedsField field={field} />
 
     case 'pet-dog-breeds':
-      return <PetDogBreedsField field={field} loading={loading} />
+      return <PetDogBreedsField field={field} />
 
     default: {
       const badField: never = field

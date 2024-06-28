@@ -1,6 +1,8 @@
+import { useAtomValue } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { useMemo } from 'react'
 import { Combobox } from '@/components/Combobox/Combobox'
+import { priceCalculatorLoadingAtom } from '@/components/PriceCalculator/priceCalculatorAtoms'
 import { PriceIntentAnimal, usePriceIntentAvailableBreedsQuery } from '@/services/graphql/generated'
 import type {
   PetCatBreedsField as InputFieldPetBreed,
@@ -10,13 +12,13 @@ import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
 type Props = {
   field: InputFieldPetBreed
-  loading: boolean
 }
 
-export const PetCatBreedsField = ({ field, loading }: Props) => {
+export const PetCatBreedsField = ({ field }: Props) => {
   const translateLabel = useTranslateFieldLabel()
   const { t } = useTranslation('purchase-form')
   const { breeds } = usePetBreeds(PriceIntentAnimal.Cat)
+  const loading = useAtomValue(priceCalculatorLoadingAtom)
 
   let defaultSelectedBreed: Breed | null = null
   if (field.value) {

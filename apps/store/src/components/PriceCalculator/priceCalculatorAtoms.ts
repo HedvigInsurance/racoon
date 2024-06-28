@@ -111,3 +111,5 @@ export const useSyncPriceCalculatorState = (priceIntent: PriceIntentFragment): v
 export const useIsPriceCalculatorStateReady = (): boolean => {
   return !!useAtomValue(currentPriceIntentIdAtom)
 }
+
+export const priceCalculatorLoadingAtom = atom(false)
