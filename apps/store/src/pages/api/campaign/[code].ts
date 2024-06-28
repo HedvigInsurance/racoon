@@ -10,7 +10,8 @@ import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { getPathnameFromUrl } from '@/utils/getPathnameFromUrl'
 import { getCountryByLocale } from '@/utils/l10n/countryUtils'
 import { getLocaleOrFallback, getUrlLocale } from '@/utils/l10n/localeUtils'
-import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
+import { PageLink } from '@/utils/PageLink'
+import { ORIGIN_URL } from '@/utils/url'
 
 enum QueryParam {
   Next = 'next',

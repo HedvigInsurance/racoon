@@ -2,7 +2,7 @@ import { type NextApiRequest, type NextApiResponse } from 'next'
 import { Slack } from '@/services/slack/slack'
 import { SlashCommand } from '@/services/slack/slack.constants'
 import type { SlashCommandRequest } from '@/services/slack/slack.types'
-import { ORIGIN_URL } from '@/utils/PageLink'
+import { ORIGIN_URL } from '@/utils/url'
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'POST') {

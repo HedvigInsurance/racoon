@@ -2,6 +2,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { QueryParam as CheckoutPageQueryParam } from '@/components/CheckoutPage/CheckoutPage.constants'
 import { QueryParam as CheckoutTrustlyQueryParam } from '@/components/CheckoutPaymentTrustlyPage/CheckoutPaymentTrustlyPage constants'
 import type { RoutingLocale } from '@/utils/l10n/types'
+import { ORIGIN_URL } from '@/utils/url'
 import { locales } from './l10n/locales'
 
 class ExtendedURL extends URL {
@@ -13,12 +14,6 @@ class ExtendedURL extends URL {
     return this.pathname + this.search + this.hash
   }
 }
-
-export const ORIGIN_URL =
-  process.env.NEXT_PUBLIC_ORIGIN_URL ??
-  (process.env.NEXT_PUBLIC_VERCEL_URL
-    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-    : 'http://localhost:8040')
 
 type BaseParams = { locale: RoutingLocale }
 
@@ -366,20 +361,4 @@ const PRIVACY_POLICY_URL: Partial<Record<RoutingLocale, URL>> = {
 const REVIEWS_URL: Partial<Record<RoutingLocale, URL>> = {
   se: new URL('/se/hedvig/omdomen', ORIGIN_URL),
   'se-en': new URL('/se-en/hedvig/reviews', ORIGIN_URL),
-}
-
-export const removeTrailingSlash = (url: string) => {
-  return url.endsWith('/') ? url.slice(0, -1) : url
-}
-
-export const removeSEHomepageLangSegment = (urlString: string): string => {
-  const url = new URL(removeTrailingSlash(urlString))
-
-  const isSwedishHomepage = url.pathname === '/se'
-
-  if (isSwedishHomepage) {
-    url.pathname = '/'
-  }
-
-  return removeTrailingSlash(url.toString())
 }

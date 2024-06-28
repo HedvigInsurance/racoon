@@ -3,7 +3,7 @@ import Link from 'next/link'
 import type { ComponentProps } from 'react'
 import { Children, type ReactNode } from 'react'
 import { Text } from 'ui'
-import { removeSEHomepageLangSegment } from '@/utils/PageLink'
+import { removeSEHomepageLangSegment } from '@/utils/url'
 import { breadcrumbItem, breadcrumbsLink, breadcrumbsList } from './PageBreadcrumbs.css'
 
 export type BreadcrumbListItem = {

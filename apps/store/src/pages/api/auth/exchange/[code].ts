@@ -2,8 +2,9 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
 import { saveAuthTokens } from '@/services/authApi/persist'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
-import { ORIGIN_URL, PageLink } from '@/utils/PageLink'
+import { PageLink } from '@/utils/PageLink'
 import { resetSessionServerSide } from '@/utils/resetSessionServerSide'
+import { ORIGIN_URL } from '@/utils/url'
 
 enum QueryParam {
   Next = 'next',

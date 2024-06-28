@@ -9,7 +9,7 @@ import {
 import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
-import { ORIGIN_URL } from '@/utils/PageLink'
+import { ORIGIN_URL } from '@/utils/url'
 
 const PRODUCT_NAME_CAR = 'SE_CAR'
 const SLUG = 'se/test-car-extension-offer'

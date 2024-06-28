@@ -3,8 +3,8 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { LoginPage } from '@/features/memberArea/pages/LoginPage/LoginPage'
 import { getAccessToken } from '@/services/authApi/persist'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
-import { ORIGIN_URL } from '@/utils/PageLink'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
+import { ORIGIN_URL } from '@/utils/url'
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   patchNextI18nContext(context)
