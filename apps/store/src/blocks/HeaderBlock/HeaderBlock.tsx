@@ -13,10 +13,12 @@ import {
   type ProductNavContainerBlockProps,
 } from './ProductNavContainerBlock'
 
+export type NavMenuContainerProps = ExpectedBlockType<
+  NestedNavContainerBlockProps | NavItemBlockProps | ProductNavContainerBlockProps
+>
+
 export type HeaderBlockProps = SbBaseBlockProps<{
-  navMenuContainer: ExpectedBlockType<
-    NestedNavContainerBlockProps | NavItemBlockProps | ProductNavContainerBlockProps
-  >
+  navMenuContainer: NavMenuContainerProps
 }>
 
 // Performance considerations
