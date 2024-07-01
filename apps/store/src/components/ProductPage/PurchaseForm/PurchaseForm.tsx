@@ -24,6 +24,7 @@ import { PriceIntentTrackingProvider } from '@/components/ProductPage/PriceInten
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { ProductPageDebugDialog } from '@/components/ProductPage/ProductPageDebugDialog'
 import { ProductPageViewTracker } from '@/components/ProductPage/ProductPageViewTrack'
+import { usePriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
 import {
   purchaseFormHeroWrapper,
   purchaseFormPriceLoaderWrapper,
@@ -97,7 +98,7 @@ type PurchaseFormInnerProps = PurchaseFormProps & {
 }
 
 const PurchaseFormInner = (props: PurchaseFormInnerProps) => {
-  const { priceTemplate } = useProductPageContext()
+  const priceTemplate = usePriceTemplate()
   const productData = useProductData()
   const { shopSession } = useShopSession()
   const [priceIntent] = usePriceIntent()
