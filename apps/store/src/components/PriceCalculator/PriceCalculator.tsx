@@ -6,11 +6,11 @@ import { ChangeSsnWarningDialog } from '@/components/ChangeSsnWarningDialog/Chan
 import { PriceCalculatorAccordionSection } from '@/components/PriceCalculator/PriceCalculatorAccordionSection'
 import {
   activeFormSectionIdAtom,
-  currentPriceIntentIdAtom,
   GOTO_NEXT_SECTION,
   priceCalculatorFormAtom,
   priceIntentAtom,
   shopSessionCustomerAtom,
+  usePriceIntentId,
 } from '@/components/PriceCalculator/priceCalculatorAtoms'
 import { SSN_SE_SECTION_ID, SsnSeSection } from '@/components/PriceCalculator/SsnSeSection'
 import { usePriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
@@ -46,10 +46,7 @@ export const PriceCalculator = (props: Props) => {
   if (shopSessionId == null) {
     throw new Error('shopSession must be ready')
   }
-  const priceIntentId = useAtomValue(currentPriceIntentIdAtom)
-  if (priceIntentId == null) {
-    throw new Error('priceIntentId must be set')
-  }
+  const priceIntentId = usePriceIntentId()
   const priceTemplate = usePriceTemplate()
   const form = useAtomValue(priceCalculatorFormAtom)
   const priceIntent = useAtomValue(priceIntentAtom)

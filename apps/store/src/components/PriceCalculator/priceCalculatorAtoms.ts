@@ -96,12 +96,14 @@ const getAtomValueOrThrow = <T>(get: Getter, atom: Atom<T>): NonNullable<T> => {
   return value
 }
 
-export const useSyncPriceCalculatorState = (priceIntent: PriceIntentFragment): void => {
+export const useSyncPriceCalculatorState = (priceIntent?: PriceIntentFragment): void => {
   const shopSessionCustomer = useShopSession().shopSession?.customer
   const store = useStore()
   useEffect(() => {
-    store.set(currentPriceIntentIdAtom, priceIntent.id)
-    store.set(priceIntentAtomFamily(priceIntent.id), priceIntent)
+    if (priceIntent != null) {
+      store.set(currentPriceIntentIdAtom, priceIntent.id)
+      store.set(priceIntentAtomFamily(priceIntent.id), priceIntent)
+    }
   }, [priceIntent, store])
   useEffect(() => {
     store.set(shopSessionCustomerAtom, shopSessionCustomer ?? null)
@@ -113,3 +115,11 @@ export const useIsPriceCalculatorStateReady = (): boolean => {
 }
 
 export const priceCalculatorLoadingAtom = atom(false)
+
+export const usePriceIntentId = (): string => {
+  const priceIntentId = useAtomValue(currentPriceIntentIdAtom)
+  if (priceIntentId == null) {
+    throw new Error('priceIntentId must be defined')
+  }
+  return priceIntentId
+}
