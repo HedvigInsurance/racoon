@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { Button, InfoIcon, Space, Text, theme } from 'ui'
+import { Button, InfoIcon, Space, Text, theme, Dialog } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import type { PriceIntentWarning } from '@/services/graphql/generated'
 
@@ -18,7 +18,9 @@ export const WarningPrompt = ({ header, message, onClickConfirm, onClickEdit }: 
         <SpaceFlex space={1} direction="vertical" align="center">
           <InfoIcon size="1.5rem" color={theme.colors.signalBlueElement} />
           <div>
-            <Text balance={true}>{header}</Text>
+            <Dialog.Title asChild={true}>
+              <Text balance={true}>{header}</Text>
+            </Dialog.Title>
             <Text color="textSecondary" balance={true}>
               {message}
             </Text>
