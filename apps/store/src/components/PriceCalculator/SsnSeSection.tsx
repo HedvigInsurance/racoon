@@ -1,16 +1,19 @@
 import { datadogLogs } from '@datadog/browser-logs'
+import { useAtomValue } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { type FormEventHandler, memo } from 'react'
 import { Button, Space } from 'ui'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
+import { shopSessionCustomerAtom } from '@/components/PriceCalculator/priceCalculatorAtoms'
 import { useShopSessionCustomerUpdateMutation } from '@/services/graphql/generated'
+import { useShopSessionId } from '@/services/shopSession/ShopSessionContext'
 import { useErrorMessage } from '@/utils/useErrorMessage'
 
 const SsnFieldName = 'ssn'
 
-type Props = { shopSessionId: string; ssn?: string | null; onCompleted: () => void }
-
-export const SsnSeSection = memo(({ shopSessionId, ssn, onCompleted }: Props) => {
+export const SsnSeSection = memo(() => {
+  const shopSessionId = useShopSessionId()!
+  const shopSessionCustomer = useAtomValue(shopSessionCustomerAtom)
   const { t } = useTranslation('purchase-form')
   const [updateCustomer, result] = useShopSessionCustomerUpdateMutation({
     // priceIntent.suggestedData may be updated based on customer.ssn
@@ -19,11 +22,9 @@ export const SsnSeSection = memo(({ shopSessionId, ssn, onCompleted }: Props) =>
     onCompleted(data) {
       const { shopSession } = data.shopSessionCustomerUpdate
       if (!shopSession) return
-
-      onCompleted()
     },
     onError(error) {
-      datadogLogs.logger.debug('Failed to update customer ssn', { error })
+      datadogLogs.logger.debug(`Failed to update customer ssn: ${error.message}`, { error })
     },
   })
 
@@ -42,7 +43,7 @@ export const SsnSeSection = memo(({ shopSessionId, ssn, onCompleted }: Props) =>
         <PersonalNumberField
           label={t('FIELD_SSN_SE_LABEL')}
           name={SsnFieldName}
-          defaultValue={ssn ?? ''}
+          defaultValue={shopSessionCustomer?.ssn ?? ''}
           required={true}
           warning={!!errorMessage}
           message={errorMessage}

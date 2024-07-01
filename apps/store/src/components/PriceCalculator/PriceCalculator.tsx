@@ -1,15 +1,21 @@
-import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
-import { useSetAtom } from 'jotai'
-import { useMemo, useState } from 'react'
+import { useAtomValue, useSetAtom } from 'jotai'
+import {
+  activeFormSectionIdAtom,
+  currentPriceIntentIdAtom,
+  GOTO_NEXT_SECTION,
+  priceCalculatorFormAtom,
+  priceIntentAtom,
+} from '@/components/PriceCalculator/priceCalculatorAtoms'
+import { usePriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
 import {
   prefillData,
   setupForm,
   updateFormState,
 } from '@/services/PriceCalculator/PriceCalculator.helpers'
-import { type Template, type Form } from '@/services/PriceCalculator/PriceCalculator.types'
+import { type Form } from '@/services/PriceCalculator/PriceCalculator.types'
 import { type PriceIntent } from '@/services/priceIntent/priceIntent.types'
-import { type ShopSession } from '@/services/shopSession/ShopSession.types'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { AutomaticField } from './AutomaticField'
 import { FetchInsurance } from './FetchInsurance'
 import { FetchInsuranceContainer } from './FetchInsuranceContainer'
@@ -22,9 +28,6 @@ import { showPriceIntentWarningAtom } from './Warning/showPriceIntentWarningAtom
 import { Warning } from './Warning/Warning'
 
 type Props = {
-  priceIntent: PriceIntent
-  shopSession: ShopSession
-  priceTemplate: Template
   onConfirm: () => void
 }
 
@@ -34,23 +37,22 @@ type CustomerData = {
 }
 
 export const PriceCalculator = (props: Props) => {
-  const { priceIntent, shopSession, onConfirm, priceTemplate } = props
+  const { onConfirm } = props
+  const { shopSession } = useShopSession()
+  if (shopSession == null) {
+    throw new Error('shopSession must be ready')
+  }
+  const priceIntentId = useAtomValue(currentPriceIntentIdAtom)
+  if (priceIntentId == null) {
+    throw new Error('priceIntentId must be set')
+  }
+  const form = useAtomValue(priceCalculatorFormAtom)
+  const priceIntent = useAtomValue(priceIntentAtom)
+  const priceTemplate = usePriceTemplate()
 
-  const form = useMemo(() => {
-    return setupForm({
-      customer: shopSession.customer,
-      priceIntent,
-      template: priceTemplate,
-    })
-  }, [priceIntent, shopSession.customer, priceTemplate])
+  const setActiveSectionId = useSetAtom(activeFormSectionIdAtom)
 
-  const [activeSectionId, setActiveSectionId] = useState(() => {
-    const firstIncompleteSection = form.sections.find(({ state }) => state !== 'valid')
-    if (firstIncompleteSection) return firstIncompleteSection.id
-    return form.sections[form.sections.length - 1].id
-  })
-
-  const showFetchInsurance = useShowFetchInsurance({ priceIntentId: priceIntent.id })
+  const showFetchInsurance = useShowFetchInsurance({ priceIntentId })
   const showPriceIntentWarning = useSetAtom(showPriceIntentWarningAtom)
   const [handleSubmit, handleSubmitSection, isLoading] = useHandleSubmitPriceCalculator({
     shopSession,
@@ -68,7 +70,10 @@ export const PriceCalculator = (props: Props) => {
           showPriceIntentWarning(true)
           datadogRum.addAction('Show PriceIntent Warning')
         }
-        if (priceIntent.externalInsurer) showFetchInsurance()
+        if (priceIntent.externalInsurer) {
+          // NOTE: We're still going to the next section underneath Insurely prompt
+          showFetchInsurance()
+        }
 
         // If we show a warning, prevent the user from going to the
         // next section without interacting with the warning dialog
@@ -80,36 +85,12 @@ export const PriceCalculator = (props: Props) => {
   })
 
   const goToNextSection = () => {
-    setActiveSectionId((prevSectionId) => {
-      const currentSectionIndex = form.sections.findIndex(({ id }) => id === prevSectionId)
-      // If section has both customer and priceIntent fields, we'll get two onSuccess callbacks
-      // in unknown order. Making sure we only go forward when section fields are all filled
-      if (form.sections[currentSectionIndex].state !== 'valid') {
-        return form.sections[currentSectionIndex].id
-      }
-      const nextSection = form.sections[currentSectionIndex + 1]
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (nextSection) {
-        return nextSection.id
-      } else {
-        datadogLogs.logger.error('Failed to find next section', {
-          prevSectionId,
-          templateName: priceTemplate.name,
-          priceIntentId: priceIntent.id,
-        })
-        return prevSectionId
-      }
-    })
+    setActiveSectionId(GOTO_NEXT_SECTION)
   }
 
   return (
     <>
-      <PriceCalculatorAccordion
-        activeSectionId={activeSectionId}
-        form={form}
-        shopSession={shopSession}
-        onActiveSectionChange={setActiveSectionId}
-      >
+      <PriceCalculatorAccordion>
         {(section, sectionIndex) => (
           <PriceCalculatorSection
             section={section}

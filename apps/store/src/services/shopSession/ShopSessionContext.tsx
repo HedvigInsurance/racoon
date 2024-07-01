@@ -19,6 +19,7 @@ type ShopSessionResult = ShopSessionQueryResult & {
 }
 
 export const ShopSessionContext = createContext<ShopSessionResult | null>(null)
+ShopSessionContext.displayName = 'ShopSessionContext'
 
 type Props = PropsWithChildren<{ shopSessionId?: string }>
 
@@ -117,6 +118,7 @@ const useShopSessionContextValue = (initialShopSessionId?: string) => {
 // Optimization: single-field context that allows consuming just sessionId
 // Unlike full ShopSessionContext, almost never triggers rerender since ID rarely changes
 export const ShopSessionIdContext = createContext<string | null>(null)
+ShopSessionIdContext.displayName = 'ShopSessionIdContext'
 
 export const useShopSessionId = (): string | null => {
   return useContext(ShopSessionIdContext)
