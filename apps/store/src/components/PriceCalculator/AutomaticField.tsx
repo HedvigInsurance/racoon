@@ -2,7 +2,6 @@ import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { StepperInput } from '@/components/StepperInput/StepperInput'
 import { TextField } from '@/components/TextField/TextField'
 import type { InputField as InputFieldType } from '@/services/PriceCalculator/Field.types'
-import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { convertToDate } from '@/utils/date'
 import { InputDay } from '../InputDay/InputDay'
 import { CarMileageField } from './CarMileageField'
@@ -17,10 +16,9 @@ import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 type Props = {
   field: InputFieldType
   autoFocus?: boolean
-  priceIntent: PriceIntent
 }
 
-export const AutomaticField = ({ field, priceIntent, autoFocus }: Props) => {
+export const AutomaticField = ({ field, autoFocus }: Props) => {
   const translateLabel = useTranslateFieldLabel()
 
   switch (field.type) {
@@ -139,14 +137,7 @@ export const AutomaticField = ({ field, priceIntent, autoFocus }: Props) => {
       return <CarMileageField field={field} />
 
     case 'current-insurance':
-      return (
-        <CurrentInsuranceField
-          label={translateLabel(field.label)}
-          productName={priceIntent.product.name}
-          priceIntentId={priceIntent.id}
-          externalInsurer={priceIntent.externalInsurer?.id}
-        />
-      )
+      return <CurrentInsuranceField label={translateLabel(field.label)} />
 
     case 'stepper':
       return (

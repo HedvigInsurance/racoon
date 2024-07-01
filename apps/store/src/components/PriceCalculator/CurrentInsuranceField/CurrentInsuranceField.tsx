@@ -1,4 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
+import { useAtomValue } from 'jotai'
+import { priceIntentAtom } from '@/components/PriceCalculator/priceCalculatorAtoms'
 import {
   useExternalInsurersQuery,
   useExternalInsurerUpdateMutation,
@@ -9,16 +11,15 @@ import { InputCurrentInsurance } from './InputCurrentInsurance'
 
 type Props = {
   label: string
-  productName: string
-  priceIntentId: string
-  externalInsurer?: string
 }
 
-export const CurrentInsuranceField = (props: Props) => {
-  const priceIntentId = props.priceIntentId
+export const CurrentInsuranceField = ({ label }: Props) => {
+  const priceIntent = useAtomValue(priceIntentAtom)
+  const priceIntentId = priceIntent.id
 
   const showFetchInsurance = useShowFetchInsurance({ priceIntentId })
-  const companyOptions = useCompanyOptions(props.productName)
+  const companyOptions = useCompanyOptions(priceIntent.product.name)
+  const externalInsurer = priceIntent.externalInsurer?.id
   const updateExternalInsurer = useUpdateExternalInsurer({
     priceIntentId,
     onCompleted(updatedPriceIntent) {
@@ -37,8 +38,8 @@ export const CurrentInsuranceField = (props: Props) => {
 
   return (
     <InputCurrentInsurance
-      label={props.label}
-      company={props.externalInsurer}
+      label={label}
+      company={externalInsurer}
       companyOptions={companyOptions}
       onCompanyChange={updateExternalInsurer}
     />

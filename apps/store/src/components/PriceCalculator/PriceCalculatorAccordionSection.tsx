@@ -20,7 +20,7 @@ type Props = {
   children: ReactNode
   active: boolean
   valid: boolean
-  title: string
+  title: Label
   tooltip?: Label
   value: string
   previewFieldName?: string
@@ -31,6 +31,7 @@ type Props = {
 
 export const PriceCalculatorAccordionSection = (props: Props) => {
   const { t } = useTranslation('purchase-form')
+
   const translateLabel = useTranslateFieldLabel()
 
   const showMutedHeading = !(props.active || props.valid)
@@ -72,7 +73,7 @@ export const PriceCalculatorAccordionSection = (props: Props) => {
             color={showMutedHeading ? 'textSecondary' : 'textPrimary'}
             className={gridTitle}
           >
-            {props.title}
+            {translateLabel(props.title)}
           </Heading>
 
           {props.tooltip && !showEditButton && (
