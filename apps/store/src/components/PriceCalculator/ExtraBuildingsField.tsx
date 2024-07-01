@@ -15,7 +15,11 @@ import {
   CrossIconSmall,
 } from 'ui'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
-import { priceCalculatorLoadingAtom } from '@/components/PriceCalculator/priceCalculatorAtoms'
+import {
+  currentPriceIntentIdAtom,
+  priceCalculatorLoadingAtom,
+} from '@/components/PriceCalculator/priceCalculatorAtoms'
+import { useUpdatePriceIntent } from '@/components/PriceCalculator/useUpdatePriceIntent'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextField } from '@/components/TextField/TextField'
 import type {
@@ -23,7 +27,7 @@ import type {
   ExtraBuilding,
   FieldOption,
 } from '@/services/PriceCalculator/Field.types'
-import type { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
+import { useShopSessionId } from '@/services/shopSession/ShopSessionContext'
 import * as InputRadio from './InputRadio'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
@@ -40,17 +44,14 @@ enum Field {
 
 type ExtraBuildingsFieldProps = {
   field: InputFieldExtraBuildings
-  onSubmit: (data: JSONData) => Promise<unknown>
   buildingOptions: Array<FieldOption>
 }
 
-export const ExtraBuildingsField = ({
-  field,
-  onSubmit,
-  buildingOptions,
-}: ExtraBuildingsFieldProps) => {
+export const ExtraBuildingsField = ({ field, buildingOptions }: ExtraBuildingsFieldProps) => {
   const loading = useAtomValue(priceCalculatorLoadingAtom)
   const [isOpen, setIsOpen] = useState(false)
+  const priceIntentId = useAtomValue(currentPriceIntentIdAtom)!
+  const shopSessionId = useShopSessionId()!
 
   const { t } = useTranslation('purchase-form')
   const translateLabel = useTranslateFieldLabel()
@@ -60,27 +61,49 @@ export const ExtraBuildingsField = ({
     value: option.value,
   }))
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+  const updatePriceIntent = useUpdatePriceIntent({
+    onSuccess: () => {
+      setIsOpen(false)
+    },
+  })
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault()
     event.stopPropagation()
 
     const formData = new FormData(event.currentTarget)
-    const data = Object.fromEntries(formData.entries())
-
-    await onSubmit({
-      [field.name]: [...(field.value ?? []), convertExtraBuilding(data)],
+    const data = {
+      [field.name]: [
+        ...(field.value ?? []),
+        convertExtraBuilding(Object.fromEntries(formData.entries())),
+      ],
+    }
+    updatePriceIntent({
+      variables: {
+        priceIntentId,
+        data,
+        // This is awkward, but we need to pass variables to second mutation even if its payload is empty here
+        customer: { shopSessionId },
+      },
     })
-    setIsOpen(false)
   }
 
-  const handleRemove = async (extraBuilding: ExtraBuilding) => {
+  const handleRemove = (extraBuilding: ExtraBuilding) => {
     const identifier = JSON.stringify(extraBuilding)
 
-    await onSubmit({
+    const data = {
       [field.name]: (field.value ?? []).filter((item) => {
         const itemIdentifier = JSON.stringify(item)
         return itemIdentifier !== identifier
       }),
+    }
+    updatePriceIntent({
+      variables: {
+        priceIntentId,
+        data,
+        // This is awkward, but we need to pass variables to second mutation even if its payload is empty here
+        customer: { shopSessionId },
+      },
     })
   }
 
@@ -128,9 +151,11 @@ export const ExtraBuildingsField = ({
         <DialogContentWrapper>
           <Space y={1.5}>
             <Header>
-              <Heading as="h3" variant="standard.24">
-                {t('FIELD_EXTRA_BUILDINGS_ADD_BUTTON')}
-              </Heading>
+              <Dialog.Title asChild={true}>
+                <Heading as="h3" variant="standard.24">
+                  {t('FIELD_EXTRA_BUILDINGS_ADD_BUTTON')}
+                </Heading>
+              </Dialog.Title>
 
               <DialogClose type="button">
                 <CrossIcon />

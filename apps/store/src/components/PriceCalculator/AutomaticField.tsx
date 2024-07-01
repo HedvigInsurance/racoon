@@ -2,7 +2,6 @@ import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { StepperInput } from '@/components/StepperInput/StepperInput'
 import { TextField } from '@/components/TextField/TextField'
 import type { InputField as InputFieldType } from '@/services/PriceCalculator/Field.types'
-import type { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { convertToDate } from '@/utils/date'
 import { InputDay } from '../InputDay/InputDay'
@@ -17,12 +16,11 @@ import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
 type Props = {
   field: InputFieldType
-  onSubmit: (data: JSONData) => Promise<unknown>
   autoFocus?: boolean
   priceIntent: PriceIntent
 }
 
-export const AutomaticField = ({ field, priceIntent, onSubmit, autoFocus }: Props) => {
+export const AutomaticField = ({ field, priceIntent, autoFocus }: Props) => {
   const translateLabel = useTranslateFieldLabel()
 
   switch (field.type) {
@@ -132,7 +130,6 @@ export const AutomaticField = ({ field, priceIntent, onSubmit, autoFocus }: Prop
             ...buildingOption,
             name: buildingOption.label,
           }))}
-          onSubmit={onSubmit}
         />
       )
 
