@@ -23,6 +23,7 @@ import {
 } from '@/services/graphql/generated'
 import { type Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
+import { useShopSessionId } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
@@ -124,8 +125,9 @@ export const CalculatePricePage = (props: Props) => {
   useSyncPriceTemplate(props.priceTemplate)
   useSyncPriceCalculatorState(props.priceIntent)
 
+  const shopSessionId = useShopSessionId()
   const isReady = useIsPriceCalculatorStateReady()
-  if (!isReady) {
+  if (shopSessionId == null || !isReady) {
     return null
   }
 
