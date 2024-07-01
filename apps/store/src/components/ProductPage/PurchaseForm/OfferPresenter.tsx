@@ -2,12 +2,14 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useInView } from 'framer-motion'
+import { useAtomValue } from 'jotai'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import type { MouseEventHandler, ReactNode, RefObject } from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Button, Space, Text, PlusIcon, theme } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
+import { priceIntentAtom } from '@/components/PriceCalculator/priceCalculatorAtoms'
 import { usePriceIntent } from '@/components/ProductPage/PriceIntentContext'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import { ScrollToTopButton } from '@/components/ProductPage/ScrollToButton/ScrollToButton'
@@ -18,8 +20,7 @@ import { BundleDiscountOfferTooltip } from '@/features/bundleDiscount/BundleDisc
 import { BankSigneringEvent } from '@/services/bankSignering'
 import type { ProductOfferFragment, RedeemedCampaignFragment } from '@/services/graphql/generated'
 import { ExternalInsuranceCancellationOption } from '@/services/graphql/generated'
-import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
-import type { ShopSession } from '@/services/shopSession/ShopSession.types'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
@@ -39,18 +40,23 @@ enum AddToCartRedirect {
 }
 
 type Props = {
-  priceIntent: PriceIntent
-  shopSession: ShopSession
-  selectedOffer: ProductOfferFragment
   scrollPastRef: RefObject<HTMLElement>
   onClickEdit: () => void
   notifyProductAdded: (item: ProductOfferFragment) => void
 }
 
 export const OfferPresenter = (props: Props) => {
-  const { priceIntent, shopSession, scrollPastRef, onClickEdit, selectedOffer } = props
+  const { shopSession } = useShopSession()
+  if (shopSession == null) {
+    throw new Error('shopSession must be defined')
+  }
+  const priceIntent = useAtomValue(priceIntentAtom)
+  const [selectedOffer, setSelectedOffer] = useSelectedOffer()
+  if (selectedOffer == null) {
+    throw new Error('selectedOffer must be defined')
+  }
+  const { scrollPastRef, onClickEdit } = props
   const [, , resetPriceIntent] = usePriceIntent()
-  const [, setSelectedOffer] = useSelectedOffer()
   const { t } = useTranslation('purchase-form')
   const formatter = useFormatter()
   const [addToCartRedirect, setAddToCartRedirect] = useState<AddToCartRedirect | null>(null)
@@ -140,8 +146,8 @@ export const OfferPresenter = (props: Props) => {
   }, [tiers, selectedOffer])
 
   const productOfferIds = useMemo(
-    () => props.priceIntent.offers.map(({ id }) => id),
-    [props.priceIntent.offers],
+    () => priceIntent.offers.map(({ id }) => id),
+    [priceIntent.offers],
   )
 
   const handleAddToCart: MouseEventHandler = (event) => {
