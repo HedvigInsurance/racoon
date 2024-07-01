@@ -61,6 +61,7 @@ export const updateCustomerDataIfPresent = async (params: UpdateCustomerDataIfPr
         apolloClient: params.apolloClient,
         variables: { shopSessionId: params.shopSessionId, ...customerData },
       })
+      console.log('Widget | Updated customer data:', customerData)
     } catch (error) {
       console.warn('Failed to update customer data', error)
     }
