@@ -14,7 +14,6 @@ import {
   INSURELY_IFRAME_MAX_HEIGHT,
   INSURELY_IFRAME_MAX_WIDTH,
 } from '@/services/Insurely/Insurely.constants'
-import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { Features } from '@/utils/Features'
 import { FetchInsuranceSuccess } from './FetchInsuranceSuccess'
 import {
@@ -29,7 +28,7 @@ const USE_NATIVE_SUCCESS = Features.enabled('INSURELY_NATIVE_SUCCESS')
 type OnCompleted = NonNullable<ComponentProps<typeof InsurelyIframe>['onCompleted']>
 
 type Props = {
-  shopSession: ShopSession
+  customerSsn?: string
   priceIntentId: string
   externalInsurer: ExternalInsurer
   insurely: { configName: string; partner: string }
@@ -58,7 +57,7 @@ export const FetchInsurance = (props: Props) => {
     fetchInsuranceCompare()
     setInsurelyConfig({
       company: props.externalInsurer.insurelyId ?? undefined,
-      ssn: props.shopSession.customer?.ssn ?? undefined,
+      ssn: props.customerSsn ?? undefined,
     })
   }
   const handleClickSkip = () => {
