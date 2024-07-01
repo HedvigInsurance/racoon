@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { useAtomValue } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import type { FormEventHandler } from 'react'
 import { useState } from 'react'
@@ -14,6 +15,7 @@ import {
   CrossIconSmall,
 } from 'ui'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
+import { priceCalculatorLoadingAtom } from '@/components/PriceCalculator/priceCalculatorAtoms'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextField } from '@/components/TextField/TextField'
 import type {
@@ -39,16 +41,15 @@ enum Field {
 type ExtraBuildingsFieldProps = {
   field: InputFieldExtraBuildings
   onSubmit: (data: JSONData) => Promise<unknown>
-  loading: boolean
   buildingOptions: Array<FieldOption>
 }
 
 export const ExtraBuildingsField = ({
   field,
   onSubmit,
-  loading,
   buildingOptions,
 }: ExtraBuildingsFieldProps) => {
+  const loading = useAtomValue(priceCalculatorLoadingAtom)
   const [isOpen, setIsOpen] = useState(false)
 
   const { t } = useTranslation('purchase-form')

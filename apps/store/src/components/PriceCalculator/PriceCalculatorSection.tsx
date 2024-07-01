@@ -1,8 +1,10 @@
 import styled from '@emotion/styled'
+import { useAtomValue } from 'jotai'
 import NextLink from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { type FormEventHandler, type ReactNode } from 'react'
 import { Button, Space, Text } from 'ui'
+import { priceCalculatorLoadingAtom } from '@/components/PriceCalculator/priceCalculatorAtoms'
 import { linkStyles } from '@/components/RichText/RichText.styles'
 import { deserializeField } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { type FormSection, type JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
@@ -12,16 +14,16 @@ import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
 type Props = {
   section: FormSection
-  loading: boolean
   onSubmit: (data: JSONData) => void
   last: boolean
   children: ReactNode
 }
 
-export const PriceCalculatorSection = ({ section, loading, onSubmit, last, children }: Props) => {
+export const PriceCalculatorSection = ({ section, onSubmit, last, children }: Props) => {
   const locale = useRoutingLocale()
   const { t } = useTranslation('purchase-form')
   const translateLabel = useTranslateFieldLabel()
+  const loading = useAtomValue(priceCalculatorLoadingAtom)
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault()
@@ -46,7 +48,7 @@ export const PriceCalculatorSection = ({ section, loading, onSubmit, last, child
         {children}
 
         <Space as="footer" y={0.25}>
-          <Button type="submit" disabled={loading} loading={loading} fullWidth={true}>
+          <Button type="submit" loading={loading} fullWidth={true}>
             {translateLabel(section.submitLabel)}
           </Button>
 

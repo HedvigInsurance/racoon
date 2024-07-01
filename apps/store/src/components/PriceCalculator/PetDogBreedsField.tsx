@@ -1,8 +1,10 @@
 import { datadogLogs } from '@datadog/browser-logs'
+import { useAtomValue } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { useState, useMemo } from 'react'
 import { Space } from 'ui'
 import { Combobox } from '@/components/Combobox/Combobox'
+import { priceCalculatorLoadingAtom } from '@/components/PriceCalculator/priceCalculatorAtoms'
 import { PriceIntentAnimal, usePriceIntentAvailableBreedsQuery } from '@/services/graphql/generated'
 import type {
   PetDogBreedsField as InputFieldPetDogBreeds,
@@ -13,10 +15,10 @@ import { MixedBreedPicker } from './MixedBreedPicker/MixedBreedPicker'
 
 type Props = {
   field: InputFieldPetDogBreeds
-  loading: boolean
 }
 
-export const PetDogBreedsField = ({ field, loading }: Props) => {
+export const PetDogBreedsField = ({ field }: Props) => {
+  const loading = useAtomValue(priceCalculatorLoadingAtom)
   const [showMixedPicker, setShowMixedPicker] = useState(() => (field.value ?? []).length > 1)
   const { t } = useTranslation('purchase-form')
 

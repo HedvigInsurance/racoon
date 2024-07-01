@@ -54,9 +54,7 @@ export const PriceCalculator = (props: Props) => {
 
   const showFetchInsurance = useShowFetchInsurance({ priceIntentId })
   const showPriceIntentWarning = useSetAtom(showPriceIntentWarningAtom)
-  const [handleSubmit, handleSubmitSection, isLoading] = useHandleSubmitPriceCalculator({
-    shopSession,
-    priceIntent,
+  const [handleSubmit, handleSubmitSection] = useHandleSubmitPriceCalculator({
     onSuccess({ priceIntent, customer }) {
       const form = setupForm({
         customer,
@@ -95,7 +93,6 @@ export const PriceCalculator = (props: Props) => {
           <PriceCalculatorSection
             section={section}
             onSubmit={handleSubmitSection}
-            loading={isLoading}
             last={sectionIndex === form.sections.length - 1}
           >
             <FormGrid items={section.items}>
@@ -103,7 +100,6 @@ export const PriceCalculator = (props: Props) => {
                 <AutomaticField
                   field={field}
                   onSubmit={handleSubmit}
-                  loading={isLoading}
                   priceIntent={priceIntent}
                   // We don't want to mess up focusing for the user by setting autoFocus on the
                   // first item in the form, since that would make it unintuitive to navigate our
