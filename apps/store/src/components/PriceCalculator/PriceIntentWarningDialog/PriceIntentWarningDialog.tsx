@@ -1,7 +1,6 @@
 import { useAtom, useAtomValue } from 'jotai'
 import { Dialog } from 'ui'
 import { priceIntentAtom } from '@/components/PriceCalculator/priceCalculatorAtoms'
-import { Features } from '@/utils/Features'
 import { dialogContent, dialogWindow } from './PriceIntentWarningDialog.css'
 import { showPriceIntentWarningAtom } from './showPriceIntentWarningAtom'
 import { WarningPrompt } from './WarningPrompt'
@@ -24,7 +23,6 @@ export function PriceIntentWarningDialog({ onConfirm }: Props) {
   }
 
   if (priceIntentWarning == null) return null
-  if (!Features.enabled('PRICE_INTENT_WARNING')) return null
 
   return (
     <Dialog.Root open={isOpen}>

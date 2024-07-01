@@ -33,7 +33,7 @@ export const useUpdatePriceIntent = ({ onSuccess }: Options) => {
       }
     },
     onError(error) {
-      window.console.log("Couldn't update price intent", error)
+      console.log("Couldn't update price intent", error)
       datadogLogs.logger.error("Couldn't update price intent", {
         error,
       })
