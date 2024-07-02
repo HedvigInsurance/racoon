@@ -15,6 +15,7 @@ import { CartToast } from '@/components/CartNotification/CartToast'
 import { Pillow } from '@/components/Pillow/Pillow'
 import {
   useIsPriceCalculatorStateReady,
+  usePriceIntentId,
   useSyncPriceCalculatorState,
 } from '@/components/PriceCalculator/priceCalculatorAtoms'
 import { PriceCalculatorDynamic } from '@/components/PriceCalculator/PriceCalculatorDynamic'
@@ -48,8 +49,6 @@ import {
   ExternalInsuranceCancellationOption,
   usePriceIntentConfirmMutation,
 } from '@/services/graphql/generated'
-import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
-import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { sendDialogEvent } from '@/utils/dialogEvent'
@@ -107,6 +106,8 @@ const PurchaseFormInner = (props: PurchaseFormInnerProps) => {
   const tracking = useTracking()
   const isLarge = useBreakpoint('lg')
 
+  useSyncPriceCalculatorState(priceIntent)
+
   const isPriceCalculatorExpanded = useIsPriceCalculatorExpanded()
   const [formState, setFormState] = usePurchaseFormState(
     isPriceCalculatorExpanded ? { state: 'EDIT' } : undefined,
@@ -145,7 +146,9 @@ const PurchaseFormInner = (props: PurchaseFormInnerProps) => {
     !isLarge && window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   }
 
-  const isReady = shopSession != null && priceIntent != null
+  const isPriceCalculatorStateReady = useIsPriceCalculatorStateReady()
+
+  const isReady = shopSession != null && isPriceCalculatorStateReady
   if (!isReady) {
     return <IdleState loading={true} showAverageRating={props.showAverageRating} />
   } else if (formState.state === 'IDLE') {
@@ -154,19 +157,13 @@ const PurchaseFormInner = (props: PurchaseFormInnerProps) => {
     } else {
       return (
         <ProductHeroContainer size="large" compact={true}>
-          <ShowOfferState
-            shopSession={shopSession}
-            priceIntent={priceIntent}
-            onClickEdit={editForm}
-            notifyProductAdded={props.notifyProductAdded}
-            selectedOffer={selectedOffer}
-          />
+          <ShowOfferState onClickEdit={editForm} notifyProductAdded={props.notifyProductAdded} />
         </ProductHeroContainer>
       )
     }
   }
 
-  const editingStateForm = <EditingState priceIntent={priceIntent} onComplete={handleComplete} />
+  const editingStateForm = <EditingState onComplete={handleComplete} />
 
   const editor = isLarge ? (
     <motion.div
@@ -280,23 +277,21 @@ const IdleState = ({ loading, onClick, showAverageRating }: IdleStateProps) => {
 }
 
 type EditingStateProps = {
-  priceIntent: PriceIntent
   onComplete: (error?: string) => void
 }
 
 const EditingState = (props: EditingStateProps) => {
-  const { priceIntent, onComplete } = props
+  const priceIntentId = usePriceIntentId()
+  const { onComplete } = props
   const { t } = useTranslation('purchase-form')
-
-  useSyncPriceCalculatorState(priceIntent)
 
   const priceLoaderPromise = useRef<Promise<unknown> | null>(null)
   const [confirmPriceIntent, result] = usePriceIntentConfirmMutation({
-    variables: { priceIntentId: priceIntent.id },
+    variables: { priceIntentId },
     onError(error) {
       datadogLogs.logger.warn('Failed to confirm price intent', {
         error,
-        priceIntentId: priceIntent.id,
+        priceIntentId,
       })
       if (error.networkError || error.graphQLErrors.length > 0) {
         // Unknown error
@@ -319,7 +314,7 @@ const EditingState = (props: EditingStateProps) => {
         onComplete()
       } else {
         throw new Error(
-          `UNEXPECTED: price intent not updated without user error (${priceIntent.id})`,
+          `UNEXPECTED: price intent not updated without user error (${priceIntentId})`,
         )
       }
     },
@@ -336,10 +331,7 @@ const EditingState = (props: EditingStateProps) => {
     ])
   }
 
-  const isReady = useIsPriceCalculatorStateReady()
-  if (!isReady) {
-    return null
-  } else if (isLoadingPrice) {
+  if (isLoadingPrice) {
     return (
       <div className={purchaseFormPriceLoaderWrapper}>
         <PriceLoader />
@@ -348,31 +340,25 @@ const EditingState = (props: EditingStateProps) => {
   }
   return (
     <div className={purchaseFormResponsiveBlock}>
-      <PriceCalculatorDynamic key={priceIntent.id} onConfirm={handleConfirm} />
+      <PriceCalculatorDynamic key={priceIntentId} onConfirm={handleConfirm} />
     </div>
   )
 }
 
 type ShowOfferStateProps = {
-  priceIntent: PriceIntent
-  shopSession: ShopSession
   onClickEdit: () => void
   notifyProductAdded: (item: ProductOfferFragment) => void
-  selectedOffer: ProductOfferFragment
 }
 
 const ShowOfferState = (props: ShowOfferStateProps) => {
-  const { shopSession, priceIntent, selectedOffer, onClickEdit, notifyProductAdded } = props
+  const { onClickEdit, notifyProductAdded } = props
   const scrollPastRef = useRef<HTMLDivElement | null>(null)
 
   return (
     <div className={clsx(purchaseFormResponsiveBlock, purchaseFormSection)} ref={scrollPastRef}>
       <OfferPresenterDynamic
-        priceIntent={priceIntent}
-        shopSession={shopSession}
         scrollPastRef={scrollPastRef}
         onClickEdit={onClickEdit}
-        selectedOffer={selectedOffer}
         notifyProductAdded={notifyProductAdded}
       />
     </div>

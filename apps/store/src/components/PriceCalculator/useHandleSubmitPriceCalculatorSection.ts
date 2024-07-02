@@ -1,6 +1,5 @@
-import { useAtomValue } from 'jotai'
 import { startTransition, useCallback } from 'react'
-import { currentPriceIntentIdAtom } from '@/components/PriceCalculator/priceCalculatorAtoms'
+import { usePriceIntentId } from '@/components/PriceCalculator/priceCalculatorAtoms'
 import { useUpdatePriceIntent } from '@/components/PriceCalculator/useUpdatePriceIntent'
 import type { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
@@ -13,7 +12,7 @@ type Params = {
 
 export const useHandleSubmitPriceCalculatorSection = (params: Params) => {
   const shopSessionId = useShopSessionId()!
-  const priceIntentId = useAtomValue(currentPriceIntentIdAtom)!
+  const priceIntentId = usePriceIntentId()
   const updatePriceIntent = useUpdatePriceIntent({ onSuccess: params.onSuccess })
 
   // NOTE: We probably want to refactor this in the future

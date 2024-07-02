@@ -16,8 +16,8 @@ import {
 } from 'ui'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import {
-  currentPriceIntentIdAtom,
   priceCalculatorLoadingAtom,
+  usePriceIntentId,
 } from '@/components/PriceCalculator/priceCalculatorAtoms'
 import { useUpdatePriceIntent } from '@/components/PriceCalculator/useUpdatePriceIntent'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -50,7 +50,7 @@ type ExtraBuildingsFieldProps = {
 export const ExtraBuildingsField = ({ field, buildingOptions }: ExtraBuildingsFieldProps) => {
   const loading = useAtomValue(priceCalculatorLoadingAtom)
   const [isOpen, setIsOpen] = useState(false)
-  const priceIntentId = useAtomValue(currentPriceIntentIdAtom)!
+  const priceIntentId = usePriceIntentId()
   const shopSessionId = useShopSessionId()!
 
   const { t } = useTranslation('purchase-form')
