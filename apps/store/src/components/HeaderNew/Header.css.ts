@@ -3,11 +3,13 @@ import { minWidth, tokens, yStack } from 'ui'
 import { zIndexes } from '@/utils/zIndex'
 import { MAX_WIDTH } from '../GridLayout/GridLayout.constants'
 import {
-  HEADER_HEIGHT_DESKTOP,
   HEADER_HEIGHT_MOBILE,
-  MENU_BAR_HEIGHT_DESKTOP,
   MENU_BAR_HEIGHT_MOBILE,
-} from './Header.constants'
+} from './HeaderMenuMobile/HeaderMenuMobile.css'
+
+export const MENU_BAR_HEIGHT_DESKTOP = '4.5rem'
+export const MENU_BAR_HEIGHT_PX = 72
+const HEADER_HEIGHT_DESKTOP = `calc(${MENU_BAR_HEIGHT_DESKTOP} + ${tokens.space.xs})`
 
 export const focusableStyles = style({
   cursor: 'pointer',
@@ -129,6 +131,16 @@ export const navigationItem = style({
     [minWidth.lg]: {
       selectors: {
         '&&': { borderBottom: 'unset' },
+
+        // Make the last item first in the list
+        '&:last-child': {
+          order: -1,
+        },
+
+        // Position second item on the right side of the header
+        '&:nth-child(2)': {
+          marginLeft: 'auto',
+        },
       },
     },
   },
@@ -137,26 +149,23 @@ export const navigationItem = style({
 export const navigationTriggerLink = style([
   focusableStyles,
   {
-    paddingBlock: tokens.space.lg,
     display: 'flex',
     alignItems: 'center',
     gap: tokens.space.xxxl,
+    paddingBlock: tokens.space.lg,
     whiteSpace: 'nowrap',
 
     '@media': {
       [minWidth.lg]: {
+        height: '2.5rem',
         paddingBlock: tokens.space.xs,
         paddingInline: tokens.space.md,
-
         borderRadius: tokens.radius.sm,
-
-        ':hover': {
-          backgroundColor: tokens.colors.grayTranslucent100,
-        },
+        backgroundColor: tokens.colors.buttonSecondary,
 
         selectors: {
-          '&[data-state="open"]': {
-            backgroundColor: tokens.colors.grayTranslucent100,
+          '&[data-state="open"], &:hover': {
+            backgroundColor: tokens.colors.buttonSecondaryHover,
           },
         },
       },
@@ -171,9 +180,9 @@ export const navigationSecondaryItem = style({
 
   '@media': {
     [minWidth.lg]: {
-      padding: `${tokens.space.xs} ${tokens.space.sm}`,
+      padding: `${tokens.space.sm} ${tokens.space.sm}`,
       margin: 0,
-      borderRadius: tokens.radius.sm,
+      borderRadius: tokens.radius.md,
 
       ':hover': {
         backgroundColor: tokens.colors.grayTranslucent100,
@@ -196,6 +205,13 @@ export const navigationContent = style({
     [minWidth.lg]: {
       position: 'absolute',
       paddingTop: `calc(${tokens.space.sm} + ${tokens.space.xs})`,
+
+      selectors: {
+        // Make sure the menu item to the right doesn't expand outside the viewport
+        [`${navigationItem}:nth-child(2) &`]: {
+          right: '0',
+        },
+      },
     },
   },
 })
@@ -208,10 +224,11 @@ export const navigationMenuWrapper = style({
   '@media': {
     [minWidth.lg]: {
       backgroundColor: tokens.colors.light,
-      boxShadow: tokens.shadow.default,
-      borderRadius: tokens.radius.sm,
+      boxShadow: `0px 4px 10px -2px ${tokens.colors.translucent1}, 0px 2px 2px -1px ${tokens.colors.translucent2}`,
+      border: `1px solid ${tokens.colors.borderTranslucent1}`,
+      borderRadius: tokens.radius.xl,
       padding: tokens.space.md,
-      rowGap: tokens.space.md,
+      rowGap: tokens.space.xs,
     },
   },
 })
@@ -234,7 +251,7 @@ export const navigationPrimaryList = style({
       alignItems: 'center',
       height: MENU_BAR_HEIGHT_DESKTOP,
       padding: tokens.space.none,
-      gap: tokens.space.xxs,
+      gap: tokens.space.xs,
     },
   },
 })

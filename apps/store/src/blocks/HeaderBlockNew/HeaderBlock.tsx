@@ -31,9 +31,7 @@ export const HeaderBlock = ({ blok }: HeaderBlockNewProps) => {
   return (
     <Header {...storyblokEditable(blok)}>
       <HeaderMenu defaultValue={productNavItem}>
-        {blok.headerMenu.map((item) => (
-          <NestedMenuBlock key={item._uid} blok={item} />
-        ))}
+        {blok.headerMenu.map((item) => <NestedMenuBlock key={item._uid} blok={item} />)}
       </HeaderMenu>
 
       <ShoppingCartMenuItem />
