@@ -15,11 +15,11 @@ import {
   CrossIconSmall,
 } from 'ui'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
+import { useUpdatePriceIntent } from '@/components/PriceCalculator/useUpdatePriceIntent'
 import {
   priceCalculatorLoadingAtom,
   usePriceIntentId,
-} from '@/components/PriceCalculator/priceCalculatorAtoms'
-import { useUpdatePriceIntent } from '@/components/PriceCalculator/useUpdatePriceIntent'
+} from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { TextField } from '@/components/TextField/TextField'
 import type {

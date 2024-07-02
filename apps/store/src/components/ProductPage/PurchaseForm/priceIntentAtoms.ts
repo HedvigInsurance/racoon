@@ -96,7 +96,7 @@ const getAtomValueOrThrow = <T>(get: Getter, atom: Atom<T>): NonNullable<T> => {
   return value
 }
 
-export const useSyncPriceCalculatorState = (priceIntent?: PriceIntentFragment): void => {
+export const useSyncPriceIntentState = (priceIntent?: PriceIntentFragment): void => {
   const shopSessionCustomer = useShopSession().shopSession?.customer
   const store = useStore()
   useEffect(() => {
@@ -110,7 +110,7 @@ export const useSyncPriceCalculatorState = (priceIntent?: PriceIntentFragment): 
   }, [shopSessionCustomer, store])
 }
 
-export const useIsPriceCalculatorStateReady = (): boolean => {
+export const useIsPriceIntentStateReady = (): boolean => {
   return !!useAtomValue(currentPriceIntentIdAtom)
 }
 
