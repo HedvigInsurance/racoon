@@ -9,6 +9,7 @@ import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceCalculatorDynamic } from '@/components/PriceCalculator/PriceCalculatorDynamic'
 import { completePriceLoader, PriceLoader } from '@/components/PriceLoader'
+import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import {
   useIsPriceIntentStateReady,
   useSyncPriceIntentState,
@@ -19,11 +20,9 @@ import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import {
   ExternalInsuranceCancellationOption,
   usePriceIntentConfirmMutation,
-  type WidgetPriceIntentFragment,
 } from '@/services/graphql/generated'
 import { type Template } from '@/services/PriceCalculator/PriceCalculator.types'
-import { type ShopSession } from '@/services/shopSession/ShopSession.types'
-import { useShopSessionId } from '@/services/shopSession/ShopSessionContext'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
@@ -33,8 +32,7 @@ import { Header } from './Header'
 const CAR_INSURANCE = 'SE_CAR'
 
 type Props = {
-  shopSession: ShopSession
-  priceIntent: WidgetPriceIntentFragment
+  priceIntentId: string
   priceTemplate: Template
   flow: string
   showBackButton?: boolean
@@ -48,11 +46,19 @@ export const CalculatePricePage = (props: Props) => {
   const locale = useRoutingLocale()
   const router = useRouter()
   const tracking = useTracking()
-  const entryToReplace = props.shopSession.cart.entries.find(
-    (item) => item.product.name === props.priceIntent.product.name,
+  const productData = useProductData()
+  const { shopSession } = useShopSession()
+  if (shopSession == null) {
+    throw new Error('shopSession must be defined')
+  }
+  const shopSessionId = shopSession.id
+
+  const { priceIntentId } = props
+  const entryToReplace = shopSession.cart.entries.find(
+    (item) => item.product.name === productData.name,
   )
   const [addToCart] = useAddToCart({
-    shopSessionId: props.shopSession.id,
+    shopSessionId,
     entryToReplace: entryToReplace?.id,
     async onError() {
       await priceLoaderPromise.current
@@ -76,8 +82,8 @@ export const CalculatePricePage = (props: Props) => {
           PageLink.widgetSwitch({
             locale,
             flow: props.flow,
-            shopSessionId: props.shopSession.id,
-            priceIntentId: props.priceIntent.id,
+            shopSessionId,
+            priceIntentId,
           }),
         )
       } else {
@@ -85,8 +91,8 @@ export const CalculatePricePage = (props: Props) => {
           PageLink.widgetSign({
             locale,
             flow: props.flow,
-            shopSessionId: props.shopSession.id,
-            priceIntentId: props.priceIntent.id,
+            shopSessionId,
+            priceIntentId,
           }),
         )
       }
@@ -94,7 +100,7 @@ export const CalculatePricePage = (props: Props) => {
   })
 
   const [confirm] = usePriceIntentConfirmMutation({
-    variables: { priceIntentId: props.priceIntent.id },
+    variables: { priceIntentId },
     async onError(error) {
       await priceLoaderPromise.current
       showError(error)
@@ -113,9 +119,9 @@ export const CalculatePricePage = (props: Props) => {
 
   const handleConfirm = () => {
     datadogRum.addAction('Widget Confirm Price', {
-      shopSessionId: props.shopSession.id,
+      shopSessionId,
       flow: props.flow,
-      productName: props.priceIntent.product.name,
+      productName: productData.name,
     })
     setLoading(true)
     confirm()
@@ -123,11 +129,10 @@ export const CalculatePricePage = (props: Props) => {
   }
 
   useSyncPriceTemplate(props.priceTemplate)
-  useSyncPriceIntentState(props.priceIntent)
+  useSyncPriceIntentState(priceIntentId)
 
-  const shopSessionId = useShopSessionId()
   const isReady = useIsPriceIntentStateReady()
-  if (shopSessionId == null || !isReady) {
+  if (!isReady) {
     return null
   }
 
@@ -137,9 +142,9 @@ export const CalculatePricePage = (props: Props) => {
 
       <Space y={2.5}>
         <SpaceFlex align="center" direction="vertical">
-          <Pillow size="xlarge" {...props.priceIntent.product.pillowImage} />
+          <Pillow size="xlarge" {...productData.pillowImage} />
           <Heading as="h2" variant="standard.18" align="center">
-            {props.priceIntent.product.displayNameShort}
+            {productData.displayNameShort}
           </Heading>
         </SpaceFlex>
 

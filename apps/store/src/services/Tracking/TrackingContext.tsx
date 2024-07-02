@@ -10,7 +10,7 @@ export const TrackingContext = createContext<Tracking['context']>({})
 type Props = {
   children: ReactNode
   shopSessionId?: string | null
-  priceIntent?: PriceIntent
+  priceIntent?: PriceIntent | null
   productData?: ProductData
   partner?: string
 }

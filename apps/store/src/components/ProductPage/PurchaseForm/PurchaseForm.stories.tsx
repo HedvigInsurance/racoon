@@ -6,7 +6,6 @@ import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
 import { PriceIntentCreateDocument, ShopSessionCreateDocument } from '@/services/graphql/generated'
 import { SE_APARTMENT_BRF } from '@/services/PriceCalculator/data/SE_APARTMENT_BRF'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
-import { PriceIntentContextProvider } from '../PriceIntentContext'
 import { ProductPageContextProvider } from '../ProductPageContext'
 import { PurchaseForm } from './PurchaseForm'
 
@@ -27,11 +26,9 @@ const Template: Story = {
     <ShopSessionProvider shopSessionId="1e517b18-fd77-4384-aee1-17481da3781a">
       <ProductDataProvider productData={props.productData}>
         <ProductPageContextProvider priceTemplate={props.priceTemplate} story={productStoryBRF}>
-          <PriceIntentContextProvider>
-            <BankIdContextProvider>
-              <PurchaseForm />
-            </BankIdContextProvider>
-          </PriceIntentContextProvider>
+          <BankIdContextProvider>
+            <PurchaseForm />
+          </BankIdContextProvider>
         </ProductPageContextProvider>
       </ProductDataProvider>
     </ShopSessionProvider>

@@ -84,7 +84,9 @@ export class PriceIntentService {
 
     if (priceIntentId) {
       const priceIntent = await this.get(priceIntentId)
-      if (priceIntent) return priceIntent
+      if (priceIntent != null && priceIntent.product.name === params.productName) {
+        return priceIntent
+      }
     }
 
     // Deduplicate mutation, Apollo won't do this for us
