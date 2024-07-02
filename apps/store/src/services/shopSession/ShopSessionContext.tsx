@@ -47,14 +47,14 @@ export const useShopSession = (): ShopSessionResult => {
 const useShopSessionContextValue = (initialShopSessionId?: string) => {
   const { countryCode } = useCurrentCountry()
   const apolloClient = useApolloClient()
-  const shopSessionServiceClientSide = useMemo(
-    () => setupShopSessionServiceClientSide(apolloClient),
-    [apolloClient],
-  )
+  const shopSessionServiceClientSide = useMemo(() => {
+    const service = setupShopSessionServiceClientSide(apolloClient)
+    if (initialShopSessionId) service.saveId(initialShopSessionId)
 
-  const [shopSessionId, setShopSessionId] = useState(
-    shopSessionServiceClientSide.shopSessionId() ?? initialShopSessionId,
-  )
+    return service
+  }, [apolloClient, initialShopSessionId])
+
+  const [shopSessionId, setShopSessionId] = useState(shopSessionServiceClientSide.shopSessionId())
 
   const queryResult = useShopSessionQuery({
     variables: shopSessionId ? { shopSessionId } : undefined,
