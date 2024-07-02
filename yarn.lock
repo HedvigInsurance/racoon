@@ -8527,9 +8527,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@radix-ui/react-checkbox@npm:1.1.0":
-  version: 1.1.0
-  resolution: "@radix-ui/react-checkbox@npm:1.1.0"
+"@radix-ui/react-checkbox@npm:1.1.1":
+  version: 1.1.1
+  resolution: "@radix-ui/react-checkbox@npm:1.1.1"
   dependencies:
     "@radix-ui/primitive": "npm:1.1.0"
     "@radix-ui/react-compose-refs": "npm:1.1.0"
@@ -8549,7 +8549,7 @@ __metadata:
       optional: true
     "@types/react-dom":
       optional: true
-  checksum: 10c0/794879dc454aed9fa0b29f622b843efa2289755cf7ac66f15f1ca07351c87927835011bc031067456c578b70fc3b20e57bdb2dec5b3367d0c346cf6cd7d4254e
+  checksum: 10c0/2d7d35b8319298166905057e9f7fb1d4b51d73bdec6c7c2127d2266e0f053c39586e316ea0da9a24612dfa86b8fc1f5160d4c37f79ae567025b62616de95c2c7
   languageName: node
   linkType: hard
 
@@ -9273,9 +9273,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@radix-ui/react-tooltip@npm:1.1.1":
-  version: 1.1.1
-  resolution: "@radix-ui/react-tooltip@npm:1.1.1"
+"@radix-ui/react-tooltip@npm:1.1.2":
+  version: 1.1.2
+  resolution: "@radix-ui/react-tooltip@npm:1.1.2"
   dependencies:
     "@radix-ui/primitive": "npm:1.1.0"
     "@radix-ui/react-compose-refs": "npm:1.1.0"
@@ -9299,7 +9299,7 @@ __metadata:
       optional: true
     "@types/react-dom":
       optional: true
-  checksum: 10c0/42965dd7b93d3e82cee80aa9d00ed52e73a97d56021e7b868dc6bc69574a3c1c049495f5009b3c786919fb7d3af1ac7d69c2fc4013687e9dcdc937e60f2bdc35
+  checksum: 10c0/76f3abcd27f7f673612631abc340a17e6ab0e5d20b901fe4828400de05d4d8a8711392417b028be86a3053a0881b80d0ed41c4e027eb64c1af9fe74db70d3786
   languageName: node
   linkType: hard
 
@@ -26002,7 +26002,7 @@ __metadata:
     "@opentelemetry/api": "npm:1.9.0"
     "@opentelemetry/api-logs": "npm:0.52.1"
     "@radix-ui/react-accordion": "npm:1.2.0"
-    "@radix-ui/react-checkbox": "npm:1.1.0"
+    "@radix-ui/react-checkbox": "npm:1.1.1"
     "@radix-ui/react-collapsible": "npm:1.1.0"
     "@radix-ui/react-dialog": "npm:1.1.1"
     "@radix-ui/react-navigation-menu": "npm:1.2.0"
@@ -26011,7 +26011,7 @@ __metadata:
     "@radix-ui/react-select": "npm:2.1.1"
     "@radix-ui/react-switch": "npm:1.1.0"
     "@radix-ui/react-tabs": "npm:1.1.0"
-    "@radix-ui/react-tooltip": "npm:1.1.1"
+    "@radix-ui/react-tooltip": "npm:1.1.2"
     "@storyblok/js": "npm:3.0.8"
     "@storyblok/react": "npm:3.0.10"
     "@storybook/addon-actions": "npm:8.1.11"
