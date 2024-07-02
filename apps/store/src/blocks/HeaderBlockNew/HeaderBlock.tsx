@@ -15,7 +15,7 @@ export type HeaderMenuProps = ExpectedBlockType<
 >
 
 export type HeaderBlockNewProps = SbBaseBlockProps<{
-  headerMenu: HeaderMenuProps
+  headerMenu: HeaderMenuProps | []
 }>
 
 // Performance considerations
@@ -30,11 +30,13 @@ export const HeaderBlock = ({ blok }: HeaderBlockNewProps) => {
   )
   return (
     <Header {...storyblokEditable(blok)}>
-      <HeaderMenu defaultValue={productNavItem}>
-        {blok.headerMenu.map((item) => (
-          <NestedMenuBlock key={item._uid} blok={item} />
-        ))}
-      </HeaderMenu>
+      {blok.headerMenu.length > 0 && (
+        <HeaderMenu defaultValue={productNavItem}>
+          {blok.headerMenu.map((item) => (
+            <NestedMenuBlock key={item._uid} blok={item} />
+          ))}
+        </HeaderMenu>
+      )}
 
       <ShoppingCartMenuItem />
     </Header>
