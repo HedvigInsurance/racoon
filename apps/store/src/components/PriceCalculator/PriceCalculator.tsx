@@ -8,7 +8,6 @@ import {
   activeFormSectionIdAtom,
   GOTO_NEXT_SECTION,
   priceCalculatorFormAtom,
-  priceIntentAtom,
   shopSessionCustomerAtom,
   usePriceIntentId,
 } from '@/components/PriceCalculator/priceCalculatorAtoms'
@@ -27,10 +26,10 @@ import * as Accordion from './Accordion'
 import { FetchInsuranceContainer } from './FetchInsuranceContainer'
 import { FormGrid } from './FormGrid/FormGrid'
 import { PriceCalculatorSection } from './PriceCalculatorSection'
+import { PriceIntentWarningDialog } from './PriceIntentWarningDialog/PriceIntentWarningDialog'
+import { showPriceIntentWarningAtom } from './PriceIntentWarningDialog/showPriceIntentWarningAtom'
 import { useShowFetchInsurance } from './useFetchInsurance'
 import { useHandleSubmitPriceCalculatorSection } from './useHandleSubmitPriceCalculatorSection'
-import { showPriceIntentWarningAtom } from './Warning/showPriceIntentWarningAtom'
-import { Warning } from './Warning/Warning'
 
 type Props = {
   onConfirm: () => void
@@ -49,7 +48,6 @@ export const PriceCalculator = (props: Props) => {
   const priceIntentId = usePriceIntentId()
   const priceTemplate = usePriceTemplate()
   const form = useAtomValue(priceCalculatorFormAtom)
-  const priceIntent = useAtomValue(priceIntentAtom)
   const shopSessionCustomer = useAtomValue(shopSessionCustomerAtom)
 
   const [activeSectionId, setActiveSectionId] = useAtom(activeFormSectionIdAtom)
@@ -185,9 +183,7 @@ export const PriceCalculator = (props: Props) => {
         onDecline={handleDeclineChangeSsn}
       />
 
-      {priceIntent.warning && (
-        <Warning priceIntentWarning={priceIntent.warning} onConfirm={goToNextSection} />
-      )}
+      <PriceIntentWarningDialog onConfirm={goToNextSection} />
 
       <FetchInsuranceContainer />
     </>
