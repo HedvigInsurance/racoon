@@ -1,6 +1,6 @@
 import { startTransition, useCallback } from 'react'
-import { usePriceIntentId } from '@/components/PriceCalculator/priceCalculatorAtoms'
 import { useUpdatePriceIntent } from '@/components/PriceCalculator/useUpdatePriceIntent'
+import { usePriceIntentId } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import type { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
 import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import type { ShopSession } from '@/services/shopSession/ShopSession.types'

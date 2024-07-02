@@ -1,6 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useAtomValue } from 'jotai'
-import { priceIntentAtom } from '@/components/PriceCalculator/priceCalculatorAtoms'
+import { priceIntentAtom } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import {
   useExternalInsurersQuery,
   useExternalInsurerUpdateMutation,

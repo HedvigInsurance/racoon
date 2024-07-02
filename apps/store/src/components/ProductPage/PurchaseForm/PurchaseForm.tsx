@@ -13,11 +13,6 @@ import { Button, Heading, Space, framerTransitions } from 'ui'
 import type { CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { CartToast } from '@/components/CartNotification/CartToast'
 import { Pillow } from '@/components/Pillow/Pillow'
-import {
-  useIsPriceCalculatorStateReady,
-  usePriceIntentId,
-  useSyncPriceCalculatorState,
-} from '@/components/PriceCalculator/priceCalculatorAtoms'
 import { PriceCalculatorDynamic } from '@/components/PriceCalculator/PriceCalculatorDynamic'
 import { completePriceLoader, PriceLoader } from '@/components/PriceLoader'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
@@ -29,6 +24,11 @@ import { PriceIntentTrackingProvider } from '@/components/ProductPage/PriceInten
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { ProductPageDebugDialog } from '@/components/ProductPage/ProductPageDebugDialog'
 import { ProductPageViewTracker } from '@/components/ProductPage/ProductPageViewTrack'
+import {
+  useIsPriceIntentStateReady,
+  usePriceIntentId,
+  useSyncPriceIntentState,
+} from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import {
   purchaseFormHeroWrapper,
   purchaseFormPriceLoaderWrapper,
@@ -106,7 +106,7 @@ const PurchaseFormInner = (props: PurchaseFormInnerProps) => {
   const tracking = useTracking()
   const isLarge = useBreakpoint('lg')
 
-  useSyncPriceCalculatorState(priceIntent)
+  useSyncPriceIntentState(priceIntent)
 
   const isPriceCalculatorExpanded = useIsPriceCalculatorExpanded()
   const [formState, setFormState] = usePurchaseFormState(
@@ -146,9 +146,9 @@ const PurchaseFormInner = (props: PurchaseFormInnerProps) => {
     !isLarge && window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   }
 
-  const isPriceCalculatorStateReady = useIsPriceCalculatorStateReady()
+  const isPriceIntentStateReady = useIsPriceIntentStateReady()
 
-  const isReady = shopSession != null && isPriceCalculatorStateReady
+  const isReady = shopSession != null && isPriceIntentStateReady
   if (!isReady) {
     return <IdleState loading={true} showAverageRating={props.showAverageRating} />
   } else if (formState.state === 'IDLE') {

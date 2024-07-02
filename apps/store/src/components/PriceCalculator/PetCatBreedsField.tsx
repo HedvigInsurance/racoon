@@ -2,7 +2,7 @@ import { useAtomValue } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { useMemo } from 'react'
 import { Combobox } from '@/components/Combobox/Combobox'
-import { priceCalculatorLoadingAtom } from '@/components/PriceCalculator/priceCalculatorAtoms'
+import { priceCalculatorLoadingAtom } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { PriceIntentAnimal, usePriceIntentAvailableBreedsQuery } from '@/services/graphql/generated'
 import type {
   PetCatBreedsField as InputFieldPetBreed,

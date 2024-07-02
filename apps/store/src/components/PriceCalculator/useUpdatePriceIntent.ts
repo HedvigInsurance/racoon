@@ -2,7 +2,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { useSetAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { useEffect } from 'react'
-import { priceCalculatorLoadingAtom } from '@/components/PriceCalculator/priceCalculatorAtoms'
+import { priceCalculatorLoadingAtom } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import {
   type ShopSessionCustomerFragment,

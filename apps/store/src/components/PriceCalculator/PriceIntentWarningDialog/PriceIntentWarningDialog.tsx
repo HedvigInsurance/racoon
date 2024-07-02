@@ -1,6 +1,6 @@
 import { useAtom, useAtomValue } from 'jotai'
 import { Dialog } from 'ui'
-import { priceIntentAtom } from '@/components/PriceCalculator/priceCalculatorAtoms'
+import { priceIntentAtom } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { dialogContent, dialogWindow } from './PriceIntentWarningDialog.css'
 import { showPriceIntentWarningAtom } from './showPriceIntentWarningAtom'
 import { WarningPrompt } from './WarningPrompt'

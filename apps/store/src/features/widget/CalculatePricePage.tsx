@@ -7,12 +7,12 @@ import { Heading, mq, Space, theme } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { Pillow } from '@/components/Pillow/Pillow'
-import {
-  useIsPriceCalculatorStateReady,
-  useSyncPriceCalculatorState,
-} from '@/components/PriceCalculator/priceCalculatorAtoms'
 import { PriceCalculatorDynamic } from '@/components/PriceCalculator/PriceCalculatorDynamic'
 import { completePriceLoader, PriceLoader } from '@/components/PriceLoader'
+import {
+  useIsPriceIntentStateReady,
+  useSyncPriceIntentState,
+} from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { useSyncPriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
@@ -123,10 +123,10 @@ export const CalculatePricePage = (props: Props) => {
   }
 
   useSyncPriceTemplate(props.priceTemplate)
-  useSyncPriceCalculatorState(props.priceIntent)
+  useSyncPriceIntentState(props.priceIntent)
 
   const shopSessionId = useShopSessionId()
-  const isReady = useIsPriceCalculatorStateReady()
+  const isReady = useIsPriceIntentStateReady()
   if (shopSessionId == null || !isReady) {
     return null
   }
