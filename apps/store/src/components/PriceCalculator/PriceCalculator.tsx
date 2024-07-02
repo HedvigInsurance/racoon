@@ -22,9 +22,8 @@ import {
 } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { type Form } from '@/services/PriceCalculator/PriceCalculator.types'
 import { type PriceIntent } from '@/services/priceIntent/priceIntent.types'
-import { useShopSession, useShopSessionId } from '@/services/shopSession/ShopSessionContext'
+import { useShopSessionId } from '@/services/shopSession/ShopSessionContext'
 import * as Accordion from './Accordion'
-import { FetchInsurance } from './FetchInsurance'
 import { FetchInsuranceContainer } from './FetchInsuranceContainer'
 import { FormGrid } from './FormGrid/FormGrid'
 import { PriceCalculatorSection } from './PriceCalculatorSection'
@@ -43,11 +42,10 @@ type CustomerData = {
 }
 
 export const PriceCalculator = (props: Props) => {
-  const { shopSession } = useShopSession()
-  if (shopSession == null) {
+  const shopSessionId = useShopSessionId()
+  if (shopSessionId == null) {
     throw new Error('shopSession must be ready')
   }
-  const shopSessionId = useShopSessionId()!
   const priceIntentId = useAtomValue(currentPriceIntentIdAtom)
   if (priceIntentId == null) {
     throw new Error('priceIntentId must be set')
@@ -194,17 +192,7 @@ export const PriceCalculator = (props: Props) => {
         <Warning priceIntentWarning={priceIntent.warning} onConfirm={goToNextSection} />
       )}
 
-      <FetchInsuranceContainer priceIntent={priceIntent}>
-        {({ externalInsurer, insurely }) => (
-          <FetchInsurance
-            shopSession={shopSession}
-            priceIntentId={priceIntent.id}
-            externalInsurer={externalInsurer}
-            insurely={insurely}
-            productName={priceIntent.product.name}
-          />
-        )}
-      </FetchInsuranceContainer>
+      <FetchInsuranceContainer />
     </>
   )
 }
