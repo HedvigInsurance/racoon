@@ -4,14 +4,14 @@ import { useRouter } from 'next/navigation'
 import { useCallback, useMemo, useState } from 'react'
 import { ChangeSsnWarningDialog } from '@/components/ChangeSsnWarningDialog/ChangeSsnWarningDialog'
 import { PriceCalculatorAccordionSection } from '@/components/PriceCalculator/PriceCalculatorAccordionSection'
+import { SSN_SE_SECTION_ID, SsnSeSection } from '@/components/PriceCalculator/SsnSeSection'
 import {
   activeFormSectionIdAtom,
   GOTO_NEXT_SECTION,
   priceCalculatorFormAtom,
   shopSessionCustomerAtom,
   usePriceIntentId,
-} from '@/components/PriceCalculator/priceCalculatorAtoms'
-import { SSN_SE_SECTION_ID, SsnSeSection } from '@/components/PriceCalculator/SsnSeSection'
+} from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { usePriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import {

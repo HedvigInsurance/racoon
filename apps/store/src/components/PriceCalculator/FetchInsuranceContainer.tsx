@@ -3,7 +3,7 @@ import { FetchInsurance } from '@/components/PriceCalculator/FetchInsurance'
 import {
   priceIntentAtom,
   shopSessionCustomerAtom,
-} from '@/components/PriceCalculator/priceCalculatorAtoms'
+} from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { Features } from '@/utils/Features'
 
 export const FetchInsuranceContainer = () => {
