@@ -2,11 +2,11 @@ import { Text, tokens } from 'ui'
 import { cartCount, iconWrapper } from './ShoppingCartMenuItem.css'
 
 export type ShoppingBagIconProps = {
-  count: number
+  count?: number
 }
 
 export const ShoppingBagIcon = ({ count }: ShoppingBagIconProps) => {
-  const hasItemsInCart = count > 0
+  const hasItemsInCart = count && count > 0
 
   return (
     <>
@@ -20,7 +20,7 @@ export const ShoppingBagIcon = ({ count }: ShoppingBagIconProps) => {
       ) : (
         <div className={iconWrapper}>
           <ShoppingBagIconLight />
-          <Text className={cartCount} size="md">
+          <Text className={cartCount} as="span" size="md">
             {count}
           </Text>
         </div>
