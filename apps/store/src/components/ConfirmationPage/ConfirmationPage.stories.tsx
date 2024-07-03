@@ -4,40 +4,6 @@ import { ShopSessionOutcomeDocument } from '@/services/graphql/generated'
 import type { ConfirmationStory } from '@/services/storyblok/storyblok'
 import { ConfirmationPage } from './ConfirmationPage'
 
-const meta: Meta<typeof ConfirmationPage> = {
-  title: 'Checkout / ConfirmationPage',
-  parameters: {
-    layout: 'fullscreen',
-  },
-}
-
-export default meta
-type Story = StoryObj<typeof ConfirmationPage>
-
-const Template: Story = {
-  render: (args) => <ConfirmationPage {...args} />,
-}
-
-const storyblokStory = {
-  id: 123,
-  alternates: [],
-  full_slug: 'confirmation-page',
-  created_at: '2021-03-02T10:00:00.000Z',
-  group_id: '123',
-  is_startpage: false,
-  name: 'Confirmation page',
-  parent_id: 123,
-  position: 0,
-  published_at: '2021-03-02T10:00:00.000Z',
-  first_published_at: '2021-03-02T10:00:00.000Z',
-  meta_data: {},
-  slug: 'confirmation-page',
-  lang: 'en',
-  uuid: '123',
-  sort_by_date: '2021-03-02T10:00:00.000Z',
-  tag_list: [],
-}
-
 const cart = {
   id: '123',
   cost: {
@@ -110,7 +76,23 @@ const cart = {
 
 // TODO: get this from some fixture module
 const story: ConfirmationStory = {
-  ...storyblokStory,
+  id: 123,
+  alternates: [],
+  full_slug: 'confirmation-page',
+  created_at: '2021-03-02T10:00:00.000Z',
+  group_id: '123',
+  is_startpage: false,
+  name: 'Confirmation page',
+  parent_id: 123,
+  position: 0,
+  published_at: '2021-03-02T10:00:00.000Z',
+  first_published_at: '2021-03-02T10:00:00.000Z',
+  meta_data: {},
+  slug: 'confirmation-page',
+  lang: 'en',
+  uuid: '123',
+  sort_by_date: '2021-03-02T10:00:00.000Z',
+  tag_list: [],
   content: {
     body: [],
     title: 'Your purchase is complete!',
@@ -123,37 +105,41 @@ const story: ConfirmationStory = {
       name: '',
       focus: '',
       title: '',
-      filename: 'https://a.storyblok.com/f/165473/2160x1549/7784154280/phone_heldnatural_en-1.png',
+      filename:
+        'https://a.storyblok.com/f/165473/3000x1750/2286e28041/mobil-i-handen-hedvig-3000.jpg',
       copyright: '',
       fieldtype: 'asset',
       is_external_url: false,
     },
     checklistTitle: 'What happens next?',
     checklistSubtitle: 'We will send you a confirmation via email.',
-    checklist: `Sign Hedvig
-          Connect payment method
-          Download the app`,
+    checklist: 'Sign Hedvig\nConnect payment method\nDownload the app',
     faqTitle: 'Frequently asked questions',
     faqSubtitle: 'Here are some answers to the most common questions.',
     seoTitle: 'Your purchase is complete | Hedvig',
   },
 }
 
+const meta: Meta<typeof ConfirmationPage> = {
+  title: 'Checkout / ConfirmationPage',
+  parameters: {
+    layout: 'fullscreen',
+  },
+}
+
+export default meta
+type Story = StoryObj<typeof ConfirmationPage>
+
+const Template: Story = {
+  render: (args) => <ConfirmationPage {...args} />,
+}
+
 export const Default = {
   ...Template,
   args: {
-    globalStory: {
-      ...storyblokStory,
-      content: {
-        header: [],
-        footer: [],
-      },
-    },
-    shopSessionId: 'ecf94a27-9daa-460e-a272-48b60f2d74ec',
-    memberPartnerData: { sas: { eligible: true } },
     currency: 'SEK',
-    cart: cart,
-    story: story,
+    cart,
+    story,
   },
 }
 
@@ -215,5 +201,13 @@ export const WithSwitchingAssistant = {
         },
       ],
     },
+  },
+}
+
+export const WithSasPartnership = {
+  ...Template,
+  args: {
+    ...Default.args,
+    memberPartnerData: { sas: { eligible: true } },
   },
 }

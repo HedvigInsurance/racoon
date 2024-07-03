@@ -16,16 +16,19 @@ import {
 } from '@/services/graphql/generated'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
-import { type ConfirmationStory } from '@/services/storyblok/storyblok'
+import { type StoryblokPageProps } from '@/services/storyblok/storyblok'
 import { Features } from '@/utils/Features'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
 
 type Params = { shopSessionId: string }
 
-export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Params> = async (
-  context,
-) => {
+type Props = ConfirmationPageProps & { shopSessionId: string } & Pick<
+    StoryblokPageProps,
+    'globalStory'
+  >
+
+export const getServerSideProps: GetServerSideProps<Props, Params> = async (context) => {
   patchNextI18nContext(context)
   const { req, res, locale, params } = context
 
@@ -67,9 +70,7 @@ export const getServerSideProps: GetServerSideProps<ConfirmationPageProps, Param
   }
 }
 
-const CheckoutConfirmationPage: NextPageWithLayout<
-  ConfirmationPageProps & { story: ConfirmationStory }
-> = (props) => {
+const CheckoutConfirmationPage: NextPageWithLayout<Props> = (props) => {
   return (
     <>
       <Head>

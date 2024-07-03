@@ -1,9 +1,10 @@
 import type { StoryObj } from '@storybook/react'
 import { type Meta } from '@storybook/react'
-import type { SasEurobonusSection } from './SasEurobonusSection'
+import { SasEurobonusSection } from './SasEurobonusSection'
 
 const meta: Meta<typeof SasEurobonusSection> = {
-  title: 'Checkout / SAS Eurobonus Section',
+  title: 'Checkout / ConfirmationPage / SAS Eurobonus Section',
+  component: SasEurobonusSection,
   args: {
     state: 'idle',
     eurobonusNumber: '',

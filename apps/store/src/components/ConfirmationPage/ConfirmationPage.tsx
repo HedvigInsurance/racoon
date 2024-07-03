@@ -6,17 +6,12 @@ import { ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
 import { ProductItemContractContainerCar } from '@/features/carDealership/ProductItemContractContainer'
 import { SasEurobonusSectionContainer } from '@/features/sas/SasEurobonusSection'
-import type { ConfirmationStory } from '@/services/storyblok/storyblok'
 import { Features } from '@/utils/Features'
 import type { ConfirmationPageProps } from './ConfirmationPage.types'
 import { StaticContent } from './StaticContent'
 import { SwitchingAssistantSection } from './SwitchingAssistantSection/SwitchingAssistantSection'
 
-type Props = ConfirmationPageProps & {
-  story: ConfirmationStory
-}
-
-export const ConfirmationPage = (props: Props) => {
+export const ConfirmationPage = (props: ConfirmationPageProps) => {
   const cartTotalCost = props.cart.cost.gross.amount
 
   return (
