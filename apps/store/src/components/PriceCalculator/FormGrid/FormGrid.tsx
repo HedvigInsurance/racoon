@@ -19,7 +19,13 @@ export const FormGrid = ({ items, autofocusFirst }: FormSectionProps) => {
             [columnSpan]: `${item.layout.columnSpan}`,
           })}
         >
-          <AutomaticField field={item.field} autoFocus={autofocusFirst && index === 0} />
+          <AutomaticField
+            // NOTE: We want to remount the field when default changes from empty (could be any f
+            // But not when default changes from one value to another - this risks loosing user input
+            key={`${item.field.name}_${item.field.defaultValue == null || item.field.defaultValue === ''}`}
+            field={item.field}
+            autoFocus={autofocusFirst && index === 0}
+          />
         </div>
       ))}
     </div>
