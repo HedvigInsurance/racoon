@@ -20,7 +20,8 @@ export const FormGrid = ({ items, autofocusFirst }: FormSectionProps) => {
           })}
         >
           <AutomaticField
-            // NOTE: We want to remount the field when default changes from empty (could be any f
+            // GOTCHA: Uncontrolled fields keep very first defaultValue they had
+            // Therefore, we want to remount the field when default changes from empty to non-empty
             // But not when default changes from one value to another - this risks loosing user input
             key={`${item.field.name}_${item.field.defaultValue == null || item.field.defaultValue === ''}`}
             field={item.field}

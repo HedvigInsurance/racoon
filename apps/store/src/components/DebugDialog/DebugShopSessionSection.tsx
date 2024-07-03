@@ -1,5 +1,5 @@
 import { usePathname } from 'next/navigation'
-import { Button, Space } from 'ui'
+import { Button } from 'ui'
 import { useShopSessionId } from '@/services/shopSession/ShopSessionContext'
 import { PageLink } from '@/utils/PageLink'
 import { CopyToClipboard } from './CopyToClipboard'
@@ -9,10 +9,10 @@ export const DebugShopSessionSection = () => {
   const shopSessionId = useShopSessionId()
   const pathname = usePathname()
 
-  if (!shopSessionId || !pathname) return null
+  if (shopSessionId == null || pathname == null) return null
 
   return (
-    <Space y={0.25}>
+    <>
       <CopyToClipboard label="Shop Session">{shopSessionId}</CopyToClipboard>
 
       <Button
@@ -25,6 +25,6 @@ export const DebugShopSessionSection = () => {
       </Button>
 
       <DebugResumeSessionSection />
-    </Space>
+    </>
   )
 }

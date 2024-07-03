@@ -25,6 +25,7 @@ export const DebugDialog = (props: { children: ReactNode }) => {
   return (
     <Dialog.Root open={isOpen} onOpenChange={setOpen}>
       <DialogContent onClose={() => setOpen(false)}>
+        <Dialog.Title style={{ display: 'none' }}>Debug tools</Dialog.Title>
         <DialogWindow>{props.children}</DialogWindow>
       </DialogContent>
     </Dialog.Root>
