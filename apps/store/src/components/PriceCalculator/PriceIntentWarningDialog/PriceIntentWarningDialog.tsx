@@ -1,6 +1,6 @@
-import { useAtom, useAtomValue } from 'jotai'
+import { useAtom } from 'jotai'
 import { Dialog } from 'ui'
-import { priceIntentAtom } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
+import { usePriceIntent } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { dialogContent, dialogWindow } from './PriceIntentWarningDialog.css'
 import { showPriceIntentWarningAtom } from './showPriceIntentWarningAtom'
 import { WarningPrompt } from './WarningPrompt'
@@ -10,7 +10,7 @@ type Props = {
 }
 
 export function PriceIntentWarningDialog({ onConfirm }: Props) {
-  const priceIntentWarning = useAtomValue(priceIntentAtom).warning
+  const priceIntentWarning = usePriceIntent().warning
   const [isOpen, setIsOpen] = useAtom(showPriceIntentWarningAtom)
 
   const handleClickConfirm = () => {

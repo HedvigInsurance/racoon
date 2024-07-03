@@ -1,14 +1,14 @@
 import { useAtomValue } from 'jotai'
 import { FetchInsurance } from '@/components/PriceCalculator/FetchInsurance'
 import {
-  priceIntentAtom,
   shopSessionCustomerAtom,
+  usePriceIntent,
 } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { Features } from '@/utils/Features'
 
 export const FetchInsuranceContainer = () => {
   const shopSessionCustomer = useAtomValue(shopSessionCustomerAtom)
-  const priceIntent = useAtomValue(priceIntentAtom)
+  const priceIntent = usePriceIntent()
 
   if (!Features.enabled('INSURELY')) return null
   if (priceIntent.product.name === 'SE_CAR' && !Features.enabled('INSURELY_CAR')) return null
