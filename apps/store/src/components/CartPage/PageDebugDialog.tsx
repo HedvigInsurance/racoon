@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo } from 'react'
-import { Space } from 'ui'
+import { yStack } from 'ui'
 import { CopyToClipboard } from '@/components/DebugDialog/CopyToClipboard'
 import { DebugDialog } from '@/components/DebugDialog/DebugDialog'
 import { DebugShopSessionSection } from '@/components/DebugDialog/DebugShopSessionSection'
@@ -13,12 +13,12 @@ import { PageLink } from '@/utils/PageLink'
 export const PageDebugDialog = () => {
   return (
     <DebugDialog>
-      <Space y={0.25}>
+      <div className={yStack({ gap: 'xs' })}>
         <LinkToCartSection />
         <LinkToRetargetingSection />
         <DebugShopSessionSection />
         <DebugTextKeys />
-      </Space>
+      </div>
     </DebugDialog>
   )
 }

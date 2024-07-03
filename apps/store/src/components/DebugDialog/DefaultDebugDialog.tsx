@@ -1,6 +1,6 @@
 'use client'
 
-import { Space } from 'ui'
+import { yStack } from 'ui'
 import { DebugDialog } from '@/components/DebugDialog/DebugDialog'
 import { DebugShopSessionSection } from '@/components/DebugDialog/DebugShopSessionSection'
 import { DebugTextKeys } from './DebugTextKeys'
@@ -8,10 +8,10 @@ import { DebugTextKeys } from './DebugTextKeys'
 export const DefaultDebugDialog = () => {
   return (
     <DebugDialog>
-      <Space y={0.25}>
+      <div className={yStack({ gap: 'xs' })}>
         <DebugShopSessionSection />
         <DebugTextKeys />
-      </Space>
+      </div>
     </DebugDialog>
   )
 }
