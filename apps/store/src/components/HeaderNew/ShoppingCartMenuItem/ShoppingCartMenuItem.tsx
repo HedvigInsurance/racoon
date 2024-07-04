@@ -8,7 +8,7 @@ import { cartLink, wrapper } from './ShoppingCartMenuItem.css'
 
 export const ShoppingCartMenuItem = () => {
   const { shopSession } = useShopSession()
-  const cartLineCount = shopSession?.cart.entries.length ?? 0
+  const cartLineCount = shopSession?.cart.entries.length
 
   const locale = useRoutingLocale()
   return (
