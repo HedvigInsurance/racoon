@@ -21,6 +21,24 @@ export const iconWrapper = style({
   justifyContent: 'center',
 })
 
+export const shoppingBagIconLight = style({
+  color: tokens.colors.grayTranslucent200,
+  selectors: {
+    [`${cartLink}:hover &`]: {
+      color: tokens.colors.grayTranslucent300,
+    },
+  },
+})
+
+export const shoppingBagIconGreen = style({
+  color: tokens.colors.green100,
+  selectors: {
+    [`${cartLink}:hover &`]: {
+      color: tokens.colors.green200,
+    },
+  },
+})
+
 export const cartCount = style({
   position: 'absolute',
   // Center vertically
