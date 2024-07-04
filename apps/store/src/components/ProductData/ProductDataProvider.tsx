@@ -1,7 +1,7 @@
 'use client'
-import { atom, useAtom, useAtomValue, useStore } from 'jotai'
-import { atomFamily } from 'jotai/utils'
-import type { ReactNode } from 'react'
+import { atom, useAtom, useAtomValue } from 'jotai'
+import { atomFamily, useHydrateAtoms } from 'jotai/utils'
+import { type ReactNode } from 'react'
 import type { RoutingLocale } from '@/utils/l10n/types'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import type { ProductData } from './ProductData.types'
@@ -36,12 +36,18 @@ type Props = {
 export const ProductDataProvider = (props: Props) => {
   const locale = useRoutingLocale()
   const key = productKey(props.productData.id, locale)
-  // Writing on every render and relying on jotai skipping recalculations when value === prevValue
-  // This is faster that using effects to sync with current page during client-side navigation
-  const store = useStore()
-  store.set(currentProductAtom, key)
-  store.set(productDataAtomFamily(key), props.productData)
-  store.set(selectedTypeOfContractAtom, props.selectedTypeOfContract)
+  useHydrateAtoms(
+    [
+      [currentProductAtom, key],
+      [productDataAtomFamily(key), props.productData],
+      [selectedTypeOfContractAtom, props.selectedTypeOfContract],
+    ],
+    // Force update during client side navigation
+    {
+      dangerouslyForceHydrate: true,
+    },
+  )
+
   return props.children
 }
 

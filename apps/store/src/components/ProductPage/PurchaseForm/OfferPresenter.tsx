@@ -9,7 +9,6 @@ import type { MouseEventHandler, ReactNode, RefObject } from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Button, Space, Text, PlusIcon, theme } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
-import { usePriceIntent } from '@/components/ProductPage/PriceIntentContext'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import { ScrollToTopButton } from '@/components/ProductPage/ScrollToButton/ScrollToButton'
 import { useCartEntryToReplace } from '@/components/ProductPage/useCartEntryToReplace'
@@ -29,7 +28,7 @@ import { useFormatter } from '@/utils/useFormatter'
 import { ComparisonTableModal } from './ComparisonTableModal'
 import { DeductibleSelector } from './DeductibleSelector'
 import { DiscountTooltip } from './DiscountTooltip/DiscountTooltip'
-import { priceIntentAtom } from './priceIntentAtoms'
+import { priceIntentAtom, useResetPriceIntent } from './priceIntentAtoms'
 import { ProductTierSelector } from './ProductTierSelector'
 import { useSelectedOffer } from './useSelectedOffer'
 import { useTiersAndDeductibles } from './useTiersAndDeductibles'
@@ -56,7 +55,6 @@ export const OfferPresenter = (props: Props) => {
     throw new Error('selectedOffer must be defined')
   }
   const { scrollPastRef, onClickEdit } = props
-  const [, , resetPriceIntent] = usePriceIntent()
   const { t } = useTranslation('purchase-form')
   const formatter = useFormatter()
   const [addToCartRedirect, setAddToCartRedirect] = useState<AddToCartRedirect | null>(null)
@@ -150,6 +148,7 @@ export const OfferPresenter = (props: Props) => {
     [priceIntent.offers],
   )
 
+  const resetPriceIntent = useResetPriceIntent()
   const handleAddToCart: MouseEventHandler = (event) => {
     event.preventDefault()
     datadogRum.addAction(`PriceCalculator AddToCart Cart`)

@@ -94,7 +94,7 @@ export function ProductItem(props: Props) {
         className={cardHeader}
         style={{ gridTemplateColumns: pillow.src ? 'auto 1fr' : '1fr' }}
         onClick={toggleExpandCard}
-        arial-expanded={expanded}
+        aria-expanded={expanded}
         aria-controls={DETAILS_SECTION_ID}
       >
         <Pillow size="small" src={pillow.src} alt="" />

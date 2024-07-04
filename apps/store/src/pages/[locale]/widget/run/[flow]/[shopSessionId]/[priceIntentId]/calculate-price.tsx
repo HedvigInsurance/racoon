@@ -1,9 +1,11 @@
-import type { ApolloClient } from '@apollo/client'
+import { type ApolloClient } from '@apollo/client'
 import type { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import type { ComponentPropsWithoutRef } from 'react'
+import type { ComponentPropsWithoutRef, ReactNode } from 'react'
+import { type ProductData } from '@/components/ProductData/ProductData.types'
+import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
 import { CalculatePricePage } from '@/features/widget/CalculatePricePage'
 import { fetchFlowStory, getWidgetPriceTemplate } from '@/features/widget/widget.helpers'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
@@ -14,7 +16,9 @@ import {
   WidgetPriceIntentDocument,
   type WidgetPriceIntentQuery,
 } from '@/services/graphql/generated'
+import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { ShopSessionProvider, useShopSessionId } from '@/services/shopSession/ShopSessionContext'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
@@ -47,7 +51,14 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient })
 
   try {
-    const [translations, priceIntent, story] = await Promise.all([
+    const [
+      translations,
+      priceIntent,
+      story,
+      // Only loading for hydrating client-side apollo cache
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      shopSession,
+    ] = await Promise.all([
       serverSideTranslations(context.locale),
       fetchWidgetPriceIntent(apolloClient, context.params.priceIntentId),
       fetchFlowStory(context.params.flow, context.draftMode),
@@ -70,6 +81,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
         ...translations,
         ...context.params,
         showBackButton: story.content.showBackButton ?? false,
+        [SHOP_SESSION_PROP_NAME]: context.params.shopSessionId,
       },
     })
   } catch (error) {
@@ -78,39 +90,52 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   }
 }
 
-const Page = ({ partner, ...rest }: Props) => {
+export default function Page({ partner, shopSessionId, priceIntentId, ...forwardedProps }: Props) {
   const { t } = useTranslation('widget')
 
   const shopSessionResult = useShopSessionQuery({
-    variables: { shopSessionId: rest.shopSessionId },
+    variables: { shopSessionId },
   })
   const shopSession = shopSessionResult.data?.shopSession
 
   const priceIntentResult = useWidgetPriceIntentQuery({
-    variables: { priceIntentId: rest.priceIntentId },
+    variables: { priceIntentId },
   })
   const priceIntent = priceIntentResult.data?.priceIntent
 
-  // TODO: Handle loading state
-  if (!shopSession || !priceIntent) return null
+  if (shopSession == null || priceIntent == null) return null
+
+  // Does not have variants and some CMS fields, but we're not currently using them in widget flow components
+  const productData = priceIntent.product as ProductData
 
   return (
     <>
       <Head>
         <title>{`Hedvig | ${t('CALCULATE_PRICE_PAGE_TITLE')}`}</title>
       </Head>
-      <TrackingProvider
-        shopSessionId={rest.shopSessionId}
-        priceIntent={priceIntent}
-        partner={partner}
-      >
-        <CalculatePricePage {...rest} shopSession={shopSession} priceIntent={priceIntent} />
-      </TrackingProvider>
+      <ShopSessionProvider shopSessionId={shopSession.id}>
+        <TrackingProvider shopSessionId={shopSessionId} priceIntent={priceIntent} partner={partner}>
+          <ProductDataProvider productData={productData}>
+            <ShopSessionLoader>
+              <CalculatePricePage {...forwardedProps} priceIntentId={priceIntentId} />
+            </ShopSessionLoader>
+          </ProductDataProvider>
+        </TrackingProvider>
+      </ShopSessionProvider>
     </>
   )
 }
 
-export default Page
+// Poor man's Suspense for loading shopSession
+// Data is ready on first client-side render, but it's missing on server render
+// TODO: Use normal Suspense when we use app router for widget flows
+function ShopSessionLoader({ children }: { children: ReactNode }) {
+  const shopSessionId = useShopSessionId()
+  if (shopSessionId == null) {
+    return null
+  }
+  return children
+}
 
 const fetchWidgetPriceIntent = async (
   apolloClient: ApolloClient<unknown>,

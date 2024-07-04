@@ -16,10 +16,6 @@ import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceCalculatorDynamic } from '@/components/PriceCalculator/PriceCalculatorDynamic'
 import { completePriceLoader, PriceLoader } from '@/components/PriceLoader'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
-import {
-  PriceIntentContextProvider,
-  usePriceIntent,
-} from '@/components/ProductPage/PriceIntentContext'
 import { PriceIntentTrackingProvider } from '@/components/ProductPage/PriceIntentTrackingProvider'
 import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
 import { ProductPageDebugDialog } from '@/components/ProductPage/ProductPageDebugDialog'
@@ -41,6 +37,7 @@ import {
   useIsPriceCalculatorExpanded,
   useOpenPriceCalculatorQueryParam,
 } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
+import { usePreloadedPriceIntentId } from '@/components/ProductPage/PurchaseForm/usePreloadedPriceIntentId'
 import { ProductAverageRating } from '@/components/ProductReviews/ProductAverageRating'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { BankSigneringEvent } from '@/services/bankSignering'
@@ -79,13 +76,11 @@ export function PurchaseForm(props: PurchaseFormProps) {
         <Suspense
           fallback={<IdleState loading={true} showAverageRating={props.showAverageRating} />}
         >
-          <PriceIntentContextProvider>
-            <PriceIntentTrackingProvider>
-              <PurchaseFormInner {...props} notifyProductAdded={notifyProductAdded} />
-              <ProductPageDebugDialog />
-              <ProductPageViewTracker />
-            </PriceIntentTrackingProvider>
-          </PriceIntentContextProvider>
+          <PriceIntentTrackingProvider>
+            <PurchaseFormInner {...props} notifyProductAdded={notifyProductAdded} />
+            <ProductPageDebugDialog />
+            <ProductPageViewTracker />
+          </PriceIntentTrackingProvider>
         </Suspense>
       </div>
       {/* key=pathname makes sure we re-init the toast if current page changes */}
@@ -101,12 +96,12 @@ type PurchaseFormInnerProps = PurchaseFormProps & {
 const PurchaseFormInner = (props: PurchaseFormInnerProps) => {
   const productData = useProductData()
   const { shopSession } = useShopSession()
-  const [priceIntent] = usePriceIntent()
   const [selectedOffer] = useSelectedOffer()
   const tracking = useTracking()
   const isLarge = useBreakpoint('lg')
 
-  useSyncPriceIntentState(priceIntent)
+  const preloadedPriceIntentId = usePreloadedPriceIntentId()
+  useSyncPriceIntentState(preloadedPriceIntentId)
 
   const isPriceCalculatorExpanded = useIsPriceCalculatorExpanded()
   const [formState, setFormState] = usePurchaseFormState(
