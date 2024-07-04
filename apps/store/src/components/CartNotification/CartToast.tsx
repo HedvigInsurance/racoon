@@ -1,14 +1,10 @@
 import { datadogRum } from '@datadog/browser-rum'
-import { keyframes } from '@emotion/react'
-import styled from '@emotion/styled'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useTranslation } from 'next-i18next'
 import type { ReactNode } from 'react'
 import { forwardRef, useImperativeHandle, useState } from 'react'
-import { Button, mq, Text, theme } from 'ui'
+import { Button, Text, yStack } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
-import { MENU_BAR_HEIGHT_DESKTOP } from '@/components/Header/Header.constants'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import {
   BUNDLE_DISCOUNT_PERCENTAGE,
   hasBundleDiscount,
@@ -22,6 +18,7 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
+import { contentWrapper, dialogContentWrapper, styledOverlay } from './CartToast.css'
 import { ProductItem } from './ProductItem'
 
 export type CartToastAttributes = {
@@ -74,21 +71,21 @@ export const CartToast = forwardRef<CartToastAttributes>((_, forwardedRef) => {
   return (
     <DialogPrimitive.Root open={isOpen}>
       <DialogPrimitive.Portal>
-        <StyledOverlay />
-        <StyledContentWrapper>
+        <DialogPrimitive.Overlay className={styledOverlay} />
+        <div className={contentWrapper}>
           <DialogPrimitive.Content onEscapeKeyDown={handleClose} onInteractOutside={handleClose}>
-            <DialogContentWrapper>
+            <div className={dialogContentWrapper}>
               {cart.entries.map((entry) => (
                 <CartToastItem key={entry.id} item={entry} />
               ))}
               {hasCartItemsEligibleForBundleDiscount(shopSession) && (
-                <BundleDiscountWrapper>
+                <div className={yStack({ gap: 'md' })}>
                   <BundleDiscountExtraProductLinks>
                     {bundleDiscountHeader}
                   </BundleDiscountExtraProductLinks>
-                </BundleDiscountWrapper>
+                </div>
               )}
-              <SpaceFlex space={0.5} direction={'vertical'}>
+              <div className={yStack({ gap: 'xs' })}>
                 <ButtonNextLink
                   href={PageLink.cart({ locale }).pathname}
                   variant="primary"
@@ -101,10 +98,10 @@ export const CartToast = forwardRef<CartToastAttributes>((_, forwardedRef) => {
                 <Button onClick={handleClose} variant="ghost" fullWidth={true}>
                   {t('DIALOG_CLOSE', { ns: 'common' })}
                 </Button>
-              </SpaceFlex>
-            </DialogContentWrapper>
+              </div>
+            </div>
           </DialogPrimitive.Content>
-        </StyledContentWrapper>
+        </div>
       </DialogPrimitive.Portal>
     </DialogPrimitive.Root>
   )
@@ -132,54 +129,3 @@ function CartToastItem({ item }: { item: CartFragment['entries'][number] }) {
     />
   )
 }
-
-const BundleDiscountWrapper = styled.div({
-  gap: theme.space.md,
-  display: 'flex',
-  flexDirection: 'column',
-})
-
-const overlayShow = keyframes({
-  '0%': { opacity: 0 },
-  '100%': { opacity: 1 },
-})
-
-const StyledOverlay = styled(DialogPrimitive.Overlay)({
-  backgroundColor: 'rgba(0, 0, 0, 0.15)',
-  position: 'fixed',
-  inset: 0,
-  '@media (prefers-reduced-motion: no-preference)': {
-    animation: `${overlayShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) forwards`,
-  },
-})
-
-const StyledContentWrapper = styled.div({
-  position: 'fixed',
-  inset: 0,
-})
-
-const DialogContentWrapper = styled.div({
-  position: 'absolute',
-  width: '100%',
-
-  display: 'flex',
-  flexDirection: 'column',
-  gap: theme.space.lg,
-
-  paddingTop: theme.space.lg,
-  paddingInline: theme.space.md,
-  paddingBottom: theme.space.xs,
-
-  borderBottomLeftRadius: theme.radius.md,
-  borderBottomRightRadius: theme.radius.md,
-
-  backgroundColor: theme.colors.light,
-  boxShadow: theme.shadow.default,
-
-  [mq.lg]: {
-    top: MENU_BAR_HEIGHT_DESKTOP,
-    right: theme.space.md,
-    borderRadius: theme.radius.md,
-    maxWidth: '28rem',
-  },
-})
