@@ -1,3 +1,4 @@
+'use client'
 import styled from '@emotion/styled'
 import { Heading, mq, Space, theme } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
