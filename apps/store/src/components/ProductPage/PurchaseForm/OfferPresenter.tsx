@@ -5,7 +5,7 @@ import { useInView } from 'framer-motion'
 import { useAtomValue } from 'jotai'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
-import type { MouseEventHandler, ReactNode, RefObject } from 'react'
+import { memo, type MouseEventHandler, type ReactNode, type RefObject } from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Button, Space, Text, PlusIcon, theme } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
@@ -44,7 +44,7 @@ type Props = {
   notifyProductAdded: (item: ProductOfferFragment) => void
 }
 
-export const OfferPresenter = (props: Props) => {
+export const OfferPresenter = memo((props: Props) => {
   const { shopSession } = useShopSession()
   if (shopSession == null) {
     throw new Error('shopSession must be defined')
@@ -265,7 +265,8 @@ export const OfferPresenter = (props: Props) => {
       </ScrollPast>
     </>
   )
-}
+})
+OfferPresenter.displayName = 'OfferPresenter'
 
 const ScrollPastButtonContent = styled.div({
   display: 'flex',

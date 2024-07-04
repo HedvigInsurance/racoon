@@ -5,14 +5,13 @@ import { clsx } from 'clsx'
 import { motion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
-import type { ReactNode } from 'react'
+import { memo, type ReactNode } from 'react'
 import { useMemo } from 'react'
 import { Suspense } from 'react'
 import { useCallback, useRef, useState } from 'react'
-import { Button, Heading, Space, framerTransitions } from 'ui'
+import { Button, framerTransitions, Space } from 'ui'
 import type { CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { CartToast } from '@/components/CartNotification/CartToast'
-import { Pillow } from '@/components/Pillow/Pillow'
 import { PriceCalculatorDynamic } from '@/components/PriceCalculator/PriceCalculatorDynamic'
 import { completePriceLoader, PriceLoader } from '@/components/PriceLoader'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
@@ -39,7 +38,6 @@ import {
 } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import { usePreloadedPriceIntentId } from '@/components/ProductPage/PurchaseForm/usePreloadedPriceIntentId'
 import { ProductAverageRating } from '@/components/ProductReviews/ProductAverageRating'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { BankSigneringEvent } from '@/services/bankSignering'
 import type { ProductOfferFragment } from '@/services/graphql/generated'
 import {
@@ -136,10 +134,13 @@ const PurchaseFormInner = (props: PurchaseFormInnerProps) => {
     editForm()
   }
 
-  const handleComplete = (error?: string) => {
-    setFormState(error != null ? { state: 'ERROR', errorMsg: error } : 'IDLE')
-    !isLarge && window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-  }
+  const handleComplete = useCallback(
+    (error?: string) => {
+      setFormState(error != null ? { state: 'ERROR', errorMsg: error } : 'IDLE')
+      !isLarge && window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+    },
+    [isLarge, setFormState],
+  )
 
   const isPriceIntentStateReady = useIsPriceIntentStateReady()
 
@@ -171,18 +172,7 @@ const PurchaseFormInner = (props: PurchaseFormInnerProps) => {
       </ProductHeroContainer>
     </motion.div>
   ) : (
-    <PriceCalculatorDialog
-      isOpen
-      toggleDialog={() => setFormState('IDLE')}
-      header={
-        <SpaceFlex direction="vertical" align="center" space={0.5}>
-          <Pillow size="large" {...productData.pillowImage} />
-          <Heading as="h2" variant="standard.18">
-            {productData.displayNameShort}
-          </Heading>
-        </SpaceFlex>
-      }
-    >
+    <PriceCalculatorDialog isOpen toggleDialog={() => setFormState('IDLE')}>
       {editingStateForm}
     </PriceCalculatorDialog>
   )
@@ -275,7 +265,7 @@ type EditingStateProps = {
   onComplete: (error?: string) => void
 }
 
-const EditingState = (props: EditingStateProps) => {
+const EditingState = memo((props: EditingStateProps) => {
   const priceIntentId = usePriceIntentId()
   const { onComplete } = props
   const { t } = useTranslation('purchase-form')
@@ -316,7 +306,7 @@ const EditingState = (props: EditingStateProps) => {
   })
 
   const [isLoadingPrice, setIsLoadingPrice] = useState(result.loading)
-  const handleConfirm = () => {
+  const handleConfirm = useCallback(() => {
     setIsLoadingPrice(true)
     confirmPriceIntent()
     priceLoaderPromise.current = Promise.all([
@@ -324,7 +314,7 @@ const EditingState = (props: EditingStateProps) => {
       // Make sure we finish loading next step's UI before hiding loading indicator
       loadOfferPresenter(),
     ])
-  }
+  }, [confirmPriceIntent])
 
   if (isLoadingPrice) {
     return (
@@ -338,7 +328,8 @@ const EditingState = (props: EditingStateProps) => {
       <PriceCalculatorDynamic key={priceIntentId} onConfirm={handleConfirm} />
     </div>
   )
-}
+})
+EditingState.displayName = 'EditingState'
 
 type ShowOfferStateProps = {
   onClickEdit: () => void
