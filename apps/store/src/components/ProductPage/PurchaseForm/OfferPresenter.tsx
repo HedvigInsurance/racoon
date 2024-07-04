@@ -2,7 +2,6 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useInView } from 'framer-motion'
-import { useAtomValue } from 'jotai'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import { memo, type MouseEventHandler, type ReactNode, type RefObject } from 'react'
@@ -28,7 +27,7 @@ import { useFormatter } from '@/utils/useFormatter'
 import { ComparisonTableModal } from './ComparisonTableModal'
 import { DeductibleSelector } from './DeductibleSelector'
 import { DiscountTooltip } from './DiscountTooltip/DiscountTooltip'
-import { priceIntentAtom, useResetPriceIntent } from './priceIntentAtoms'
+import { usePriceIntent, useResetPriceIntent } from './priceIntentAtoms'
 import { ProductTierSelector } from './ProductTierSelector'
 import { useSelectedOffer } from './useSelectedOffer'
 import { useTiersAndDeductibles } from './useTiersAndDeductibles'
@@ -49,7 +48,7 @@ export const OfferPresenter = memo((props: Props) => {
   if (shopSession == null) {
     throw new Error('shopSession must be defined')
   }
-  const priceIntent = useAtomValue(priceIntentAtom)
+  const priceIntent = usePriceIntent()
   const [selectedOffer, setSelectedOffer] = useSelectedOffer()
   if (selectedOffer == null) {
     throw new Error('selectedOffer must be defined')

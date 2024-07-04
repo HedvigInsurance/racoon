@@ -1,6 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { useAtomValue } from 'jotai'
-import { priceIntentAtom } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
+import { usePriceIntent } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import {
   useExternalInsurersQuery,
   useExternalInsurerUpdateMutation,
@@ -14,7 +13,7 @@ type Props = {
 }
 
 export const CurrentInsuranceField = ({ label }: Props) => {
-  const priceIntent = useAtomValue(priceIntentAtom)
+  const priceIntent = usePriceIntent()
   const priceIntentId = priceIntent.id
 
   const showFetchInsurance = useShowFetchInsurance({ priceIntentId })

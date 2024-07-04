@@ -29,16 +29,25 @@ const priceIntentAtomFamily = atomFamily((priceIntentId: unknown) =>
   atom<PriceIntentFragment | null>(null),
 )
 
-export const priceIntentAtom = atom<PriceIntentFragment>((get) => {
-  const priceIntentId = getAtomValueOrThrow(get, currentPriceIntentIdAtom)
-  return getAtomValueOrThrow(get, priceIntentAtomFamily(priceIntentId))
+export const priceIntentAtom = atom<PriceIntentFragment | null>((get) => {
+  const priceIntentId = get(currentPriceIntentIdAtom)
+  if (priceIntentId == null) return null
+  return get(priceIntentAtomFamily(priceIntentId)) ?? null
 })
+
+export const usePriceIntent = () => {
+  const atomValue = useAtomValue(priceIntentAtom)
+  if (atomValue == null) {
+    throw new Error('priceIntent must be defined')
+  }
+  return atomValue
+}
 
 export const shopSessionCustomerAtom = atom<ShopSessionCustomerFragment | null>(null)
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const priceCalculatorFormAtom = atom<Form>((get) => {
-  const priceIntent = get(priceIntentAtom)
+  const priceIntent = getAtomValueOrThrow(get, priceIntentAtom)
   const template = getAtomValueOrThrow(get, priceTemplateAtom)
   return setupForm({
     customer: get(shopSessionCustomerAtom),
