@@ -140,14 +140,14 @@ const MobileMenuOpenIcon = () => {
       <path
         d="M14 16L26 16"
         stroke={tokens.colors.gray1000}
-        stroke-width="1.5"
-        stroke-linecap="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
       />
       <path
         d="M14 24L26 24"
         stroke={tokens.colors.gray1000}
-        stroke-width="1.5"
-        stroke-linecap="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
       />
     </svg>
   )
@@ -161,8 +161,8 @@ const MobileMenuCloseIcon = () => {
         fill={tokens.colors.grayTranslucent200}
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M14.8735 13.8128C14.5806 13.5199 14.1057 13.5199 13.8128 13.8128C13.5199 14.1057 13.5199 14.5805 13.8128 14.8734L18.9393 19.9999L13.8128 25.1265C13.5199 25.4194 13.52 25.8943 13.8128 26.1871C14.1057 26.48 14.5806 26.48 14.8735 26.1871L20 21.0606L25.1265 26.1871C25.4194 26.48 25.8943 26.48 26.1872 26.1871C26.4801 25.8942 26.4801 25.4194 26.1872 25.1265L21.0606 19.9999L26.1871 14.8733C26.48 14.5804 26.48 14.1056 26.1871 13.8127C25.8942 13.5198 25.4193 13.5198 25.1265 13.8127L20 18.9393L14.8735 13.8128Z"
         fill={tokens.colors.gray1000}
       />
