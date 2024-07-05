@@ -39,7 +39,7 @@
     "lint-staged": "15.2.7",
     "prettier": "3.3.2",
     "turbo": "1.13.4",
-    "typescript": "5.5.2"
+    "typescript": "5.5.3"
   },
   "dependenciesMeta": {
     "cpu-features": {

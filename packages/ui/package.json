@@ -46,7 +46,7 @@
     "jest-environment-jsdom": "29.7.0",
     "ts-jest": "29.1.5",
     "tsconfig-paths-webpack-plugin": "4.1.0",
-    "typescript": "5.5.2"
+    "typescript": "5.5.3"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "1.2.2",
