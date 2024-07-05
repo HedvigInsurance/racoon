@@ -1,18 +1,18 @@
-import { i18n } from 'next-i18next'
-import { getLocaleOrFallback, toIsoLocale } from '@/utils/l10n/localeUtils'
-import type { UiLocale } from '@/utils/l10n/types'
+import { FALLBACK_LOCALE } from '@/utils/l10n/locales'
+import { toIsoLocale } from '@/utils/l10n/localeUtils'
+import type { RoutingLocale } from '@/utils/l10n/types'
 
 export const fetchJson = async <T extends object>(
   url: string,
-  options?: Partial<RequestInit>,
+  options?: { locale?: RoutingLocale } & Partial<RequestInit>,
 ): Promise<T> => {
-  const locale = getLocaleOrFallback(i18n?.language as UiLocale).routingLocale
+  const { locale, ...requestOptions } = options ?? {}
 
   const resp = await fetch(url, {
-    ...options,
+    ...requestOptions,
     headers: {
       'Content-type': 'application/json',
-      'Hedvig-Language': toIsoLocale(locale),
+      'Hedvig-Language': toIsoLocale(locale ?? FALLBACK_LOCALE),
       ...options?.headers,
     },
   })

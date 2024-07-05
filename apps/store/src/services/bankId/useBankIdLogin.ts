@@ -4,6 +4,7 @@ import type { Subscription } from 'zen-observable-ts'
 import { loginMemberSeBankId } from '@/services/authApi/login'
 import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
 import { saveAuthTokens } from '@/services/authApi/persist'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import type { BankIdLoginOptions, LoginPromptOptions, StartLoginOptions } from './bankId.types'
 import { apiStatusToBankIdState, bankIdLogger } from './bankId.utils'
 import type { BankIdDispatch } from './bankIdReducer'
@@ -62,13 +63,14 @@ export const useBankIdLogin = ({ dispatch }: HookOptions) => {
 }
 
 export const useBankIdLoginApi = ({ dispatch }: HookOptions) => {
+  const locale = useRoutingLocale()
   const subscriptionRef = useRef<Subscription | null>(null)
   const startLogin = useCallback(
     ({ ssn, onSuccess }: BankIdLoginOptions) => {
       bankIdLogger.info('Starting BankId login')
       // Future ideas
       // - try Observable.from().forEach to await final result and Promise.finally to clean up ref
-      subscriptionRef.current = loginMemberSeBankId(ssn).subscribe({
+      subscriptionRef.current = loginMemberSeBankId(ssn, locale).subscribe({
         async next(statusResponse) {
           dispatch({
             type: 'operationStateChange',
@@ -102,7 +104,7 @@ export const useBankIdLoginApi = ({ dispatch }: HookOptions) => {
         },
       })
     },
-    [dispatch],
+    [dispatch, locale],
   )
   const cancelLogin = useCallback(() => {
     subscriptionRef.current?.unsubscribe()

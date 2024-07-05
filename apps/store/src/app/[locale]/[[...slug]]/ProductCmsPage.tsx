@@ -25,7 +25,7 @@ export const ProductCmsPage = async ({ locale, story }: ProductCmsPageProps) => 
     throw new Error(`Unknown price template: ${story.content.priceFormTemplateId}`)
   }
 
-  const apolloClient = getApolloClient(locale)
+  const apolloClient = getApolloClient({ locale })
   const productName = story.content.productId
   const [productData, productReviewsMetadata] = await Promise.all([
     fetchProductData({

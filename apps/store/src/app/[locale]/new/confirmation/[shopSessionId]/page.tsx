@@ -1,5 +1,9 @@
 import { type Metadata } from 'next'
+import { cookies } from 'next/headers'
 import { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage'
+import { fetchMemberPartnerData } from '@/components/ConfirmationPage/fetchMemberPartnerData'
+import { SuccessAnimation } from '@/components/ConfirmationPage/SuccessAnimation/SuccessAnimation'
+import { fetchSwitchingData } from '@/components/ConfirmationPage/SwitchingAssistantSection/fetchSwitchingData'
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
 import { setupShopSession } from '@/services/shopSession/app-router/ShopSession.utils'
 import type { ConfirmationStory } from '@/services/storyblok/storyblok'
@@ -13,14 +17,23 @@ type Props = { params: Params }
 export default async function Page({ params }: Props) {
   const confirmationStory = await fetchConfirmationStory(params.locale)
 
-  // TODO: enable fetching switching data. In order to do that we first need
-  // to be able to initialize apollo client with auth headers for rsc
-  const apolloClient = getApolloClient(params.locale)
+  const apolloClient = getApolloClient({ locale: params.locale, cookies: cookies() })
   const shopSessionService = setupShopSession(apolloClient)
-  const [shopSession] = await Promise.all([shopSessionService.fetchById(params.shopSessionId)])
+  const [shopSession, switchingData, memberPartnerData] = await Promise.all([
+    shopSessionService.fetchById(params.shopSessionId),
+    fetchSwitchingData(shopSessionService, params.shopSessionId),
+    fetchMemberPartnerData(apolloClient),
+  ])
 
   return (
-    <ConfirmationPage story={confirmationStory} cart={shopSession.cart} memberPartnerData={null} />
+    <SuccessAnimation>
+      <ConfirmationPage
+        story={confirmationStory}
+        cart={shopSession.cart}
+        switching={switchingData ?? undefined}
+        memberPartnerData={memberPartnerData}
+      />
+    </SuccessAnimation>
   )
 }
 

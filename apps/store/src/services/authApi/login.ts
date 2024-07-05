@@ -1,5 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { Observable } from 'zen-observable-ts'
+import type { RoutingLocale } from '@/utils/l10n/types'
 import { AuthEndpoint } from './authEndpoint'
 import { fetchJson, ServerError } from './fetchJson'
 
@@ -9,13 +10,16 @@ enum MemberLoginMethod {
   SE_BANKID = 'SE_BANKID',
 }
 
-export const loginMemberSeBankId = (ssn: string): Observable<MemberLoginStatusResponse> => {
+export const loginMemberSeBankId = (
+  ssn: string,
+  locale?: RoutingLocale,
+): Observable<MemberLoginStatusResponse> => {
   return new Observable((subscriber) => {
     let pollTimeoutId: number
     const poll = async (statusUrl: string) => {
       if (subscriber.closed) return
       try {
-        const result = await memberLoginStatus(statusUrl)
+        const result = await memberLoginStatus(statusUrl, locale)
         subscriber.next(result)
 
         if (result.status === 'COMPLETED') {
@@ -36,7 +40,7 @@ export const loginMemberSeBankId = (ssn: string): Observable<MemberLoginStatusRe
       pollTimeoutId = window.setTimeout(() => poll(statusUrl), POLL_INTERVAL)
     }
 
-    memberLoginCreateSE(ssn)
+    memberLoginCreateSE(ssn, locale)
       .then(({ statusUrl }) => poll(AuthEndpoint.LOGIN_STATUS(statusUrl)))
       .catch((err?: Error) => {
         subscriber.error(err?.message)
@@ -60,8 +64,8 @@ export type MemberLoginStatusResponse = {
   authorizationCode: string | null
 }
 
-const memberLoginStatus = async (statusUrl: string) => {
-  return await fetchJson<MemberLoginStatusResponse>(statusUrl)
+const memberLoginStatus = async (statusUrl: string, locale?: RoutingLocale) => {
+  return await fetchJson<MemberLoginStatusResponse>(statusUrl, { locale })
 }
 
 type MemberLoginResponseSuccess = {
@@ -79,13 +83,14 @@ type MemberLoginResponseError = {
 
 type MemberLoginResponse = MemberLoginResponseSuccess | MemberLoginResponseError
 
-const memberLoginCreateSE = async (personalNumber: string) => {
+const memberLoginCreateSE = async (personalNumber: string, locale?: RoutingLocale) => {
   const data = await fetchJson<MemberLoginResponse>(AuthEndpoint.MEMBER_LOGIN, {
     method: 'POST',
     body: JSON.stringify({
       method: MemberLoginMethod.SE_BANKID,
       personalNumber,
     }),
+    locale,
   })
 
   if (data.result === 'error') {

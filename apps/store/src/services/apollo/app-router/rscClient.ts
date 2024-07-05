@@ -1,39 +1,51 @@
 import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client'
-import { registerApolloClient } from '@apollo/experimental-nextjs-app-support/rsc'
+import { registerApolloClient } from '@apollo/experimental-nextjs-app-support'
 import { FALLBACK_LOCALE } from '@/utils/l10n/locales'
 import { toRoutingLocale } from '@/utils/l10n/localeUtils'
 import type { RoutingLocale } from '@/utils/l10n/types'
+import type { NextCookiesStore } from '@/utils/types'
 import { errorLink } from '../errorLink'
 import { httpLink } from '../httpLink'
 import { userErrorLink } from '../userErrorLink'
+import { serverDynamicHeadersLink } from './serverDynamicHeadersLink'
 import { serverStaticHeadersLink } from './serverStaticHeadersLink'
 
-// Passing locale through module-level static var is ugly, but it works
-// When `registerApolloClient` stops complaining about passed params, we should switch to it
-let currentLocale = toRoutingLocale(FALLBACK_LOCALE)
-export const getApolloClient = (locale: RoutingLocale): ApolloClient<any> => {
-  currentLocale = locale
-  return getClient()
+type Params = {
+  locale?: RoutingLocale
+  cookies?: NextCookiesStore
 }
 
-// TODO: Support RSC client for dynamic pages too (auth headers, hedvig-shop-session-id header)
-const { getClient } = registerApolloClient(() => {
-  return new ApolloClient({
-    name: 'Web:Racoon:Store',
+export const getApolloClient = ({
+  locale = toRoutingLocale(FALLBACK_LOCALE),
+  cookies,
+}: Params): ApolloClient<any> => {
+  return makeGetApolloClient(locale, cookies)()
+}
 
-    link: ApolloLink.from([
-      // Has to be the first to process output last
-      // We re-raise userError results as errors, we don't want errorLink to see those
-      userErrorLink,
-      errorLink,
-      serverStaticHeadersLink({ locale: currentLocale }),
-      requestLogger,
-      httpLink,
-    ]),
+// Passing 'locale' and 'cookies' through closure is ugly, but it works.
+// When `registerApolloClient` stops complaining about passed params, we should switch to it
+function makeGetApolloClient(locale: RoutingLocale, cookies?: NextCookiesStore) {
+  const { getClient } = registerApolloClient(() => {
+    return new ApolloClient({
+      name: 'Web:Racoon:Store',
 
-    cache: new InMemoryCache(),
+      link: ApolloLink.from([
+        // Has to be the first to process output last
+        // We re-raise userError results as errors, we don't want errorLink to see those
+        userErrorLink,
+        errorLink,
+        serverStaticHeadersLink({ locale }),
+        ...(cookies ? [serverDynamicHeadersLink({ cookies })] : []),
+        requestLogger,
+        httpLink,
+      ]),
+
+      cache: new InMemoryCache(),
+    })
   })
-})
+
+  return getClient
+}
 
 // Set to true to debug GQL requests in server components
 const logRequests = process.env.NODE_ENV === 'development'
