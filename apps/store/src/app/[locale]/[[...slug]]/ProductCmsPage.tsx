@@ -4,6 +4,7 @@ import { BankIdDialog } from '@/components/BankIdDialog/BankIdDialog'
 import { PageBannerTriggers } from '@/components/Banner/PageBannerTriggers'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
+import { getProductPageData } from '@/components/ProductPage/getProductPageData'
 import { ProductPageDataProvider } from '@/components/ProductPage/ProductPageDataProvider'
 import { fetchProductReviewsMetadata } from '@/features/memberReviews/memberReviews'
 import { ProductReviewsMetadataProvider } from '@/features/memberReviews/ProductReviewsMetadataProvider'
@@ -45,7 +46,10 @@ export const ProductCmsPage = async ({ locale, story }: ProductCmsPageProps) => 
       productData={productData}
       selectedTypeOfContract={initialSelectedTypeOfContract}
     >
-      <ProductPageDataProvider story={story} priceTemplate={priceTemplate}>
+      <ProductPageDataProvider
+        productPageData={getProductPageData(story, productData)}
+        priceTemplate={priceTemplate}
+      >
         <ProductReviewsMetadataProvider productReviewsMetadata={productReviewsMetadata}>
           <BankIdContextProvider>
             <StoryblokStory story={story} bridgeOptions={storyblokBridgeOptions} />

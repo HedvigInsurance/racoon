@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
+import { getProductPageData } from '@/components/ProductPage/getProductPageData'
 import { productData } from '@/mocks/productData'
 import { productStoryBRF } from '@/mocks/storyblok'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
@@ -25,7 +26,10 @@ const Template: Story = {
   render: () => (
     <ShopSessionProvider shopSessionId="1e517b18-fd77-4384-aee1-17481da3781a">
       <ProductDataProvider productData={props.productData}>
-        <ProductPageDataProvider priceTemplate={props.priceTemplate} story={productStoryBRF}>
+        <ProductPageDataProvider
+          productPageData={getProductPageData(productStoryBRF, props.productData)}
+          priceTemplate={props.priceTemplate}
+        >
           <BankIdContextProvider>
             <PurchaseForm />
           </BankIdContextProvider>

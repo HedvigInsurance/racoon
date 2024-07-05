@@ -1,42 +1,25 @@
 'use client'
 import { atom, useAtomValue } from 'jotai'
 import { useHydrateAtoms } from 'jotai/utils'
-import type { PropsWithChildren } from 'react'
-import { useMemo } from 'react'
+import type { ReactNode } from 'react'
+import { type ProductPageData } from '@/components/ProductPage/getProductPageData'
 import { useSyncPriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
-import { useProductData } from '../ProductData/ProductDataProvider'
 import type { ProductPageProps } from './ProductPage.types'
-
-type ProductPageData = {
-  product: {
-    name: string
-    description: string
-    tagline?: string
-  }
-}
 
 const productPageDataAtom = atom<ProductPageData | null>(null)
 
-type Props = PropsWithChildren<Pick<ProductPageProps, 'priceTemplate' | 'story'>>
+type Props = Pick<ProductPageProps, 'priceTemplate'> & {
+  children: ReactNode
+  productPageData: ProductPageData
+}
 
-export function ProductPageDataProvider({ children, story, priceTemplate }: Props) {
+export function ProductPageDataProvider({ children, priceTemplate, productPageData }: Props) {
   useSyncPriceTemplate(priceTemplate)
-  useSyncProductPageData(story)
+  useSyncProductPageData(productPageData)
   return children
 }
 
-const useSyncProductPageData = (story: ProductPageProps['story']) => {
-  const productData = useProductData()
-  const productPageData = useMemo(
-    () => ({
-      product: {
-        name: story.content.name || productData.displayNameShort,
-        description: story.content.description || productData.displayNameFull,
-        tagline: story.content.tagline,
-      },
-    }),
-    [productData, story.content],
-  )
+const useSyncProductPageData = (productPageData: ProductPageData) => {
   useHydrateAtoms([[productPageDataAtom, productPageData]], {
     dangerouslyForceHydrate: true,
   })
