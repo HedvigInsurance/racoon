@@ -6,7 +6,7 @@ import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
 import { PriceIntentCreateDocument, ShopSessionCreateDocument } from '@/services/graphql/generated'
 import { SE_APARTMENT_BRF } from '@/services/PriceCalculator/data/SE_APARTMENT_BRF'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
-import { ProductPageContextProvider } from '../ProductPageContext'
+import { ProductPageDataProvider } from '../ProductPageDataProvider'
 import { PurchaseForm } from './PurchaseForm'
 
 const meta: Meta<typeof PurchaseForm> = {
@@ -25,11 +25,11 @@ const Template: Story = {
   render: () => (
     <ShopSessionProvider shopSessionId="1e517b18-fd77-4384-aee1-17481da3781a">
       <ProductDataProvider productData={props.productData}>
-        <ProductPageContextProvider priceTemplate={props.priceTemplate} story={productStoryBRF}>
+        <ProductPageDataProvider priceTemplate={props.priceTemplate} story={productStoryBRF}>
           <BankIdContextProvider>
             <PurchaseForm />
           </BankIdContextProvider>
-        </ProductPageContextProvider>
+        </ProductPageDataProvider>
       </ProductDataProvider>
     </ShopSessionProvider>
   ),

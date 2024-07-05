@@ -7,26 +7,26 @@ import { PriceIntentTrackingProvider } from '@/components/ProductPage/PriceInten
 import { ProductPageViewTracker } from '@/components/ProductPage/ProductPageViewTrack'
 import { ProductReviewsMetadataProvider } from '@/features/memberReviews/ProductReviewsMetadataProvider'
 import { type ProductPageProps } from './ProductPage.types'
-import { ProductPageContextProvider } from './ProductPageContext'
+import { ProductPageDataProvider } from './ProductPageDataProvider'
 import { ProductPageDebugDialog } from './ProductPageDebugDialog'
 
-export const ProductPage = ({ story, ...props }: ProductPageProps) => {
+export const ProductPage = (props: ProductPageProps) => {
   return (
     <ProductDataProvider
       productData={props.productData}
       selectedTypeOfContract={props.initialSelectedTypeOfContract}
     >
-      <ProductPageContextProvider {...props} story={story}>
+      <ProductPageDataProvider story={props.story} priceTemplate={props.priceTemplate}>
         <PriceIntentTrackingProvider>
           <ProductReviewsMetadataProvider productReviewsMetadata={props.productReviewsMetadata}>
-            <StoryblokComponent blok={story.content} />
+            <StoryblokComponent blok={props.story.content} />
             {props.breadcrumbs && <PageBreadcrumbs items={props.breadcrumbs} />}
             <ProductPageDebugDialog />
             <ProductPageViewTracker />
-            <PageBannerTriggers blok={story.content} />
+            <PageBannerTriggers blok={props.story.content} />
           </ProductReviewsMetadataProvider>
         </PriceIntentTrackingProvider>
-      </ProductPageContextProvider>
+      </ProductPageDataProvider>
     </ProductDataProvider>
   )
 }

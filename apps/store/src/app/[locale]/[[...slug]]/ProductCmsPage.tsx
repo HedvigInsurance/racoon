@@ -4,7 +4,7 @@ import { BankIdDialog } from '@/components/BankIdDialog/BankIdDialog'
 import { PageBannerTriggers } from '@/components/Banner/PageBannerTriggers'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
-import { ProductPageContextProvider } from '@/components/ProductPage/ProductPageContext'
+import { ProductPageDataProvider } from '@/components/ProductPage/ProductPageDataProvider'
 import { fetchProductReviewsMetadata } from '@/features/memberReviews/memberReviews'
 import { ProductReviewsMetadataProvider } from '@/features/memberReviews/ProductReviewsMetadataProvider'
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
@@ -45,7 +45,7 @@ export const ProductCmsPage = async ({ locale, story }: ProductCmsPageProps) => 
       productData={productData}
       selectedTypeOfContract={initialSelectedTypeOfContract}
     >
-      <ProductPageContextProvider story={story} priceTemplate={priceTemplate}>
+      <ProductPageDataProvider story={story} priceTemplate={priceTemplate}>
         <ProductReviewsMetadataProvider productReviewsMetadata={productReviewsMetadata}>
           <BankIdContextProvider>
             <StoryblokStory story={story} bridgeOptions={storyblokBridgeOptions} />
@@ -53,7 +53,7 @@ export const ProductCmsPage = async ({ locale, story }: ProductCmsPageProps) => 
             <BankIdDialog />
           </BankIdContextProvider>
         </ProductReviewsMetadataProvider>
-      </ProductPageContextProvider>
+      </ProductPageDataProvider>
     </ProductDataProvider>
   )
 }

@@ -16,7 +16,7 @@ import { PriceCalculatorDynamic } from '@/components/PriceCalculator/PriceCalcul
 import { completePriceLoader, PriceLoader } from '@/components/PriceLoader'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { PriceIntentTrackingProvider } from '@/components/ProductPage/PriceIntentTrackingProvider'
-import { useProductPageContext } from '@/components/ProductPage/ProductPageContext'
+import { useProductPageData } from '@/components/ProductPage/ProductPageDataProvider'
 import { ProductPageDebugDialog } from '@/components/ProductPage/ProductPageDebugDialog'
 import { ProductPageViewTracker } from '@/components/ProductPage/ProductPageViewTrack'
 import {
@@ -200,7 +200,7 @@ type ProductHeroContainerProps = {
 }
 
 const ProductHeroContainer = (props: ProductHeroContainerProps) => {
-  const { content } = useProductPageContext()
+  const { product } = useProductPageData()
   const productData = useProductData()
   const pillow = useMemo(
     () => ({
@@ -219,8 +219,8 @@ const ProductHeroContainer = (props: ProductHeroContainerProps) => {
       )}
     >
       <ProductHero
-        name={content.product.name}
-        description={content.product.description}
+        name={product.name}
+        description={product.description}
         pillow={pillow}
         size={props.size}
       />
