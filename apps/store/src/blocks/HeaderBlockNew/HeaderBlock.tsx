@@ -1,6 +1,5 @@
 import { storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
-import { NestedMenuBlock } from '@/blocks/HeaderBlockNew/NestedMenuBlock'
 import { Header } from '@/components/HeaderNew/Header'
 import { HeaderMenu } from '@/components/HeaderNew/HeaderMenu/HeaderMenu'
 import { ShoppingCartMenuItem } from '@/components/HeaderNew/ShoppingCartMenuItem/ShoppingCartMenuItem'
@@ -31,11 +30,7 @@ export const HeaderBlock = ({ blok }: HeaderBlockNewProps) => {
   return (
     <Header {...storyblokEditable(blok)}>
       {blok.headerMenu.length > 0 && (
-        <HeaderMenu defaultValue={productNavItem}>
-          {blok.headerMenu.map((item) => (
-            <NestedMenuBlock key={item._uid} blok={item} />
-          ))}
-        </HeaderMenu>
+        <HeaderMenu defaultValue={productNavItem} items={blok.headerMenu} />
       )}
 
       <ShoppingCartMenuItem />
