@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
 import { getProductPageData } from '@/components/ProductPage/getProductPageData'
+import { PurchaseFormRsc } from '@/components/ProductPage/PurchaseForm/PurchaseFormRsc'
 import { productData } from '@/mocks/productData'
 import { productStoryBRF } from '@/mocks/storyblok'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
@@ -8,9 +9,8 @@ import { PriceIntentCreateDocument, ShopSessionCreateDocument } from '@/services
 import { SE_APARTMENT_BRF } from '@/services/PriceCalculator/data/SE_APARTMENT_BRF'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { ProductPageDataProvider } from '../ProductPageDataProvider'
-import { PurchaseForm } from './PurchaseForm'
 
-const meta: Meta<typeof PurchaseForm> = {
+const meta: Meta<typeof PurchaseFormRsc> = {
   title: 'Purchase Form / Purchase Form',
   parameters: {
     nextjs: {
@@ -20,7 +20,7 @@ const meta: Meta<typeof PurchaseForm> = {
 }
 
 export default meta
-type Story = StoryObj<typeof PurchaseForm>
+type Story = StoryObj<typeof PurchaseFormRsc>
 
 const Template: Story = {
   render: () => (
@@ -31,7 +31,7 @@ const Template: Story = {
           priceTemplate={props.priceTemplate}
         >
           <BankIdContextProvider>
-            <PurchaseForm />
+            <PurchaseFormRsc />
           </BankIdContextProvider>
         </ProductPageDataProvider>
       </ProductDataProvider>

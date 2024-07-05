@@ -5,10 +5,7 @@ import { clsx } from 'clsx'
 import { motion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
-import { memo, type ReactNode } from 'react'
-import { useMemo } from 'react'
-import { Suspense } from 'react'
-import { useCallback, useRef, useState } from 'react'
+import { memo, useCallback, useRef, useState } from 'react'
 import { Button, framerTransitions, Space } from 'ui'
 import type { CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { CartToast } from '@/components/CartNotification/CartToast'
@@ -16,7 +13,6 @@ import { PriceCalculatorDynamic } from '@/components/PriceCalculator/PriceCalcul
 import { completePriceLoader, PriceLoader } from '@/components/PriceLoader'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { PriceIntentTrackingProvider } from '@/components/ProductPage/PriceIntentTrackingProvider'
-import { useProductPageData } from '@/components/ProductPage/ProductPageDataProvider'
 import { ProductPageDebugDialog } from '@/components/ProductPage/ProductPageDebugDialog'
 import { ProductPageViewTracker } from '@/components/ProductPage/ProductPageViewTrack'
 import {
@@ -24,8 +20,8 @@ import {
   usePriceIntentId,
   useSyncPriceIntentState,
 } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
+import { ProductHeroContainer } from '@/components/ProductPage/PurchaseForm/ProductHeroContainer'
 import {
-  purchaseFormHeroWrapper,
   purchaseFormPriceLoaderWrapper,
   purchaseFormResponsiveBlock,
   purchaseFormSection,
@@ -51,7 +47,6 @@ import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
 import { ScrollPast } from '../ScrollPast/ScrollPast'
 import { loadOfferPresenter, OfferPresenterDynamic } from './OfferPresenterDynamic'
 import { PriceCalculatorDialog } from './PriceCalculatorDialog'
-import { ProductHero } from './ProductHero/ProductHero'
 import { PurchaseFormErrorDialog } from './PurchaseFormErrorDialog'
 import { usePurchaseFormState } from './usePurchaseFormState'
 import { useSelectedOffer } from './useSelectedOffer'
@@ -60,7 +55,7 @@ export type PurchaseFormProps = {
   showAverageRating?: boolean
 }
 
-export function PurchaseForm(props: PurchaseFormProps) {
+export function PurchaseFormClient(props: PurchaseFormProps) {
   const pathname = usePathname()
 
   const toastRef = useRef<CartToastAttributes | null>(null)
@@ -71,15 +66,11 @@ export function PurchaseForm(props: PurchaseFormProps) {
   return (
     <>
       <div className={purchaseFormTop}>
-        <Suspense
-          fallback={<IdleState loading={true} showAverageRating={props.showAverageRating} />}
-        >
-          <PriceIntentTrackingProvider>
-            <PurchaseFormInner {...props} notifyProductAdded={notifyProductAdded} />
-            <ProductPageDebugDialog />
-            <ProductPageViewTracker />
-          </PriceIntentTrackingProvider>
-        </Suspense>
+        <PriceIntentTrackingProvider>
+          <PurchaseFormInner {...props} notifyProductAdded={notifyProductAdded} />
+          <ProductPageDebugDialog />
+          <ProductPageViewTracker />
+        </PriceIntentTrackingProvider>
       </div>
       {/* key=pathname makes sure we re-init the toast if current page changes */}
       <CartToast key={pathname} ref={toastRef} />
@@ -190,42 +181,6 @@ const PurchaseFormInner = (props: PurchaseFormInnerProps) => {
         errorMessage={formState.errorMsg}
       />
     </>
-  )
-}
-
-type ProductHeroContainerProps = {
-  children: ReactNode
-  size: 'small' | 'large'
-  compact?: boolean
-}
-
-const ProductHeroContainer = (props: ProductHeroContainerProps) => {
-  const { product } = useProductPageData()
-  const productData = useProductData()
-  const pillow = useMemo(
-    () => ({
-      src: productData.pillowImage.src,
-      alt: productData.pillowImage.alt ?? undefined,
-    }),
-    [productData],
-  )
-  return (
-    <div
-      className={clsx(
-        purchaseFormResponsiveBlock,
-        purchaseFormSection,
-        purchaseFormHeroWrapper.base,
-        props.compact ? purchaseFormHeroWrapper.compact : purchaseFormHeroWrapper.full,
-      )}
-    >
-      <ProductHero
-        name={product.name}
-        description={product.description}
-        pillow={pillow}
-        size={props.size}
-      />
-      {props.children}
-    </div>
   )
 }
 

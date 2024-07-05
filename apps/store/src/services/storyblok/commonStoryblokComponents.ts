@@ -28,7 +28,6 @@ import { PerilsBlock } from '@/blocks/PerilsBlock'
 import { ProductCardBlock } from '@/blocks/ProductCardBlock'
 import { ProductDocumentsBlock } from '@/blocks/ProductDocumentsBlock'
 import { ProductGridBlock } from '@/blocks/ProductGridBlock'
-import { ProductPageBlock } from '@/blocks/ProductPageBlock'
 import { ProductPillowBlock } from '@/blocks/ProductPillowsBlock/ProductPillowBlock'
 import { ProductPillowsBlock } from '@/blocks/ProductPillowsBlock/ProductPillowsBlock'
 import { ProductReviewsBlock } from '@/blocks/ProductReviewsBlock'
@@ -82,7 +81,6 @@ export const commonStoryblokComponents = {
   modal: ModalBlock,
   page: PageBlock,
   perils: PerilsBlock,
-  product: ProductPageBlock,
   productCard: ProductCardBlock,
   productDocuments: ProductDocumentsBlock,
   productGrid: ProductGridBlock,

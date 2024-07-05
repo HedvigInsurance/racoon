@@ -1,3 +1,4 @@
+'use client'
 import { useTranslation } from 'next-i18next'
 import { CertifiedIcon } from 'ui'
 import type { ProductData } from '@/components/ProductData/ProductData.types'

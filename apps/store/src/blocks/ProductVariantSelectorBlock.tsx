@@ -5,7 +5,9 @@ import { ConditionalWrapper, theme, mq } from 'ui'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { ProductVariantSelector } from '@/components/ProductVariantSelector/ProductVariantSelector'
 import { zIndexes } from '@/utils/zIndex'
-import { NAVIGATION_LIST_HEIGHT } from './ProductPageBlock'
+
+// FIXME: copied from ProductPageBlock, move to common module
+const NAVIGATION_LIST_HEIGHT = '2.5rem'
 
 type ProductVariantSelectorBlockProps = {
   nested?: boolean

@@ -1,11 +1,12 @@
-import { StoryblokStory } from '@storyblok/react/rsc'
-import { storyblokBridgeOptions } from '@/appComponents/storyblokBridgeOptions'
+import { Suspense } from 'react'
+import { ProductPageBlockNew } from '@/blocks/ProductPageBlock/ProductPageBlockNew'
 import { BankIdDialog } from '@/components/BankIdDialog/BankIdDialog'
 import { PageBannerTriggers } from '@/components/Banner/PageBannerTriggers'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
 import { getProductPageData } from '@/components/ProductPage/getProductPageData'
 import { ProductPageDataProvider } from '@/components/ProductPage/ProductPageDataProvider'
+import { PurchaseFormRsc } from '@/components/ProductPage/PurchaseForm/PurchaseFormRsc'
 import { fetchProductReviewsMetadata } from '@/features/memberReviews/memberReviews'
 import { ProductReviewsMetadataProvider } from '@/features/memberReviews/ProductReviewsMetadataProvider'
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
@@ -52,7 +53,12 @@ export const ProductCmsPage = async ({ locale, story }: ProductCmsPageProps) => 
       >
         <ProductReviewsMetadataProvider productReviewsMetadata={productReviewsMetadata}>
           <BankIdContextProvider>
-            <StoryblokStory story={story} bridgeOptions={storyblokBridgeOptions} />
+            <main>
+              <PurchaseFormRsc showAverageRating={story.content.showAverageRating} />
+              <Suspense>
+                <ProductPageBlockNew story={story} />
+              </Suspense>
+            </main>
             <PageBannerTriggers blok={story.content} />
             <BankIdDialog />
           </BankIdContextProvider>

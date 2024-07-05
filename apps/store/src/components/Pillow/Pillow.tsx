@@ -1,3 +1,5 @@
+'use client'
+// FIXME: support RSC mode
 import styled from '@emotion/styled'
 import Image from 'next/image'
 import { memo } from 'react'

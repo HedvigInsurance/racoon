@@ -11,9 +11,9 @@ import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { MAX_WIDTH } from '@/components/GridLayout/GridLayout.constants'
 import { HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header.constants'
 import {
-  PurchaseForm,
   type PurchaseFormProps,
-} from '@/components/ProductPage/PurchaseForm/PurchaseForm'
+  PurchaseFormRsc,
+} from '@/components/ProductPage/PurchaseForm/PurchaseFormRsc'
 import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { useIdleCallback } from '@/utils/useIdleCallback'
 import { zIndexes } from '@/utils/zIndex'
@@ -33,6 +33,7 @@ export type ProductPageBlockProps = SbBaseBlockProps<
   } & Pick<PurchaseFormProps, 'showAverageRating'>
 >
 
+// FIXME: Remove, no longer used
 export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
   const [activeSection, setActiveSection] = useState<PageSection>('overview')
 
@@ -70,7 +71,7 @@ export const ProductPageBlock = ({ blok }: ProductPageBlockProps) => {
       <Grid>
         <GridLayout.Content width="1/2" align="right">
           <PurchaseFormWrapper>
-            <PurchaseForm showAverageRating={blok.showAverageRating} />
+            <PurchaseFormRsc showAverageRating={blok.showAverageRating} />
           </PurchaseFormWrapper>
         </GridLayout.Content>
 
