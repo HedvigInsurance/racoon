@@ -22,6 +22,7 @@ module.exports = {
   rules: {
     'no-unneeded-ternary': 'error',
     'no-nested-ternary': 'error',
+    'react/no-unknown-property': 'error',
     'import/order': [
       'error',
       {
