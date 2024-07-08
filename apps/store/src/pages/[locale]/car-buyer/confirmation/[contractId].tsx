@@ -1,7 +1,6 @@
 import type { ApolloClient } from '@apollo/client'
 import type { GetServerSideProps } from 'next'
-import type { ComponentPropsWithoutRef } from 'react'
-import type { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage'
+import { type ConfirmationPageProps } from '@/components/ConfirmationPage/ConfirmationPage.types'
 import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
 import { STORYBLOK_CAR_DEALERSHIP_FOLDER_SLUG } from '@/features/carDealership/carDearlership.constants'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
@@ -10,12 +9,16 @@ import type {
   CarTrialExtensionQueryVariables,
 } from '@/services/graphql/generated'
 import { CarTrialExtensionDocument } from '@/services/graphql/generated'
-import type { ConfirmationStory } from '@/services/storyblok/storyblok'
+import { type ConfirmationStory, type StoryblokPageProps } from '@/services/storyblok/storyblok'
 import { getStoryBySlug } from '@/services/storyblok/storyblok'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
 
-type Props = ComponentPropsWithoutRef<typeof ConfirmationPage>
+// globalStory is used by page's layout
+type Props = ConfirmationPageProps & { shopSessionId: string } & Pick<
+    StoryblokPageProps,
+    'globalStory'
+  >
 
 type Params = { contractId: string }
 

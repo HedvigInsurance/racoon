@@ -3,12 +3,11 @@ import type {
   CurrentMemberQuery,
   CartFragment,
 } from '@/services/graphql/generated'
-import type { StoryblokPageProps } from '@/services/storyblok/storyblok'
+import type { ConfirmationStory } from '@/services/storyblok/storyblok'
 
 export type MemberPartnerData = CurrentMemberQuery['currentMember']['partnerData']
 
-export type ConfirmationPageProps = Pick<StoryblokPageProps, 'globalStory'> & {
-  shopSessionId: string
+export type ConfirmationPageProps = {
   cart: CartFragment
   memberPartnerData: MemberPartnerData | null
   switching?: {
@@ -16,4 +15,5 @@ export type ConfirmationPageProps = Pick<StoryblokPageProps, 'globalStory'> & {
     companyDisplayName: string
   }
   carTrialContract?: TrialContractFragment
+  story: ConfirmationStory
 }
