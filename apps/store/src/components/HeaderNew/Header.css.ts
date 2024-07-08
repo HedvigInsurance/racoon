@@ -132,11 +132,6 @@ export const navigationItem = style({
       selectors: {
         '&&': { borderBottom: 'unset' },
 
-        // Make the last item first in the list
-        '&:last-child': {
-          order: -1,
-        },
-
         // Position second item on the right side of the header
         '&:nth-child(2)': {
           marginLeft: 'auto',
@@ -145,6 +140,24 @@ export const navigationItem = style({
     },
   },
 })
+
+export const navigationContentMinWidth = createVar()
+
+export const navigationItemGeneralMenu = style({
+  vars: {
+    [navigationContentMinWidth]: '16rem',
+  },
+  '@media': {
+    [minWidth.lg]: {
+      // Make general menu item first in the header menu in desktop
+      ':last-child': {
+        order: -1,
+      },
+    },
+  },
+})
+
+export const navigationTriggerLinkPadding = createVar()
 
 export const navigationTriggerLink = style([
   focusableStyles,
@@ -159,7 +172,7 @@ export const navigationTriggerLink = style([
       [minWidth.lg]: {
         height: '2.5rem',
         paddingBlock: tokens.space.xs,
-        paddingInline: tokens.space.md,
+        paddingInline: navigationTriggerLinkPadding,
         borderRadius: tokens.radius.sm,
         backgroundColor: tokens.colors.buttonSecondary,
 
@@ -170,8 +183,56 @@ export const navigationTriggerLink = style([
         },
       },
     },
+    vars: {
+      [navigationTriggerLinkPadding]: tokens.space.md,
+    },
   },
 ])
+
+export const navigationTriggerHiddenLabel = style({
+  '@media': {
+    [minWidth.lg]: {
+      selectors: {
+        // Visually hidden but available for screen readers
+        [`${navigationItem}:last-child &`]: {
+          clip: 'rect(0 0 0 0)',
+          clipPath: 'inset(50%)',
+          height: '1px',
+          overflow: 'hidden',
+          position: 'absolute',
+          whiteSpace: 'nowrap',
+          width: '1px',
+        },
+      },
+    },
+  },
+})
+
+export const hamburgerOpenGeneralMenu = style({
+  display: 'none',
+  '@media': {
+    [minWidth.lg]: {
+      selectors: {
+        [`${navigationTriggerLink}[data-state="closed"] &`]: {
+          display: 'block',
+        },
+      },
+    },
+  },
+})
+
+export const hamburgerCloseGeneralMenu = style({
+  display: 'none',
+  '@media': {
+    [minWidth.lg]: {
+      selectors: {
+        [`${navigationTriggerLink}[data-state="open"] &`]: {
+          display: 'block',
+        },
+      },
+    },
+  },
+})
 
 export const navigationSecondaryItem = style({
   padding: tokens.space.md,
@@ -204,6 +265,7 @@ export const navigationContent = style({
   '@media': {
     [minWidth.lg]: {
       position: 'absolute',
+      minWidth: navigationContentMinWidth,
       paddingTop: `calc(${tokens.space.sm} + ${tokens.space.xs})`,
 
       selectors: {
