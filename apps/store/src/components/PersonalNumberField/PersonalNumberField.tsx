@@ -14,6 +14,7 @@ export type Props = Omit<
   label: string
   warning?: boolean
   message?: string
+  onValidValueEntered?: (value: string) => void
 } & Pick<TextFieldProps, 'onClear'>
 
 /**
@@ -21,7 +22,15 @@ export type Props = Omit<
  * Only supports Swedish personal numbers.
  */
 export const PersonalNumberField = memo((props: Props) => {
-  const { value: propValue, defaultValue, label, warning, onClear, ...baseProps } = props
+  const {
+    value: propValue,
+    defaultValue,
+    label,
+    warning,
+    onClear,
+    onValidValueEntered,
+    ...forwardedProps
+  } = props
 
   const [value, setValue] = useState(() => {
     if (typeof propValue === 'string') return propValue
@@ -32,17 +41,20 @@ export const PersonalNumberField = memo((props: Props) => {
   const handleValueChange = (value: string) => {
     if (Personnummer.valid(value)) {
       value = Personnummer.parse(value).format(true)
+      setValue(value)
+      onValidValueEntered?.(value)
+    } else {
+      setValue(value)
     }
-    setValue(value)
   }
 
   return (
     <>
-      <input {...baseProps} type="text" value={value} readOnly hidden />
+      <input {...forwardedProps} type="text" value={value} readOnly hidden />
 
       {!props.hidden && (
         <TextField
-          {...baseProps}
+          {...forwardedProps}
           value={propValue}
           defaultValue={propValue ?? defaultValue}
           label={label}

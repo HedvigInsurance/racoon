@@ -35,6 +35,10 @@ export const SsnSeSection = memo(() => {
     updateCustomer({ variables: { input: { shopSessionId: shopSessionId, ssn } } })
   }
 
+  const handleValidValueEntered = (ssn: string) => {
+    updateCustomer({ variables: { input: { shopSessionId: shopSessionId, ssn } } })
+  }
+
   const errorMessage = useErrorMessage(result.error)
 
   return (
@@ -47,6 +51,7 @@ export const SsnSeSection = memo(() => {
           required={true}
           warning={!!errorMessage}
           message={errorMessage}
+          onValidValueEntered={handleValidValueEntered}
         />
         <Button type="submit" loading={result.loading} fullWidth={true}>
           {t('SUBMIT_LABEL_PROCEED')}
