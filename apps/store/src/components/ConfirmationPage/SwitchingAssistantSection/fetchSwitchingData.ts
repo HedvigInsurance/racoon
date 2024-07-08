@@ -3,9 +3,9 @@ import type { SwitchingAssistantData } from './SwitchingAssistantSection.types'
 
 export async function fetchSwitchingData(
   shopSessionService: ShopSessionService,
-  shopSessionOutcomeId: string,
+  shopSessionId: string,
 ): Promise<SwitchingAssistantData | null> {
-  const outcome = await fetchOutcomeData(shopSessionService, shopSessionOutcomeId)
+  const outcome = await fetchOutcomeData(shopSessionService, shopSessionId)
   if (!outcome) return null
 
   const switchingContract = outcome.createdContracts.find(

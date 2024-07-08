@@ -1,23 +1,17 @@
-import { type ApolloClient, isApolloError } from '@apollo/client'
 import type { GetServerSideProps, NextPageWithLayout } from 'next'
 import Head from 'next/head'
 import { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage'
 import { type ConfirmationPageProps } from '@/components/ConfirmationPage/ConfirmationPage.types'
 import { fetchConfirmationStory } from '@/components/ConfirmationPage/fetchConfirmationStory'
+import { fetchMemberPartnerData } from '@/components/ConfirmationPage/fetchMemberPartnerData'
 import { SuccessAnimation } from '@/components/ConfirmationPage/SuccessAnimation/SuccessAnimation'
 import { fetchSwitchingData } from '@/components/ConfirmationPage/SwitchingAssistantSection/fetchSwitchingData'
 import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
 import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
-import {
-  CurrentMemberDocument,
-  type CurrentMemberQuery,
-  type CurrentMemberQueryVariables,
-} from '@/services/graphql/generated'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { type StoryblokPageProps } from '@/services/storyblok/storyblok'
-import { Features } from '@/utils/Features'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
 
@@ -86,22 +80,3 @@ const CheckoutConfirmationPage: NextPageWithLayout<Props> = (props) => {
 CheckoutConfirmationPage.getLayout = (children) => <LayoutWithMenu>{children}</LayoutWithMenu>
 
 export default CheckoutConfirmationPage
-
-const fetchMemberPartnerData = async (apolloClient: ApolloClient<unknown>) => {
-  if (!Features.enabled('SAS_PARTNERSHIP')) {
-    return null
-  }
-  try {
-    const { data } = await apolloClient.query<CurrentMemberQuery, CurrentMemberQueryVariables>({
-      query: CurrentMemberDocument,
-    })
-    return data.currentMember.partnerData ?? null
-  } catch (err) {
-    if (err instanceof Error && isApolloError(err)) {
-      console.info('Failed to fetch currentMember', err)
-      return null
-    } else {
-      throw err
-    }
-  }
-}
