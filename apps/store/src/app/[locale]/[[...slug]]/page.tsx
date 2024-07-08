@@ -2,12 +2,17 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import type { ReactNode } from 'react'
 import { cache } from 'react'
+import { PriceCalculatorCmsPage } from '@/app/[locale]/[[...slug]]/PriceCalculatorCmsPage'
 import { ContactUs } from '@/components/ContactUs/ContactUs'
 import { DefaultDebugDialog } from '@/components/DebugDialog/DefaultDebugDialog'
 import { CustomerFirstScript } from '@/services/CustomerFirst'
 import type { PageStory } from '@/services/storyblok/storyblok'
 import { MOST_VISITED_PATHS } from '@/services/storyblok/Storyblok.constant'
-import { getImgSrc, isProductStory } from '@/services/storyblok/Storyblok.helpers'
+import {
+  getImgSrc,
+  isPriceCalculatorPageStory,
+  isProductStory,
+} from '@/services/storyblok/Storyblok.helpers'
 import { getCmsPageLinks, getStoryBySlug } from '@/services/storyblok/storyblok.rsc'
 import { Features } from '@/utils/Features'
 import { locales } from '@/utils/l10n/locales'
@@ -28,6 +33,9 @@ type Props = {
   params: CmsPageRoutingParams
 }
 
+// NOTE: Since we're using catch-all routing segment, we have to do our own dispatching
+// to specific components based on story content type
+// Any type-specific data fetching should happen in child components
 export default async function CmsPage(props: Props) {
   const story = await fetchStory(props.params.locale, props.params.slug?.join('/'))
 
@@ -44,7 +52,15 @@ export default async function CmsPage(props: Props) {
         {chat}
       </>
     )
+  } else if (isPriceCalculatorPageStory(story)) {
+    return (
+      <>
+        <PriceCalculatorCmsPage story={story} />
+        <StoryBreadcrumbs params={props.params} currentPageTitle={story.name} />
+      </>
+    )
   }
+
   return (
     <>
       <ContentCmsPage locale={props.params.locale} story={story} />
@@ -76,7 +92,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           }
         : undefined,
     },
-    robots: story.content.robots,
+    robots: story.content.robots ?? 'noindex',
     title,
   }
   return result
