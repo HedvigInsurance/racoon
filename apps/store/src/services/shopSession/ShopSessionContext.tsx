@@ -1,7 +1,7 @@
 'use client'
 
 import { useApolloClient } from '@apollo/client'
-import type { PropsWithChildren } from 'react'
+import { type PropsWithChildren, use } from 'react'
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import type { ShopSessionQueryResult } from '@/services/graphql/generated'
 import { useShopSessionQuery } from '@/services/graphql/generated'
@@ -25,10 +25,19 @@ type Props = PropsWithChildren<{ shopSessionId?: string }>
 
 export const ShopSessionProvider = ({ children, shopSessionId: initialShopSessionId }: Props) => {
   const contextValue = useShopSessionContextValue(initialShopSessionId)
+  const promiseRef = useRef(
+    new Promise<string>((resolve) => {
+      contextValue.onReady((shopSession) => {
+        resolve(shopSession.id)
+      })
+    }),
+  )
   return (
     <ShopSessionContext.Provider value={contextValue}>
       <ShopSessionIdContext.Provider value={contextValue.shopSession?.id ?? null}>
-        {children}
+        <ShopSessionIdPromiseContext.Provider value={promiseRef.current}>
+          {children}
+        </ShopSessionIdPromiseContext.Provider>
       </ShopSessionIdContext.Provider>
     </ShopSessionContext.Provider>
   )
@@ -122,4 +131,18 @@ ShopSessionIdContext.displayName = 'ShopSessionIdContext'
 
 export const useShopSessionId = (): string | null => {
   return useContext(ShopSessionIdContext)
+}
+
+const ShopSessionIdPromiseContext = createContext<Promise<string>>(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  new Promise((resolve) => {}),
+)
+ShopSessionIdPromiseContext.displayName = 'ShopSessionIdPromiseContext'
+
+// Prototype: `use()` for data loading allows `Suspense` to show loading indicator for subtree
+// instead of every component handling it individually
+// See https://react.dev/reference/react/use
+export const useShopSessionIdPromise = (): string => {
+  const idPromise = use(ShopSessionIdPromiseContext)
+  return use(idPromise)
 }
