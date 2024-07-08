@@ -15,7 +15,7 @@ type Props = {
 
 const DEFAULT_LOCALE: RoutingLocale = locales['sv-SE'].routingLocale
 
-const apolloClient = getApolloClient(DEFAULT_LOCALE)
+const apolloClient = getApolloClient({ locale: DEFAULT_LOCALE })
 
 export default async function InsuranceSwitchExpirationDate({ params }: Props) {
   const {

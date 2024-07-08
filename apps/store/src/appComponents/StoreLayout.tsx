@@ -25,7 +25,7 @@ type StoreLayoutProps = {
 
 // Does not use routing params directly, so can be used outside of app/[locale] if needed - just pass locale explicitly
 export async function StoreLayout({ locale, children }: StoreLayoutProps) {
-  const apolloClient = getApolloClient(locale)
+  const apolloClient = getApolloClient({ locale })
   const [companyReviewsMetadata, productMetadata, globalStory] = await Promise.all([
     fetchCompanyReviewsMetadata(),
     fetchGlobalProductMetadata({ apolloClient }),

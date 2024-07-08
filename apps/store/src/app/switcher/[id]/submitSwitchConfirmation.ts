@@ -32,7 +32,7 @@ export const submitSwitchConfirmation = async (
     }
   }
 
-  const apolloClient = getApolloClient(DEFAULT_LOCALE)
+  const apolloClient = getApolloClient({ locale: DEFAULT_LOCALE })
 
   const messages: Array<Message> = []
   const errors: Array<string> = []

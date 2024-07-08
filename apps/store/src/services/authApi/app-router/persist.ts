@@ -1,6 +1,5 @@
 import { type OptionsType } from 'cookies-next/lib/types'
-import { cookies } from 'next/headers'
-import { type CookieParams } from '@/utils/types'
+import type { NextCookiesStore } from '@/utils/types'
 
 const COOKIE_KEY = '_hvsession'
 const REFRESH_TOKEN_COOKIE_KEY = '_hvrefresh'
@@ -15,36 +14,33 @@ const OPTIONS: OptionsType = {
   }),
 }
 
-type SaveAuthTokensParams = CookieParams & {
+type SaveAuthTokensParams = {
   accessToken: string
   refreshToken: string
+  cookies: NextCookiesStore
 }
 
-export const saveAuthTokens = (params: SaveAuthTokensParams) => {
-  const { accessToken, refreshToken, ...cookieParams } = params
-  const cookieStore = cookies()
-
-  cookieStore.set(COOKIE_KEY, serialize(accessToken), { ...cookieParams, ...OPTIONS })
-  cookieStore.set(REFRESH_TOKEN_COOKIE_KEY, refreshToken, { ...cookieParams, ...OPTIONS })
+export const saveAuthTokens = ({ accessToken, refreshToken, cookies }: SaveAuthTokensParams) => {
+  cookies.set(COOKIE_KEY, serialize(accessToken), OPTIONS)
+  cookies.set(REFRESH_TOKEN_COOKIE_KEY, refreshToken, OPTIONS)
 }
 
-export const resetAuthTokens = () => {
-  const cookieStore = cookies()
-  cookieStore.delete(COOKIE_KEY)
-  cookieStore.delete(REFRESH_TOKEN_COOKIE_KEY)
+export const resetAuthTokens = (cookies: NextCookiesStore) => {
+  cookies.delete(COOKIE_KEY)
+  cookies.delete(REFRESH_TOKEN_COOKIE_KEY)
 }
 
-export const getRefreshToken = (): string | undefined => {
-  return cookies().get(REFRESH_TOKEN_COOKIE_KEY)?.value
+export const getRefreshToken = (cookies: NextCookiesStore): string | undefined => {
+  return cookies.get(REFRESH_TOKEN_COOKIE_KEY)?.value
 }
 
-export const getAccessToken = (): string | undefined => {
-  const cookieValue = cookies().get(COOKIE_KEY)?.value
+export const getAccessToken = (cookies: NextCookiesStore): string | undefined => {
+  const cookieValue = cookies.get(COOKIE_KEY)?.value
   return cookieValue ? deserialize(cookieValue) : undefined
 }
 
-export const getAuthHeaders = (): Record<string, string> => {
-  const accessToken = getAccessToken()
+export const getAuthHeaders = (cookies: NextCookiesStore): Record<string, string> => {
+  const accessToken = getAccessToken(cookies)
   return accessToken ? { Authorization: `Bearer ${accessToken}` } : {}
 }
 
