@@ -7,14 +7,12 @@ import {
 } from '@/blocks/HeaderBlockNew/ProductMenuBlock'
 import { SubMenuBlock, type SubMenuBlockProps } from '@/blocks/HeaderBlockNew/SubMenuBlock'
 import { checkBlockType } from '@/services/storyblok/Storyblok.helpers'
-import { useResponsiveVariant } from '@/utils/useResponsiveVariant'
 
 type NestedMenuBlockProps = {
   blok: HeaderBlockNewProps['blok']['headerMenu'][number]
+  variant: 'mobile' | 'desktop'
 }
-export const NestedMenuBlock = ({ blok }: NestedMenuBlockProps) => {
-  const variant = useResponsiveVariant('lg')
-
+export const NestedMenuBlock = ({ blok, variant }: NestedMenuBlockProps) => {
   const subMenu = checkBlockType<SubMenuBlockProps['blok']>(blok, SubMenuBlock.blockName)
   if (subMenu) {
     return <SubMenuBlock key={subMenu._uid} blok={subMenu} />
@@ -25,13 +23,7 @@ export const NestedMenuBlock = ({ blok }: NestedMenuBlockProps) => {
     ProductMenuBlock.blockName,
   )
   if (productMenu) {
-    return (
-      <ProductMenuBlock
-        key={productMenu._uid}
-        blok={productMenu}
-        variant={variant === 'mobile' ? 'mobile' : 'desktop'}
-      />
-    )
+    return <ProductMenuBlock key={productMenu._uid} blok={productMenu} variant={variant} />
   }
 
   const menuBlock = checkBlockType<MenuItemBlockProps['blok']>(blok, MenuItemBlock.blockName)
