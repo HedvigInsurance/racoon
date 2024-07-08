@@ -55,7 +55,7 @@ export default async function CmsPage(props: Props) {
   } else if (isPriceCalculatorPageStory(story)) {
     return (
       <>
-        <PriceCalculatorCmsPage story={story} />
+        <PriceCalculatorCmsPage locale={props.params.locale} story={story} />
         <StoryBreadcrumbs params={props.params} currentPageTitle={story.name} />
       </>
     )

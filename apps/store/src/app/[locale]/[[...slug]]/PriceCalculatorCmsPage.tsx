@@ -1,8 +1,11 @@
 import 'server-only'
 import { notFound } from 'next/navigation'
+import { PriceCalculatorPage } from '@/components/PriceCalculatorPage/PriceCalculatorPage'
 import { type PriceCalculatorPageStory } from '@/services/storyblok/storyblok'
+import { type RoutingLocale } from '@/utils/l10n/types'
 
 type Props = {
+  locale: RoutingLocale
   story: PriceCalculatorPageStory
 }
 
@@ -11,5 +14,5 @@ export function PriceCalculatorCmsPage(props: Props) {
     throw notFound()
   }
   console.log('priceCalculatorPage', props)
-  return <h1>TODO: Price calculator page</h1>
+  return <PriceCalculatorPage locale={props.locale} />
 }
