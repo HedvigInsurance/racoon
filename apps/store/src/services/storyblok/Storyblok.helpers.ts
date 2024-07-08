@@ -1,7 +1,12 @@
 import { type ISbStoryData, type SbBlokData } from '@storyblok/react'
 import type { RoutingLocale } from '@/utils/l10n/types'
 import { makeAbsolute, appendAnchor } from '@/utils/url'
-import type { LinkField, ProductStory, WidgetFlowStory } from './storyblok'
+import type {
+  LinkField,
+  PriceCalculatorPageStory,
+  ProductStory,
+  WidgetFlowStory,
+} from './storyblok'
 
 export const filterByBlockType = <BlockData extends SbBlokData>(
   blocks: Array<BlockData> = [],
@@ -50,6 +55,12 @@ export const isProductStory = (story: ISbStoryData): story is ProductStory => {
 
 export const isWidgetFlowStory = (story: ISbStoryData): story is WidgetFlowStory => {
   return story.content.component === 'widgetFlow'
+}
+
+export const isPriceCalculatorPageStory = (
+  story: ISbStoryData,
+): story is PriceCalculatorPageStory => {
+  return story.content.component === 'priceCalculatorPage'
 }
 
 export const getStoryblokImageSize = (filename: string) => {

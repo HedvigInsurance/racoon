@@ -93,7 +93,7 @@ type StoryblokTableRow = {
 }
 
 export type SEOData = {
-  robots: 'index' | 'noindex'
+  robots?: 'index' | 'noindex'
   seoTitle?: string
   seoMetaDescription?: string
   seoMetaOgImage?: StoryblokAsset
@@ -150,6 +150,11 @@ export type WidgetFlowStory = ISbStoryData<{
   checkoutPageContent?: Array<SbBlokData>
   pageTitle?: string
   showBackButton?: boolean
+}>
+
+// TODO: Refine type
+export type PriceCalculatorPageStory = ISbStoryData<{
+  component: 'priceCalculatorPage'
 }>
 
 type HeaderProps = SbBaseBlockProps<{
