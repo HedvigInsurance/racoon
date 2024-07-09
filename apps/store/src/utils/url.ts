@@ -13,7 +13,8 @@ export const makeAbsolute = (url: string) => {
 }
 
 export const isSameLink = (urlA: string, urlB: string) => {
-  return makeAbsolute(urlA) === makeAbsolute(urlB)
+  // Folder links have a trailing slash that should be removed before comparing
+  return removeTrailingSlash(makeAbsolute(urlA)) === removeTrailingSlash(makeAbsolute(urlB))
 }
 
 export const appendAnchor = (url: string, anchor?: string) => (anchor ? `${url}#${anchor}` : url)
