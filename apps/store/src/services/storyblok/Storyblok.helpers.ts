@@ -1,6 +1,6 @@
 import { type ISbStoryData, type SbBlokData } from '@storyblok/react'
 import type { RoutingLocale } from '@/utils/l10n/types'
-import { makeAbsolute, appendAnchor } from '@/utils/url'
+import { makeAbsolute, appendAnchor, removeTrailingSlash } from '@/utils/url'
 import type {
   LinkField,
   PriceCalculatorPageStory,
@@ -36,9 +36,11 @@ export const checkBlockType = <BlockData extends SbBlokData>(
 
 const MISSING_LINKS = new Set()
 export const getLinkFieldURL = (link: LinkField, linkText?: string) => {
-  if (link.story) return makeAbsolute(appendAnchor(link.story.url, link.anchor))
+  if (link.story)
+    return removeTrailingSlash(makeAbsolute(appendAnchor(link.story.url, link.anchor)))
 
-  if (link.linktype === 'url') return makeAbsolute(appendAnchor(link.url, link.anchor))
+  if (link.linktype === 'url')
+    return removeTrailingSlash(makeAbsolute(appendAnchor(link.url, link.anchor)))
 
   // Warn about CMS links without target. This could be either reference to something not yet created or misconfiguration
   if (!MISSING_LINKS.has(link.id)) {
@@ -46,7 +48,7 @@ export const getLinkFieldURL = (link: LinkField, linkText?: string) => {
     console.log('Did not see story field in link, returning empty URL.', linkText, link)
   }
 
-  return makeAbsolute(appendAnchor(link.cached_url, link.anchor))
+  return removeTrailingSlash(makeAbsolute(appendAnchor(link.cached_url, link.anchor)))
 }
 
 export const isProductStory = (story: ISbStoryData): story is ProductStory => {
