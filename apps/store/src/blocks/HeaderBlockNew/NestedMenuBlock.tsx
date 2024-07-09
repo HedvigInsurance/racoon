@@ -7,12 +7,21 @@ import {
 } from '@/blocks/HeaderBlockNew/ProductMenuBlock'
 import { SubMenuBlock, type SubMenuBlockProps } from '@/blocks/HeaderBlockNew/SubMenuBlock'
 import { checkBlockType } from '@/services/storyblok/Storyblok.helpers'
+import { GeneralMenuBlock, type GeneralMenuBlockProps } from './GeneralMenuBlock'
 
 type NestedMenuBlockProps = {
   blok: HeaderBlockNewProps['blok']['headerMenu'][number]
   variant: 'mobile' | 'desktop'
 }
 export const NestedMenuBlock = ({ blok, variant }: NestedMenuBlockProps) => {
+  const generalMenu = checkBlockType<GeneralMenuBlockProps['blok']>(
+    blok,
+    GeneralMenuBlock.blockName,
+  )
+  if (generalMenu) {
+    return <GeneralMenuBlock key={generalMenu._uid} blok={generalMenu} />
+  }
+
   const subMenu = checkBlockType<SubMenuBlockProps['blok']>(blok, SubMenuBlock.blockName)
   if (subMenu) {
     return <SubMenuBlock key={subMenu._uid} blok={subMenu} />

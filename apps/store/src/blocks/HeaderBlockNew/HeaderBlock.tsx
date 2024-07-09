@@ -5,12 +5,13 @@ import { HeaderMenu } from '@/components/HeaderNew/HeaderMenu/HeaderMenu'
 import { ShoppingCartMenuItem } from '@/components/HeaderNew/ShoppingCartMenuItem/ShoppingCartMenuItem'
 import type { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { checkBlockType } from '@/services/storyblok/Storyblok.helpers'
+import { type GeneralMenuBlockProps } from './GeneralMenuBlock'
 import { type MenuItemBlockProps } from './MenuItemBlock'
 import { ProductMenuBlock, type ProductMenuBlockProps } from './ProductMenuBlock'
 import { type SubMenuBlockProps } from './SubMenuBlock'
 
 export type HeaderMenuProps = ExpectedBlockType<
-  SubMenuBlockProps | MenuItemBlockProps | ProductMenuBlockProps
+  SubMenuBlockProps | MenuItemBlockProps | ProductMenuBlockProps | GeneralMenuBlockProps
 >
 
 export type HeaderBlockNewProps = SbBaseBlockProps<{
