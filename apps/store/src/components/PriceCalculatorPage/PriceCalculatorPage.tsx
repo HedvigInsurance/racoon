@@ -15,18 +15,13 @@ type Props = {
 // TODO: Convert to vanilla styles when we get to look and feel part
 export function PriceCalculatorPage({ locale }: Props) {
   return (
-    <div
-      className={xStack({})}
-      style={{ maxHeight: '100vh', overflow: 'auto', backgroundColor: 'white', gap: 'initial' }}
-    >
+    <div className={xStack({})} style={{ backgroundColor: 'white', gap: 'initial' }}>
       <div
         style={{
           backgroundColor: 'lightblue',
           position: 'sticky',
           top: 0,
           width: '50%',
-          height: 'fit-content',
-          minHeight: '100vh',
         }}
       >
         TODO: background media
