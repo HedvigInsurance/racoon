@@ -2,6 +2,7 @@
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { storyblokEditable } from '@storyblok/react'
 import { useTranslation } from 'next-i18next'
+import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import type { ButtonBlockProps } from '@/blocks/ButtonBlock'
 import { MenuItemBlock, type MenuItemBlockProps } from '@/blocks/HeaderBlockNew/MenuItemBlock'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
@@ -18,7 +19,6 @@ import type { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/s
 import { filterByBlockType, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
-import { mobileWrapper } from './ProductNavContainerBlock.css'
 
 export type ProductMenuBlockProps = SbBaseBlockProps<{
   name: string
@@ -80,7 +80,7 @@ export const ProductMenuBlock = ({ blok, variant }: ProductMenuBlockProps) => {
   )
 
   if (variant === 'mobile') {
-    return <div className={mobileWrapper}>{content}</div>
+    return <div className={sprinkles({ paddingTop: 'md' })}>{content}</div>
   } else {
     return (
       <NavigationMenuPrimitive.Item
