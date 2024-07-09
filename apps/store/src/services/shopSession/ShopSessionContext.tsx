@@ -54,7 +54,9 @@ const useShopSessionContextValue = (initialShopSessionId?: string) => {
     return service
   }, [apolloClient, initialShopSessionId])
 
-  const [shopSessionId, setShopSessionId] = useState(shopSessionServiceClientSide.shopSessionId())
+  const [shopSessionId, setShopSessionId] = useState(
+    shopSessionServiceClientSide.shopSessionId() ?? initialShopSessionId,
+  )
 
   const queryResult = useShopSessionQuery({
     variables: shopSessionId ? { shopSessionId } : undefined,
