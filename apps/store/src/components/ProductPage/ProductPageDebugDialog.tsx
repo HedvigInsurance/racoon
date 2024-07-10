@@ -1,3 +1,4 @@
+'use client'
 import { useAtomValue } from 'jotai'
 import { useMemo } from 'react'
 import { yStack } from 'ui'

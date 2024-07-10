@@ -3,6 +3,7 @@ import { xStack } from 'ui'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
 import { ProductPageDataProvider } from '@/components/ProductPage/ProductPageDataProvider'
+import { ProductPageDebugDialog } from '@/components/ProductPage/ProductPageDebugDialog'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
 import { SE_PET_DOG_NEW } from '@/services/PriceCalculator/data/SE_PET_DOG_NEW'
@@ -54,6 +55,7 @@ async function PriceCalculatorProviders({ locale, children }: PriceCalculatorPro
     <ProductDataProvider productData={productData}>
       <ProductPageDataProvider productPageData={{} as any} priceTemplate={priceTemplate}>
         {children}
+        <ProductPageDebugDialog />
       </ProductPageDataProvider>
     </ProductDataProvider>
   )
