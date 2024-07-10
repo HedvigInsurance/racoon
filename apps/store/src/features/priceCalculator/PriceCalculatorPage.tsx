@@ -6,8 +6,8 @@ import { ProductPageDataProvider } from '@/components/ProductPage/ProductPageDat
 import { ProductPageDebugDialog } from '@/components/ProductPage/ProductPageDebugDialog'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
-import { SE_PET_DOG_NEW } from '@/services/PriceCalculator/data/SE_PET_DOG_NEW'
 import { type RoutingLocale } from '@/utils/l10n/types'
+import { SE_PET_DOG_NEW } from './priceTemplates/SE_PET_DOG_NEW'
 import { PurchaseFormNew } from './PurchaseFormNew'
 
 type Props = {

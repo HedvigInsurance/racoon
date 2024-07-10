@@ -1,6 +1,6 @@
 import 'server-only'
 import { notFound } from 'next/navigation'
-import { PriceCalculatorPage } from '@/components/PriceCalculatorPage/PriceCalculatorPage'
+import { PriceCalculatorPage } from '@/features/priceCalculator/PriceCalculatorPage'
 import { type PriceCalculatorPageStory } from '@/services/storyblok/storyblok'
 import { type RoutingLocale } from '@/utils/l10n/types'
 

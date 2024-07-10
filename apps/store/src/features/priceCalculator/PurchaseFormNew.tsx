@@ -3,7 +3,6 @@
 import { useStore } from 'jotai'
 import { startTransition, useCallback, useEffect, useRef, useState } from 'react'
 import { yStack } from 'ui'
-import { useConfirmPriceIntent } from '@/components/PriceCalculatorPage/useConfirmPriceIntent'
 import { PriceLoader } from '@/components/PriceLoader'
 import { OfferPresenter } from '@/components/ProductPage/PurchaseForm/OfferPresenter'
 import {
@@ -12,6 +11,7 @@ import {
   useSyncPriceIntentState,
 } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
+import { useConfirmPriceIntent } from '@/features/priceCalculator/useConfirmPriceIntent'
 import { InsuranceDataForm } from './InsuranceDataForm'
 
 type PurchaseFormStep = 'loadingForm' | 'fillForm' | 'calculatingPrice' | 'viewOffers'
