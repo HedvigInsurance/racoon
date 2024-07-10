@@ -24,7 +24,7 @@ export const NestedMenuBlock = ({ blok, variant }: NestedMenuBlockProps) => {
 
   const subMenu = checkBlockType<SubMenuBlockProps['blok']>(blok, SubMenuBlock.blockName)
   if (subMenu) {
-    return <SubMenuBlock key={subMenu._uid} blok={subMenu} />
+    return <SubMenuBlock key={subMenu._uid} blok={subMenu} variant={variant} />
   }
 
   const productMenu = checkBlockType<ProductMenuBlockProps['blok']>(

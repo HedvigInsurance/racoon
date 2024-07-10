@@ -25,12 +25,13 @@ export const navigationLink = style([
 export const productNavigationLinkCard = style([
   focusableStyles,
   {
+    position: 'relative',
     display: 'flex',
     columnGap: tokens.space.sm,
     placeItems: 'center',
     flexShrink: 0,
     paddingBlock: tokens.space.xs,
-    position: 'relative',
+    paddingInline: tokens.space.xxs,
 
     '@media': {
       [minWidth.lg]: {

@@ -1,6 +1,8 @@
 'use client'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { storyblokEditable } from '@storyblok/react'
+import clsx from 'clsx'
+import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import type { ButtonBlockProps } from '@/blocks/ButtonBlock'
@@ -13,7 +15,7 @@ import {
 } from '@/components/HeaderNew/Header.css'
 import { NavigationContent } from '@/components/HeaderNew/NavigationContent'
 import { ProductNavigationLink } from '@/components/HeaderNew/NavigationLink/NavigationLink'
-import { NavigationTrigger } from '@/components/HeaderNew/NavigationTrigger'
+import { NavigationTrigger } from '@/components/HeaderNew/NavigationTrigger/NavigationTrigger'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
 import type { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
@@ -56,7 +58,7 @@ export const ProductMenuBlock = ({ blok, variant }: ProductMenuBlockProps) => {
   })
 
   const content = (
-    <div className={navigationMenuWrapper}>
+    <div className={clsx(navigationMenuWrapper, sprinkles({ paddingBottom: 'xl' }))}>
       <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
         <NavigationMenuPrimitive.List className={navigationProductList}>
           {productMenuItems.map((item) => (
@@ -88,7 +90,9 @@ export const ProductMenuBlock = ({ blok, variant }: ProductMenuBlockProps) => {
         value={blok.name}
         {...storyblokEditable(blok)}
       >
-        <NavigationTrigger href={PageLink.store({ locale })}>{blok.name}</NavigationTrigger>
+        <NavigationTrigger>
+          <Link href={PageLink.store({ locale })}>{blok.name}</Link>
+        </NavigationTrigger>
         <NavigationContent>{content}</NavigationContent>
       </NavigationMenuPrimitive.Item>
     )
