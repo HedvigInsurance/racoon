@@ -4,13 +4,13 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import { useStore } from 'jotai'
 import { useTranslation } from 'next-i18next'
-import { startTransition, useCallback, useEffect, useState } from 'react'
+import { startTransition, useCallback, useEffect, useRef, useState } from 'react'
 import { PriceCalculator } from '@/components/PriceCalculator/PriceCalculator'
 import { PriceLoader } from '@/components/PriceLoader'
+import { OfferPresenter } from '@/components/ProductPage/PurchaseForm/OfferPresenter'
 import {
   priceIntentAtom,
   useIsPriceIntentStateReady,
-  usePriceIntent,
   usePriceIntentId,
   useSyncPriceIntentState,
 } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
@@ -139,20 +139,19 @@ type PriceIntentOffersProps = {
   onEdit: () => void
 }
 function PriceIntentOffers({ onEdit }: PriceIntentOffersProps) {
-  const priceIntent = usePriceIntent()
   const [selectedOffer] = useSelectedOffer()
   console.log('selectedOffer', selectedOffer)
+  const wrapperRef = useRef(null)
+  const notifyProductAdded = () => {
+    console.log('product added to cart')
+  }
   return (
-    <div>
-      {/*TODO: i18n, style*/}
-      <button onClick={onEdit}>Edit form</button>
-      <hr />
-      <h2>Offers:</h2>
-      <pre>
-        <code style={{ fontFamily: 'monospace' }}>
-          {JSON.stringify(priceIntent.offers, null, 2)}
-        </code>
-      </pre>
+    <div ref={wrapperRef}>
+      <OfferPresenter
+        scrollPastRef={wrapperRef}
+        onClickEdit={onEdit}
+        notifyProductAdded={notifyProductAdded}
+      />
     </div>
   )
 }
