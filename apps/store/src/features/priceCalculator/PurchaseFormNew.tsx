@@ -4,13 +4,13 @@ import { useStore } from 'jotai'
 import { startTransition, useCallback, useEffect, useRef, useState } from 'react'
 import { yStack } from 'ui'
 import { PriceLoader } from '@/components/PriceLoader'
-import { OfferPresenter } from '@/components/ProductPage/PurchaseForm/OfferPresenter'
 import {
   priceIntentAtom,
   useIsPriceIntentStateReady,
   useSyncPriceIntentState,
 } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
+import { OfferPresenterNew } from '@/features/priceCalculator/OfferPresenterNew'
 import { useConfirmPriceIntent } from '@/features/priceCalculator/useConfirmPriceIntent'
 import { InsuranceDataForm } from './InsuranceDataForm'
 
@@ -85,7 +85,7 @@ function PriceIntentOffers({ onEdit }: PriceIntentOffersProps) {
   }
   return (
     <div ref={wrapperRef}>
-      <OfferPresenter
+      <OfferPresenterNew
         scrollPastRef={wrapperRef}
         onClickEdit={onEdit}
         notifyProductAdded={notifyProductAdded}
