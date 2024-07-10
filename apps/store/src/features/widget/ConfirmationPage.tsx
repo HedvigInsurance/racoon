@@ -1,18 +1,24 @@
 import { datadogRum } from '@datadog/browser-rum'
-import styled from '@emotion/styled'
-import { Button, Heading, Space, mq, theme } from 'ui'
+import { useTranslation } from 'next-i18next'
+import { Text, Button, Heading, Space, theme, LockIcon } from 'ui'
 import { StaticContent } from '@/components/ConfirmationPage/StaticContent'
 import { SwitchingAssistantSection } from '@/components/ConfirmationPage/SwitchingAssistantSection/SwitchingAssistantSection'
 import type { SwitchingAssistantData } from '@/components/ConfirmationPage/SwitchingAssistantSection/SwitchingAssistantSection.types'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
+import { InputDay } from '@/components/InputDay/InputDay'
+import { useGetStartDateProps } from '@/components/ProductItem/useGetStartDateProps'
+import { ProductItem } from '@/components/ProductItemV2/ProductItem'
+import type { Offer } from '@/components/ProductItemV2/ProductItem.types'
 import { Discount } from '@/components/ShopBreakdown/Discount'
 import { Divider } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
 import { useDiscountProps } from '@/components/ShopBreakdown/useDiscountExplanation'
+import { Tooltip } from '@/components/Tooltip/Tooltip'
 import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import type { ConfirmationStory } from '@/services/storyblok/storyblok'
+import { convertToDate } from '@/utils/date'
+import { wrapper, fakeInput, fakeInputRow } from './ConfirmationPage.css'
 import { Header } from './Header'
-import { ProductItem } from './ProductItem'
 import { publishWidgetEvent } from './publishWidgetEvent'
 
 type Props = {
@@ -32,8 +38,9 @@ export const ConfirmationPage = (props: Props) => {
   const discount = useDiscountProps(props.shopSession.cart.redeemedCampaign)
 
   return (
-    <Wrapper y={4}>
+    <div className={wrapper}>
       <Header step="CONFIRMATION" />
+
       <GridLayout.Root>
         <GridLayout.Content width="1/3" align="center">
           <Space y={4}>
@@ -43,12 +50,9 @@ export const ConfirmationPage = (props: Props) => {
               </Heading>
               <Space y={1}>
                 {props.shopSession.cart.entries.map((item) => (
-                  <ProductItem
-                    key={item.id}
-                    shopSessionId={props.shopSession.id}
-                    selectedOffer={item}
-                    mode="view"
-                  />
+                  <ProductItem key={item.id} selectedOffer={item}>
+                    <ViewUI selectedOffer={item} />
+                  </ProductItem>
                 ))}
 
                 {discount && (
@@ -73,11 +77,53 @@ export const ConfirmationPage = (props: Props) => {
       </GridLayout.Root>
 
       <StaticContent content={props.staticContent} />
-    </Wrapper>
+    </div>
   )
 }
 
-const Wrapper = styled(Space)({
-  paddingBottom: theme.space.lg,
-  [mq.lg]: { paddingBottom: theme.space.xxl },
-})
+type ViewUIProps = {
+  selectedOffer: Offer
+}
+
+function ViewUI(props: ViewUIProps) {
+  const { t } = useTranslation(['cart', 'purchase-form'])
+  const getStartDateProps = useGetStartDateProps()
+
+  const { tooltip } = getStartDateProps({
+    data: props.selectedOffer.priceIntentData,
+    startDate: props.selectedOffer.startDate,
+  })
+
+  const handleClickTooltip = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation()
+  }
+
+  return (
+    <>
+      {props.selectedOffer.cancellation.requested ? (
+        <div className={fakeInput}>
+          <Text as="p" color="textTranslucentSecondary" size="xs">
+            {t('purchase-form:START_DATE_FIELD_LABEL')}
+          </Text>
+          <div className={fakeInputRow}>
+            <Text as="p" size="xl">
+              {t('CART_ENTRY_AUTO_SWITCH')}
+            </Text>
+
+            <Tooltip message={tooltip}>
+              <button onClick={handleClickTooltip}>
+                <LockIcon size="1rem" color={theme.colors.textSecondary} />
+              </button>
+            </Tooltip>
+          </div>
+        </div>
+      ) : (
+        <InputDay
+          label={t('purchase-form:START_DATE_FIELD_LABEL')}
+          selected={convertToDate(props.selectedOffer.startDate) ?? undefined}
+          disabled={true}
+        />
+      )}
+    </>
+  )
+}
