@@ -15,18 +15,18 @@ import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { BUNDLE_DISCOUNT_ELIGIBLE_PRODUCT_IDS } from '@/features/bundleDiscount/bundleDiscount'
 import { BundleDiscountOfferTooltip } from '@/features/bundleDiscount/BundleDiscountOfferTooltip'
 import { BankSigneringEvent } from '@/services/bankSignering'
-import type { ProductOfferFragment, RedeemedCampaignFragment } from '@/services/graphql/generated'
+import type { ProductOfferFragment } from '@/services/graphql/generated'
 import { ExternalInsuranceCancellationOption } from '@/services/graphql/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useAddToCart } from '@/utils/useAddToCart'
-import { useGetDiscountExplanation } from '@/utils/useDiscountExplanation'
 import { useFormatter } from '@/utils/useFormatter'
 import { ComparisonTableModal } from './ComparisonTableModal'
 import { DeductibleSelector } from './DeductibleSelector'
 import { DiscountTooltip } from './DiscountTooltip/DiscountTooltip'
+import { useDiscountTooltipProps } from './DiscountTooltip/useDiscountTooltipProps'
 import { usePriceIntent, useResetPriceIntent } from './priceIntentAtoms'
 import { ProductTierSelector } from './ProductTierSelector'
 import { useSelectedOffer } from './useSelectedOffer'
@@ -301,52 +301,3 @@ const Separator = styled.div({
   margin: `0 ${theme.space.sm}`,
   alignSelf: 'stretch',
 })
-
-const useDiscountTooltipProps = (
-  selectedOffer: ProductOfferFragment,
-  campaign?: RedeemedCampaignFragment,
-) => {
-  const { t } = useTranslation(['purchase-form', 'cart'])
-  const formatter = useFormatter()
-  const getDiscountExplanation = useGetDiscountExplanation()
-
-  const tooltipProps = useMemo(() => {
-    if (selectedOffer.priceMatch) {
-      const company = selectedOffer.priceMatch.externalInsurer.displayName
-
-      if (selectedOffer.priceMatch.priceReduction.amount < 1) {
-        // No price reduction due to incomparable offers
-        const amount = formatter.monthlyPrice(selectedOffer.priceMatch.externalPrice)
-        return {
-          children: t('PRICE_MATCH_BUBBLE_INCOMPARABLE_TITLE', { amount, company }),
-          subtitle: t('PRICE_MATCH_BUBBLE_INCOMPARABLE_SUBTITLE'),
-          color: 'gray',
-        } as const
-      }
-
-      const priceReduction = formatter.monthlyPrice(selectedOffer.priceMatch.priceReduction)
-
-      return {
-        children: t('PRICE_MATCH_BUBBLE_SUCCESS_TITLE', { amount: priceReduction }),
-        subtitle: t('PRICE_MATCH_BUBBLE_SUCCESS_SUBTITLE', { company }),
-        color: 'green',
-      } as const
-    }
-
-    if (campaign && selectedOffer.cost.discount.amount > 0) {
-      return {
-        children: getDiscountExplanation({
-          ...campaign.discount,
-          amount: selectedOffer.cost.discount,
-        }),
-        subtitle: t('DISCOUNT_PRICE_AFTER_EXPIRATION', {
-          amount: formatter.monthlyPrice(selectedOffer.cost.gross),
-          ns: 'cart',
-        }),
-        color: 'green',
-      } as const
-    }
-  }, [t, formatter, getDiscountExplanation, selectedOffer, campaign])
-
-  return tooltipProps
-}
