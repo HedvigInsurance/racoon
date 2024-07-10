@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers'
+import { type SimplePersister } from '../Persister.types'
 
-export class AppRouterCookiePersister {
+export class AppRouterCookiePersister implements SimplePersister {
   constructor(private readonly cookieKey: string) {}
 
   public save(value: string, cookieKey = this.cookieKey) {
@@ -8,7 +9,7 @@ export class AppRouterCookiePersister {
   }
 
   public fetch(cookieKey = this.cookieKey) {
-    const cookieValue = cookies().get(cookieKey)
+    const cookieValue = cookies().get(cookieKey)?.value
     if (typeof cookieValue === 'string') return cookieValue
     return null
   }
