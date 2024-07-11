@@ -6,14 +6,14 @@ import { Heading, yStack } from 'ui'
 import { SSN_SE_SECTION_ID, SsnSeSection } from '@/components/PriceCalculator/SsnSeSection'
 import { useHandleSubmitPriceCalculatorSection } from '@/components/PriceCalculator/useHandleSubmitPriceCalculatorSection'
 import { useTranslateFieldLabel } from '@/components/PriceCalculator/useTranslateFieldLabel'
-import { FormGridNew } from '@/components/PriceCalculatorPage/FormGridNew'
-import { SectionPreview } from '@/components/PriceCalculatorPage/SectionPreview'
 import {
   activeFormSectionIdAtom,
   GOTO_NEXT_SECTION,
   priceCalculatorFormAtom,
 } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { usePriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
+import { FormGridNew } from '@/features/priceCalculator/FormGridNew'
+import { SectionPreview } from '@/features/priceCalculator/SectionPreview'
 import {
   deserializeField,
   prefillData,

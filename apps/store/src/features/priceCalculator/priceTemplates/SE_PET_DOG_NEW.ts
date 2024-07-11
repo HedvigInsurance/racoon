@@ -6,8 +6,8 @@ import {
   ssnSeSection,
   streetAddressField,
 } from '@/services/PriceCalculator/formFragments'
+import type { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { setI18nNamespace, tKey } from '@/utils/i18n'
-import type { Template } from '../PriceCalculator.types'
 
 setI18nNamespace('purchase-form')
 
