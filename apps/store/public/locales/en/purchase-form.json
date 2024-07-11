@@ -151,5 +151,5 @@
   "SUBMIT_LABEL_PROCEED": "Next step",
   "TIER_SELECTOR_DEFAULT_LABEL": "Choose coverage",
   "TIER_SELECTOR_SELECTED_LABEL": "Coverage level",
-  "YEARLY_MILEAGE_VALUE": "{{value}} miles/year"
+  "YEARLY_MILEAGE_VALUE": "{{value}}0 km/year"
 }
