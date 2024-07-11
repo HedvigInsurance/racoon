@@ -11,9 +11,9 @@ import { getOfferPrice } from '@/utils/getOfferPrice'
 import { ProductDetails } from './ProductDetails'
 import {
   card,
-  cardGreenVariant,
   cardHeader,
-  cardHeaderRow,
+  cardHeaderButton,
+  cardGreenVariant,
   priceSection,
   deleteButton,
   editButton,
@@ -72,30 +72,30 @@ export function ProductItem(props: Props) {
 
   return (
     <div className={clsx(card, props.greenVariant && cardGreenVariant, props.className)}>
-      <button
-        className={cardHeader}
-        onClick={toggleExpandCard}
-        aria-expanded={expanded}
-        aria-controls={DETAILS_SECTION_ID}
-      >
-        <Pillow size="small" src={pillow.src} alt={pillow.alt} />
-        <div>
-          <div className={cardHeaderRow}>
+      <header className={cardHeader}>
+        <button
+          className={cardHeaderButton}
+          onClick={toggleExpandCard}
+          aria-expanded={expanded}
+          aria-controls={DETAILS_SECTION_ID}
+        >
+          <Pillow size="small" src={pillow.src} alt={pillow.alt} />
+          <div>
             <Text as="p" size="md" color="textTranslucentPrimary">
               {props.selectedOffer.product.displayNameFull}
             </Text>
-
-            {props.onDelete && (
-              <button className={deleteButton} onClick={handleDelete}>
-                <CrossIconSmall color={theme.colors.textSecondary} />
-              </button>
-            )}
+            <Text as="p" color="textTranslucentSecondary">
+              {props.selectedOffer.exposure.displayNameShort}
+            </Text>
           </div>
-          <Text as="p" color="textTranslucentSecondary">
-            {props.selectedOffer.exposure.displayNameShort}
-          </Text>
-        </div>
-      </button>
+        </button>
+
+        {props.onDelete && (
+          <button className={deleteButton} onClick={handleDelete}>
+            <CrossIconSmall color={theme.colors.textSecondary} />
+          </button>
+        )}
+      </header>
 
       <div className={yStack({ gap: 'md' })}>
         {props.children}
