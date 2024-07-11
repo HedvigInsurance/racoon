@@ -45,6 +45,7 @@ const unresponsiveProperties = defineProperties({
     paddingBottom: spaceTokensSubset,
     paddingLeft: spaceTokensSubset,
     paddingRight: spaceTokensSubset,
+    padding: spaceTokensSubset,
     gap: spaceTokensSubset,
   },
   shorthands: {
