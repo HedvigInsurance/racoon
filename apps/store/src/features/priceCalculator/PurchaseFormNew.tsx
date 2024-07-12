@@ -1,7 +1,7 @@
 'use client'
 
 import { useStore } from 'jotai'
-import { startTransition, useCallback, useEffect, useRef, useState } from 'react'
+import { startTransition, useCallback, useEffect, useState } from 'react'
 import { yStack } from 'ui'
 import { PriceLoader } from '@/components/PriceLoader'
 import {
@@ -79,17 +79,8 @@ type PriceIntentOffersProps = {
   onEdit: () => void
 }
 function PriceIntentOffers({ onEdit }: PriceIntentOffersProps) {
-  const wrapperRef = useRef(null)
   const notifyProductAdded = () => {
     window.alert('Added to cart. TODO: Implement further')
   }
-  return (
-    <div ref={wrapperRef}>
-      <OfferPresenterNew
-        scrollPastRef={wrapperRef}
-        onClickEdit={onEdit}
-        notifyProductAdded={notifyProductAdded}
-      />
-    </div>
-  )
+  return <OfferPresenterNew onClickEdit={onEdit} notifyProductAdded={notifyProductAdded} />
 }
