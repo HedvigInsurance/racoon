@@ -3,9 +3,9 @@
 import { ApolloLink } from '@apollo/client'
 import {
   ApolloNextAppProvider,
-  NextSSRApolloClient,
-  NextSSRInMemoryCache,
-} from '@apollo/experimental-nextjs-app-support/ssr'
+  ApolloClient,
+  InMemoryCache,
+} from '@apollo/experimental-nextjs-app-support'
 import type { ReactNode } from 'react'
 import { useCallback } from 'react'
 import { createHeadersLink } from '@/services/apollo/createHeadersLink'
@@ -28,9 +28,9 @@ export const ApolloProvider = ({ children, locale }: Props) => {
 const useMakeApolloClient = (locale: RoutingLocale) => {
   return useCallback(
     () =>
-      new NextSSRApolloClient({
+      new ApolloClient({
         name: 'Web:Racoon:Store',
-        cache: new NextSSRInMemoryCache(),
+        cache: new InMemoryCache(),
 
         link: ApolloLink.from([
           // Has to be the first to process output last
