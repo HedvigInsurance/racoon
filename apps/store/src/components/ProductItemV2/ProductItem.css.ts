@@ -1,7 +1,7 @@
 import { style } from '@vanilla-extract/css'
 import { minWidth, tokens } from 'ui'
 
-export const cardHeader = style({
+export const cardHeaderButton = style({
   display: 'grid',
   gridTemplateColumns: 'auto 1fr',
   columnGap: tokens.space.md,
@@ -13,19 +13,12 @@ export const cardHeader = style({
   },
 })
 
-export const cardHeaderRow = style({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  width: '100%',
-})
-
 export const card = style({
   borderRadius: tokens.radius.md,
   padding: tokens.space.md,
   backgroundColor: tokens.colors.opaque1,
   selectors: {
-    [`&:has(${cardHeader}:focus-visible)`]: {
+    [`&:has(${cardHeaderButton}:focus-visible)`]: {
       boxShadow: tokens.shadow.focus,
       borderRadius: tokens.radius.sm,
     },
@@ -33,7 +26,7 @@ export const card = style({
   '@media': {
     '(hover: hover)': {
       selectors: {
-        [`&:has(${cardHeader}:hover)`]: {
+        [`&:has(${cardHeaderButton}:hover)`]: {
           backgroundColor: tokens.colors.grayTranslucent200,
         },
       },
@@ -44,12 +37,14 @@ export const card = style({
   },
 })
 
+export const cardHeader = style({ position: 'relative' })
+
 export const cardGreenVariant = style({
   backgroundColor: tokens.colors.signalGreenFill,
   '@media': {
     '(hover: hover)': {
       selectors: {
-        [`&:has(${cardHeader}:hover)`]: {
+        [`&:has(${cardHeaderButton}:hover)`]: {
           backgroundColor: tokens.colors.green200,
         },
       },
@@ -65,6 +60,9 @@ export const priceSection = style({
 })
 
 export const deleteButton = style({
+  position: 'absolute',
+  top: 0,
+  right: 0,
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -73,6 +71,9 @@ export const deleteButton = style({
   borderRadius: '50%',
   backgroundColor: tokens.colors.grayTranslucent200,
   cursor: 'pointer',
+  ':focus-visible': {
+    boxShadow: tokens.shadow.focus,
+  },
   '@media': {
     '(hover: hover)': {
       ':hover': {
