@@ -1,8 +1,9 @@
-import { assignVars, style } from '@vanilla-extract/css'
+import { style } from '@vanilla-extract/css'
 import { minWidth, tokens } from 'ui'
 
 export const cardHeader = style({
   display: 'grid',
+  gridTemplateColumns: 'auto 1fr',
   columnGap: tokens.space.md,
   alignItems: 'center',
   width: '100%',
@@ -41,14 +42,6 @@ export const card = style({
       padding: tokens.space.lg,
     },
   },
-})
-
-// Next step is to reassign these tokens on a `layer` level
-export const cardEditVariant = style({
-  vars: assignVars(tokens.components.input.background, {
-    default: tokens.colors.backgroundStandard,
-    selected: tokens.colors.opaque1,
-  }),
 })
 
 export const cardGreenVariant = style({
@@ -93,26 +86,8 @@ export const editButton = style({
   marginBottom: tokens.space.xs,
 })
 
-export const fakeInput = style({
-  width: '100%',
-  height: '4.5rem',
-  padding: tokens.space.sm,
-  borderRadius: tokens.radius.sm,
-  backgroundColor: tokens.colors.translucent1,
-})
-
-export const fakeInputRow = style({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-})
-
 export const separator = style({
   width: '100%',
   height: 1,
   backgroundColor: tokens.colors.borderOpaque2,
-})
-
-export const compareButtonWrapper = style({
-  padding: tokens.space.md,
 })
