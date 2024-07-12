@@ -12,7 +12,7 @@ export const navigationLink = style([
       [minWidth.lg]: {
         paddingBlock: tokens.space.xs,
         paddingInline: tokens.space.md,
-        borderRadius: tokens.radius.sm,
+        borderRadius: tokens.radius.md,
 
         ':hover': {
           backgroundColor: tokens.colors.grayTranslucent100,
