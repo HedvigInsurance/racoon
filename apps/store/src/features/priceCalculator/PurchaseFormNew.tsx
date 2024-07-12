@@ -1,7 +1,7 @@
 'use client'
 
-import { useStore } from 'jotai'
-import { startTransition, useCallback, useEffect, useState } from 'react'
+import { useAtom, useStore } from 'jotai'
+import { startTransition, useEffect } from 'react'
 import { yStack } from 'ui'
 import { PriceLoader } from '@/components/PriceLoader'
 import {
@@ -11,10 +11,8 @@ import {
 } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { OfferPresenterNew } from '@/features/priceCalculator/OfferPresenterNew'
-import { useConfirmPriceIntent } from '@/features/priceCalculator/useConfirmPriceIntent'
+import { priceCalculatorStepAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
 import { InsuranceDataForm } from './InsuranceDataForm'
-
-type PurchaseFormStep = 'loadingForm' | 'fillForm' | 'calculatingPrice' | 'viewOffers'
 
 // TODO:
 // - handle SSN change warning (put in atoms?)
@@ -25,33 +23,16 @@ export function PurchaseFormNew() {
   useSyncPriceIntentState(undefined)
   const store = useStore()
   const isReady = useIsPriceIntentStateReady()
-  const [step, setStep] = useState<PurchaseFormStep>('loadingForm')
+  const [step, setStep] = useAtom(priceCalculatorStepAtom)
   useEffect(() => {
-    setStep(() => {
-      if (!isReady) {
-        return 'loadingForm'
-      }
-      const priceIntent = store.get(priceIntentAtom)
-      if (priceIntent?.offers.length) {
-        return 'viewOffers'
-      }
-      return 'fillForm'
-    })
-  }, [isReady, store])
-
-  const confirmPriceIntent = useConfirmPriceIntent({
-    onSuccess() {
+    if (!isReady) return
+    const priceIntent = store.get(priceIntentAtom)
+    if (priceIntent?.offers.length) {
       setStep('viewOffers')
-    },
-    onError(message) {
-      console.log('TODO: show error', message)
-      window.alert('Something went wrong. TODO: show error')
-    },
-  })
-  const confirm = useCallback(() => {
-    setStep('calculatingPrice')
-    confirmPriceIntent()
-  }, [confirmPriceIntent])
+    } else {
+      setStep('fillForm')
+    }
+  }, [isReady, setStep, store])
 
   const handleEdit = () => {
     startTransition(() => setStep('fillForm'))
@@ -61,7 +42,7 @@ export function PurchaseFormNew() {
     case 'loadingForm':
       return <Skeleton style={{ height: '75vh' }} />
     case 'fillForm':
-      return <InsuranceDataForm onSubmitSuccessAndReadyToConfirm={confirm} />
+      return <InsuranceDataForm />
     case 'calculatingPrice':
       return (
         <div className={yStack({ justifyContent: 'center' })} style={{ minHeight: '75vh' }}>
@@ -69,7 +50,12 @@ export function PurchaseFormNew() {
         </div>
       )
     case 'viewOffers':
-      return <PriceIntentOffers onEdit={handleEdit} />
+      return (
+        <div className={yStack({})} style={{ gap: '2.75rem' }}>
+          <InsuranceDataForm />
+          <PriceIntentOffers onEdit={handleEdit} />
+        </div>
+      )
     default:
       throw new Error(`Unexpected step: ${step}`)
   }

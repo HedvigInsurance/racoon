@@ -1,6 +1,6 @@
 import { useApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
-import { type Atom, atom, type Getter, useAtomValue, useSetAtom, useStore } from 'jotai'
+import { atom, useAtomValue, useSetAtom, useStore } from 'jotai'
 import { atomFamily } from 'jotai/utils'
 import { useCallback, useEffect, useState } from 'react'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
@@ -21,6 +21,7 @@ import { type Form } from '@/services/PriceCalculator/PriceCalculator.types'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 import { useShopSession, useShopSessionId } from '@/services/shopSession/ShopSessionContext'
 import { getOffersByPrice } from '@/utils/getOffersByPrice'
+import { getAtomValueOrThrow } from '@/utils/jotaiUtils'
 
 export const currentPriceIntentIdAtom = atom<string | null>(null)
 
@@ -106,15 +107,6 @@ export const activeFormSectionIdAtom = atom(
   },
 )
 export const GOTO_NEXT_SECTION = Symbol('GOTO_NEXT_SECTION')
-
-// TODO: Consider moving to utils
-const getAtomValueOrThrow = <T>(get: Getter, atom: Atom<T>): NonNullable<T> => {
-  const value = get(atom)
-  if (value == null) {
-    throw new Error(`${atom} must have value`)
-  }
-  return value
-}
 
 export const useSyncPriceIntentState = (preloadedPriceIntentId?: string): void => {
   const priceTemplate = useAtomValue(priceTemplateAtom)
