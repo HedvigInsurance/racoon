@@ -28,6 +28,9 @@ export const buttonTrigger = style({
       ':active': {
         backgroundColor: 'transparent',
       },
+      ':focus-visible': {
+        boxShadow: 'none',
+      },
     },
   },
 })
