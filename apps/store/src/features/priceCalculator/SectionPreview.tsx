@@ -1,6 +1,6 @@
 import { useSetAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
-import { useMemo } from 'react'
+import { startTransition, useMemo } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import { Button, Text, tokens, xStack } from 'ui'
 import { useTranslateFieldLabel } from '@/components/PriceCalculator/useTranslateFieldLabel'
@@ -34,8 +34,10 @@ export function SectionPreview({ section }: { section: FormSection }) {
   const setActiveSectionId = useSetAtom(activeFormSectionIdAtom)
   const setStep = useSetAtom(priceCalculatorStepAtom)
   const handleEdit = () => {
-    setActiveSectionId(section.id)
-    setStep('fillForm')
+    startTransition(() => {
+      setActiveSectionId(section.id)
+      setStep('fillForm')
+    })
   }
 
   return (

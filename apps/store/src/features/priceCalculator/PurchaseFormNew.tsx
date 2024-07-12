@@ -1,7 +1,7 @@
 'use client'
 
 import { useAtom, useStore } from 'jotai'
-import { startTransition, useEffect } from 'react'
+import { useEffect } from 'react'
 import { yStack } from 'ui'
 import { PriceLoader } from '@/components/PriceLoader'
 import {
@@ -34,10 +34,6 @@ export function PurchaseFormNew() {
     }
   }, [isReady, setStep, store])
 
-  const handleEdit = () => {
-    startTransition(() => setStep('fillForm'))
-  }
-
   switch (step) {
     case 'loadingForm':
       return <Skeleton style={{ height: '75vh' }} />
@@ -53,20 +49,10 @@ export function PurchaseFormNew() {
       return (
         <div className={yStack({})} style={{ gap: '2.75rem' }}>
           <InsuranceDataForm />
-          <PriceIntentOffers onEdit={handleEdit} />
+          <OfferPresenterNew />
         </div>
       )
     default:
       throw new Error(`Unexpected step: ${step}`)
   }
-}
-
-type PriceIntentOffersProps = {
-  onEdit: () => void
-}
-function PriceIntentOffers({ onEdit }: PriceIntentOffersProps) {
-  const notifyProductAdded = () => {
-    window.alert('Added to cart. TODO: Implement further')
-  }
-  return <OfferPresenterNew onClickEdit={onEdit} notifyProductAdded={notifyProductAdded} />
 }
