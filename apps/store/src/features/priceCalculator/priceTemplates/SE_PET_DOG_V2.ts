@@ -11,8 +11,8 @@ import { setI18nNamespace, tKey } from '@/utils/i18n'
 
 setI18nNamespace('purchase-form')
 
-export const SE_PET_DOG_NEW: Template = {
-  name: 'SE_PET_DOG_NEW',
+export const SE_PET_DOG_V2: Template = {
+  name: 'SE_PET_DOG_V2',
   sections: [
     ssnSeSection,
     {
@@ -25,20 +25,6 @@ export const SE_PET_DOG_NEW: Template = {
             type: 'text',
             name: 'name',
             label: { key: tKey('FIELD_NAME_PET_LABEL') },
-            required: true,
-          },
-          layout: LAYOUT.FULL_WIDTH,
-        },
-        {
-          field: {
-            type: 'radio',
-            stacking: 'horizontal',
-            name: 'gender',
-            label: { key: tKey('FIELD_GENDER_LABEL') },
-            options: [
-              { label: { key: tKey('FIELD_GENDER_OPTION_MALE_DOG') }, value: 'MALE' },
-              { label: { key: tKey('FIELD_GENDER_OPTION_FEMALE_DOG') }, value: 'FEMALE' },
-            ],
             required: true,
           },
           layout: LAYOUT.FULL_WIDTH,
@@ -62,6 +48,20 @@ export const SE_PET_DOG_NEW: Template = {
             // UW filter breeches are handled by the backend
             min: '1990-01-01',
             max: 'TODAY',
+          },
+          layout: LAYOUT.FULL_WIDTH,
+        },
+        {
+          field: {
+            type: 'radio',
+            stacking: 'horizontal',
+            name: 'gender',
+            label: { key: tKey('FIELD_GENDER_LABEL') },
+            options: [
+              { label: { key: tKey('FIELD_GENDER_OPTION_MALE_DOG') }, value: 'MALE' },
+              { label: { key: tKey('FIELD_GENDER_OPTION_FEMALE_DOG') }, value: 'FEMALE' },
+            ],
+            required: true,
           },
           layout: LAYOUT.FULL_WIDTH,
         },
