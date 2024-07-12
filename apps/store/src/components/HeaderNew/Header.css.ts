@@ -15,7 +15,7 @@ export const focusableStyles = style({
   cursor: 'pointer',
 
   ':focus-visible': {
-    outline: `2px solid ${tokens.colors.gray900}`,
+    outline: `2px solid ${tokens.colors.red300}`,
   },
 })
 
@@ -121,12 +121,6 @@ export const HeaderMenuDesktop = style([
 ])
 
 export const navigationItem = style({
-  selectors: {
-    '&:not(:last-child)': {
-      borderBottom: `1px solid ${tokens.colors.borderOpaque1}`,
-    },
-  },
-
   '@media': {
     [minWidth.lg]: {
       selectors: {
@@ -137,6 +131,21 @@ export const navigationItem = style({
           marginLeft: 'auto',
         },
       },
+    },
+  },
+})
+
+export const navigationItemSubMenu = style({
+  marginBottom: tokens.space.xxs,
+  paddingBottom: tokens.space.md,
+  borderRadius: tokens.radius.md,
+  backgroundColor: tokens.colors.buttonSecondary,
+
+  '@media': {
+    [minWidth.lg]: {
+      marginBottom: tokens.space.none,
+      paddingBottom: tokens.space.none,
+      backgroundColor: 'transparent',
     },
   },
 })
@@ -157,93 +166,17 @@ export const navigationItemGeneralMenu = style({
   },
 })
 
-export const navigationTriggerLinkPadding = createVar()
-
-export const navigationTriggerLink = style([
-  focusableStyles,
-  {
-    display: 'flex',
-    alignItems: 'center',
-    gap: tokens.space.xxxl,
-    paddingBlock: tokens.space.lg,
-    whiteSpace: 'nowrap',
-
-    '@media': {
-      [minWidth.lg]: {
-        height: '2.5rem',
-        paddingBlock: tokens.space.xs,
-        paddingInline: navigationTriggerLinkPadding,
-        borderRadius: tokens.radius.sm,
-        backgroundColor: tokens.colors.buttonSecondary,
-
-        selectors: {
-          '&[data-state="open"], &:hover': {
-            backgroundColor: tokens.colors.buttonSecondaryHover,
-          },
-        },
-      },
-    },
-    vars: {
-      [navigationTriggerLinkPadding]: tokens.space.md,
-    },
-  },
-])
-
-export const navigationTriggerHiddenLabel = style({
-  '@media': {
-    [minWidth.lg]: {
-      selectors: {
-        // Visually hidden but available for screen readers
-        [`${navigationItem}:last-child &`]: {
-          clip: 'rect(0 0 0 0)',
-          clipPath: 'inset(50%)',
-          height: '1px',
-          overflow: 'hidden',
-          position: 'absolute',
-          whiteSpace: 'nowrap',
-          width: '1px',
-        },
-      },
-    },
-  },
-})
-
-export const hamburgerOpenGeneralMenu = style({
-  display: 'none',
-  '@media': {
-    [minWidth.lg]: {
-      selectors: {
-        [`${navigationTriggerLink}[data-state="closed"] &`]: {
-          display: 'block',
-        },
-      },
-    },
-  },
-})
-
-export const hamburgerCloseGeneralMenu = style({
-  display: 'none',
-  '@media': {
-    [minWidth.lg]: {
-      selectors: {
-        [`${navigationTriggerLink}[data-state="open"] &`]: {
-          display: 'block',
-        },
-      },
-    },
-  },
-})
-
 export const navigationSecondaryItem = style({
-  padding: tokens.space.md,
-  marginLeft: tokens.space.md,
-  color: tokens.colors.textPrimary,
+  paddingBlock: tokens.space.xxs,
+  paddingLeft: tokens.space.lg,
+  paddingRight: tokens.space.md,
+  color: tokens.colors.textSecondaryOnGray,
 
   '@media': {
     [minWidth.lg]: {
       padding: `${tokens.space.sm} ${tokens.space.sm}`,
-      margin: 0,
       borderRadius: tokens.radius.md,
+      color: tokens.colors.textPrimary,
 
       ':hover': {
         backgroundColor: tokens.colors.grayTranslucent100,
@@ -280,7 +213,6 @@ export const navigationContent = style({
 
 // Same component reused between mobile and desktop menus
 export const navigationMenuWrapper = style({
-  paddingBottom: tokens.space.xl,
   rowGap: tokens.space.lg,
 
   '@media': {
@@ -319,11 +251,11 @@ export const navigationPrimaryList = style({
 })
 
 export const navigationSecondaryList = style({
-  display: 'block',
+  paddingTop: tokens.space.xs,
 
   '@media': {
     [minWidth.lg]: {
-      padding: 0,
+      paddingTop: tokens.space.none,
     },
   },
 })

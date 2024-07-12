@@ -9,10 +9,11 @@ import {
   navigationSecondaryItem,
   navigationSecondaryList,
   navigationItemGeneralMenu,
+  navigationItemSubMenu,
 } from '@/components/HeaderNew/Header.css'
 import { NavigationContent } from '@/components/HeaderNew/NavigationContent'
 import { SecondaryNavigationLink } from '@/components/HeaderNew/NavigationLink/NavigationLink'
-import { NavigationTriggerGeneralMenu } from '@/components/HeaderNew/NavigationTriggerGeneralMenu'
+import { NavigationTriggerGeneralMenu } from '@/components/HeaderNew/NavigationTrigger/NavigationTriggerGeneralMenu'
 import type { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 
@@ -30,7 +31,7 @@ export const GeneralMenuBlock = ({ blok }: GeneralMenuBlockProps) => {
 
   return (
     <NavigationMenuPrimitive.Item
-      className={clsx(navigationItem, navigationItemGeneralMenu)}
+      className={clsx(navigationItem, navigationItemGeneralMenu, navigationItemSubMenu)}
       value={blok.name}
       {...storyblokEditable(blok)}
     >
