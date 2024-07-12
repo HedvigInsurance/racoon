@@ -32,6 +32,7 @@ export type Template = {
 export type TemplateSection = {
   id: string
   title: Label
+  subtitle?: Label
   submitLabel: Label
   items: Array<SectionItem>
   editable?: boolean

@@ -1,7 +1,7 @@
 'use client'
 
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
-import { type FormEventHandler, type PropsWithChildren, type ReactNode } from 'react'
+import { type FormEventHandler, type ReactNode } from 'react'
 import { Heading, yStack } from 'ui'
 import { SSN_SE_SECTION_ID, SsnSeSection } from '@/components/PriceCalculator/SsnSeSection'
 import { useHandleSubmitPriceCalculatorSection } from '@/components/PriceCalculator/useHandleSubmitPriceCalculatorSection'
@@ -39,18 +39,21 @@ export function InsuranceDataForm(props: InsuranceDataFormProps) {
   }
   const form = useAtomValue(priceCalculatorFormAtom)
   const [activeSectionId] = useAtom(activeFormSectionIdAtom)
-  const translateLabel = useTranslateFieldLabel()
   const sections = form.sections.map((section) => {
-    let sectionBody: ReactNode
     if (section.id !== activeSectionId) {
       // No preview needed for sections that are not yet touched
       if (section.state === 'initial') {
         return null
       }
-      sectionBody = <SectionPreview section={section} />
-    } else if (section.id === SSN_SE_SECTION_ID) {
+      return <SectionPreview key={section.id} section={section} />
+    }
+
+    let sectionBody: ReactNode
+    let sectionStyle = {}
+    if (section.id === SSN_SE_SECTION_ID) {
       sectionBody = <SsnSeSection />
     } else {
+      sectionStyle = { marginTop: '3.75rem' }
       sectionBody = (
         <InsuranceDataSection
           section={section}
@@ -59,30 +62,41 @@ export function InsuranceDataForm(props: InsuranceDataFormProps) {
       )
     }
     return (
-      <div key={section.id}>
-        <SectionTitle>{translateLabel(section.title)}</SectionTitle>
+      <div key={section.id} className={yStack({ gap: 'xl' })} style={sectionStyle}>
+        <SectionTitle section={section} />
         {sectionBody}
       </div>
     )
   })
-  return <div className={yStack({ gap: 'lg' })}>{sections}</div>
+  return <div className={yStack({ gap: 'xs' })}>{sections}</div>
 }
 
-function SectionTitle({ children }: PropsWithChildren) {
+function SectionTitle({ section }: { section: FormSection }) {
+  const translateLabel = useTranslateFieldLabel()
   return (
-    <Heading as="h2" variant="standard.24">
-      {children}
-    </Heading>
+    <div>
+      <Heading as="h2" variant="standard.24">
+        {translateLabel(section.title)}
+      </Heading>
+      {section.subtitle != null && (
+        <Heading as="h3" variant="standard.24" color="textSecondary">
+          {translateLabel(section.subtitle)}
+        </Heading>
+      )}
+    </div>
   )
 }
 
+type InsuranceDataSectionProps = {
+  section: FormSection
+} & InsuranceDataFormProps
+
 // TODO
 // - do we need autofocus on first field?
-// - create customer-independent submit handler
 function InsuranceDataSection({
   section,
   onSubmitSuccessAndReadyToConfirm,
-}: { section: FormSection } & InsuranceDataFormProps) {
+}: InsuranceDataSectionProps) {
   const priceTemplate = usePriceTemplate()
   const submitPriceCalculatorSection = useHandleSubmitPriceCalculatorSection({
     onSuccess({ priceIntent, customer }) {

@@ -15,4 +15,5 @@ export const gridItem = style({
 
 export const submitButton = style({
   gridColumn: 'span 6',
+  marginTop: tokens.space.xxl,
 })

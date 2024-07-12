@@ -1,4 +1,3 @@
-import { clsx } from 'clsx'
 import { useSetAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { useMemo } from 'react'
@@ -26,16 +25,21 @@ export function SectionPreview({ section }: { section: FormSection }) {
     }
 
     return autoFormat(section.preview.fieldName, value)
-  }, [section, translateLabel, autoFormat])
+  }, [section, autoFormat, translateLabel])
 
   const handleEdit = () => setActiveSectionId(section.id)
 
   return (
     <div
-      className={clsx(xStack({}), sprinkles({ padding: 'md' }))}
+      className={xStack({ padding: 'md', alignItems: 'center' })}
       style={{ backgroundColor: tokens.colors.backgroundStandard, borderRadius: tokens.radius.md }}
     >
-      <Text className={sprinkles({ flexGrow: 1 })}>{previewText}</Text>
+      <div className={sprinkles({ flexGrow: 1 })}>
+        <Text color="textSecondary">{translateLabel(section.title)}</Text>
+        <Text size="xl" color="textSecondary">
+          {previewText}
+        </Text>
+      </div>
       <Button
         variant="secondary"
         size={'small'}
