@@ -7,17 +7,17 @@ import { memo, type MouseEventHandler, type ReactNode, useEffect, useMemo, useRe
 import { Button, PlusIcon, Text, yStack } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
 import { ComparisonTableModal } from '@/components/ProductPage/PurchaseForm/ComparisonTableModal'
-import { DeductibleSelector } from '@/components/ProductPage/PurchaseForm/DeductibleSelector'
 import { DiscountTooltip } from '@/components/ProductPage/PurchaseForm/DiscountTooltip/DiscountTooltip'
 import { useDiscountTooltipProps } from '@/components/ProductPage/PurchaseForm/DiscountTooltip/useDiscountTooltipProps'
 import { usePriceIntent } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
-import { ProductTierSelector } from '@/components/ProductPage/PurchaseForm/ProductTierSelector'
 import { useSelectedOffer } from '@/components/ProductPage/PurchaseForm/useSelectedOffer'
 import { useTiersAndDeductibles } from '@/components/ProductPage/PurchaseForm/useTiersAndDeductibles'
 import { useCartEntryToReplace } from '@/components/ProductPage/useCartEntryToReplace'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { BUNDLE_DISCOUNT_ELIGIBLE_PRODUCT_IDS } from '@/features/bundleDiscount/bundleDiscount'
 import { BundleDiscountOfferTooltip } from '@/features/bundleDiscount/BundleDiscountOfferTooltip'
+import { DeductibleSelectorV2 } from '@/features/priceCalculator/DeductibleSelectorV2'
+import { ProductTierSelectorV2 } from '@/features/priceCalculator/ProductTierSelectorV2'
 import { BankSigneringEvent } from '@/services/bankSignering'
 import type { ProductOfferFragment } from '@/services/graphql/generated'
 import { ExternalInsuranceCancellationOption } from '@/services/graphql/generated'
@@ -28,7 +28,7 @@ import { PageLink } from '@/utils/PageLink'
 import { useAddToCart } from '@/utils/useAddToCart'
 import { useFormatter } from '@/utils/useFormatter'
 
-export const OfferPresenterNew = memo(() => {
+export const OfferPresenterV2 = memo(() => {
   const { shopSession } = useShopSession()
   if (shopSession == null) {
     throw new Error('shopSession must be defined')
@@ -147,9 +147,8 @@ export const OfferPresenterNew = memo(() => {
       </div>
 
       {tiers.length > 1 && (
-        <div className={yStack({ alignItems: 'center' })}>
-          <ProductTierSelector
-            defaultOpen={true}
+        <div className={yStack({ alignItems: 'stretch' })}>
+          <ProductTierSelectorV2
             offers={tiers}
             selectedOffer={selectedTier}
             onValueChange={handleOfferChange}
@@ -166,12 +165,13 @@ export const OfferPresenterNew = memo(() => {
       )}
 
       {deductibles.length > 1 && (
-        <DeductibleSelector
-          offers={deductibles}
-          selectedOffer={selectedOffer}
-          onValueChange={handleOfferChange}
-          defaultOpen={true}
-        />
+        <div className={yStack({ alignItems: 'stretch' })}>
+          <DeductibleSelectorV2
+            offers={deductibles}
+            selectedOffer={selectedOffer}
+            onValueChange={handleOfferChange}
+          />
+        </div>
       )}
 
       <CancellationForm productOfferIds={productOfferIds} offer={selectedOffer} />
@@ -187,4 +187,4 @@ export const OfferPresenterNew = memo(() => {
     </div>
   )
 })
-OfferPresenterNew.displayName = 'OfferPresenterNew'
+OfferPresenterV2.displayName = 'OfferPresenterNew'

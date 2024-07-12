@@ -10,7 +10,7 @@ import {
   useSyncPriceIntentState,
 } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
-import { OfferPresenterNew } from '@/features/priceCalculator/OfferPresenterNew'
+import { OfferPresenterV2 } from '@/features/priceCalculator/OfferPresenterV2'
 import { priceCalculatorStepAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
 import { InsuranceDataForm } from './InsuranceDataForm'
 
@@ -19,7 +19,7 @@ import { InsuranceDataForm } from './InsuranceDataForm'
 // - support preloaded priceIntentId
 // - handle errors
 // - proceed to cart
-export function PurchaseFormNew() {
+export function PurchaseFormV2() {
   useSyncPriceIntentState(undefined)
   const store = useStore()
   const isReady = useIsPriceIntentStateReady()
@@ -49,7 +49,7 @@ export function PurchaseFormNew() {
       return (
         <div className={yStack({})} style={{ gap: '2.75rem' }}>
           <InsuranceDataForm />
-          <OfferPresenterNew />
+          <OfferPresenterV2 />
         </div>
       )
     default:

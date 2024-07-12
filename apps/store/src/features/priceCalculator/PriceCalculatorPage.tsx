@@ -8,7 +8,7 @@ import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
 import { type RoutingLocale } from '@/utils/l10n/types'
 import { SE_PET_DOG_V2 } from './priceTemplates/SE_PET_DOG_V2'
-import { PurchaseFormNew } from './PurchaseFormNew'
+import { PurchaseFormV2 } from './PurchaseFormV2'
 
 type Props = {
   locale: RoutingLocale
@@ -30,7 +30,7 @@ export function PriceCalculatorPage({ locale }: Props) {
       <div style={{ minHeight: '300vh', width: '50%', flexGrow: 1, padding: '1rem' }}>
         <Suspense fallback={<Skeleton style={{ height: '75vh' }} />}>
           <PriceCalculatorProviders locale={locale}>
-            <PurchaseFormNew />
+            <PurchaseFormV2 />
           </PriceCalculatorProviders>
         </Suspense>
       </div>
