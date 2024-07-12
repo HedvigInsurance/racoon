@@ -59,9 +59,8 @@ export function HeaderMenuMobile(props: Props) {
           variant="secondary"
           size="medium"
           aria-label={t('NAV_MENU_DIALOG_OPEN')}
-        >
-          <HamburgerOpenIcon />
-        </Button>
+          Icon={<HamburgerOpenIcon />}
+        />
       </DialogPrimitive.Trigger>
       <DialogContent>
         <div className={contentWrapper}>
@@ -75,9 +74,8 @@ export function HeaderMenuMobile(props: Props) {
                 variant="secondary"
                 size="medium"
                 aria-label={t('NAV_MENU_DIALOG_CLOSE')}
-              >
-                <HamburgerCloseIcon />
-              </Button>
+                Icon={<HamburgerCloseIcon />}
+              />
             </DialogPrimitive.Close>
             <ShoppingCartMenuItem />
           </div>

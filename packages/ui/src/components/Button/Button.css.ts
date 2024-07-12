@@ -230,6 +230,12 @@ export const childrenWrapper = style({
   gap: tokens.space.xs,
 })
 
+export const textWrapper = style({
+  // Sine our fonts line height are not perfectly centered vertically,
+  // offset the text 2px according to design
+  marginTop: '-0.125rem',
+})
+
 export const centered = style({
   position: 'absolute',
   display: 'flex',

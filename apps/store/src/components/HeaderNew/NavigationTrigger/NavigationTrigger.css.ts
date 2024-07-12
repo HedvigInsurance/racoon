@@ -1,15 +1,14 @@
-import { createVar, style } from '@vanilla-extract/css'
+import { style } from '@vanilla-extract/css'
 import { tokens, minWidth } from 'ui'
 import { focusableStyles, navigationItem } from '../Header.css'
-
-export const navigationTriggerLinkPadding = createVar()
 
 export const navigationTrigger = style([
   focusableStyles,
   {
     display: 'flex',
     alignItems: 'center',
-    gap: tokens.space.xxxl,
+    justifyContent: 'space-between',
+    width: '100%',
     paddingTop: tokens.space.md,
     paddingLeft: tokens.space.lg,
     paddingRight: tokens.space.md,
@@ -17,30 +16,29 @@ export const navigationTrigger = style([
 
     '@media': {
       [minWidth.lg]: {
-        height: '2.5rem',
-        paddingBlock: tokens.space.xs,
-        paddingInline: navigationTriggerLinkPadding,
-        borderRadius: tokens.radius.sm,
-        backgroundColor: tokens.colors.buttonSecondary,
-
-        selectors: {
-          '&[data-state="open"], &:hover': {
-            backgroundColor: tokens.colors.buttonSecondaryHover,
-          },
-        },
+        paddingBlock: tokens.space.none,
+        paddingInline: tokens.space.md,
       },
-    },
-    vars: {
-      [navigationTriggerLinkPadding]: tokens.space.md,
     },
   },
 ])
 
-export const navigationTriggerSubMenu = style({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  width: '100%',
+export const navigationTriggerGeneralMenu = style({
+  '@media': {
+    [minWidth.lg]: {
+      width: '2.5rem',
+      height: '2.5rem',
+      padding: 0,
+      borderRadius: tokens.radius.sm,
+      backgroundColor: tokens.colors.buttonSecondary,
+
+      selectors: {
+        '&[data-state="open"], &:hover': {
+          backgroundColor: tokens.colors.buttonSecondaryHover,
+        },
+      },
+    },
+  },
 })
 
 export const navigationTriggerHiddenLabel = style({
@@ -67,7 +65,7 @@ export const hamburgerOpenGeneralMenu = style({
   '@media': {
     [minWidth.lg]: {
       selectors: {
-        [`${navigationTrigger}[data-state="closed"] &`]: {
+        [`${navigationTriggerGeneralMenu}[data-state="closed"] &`]: {
           display: 'block',
         },
       },
@@ -80,7 +78,7 @@ export const hamburgerCloseGeneralMenu = style({
   '@media': {
     [minWidth.lg]: {
       selectors: {
-        [`${navigationTrigger}[data-state="open"] &`]: {
+        [`${navigationTriggerGeneralMenu}[data-state="open"] &`]: {
           display: 'block',
         },
       },
