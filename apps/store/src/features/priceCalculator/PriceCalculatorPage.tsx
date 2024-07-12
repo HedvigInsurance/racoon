@@ -7,7 +7,7 @@ import { ProductPageDebugDialog } from '@/components/ProductPage/ProductPageDebu
 import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { getApolloClient } from '@/services/apollo/app-router/rscClient'
 import { type RoutingLocale } from '@/utils/l10n/types'
-import { SE_PET_DOG_NEW } from './priceTemplates/SE_PET_DOG_NEW'
+import { SE_PET_DOG_V2 } from './priceTemplates/SE_PET_DOG_V2'
 import { PurchaseFormNew } from './PurchaseFormNew'
 
 type Props = {
@@ -50,7 +50,7 @@ async function PriceCalculatorProviders({ locale, children }: PriceCalculatorPro
     apolloClient,
     productName,
   })
-  const priceTemplate = SE_PET_DOG_NEW
+  const priceTemplate = SE_PET_DOG_V2
   return (
     <ProductDataProvider productData={productData}>
       <ProductPageDataProvider productPageData={{} as any} priceTemplate={priceTemplate}>
