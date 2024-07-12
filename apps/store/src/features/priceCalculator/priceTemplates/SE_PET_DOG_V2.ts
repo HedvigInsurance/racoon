@@ -1,10 +1,7 @@
 import {
-  emailField,
   LAYOUT,
-  livingSpaceField,
-  postalCodeField,
   ssnSeSection,
-  streetAddressField,
+  yourAddressSectionWithLivingSpaceV2,
 } from '@/services/PriceCalculator/formFragments'
 import type { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { setI18nNamespace, tKey } from '@/utils/i18n'
@@ -18,6 +15,7 @@ export const SE_PET_DOG_V2: Template = {
     {
       id: 'your-dog',
       title: { key: tKey('SECTION_TITLE_YOUR_DOG') },
+      subtitle: { key: tKey('SECTION_SUBTITLE_YOUR_DOG') },
       submitLabel: { key: tKey('SUBMIT_LABEL_PROCEED') },
       items: [
         {
@@ -54,7 +52,6 @@ export const SE_PET_DOG_V2: Template = {
         {
           field: {
             type: 'radio',
-            stacking: 'horizontal',
             name: 'gender',
             label: { key: tKey('FIELD_GENDER_LABEL') },
             options: [
@@ -91,14 +88,11 @@ export const SE_PET_DOG_V2: Template = {
           },
           layout: LAYOUT.FULL_WIDTH,
         },
-        { field: streetAddressField, layout: LAYOUT.FULL_WIDTH },
-        { field: postalCodeField, layout: LAYOUT.HALF_WIDTH },
-        { field: livingSpaceField, layout: LAYOUT.HALF_WIDTH },
-        { field: emailField, layout: LAYOUT.FULL_WIDTH },
       ],
       preview: {
         fieldName: 'name',
       },
     },
+    yourAddressSectionWithLivingSpaceV2,
   ],
 }
