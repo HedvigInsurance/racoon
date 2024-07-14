@@ -87,8 +87,8 @@
     "zod": "3.23.8"
   },
   "devDependencies": {
-    "@babel/core": "7.24.7",
-    "@babel/preset-env": "7.24.7",
+    "@babel/core": "7.24.8",
+    "@babel/preset-env": "7.24.8",
     "@babel/preset-react": "7.24.7",
     "@babel/preset-typescript": "7.24.7",
     "@datadog/datadog-ci": "2.39.0",
