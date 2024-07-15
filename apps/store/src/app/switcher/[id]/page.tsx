@@ -1,4 +1,4 @@
-import { getApolloClient } from '@/services/apollo/app-router/rscClient'
+import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
 import {
   SwitcherCaseDocument,
   type SwitcherCaseQuery,
@@ -15,7 +15,8 @@ type Props = {
 
 const DEFAULT_LOCALE: RoutingLocale = locales['sv-SE'].routingLocale
 
-const apolloClient = getApolloClient({ locale: DEFAULT_LOCALE })
+const { getApolloClient } = setupApolloClient({ locale: DEFAULT_LOCALE })
+const apolloClient = getApolloClient()
 
 export default async function InsuranceSwitchExpirationDate({ params }: Props) {
   const {

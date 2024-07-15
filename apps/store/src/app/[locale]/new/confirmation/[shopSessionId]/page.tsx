@@ -4,7 +4,7 @@ import { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage
 import { fetchMemberPartnerData } from '@/components/ConfirmationPage/fetchMemberPartnerData'
 import { SuccessAnimation } from '@/components/ConfirmationPage/SuccessAnimation/SuccessAnimation'
 import { fetchSwitchingData } from '@/components/ConfirmationPage/SwitchingAssistantSection/fetchSwitchingData'
-import { getApolloClient } from '@/services/apollo/app-router/rscClient'
+import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
 import { setupShopSession } from '@/services/shopSession/app-router/ShopSession.utils'
 import type { ConfirmationStory } from '@/services/storyblok/storyblok'
 import { getStoryBySlug } from '@/services/storyblok/storyblok'
@@ -17,7 +17,8 @@ type Props = { params: Params }
 export default async function Page({ params }: Props) {
   const confirmationStory = await fetchConfirmationStory(params.locale)
 
-  const apolloClient = getApolloClient({ locale: params.locale, cookies: cookies() })
+  const { getApolloClient } = setupApolloClient({ locale: params.locale, cookies: cookies() })
+  const apolloClient = getApolloClient()
   const shopSessionService = setupShopSession(apolloClient)
   const [shopSession, switchingData, memberPartnerData] = await Promise.all([
     shopSessionService.fetchById(params.shopSessionId),

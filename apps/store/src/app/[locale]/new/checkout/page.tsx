@@ -1,7 +1,8 @@
-import { getApolloClient } from '@/services/apollo/app-router/rscClient'
+import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
 import { setupShopSession } from '@/services/shopSession/app-router/ShopSession.utils'
 import type { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
+import { CheckoutPage } from './CheckoutPage'
 
 type Params = { locale: RoutingLocale }
 
@@ -15,8 +16,8 @@ export default async function Page({ params }: Props) {
     },
   } as const
 
-  const apolloClient = getApolloClient({ locale: params.locale })
-  const shopSessionService = setupShopSession(apolloClient)
+  const { getApolloClient } = setupApolloClient({ locale: params.locale })
+  const shopSessionService = setupShopSession(getApolloClient())
   const shopSession = await shopSessionService.fetch()
 
   if (!shopSession) {
@@ -35,8 +36,7 @@ export default async function Page({ params }: Props) {
     return fallbackRedirect
   }
 
-  console.log(shopSession)
-  return null
+  return <CheckoutPage />
 }
 
 // Make sure this route always gets generated using dynamic rendering.

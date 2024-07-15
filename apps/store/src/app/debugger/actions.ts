@@ -2,7 +2,7 @@
 
 import type { ApolloClient } from '@apollo/client'
 import { redirect } from 'next/navigation'
-import { getApolloClient } from '@/services/apollo/app-router/rscClient'
+import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
 import type {
   CartEntryAddMutation,
   CartEntryAddMutationVariables,
@@ -48,7 +48,8 @@ export const createCustomerSession = async (
       }
     }
 
-    const apolloClient = getApolloClient({ locale: DEFAULT_LOCALE })
+    const { getApolloClient } = setupApolloClient({ locale: DEFAULT_LOCALE })
+    const apolloClient = getApolloClient()
     const shopSessionService = setupShopSession(apolloClient)
     const shopSession = await shopSessionService.create({ countryCode: DEFAULT_COUNTRY_CODE })
     console.log(`Created new ShopSession: ${shopSession.id}`)

@@ -1,0 +1,63 @@
+'use client'
+
+import { datadogLogs } from '@datadog/browser-logs'
+import { AnimatePresence, motion } from 'framer-motion'
+import { ProductItem } from '@/components/ProductItemV2/ProductItem'
+import { ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
+import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+import { type ProductOfferFragment, useCartEntryRemoveMutation } from '@/services/graphql/generated'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { useTracking } from '@/services/Tracking/useTracking'
+import { layout, shopBreakdowSection } from './CheckoutPage.css'
+
+export function CheckoutPage() {
+  const { shopSession } = useShopSession()
+  const tracking = useTracking()
+  const { showError } = useAppErrorHandleContext()
+
+  // TODO: add a custom merge function that makes sure to update the cache accordingly
+  const [removeCartItem] = useCartEntryRemoveMutation({
+    awaitRefetchQueries: true,
+    onError(error) {
+      datadogLogs.logger.error('Checkout Page | Failed to remove offer from cart', {
+        shopSessionId: shopSession?.id,
+        // TODO: find a way to add offer.id here as well. Maybe from error.extraInfo
+        error,
+      })
+      showError(error)
+    },
+  })
+
+  const handleRemoveCartItem = (offer: ProductOfferFragment) => () => {
+    tracking.reportDeleteFromCart(offer)
+    if (shopSession) {
+      removeCartItem({ variables: { shopSessionId: shopSession.id, offerId: offer.id } })
+    }
+  }
+
+  if (shopSession == null || shopSession.cart.entries.length === 0) {
+    return null
+  }
+
+  return (
+    <main className={layout}>
+      <section className={shopBreakdowSection}>
+        <ShopBreakdown>
+          <AnimatePresence initial={false}>
+            {shopSession.cart.entries.map((offer) => (
+              <motion.div
+                key={offer.id}
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ opacity: 0, height: 0 }}
+                style={{ position: 'relative' }}
+              >
+                <ProductItem selectedOffer={offer} onDelete={handleRemoveCartItem(offer)} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </ShopBreakdown>
+      </section>
+    </main>
+  )
+}

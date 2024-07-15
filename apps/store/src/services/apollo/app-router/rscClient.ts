@@ -15,17 +15,10 @@ type Params = {
   cookies?: NextCookiesStore
 }
 
-export const getApolloClient = ({
-  locale = toRoutingLocale(FALLBACK_LOCALE),
-  cookies,
-}: Params): ApolloClient<any> => {
-  return makeGetApolloClient(locale, cookies)()
-}
-
 // Passing 'locale' and 'cookies' through closure is ugly, but it works.
 // When `registerApolloClient` stops complaining about passed params, we should switch to it
-function makeGetApolloClient(locale: RoutingLocale, cookies?: NextCookiesStore) {
-  const { getClient } = registerApolloClient(() => {
+export function setupApolloClient({ locale = toRoutingLocale(FALLBACK_LOCALE), cookies }: Params) {
+  const { getClient: getApolloClient, PreloadQuery } = registerApolloClient(() => {
     return new ApolloClient({
       name: 'Web:Racoon:Store',
 
@@ -44,7 +37,7 @@ function makeGetApolloClient(locale: RoutingLocale, cookies?: NextCookiesStore) 
     })
   })
 
-  return getClient
+  return { getApolloClient, PreloadQuery }
 }
 
 // Set to true to debug GQL requests in server components

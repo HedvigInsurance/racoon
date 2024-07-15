@@ -2,7 +2,7 @@
 
 import { initTranslations } from '@/app/i18n'
 import type { FormStateWithErrors, Message } from '@/app/types/formStateTypes'
-import { getApolloClient } from '@/services/apollo/app-router/rscClient'
+import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
 import {
   SwitcherCaseCompleteDocument,
   type SwitcherCaseCompleteMutation,
@@ -32,7 +32,8 @@ export const submitSwitchConfirmation = async (
     }
   }
 
-  const apolloClient = getApolloClient({ locale: DEFAULT_LOCALE })
+  const { getApolloClient } = setupApolloClient({ locale: DEFAULT_LOCALE })
+  const apolloClient = getApolloClient()
 
   const messages: Array<Message> = []
   const errors: Array<string> = []
