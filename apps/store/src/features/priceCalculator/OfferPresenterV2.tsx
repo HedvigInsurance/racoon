@@ -4,10 +4,8 @@ import { useInView } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import { memo, type MouseEventHandler, type ReactNode, useEffect, useMemo, useRef } from 'react'
-import { sprinkles } from 'ui/src/theme/sprinkles.css'
-import { Button, PlusIcon, Text, yStack } from 'ui'
+import { Button, Text, yStack } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
-import { ComparisonTableModal } from '@/components/ProductPage/PurchaseForm/ComparisonTableModal'
 import { DiscountTooltip } from '@/components/ProductPage/PurchaseForm/DiscountTooltip/DiscountTooltip'
 import { useDiscountTooltipProps } from '@/components/ProductPage/PurchaseForm/DiscountTooltip/useDiscountTooltipProps'
 import { usePriceIntent } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
@@ -153,12 +151,6 @@ export const OfferPresenterV2 = memo(() => {
             selectedOffer={selectedTier}
             onValueChange={handleOfferChange}
           />
-          <ComparisonTableModal tiers={tiers} selectedTierId={selectedTier.id}>
-            <Button variant="secondary" size="small" className={sprinkles({ alignSelf: 'center' })}>
-              {t('COMPARE_COVERAGE_BUTTON')}
-              <PlusIcon />
-            </Button>
-          </ComparisonTableModal>
         </div>
       )}
 
@@ -185,4 +177,4 @@ export const OfferPresenterV2 = memo(() => {
     </div>
   )
 })
-OfferPresenterV2.displayName = 'OfferPresenterNew'
+OfferPresenterV2.displayName = 'OfferPresenterV2'
