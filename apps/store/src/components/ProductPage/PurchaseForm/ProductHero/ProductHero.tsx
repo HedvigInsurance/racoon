@@ -1,15 +1,16 @@
+'use client'
 import { Heading, Text, yStack } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { pillow } from './ProductHero.css'
 
 type Props = {
   name: string
-  description: string
-  pillow: { src: string; alt?: string }
+  description?: string
+  pillow: { src: string; alt?: string | null }
   size: 'small' | 'large'
 }
 
-export const ProductHero = (props: Props) => {
+export function ProductHero(props: Props) {
   return (
     <div className={yStack({ gap: 'md' })}>
       <Pillow
@@ -23,9 +24,11 @@ export const ProductHero = (props: Props) => {
         <Heading as="h1" variant="standard.24" align="center">
           {props.name}
         </Heading>
-        <Text size="xs" color="textSecondary" align="center">
-          {props.description}
-        </Text>
+        {props.description && (
+          <Text size="xs" color="textSecondary" align="center">
+            {props.description}
+          </Text>
+        )}
       </div>
     </div>
   )
