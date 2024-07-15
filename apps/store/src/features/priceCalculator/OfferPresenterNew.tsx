@@ -3,25 +3,14 @@ import { datadogRum } from '@datadog/browser-rum'
 import { useInView } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
-import {
-  memo,
-  type MouseEventHandler,
-  type ReactNode,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import { memo, type MouseEventHandler, type ReactNode, useEffect, useMemo, useRef } from 'react'
 import { Button, PlusIcon, Text, yStack } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
 import { ComparisonTableModal } from '@/components/ProductPage/PurchaseForm/ComparisonTableModal'
 import { DeductibleSelector } from '@/components/ProductPage/PurchaseForm/DeductibleSelector'
 import { DiscountTooltip } from '@/components/ProductPage/PurchaseForm/DiscountTooltip/DiscountTooltip'
 import { useDiscountTooltipProps } from '@/components/ProductPage/PurchaseForm/DiscountTooltip/useDiscountTooltipProps'
-import {
-  usePriceIntent,
-  useResetPriceIntent,
-} from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
+import { usePriceIntent } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { ProductTierSelector } from '@/components/ProductPage/PurchaseForm/ProductTierSelector'
 import { useSelectedOffer } from '@/components/ProductPage/PurchaseForm/useSelectedOffer'
 import { useTiersAndDeductibles } from '@/components/ProductPage/PurchaseForm/useTiersAndDeductibles'
@@ -39,17 +28,7 @@ import { PageLink } from '@/utils/PageLink'
 import { useAddToCart } from '@/utils/useAddToCart'
 import { useFormatter } from '@/utils/useFormatter'
 
-enum AddToCartRedirect {
-  Cart = 'Cart',
-  Checkout = 'Checkout',
-}
-
-type Props = {
-  onClickEdit: () => void
-  notifyProductAdded: (item: ProductOfferFragment) => void
-}
-
-export const OfferPresenterNew = memo(({ onClickEdit, notifyProductAdded }: Props) => {
+export const OfferPresenterNew = memo(() => {
   const { shopSession } = useShopSession()
   if (shopSession == null) {
     throw new Error('shopSession must be defined')
@@ -61,7 +40,6 @@ export const OfferPresenterNew = memo(({ onClickEdit, notifyProductAdded }: Prop
   }
   const { t } = useTranslation('purchase-form')
   const formatter = useFormatter()
-  const [addToCartRedirect, setAddToCartRedirect] = useState<AddToCartRedirect | null>(null)
   const locale = useRoutingLocale()
   const { tiers, deductibles } = useTiersAndDeductibles({
     offers: priceIntent.offers,
@@ -152,54 +130,39 @@ export const OfferPresenterNew = memo(({ onClickEdit, notifyProductAdded }: Prop
     [priceIntent.offers],
   )
 
-  const resetPriceIntent = useResetPriceIntent()
-  const handleAddToCart: MouseEventHandler = (event) => {
-    event.preventDefault()
-    datadogRum.addAction(`PriceCalculator AddToCart Cart`)
-    setAddToCartRedirect(AddToCartRedirect.Cart)
-    onSuccessRef.current = (addedProductOffer: ProductOfferFragment) => {
-      notifyProductAdded(addedProductOffer)
-      resetPriceIntent()
-    }
-    addToCart(selectedOffer.id)
-  }
-
   const router = useRouter()
-  const [isNavigatingToCheckout, setNavigatingToCheckout] = useState(false)
-  const handleGoToCheckout: MouseEventHandler = (event) => {
+  const handleAddToCart: MouseEventHandler = async (event) => {
     event.preventDefault()
-    datadogRum.addAction(`PriceCalculator AddToCart Checkout`)
-    setAddToCartRedirect(AddToCartRedirect.Checkout)
-    onSuccessRef.current = () => {
-      setNavigatingToCheckout(true)
-      const nextUrl = PageLink.checkout({ locale, expandCart: true }).toRelative()
-      tracking.reportBeginCheckout(shopSession.cart)
-      router.push(nextUrl)
-    }
-    addToCart(selectedOffer.id)
+    await addToCart(selectedOffer.id)
+    router.push(PageLink.cart({ locale }).pathname)
   }
 
   return (
-    <div className={yStack({})} ref={offerRef}>
+    <div className={yStack({})}>
       <div className={yStack({ alignItems: 'center' })}>
         {discountTooltip}
         <Text as="p" align="center" size="xl">
           {displayPrice}
         </Text>
-        <Button variant="secondary" size="small" onClick={onClickEdit}>
-          <Text align="center" size="xs" color="textSecondary" as="span">
-            {t('PRESENT_OFFER_EDIT_BUTTON')}
-          </Text>
-        </Button>
       </div>
 
       {tiers.length > 1 && (
-        <ProductTierSelector
-          defaultOpen={true}
-          offers={tiers}
-          selectedOffer={selectedTier}
-          onValueChange={handleOfferChange}
-        />
+        <div className={yStack({ alignItems: 'center' })}>
+          <ProductTierSelector
+            defaultOpen={true}
+            offers={tiers}
+            selectedOffer={selectedTier}
+            onValueChange={handleOfferChange}
+          />
+          <ComparisonTableModal tiers={tiers} selectedTierId={selectedTier.id}>
+            <Button variant="ghost" size="small">
+              <SpaceFlex space={0.5} align="center">
+                <PlusIcon />
+                {t('COMPARE_COVERAGE_BUTTON')}
+              </SpaceFlex>
+            </Button>
+          </ComparisonTableModal>
+        </div>
       )}
 
       {deductibles.length > 1 && (
@@ -216,38 +179,11 @@ export const OfferPresenterNew = memo(({ onClickEdit, notifyProductAdded }: Prop
       <Button
         variant="primary"
         onClick={handleAddToCart}
-        loading={loadingAddToCart && addToCartRedirect === AddToCartRedirect.Cart}
-        disabled={loadingAddToCart}
+        loading={loadingAddToCart}
         fullWidth={true}
       >
         {t('ADD_TO_CART_BUTTON_LABEL')}
       </Button>
-
-      <Button
-        variant="primary-alt"
-        onClick={handleGoToCheckout}
-        loading={
-          isNavigatingToCheckout ||
-          (loadingAddToCart && addToCartRedirect === AddToCartRedirect.Checkout)
-        }
-        disabled={loadingAddToCart}
-        fullWidth={true}
-      >
-        {t('QUICK_CHECKOUT_BUTTON_LABEL')}
-      </Button>
-
-      {tiers.length > 1 && (
-        <SpaceFlex direction="vertical" align="center">
-          <ComparisonTableModal tiers={tiers} selectedTierId={selectedTier.id}>
-            <Button variant="ghost" size="small">
-              <SpaceFlex space={0.5} align="center">
-                <PlusIcon />
-                {t('COMPARE_COVERAGE_BUTTON')}
-              </SpaceFlex>
-            </Button>
-          </ComparisonTableModal>
-        </SpaceFlex>
-      )}
     </div>
   )
 })
