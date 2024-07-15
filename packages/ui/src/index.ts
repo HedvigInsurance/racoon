@@ -15,6 +15,7 @@ export * from './components/ThemeProvider'
 
 export { responsiveVariants } from './utils/responsiveVariants/responsiveVariants'
 export * from './utils/responsiveVariants/repsonsiveVariants.types'
+export { visuallyHidden } from './utils/visuallyHidden.css'
 
 export * from './icons'
 

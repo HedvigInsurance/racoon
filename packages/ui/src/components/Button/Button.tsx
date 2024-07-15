@@ -19,6 +19,7 @@ type BaseProps = {
   variant?: 'primary' | 'primary-alt' | 'secondary' | 'secondary-alt' | 'ghost' | 'ghost-alt'
   size?: ButtonSize
   fullWidth?: boolean
+  hiddenText?: ReactNode
   loading?: boolean
   Icon?: ReactNode
 }
@@ -41,6 +42,7 @@ export const Button: PolymorphicComponent = forwardRef(function Button<
     size = 'large',
     className,
     fullWidth,
+    hiddenText,
     loading,
     disabled,
     target,
@@ -80,6 +82,7 @@ export const Button: PolymorphicComponent = forwardRef(function Button<
       <span className={childrenWrapper} style={{ opacity: loading ? 0 : 1 }}>
         {Icon} {children && <span className={textWrapper}>{children}</span>}
       </span>
+      {hiddenText && hiddenText}
       {loading && (
         <span className={centered}>
           <DotPulse />
