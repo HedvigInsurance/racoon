@@ -1,6 +1,6 @@
 'use client'
 
-import { useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { useAtomValue, useSetAtom } from 'jotai'
 import { type FormEventHandler, type ReactNode } from 'react'
 import { Heading, yStack } from 'ui'
 import { SSN_SE_SECTION_ID, SsnSeSection } from '@/components/PriceCalculator/SsnSeSection'
@@ -13,7 +13,9 @@ import {
 } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { usePriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
 import { FormGridNew } from '@/features/priceCalculator/FormGridNew'
+import { priceCalculatorStepAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
 import { SectionPreview } from '@/features/priceCalculator/SectionPreview'
+import { useConfirmPriceIntent } from '@/features/priceCalculator/useConfirmPriceIntent'
 import {
   deserializeField,
   prefillData,
@@ -28,19 +30,16 @@ import {
 import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { useShopSessionId } from '@/services/shopSession/ShopSessionContext'
 
-type InsuranceDataFormProps = {
-  onSubmitSuccessAndReadyToConfirm: () => void
-}
-
-export function InsuranceDataForm(props: InsuranceDataFormProps) {
+export function InsuranceDataForm() {
   const shopSessionId = useShopSessionId()
   if (shopSessionId == null) {
     throw new Error('shopSession must be ready')
   }
   const form = useAtomValue(priceCalculatorFormAtom)
-  const [activeSectionId] = useAtom(activeFormSectionIdAtom)
+  const activeSectionId = useAtomValue(activeFormSectionIdAtom)
+  const step = useAtomValue(priceCalculatorStepAtom)
   const sections = form.sections.map((section) => {
-    if (section.id !== activeSectionId) {
+    if (step !== 'fillForm' || section.id !== activeSectionId) {
       // No preview needed for sections that are not yet touched
       if (section.state === 'initial') {
         return null
@@ -54,12 +53,7 @@ export function InsuranceDataForm(props: InsuranceDataFormProps) {
       sectionBody = <SsnSeSection />
     } else {
       sectionStyle = { marginTop: '3.75rem' }
-      sectionBody = (
-        <InsuranceDataSection
-          section={section}
-          onSubmitSuccessAndReadyToConfirm={props.onSubmitSuccessAndReadyToConfirm}
-        />
-      )
+      sectionBody = <InsuranceDataSection section={section} />
     }
     return (
       <div key={section.id} className={yStack({ gap: 'xl' })} style={sectionStyle}>
@@ -89,15 +83,24 @@ function SectionTitle({ section }: { section: FormSection }) {
 
 type InsuranceDataSectionProps = {
   section: FormSection
-} & InsuranceDataFormProps
+}
 
 // TODO
 // - do we need autofocus on first field?
-function InsuranceDataSection({
-  section,
-  onSubmitSuccessAndReadyToConfirm,
-}: InsuranceDataSectionProps) {
+function InsuranceDataSection({ section }: InsuranceDataSectionProps) {
   const priceTemplate = usePriceTemplate()
+  const setStep = useSetAtom(priceCalculatorStepAtom)
+
+  const confirmPriceIntent = useConfirmPriceIntent({
+    onSuccess() {
+      setStep('viewOffers')
+    },
+    onError(message) {
+      console.log('TODO: show error', message)
+      window.alert('Something went wrong. TODO: show error')
+    },
+  })
+
   const submitPriceCalculatorSection = useHandleSubmitPriceCalculatorSection({
     onSuccess({ priceIntent, customer }) {
       const form = setupForm({
@@ -106,7 +109,8 @@ function InsuranceDataSection({
         template: priceTemplate,
       })
       if (isFormReadyToConfirm({ form, priceIntent, customer })) {
-        onSubmitSuccessAndReadyToConfirm()
+        setStep('calculatingPrice')
+        confirmPriceIntent()
         return
       }
 

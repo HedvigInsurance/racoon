@@ -5,6 +5,7 @@ import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import { Button, Text, tokens, xStack } from 'ui'
 import { useTranslateFieldLabel } from '@/components/PriceCalculator/useTranslateFieldLabel'
 import { activeFormSectionIdAtom } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
+import { priceCalculatorStepAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
 import { type FormSection } from '@/services/PriceCalculator/PriceCalculator.types'
 import { useAutoFormat } from '@/utils/useFormatter'
 
@@ -12,13 +13,16 @@ export function SectionPreview({ section }: { section: FormSection }) {
   const autoFormat = useAutoFormat()
   const translateLabel = useTranslateFieldLabel()
   const { t } = useTranslation('purchase-form')
-  const setActiveSectionId = useSetAtom(activeFormSectionIdAtom)
   const previewText = useMemo(() => {
-    if (!section.preview?.fieldName) return
+    if (!section.preview?.fieldName) {
+      return
+    }
 
     const item = section.items.find((item) => item.field.name === section.preview?.fieldName)
     const value = item?.field.value
-    if (value === undefined) return
+    if (value === undefined) {
+      return
+    }
 
     if (section.preview.label) {
       return translateLabel(section.preview.label, parseTranslateOptions(value))
@@ -27,7 +31,12 @@ export function SectionPreview({ section }: { section: FormSection }) {
     return autoFormat(section.preview.fieldName, value)
   }, [section, autoFormat, translateLabel])
 
-  const handleEdit = () => setActiveSectionId(section.id)
+  const setActiveSectionId = useSetAtom(activeFormSectionIdAtom)
+  const setStep = useSetAtom(priceCalculatorStepAtom)
+  const handleEdit = () => {
+    setActiveSectionId(section.id)
+    setStep('fillForm')
+  }
 
   return (
     <div
@@ -42,7 +51,7 @@ export function SectionPreview({ section }: { section: FormSection }) {
       </div>
       <Button
         variant="secondary"
-        size={'small'}
+        size="medium"
         style={{ backgroundColor: tokens.colors.white }}
         onClick={handleEdit}
       >
