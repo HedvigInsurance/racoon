@@ -34,7 +34,18 @@ export const Large = {
   render: Template,
   args: {
     label: 'Name',
-    variant: 'large',
+    size: 'large',
+    defaultValue: 'John Sculley',
+    type: 'text',
+    inputMode: 'text',
+  },
+}
+
+export const medium = {
+  render: Template,
+  args: {
+    label: 'Name',
+    size: 'medium',
     defaultValue: 'John Sculley',
     type: 'text',
     inputMode: 'text',
@@ -45,7 +56,7 @@ export const Small = {
   render: Template,
   args: {
     label: 'Address',
-    variant: 'small',
+    size: 'small',
     defaultValue: '786 Franklin Ave.',
     type: 'text',
     inputMode: 'text',
@@ -60,7 +71,7 @@ export const Number = {
     pattern: '[0-9]*',
     autoComplete: 'off',
     label: 'Weight',
-    variant: 'large',
+    size: 'medium',
     defaultValue: '150',
     suffix: 'kg',
   },

@@ -23,7 +23,7 @@ type BaseInputProps = Omit<
 
 export type Props = BaseInputProps & {
   label: string
-  size?: 'small' | 'large'
+  size?: 'small' | 'medium' | 'large'
   suffix?: string
   warning?: boolean
   message?: string
