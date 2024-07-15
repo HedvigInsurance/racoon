@@ -4,6 +4,7 @@ import { useInView } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import { memo, type MouseEventHandler, type ReactNode, useEffect, useMemo, useRef } from 'react'
+import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import { Button, PlusIcon, Text, yStack } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
 import { ComparisonTableModal } from '@/components/ProductPage/PurchaseForm/ComparisonTableModal'
@@ -13,7 +14,6 @@ import { usePriceIntent } from '@/components/ProductPage/PurchaseForm/priceInten
 import { useSelectedOffer } from '@/components/ProductPage/PurchaseForm/useSelectedOffer'
 import { useTiersAndDeductibles } from '@/components/ProductPage/PurchaseForm/useTiersAndDeductibles'
 import { useCartEntryToReplace } from '@/components/ProductPage/useCartEntryToReplace'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { BUNDLE_DISCOUNT_ELIGIBLE_PRODUCT_IDS } from '@/features/bundleDiscount/bundleDiscount'
 import { BundleDiscountOfferTooltip } from '@/features/bundleDiscount/BundleDiscountOfferTooltip'
 import { DeductibleSelectorV2 } from '@/features/priceCalculator/DeductibleSelectorV2'
@@ -154,11 +154,9 @@ export const OfferPresenterV2 = memo(() => {
             onValueChange={handleOfferChange}
           />
           <ComparisonTableModal tiers={tiers} selectedTierId={selectedTier.id}>
-            <Button variant="ghost" size="small">
-              <SpaceFlex space={0.5} align="center">
-                <PlusIcon />
-                {t('COMPARE_COVERAGE_BUTTON')}
-              </SpaceFlex>
+            <Button variant="secondary" size="small" className={sprinkles({ alignSelf: 'center' })}>
+              {t('COMPARE_COVERAGE_BUTTON')}
+              <PlusIcon />
             </Button>
           </ComparisonTableModal>
         </div>

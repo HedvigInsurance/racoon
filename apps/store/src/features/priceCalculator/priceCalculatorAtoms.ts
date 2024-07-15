@@ -1,6 +1,7 @@
 // State atoms exclusive for new Price Calculator. Reusable atoms are located in priceIntentAtoms
 
-import { atom } from 'jotai'
+import { type SbBlokData } from '@storyblok/react'
+import { atom, useAtomValue } from 'jotai'
 import { atomFamily } from 'jotai/utils'
 import { currentPriceIntentIdAtom } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { getAtomValueOrThrow } from '@/utils/jotaiUtils'
@@ -25,3 +26,13 @@ export const priceCalculatorStepAtom = atom(
     set(priceCalculatorStepAtomFamily(priceIntentId), value)
   },
 )
+
+export const priceCalculatorDeductibleInfoAtom = atom<Array<SbBlokData> | null>(null)
+
+export const usePriceCalculatorDeductibleInfo = () => {
+  const value = useAtomValue(priceCalculatorDeductibleInfoAtom)
+  if (value == null) {
+    throw new Error('Expected to have price calculator deductible info')
+  }
+  return value
+}
