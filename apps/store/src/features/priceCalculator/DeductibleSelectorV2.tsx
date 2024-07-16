@@ -1,12 +1,12 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import Link from 'next/link'
+import { StoryblokComponent } from '@storyblok/react'
 import { useTranslation } from 'next-i18next'
 import { useMemo } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
-import { Heading, Text } from 'ui'
+import { Button, Heading, PlusIcon, Text } from 'ui'
+import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
+import { usePriceCalculatorDeductibleInfo } from '@/features/priceCalculator/priceCalculatorAtoms'
 import type { Money, ProductOfferFragment } from '@/services/graphql/generated'
-import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
-import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
 import * as CardRadioGroup from './CardRadioGroup'
 
@@ -24,8 +24,6 @@ type Props = {
 }
 
 export function DeductibleSelectorV2({ offers, selectedOffer, onValueChange }: Props) {
-  const { t } = useTranslation('purchase-form')
-  const locale = useRoutingLocale()
   const formatter = useFormatter()
 
   const deductibleLevels = useMemo(() => {
@@ -64,16 +62,30 @@ export function DeductibleSelectorV2({ offers, selectedOffer, onValueChange }: P
           </CardRadioGroup.Item>
         ))}
       </CardRadioGroup.Root>
-      <Link
-        href={PageLink.deductibleHelp({ locale })}
-        style={{ alignSelf: 'center' }}
-        target="_blank"
-        rel="noopener"
-      >
-        <Text as="span" size="xs">
-          {t('DEDUCTIBLE_SELECTOR_FOOTER_LINK')}
-        </Text>
-      </Link>
+      <DeductibleInfo />
     </>
+  )
+}
+
+function DeductibleInfo() {
+  const { t } = useTranslation('purchase-form')
+  const deductibleInfo = usePriceCalculatorDeductibleInfo()
+  return (
+    <FullscreenDialog.Root>
+      <FullscreenDialog.Trigger asChild={true}>
+        <Button variant="secondary" size="small" className={sprinkles({ alignSelf: 'center' })}>
+          {t('DEDUCTIBLE_SELECTOR_FOOTER_LINK')}
+          <PlusIcon size="1rem" />
+        </Button>
+      </FullscreenDialog.Trigger>
+      <FullscreenDialog.Modal>
+        <FullscreenDialog.Title className={sprinkles({ display: 'none' })}>
+          {t('DEDUCTIBLE_SELECTOR_FOOTER_LINK')}
+        </FullscreenDialog.Title>
+        {deductibleInfo.map((blok) => (
+          <StoryblokComponent key={blok._uid} blok={blok} />
+        ))}
+      </FullscreenDialog.Modal>
+    </FullscreenDialog.Root>
   )
 }

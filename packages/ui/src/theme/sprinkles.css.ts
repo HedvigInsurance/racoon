@@ -31,10 +31,11 @@ const mediaQueriesSubset = createSubset(mediaQueries, ['sm', 'md', 'lg'])
 const unresponsiveProperties = defineProperties({
   properties: {
     alignItems: ['flex-start', 'center', 'flex-end', 'stretch'],
+    alignSelf: ['center'],
     justifyContent: ['center', 'space-between'],
     textAlign: ['left', 'center', 'right'],
     color: textColors,
-    display: ['flex', 'grid'],
+    display: ['flex', 'grid', 'none'],
     flexDirection: ['row', 'column'],
     flexGrow: [1],
     marginTop: spaceTokensSubset,

@@ -155,6 +155,7 @@ export type WidgetFlowStory = ISbStoryData<{
 // TODO: Refine type
 export type PriceCalculatorPageStory = ISbStoryData<{
   component: 'priceCalculatorPage'
+  deductibleInfo?: Array<SbBlokData>
 }>
 
 type HeaderProps = SbBaseBlockProps<{
