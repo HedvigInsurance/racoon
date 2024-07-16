@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import type { ReactNode } from 'react'
+import type { ReactNode, CSSProperties } from 'react'
 import Balancer from 'react-wrap-balancer'
 import type { FontSizeProps } from '../../theme'
 import { type Sprinkles, sprinkles } from '../../theme/sprinkles.css'
@@ -9,6 +9,7 @@ type TextStyleProps = {
   align?: Sprinkles['textAlign']
   balance?: boolean
   className?: string
+  style?: CSSProperties
   color?: Sprinkles['color']
   size?: FontSizeProps
   strikethrough?: boolean

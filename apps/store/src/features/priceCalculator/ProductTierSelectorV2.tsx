@@ -1,6 +1,8 @@
 import { useTranslation } from 'next-i18next'
+import { useRef } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
-import { Heading, Text } from 'ui'
+import { Button, Heading, PlusIcon, Text, tokens, xStack, yStack } from 'ui'
+import { ComparisonTableModal } from '@/components/ProductPage/PurchaseForm/ComparisonTableModal'
 import type { ProductOfferFragment } from '@/services/graphql/generated'
 import { useFormatter } from '@/utils/useFormatter'
 import * as CardRadioGroup from './CardRadioGroup'
@@ -11,29 +13,72 @@ type Props = {
   onValueChange: (offerId: string) => void
 }
 
-// TODO:
-// - show compare btn
-// - default tier label (always middle?)
 export function ProductTierSelectorV2({ offers, selectedOffer, onValueChange }: Props) {
   const getVariantDescription = useGetVariantDescription()
   const formatter = useFormatter()
+  const { t } = useTranslation('purchase-form')
+
+  const tierDialogRef = useRef<{ open: () => void }>(null)
+
+  const openTierDialog = () => tierDialogRef.current?.open()
 
   return (
-    <CardRadioGroup.Root value={selectedOffer.id} onValueChange={onValueChange}>
-      {offers.map((offer) => (
-        <CardRadioGroup.Item key={offer.id} value={offer.id}>
-          <Heading as="h2" variant="standard.24">
-            {offer.variant.displayNameSubtype || offer.variant.displayName}
-          </Heading>
-          <Heading as="h3" variant="standard.24" color="textSecondary">
-            {formatter.monthlyPrice(offer.cost.net)}
-          </Heading>
-          <Text color="textSecondary" className={sprinkles({ marginTop: 'md' })}>
-            {getVariantDescription(offer.variant.typeOfContract)}
-          </Text>
-        </CardRadioGroup.Item>
-      ))}
-    </CardRadioGroup.Root>
+    <>
+      <CardRadioGroup.Root value={selectedOffer.id} onValueChange={onValueChange}>
+        {offers.map((offer) => (
+          <CardRadioGroup.Item key={offer.id} value={offer.id} style={{ padding: tokens.space.lg }}>
+            <div className={yStack({ gap: 'none' })}>
+              <div className={xStack({ justifyContent: 'space-between' })}>
+                <Heading as="h2" variant="standard.24">
+                  {offer.variant.displayNameSubtype || offer.variant.displayName}
+                </Heading>
+                {isDefaultTier(offer) && <DefaultTierLabel />}
+              </div>
+              <Heading as="h3" variant="standard.24" color="textSecondary">
+                {formatter.monthlyPrice(offer.cost.net)}
+              </Heading>
+            </div>
+            <Text color="textSecondary" className={sprinkles({ marginTop: 'md' })}>
+              {getVariantDescription(offer.variant.typeOfContract)}
+            </Text>
+            {offer.id === selectedOffer.id && (
+              <Button variant="secondary" fullWidth={true} size="medium" onClick={openTierDialog}>
+                {t('COMPARE_TIERS_LABEL')}
+              </Button>
+            )}
+          </CardRadioGroup.Item>
+        ))}
+      </CardRadioGroup.Root>
+
+      <ComparisonTableModal
+        controlRef={tierDialogRef}
+        tiers={offers}
+        selectedTierId={selectedOffer.id}
+      >
+        <Button variant="secondary" size="small" className={sprinkles({ alignSelf: 'center' })}>
+          {t('COMPARE_COVERAGE_BUTTON')}
+          <PlusIcon />
+        </Button>
+      </ComparisonTableModal>
+    </>
+  )
+}
+
+function DefaultTierLabel() {
+  const { t } = useTranslation('purchase-form')
+  return (
+    <Text
+      as="div"
+      size="xs"
+      style={{
+        paddingInline: tokens.space.xs,
+        paddingBlock: tokens.space.xxs,
+        borderRadius: tokens.radius.xxs,
+        backgroundColor: tokens.colors.pink300,
+      }}
+    >
+      {t('DEFAULT_TIER_LABEL')}
+    </Text>
   )
 }
 
@@ -63,4 +108,9 @@ const useGetVariantDescription = () => {
         return t('SE_CAT_PREMIUM_DESCRIPTION')
     }
   }
+}
+
+// Not configurable for now, but we can make it so if needed
+const isDefaultTier = (offer: ProductOfferFragment) => {
+  return offer.variant.typeOfContract.endsWith('_STANDARD')
 }

@@ -47,7 +47,7 @@ const unresponsiveProperties = defineProperties({
     paddingLeft: spaceTokensSubset,
     paddingRight: spaceTokensSubset,
     padding: spaceTokensSubset,
-    gap: spaceTokensSubset,
+    gap: { ...spaceTokensSubset, none: 0 },
   },
   shorthands: {
     mx: ['marginLeft', 'marginRight'],

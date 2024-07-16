@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { useMemo, type ReactNode } from 'react'
+import { useMemo, type ReactNode, type RefObject, useImperativeHandle, useState } from 'react'
+import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import { Button, Dialog } from 'ui'
 import {
   TableMarkers,
@@ -20,19 +21,28 @@ type Props = {
   tiers: Array<ProductOfferFragment>
   selectedTierId: string
   children: ReactNode
+  controlRef?: RefObject<{ open: () => void }>
 }
 
-export const ComparisonTableModal = ({ tiers, selectedTierId, children }: Props) => {
+export const ComparisonTableModal = ({ tiers, selectedTierId, controlRef, children }: Props) => {
   const { t } = useTranslation('purchase-form')
   const variant = useResponsiveVariant('md')
   const { table, selectedTierDisplayName } = useTableData(tiers, selectedTierId)
 
+  const [isOpen, setOpen] = useState(false)
+  useImperativeHandle(controlRef, () => ({
+    open() {
+      setOpen(true)
+    },
+  }))
+
   const handleOpenChange = (open: boolean) => {
+    setOpen(open)
     sendDialogEvent(open ? 'open' : 'close')
   }
 
   return (
-    <FullscreenDialog.Root onOpenChange={handleOpenChange}>
+    <FullscreenDialog.Root open={isOpen} onOpenChange={handleOpenChange}>
       <Dialog.Trigger asChild>{children}</Dialog.Trigger>
 
       <FullscreenDialog.Modal
@@ -46,6 +56,9 @@ export const ComparisonTableModal = ({ tiers, selectedTierId, children }: Props)
           </>
         }
       >
+        <FullscreenDialog.Title className={sprinkles({ display: 'none' })}>
+          {t('COMPARE_TIERS_LABEL')}
+        </FullscreenDialog.Title>
         <Grid>
           <GridLayout.Content align="center" width={{ md: '2/3', xxl: '1/2' }}>
             {variant === 'mobile' && (

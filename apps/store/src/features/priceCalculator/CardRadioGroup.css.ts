@@ -1,17 +1,26 @@
 import { style } from '@vanilla-extract/css'
-import { tokens } from 'ui'
+import { tokens, yStack } from 'ui'
 
-export const item = style({
-  borderRadius: tokens.radius.md,
-  backgroundColor: tokens.colors.opaque1,
-  padding: tokens.space.md,
-  selectors: {
-    '&[data-state=checked]': {
-      backgroundColor: tokens.colors.buttonPrimary,
-      vars: {
-        [tokens.colors.textPrimary]: tokens.colors.textNegative,
-        [tokens.colors.textSecondary]: tokens.colors.gray500,
+export const item = style([
+  yStack({ gap: 'sm' }),
+  {
+    borderRadius: tokens.radius.md,
+    backgroundColor: tokens.colors.opaque1,
+    padding: tokens.space.md,
+    cursor: 'pointer',
+
+    selectors: {
+      '&[data-state=checked]': {
+        backgroundColor: tokens.colors.buttonPrimary,
+        vars: {
+          [tokens.colors.textPrimary]: tokens.colors.textNegative,
+          [tokens.colors.textSecondary]: tokens.colors.gray500,
+        },
       },
     },
+    vars: {
+      [tokens.colors.buttonSecondary]: tokens.colors.grayTranslucentDark900,
+      [tokens.colors.buttonSecondaryHover]: tokens.colors.grayTranslucentDark800,
+    },
   },
-})
+])

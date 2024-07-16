@@ -14,8 +14,8 @@ export function Root({ children, className, ...forwardedProps }: RadioGroupProps
 
 export function Item({ children, className, value, ...forwardedProps }: RadioGroupItemProps) {
   return (
-    <RadioGroup.Item value={value} className={clsx(item, className)} {...forwardedProps}>
-      {children}
+    <RadioGroup.Item value={value} {...forwardedProps} asChild>
+      <div className={clsx(item, className)}>{children}</div>
     </RadioGroup.Item>
   )
 }
