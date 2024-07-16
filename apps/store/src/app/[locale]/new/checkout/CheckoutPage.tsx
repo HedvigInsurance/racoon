@@ -5,13 +5,18 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { ProductItem } from '@/components/ProductItemV2/ProductItem'
 import { ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
-import { type ProductOfferFragment, useCartEntryRemoveMutation } from '@/services/graphql/generated'
-import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import {
+  type ProductOfferFragment,
+  useCartEntryRemoveMutation,
+  useShopSessionSuspenseQuery,
+} from '@/services/graphql/generated'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { layout, shopBreakdowSection } from './CheckoutPage.css'
 
-export function CheckoutPage() {
-  const { shopSession } = useShopSession()
+type Props = { shopSessionId: string }
+
+export function CheckoutPage({ shopSessionId }: Props) {
+  const shopSession = useShopSession({ shopSessionId })
   const tracking = useTracking()
   const { showError } = useAppErrorHandleContext()
 
@@ -20,7 +25,7 @@ export function CheckoutPage() {
     awaitRefetchQueries: true,
     onError(error) {
       datadogLogs.logger.error('Checkout Page | Failed to remove offer from cart', {
-        shopSessionId: shopSession?.id,
+        shopSessionId: shopSession.id,
         // TODO: find a way to add offer.id here as well. Maybe from error.extraInfo
         error,
       })
@@ -30,13 +35,7 @@ export function CheckoutPage() {
 
   const handleRemoveCartItem = (offer: ProductOfferFragment) => () => {
     tracking.reportDeleteFromCart(offer)
-    if (shopSession) {
-      removeCartItem({ variables: { shopSessionId: shopSession.id, offerId: offer.id } })
-    }
-  }
-
-  if (shopSession == null || shopSession.cart.entries.length === 0) {
-    return null
+    removeCartItem({ variables: { shopSessionId: shopSession.id, offerId: offer.id } })
   }
 
   return (
@@ -60,4 +59,14 @@ export function CheckoutPage() {
       </section>
     </main>
   )
+}
+
+function useShopSession({ shopSessionId }: { shopSessionId: string }) {
+  // TODO: ideally we want to continue to use `useShopSession` from `ShopSessionContext` here but first we need
+  // to change it so it uses React Suspense.
+  const {
+    data: { shopSession },
+  } = useShopSessionSuspenseQuery({ variables: { shopSessionId } })
+
+  return shopSession
 }
