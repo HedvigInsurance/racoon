@@ -3,9 +3,13 @@ import { useTranslation } from 'next-i18next'
 import { startTransition, useMemo } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import { Button, Text, tokens, xStack } from 'ui'
+import { SSN_SE_SECTION_ID } from '@/components/PriceCalculator/SsnSeSection'
 import { useTranslateFieldLabel } from '@/components/PriceCalculator/useTranslateFieldLabel'
 import { activeFormSectionIdAtom } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
-import { priceCalculatorStepAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
+import {
+  priceCalculatorShowEditSsnWarningAtom,
+  priceCalculatorStepAtom,
+} from '@/features/priceCalculator/priceCalculatorAtoms'
 import { type FormSection } from '@/services/PriceCalculator/PriceCalculator.types'
 import { useAutoFormat } from '@/utils/useFormatter'
 
@@ -33,10 +37,15 @@ export function SectionPreview({ section }: { section: FormSection }) {
 
   const setActiveSectionId = useSetAtom(activeFormSectionIdAtom)
   const setStep = useSetAtom(priceCalculatorStepAtom)
+  const setShowEditSsnWarning = useSetAtom(priceCalculatorShowEditSsnWarningAtom)
   const handleEdit = () => {
     startTransition(() => {
-      setActiveSectionId(section.id)
-      setStep('fillForm')
+      if (section.id === SSN_SE_SECTION_ID) {
+        setShowEditSsnWarning(true)
+      } else {
+        setStep('fillForm')
+        setActiveSectionId(section.id)
+      }
     })
   }
 

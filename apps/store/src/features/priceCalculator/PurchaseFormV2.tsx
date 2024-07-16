@@ -15,7 +15,6 @@ import { priceCalculatorStepAtom } from '@/features/priceCalculator/priceCalcula
 import { InsuranceDataForm } from './InsuranceDataForm'
 
 // TODO:
-// - handle SSN change warning (put in atoms?)
 // - support preloaded priceIntentId
 // - handle errors
 // - proceed to cart

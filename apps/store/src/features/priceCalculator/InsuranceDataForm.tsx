@@ -12,6 +12,7 @@ import {
   priceCalculatorFormAtom,
 } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { usePriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
+import { EditSsnWarningContainer } from '@/features/priceCalculator/EditSsnWarningContainer'
 import { FormGridNew } from '@/features/priceCalculator/FormGridNew'
 import { priceCalculatorStepAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
 import { SectionPreview } from '@/features/priceCalculator/SectionPreview'
@@ -62,7 +63,12 @@ export function InsuranceDataForm() {
       </div>
     )
   })
-  return <div className={yStack({ gap: 'xs' })}>{sections}</div>
+  return (
+    <>
+      <div className={yStack({ gap: 'xs' })}>{sections}</div>
+      <EditSsnWarningContainer />
+    </>
+  )
 }
 
 function SectionTitle({ section }: { section: FormSection }) {
@@ -147,7 +153,6 @@ function InsuranceDataSection({ section }: InsuranceDataSectionProps) {
   )
 }
 
-// TODO: don't update customer data in generic section
 type IsFormReadyToConfirmParams = {
   form: Form
   customer?: CustomerData | null

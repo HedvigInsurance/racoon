@@ -36,3 +36,5 @@ export const usePriceCalculatorDeductibleInfo = () => {
   }
   return value
 }
+
+export const priceCalculatorShowEditSsnWarningAtom = atom(false)
