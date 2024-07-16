@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { tokens, minWidth } from 'ui'
+import { tokens, minWidth, xStack } from 'ui'
 import { focusableStyles } from '../Header.css'
 
 export const navigationLink = style([
@@ -24,11 +24,9 @@ export const navigationLink = style([
 
 export const productNavigationLinkCard = style([
   focusableStyles,
+  xStack({ gap: 'xs', alignItems: 'center' }),
   {
     position: 'relative',
-    display: 'flex',
-    columnGap: tokens.space.sm,
-    placeItems: 'center',
     flexShrink: 0,
     paddingBlock: tokens.space.xs,
     paddingInline: tokens.space.xxs,

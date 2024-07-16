@@ -1,26 +1,21 @@
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
-import { assignInlineVars } from '@vanilla-extract/dynamic'
 import clsx from 'clsx'
 import { PlusIcon, MinusIcon } from 'ui'
 import { HamburgerCloseIcon, HamburgerOpenIcon } from '../HamburgerIcon/HamburgerIcon'
 import {
   navigationTrigger,
-  navigationTriggerSubMenu,
-  navigationTriggerLinkPadding,
   navigationTriggerHiddenLabel,
   hamburgerOpenGeneralMenu,
   hamburgerCloseGeneralMenu,
   closeIcon,
   openIcon,
+  navigationTriggerGeneralMenu,
 } from './NavigationTrigger.css'
 
 export const NavigationTriggerGeneralMenu = ({ children }: { children: string }) => {
   return (
     <NavigationMenuPrimitive.Trigger
-      className={clsx(navigationTrigger, navigationTriggerSubMenu)}
-      style={assignInlineVars({
-        [navigationTriggerLinkPadding]: '0',
-      })}
+      className={clsx(navigationTrigger, navigationTriggerGeneralMenu)}
       // Prevent mouse events from closing the menu
       onPointerEnter={(event) => event.preventDefault()}
       onPointerLeave={(event) => event.preventDefault()}

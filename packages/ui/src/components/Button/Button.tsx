@@ -3,7 +3,14 @@
 import clsx from 'clsx'
 import { forwardRef, type ReactNode } from 'react'
 import type { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../TypeUtils'
-import { baseButton, buttonVariant, centered, childrenWrapper, fullWidthStyles } from './Button.css'
+import {
+  baseButton,
+  buttonVariant,
+  centered,
+  childrenWrapper,
+  fullWidthStyles,
+  textWrapper,
+} from './Button.css'
 import type { ButtonSize } from './Button.helpers'
 import { getButtonSizeStyles } from './Button.helpers'
 import { DotPulse } from './DotPulse'
@@ -71,7 +78,7 @@ export const Button: PolymorphicComponent = forwardRef(function Button<
       {...props}
     >
       <span className={childrenWrapper} style={{ opacity: loading ? 0 : 1 }}>
-        {Icon} {children}
+        {Icon} {children && <span className={textWrapper}>{children}</span>}
       </span>
       {loading && (
         <span className={centered}>

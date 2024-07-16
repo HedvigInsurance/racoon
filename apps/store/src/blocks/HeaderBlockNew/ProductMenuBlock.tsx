@@ -2,7 +2,6 @@
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { storyblokEditable } from '@storyblok/react'
 import clsx from 'clsx'
-import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import type { ButtonBlockProps } from '@/blocks/ButtonBlock'
@@ -91,7 +90,9 @@ export const ProductMenuBlock = ({ blok, variant }: ProductMenuBlockProps) => {
         {...storyblokEditable(blok)}
       >
         <NavigationTrigger>
-          <Link href={PageLink.store({ locale })}>{blok.name}</Link>
+          <ButtonNextLink size="medium" variant="secondary" href={PageLink.store({ locale })}>
+            {blok.name}
+          </ButtonNextLink>
         </NavigationTrigger>
         <NavigationContent>{content}</NavigationContent>
       </NavigationMenuPrimitive.Item>

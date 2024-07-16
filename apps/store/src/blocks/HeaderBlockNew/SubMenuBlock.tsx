@@ -1,9 +1,9 @@
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { storyblokEditable } from '@storyblok/react'
 import clsx from 'clsx'
-import Link from 'next/link'
 import { MinusIcon, PlusIcon } from 'ui'
 import { MenuItemBlock, type MenuItemBlockProps } from '@/blocks/HeaderBlockNew/MenuItemBlock'
+import { ButtonNextLink } from '@/components/ButtonNextLink'
 import {
   navigationItem,
   navigationItemSubMenu,
@@ -52,7 +52,13 @@ export const SubMenuBlock = ({ blok, variant }: SubMenuBlockProps) => {
         </NavigationTrigger>
       ) : (
         <NavigationTrigger>
-          <Link href={getLinkFieldURL(firstMenuItem.link, firstMenuItem.name)}>{blok.name}</Link>
+          <ButtonNextLink
+            size="medium"
+            variant="secondary"
+            href={getLinkFieldURL(firstMenuItem.link, firstMenuItem.name)}
+          >
+            {blok.name}
+          </ButtonNextLink>
         </NavigationTrigger>
       )}
       <NavigationContent>
