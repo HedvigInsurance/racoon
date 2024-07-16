@@ -48,9 +48,20 @@ export const productNavigationLinkCard = style([
 export const secondaryNavigationLink = style([
   focusableStyles,
   {
+    display: 'block',
     alignSelf: 'center',
     textDecoration: 'none',
     whiteSpace: 'nowrap',
+    width: '100%',
+    paddingBlock: tokens.space.xxs,
+    paddingLeft: tokens.space.lg,
+    paddingRight: tokens.space.md,
+
+    '@media': {
+      [minWidth.lg]: {
+        padding: tokens.space.sm,
+      },
+    },
   },
 ])
 

@@ -167,14 +167,10 @@ export const navigationItemGeneralMenu = style({
 })
 
 export const navigationSecondaryItem = style({
-  paddingBlock: tokens.space.xxs,
-  paddingLeft: tokens.space.lg,
-  paddingRight: tokens.space.md,
   color: tokens.colors.textSecondaryOnGray,
 
   '@media': {
     [minWidth.lg]: {
-      padding: `${tokens.space.sm} ${tokens.space.sm}`,
       borderRadius: tokens.radius.md,
       color: tokens.colors.textPrimary,
 
