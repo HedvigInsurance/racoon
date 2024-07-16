@@ -3,7 +3,6 @@ import { registerApolloClient } from '@apollo/experimental-nextjs-app-support'
 import { FALLBACK_LOCALE } from '@/utils/l10n/locales'
 import { toRoutingLocale } from '@/utils/l10n/localeUtils'
 import type { RoutingLocale } from '@/utils/l10n/types'
-import type { NextCookiesStore } from '@/utils/types'
 import { errorLink } from '../errorLink'
 import { httpLink } from '../httpLink'
 import { userErrorLink } from '../userErrorLink'
@@ -12,12 +11,11 @@ import { serverStaticHeadersLink } from './serverStaticHeadersLink'
 
 type Params = {
   locale?: RoutingLocale
-  cookies?: NextCookiesStore
 }
 
 // Passing 'locale' and 'cookies' through closure is ugly, but it works.
 // When `registerApolloClient` stops complaining about passed params, we should switch to it
-export function setupApolloClient({ locale = toRoutingLocale(FALLBACK_LOCALE), cookies }: Params) {
+export function setupApolloClient({ locale = toRoutingLocale(FALLBACK_LOCALE) }: Params) {
   const { getClient: getApolloClient, PreloadQuery } = registerApolloClient(() => {
     return new ApolloClient({
       name: 'Web:Racoon:Store',
@@ -28,7 +26,7 @@ export function setupApolloClient({ locale = toRoutingLocale(FALLBACK_LOCALE), c
         userErrorLink,
         errorLink,
         serverStaticHeadersLink({ locale }),
-        ...(cookies ? [serverDynamicHeadersLink({ cookies })] : []),
+        serverDynamicHeadersLink(),
         requestLogger,
         httpLink,
       ]),

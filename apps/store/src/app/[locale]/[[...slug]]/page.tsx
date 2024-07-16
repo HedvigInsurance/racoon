@@ -161,7 +161,7 @@ export async function generateStaticParams({
 export const dynamicParams = true
 // Make sure we don't accidentally use dynamic rendering
 // https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#dynamic
-export const dynamic = 'error'
+export const dynamic = 'force-static'
 
 // Cache speeds up development mode by deduplicating requests between metadata and main renderer
 const fetchStory = cache(async (locale: RoutingLocale, slug = '') => {

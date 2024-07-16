@@ -1,6 +1,6 @@
 import type { ApolloClient } from '@apollo/client'
+import { cookies } from 'next/headers'
 import { AppRouterCookiePersister } from '@/services/persister/app-router/AppRouterCookiePersister'
-import type { NextCookiesStore } from '@/utils/types'
 import { SHOP_SESSION_COOKIE_NAME } from '../ShopSession.constants'
 import { ShopSessionService } from '../ShopSessionService'
 
@@ -11,6 +11,6 @@ export const setupShopSession = (apolloClient: ApolloClient<unknown>) => {
   )
 }
 
-export const getShopSessionId = (cookies: NextCookiesStore) => {
-  return cookies.get(SHOP_SESSION_COOKIE_NAME)?.value
+export const getShopSessionId = () => {
+  return cookies().get(SHOP_SESSION_COOKIE_NAME)?.value
 }
