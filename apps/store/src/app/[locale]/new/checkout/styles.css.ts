@@ -13,10 +13,11 @@ export const layout = style({
   },
 })
 
-export const shopBreakdowSection = style({
+export const content = style({
   gridColumn: '1 / -1',
   columnGap: tokens.space.md,
   paddingBottom: tokens.space[10],
+  paddingTop: tokens.space.xxl,
   '@media': {
     [minWidth.sm]: {
       gridColumn: '3 / span 8',
