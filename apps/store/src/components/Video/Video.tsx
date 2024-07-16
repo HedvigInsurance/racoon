@@ -3,7 +3,7 @@ import { assignInlineVars } from '@vanilla-extract/dynamic'
 import clsx from 'clsx'
 import { useInView } from 'framer-motion'
 import React, { useCallback, useEffect, useId, useRef, useState } from 'react'
-import { PlayIcon, PauseIcon, Button } from 'ui'
+import { PlayIcon, PauseIcon, Button, visuallyHidden } from 'ui'
 import { useDialogEvent } from '@/utils/dialogEvent'
 import {
   controlButton,
@@ -251,12 +251,13 @@ export const Video = ({
               variant="secondary"
               size="small"
               aria-labelledby={playButtonId}
-            >
-              {state === State.Paused ? <PlayIcon size="1rem" /> : <PauseIcon size="1rem" />}
-              <span id={playButtonId} hidden>
-                {state === State.Paused ? 'Play' : 'Pause'}
-              </span>
-            </Button>
+              hiddenText={
+                <span id={playButtonId} className={visuallyHidden}>
+                  {state === State.Paused ? 'Play' : 'Pause'}
+                </span>
+              }
+              Icon={state === State.Paused ? <PlayIcon size="1rem" /> : <PauseIcon size="1rem" />}
+            />
             {!hideSoundControl && (
               <Button
                 className={controlButton}
@@ -264,16 +265,19 @@ export const Video = ({
                 variant="secondary"
                 size="small"
                 aria-labelledby={muteButtonId}
-              >
-                <div className={soundBars}>
-                  <span className={soundBar} />
-                  <span className={soundBar} />
-                  <span className={soundBar} />
-                </div>
-                <span id={muteButtonId} hidden>
-                  {muted ? 'Mute' : 'Unmute'}
-                </span>
-              </Button>
+                hiddenText={
+                  <span id={muteButtonId} className={visuallyHidden}>
+                    {muted ? 'Mute' : 'Unmute'}
+                  </span>
+                }
+                Icon={
+                  <div className={soundBars}>
+                    <span className={soundBar} />
+                    <span className={soundBar} />
+                    <span className={soundBar} />
+                  </div>
+                }
+              />
             )}
           </div>
         </div>
