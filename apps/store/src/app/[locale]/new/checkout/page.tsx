@@ -3,7 +3,8 @@ import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
 import { setupShopSession } from '@/services/shopSession/app-router/ShopSession.utils'
 import type { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
-import { CheckoutPage } from './CheckoutPage'
+import { CartEntriesSection } from './CartEntriesSection'
+import { layout } from './styles.css'
 
 type Params = { locale: RoutingLocale }
 
@@ -32,10 +33,11 @@ export default async function Page({ params }: Props) {
     return redirect(fallbackRedirectUrl)
   }
 
-  return <CheckoutPage shopSessionId={shopSession.id} />
+  return (
+    <main className={layout}>
+      <CartEntriesSection shopSessionId={shopSession.id} />
+    </main>
+  )
 }
 
-// Make sure this route always gets generated using dynamic rendering.
-// This provides a simple migration path between SSR pages into it's app router based counterpart.
-// https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#options
 export const dynamic = 'force-dynamic'

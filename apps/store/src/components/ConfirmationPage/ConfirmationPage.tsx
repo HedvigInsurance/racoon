@@ -1,4 +1,5 @@
 'use client'
+
 import styled from '@emotion/styled'
 import { Heading, mq, Space, theme } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
@@ -10,48 +11,51 @@ import { SasEurobonusSectionContainer } from '@/features/sas/SasEurobonusSection
 import { Features } from '@/utils/Features'
 import type { ConfirmationPageProps } from './ConfirmationPage.types'
 import { StaticContent } from './StaticContent'
+import { SuccessAnimation } from './SuccessAnimation/SuccessAnimation'
 import { SwitchingAssistantSection } from './SwitchingAssistantSection/SwitchingAssistantSection'
 
 export const ConfirmationPage = (props: ConfirmationPageProps) => {
   const cartTotalCost = props.cart.cost.gross.amount
 
   return (
-    <Wrapper>
-      <Space y={4}>
-        <GridLayout.Root>
-          <GridLayout.Content width="1/3" align="center">
-            <Space y={4}>
-              <Space y={{ base: 3, lg: 4.5 }}>
-                <Heading as="h1" variant="standard.24" align="center">
-                  {props.story.content.title}
-                </Heading>
+    <SuccessAnimation>
+      <Wrapper>
+        <Space y={4}>
+          <GridLayout.Root>
+            <GridLayout.Content width="1/3" align="center">
+              <Space y={4}>
+                <Space y={{ base: 3, lg: 4.5 }}>
+                  <Heading as="h1" variant="standard.24" align="center">
+                    {props.story.content.title}
+                  </Heading>
 
-                <ShopBreakdown>
-                  {props.carTrialContract && (
-                    <ProductItemContractContainerCar contract={props.carTrialContract} />
-                  )}
-                  {props.cart.entries.map((item) => (
-                    <ProductItemContainer key={item.id} offer={item} />
-                  ))}
-                  {/* We might have some cases of confirmation pages for shop sessions that doesn't include any products into the cart: car dealership */}
-                  {cartTotalCost > 0 && <TotalAmountContainer cart={props.cart} />}
-                </ShopBreakdown>
+                  <ShopBreakdown>
+                    {props.carTrialContract && (
+                      <ProductItemContractContainerCar contract={props.carTrialContract} />
+                    )}
+                    {props.cart.entries.map((item) => (
+                      <ProductItemContainer key={item.id} offer={item} />
+                    ))}
+                    {/* We might have some cases of confirmation pages for shop sessions that doesn't include any products into the cart: car dealership */}
+                    {cartTotalCost > 0 && <TotalAmountContainer cart={props.cart} />}
+                  </ShopBreakdown>
+                </Space>
+
+                {props.switching && <SwitchingAssistantSection {...props.switching} />}
+
+                {Features.enabled('SAS_PARTNERSHIP') && props.memberPartnerData?.sas?.eligible && (
+                  <SasEurobonusSectionContainer
+                    initialValue={props.memberPartnerData.sas.eurobonusNumber ?? ''}
+                  />
+                )}
               </Space>
+            </GridLayout.Content>
+          </GridLayout.Root>
 
-              {props.switching && <SwitchingAssistantSection {...props.switching} />}
-
-              {Features.enabled('SAS_PARTNERSHIP') && props.memberPartnerData?.sas?.eligible && (
-                <SasEurobonusSectionContainer
-                  initialValue={props.memberPartnerData.sas.eurobonusNumber ?? ''}
-                />
-              )}
-            </Space>
-          </GridLayout.Content>
-        </GridLayout.Root>
-
-        <StaticContent content={props.story.content} />
-      </Space>
-    </Wrapper>
+          <StaticContent content={props.story.content} />
+        </Space>
+      </Wrapper>
+    </SuccessAnimation>
   )
 }
 

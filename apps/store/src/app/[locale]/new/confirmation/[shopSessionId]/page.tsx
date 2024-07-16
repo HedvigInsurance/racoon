@@ -1,7 +1,6 @@
 import { type Metadata } from 'next'
 import { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage'
 import { fetchMemberPartnerData } from '@/components/ConfirmationPage/fetchMemberPartnerData'
-import { SuccessAnimation } from '@/components/ConfirmationPage/SuccessAnimation/SuccessAnimation'
 import { fetchSwitchingData } from '@/components/ConfirmationPage/SwitchingAssistantSection/fetchSwitchingData'
 import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
 import { setupShopSession } from '@/services/shopSession/app-router/ShopSession.utils'
@@ -26,14 +25,12 @@ export default async function Page({ params }: Props) {
   ])
 
   return (
-    <SuccessAnimation>
-      <ConfirmationPage
-        story={confirmationStory}
-        cart={shopSession.cart}
-        switching={switchingData ?? undefined}
-        memberPartnerData={memberPartnerData}
-      />
-    </SuccessAnimation>
+    <ConfirmationPage
+      story={confirmationStory}
+      cart={shopSession.cart}
+      switching={switchingData ?? undefined}
+      memberPartnerData={memberPartnerData}
+    />
   )
 }
 
@@ -48,8 +45,3 @@ function fetchConfirmationStory(locale: RoutingLocale): Promise<ConfirmationStor
 
   return getStoryBySlug<ConfirmationStory>(CONFIRMATION_PAGE_SLUG, { locale })
 }
-
-// Make sure this route always gets generated using dynamic rendering.
-// This provides a simple migration path between SSR pages into it's app router based counterpart.
-// https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#options
-export const dynamic = 'force-dynamic'

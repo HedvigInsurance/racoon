@@ -74,7 +74,8 @@ type ProductHeroContainerProps = {
 }
 
 async function ProductHeroContainer({ locale, productName }: ProductHeroContainerProps) {
-  const apolloClient = getApolloClient({ locale })
+  const { getApolloClient } = setupApolloClient({ locale })
+  const apolloClient = getApolloClient()
   const productData = await fetchProductData({
     apolloClient,
     productName,
