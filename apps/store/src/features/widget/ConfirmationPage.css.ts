@@ -3,7 +3,6 @@ import { minWidth, tokens } from 'ui'
 
 export const wrapper = style({
   display: 'flex',
-  backgroundColor: 'red',
   flexDirection: 'column',
   gap: tokens.space.xxxl,
   paddingBottom: tokens.space.lg,
