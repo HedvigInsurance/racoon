@@ -36,8 +36,12 @@ type Props = {
 // NOTE: Since we're using catch-all routing segment, we have to do our own dispatching
 // to specific components based on story content type
 // Any type-specific data fetching should happen in child components
-export default async function CmsPage(props: Props) {
-  const story = await fetchStory(props.params.locale, props.params.slug?.join('/'))
+export default async function CmsPage({ params }: Props) {
+  if (!isRoutingLocale(params.locale)) {
+    console.log(`Invalid locale: ${params.locale}`)
+    throw notFound()
+  }
+  const story = await fetchStory(params.locale, params.slug?.join('/'))
 
   const { hideBreadcrumbs, hideChat } = story.content
   let chat: ReactNode = null
@@ -47,24 +51,24 @@ export default async function CmsPage(props: Props) {
   if (isProductStory(story)) {
     return (
       <>
-        <ProductCmsPage locale={props.params.locale} story={story} />
-        <StoryBreadcrumbs params={props.params} currentPageTitle={story.name} />
+        <ProductCmsPage locale={params.locale} story={story} />
+        <StoryBreadcrumbs params={params} currentPageTitle={story.name} />
         {chat}
       </>
     )
   } else if (isPriceCalculatorPageStory(story)) {
     return (
       <>
-        <PriceCalculatorCmsPage locale={props.params.locale} story={story} />
-        <StoryBreadcrumbs params={props.params} currentPageTitle={story.name} />
+        <PriceCalculatorCmsPage locale={params.locale} story={story} />
+        <StoryBreadcrumbs params={params} currentPageTitle={story.name} />
       </>
     )
   }
 
   return (
     <>
-      <ContentCmsPage locale={props.params.locale} story={story} />
-      {!hideBreadcrumbs && <StoryBreadcrumbs params={props.params} currentPageTitle={story.name} />}
+      <ContentCmsPage locale={params.locale} story={story} />
+      {!hideBreadcrumbs && <StoryBreadcrumbs params={params} currentPageTitle={story.name} />}
       {chat}
       <DefaultDebugDialog />
     </>
@@ -72,6 +76,9 @@ export default async function CmsPage(props: Props) {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  if (!isRoutingLocale(params.locale)) {
+    throw notFound()
+  }
   const story = await fetchStory(params.locale, params.slug?.join('/'))
   const pageUrl = normalizePageUrl([params.locale, ...(params.slug ?? [])].join('/'))
 
