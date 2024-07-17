@@ -259,14 +259,13 @@ export const navigationSecondaryList = style({
 export const navigationProductList = style([
   yStack({ gap: 'xs' }),
   {
-    marginBottom: tokens.space.lg,
+    marginBottom: tokens.space.md,
     fontSize: tokens.fontSizes.md,
     color: tokens.colors.textPrimary,
 
     '@media': {
       [minWidth.lg]: {
         minWidth: '16rem',
-        marginBottom: tokens.space.md,
       },
     },
   },
