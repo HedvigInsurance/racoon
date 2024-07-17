@@ -4,6 +4,7 @@ import { storyblokEditable } from '@storyblok/react'
 import clsx from 'clsx'
 import { useTranslation } from 'next-i18next'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
+import { Button } from 'ui'
 import type { ButtonBlockProps } from '@/blocks/ButtonBlock'
 import { MenuItemBlock, type MenuItemBlockProps } from '@/blocks/HeaderBlockNew/MenuItemBlock'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
@@ -90,9 +91,9 @@ export const ProductMenuBlock = ({ blok, variant }: ProductMenuBlockProps) => {
         {...storyblokEditable(blok)}
       >
         <NavigationTrigger>
-          <ButtonNextLink size="medium" variant="secondary" href={PageLink.store({ locale })}>
+          <Button size="medium" variant="secondary">
             {blok.name}
-          </ButtonNextLink>
+          </Button>
         </NavigationTrigger>
         <NavigationContent>{content}</NavigationContent>
       </NavigationMenuPrimitive.Item>
