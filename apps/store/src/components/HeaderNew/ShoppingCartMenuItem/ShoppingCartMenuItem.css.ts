@@ -9,6 +9,8 @@ export const wrapper = style({
 
 export const cartLink = style({
   display: 'inline-block',
+  borderRadius: tokens.radius.sm,
+
   ':focus-visible': {
     outline: `2px solid ${tokens.colors.gray900}`,
   },
