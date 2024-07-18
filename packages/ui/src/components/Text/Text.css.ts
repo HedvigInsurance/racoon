@@ -4,6 +4,12 @@ export const textBase = style({
   whiteSpace: 'pre-wrap',
 })
 
+export const textSingleLine = style({
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+})
+
 export const textFallbackColor = style({
   color: 'inherit',
 })

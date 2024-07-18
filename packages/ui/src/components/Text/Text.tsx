@@ -3,7 +3,13 @@ import type { ReactNode, CSSProperties } from 'react'
 import Balancer from 'react-wrap-balancer'
 import type { FontSizeProps } from '../../theme'
 import { type Sprinkles, sprinkles } from '../../theme/sprinkles.css'
-import { textBase, textFallbackColor, textStrikethrough, textUppercase } from './Text.css'
+import {
+  textBase,
+  textFallbackColor,
+  textSingleLine,
+  textStrikethrough,
+  textUppercase,
+} from './Text.css'
 
 type TextStyleProps = {
   align?: Sprinkles['textAlign']
@@ -11,6 +17,7 @@ type TextStyleProps = {
   className?: string
   style?: CSSProperties
   color?: Sprinkles['color']
+  singleLine?: boolean
   size?: FontSizeProps
   strikethrough?: boolean
   uppercase?: boolean
@@ -25,6 +32,7 @@ export type TextProps = {
 export const getTextStyles = ({
   align,
   color,
+  singleLine,
   size = 'md',
   strikethrough,
   uppercase,
@@ -34,7 +42,8 @@ export const getTextStyles = ({
     textBase,
     // Fix for vanilla-extract bug where base styles color override the color prop
     color ? undefined : textFallbackColor,
-    sprinkles({ color: color, textAlign: align, fontSize: size }),
+    sprinkles({ color, textAlign: align, fontSize: size }),
+    singleLine && textSingleLine,
     strikethrough && textStrikethrough,
     uppercase && textUppercase,
     className,
@@ -47,6 +56,7 @@ export const Text = ({
   align,
   color,
   children,
+  singleLine,
   size,
   strikethrough,
   uppercase,
@@ -56,7 +66,15 @@ export const Text = ({
   const Component = as ?? 'p'
   return (
     <Component
-      className={getTextStyles({ align, color, size, strikethrough, uppercase, className })}
+      className={getTextStyles({
+        align,
+        color,
+        singleLine,
+        size,
+        strikethrough,
+        uppercase,
+        className,
+      })}
       {...rest}
     >
       {!balance ? children : <Balancer>{children}</Balancer>}
