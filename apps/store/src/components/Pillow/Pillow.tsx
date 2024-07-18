@@ -54,7 +54,7 @@ const getSize = (size: PillowProps['size']) => {
     case 'xxsmall':
       return { width: '1.75rem', height: '1.75rem' }
     case 'xsmall':
-      return { width: '2.25rem', height: '2.25rem' }
+      return { width: '2rem', height: '2rem' }
     case 'small':
       return { width: '3rem', height: '3rem' }
     case 'medium':

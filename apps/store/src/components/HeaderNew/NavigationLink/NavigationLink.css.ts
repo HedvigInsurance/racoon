@@ -28,18 +28,28 @@ export const productNavigationLinkCard = style([
   {
     position: 'relative',
     flexShrink: 0,
+    // Make the pillow align with the rest of the menu items
+    // but make the clickable area and background bigger
+    marginInline: `calc(-1 * ${tokens.space.xxs})`,
     paddingBlock: tokens.space.xs,
-    paddingInline: tokens.space.xxs,
+    paddingInline: tokens.space.xs,
+    borderRadius: tokens.radius.sm,
 
     '@media': {
-      [minWidth.lg]: {
-        columnGap: tokens.space.xs,
-        paddingInline: tokens.space.xs,
-        borderRadius: tokens.radius.sm,
-
+      '(hover: none)': {
+        ':active': {
+          backgroundColor: tokens.colors.grayTranslucent100,
+        },
+      },
+      '(hover: hover)': {
         ':hover': {
           backgroundColor: tokens.colors.grayTranslucent100,
         },
+      },
+      [minWidth.lg]: {
+        columnGap: tokens.space.xs,
+        marginInline: 0,
+        paddingInline: tokens.space.xs,
       },
     },
   },
