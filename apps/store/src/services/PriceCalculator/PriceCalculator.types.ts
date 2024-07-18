@@ -29,6 +29,10 @@ export type Template = {
   sections: Array<TemplateSection>
 }
 
+export type TemplateV2 = Template & {
+  productName: string
+}
+
 export type TemplateSection = {
   id: string
   title: Label

@@ -152,9 +152,9 @@ export type WidgetFlowStory = ISbStoryData<{
   showBackButton?: boolean
 }>
 
-// TODO: Refine type
 export type PriceCalculatorPageStory = ISbStoryData<{
   component: 'priceCalculatorPage'
+  priceTemplate: string
   deductibleInfo?: Array<SbBlokData>
 }>
 

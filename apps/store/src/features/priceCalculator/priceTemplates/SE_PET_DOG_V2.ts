@@ -3,13 +3,14 @@ import {
   ssnSeSection,
   yourAddressSectionWithLivingSpaceV2,
 } from '@/services/PriceCalculator/formFragments'
-import type { Template } from '@/services/PriceCalculator/PriceCalculator.types'
+import type { TemplateV2 } from '@/services/PriceCalculator/PriceCalculator.types'
 import { setI18nNamespace, tKey } from '@/utils/i18n'
 
 setI18nNamespace('purchase-form')
 
-export const SE_PET_DOG_V2: Template = {
+const template: TemplateV2 = {
   name: 'SE_PET_DOG_V2',
+  productName: 'SE_PET_DOG',
   sections: [
     ssnSeSection,
     {
@@ -96,3 +97,4 @@ export const SE_PET_DOG_V2: Template = {
     yourAddressSectionWithLivingSpaceV2,
   ],
 }
+export default template
