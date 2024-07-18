@@ -9,9 +9,9 @@ import { ProductHero } from '@/components/ProductPage/PurchaseForm/ProductHero/P
 import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { PriceCalculatorStoryProvider } from '@/features/priceCalculator/PriceCalculatorStoryProvider'
 import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
+import { type TemplateV2 } from '@/services/PriceCalculator/PriceCalculator.types'
 import type { PriceCalculatorPageStory } from '@/services/storyblok/storyblok'
 import { type RoutingLocale } from '@/utils/l10n/types'
-import { SE_PET_DOG_V2 } from './priceTemplates/SE_PET_DOG_V2'
 import { PurchaseFormV2 } from './PurchaseFormV2'
 
 type Props = {
@@ -23,12 +23,11 @@ type Props = {
 const HEADER_HEIGHT = '80px'
 
 // TODO: Convert to vanilla styles when we get to look and feel part
-export function PriceCalculatorCmsPage({ locale, story }: Props) {
+export async function PriceCalculatorCmsPage({ locale, story }: Props) {
   if (process.env.FEATURE_PRICE_CALCULATOR_PAGE !== 'true') {
     throw notFound()
   }
-  // TODO: Take from story
-  const productName = 'SE_PET_DOG'
+  const { productName } = await getPriceTemplate(story.content.priceTemplate)
   return (
     <div
       className={xStack({ gap: 'none' })}
@@ -66,6 +65,19 @@ export function PriceCalculatorCmsPage({ locale, story }: Props) {
       </div>
     </div>
   )
+}
+
+const getPriceTemplate = async (templateName: string): Promise<TemplateV2> => {
+  try {
+    const module_ = await import(`./priceTemplates/${templateName}`)
+    const template = module_.default
+    if (typeof template !== 'object' || template.name !== templateName) {
+      throw new Error(`Template module does not export expected default value`)
+    }
+    return template as TemplateV2
+  } catch (err) {
+    throw new Error(`Failed to find priceTemplate ${templateName}`, { cause: err })
+  }
 }
 
 type ProductHeroContainerProps = {
@@ -107,8 +119,7 @@ async function PriceCalculatorProviders({
     apolloClient,
     productName,
   })
-  // TODO: Auto-detect (better) or take from story
-  const priceTemplate = SE_PET_DOG_V2
+  const priceTemplate = await getPriceTemplate(story.content.priceTemplate)
   // TODO: Decide where to take it from or refactor to stop needing it
   const productPageData = {} as any
   return (

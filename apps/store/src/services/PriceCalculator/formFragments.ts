@@ -44,7 +44,7 @@ export const currentInsuranceField: InputField = {
   label: { key: tKey('FIELD_EXTERNAL_INSURER_LABEL') },
 }
 
-const householdSizeField: InputField = {
+export const householdSizeField: InputField = {
   type: 'stepper',
   name: 'numberCoInsured',
   label: { key: tKey('FIELD_HOUSEHOLD_SIZE_LABEL') },
