@@ -81,7 +81,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
         ...translations,
         ...context.params,
         showBackButton: story.content.showBackButton ?? false,
-        [SHOP_SESSION_PROP_NAME]: context.params.shopSessionId,
+        [SHOP_SESSION_PROP_NAME]: shopSession.id,
       },
     })
   } catch (error) {

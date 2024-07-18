@@ -46,16 +46,15 @@ export const useShopSession = (): ShopSessionResult => {
 
 const useShopSessionContextValue = (initialShopSessionId?: string) => {
   const { countryCode } = useCurrentCountry()
-  const apolloClient = useApolloClient()
-  const shopSessionServiceClientSide = useMemo(() => {
-    const service = setupShopSessionServiceClientSide(apolloClient)
-    if (initialShopSessionId) service.saveId(initialShopSessionId)
 
-    return service
-  }, [apolloClient, initialShopSessionId])
+  const apolloClient = useApolloClient()
+  const shopSessionServiceClientSide = useMemo(
+    () => setupShopSessionServiceClientSide(apolloClient),
+    [apolloClient],
+  )
 
   const [shopSessionId, setShopSessionId] = useState(
-    shopSessionServiceClientSide.shopSessionId() ?? initialShopSessionId,
+    initialShopSessionId ?? shopSessionServiceClientSide.shopSessionId(),
   )
 
   const queryResult = useShopSessionQuery({
@@ -96,7 +95,10 @@ const useShopSessionContextValue = (initialShopSessionId?: string) => {
 
   // Fetch client-side, service ensures it only happens once
   useEffect(() => {
-    if (isBrowser()) {
+    // We want to make sure the shopSession returned by this hook is:
+    // 1. The one which is `initialShopSessionId`, when it's provided
+    // 2. The one which its id is stored in the cookie, when `initialShopSessionId` is not provided
+    if (isBrowser() && initialShopSessionId == null) {
       shopSessionServiceClientSide.getOrCreate({ countryCode }).then((shopSession) => {
         setShopSessionId(shopSession.id)
         try {
@@ -106,7 +108,7 @@ const useShopSessionContextValue = (initialShopSessionId?: string) => {
         }
       })
     }
-  }, [shopSessionServiceClientSide, countryCode])
+  }, [shopSessionServiceClientSide, countryCode, initialShopSessionId])
 
   // TODO: Move country check elsewhere, make sure we do full reload (GRW-1985)
   // Ignore session from different country.
