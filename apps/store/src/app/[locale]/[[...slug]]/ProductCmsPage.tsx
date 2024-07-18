@@ -8,7 +8,7 @@ import { getProductPageData } from '@/components/ProductPage/getProductPageData'
 import { ProductPageDataProvider } from '@/components/ProductPage/ProductPageDataProvider'
 import { fetchProductReviewsMetadata } from '@/features/memberReviews/memberReviews'
 import { ProductReviewsMetadataProvider } from '@/features/memberReviews/ProductReviewsMetadataProvider'
-import { getApolloClient } from '@/services/apollo/app-router/rscClient'
+import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
 import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import type { ProductStory } from '@/services/storyblok/storyblok'
@@ -25,7 +25,8 @@ export const ProductCmsPage = async ({ locale, story }: ProductCmsPageProps) => 
     throw new Error(`Unknown price template: ${story.content.priceFormTemplateId}`)
   }
 
-  const apolloClient = getApolloClient({ locale })
+  const { getApolloClient } = setupApolloClient({ locale })
+  const apolloClient = getApolloClient()
   const productName = story.content.productId
   const [productData, productReviewsMetadata] = await Promise.all([
     fetchProductData({

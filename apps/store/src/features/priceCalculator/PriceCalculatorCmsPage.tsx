@@ -8,7 +8,7 @@ import { ProductPageDebugDialog } from '@/components/ProductPage/ProductPageDebu
 import { ProductHero } from '@/components/ProductPage/PurchaseForm/ProductHero/ProductHero'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { PriceCalculatorStoryProvider } from '@/features/priceCalculator/PriceCalculatorStoryProvider'
-import { getApolloClient } from '@/services/apollo/app-router/rscClient'
+import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
 import type { PriceCalculatorPageStory } from '@/services/storyblok/storyblok'
 import { type RoutingLocale } from '@/utils/l10n/types'
 import { SE_PET_DOG_V2 } from './priceTemplates/SE_PET_DOG_V2'
@@ -74,7 +74,8 @@ type ProductHeroContainerProps = {
 }
 
 async function ProductHeroContainer({ locale, productName }: ProductHeroContainerProps) {
-  const apolloClient = getApolloClient({ locale })
+  const { getApolloClient } = setupApolloClient({ locale })
+  const apolloClient = getApolloClient()
   const productData = await fetchProductData({
     apolloClient,
     productName,
@@ -100,7 +101,8 @@ async function PriceCalculatorProviders({
   productName,
   children,
 }: PriceCalculatorProvidersProps) {
-  const apolloClient = getApolloClient({ locale })
+  const { getApolloClient } = setupApolloClient({ locale })
+  const apolloClient = getApolloClient()
   const productData = await fetchProductData({
     apolloClient,
     productName,

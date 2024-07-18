@@ -1,45 +1,43 @@
-import { getApolloClient } from '@/services/apollo/app-router/rscClient'
+import { notFound, redirect } from 'next/navigation'
+import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
 import { setupShopSession } from '@/services/shopSession/app-router/ShopSession.utils'
 import type { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
+import { CartEntriesSection } from './CartEntriesSection'
+import { layout } from './styles.css'
 
 type Params = { locale: RoutingLocale }
 
 type Props = { params: Params }
 
 export default async function Page({ params }: Props) {
-  const fallbackRedirect = {
-    redirect: {
-      destination: PageLink.home({ locale: params.locale }).toString(),
-      permanent: false,
-    },
-  } as const
+  const fallbackRedirectUrl = PageLink.home({ locale: params.locale }).toString()
 
-  const apolloClient = getApolloClient({ locale: params.locale })
-  const shopSessionService = setupShopSession(apolloClient)
+  const { getApolloClient } = setupApolloClient({ locale: params.locale })
+  const shopSessionService = setupShopSession(getApolloClient())
   const shopSession = await shopSessionService.fetch()
 
   if (!shopSession) {
     console.warn('Checkout | Unable to fetch shop session')
-    return fallbackRedirect
+    notFound()
   }
 
   const customer = shopSession.customer
   if (!customer) {
     console.warn('Checkout | No customer in shop session', shopSession.id)
-    return fallbackRedirect
+    return redirect(fallbackRedirectUrl)
   }
 
   if (!customer.ssn) {
     console.warn('Checkout | No SSN in shop session', shopSession.id)
-    return fallbackRedirect
+    return redirect(fallbackRedirectUrl)
   }
 
-  console.log(shopSession)
-  return null
+  return (
+    <main className={layout}>
+      <CartEntriesSection shopSessionId={shopSession.id} />
+    </main>
+  )
 }
 
-// Make sure this route always gets generated using dynamic rendering.
-// This provides a simple migration path between SSR pages into it's app router based counterpart.
-// https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#options
 export const dynamic = 'force-dynamic'

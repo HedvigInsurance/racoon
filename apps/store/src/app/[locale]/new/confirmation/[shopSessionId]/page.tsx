@@ -1,10 +1,8 @@
 import { type Metadata } from 'next'
-import { cookies } from 'next/headers'
 import { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage'
 import { fetchMemberPartnerData } from '@/components/ConfirmationPage/fetchMemberPartnerData'
-import { SuccessAnimation } from '@/components/ConfirmationPage/SuccessAnimation/SuccessAnimation'
 import { fetchSwitchingData } from '@/components/ConfirmationPage/SwitchingAssistantSection/fetchSwitchingData'
-import { getApolloClient } from '@/services/apollo/app-router/rscClient'
+import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
 import { setupShopSession } from '@/services/shopSession/app-router/ShopSession.utils'
 import type { ConfirmationStory } from '@/services/storyblok/storyblok'
 import { getStoryBySlug } from '@/services/storyblok/storyblok'
@@ -17,7 +15,8 @@ type Props = { params: Params }
 export default async function Page({ params }: Props) {
   const confirmationStory = await fetchConfirmationStory(params.locale)
 
-  const apolloClient = getApolloClient({ locale: params.locale, cookies: cookies() })
+  const { getApolloClient } = setupApolloClient({ locale: params.locale })
+  const apolloClient = getApolloClient()
   const shopSessionService = setupShopSession(apolloClient)
   const [shopSession, switchingData, memberPartnerData] = await Promise.all([
     shopSessionService.fetchById(params.shopSessionId),
@@ -26,14 +25,12 @@ export default async function Page({ params }: Props) {
   ])
 
   return (
-    <SuccessAnimation>
-      <ConfirmationPage
-        story={confirmationStory}
-        cart={shopSession.cart}
-        switching={switchingData ?? undefined}
-        memberPartnerData={memberPartnerData}
-      />
-    </SuccessAnimation>
+    <ConfirmationPage
+      story={confirmationStory}
+      cart={shopSession.cart}
+      switching={switchingData ?? undefined}
+      memberPartnerData={memberPartnerData}
+    />
   )
 }
 
@@ -48,8 +45,3 @@ function fetchConfirmationStory(locale: RoutingLocale): Promise<ConfirmationStor
 
   return getStoryBySlug<ConfirmationStory>(CONFIRMATION_PAGE_SLUG, { locale })
 }
-
-// Make sure this route always gets generated using dynamic rendering.
-// This provides a simple migration path between SSR pages into it's app router based counterpart.
-// https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#options
-export const dynamic = 'force-dynamic'

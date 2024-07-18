@@ -1,11 +1,11 @@
 import clsx from 'clsx'
-import type { PropsWithChildren } from 'react'
-import { Suspense } from 'react'
+import { Suspense, type PropsWithChildren } from 'react'
 import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import globalCss from 'ui/src/global.css'
 import { mainTheme } from 'ui'
 import { NavigationProgressIndicator } from '@/appComponents/RootLayout/NavigationProgressIndicator'
 import { OrgStructuredData } from '@/appComponents/RootLayout/OrgStructuredData'
+import { getShopSessionId } from '@/services/shopSession/app-router/ShopSession.utils'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { contentFontClassName } from '@/utils/fonts'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
@@ -22,6 +22,8 @@ export function RootLayout({
   locale = 'se',
   children,
 }: PropsWithChildren<{ locale?: RoutingLocale }>) {
+  const shopSessionId = getShopSessionId()
+
   return (
     <html lang={getLocaleOrFallback(locale).htmlLang}>
       {/* False alert, next/head does now work with app router */}
@@ -36,7 +38,7 @@ export function RootLayout({
         <NavigationProgressIndicator />
 
         <ApolloProvider locale={locale}>
-          <ShopSessionProvider>
+          <ShopSessionProvider shopSessionId={shopSessionId}>
             <BalancerProvider>{children}</BalancerProvider>
           </ShopSessionProvider>
         </ApolloProvider>

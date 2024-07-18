@@ -11,7 +11,7 @@ import { GlobalBannerDynamic } from '@/components/GlobalBanner/GlobalBannerDynam
 import { fetchGlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { CompanyReviewsMetadataProvider } from '@/features/memberReviews/CompanyReviewsMetadataProvider'
 import { fetchCompanyReviewsMetadata } from '@/features/memberReviews/memberReviews'
-import { getApolloClient } from '@/services/apollo/app-router/rscClient'
+import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
 import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
 import { type GlobalStory } from '@/services/storyblok/storyblok'
 import { getStoryBySlug } from '@/services/storyblok/storyblok.rsc'
@@ -25,7 +25,8 @@ type StoreLayoutProps = {
 
 // Does not use routing params directly, so can be used outside of app/[locale] if needed - just pass locale explicitly
 export async function StoreLayout({ locale, children }: StoreLayoutProps) {
-  const apolloClient = getApolloClient({ locale })
+  const { getApolloClient } = setupApolloClient({ locale })
+  const apolloClient = getApolloClient()
   const [companyReviewsMetadata, productMetadata, globalStory] = await Promise.all([
     fetchCompanyReviewsMetadata(),
     fetchGlobalProductMetadata({ apolloClient }),
