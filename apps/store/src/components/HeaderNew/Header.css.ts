@@ -15,7 +15,7 @@ export const focusableStyles = style({
   cursor: 'pointer',
 
   ':focus-visible': {
-    outline: `2px solid ${tokens.colors.red300}`,
+    outline: `2px solid ${tokens.colors.gray900}`,
   },
 })
 
@@ -28,7 +28,6 @@ export const ghostWrapper = style({
 
   position: 'relative',
   height: ghostWrapperHeight,
-
   zIndex: zIndexes.header,
 
   '@media': {
@@ -69,8 +68,6 @@ export const contentWrapper = style({
   '@media': {
     [minWidth.lg]: {
       height: MENU_BAR_HEIGHT_DESKTOP,
-
-      paddingInline: tokens.space.lg,
     },
   },
 })
@@ -171,12 +168,7 @@ export const navigationSecondaryItem = style({
 
   '@media': {
     [minWidth.lg]: {
-      borderRadius: tokens.radius.md,
       color: tokens.colors.textPrimary,
-
-      ':hover': {
-        backgroundColor: tokens.colors.grayTranslucent100,
-      },
     },
   },
 })
@@ -240,7 +232,8 @@ export const navigationPrimaryList = style({
       flexDirection: 'row',
       alignItems: 'center',
       height: MENU_BAR_HEIGHT_DESKTOP,
-      padding: tokens.space.none,
+      paddingInline: tokens.space.lg,
+      paddingBottom: tokens.space.none,
       gap: tokens.space.xs,
     },
   },

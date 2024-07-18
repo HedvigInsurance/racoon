@@ -35,6 +35,11 @@ export const productNavigationLinkCard = style([
     paddingInline: tokens.space.xs,
     borderRadius: tokens.radius.sm,
 
+    // Make sure item gets outline when link is focused
+    ':focus-within': {
+      outline: `2px solid ${tokens.colors.gray900}`,
+    },
+
     '@media': {
       '(hover: none)': {
         ':active': {
@@ -70,12 +75,17 @@ export const secondaryNavigationLink = style([
     '@media': {
       [minWidth.lg]: {
         padding: tokens.space.sm,
+        borderRadius: tokens.radius.md,
+
+        ':hover': {
+          backgroundColor: tokens.colors.grayTranslucent100,
+        },
       },
     },
   },
 ])
 
-export const expandingLink = style({
+export const productNavigationLink = style({
   // Make the whole card clickable - CallToAction height
   '::after': {
     content: '""',

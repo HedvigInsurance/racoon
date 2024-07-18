@@ -1,12 +1,12 @@
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import clsx from 'clsx'
 import Link from 'next/link'
-import { Badge, Space, Text } from 'ui'
+import { Badge, Text } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import {
   navigationLink,
   productNavigationLinkCard,
-  expandingLink,
+  productNavigationLink,
   secondaryNavigationLink,
 } from './NavigationLink.css'
 
@@ -49,9 +49,9 @@ export const ProductNavigationLink = ({
   label,
 }: NavigationLinkProps) => {
   return (
-    <Space className={productNavigationLinkCard}>
+    <div className={productNavigationLinkCard}>
       <Pillow size="xsmall" src={pillowImageSrc} />
-      <Link href={href} className={expandingLink}>
+      <Link href={href} className={productNavigationLink}>
         <Text as="span" size={{ _: 'xl', lg: 'md' }}>
           {children}
         </Text>
@@ -61,7 +61,7 @@ export const ProductNavigationLink = ({
           {label}
         </Badge>
       )}
-    </Space>
+    </div>
   )
 }
 
