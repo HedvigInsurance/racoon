@@ -8,7 +8,7 @@ import { Text, yStack, theme } from 'ui'
 import { CheckIcon } from '@/components/ComparisonTable/ComparisonTable'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { TrustlyIframe } from '@/services/trustly/TrustlyIframe'
-import { successState, content } from './CheckoutPaymentTrustlyPage.css'
+import { successState, content, trustlyIframe } from './CheckoutPaymentTrustlyPage.css'
 
 const datadogLogger = datadogLogs.createLogger('trustly')
 
@@ -49,7 +49,7 @@ export function CheckoutPaymentTrustlyPage({ shopSessionId, trustlyUrl, nextUrl 
       <GridLayout.Content className={content} width="1/3" align="center">
         <div className={yStack({ gap: 'lg' })}>
           <TrustlyIframe
-            style={{ width: 'min(29rem, 100%)', height: 'min(32rem, 60vh)' }}
+            className={trustlyIframe}
             url={trustlyUrl}
             onSuccess={handleSuccess}
             onFail={handleFail}

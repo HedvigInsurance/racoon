@@ -9,7 +9,7 @@ import { Button, Space, Text, theme } from 'ui'
 import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
 import { getAccessToken, saveAuthTokens } from '@/services/authApi/persist'
 import { createTrustlyUrl } from '@/services/trustly/createTrustlyUrl'
-import { trustlyIframeStyles } from '@/services/trustly/TrustlyIframe'
+import { trustlyIframeBaseStyles } from '@/services/trustly/TrustlyIframe.css'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { Layout } from './Layout'
 
@@ -53,7 +53,7 @@ export const IdleState = (props: Props) => {
     <Layout>
       <Space y={0.75}>
         <form onSubmit={handleSubmit}>
-          <IframePlaceholder data-state={state}>
+          <IframePlaceholder className={trustlyIframeBaseStyles} data-state={state}>
             <WideSpace y={0.5}>
               <Button loading={state === 'LOADING'} disabled={state === 'ERROR'}>
                 {t('FLOW_ACTIVATION_BUTTON')}
@@ -72,7 +72,7 @@ export const IdleState = (props: Props) => {
   )
 }
 
-export const IframePlaceholder = styled.div(trustlyIframeStyles, {
+export const IframePlaceholder = styled.div({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'stretch',

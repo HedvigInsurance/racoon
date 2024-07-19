@@ -4,7 +4,7 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { CheckIcon, Space, Text, theme } from 'ui'
 import { Layout } from '@/components/PaymentConnectPage/Layout'
-import { trustlyIframeStyles } from '@/services/trustly/TrustlyIframe'
+import { trustlyIframeBaseStyles } from '@/services/trustly/TrustlyIframe.css'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
 import { staticPathsPerSwedenLocale } from '@/utils/staticPaths'
@@ -21,7 +21,7 @@ const Page = () => {
   return (
     <Layout>
       <Space y={0.75}>
-        <IframePlaceholder>
+        <IframePlaceholder className={trustlyIframeBaseStyles}>
           <CheckIcon color={theme.colors.signalGreenElement} />
           <Text size={{ _: 'md', lg: 'lg' }}>{t('PAYMENT_CONNECT_SUCCESS')}</Text>
         </IframePlaceholder>
@@ -33,7 +33,7 @@ const Page = () => {
   )
 }
 
-const IframePlaceholder = styled.div(trustlyIframeStyles, {
+const IframePlaceholder = styled.div({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',

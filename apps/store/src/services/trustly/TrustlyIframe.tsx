@@ -1,9 +1,9 @@
-import { css, keyframes } from '@emotion/react'
-import styled from '@emotion/styled'
 import { type ComponentPropsWithoutRef, type ReactEventHandler, useEffect, useState } from 'react'
-import { theme } from 'ui'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
+import { trustlyIframe } from './TrustlyIframe.css'
+
+export { TRUSTLY_IFRAME_MAX_WIDTH, TRUSTLY_IFRAME_MAX_HEIGHT } from './TrustlyIframe.css'
 
 type Props = Omit<ComponentPropsWithoutRef<'iframe'>, 'src'> & {
   url: string
@@ -46,40 +46,13 @@ export const TrustlyIframe = ({ url, onSuccess, onFail, ...others }: Props) => {
     setLoading(false)
   }
 
-  return <Iframe src={url} onLoad={handleLoad} data-loading={loading} {...others} />
+  return (
+    <iframe
+      className={trustlyIframe}
+      src={url}
+      onLoad={handleLoad}
+      data-loading={loading}
+      {...others}
+    />
+  )
 }
-
-export const TRUSTLY_IFRAME_MAX_WIDTH = 600
-const TRUSTLY_IFRAME_MIN_HEIGHT = 500
-export const TRUSTLY_IFRAME_MAX_HEIGHT = 800
-
-export const trustlyIframeStyles = css({
-  width: '100%',
-  maxWidth: TRUSTLY_IFRAME_MAX_WIDTH,
-
-  minHeight: TRUSTLY_IFRAME_MIN_HEIGHT,
-  height: '100%',
-  maxHeight: TRUSTLY_IFRAME_MAX_HEIGHT,
-
-  borderRadius: 16,
-  boxShadow: theme.shadow.default,
-  marginInline: 'auto',
-  backgroundColor: theme.colors.white,
-})
-
-const pulseAnimation = keyframes({
-  '0%': { opacity: 1 },
-  '50%': { opacity: 0.5 },
-  '100%': { opacity: 1 },
-})
-
-const Iframe = styled.iframe(trustlyIframeStyles, {
-  display: 'block',
-  border: 'none',
-
-  '&[data-loading=true]': {
-    backgroundColor: theme.colors.gray200,
-    animation: `${pulseAnimation} 2s`,
-    animationIterationCount: 3,
-  },
-})

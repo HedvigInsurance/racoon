@@ -15,3 +15,8 @@ export const successState = style([
 export const content = style({
   paddingBlock: tokens.space.xxl,
 })
+
+export const trustlyIframe = style({
+  width: 'min(29rem, 100%)',
+  height: 'min(32rem, 60vh)',
+})
