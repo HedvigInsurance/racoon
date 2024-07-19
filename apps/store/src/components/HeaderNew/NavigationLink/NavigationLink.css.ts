@@ -35,11 +35,6 @@ export const productNavigationLinkCard = style([
     paddingInline: tokens.space.xs,
     borderRadius: tokens.radius.sm,
 
-    // Make sure item gets outline when link is focused
-    ':focus-within': {
-      outline: `2px solid ${tokens.colors.gray900}`,
-    },
-
     '@media': {
       '(hover: none)': {
         ':active': {
@@ -91,5 +86,14 @@ export const productNavigationLink = style({
     content: '""',
     position: 'absolute',
     inset: 0,
+    cursor: 'pointer',
+    borderRadius: tokens.radius.sm,
+  },
+
+  selectors: {
+    // Make sure the whole item gets outline when link is focused
+    '&:focus-visible:after': {
+      outline: `2px solid ${tokens.colors.gray900}`,
+    },
   },
 })

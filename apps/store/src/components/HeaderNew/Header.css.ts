@@ -62,7 +62,6 @@ export const contentWrapper = style({
   justifyContent: 'space-between',
   maxWidth: MAX_WIDTH,
   marginInline: 'auto',
-  paddingInline: tokens.space.md,
   height: MENU_BAR_HEIGHT_MOBILE,
 
   '@media': {
@@ -87,7 +86,7 @@ export const menuWrapper = style({
   justifyContent: 'space-between',
   alignItems: 'center',
   flex: 1,
-  gap: tokens.space.xs,
+  paddingInline: tokens.space.md,
 })
 
 export const navigation = style({
@@ -232,7 +231,7 @@ export const navigationPrimaryList = style({
       flexDirection: 'row',
       alignItems: 'center',
       height: MENU_BAR_HEIGHT_DESKTOP,
-      paddingInline: tokens.space.lg,
+      paddingInline: tokens.space.xs,
       paddingBottom: tokens.space.none,
       gap: tokens.space.xs,
     },
