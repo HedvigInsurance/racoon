@@ -3,16 +3,17 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ProductItem } from '@/components/ProductItemV2/ProductItem'
-import { ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
+import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
+import { Divider, ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
+import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
 import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { type ProductOfferFragment, useCartEntryRemoveMutation } from '@/services/graphql/generated'
 import { useShopSessionSuspense } from '@/services/shopSession/app-router/useShopSessionSuspense'
 import { useTracking } from '@/services/Tracking/useTracking'
-import { shopBreakdowSection } from './styles.css'
 
 type Props = { shopSessionId: string }
 
-export function CartEntriesSection({ shopSessionId }: Props) {
+export function CartEntries({ shopSessionId }: Props) {
   const shopSession = useShopSessionSuspense({ shopSessionId })
   const tracking = useTracking()
   const { showError } = useAppErrorHandleContext()
@@ -34,7 +35,7 @@ export function CartEntriesSection({ shopSessionId }: Props) {
   }
 
   return (
-    <section className={shopBreakdowSection}>
+    <>
       <ShopBreakdown>
         <AnimatePresence initial={false}>
           {shopSession.cart.entries.map((offer) => (
@@ -50,6 +51,9 @@ export function CartEntriesSection({ shopSessionId }: Props) {
           ))}
         </AnimatePresence>
       </ShopBreakdown>
-    </section>
+      <DiscountFieldContainer shopSession={shopSession} />
+      <Divider />
+      <TotalAmountContainer cart={shopSession.cart} />
+    </>
   )
 }

@@ -1,10 +1,13 @@
 import { notFound, redirect } from 'next/navigation'
+import { Suspense } from 'react'
+import { yStack } from 'ui'
 import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
 import { setupShopSession } from '@/services/shopSession/app-router/ShopSession.utils'
 import type { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
-import { CartEntriesSection } from './CartEntriesSection'
-import { layout } from './styles.css'
+import { BonusOffer } from './BonusOffer'
+import { CartEntries } from './CartEntries'
+import { layout, content } from './styles.css'
 
 type Params = { locale: RoutingLocale }
 
@@ -35,7 +38,19 @@ export default async function Page({ params }: Props) {
 
   return (
     <main className={layout}>
-      <CartEntriesSection shopSessionId={shopSession.id} />
+      <div className={content}>
+        <div className={yStack({ gap: 'md' })}>
+          <section className={yStack({ gap: 'md' })}>
+            <CartEntries shopSessionId={shopSession.id} />
+          </section>
+
+          <section className={yStack({ gap: 'xl' })}>
+            <Suspense>
+              <BonusOffer shopSessionId={shopSession.id} />
+            </Suspense>
+          </section>
+        </div>
+      </div>
     </main>
   )
 }
