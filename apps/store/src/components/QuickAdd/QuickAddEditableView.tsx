@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { useState, useId, type ComponentProps, type ReactNode, type FormEventHandler } from 'react'
 import { z } from 'zod'
-import { Space, Text, Badge, Button } from 'ui'
+import { Text, Badge, Button, yStack } from 'ui'
 import { InputDay } from '@/components/InputDay/InputDay'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Price } from '@/components/Price'
@@ -112,7 +112,7 @@ export function QuickAddEditableView(props: Props) {
 
   return (
     <div className={card}>
-      <Space y={1}>
+      <div className={yStack({ gap: 'md' })}>
         <div className={cardHeader}>
           <Pillow size="small" {...props.pillow} />
 
@@ -136,9 +136,9 @@ export function QuickAddEditableView(props: Props) {
 
         {props.Body}
 
-        <Space y={1}>
+        <div className={yStack({ gap: 'md' })}>
           <form id={formId} onSubmit={handleSubmit}>
-            <Space y={0.25}>
+            <div className={yStack({ gap: 'xxs' })}>
               <StepperInput
                 className={formField}
                 name={Fields.NUMBER_CO_INSURED}
@@ -160,7 +160,7 @@ export function QuickAddEditableView(props: Props) {
                 defaultSelected={getOfferStartDateWithFallback(offer)}
                 required={true}
               />
-            </Space>
+            </div>
             <input
               type="hidden"
               name={Fields.INTENT}
@@ -185,8 +185,8 @@ export function QuickAddEditableView(props: Props) {
               {hasNumberCoInsuredChanged ? t('QUICK_ADD_UPDATE') : t('QUICK_ADD_BUTTON')}
             </Button>
           </div>
-        </Space>
-      </Space>
+        </div>
+      </div>
     </div>
   )
 }
