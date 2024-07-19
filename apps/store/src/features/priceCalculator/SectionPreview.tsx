@@ -54,9 +54,9 @@ export function SectionPreview({ section }: { section: FormSection }) {
       className={xStack({ padding: 'md', alignItems: 'center' })}
       style={{ backgroundColor: tokens.colors.backgroundStandard, borderRadius: tokens.radius.md }}
     >
-      <div className={sprinkles({ flexGrow: 1 })}>
+      <div className={sprinkles({ flexGrow: 1, overflow: 'hidden' })}>
         <Text color="textSecondary">{translateLabel(section.title)}</Text>
-        <Text size="xl" color="textSecondary">
+        <Text size="xl" color="textSecondary" singleLine={true}>
           {previewText}
         </Text>
       </div>
