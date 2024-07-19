@@ -75,6 +75,15 @@ export const PageLink = {
 
     return url
   },
+  newCheckout: ({ locale, expandCart = false }: CheckoutPage) => {
+    const url = new ExtendedURL(`${locale}/new/checkout`, ORIGIN_URL)
+
+    if (expandCart) {
+      url.searchParams.set(CheckoutPageQueryParam.ExpandCart, '1')
+    }
+
+    return url
+  },
   checkoutPaymentTrustly: ({ locale, shopSessionId, nextUrl }: CheckoutPaymentTrustlyPage) => {
     const pathname = `${locale}/checkout/${shopSessionId}/payment/trustly`
     const url = new URL(pathname, ORIGIN_URL)

@@ -1,12 +1,15 @@
 import { notFound, redirect } from 'next/navigation'
 import { Suspense } from 'react'
 import { yStack } from 'ui'
+import { BankIdDialog } from '@/components/BankIdDialog/BankIdDialog'
 import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
+import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
 import { setupShopSession } from '@/services/shopSession/app-router/ShopSession.utils'
 import type { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
 import { BonusOffer } from './BonusOffer'
 import { CartEntries } from './CartEntries'
+import { CheckoutForm } from './CheckoutForm'
 import { layout, content } from './styles.css'
 
 type Params = { locale: RoutingLocale }
@@ -47,6 +50,13 @@ export default async function Page({ params }: Props) {
           <section className={yStack({ gap: 'xl' })}>
             <Suspense>
               <BonusOffer shopSessionId={shopSession.id} />
+            </Suspense>
+
+            <Suspense>
+              <BankIdContextProvider>
+                <CheckoutForm shopSessionId={shopSession.id} />
+                <BankIdDialog />
+              </BankIdContextProvider>
             </Suspense>
           </section>
         </div>
