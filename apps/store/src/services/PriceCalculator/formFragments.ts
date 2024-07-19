@@ -220,3 +220,21 @@ export const yourAddressSectionWithLivingSpaceV2: TemplateSection = {
     fieldName: streetAddressField.name,
   },
 }
+
+export const apartmentSectionV2: TemplateSection = {
+  id: 'your-apartment',
+  title: { key: tKey('SECTION_TITLE_YOUR_HOME') },
+  subtitle: { key: tKey('SECTION_SUBTITLE_YOUR_HOME') },
+  submitLabel: { key: tKey('SUBMIT_LABEL_FINISH') },
+  items: [
+    { field: streetAddressField, layout: LAYOUT.FULL_WIDTH },
+    { field: postalCodeField, layout: LAYOUT.HALF_WIDTH },
+    { field: livingSpaceField, layout: LAYOUT.HALF_WIDTH },
+    { field: householdSizeField, layout: LAYOUT.FULL_WIDTH },
+    { field: emailField, layout: LAYOUT.FULL_WIDTH },
+    { field: currentInsuranceField, layout: LAYOUT.FULL_WIDTH },
+  ],
+  preview: {
+    fieldName: streetAddressField.name,
+  },
+}
