@@ -4,6 +4,7 @@ import { makeAbsolute, appendAnchor, removeTrailingSlash } from '@/utils/url'
 import type {
   LinkField,
   PriceCalculatorPageStory,
+  ProductPageStory,
   ProductStory,
   WidgetFlowStory,
 } from './storyblok'
@@ -51,8 +52,14 @@ export const getLinkFieldURL = (link: LinkField, linkText?: string) => {
   return removeTrailingSlash(makeAbsolute(appendAnchor(link.cached_url, link.anchor)))
 }
 
+// Old product page story type
 export const isProductStory = (story: ISbStoryData): story is ProductStory => {
   return story.content.component === 'product'
+}
+
+// Product page story V2
+export const isProductPageStory = (story: ISbStoryData): story is ProductPageStory => {
+  return story.content.component === 'productPage'
 }
 
 export const isWidgetFlowStory = (story: ISbStoryData): story is WidgetFlowStory => {

@@ -140,6 +140,22 @@ export type ProductStory = ISbStoryData<
   } & SEOData
 >
 
+// TODO: Refine type
+export type ProductPageStory = ISbStoryData<
+  {
+    component: 'productPage'
+    name?: string
+    description?: string
+    tagline?: string
+    defaultProductVariant?: string
+    productId: string
+    announcement?: ExpectedBlockType<ReusableBlockReferenceProps>
+    body: Array<SbBlokData>
+    globalStory: GlobalStory
+    showAverageRating?: boolean
+  } & SEOData
+>
+
 export type WidgetFlowStory = ISbStoryData<{
   partner: string
   products?: Array<string>

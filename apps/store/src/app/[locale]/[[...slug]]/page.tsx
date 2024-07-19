@@ -11,6 +11,7 @@ import { MOST_VISITED_PATHS } from '@/services/storyblok/Storyblok.constant'
 import {
   getImgSrc,
   isPriceCalculatorPageStory,
+  isProductPageStory,
   isProductStory,
 } from '@/services/storyblok/Storyblok.helpers'
 import { getCmsPageLinks, getStoryBySlug } from '@/services/storyblok/storyblok.rsc'
@@ -26,6 +27,7 @@ import type { IsoLocale, RoutingLocale } from '@/utils/l10n/types'
 import { removeTrailingSlash } from '@/utils/url'
 import { ContentCmsPage } from './ContentCmsPage'
 import { ProductCmsPage } from './ProductCmsPage'
+import { ProductCmsPageV2 } from './ProductCmsPageV2'
 import { StoryBreadcrumbs } from './StoryBreadcrumbs'
 
 export type CmsPageRoutingParams = { locale: RoutingLocale; slug?: Array<string> }
@@ -54,6 +56,13 @@ export default async function CmsPage({ params }: Props) {
         <ProductCmsPage locale={params.locale} story={story} />
         <StoryBreadcrumbs params={params} currentPageTitle={story.name} />
         {chat}
+      </>
+    )
+  } else if (isProductPageStory(story)) {
+    return (
+      <>
+        <ProductCmsPageV2 locale={params.locale} story={story} />
+        <StoryBreadcrumbs params={params} currentPageTitle={story.name} />
       </>
     )
   } else if (isPriceCalculatorPageStory(story)) {
