@@ -71,9 +71,11 @@ export const RemoveActionButton = (props: Props) => {
           </>
         }
       >
-        <Text size={{ _: 'md', lg: 'xl' }} align="center">
-          {t('REMOVE_ENTRY_MODAL_PROMPT', { name: props.title })}
-        </Text>
+        <FullscreenDialog.Title asChild={true}>
+          <Text size={{ _: 'md', lg: 'xl' }} align="center">
+            {t('REMOVE_ENTRY_MODAL_PROMPT', { name: props.title })}
+          </Text>
+        </FullscreenDialog.Title>
       </FullscreenDialog.Modal>
     </FullscreenDialog.Root>
   )
