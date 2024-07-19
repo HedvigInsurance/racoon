@@ -156,11 +156,11 @@ export const Default: Story = {
             <Perils items={perils} />
           </QuickAddInfoDialog>
         </Text>
-        <ul>
+        <div>
           <ProductUsp>Extra coverage for injuries and accidents</ProductUsp>
           <ProductUsp>Up to 1 000 000kr in compensation</ProductUsp>
           <ProductUsp>No deductible</ProductUsp>
-        </ul>
+        </div>
       </>
     ),
     Footer: (
