@@ -52,9 +52,11 @@ export const EditActionButton = (props: Props) => {
           </>
         }
       >
-        <CappedText size={{ _: 'md', lg: 'xl' }} align="center">
-          <Balancer>{t('EDIT_CONFIRMATION_MODAL_PROMPT')}</Balancer>
-        </CappedText>
+        <FullscreenDialog.Title asChild={true}>
+          <CappedText size={{ _: 'md', lg: 'xl' }} align="center">
+            <Balancer>{t('EDIT_CONFIRMATION_MODAL_PROMPT')}</Balancer>
+          </CappedText>
+        </FullscreenDialog.Title>
       </FullscreenDialog.Modal>
     </FullscreenDialog.Root>
   )
