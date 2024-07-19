@@ -76,11 +76,12 @@ export function QuickAddOfferContainer(props: Props) {
         productPageLink={props.product.pageLink}
         badge={t('QUICK_ADD_BADGE_LABEL')}
         Body={
-          <ul>
+          <div>
+            <Text color="textSecondary">{t('ACCIDENT_OFFER_DESCRIPTION')}</Text>
             <ProductUsp>{t('ACCIDENT_OFFER_USP_1')}</ProductUsp>
             <ProductUsp>{t('ACCIDENT_OFFER_USP_2')}</ProductUsp>
             <ProductUsp>{t('ACCIDENT_OFFER_USP_3')}</ProductUsp>
-          </ul>
+          </div>
         }
       />
     )

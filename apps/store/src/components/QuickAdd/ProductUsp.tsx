@@ -4,9 +4,9 @@ import { productUsp, checkicon } from './ProductUsp.css'
 
 export function ProductUsp({ children }: PropsWithChildren) {
   return (
-    <li className={productUsp}>
+    <div className={productUsp}>
       <Text color="textTranslucentSecondary">{children}</Text>
       <CheckIcon className={checkicon} size="1rem" role="presentation" />
-    </li>
+    </div>
   )
 }
