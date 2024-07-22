@@ -156,8 +156,14 @@ export type ProductPageStory = ISbStoryData<
   } & SEOData
 >
 
+export enum WidgetFlowType {
+  Regular = 'Regular',
+  HomeTrialExtension = 'HomeTrialExtension',
+}
+
 export type WidgetFlowStory = ISbStoryData<{
   partner: string
+  flowType: WidgetFlowType
   products?: Array<string>
   backToAppButtonLabel?: string
   campaignCode?: string

@@ -4,6 +4,7 @@ import {
   type PageStory,
   type WidgetFlowStory,
   getStoryBySlug,
+  type WidgetFlowType,
 } from '@/services/storyblok/storyblok'
 import { isWidgetFlowStory } from '@/services/storyblok/Storyblok.helpers'
 import type { RoutingLocale } from '@/utils/l10n/types'
@@ -25,7 +26,12 @@ type FetchFlowMetadataParams = {
   draftMode?: boolean
 }
 
-type FlowMetadata = { flow: string; partnerName: string; campaignCode?: string }
+type FlowMetadata = {
+  flow: string
+  flowType: WidgetFlowType
+  partnerName: string
+  campaignCode?: string
+}
 
 export const fetchFlowMetadata = async (
   params: FetchFlowMetadataParams,
@@ -39,6 +45,7 @@ export const fetchFlowMetadata = async (
   if (isWidgetFlowStory(story)) {
     return {
       flow: String(story.id),
+      flowType: story.content.flowType,
       partnerName: story.content.partner,
       campaignCode: story.content.campaignCode,
     }

@@ -1,6 +1,7 @@
 import { type ApolloClient } from '@apollo/client'
 import { type VariablesOf } from '@graphql-typed-document-node/core'
 import { graphql } from '@/services/graphql'
+import { WidgetFlowType } from '@/services/storyblok/storyblok'
 import { SearchParam } from './parseSearchParams'
 
 const ShopSessionCreatePartnerDocument = graphql(/* GraphQL */ `
@@ -15,6 +16,7 @@ type MutationVariables = VariablesOf<typeof ShopSessionCreatePartnerDocument>['i
 
 type CreatePartnerShopSessionParams = {
   apolloClient: ApolloClient<unknown>
+  flowType: WidgetFlowType
   searchParams: URLSearchParams
 } & Pick<MutationVariables, 'countryCode' | 'partnerName' | 'campaignCode'>
 
@@ -24,12 +26,19 @@ export const createPartnerShopSession = async (
   const [variables, unusedSearchParams] = parseShopSessionCreatePartnerSearchParams(
     params.searchParams,
   )
-
-  if (variables.externalMemberId) {
-    console.info(`Widget | Creating Trial Extension Shop Session: ${variables.externalMemberId}`)
+  if (params.flowType === WidgetFlowType.HomeTrialExtension) {
+    if (variables.externalMemberId == null) {
+      throw new Error(`externalMemberId is required for trial extension flow`)
+    }
   } else {
-    console.info(`Widget | Creating Partner Shop Session`)
+    if (variables.externalMemberId != null) {
+      console.log('Removing externalMemberId from non-trial widget flow')
+    }
+    delete variables.externalMemberId
   }
+  console.log(
+    `Widget | Creating partner shopSession, flowType=${params.flowType}, variables=${JSON.stringify(variables)}`,
+  )
 
   const result = await params.apolloClient.mutate({
     mutation: ShopSessionCreatePartnerDocument,

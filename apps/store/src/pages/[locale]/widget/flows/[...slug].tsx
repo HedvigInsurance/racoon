@@ -40,9 +40,8 @@ export const getServerSideProps: GetServerSideProps<any, Params> = async (contex
   const [shopSessionId, searchParams] = await createPartnerShopSession({
     apolloClient,
     countryCode: getCountryByLocale(context.locale).countryCode,
-    partnerName: flowMetadata.partnerName,
-    campaignCode: flowMetadata.campaignCode,
     searchParams: url.searchParams,
+    ...flowMetadata,
   })
 
   console.info(`Widget | Created Shop Session: ${shopSessionId}`)
