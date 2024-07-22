@@ -35,5 +35,3 @@ const Page = async (props: Props) => {
   )
 }
 export default Page
-
-export const dynamic = 'force-static'
