@@ -1,7 +1,7 @@
 import type { LogsInitConfiguration } from '@datadog/browser-logs'
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { Tracking } from '@/services/Tracking/Tracking'
 
 const env = process.env.NEXT_PUBLIC_DATADOG_ENV || 'local'
@@ -17,13 +17,17 @@ const CLIENT_CONFIG = {
   service: process.env.NEXT_PUBLIC_DATADOG_SERVICE_NAME,
   site: 'datadoghq.eu',
   version,
+  silentMultipleInit: true,
 }
 
 const applicationId = process.env.NEXT_PUBLIC_DATADOG_APPLICATION_ID
 const clientToken = process.env.NEXT_PUBLIC_DATADOG_CLIENT_TOKEN
 
 const initDatadog = () => {
+  // Misconfiguration, should not happen in practive
   if (!applicationId || !clientToken) return
+  // Already initialized
+  if (datadogLogs.getInitConfiguration() != null) return
 
   window.performance.mark('initDatadog')
 
@@ -47,7 +51,6 @@ const initDatadog = () => {
     }
   }
   datadogLogs.init(datadogLogsConfig)
-
   datadogRum.init({
     ...CLIENT_CONFIG,
     clientToken,
@@ -56,7 +59,6 @@ const initDatadog = () => {
 
     sessionReplaySampleRate: 100,
     defaultPrivacyLevel: 'mask-user-input',
-    silentMultipleInit: true,
 
     allowedTracingUrls: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT
       ? [process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT]
@@ -67,15 +69,11 @@ const initDatadog = () => {
 
 // Should be used in top-level app component
 export const useInitDatadogAfterInteractive = () => {
-  const initRef = useRef(false)
   useEffect(() => {
-    if (!initRef.current) {
-      initRef.current = true
-      // It's safe to use datadog before init, so we want to delay initialization until after page is interactive
-      // Ensure it works in Safari (no requestIdleCallback)
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      const delay = window.requestIdleCallback ?? window.setTimeout
-      delay(initDatadog)
-    }
+    // It's safe to use datadog before init, so we want to delay initialization until after page is interactive
+    // Ensure it works in Safari (no requestIdleCallback)
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    const delay = window.requestIdleCallback ?? window.setTimeout
+    delay(initDatadog)
   }, [])
 }
