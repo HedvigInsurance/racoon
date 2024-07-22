@@ -8,7 +8,7 @@ import { type FormEventHandler, useState } from 'react'
 import { Button, Space, Text, theme } from 'ui'
 import { Layout } from '@/components/PaymentConnectPage/Layout'
 import { getAccessToken } from '@/services/authApi/persist'
-import { trustlyIframeStyles } from '@/services/trustly/TrustlyIframe'
+import { trustlyIframeBaseStyles } from '@/services/trustly/TrustlyIframe.css'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
@@ -45,7 +45,7 @@ const Page = () => {
     <Layout>
       <Space y={0.75}>
         <form onSubmit={handleSubmit}>
-          <IframePlaceholder>
+          <IframePlaceholder className={trustlyIframeBaseStyles}>
             <WideSpace y={0.5}>
               <Button loading={loading} fullWidth={true}>
                 {t('FLOW_ACTIVATION_BUTTON')}
@@ -61,7 +61,7 @@ const Page = () => {
   )
 }
 
-const IframePlaceholder = styled.div(trustlyIframeStyles, {
+const IframePlaceholder = styled.div({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'stretch',
