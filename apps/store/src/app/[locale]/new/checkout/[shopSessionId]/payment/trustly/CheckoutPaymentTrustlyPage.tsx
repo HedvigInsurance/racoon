@@ -4,7 +4,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
-import { Text, yStack, theme } from 'ui'
+import { Text, theme } from 'ui'
 import { CheckIcon } from '@/components/ComparisonTable/ComparisonTable'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { TrustlyIframe } from '@/services/trustly/TrustlyIframe'
@@ -47,18 +47,16 @@ export function CheckoutPaymentTrustlyPage({ shopSessionId, trustlyUrl, nextUrl 
   return (
     <GridLayout.Root>
       <GridLayout.Content className={content} width="1/3" align="center">
-        <div className={yStack({ gap: 'lg' })}>
-          <TrustlyIframe
-            className={trustlyIframe}
-            url={trustlyUrl}
-            onSuccess={handleSuccess}
-            onFail={handleFail}
-          />
+        <TrustlyIframe
+          className={trustlyIframe}
+          url={trustlyUrl}
+          onSuccess={handleSuccess}
+          onFail={handleFail}
+        />
 
-          <Text balance size="xs" color="textSecondary" align="center">
-            {t('PAYMENT_TRUSTLY_FOOTNOTE')}
-          </Text>
-        </div>
+        <Text balance size="xs" color="textSecondary" align="center">
+          {t('PAYMENT_TRUSTLY_FOOTNOTE')}
+        </Text>
       </GridLayout.Content>
     </GridLayout.Root>
   )

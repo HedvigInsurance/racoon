@@ -12,9 +12,12 @@ export const successState = style([
   },
 ])
 
-export const content = style({
-  paddingBlock: tokens.space.xxl,
-})
+export const content = style([
+  yStack({ gap: 'lg' }),
+  {
+    paddingBlock: tokens.space.xxl,
+  },
+])
 
 export const trustlyIframe = style({
   width: 'min(29rem, 100%)',

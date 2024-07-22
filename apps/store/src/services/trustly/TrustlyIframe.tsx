@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { type ComponentPropsWithoutRef, type ReactEventHandler, useEffect, useState } from 'react'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
@@ -9,9 +10,10 @@ type Props = Omit<ComponentPropsWithoutRef<'iframe'>, 'src'> & {
   url: string
   onSuccess: () => void
   onFail: () => void
+  className?: string
 }
 
-export const TrustlyIframe = ({ url, onSuccess, onFail, ...others }: Props) => {
+export const TrustlyIframe = ({ url, onSuccess, onFail, className, ...others }: Props) => {
   const locale = useRoutingLocale()
 
   useEffect(() => {
@@ -48,7 +50,7 @@ export const TrustlyIframe = ({ url, onSuccess, onFail, ...others }: Props) => {
 
   return (
     <iframe
-      className={trustlyIframe}
+      className={clsx(trustlyIframe, className)}
       src={url}
       onLoad={handleLoad}
       data-loading={loading}
