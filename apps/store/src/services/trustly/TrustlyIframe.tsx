@@ -1,18 +1,17 @@
 import { css, keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-import { type ReactEventHandler, useEffect, useState } from 'react'
+import { type ComponentPropsWithoutRef, type ReactEventHandler, useEffect, useState } from 'react'
 import { theme } from 'ui'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 
-type Props = {
+type Props = Omit<ComponentPropsWithoutRef<'iframe'>, 'src'> & {
   url: string
   onSuccess: () => void
   onFail: () => void
-  className?: string
 }
 
-export const TrustlyIframe = ({ url, onSuccess, onFail, className }: Props) => {
+export const TrustlyIframe = ({ url, onSuccess, onFail, ...others }: Props) => {
   const locale = useRoutingLocale()
 
   useEffect(() => {
@@ -47,7 +46,7 @@ export const TrustlyIframe = ({ url, onSuccess, onFail, className }: Props) => {
     setLoading(false)
   }
 
-  return <Iframe src={url} onLoad={handleLoad} className={className} data-loading={loading} />
+  return <Iframe src={url} onLoad={handleLoad} data-loading={loading} {...others} />
 }
 
 export const TRUSTLY_IFRAME_MAX_WIDTH = 600

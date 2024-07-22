@@ -94,6 +94,16 @@ export const PageLink = {
 
     return url
   },
+  newCheckoutPaymentTrustly: ({ locale, shopSessionId, nextUrl }: CheckoutPaymentTrustlyPage) => {
+    const pathname = `${locale}/new/checkout/${shopSessionId}/payment/trustly`
+    const url = new URL(pathname, ORIGIN_URL)
+
+    if (nextUrl) {
+      url.searchParams.append(CheckoutTrustlyQueryParam.NextUrl, nextUrl)
+    }
+
+    return url
+  },
   cookiesInfo: ({ locale }: BaseParams) => {
     return new URL(`${locale}/hedvig/cookies`, ORIGIN_URL)
   },
