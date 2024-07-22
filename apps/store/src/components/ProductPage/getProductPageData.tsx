@@ -1,5 +1,5 @@
 import type { ProductData } from '@/components/ProductData/ProductData.types'
-import type { ProductStory } from '@/services/storyblok/storyblok'
+import type { ProductPageStory, ProductStory } from '@/services/storyblok/storyblok'
 
 export type ProductPageData = {
   product: {
@@ -9,7 +9,10 @@ export type ProductPageData = {
   }
 }
 
-export const getProductPageData = (story: ProductStory, productData: ProductData) => {
+export const getProductPageData = (
+  story: ProductStory | ProductPageStory,
+  productData: ProductData,
+) => {
   return {
     product: {
       name: story.content.name || productData.displayNameShort,
