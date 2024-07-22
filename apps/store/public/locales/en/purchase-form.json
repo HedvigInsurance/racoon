@@ -98,6 +98,7 @@
   "FIELD_SUB_TYPE_APARTMENT_LABEL": "Do you own or rent your home?",
   "FIELD_SUB_TYPE_APARTMENT_OPTION_OWN": "Own it",
   "FIELD_SUB_TYPE_APARTMENT_OPTION_RENT": "Rent it",
+  "FIELD_USE_REGISTRATION_ADDRESS_LABEL": "Should the insurance apply to your civil registration address?",
   "FIELD_YEAR_OF_CONSTRUCTION_LABEL": "Year of construction",
   "FIELD_ZIP_CODE_LABEL": "Postal code",
   "GDPR_LINK_BEFORE_OFFER": "How we handle personal data",
