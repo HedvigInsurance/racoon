@@ -15,6 +15,7 @@ export const CarRegistrationNumberField = ({ field, autoFocus }: RegistrationFie
       name={field.name}
       label={translateLabel(field.label)}
       required={field.required}
+      defaultValue={field.value ?? field.defaultValue}
       autoFocus={autoFocus}
     />
   )

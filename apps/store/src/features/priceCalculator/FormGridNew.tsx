@@ -4,6 +4,7 @@ import { Button } from 'ui'
 import { AutomaticField } from '@/components/PriceCalculator/AutomaticField'
 import { useTranslateFieldLabel } from '@/components/PriceCalculator/useTranslateFieldLabel'
 import { priceCalculatorLoadingAtom } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
+import { type InputField } from '@/services/PriceCalculator/Field.types'
 import type { Label, SectionItem } from '@/services/PriceCalculator/PriceCalculator.types'
 import { columnSpan, grid, gridItem, submitButton } from './FormGridNew.css'
 
@@ -27,10 +28,7 @@ export function FormGridNew({ items, autofocusFirst, submitLabel }: FormSectionP
           })}
         >
           <AutomaticField
-            // GOTCHA: Uncontrolled fields keep very first defaultValue they had
-            // Therefore, we want to remount the field when default changes from empty to non-empty
-            // But not when default changes from one value to another - this risks loosing user input
-            key={`${item.field.name}_${item.field.defaultValue == null || item.field.defaultValue === ''}`}
+            key={fieldKey(item.field)}
             field={item.field}
             autoFocus={autofocusFirst && index === 0}
           />
@@ -42,4 +40,14 @@ export function FormGridNew({ items, autofocusFirst, submitLabel }: FormSectionP
       </Button>
     </div>
   )
+}
+
+// GOTCHA: Uncontrolled fields keep very first defaultValue they had
+// Therefore, we want to remount the field when default changes from empty to non-empty
+// But not when default changes from one value to another - this risks loosing user input
+const fieldKey = (field: InputField): string => {
+  const hasNonEmptyValue =
+    (field.defaultValue != null && field.defaultValue !== '') ||
+    (field.value != null && field.value !== '')
+  return `${field.name}_${hasNonEmptyValue}`
 }
