@@ -1,4 +1,5 @@
 import type { StorybookConfig } from '@storybook/nextjs'
+import { mainTheme } from 'ui'
 import babelConfig from './babelConfig'
 import { VanillaExtractPlugin } from '@vanilla-extract/webpack-plugin'
 // @ts-expect-error it uses `export = ` but we'd rather not enable esModuleInterop for everything

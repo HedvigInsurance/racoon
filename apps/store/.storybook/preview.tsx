@@ -1,7 +1,7 @@
 import { MockedProvider } from '@apollo/client/testing'
 import './i18next'
 import { Preview } from '@storybook/react'
-import { appProvidersDecorator, gridDecorator, themeDecorator } from './decorators'
+import { appProvidersDecorator, gridDecorator, themeDecorator, tokensDecorator } from './decorators'
 import { theme } from 'ui'
 import globalCss from 'ui/src/global.css'
 
@@ -39,7 +39,7 @@ export const parameters = {
 }
 
 const preview: Preview = {
-  decorators: [themeDecorator, gridDecorator, appProvidersDecorator],
+  decorators: [themeDecorator, tokensDecorator, gridDecorator, appProvidersDecorator],
 }
 
 export default preview
