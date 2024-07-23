@@ -1,9 +1,10 @@
 'use client'
 
 import { datadogRum } from '@datadog/browser-rum'
-import { useAtom, useAtomValue, useSetAtom } from 'jotai'
-import { type FormEventHandler, type ReactNode, useCallback } from 'react'
+import { useAtomValue, useSetAtom } from 'jotai'
+import { type FormEventHandler, type ReactNode } from 'react'
 import { Heading, yStack } from 'ui'
+import { FetchInsuranceContainer } from '@/components/PriceCalculator/FetchInsuranceContainer'
 import { PriceIntentWarningDialog } from '@/components/PriceCalculator/PriceIntentWarningDialog/PriceIntentWarningDialog'
 import { showPriceIntentWarningAtom } from '@/components/PriceCalculator/PriceIntentWarningDialog/showPriceIntentWarningAtom'
 import { SSN_SE_SECTION_ID, SsnSeSection } from '@/components/PriceCalculator/SsnSeSection'
@@ -40,7 +41,7 @@ export function InsuranceDataForm() {
     throw new Error('shopSession must be ready')
   }
   const form = useAtomValue(priceCalculatorFormAtom)
-  const [activeSectionId, setActiveSectionId] = useAtom(activeFormSectionIdAtom)
+  const activeSectionId = useAtomValue(activeFormSectionIdAtom)
   const step = useAtomValue(priceCalculatorStepAtom)
   const sections = form.sections.map((section) => {
     if (step !== 'fillForm' || section.id !== activeSectionId) {
@@ -67,15 +68,12 @@ export function InsuranceDataForm() {
     )
   })
 
-  const goToNextSection = useCallback(() => {
-    setActiveSectionId(GOTO_NEXT_SECTION)
-  }, [setActiveSectionId])
-
   return (
     <>
       <div className={yStack({ gap: 'xs' })}>{sections}</div>
       <EditSsnWarningContainer />
-      <PriceIntentWarningDialog onConfirm={goToNextSection} />
+      <PriceIntentWarningDialog />
+      <FetchInsuranceContainer />
     </>
   )
 }

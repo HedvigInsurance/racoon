@@ -90,15 +90,11 @@ export const PriceCalculator = (props: Props) => {
         // If we show a warning, prevent the user from going to the
         // next section without interacting with the warning dialog
         if (!priceIntent.warning) {
-          goToNextSection()
+          setActiveSectionId(GOTO_NEXT_SECTION)
         }
       }
     },
   })
-
-  const goToNextSection = () => {
-    setActiveSectionId(GOTO_NEXT_SECTION)
-  }
 
   const router = useRouter()
   const handleAcceptChangeSsn = useCallback(() => {
@@ -183,7 +179,7 @@ export const PriceCalculator = (props: Props) => {
         onDecline={handleDeclineChangeSsn}
       />
 
-      <PriceIntentWarningDialog onConfirm={goToNextSection} />
+      <PriceIntentWarningDialog />
 
       <FetchInsuranceContainer />
     </>

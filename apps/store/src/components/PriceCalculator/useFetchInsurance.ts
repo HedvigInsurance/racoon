@@ -3,20 +3,20 @@ import { atom, useAtom, useSetAtom } from 'jotai'
 import { useCallback } from 'react'
 import { useTracking } from '@/services/Tracking/useTracking'
 
-type State = 'INITIAL' | 'PROMPT' | 'COMPARE' | 'SUCCESS' | 'DISMISSED'
+type InsurelyState = 'INITIAL' | 'PROMPT' | 'COMPARE' | 'SUCCESS' | 'DISMISSED'
 
-const STATE_ATOM = atom<State>('INITIAL')
+const insurelyStateAtom = atom<InsurelyState>('INITIAL')
 
 type Params = {
   priceIntentId: string
 }
 
 export const useFetchInsuranceState = () => {
-  return useAtom(STATE_ATOM)
+  return useAtom(insurelyStateAtom)
 }
 
 export const useShowFetchInsurance = ({ priceIntentId }: Params) => {
-  const setState = useSetAtom(STATE_ATOM)
+  const setState = useSetAtom(insurelyStateAtom)
   const tracking = useTracking()
 
   return useCallback(
@@ -42,7 +42,7 @@ export const useShowFetchInsurance = ({ priceIntentId }: Params) => {
 }
 
 export const useFetchInsuranceCompare = () => {
-  const setState = useSetAtom(STATE_ATOM)
+  const setState = useSetAtom(insurelyStateAtom)
   const tracking = useTracking()
 
   return useCallback(() => {
@@ -53,7 +53,7 @@ export const useFetchInsuranceCompare = () => {
 }
 
 export const useFetchInsuranceSuccess = () => {
-  const setState = useSetAtom(STATE_ATOM)
+  const setState = useSetAtom(insurelyStateAtom)
   const tracking = useTracking()
 
   return useCallback(() => {
