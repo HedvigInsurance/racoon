@@ -5,7 +5,7 @@ import {
   dialogCloseIcon,
   dialogContent,
   dialogFooterWrapper,
-  dialogHeader,
+  dialogHeaderWrapper,
   dialogMain,
 } from './FullscreenDialog.css'
 
@@ -19,13 +19,17 @@ type Props = {
 export const Modal = ({ children, Header, Footer, center = false }: Props) => {
   return (
     <Dialog.Content className={dialogContent} frostedOverlay>
-      {Header ?? (
-        <header className={dialogHeader}>
+      {/* When not provided `Header` we display a fallback header. */}
+      {/* Strict check for 'undefined' is desired so consumers can omit the header with Header={null} */}
+      <header className={dialogHeaderWrapper}>
+        {Header === undefined ? (
           <Dialog.Close className={dialogCloseIcon}>
             <CrossIcon />
           </Dialog.Close>
-        </header>
-      )}
+        ) : (
+          Header
+        )}
+      </header>
       <main className={dialogMain[center ? 'centered' : 'regular']}>
         <AnimateContentWrapper>{children}</AnimateContentWrapper>
       </main>

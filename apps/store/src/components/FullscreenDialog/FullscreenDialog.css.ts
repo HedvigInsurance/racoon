@@ -1,25 +1,37 @@
-import { style, styleVariants } from '@vanilla-extract/css'
+import { createVar, style, styleVariants } from '@vanilla-extract/css'
 import { minWidth, tokens } from 'ui'
 
-const HEADER_HEIGHT = '3.5rem'
 const BUTTON_HEIGHT = '3.25rem'
 
+const dialogHeaderHeight = createVar()
+
 export const dialogContent = style({
+  vars: {
+    [dialogHeaderHeight]: '3.5rem',
+  },
   height: '100%',
   overflowY: 'auto',
   isolation: 'isolate',
+
+  '@media': {
+    [minWidth.lg]: {
+      vars: {
+        [dialogHeaderHeight]: '4.5rem',
+      },
+    },
+  },
 })
 
-export const dialogHeader = style({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-  paddingInline: tokens.space.md,
-  height: HEADER_HEIGHT,
+export const dialogHeaderWrapper = style({
   position: 'fixed',
   top: 0,
   left: 0,
   right: 0,
+
+  display: 'flex',
+  alignItems: 'center',
+  height: dialogHeaderHeight,
+  paddingInline: tokens.space.md,
   zIndex: 1,
 
   '@media': {
@@ -31,6 +43,8 @@ export const dialogHeader = style({
 
 export const dialogCloseIcon = style({
   cursor: 'pointer',
+  // Align the icon to the right
+  marginLeft: 'auto',
 })
 
 const dialogMainBase = style({
@@ -41,7 +55,7 @@ export const dialogMain = styleVariants({
   regular: [
     dialogMainBase,
     {
-      paddingTop: HEADER_HEIGHT,
+      paddingTop: dialogHeaderHeight,
       paddingBottom: `calc(${BUTTON_HEIGHT} + ${tokens.space.md} * 2)`,
       '@media': {
         [minWidth.lg]: {
