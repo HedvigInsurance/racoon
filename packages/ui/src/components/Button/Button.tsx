@@ -22,6 +22,7 @@ type BaseProps = {
   hiddenText?: ReactNode
   loading?: boolean
   Icon?: ReactNode
+  iconPosition?: 'left' | 'right'
 }
 
 export type ButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -49,6 +50,7 @@ export const Button: PolymorphicComponent = forwardRef(function Button<
     rel,
     children,
     Icon,
+    iconPosition = 'left',
     ...props
   }: ButtonProps<C>,
   ref?: PolymorphicRef<C>,
@@ -80,7 +82,9 @@ export const Button: PolymorphicComponent = forwardRef(function Button<
       {...props}
     >
       <span className={childrenWrapper} style={{ opacity: loading ? 0 : 1 }}>
-        {Icon} {children && <span className={textWrapper}>{children}</span>}
+        {iconPosition === 'left' && Icon}
+        {children && <span className={textWrapper}>{children}</span>}
+        {iconPosition === 'right' && Icon}
       </span>
       {hiddenText && hiddenText}
       {loading && (
