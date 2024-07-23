@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { type Decorator } from '@storybook/react'
 import { Global } from '@emotion/react'
 import { ApolloProvider } from '@apollo/client'
@@ -9,13 +9,25 @@ import { initializeApollo } from '../src/services/apollo/client'
 import { AppErrorProvider } from '../src/services/appErrors/AppErrorContext'
 
 export const themeDecorator: Decorator = (Story) => (
-  <div className={mainTheme}>
+  <>
     <Global styles={storybookFontStyles} />
     <ThemeProvider>
       <Story />
     </ThemeProvider>
-  </div>
+  </>
 )
+
+// Vanilla extract css theme (tokens) must be applied to the body element so components
+// that rely on Portal (FullScreenDialog for example) can also access them.
+export const tokensDecorator: Decorator = (Story) => {
+  useEffect(() => {
+    document.body.classList.add(mainTheme)
+
+    return () => document.body.classList.remove(mainTheme)
+  }, [])
+
+  return <Story />
+}
 
 /**
  * Decorator for defining grid layout as a parameter in a story.
