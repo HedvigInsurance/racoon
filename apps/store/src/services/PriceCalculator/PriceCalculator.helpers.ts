@@ -62,12 +62,22 @@ export const prefillData = ({ form, data, valueField }: FillDataParams): Form =>
   }
 }
 
+// Superset of address fields used for all Home insurance forms.
+// Not every field is used at the same time, extra ones will be dropped when rendering actual HTML form
+const ADDRESS_FIELDS = ['city', 'livingSpace', 'street', 'subType', 'yearOfConstruction', 'zipCode']
+
 type SetupFormOptions = {
   customer: ShopSessionCustomerFragment | null | undefined
   priceIntent: PriceIntent
   template: Template
+  prefillAddress?: boolean
 }
-export const setupForm = ({ customer, priceIntent, template }: SetupFormOptions) => {
+export const setupForm = ({
+  customer,
+  priceIntent,
+  template,
+  prefillAddress = true,
+}: SetupFormOptions) => {
   const form = convertTemplateIntoForm(template)
   form.sections.forEach((section) => {
     section.items = section.items.filter(
@@ -75,15 +85,25 @@ export const setupForm = ({ customer, priceIntent, template }: SetupFormOptions)
     )
   })
 
+  const prefillValues: JSONData = { ssn: customer?.ssn }
+  if (prefillAddress) {
+    for (const field of ADDRESS_FIELDS) {
+      const suggestedValue = priceIntent.suggestedData[field]
+      if (suggestedValue != null) {
+        prefillValues[field] = suggestedValue
+      }
+    }
+  }
+
   const formWithDefaultValues = prefillData({
     form,
-    data: { ...customer, ...priceIntent.suggestedData },
+    data: prefillValues,
     valueField: 'defaultValue',
   })
 
   const formWithValues = prefillData({
     form: formWithDefaultValues,
-    data: { ...customer, ...priceIntent.data },
+    data: { ssn: customer?.ssn, ...priceIntent.data },
     valueField: 'value',
   })
 

@@ -36,6 +36,12 @@ export const livingSpaceField: InputField = {
   suffix: 'm²',
 }
 
+export const useRegistrationAddressField: InputField = {
+  type: 'use-registration-address',
+  name: 'useRegistrationAddress',
+  required: true,
+}
+
 export const EXTERNAL_INSURANCE_FIELD_NAME = 'externalInsurer'
 export const currentInsuranceField: InputField = {
   type: 'current-insurance',
@@ -227,6 +233,7 @@ export const apartmentSectionV2: TemplateSection = {
   subtitle: { key: tKey('SECTION_SUBTITLE_YOUR_HOME') },
   submitLabel: { key: tKey('SUBMIT_LABEL_FINISH') },
   items: [
+    { field: useRegistrationAddressField, layout: LAYOUT.FULL_WIDTH },
     { field: streetAddressField, layout: LAYOUT.FULL_WIDTH },
     { field: postalCodeField, layout: LAYOUT.HALF_WIDTH },
     { field: livingSpaceField, layout: LAYOUT.HALF_WIDTH },

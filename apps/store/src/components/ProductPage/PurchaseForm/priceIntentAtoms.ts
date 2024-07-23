@@ -47,13 +47,18 @@ export const usePriceIntent = () => {
 export const shopSessionCustomerAtom = atom<ShopSessionCustomerFragment | null>(null)
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const useRegistrationAddressAtomFamily = atomFamily((priceIntentId: unknown) => atom(true))
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const priceCalculatorFormAtom = atom<Form>((get) => {
   const priceIntent = getAtomValueOrThrow(get, priceIntentAtom)
   const template = getAtomValueOrThrow(get, priceTemplateAtom)
+  const useRegistrationAddress = get(useRegistrationAddressAtomFamily(priceIntent.id))
   return setupForm({
     customer: get(shopSessionCustomerAtom),
     priceIntent,
     template,
+    prefillAddress: useRegistrationAddress,
   })
 })
 

@@ -98,6 +98,7 @@
   "FIELD_SUB_TYPE_APARTMENT_LABEL": "Äger eller hyr du din bostad?",
   "FIELD_SUB_TYPE_APARTMENT_OPTION_OWN": "Äger den",
   "FIELD_SUB_TYPE_APARTMENT_OPTION_RENT": "Hyr den",
+  "FIELD_USE_REGISTRATION_ADDRESS_LABEL": "Ska försäkringen gälla din folkbokföringsadress?",
   "FIELD_YEAR_OF_CONSTRUCTION_LABEL": "Byggår",
   "FIELD_ZIP_CODE_LABEL": "Postnr.",
   "GDPR_LINK_BEFORE_OFFER": "Så hanterar vi personuppgifter",

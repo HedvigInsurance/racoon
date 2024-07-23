@@ -54,6 +54,14 @@ export type ExtraBuildingsField = BaseField<Array<ExtraBuilding>> & {
   buildingOptions: Array<FieldOption>
 }
 
+export type UseRegistrationAddressField = {
+  type: 'use-registration-address'
+  name: string
+  required: true
+  value?: boolean
+  defaultValue?: boolean
+}
+
 export type ExtraBuilding = { area: number; type: string; hasWaterConnected: boolean }
 
 export type CarRegistrationNumberField = BaseField<string> & {
@@ -91,6 +99,7 @@ export type InputField =
   | DateField
   | RadioField
   | SelectField
+  | UseRegistrationAddressField
   | ExtraBuildingsField
   | CarRegistrationNumberField
   | CarMileageField

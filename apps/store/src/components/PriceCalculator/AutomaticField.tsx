@@ -1,4 +1,5 @@
 import { InputSelect } from '@/components/InputSelect/InputSelect'
+import { UseRegistrationAddressField } from '@/components/PriceCalculator/UseRegistrationAddressField'
 import { StepperInput } from '@/components/StepperInput/StepperInput'
 import { TextField } from '@/components/TextField/TextField'
 import type { InputField as InputFieldType } from '@/services/PriceCalculator/Field.types'
@@ -62,8 +63,8 @@ export const AutomaticField = ({ field, autoFocus }: Props) => {
           label={translateLabel(field.label)}
           required={field.required}
           defaultSelected={convertToDate(field.value ?? field.defaultValue) ?? undefined}
-          fromDate={field.min === 'TODAY' ? new Date() : convertToDate(field.min) ?? undefined}
-          toDate={field.max === 'TODAY' ? new Date() : convertToDate(field.max) ?? undefined}
+          fromDate={field.min === 'TODAY' ? new Date() : (convertToDate(field.min) ?? undefined)}
+          toDate={field.max === 'TODAY' ? new Date() : (convertToDate(field.max) ?? undefined)}
           autoFocus={autoFocus}
         />
       )
@@ -119,6 +120,9 @@ export const AutomaticField = ({ field, autoFocus }: Props) => {
           autoFocus={autoFocus}
         />
       )
+
+    case 'use-registration-address':
+      return <UseRegistrationAddressField field={field} />
 
     case 'extra-buildings':
       return (
