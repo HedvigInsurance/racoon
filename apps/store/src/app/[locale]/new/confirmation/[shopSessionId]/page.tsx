@@ -1,4 +1,5 @@
 import { type Metadata } from 'next'
+import { cookies } from 'next/headers'
 import { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage'
 import { fetchMemberPartnerData } from '@/components/ConfirmationPage/fetchMemberPartnerData'
 import { fetchSwitchingData } from '@/components/ConfirmationPage/SwitchingAssistantSection/fetchSwitchingData'
@@ -15,7 +16,7 @@ type Props = { params: Params }
 export default async function Page({ params }: Props) {
   const confirmationStory = await fetchConfirmationStory(params.locale)
 
-  const { getApolloClient } = setupApolloClient({ locale: params.locale })
+  const { getApolloClient } = setupApolloClient({ locale: params.locale, cookies: cookies() })
   const apolloClient = getApolloClient()
   const shopSessionService = setupShopSession(apolloClient)
   const [shopSession, switchingData, memberPartnerData] = await Promise.all([

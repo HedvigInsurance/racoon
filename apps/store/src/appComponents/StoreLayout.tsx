@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers'
 import { type ReactNode, Suspense } from 'react'
 import { AppTrackingTriggers } from '@/app/[locale]/AppTrackingTriggers'
 import { StoryblokLayout } from '@/app/[locale]/StoryblokLayout'
@@ -13,6 +14,8 @@ import { CompanyReviewsMetadataProvider } from '@/features/memberReviews/Company
 import { fetchCompanyReviewsMetadata } from '@/features/memberReviews/memberReviews'
 import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
 import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
+import { getShopSessionId } from '@/services/shopSession/app-router/ShopSession.utils'
+import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { type GlobalStory } from '@/services/storyblok/storyblok'
 import { getStoryBySlug } from '@/services/storyblok/storyblok.rsc'
 import { Features } from '@/utils/Features'
@@ -25,6 +28,8 @@ type StoreLayoutProps = {
 
 // Does not use routing params directly, so can be used outside of app/[locale] if needed - just pass locale explicitly
 export async function StoreLayout({ locale, children }: StoreLayoutProps) {
+  const shopSessionId = getShopSessionId(cookies())
+
   const { getApolloClient } = setupApolloClient({ locale })
   const apolloClient = getApolloClient()
   const [companyReviewsMetadata, productMetadata, globalStory] = await Promise.all([
@@ -35,23 +40,25 @@ export async function StoreLayout({ locale, children }: StoreLayoutProps) {
 
   return (
     <RootLayout locale={locale}>
-      <ProductMetadataProvider productMetadata={productMetadata}>
-        <CompanyReviewsMetadataProvider companyReviewsMetadata={companyReviewsMetadata}>
-          <ShopSessionTrackingProvider>
-            <AppErrorProvider>
-              <AppErrorDialog />
-              <GlobalBannerDynamic />
-              <StoryblokProvider>
-                <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
-              </StoryblokProvider>
-            </AppErrorProvider>
-            <Suspense>
-              <AppTrackingTriggers />
-            </Suspense>
-          </ShopSessionTrackingProvider>
-        </CompanyReviewsMetadataProvider>
-      </ProductMetadataProvider>
-      {Features.enabled('COOKIE_BANNER_INP_IMPROVEMENT') && <CookieConsent />}
+      <ShopSessionProvider shopSessionId={shopSessionId}>
+        <ProductMetadataProvider productMetadata={productMetadata}>
+          <CompanyReviewsMetadataProvider companyReviewsMetadata={companyReviewsMetadata}>
+            <ShopSessionTrackingProvider>
+              <AppErrorProvider>
+                <AppErrorDialog />
+                <GlobalBannerDynamic />
+                <StoryblokProvider>
+                  <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
+                </StoryblokProvider>
+              </AppErrorProvider>
+              <Suspense>
+                <AppTrackingTriggers />
+              </Suspense>
+            </ShopSessionTrackingProvider>
+          </CompanyReviewsMetadataProvider>
+        </ProductMetadataProvider>
+        {Features.enabled('COOKIE_BANNER_INP_IMPROVEMENT') && <CookieConsent />}
+      </ShopSessionProvider>
     </RootLayout>
   )
 }
