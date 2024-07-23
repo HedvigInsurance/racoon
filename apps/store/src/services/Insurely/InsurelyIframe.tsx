@@ -1,8 +1,7 @@
-// Documentation: https://docs.insurely.com/autofill-and-switcher
-
-import styled from '@emotion/styled'
+import { clsx } from 'clsx'
 import Script from 'next/script'
 import { useEffect } from 'react'
+import { insurelyIframe } from '@/services/Insurely/InsurelyIframe.css'
 import type { Language } from '@/utils/l10n/types'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 
@@ -26,15 +25,23 @@ type InsurelyMessage =
 
 type InsurelyIframeProps = {
   configName: string
+  className?: string
   onLoaded?: () => void
   onClose?: () => void
   onCollection?: (collectionId: string) => void
   onCompleted?: () => void
-  className?: string
 }
 
-export const InsurelyIframe = (props: InsurelyIframeProps) => {
-  const { onLoaded, onClose, onCollection, onCompleted } = props
+// Insurely iframe docs: https://docs.insurely.com/autofill-and-switcher
+
+export function InsurelyIframe({
+  configName,
+  className,
+  onLoaded,
+  onClose,
+  onCollection,
+  onCompleted,
+}: InsurelyIframeProps) {
   useEffect(() => {
     const handleMessage = ({ data }: MessageEvent<InsurelyMessage>) => {
       switch (data.name) {
@@ -57,16 +64,16 @@ export const InsurelyIframe = (props: InsurelyIframeProps) => {
 
   const { language } = useCurrentLocale()
   useEffect(() => {
-    setInsurelyConfig({ customerId: CUSTOMER_ID, configName: props.configName, language })
-  }, [language, props.configName])
+    setInsurelyConfig({ customerId: CUSTOMER_ID, configName, language })
+  }, [language, configName])
 
   return (
     <>
-      <StyledIframe
+      <iframe
         id="insurely-data-aggregation"
         title="insurely-data-aggregation"
         src={IFRAME_URL}
-        className={props.className}
+        className={clsx(insurelyIframe, className)}
         sandbox="allow-scripts
     allow-same-origin
     allow-popups
@@ -121,5 +128,3 @@ export const setInsurelyConfig = (config: InsurelyConfig) => {
     },
   }
 }
-
-const StyledIframe = styled.iframe({ border: 0 })
