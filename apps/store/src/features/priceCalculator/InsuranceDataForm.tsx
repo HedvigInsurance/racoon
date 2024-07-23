@@ -1,9 +1,11 @@
 'use client'
 
 import { datadogRum } from '@datadog/browser-rum'
-import { useAtomValue, useSetAtom } from 'jotai'
-import { type FormEventHandler, type ReactNode } from 'react'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { type FormEventHandler, type ReactNode, useCallback } from 'react'
 import { Heading, yStack } from 'ui'
+import { PriceIntentWarningDialog } from '@/components/PriceCalculator/PriceIntentWarningDialog/PriceIntentWarningDialog'
+import { showPriceIntentWarningAtom } from '@/components/PriceCalculator/PriceIntentWarningDialog/showPriceIntentWarningAtom'
 import { SSN_SE_SECTION_ID, SsnSeSection } from '@/components/PriceCalculator/SsnSeSection'
 import { useHandleSubmitPriceCalculatorSection } from '@/components/PriceCalculator/useHandleSubmitPriceCalculatorSection'
 import { useTranslateFieldLabel } from '@/components/PriceCalculator/useTranslateFieldLabel'
@@ -38,7 +40,7 @@ export function InsuranceDataForm() {
     throw new Error('shopSession must be ready')
   }
   const form = useAtomValue(priceCalculatorFormAtom)
-  const activeSectionId = useAtomValue(activeFormSectionIdAtom)
+  const [activeSectionId, setActiveSectionId] = useAtom(activeFormSectionIdAtom)
   const step = useAtomValue(priceCalculatorStepAtom)
   const sections = form.sections.map((section) => {
     if (step !== 'fillForm' || section.id !== activeSectionId) {
@@ -64,10 +66,16 @@ export function InsuranceDataForm() {
       </div>
     )
   })
+
+  const goToNextSection = useCallback(() => {
+    setActiveSectionId(GOTO_NEXT_SECTION)
+  }, [setActiveSectionId])
+
   return (
     <>
       <div className={yStack({ gap: 'xs' })}>{sections}</div>
       <EditSsnWarningContainer />
+      <PriceIntentWarningDialog onConfirm={goToNextSection} />
     </>
   )
 }
@@ -108,6 +116,7 @@ function InsuranceDataSection({ section }: InsuranceDataSectionProps) {
     },
   })
 
+  const showPriceIntentWarning = useSetAtom(showPriceIntentWarningAtom)
   const submitPriceCalculatorSection = useHandleSubmitPriceCalculatorSection({
     onSuccess({ priceIntent, customer }) {
       const form = setupForm({
@@ -122,9 +131,15 @@ function InsuranceDataSection({ section }: InsuranceDataSectionProps) {
       }
 
       if (priceIntent.warning) {
-        console.log('TODO: show priceIntent.warning')
-        // TODO: restore warning handling
-        // showPriceIntentWarning(true)
+        // SIDE EFFECTS: This solution is simple, but comes with quirks
+        // 1. As soon as warning appears, we'll start showing it when non-final form section is submitted
+        //    Currently, it's OK because we only have warnings for car not owned by current customer,
+        //    and it appears when submitting second-to-last section of insurance data form
+        // 2. Warning will be shown again if user has dismissed it, then went to edit the same form section
+        //    and submitted it - minor UX inconvenience we'll not prioritize for now
+        //
+        // If we ever want better model, we need to remember which warning(s) we had shown for priceIntent
+        showPriceIntentWarning(true)
         datadogRum.addAction('Show PriceIntent Warning')
       } else {
         goToNextSection()
