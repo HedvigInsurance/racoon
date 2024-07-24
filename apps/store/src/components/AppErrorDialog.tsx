@@ -32,9 +32,11 @@ export const AppErrorDialog = () => {
       >
         <Wrapper>
           <WarningTriangleIcon size="1em" color={theme.colors.amber600} />
-          <Text align="center" size={{ _: 'md', lg: 'lg' }}>
-            {t('GENERAL_ERROR_DIALOG_TITLE')}
-          </Text>
+          <FullscreenDialog.Title asChild={true}>
+            <Text align="center" size={{ _: 'md', lg: 'lg' }}>
+              {t('GENERAL_ERROR_DIALOG_TITLE')}
+            </Text>
+          </FullscreenDialog.Title>
         </Wrapper>
         <Text align="center" size={{ _: 'md', lg: 'lg' }} color="textSecondary" balance={true}>
           {errorMessage}
