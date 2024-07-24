@@ -1,9 +1,10 @@
 {
+  "BANKID_AUTHENTICATION_STEPS": "Öppna BankID-appen på din telefon och skanna QR-kod",
   "BANKID_CANCEL": "Avbryt",
   "BANKID_MODAL_CANCEL": "Avbryt",
   "BANKID_MODAL_SUCCESS_PROMPT": "Signering godkänd",
   "LOGIN_BANKID": "Logga in med BankID",
-  "LOGIN_BANKID_AUTHENTICATION_STEPS_DESKTOP": "Öppna BankID-appen på din telefon och tryck på Skanna QR-kod. Rikta kameran mot QR-koden för att logga in.",
+  "LOGIN_BANKID_AUTHENTICATION_STEPS_DESKTOP": "Öppna BankID-appen på din telefon och skanna QR-kod",
   "LOGIN_BANKID_AUTHENTICATION_STEPS_MOBILE": "Öppna BankID-appen på din telefon och fyll i din säkerhetskod.",
   "LOGIN_BANKID_ERROR": "Kunde inte logga in",
   "LOGIN_BANKID_EXPLANATION": "Om du har eller haft en försäkring hos oss kan du logga in, så hämtar vi dina uppgifter automatiskt.",
