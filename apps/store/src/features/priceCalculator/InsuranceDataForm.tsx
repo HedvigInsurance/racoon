@@ -1,8 +1,11 @@
 'use client'
 
 import { datadogRum } from '@datadog/browser-rum'
+import { clsx } from 'clsx'
 import { useAtomValue, useSetAtom } from 'jotai'
+import { useTranslation } from 'next-i18next'
 import { type FormEventHandler, type ReactNode } from 'react'
+import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import { Heading, yStack } from 'ui'
 import { FetchInsuranceContainer } from '@/components/PriceCalculator/FetchInsuranceContainer'
 import { PriceIntentWarningDialog } from '@/components/PriceCalculator/PriceIntentWarningDialog/PriceIntentWarningDialog'
@@ -16,8 +19,10 @@ import {
   priceCalculatorFormAtom,
 } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { usePriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
+import { TextWithLink } from '@/components/TextWithLink'
 import { EditSsnWarningContainer } from '@/features/priceCalculator/EditSsnWarningContainer'
 import { FormGridNew } from '@/features/priceCalculator/FormGridNew'
+import { gdprLink } from '@/features/priceCalculator/InsuranceDataForm.css'
 import { priceCalculatorStepAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
 import { SectionPreview } from '@/features/priceCalculator/SectionPreview'
 import { useConfirmPriceIntent } from '@/features/priceCalculator/useConfirmPriceIntent'
@@ -34,16 +39,20 @@ import {
 } from '@/services/PriceCalculator/PriceCalculator.types'
 import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { useShopSessionId } from '@/services/shopSession/ShopSessionContext'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
+import { PageLink } from '@/utils/PageLink'
 
 export function InsuranceDataForm() {
   const shopSessionId = useShopSessionId()
   if (shopSessionId == null) {
     throw new Error('shopSession must be ready')
   }
+  const locale = useRoutingLocale()
+  const { t } = useTranslation('purchase-form')
   const form = useAtomValue(priceCalculatorFormAtom)
   const activeSectionId = useAtomValue(activeFormSectionIdAtom)
   const step = useAtomValue(priceCalculatorStepAtom)
-  const sections = form.sections.map((section) => {
+  const sections = form.sections.map((section, index) => {
     if (step !== 'fillForm' || section.id !== activeSectionId) {
       // No preview needed for sections that are not yet touched
       if (section.state === 'initial') {
@@ -58,7 +67,23 @@ export function InsuranceDataForm() {
       sectionBody = <SsnSeSection />
     } else {
       sectionStyle = { marginTop: '3.75rem' }
-      sectionBody = <InsuranceDataSection section={section} />
+      const isLast = index === form.sections.length - 1
+      sectionBody = (
+        <>
+          <InsuranceDataSection section={section} />
+          {isLast && (
+            <TextWithLink
+              href={PageLink.privacyPolicy({ locale })}
+              className={clsx(sprinkles({ alignSelf: 'center' }), gdprLink)}
+              target="_blank"
+              size="xs"
+            >
+              {/*TODO: Extract TextLink component and remove placeholder workaround */}
+              {'[[' + t('GDPR_LINK_BEFORE_OFFER') + ']]'}
+            </TextWithLink>
+          )}
+        </>
+      )
     }
     return (
       <div key={section.id} className={yStack({ gap: 'xl' })} style={sectionStyle}>
