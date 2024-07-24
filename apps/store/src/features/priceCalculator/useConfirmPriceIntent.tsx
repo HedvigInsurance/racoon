@@ -1,21 +1,20 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
-import { useAtomValue } from 'jotai'
-import { useTranslation } from 'next-i18next'
+import { useAtomValue, useSetAtom } from 'jotai'
+import { startTransition } from 'react'
 import { currentPriceIntentIdAtom } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
+import { priceCalculatorStepAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
+import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
 import { BankSigneringEvent } from '@/services/bankSignering'
 import {
   ExternalInsuranceCancellationOption,
   usePriceIntentConfirmMutation,
 } from '@/services/graphql/generated'
 
-type ConfirmPriceIntentOptions = {
-  onSuccess: () => void
-  onError: (message: string) => void
-}
-export const useConfirmPriceIntent = ({ onSuccess, onError }: ConfirmPriceIntentOptions) => {
+export const useConfirmPriceIntent = () => {
   const priceIntentId = useAtomValue(currentPriceIntentIdAtom)
-  const { t } = useTranslation('purchase-form')
+  const { showError } = useAppErrorHandleContext()
+  const setStep = useSetAtom(priceCalculatorStepAtom)
   const [confirmPriceIntent] = usePriceIntentConfirmMutation({
     variables: { priceIntentId: priceIntentId! },
 
@@ -24,13 +23,9 @@ export const useConfirmPriceIntent = ({ onSuccess, onError }: ConfirmPriceIntent
         error,
         priceIntentId,
       })
-      if (error.networkError || error.graphQLErrors.length > 0) {
-        // Unknown error
-        onError(t('GENERAL_ERROR_DIALOG_PROMPT'))
-      } else {
-        // User error
-        onError(error.message)
-      }
+      showError(error)
+      // Prevent form flicker until dialog opens
+      startTransition(() => setStep('fillForm'))
     },
     onCompleted(data) {
       const updatedPriceIntent = data.priceIntentConfirm.priceIntent
@@ -41,7 +36,7 @@ export const useConfirmPriceIntent = ({ onSuccess, onError }: ConfirmPriceIntent
         if (hasBankSigneringOffer) {
           datadogRum.addAction(BankSigneringEvent.Offered)
         }
-        onSuccess()
+        setStep('viewOffers')
       } else {
         throw new Error(
           `UNEXPECTED: price intent not updated without user error (${priceIntentId})`,

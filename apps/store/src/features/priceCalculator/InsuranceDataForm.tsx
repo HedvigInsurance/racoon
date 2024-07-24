@@ -128,15 +128,7 @@ function InsuranceDataSection({ section }: InsuranceDataSectionProps) {
   const priceTemplate = usePriceTemplate()
   const setStep = useSetAtom(priceCalculatorStepAtom)
 
-  const confirmPriceIntent = useConfirmPriceIntent({
-    onSuccess() {
-      setStep('viewOffers')
-    },
-    onError(message) {
-      console.log('TODO: show error', message)
-      window.alert('Something went wrong. TODO: show error')
-    },
-  })
+  const confirmPriceIntent = useConfirmPriceIntent()
 
   const showPriceIntentWarning = useSetAtom(showPriceIntentWarningAtom)
   const submitPriceCalculatorSection = useHandleSubmitPriceCalculatorSection({
