@@ -1,30 +1,28 @@
-import { Fragment } from 'react'
-import { Space, Text } from 'ui'
+import { type ReactNode } from 'react'
+import { sprinkles } from 'ui/src/theme/sprinkles.css'
+import { Text } from 'ui'
 import { productGrid } from './ProductGrid.css'
 
-export type ProductGridProps<Item> = {
+export type ProductGridProps = {
   title?: string
-  items: Array<Item>
-  children: (item: Item) => React.ReactNode
+  children: ReactNode
 }
 
-export const ProductGrid = <ItemType extends { key: string }>({
-  title,
-  items,
-  children,
-}: ProductGridProps<ItemType>) => {
+export function ProductGrid({ title, children }: ProductGridProps) {
   return (
-    <Space y={1.5}>
+    <div>
       {title && (
-        <Text align="center" color="textSecondary" size="xs" uppercase={true}>
+        <Text
+          align="center"
+          color="textSecondary"
+          size="xs"
+          uppercase={true}
+          className={sprinkles({ marginTop: 'lg' })}
+        >
           {title}
         </Text>
       )}
-      <div className={productGrid}>
-        {items.map((item) => (
-          <Fragment key={item.key}>{children(item)}</Fragment>
-        ))}
-      </div>
-    </Space>
+      <div className={productGrid}>{children}</div>
+    </div>
   )
 }
