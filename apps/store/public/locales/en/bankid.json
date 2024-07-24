@@ -1,9 +1,10 @@
 {
+  "BANKID_AUTHENTICATION_STEPS": "Open BankID on your phone and scan the QR-code",
   "BANKID_CANCEL": "Cancel",
   "BANKID_MODAL_CANCEL": "Cancel",
   "BANKID_MODAL_SUCCESS_PROMPT": "Signing approved",
   "LOGIN_BANKID": "Log in with BankID",
-  "LOGIN_BANKID_AUTHENTICATION_STEPS_DESKTOP": "Open the BankID app on your phone and tap Scan QR Code. Point the camera at the QR code to log in.",
+  "LOGIN_BANKID_AUTHENTICATION_STEPS_DESKTOP": "Open BankID on your phone and scan the QR-code",
   "LOGIN_BANKID_AUTHENTICATION_STEPS_MOBILE": "Open the BankID app on your phone and enter your security code.",
   "LOGIN_BANKID_ERROR": "Failed to log in",
   "LOGIN_BANKID_EXPLANATION": "If you have or had insurance with us, you can log in, and we will retrieve your data automatically.",
