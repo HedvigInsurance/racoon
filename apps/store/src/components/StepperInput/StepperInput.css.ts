@@ -3,11 +3,10 @@ import { tokens } from 'ui'
 
 export const outerWrapper = style({
   display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  gap: tokens.space.md,
   width: '100%',
-  minHeight: '3rem',
+  height: '4rem',
+  boxSizing: 'border-box',
+  alignItems: 'center',
   paddingInline: tokens.space.md,
   borderRadius: tokens.radius.sm,
   backgroundColor: tokens.colors.translucent1,
@@ -16,11 +15,6 @@ export const outerWrapper = style({
       paddingBlock: tokens.space.sm,
     },
   },
-})
-
-export const innerWrapper = style({
-  display: 'flex',
-  flexDirection: 'column',
 })
 
 export const inputLabel = style({

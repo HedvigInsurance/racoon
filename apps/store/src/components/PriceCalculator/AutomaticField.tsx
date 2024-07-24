@@ -152,6 +152,7 @@ export const AutomaticField = ({ field, autoFocus }: Props) => {
           required={field.required}
           defaultValue={field.value ?? field.defaultValue}
           autoFocus={autoFocus}
+          label={translateLabel(field.label)}
           optionLabel={(count) => translateLabel(field.valueLabel, { count })}
         />
       )
