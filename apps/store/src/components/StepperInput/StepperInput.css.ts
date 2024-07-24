@@ -5,7 +5,6 @@ export const outerWrapper = style({
   display: 'flex',
   width: '100%',
   height: '4rem',
-  boxSizing: 'border-box',
   alignItems: 'center',
   paddingInline: tokens.space.md,
   borderRadius: tokens.radius.sm,
