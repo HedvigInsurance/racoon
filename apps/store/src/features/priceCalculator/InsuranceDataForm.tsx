@@ -19,7 +19,7 @@ import {
   priceCalculatorFormAtom,
 } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { usePriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
-import { TextWithLink } from '@/components/TextWithLink'
+import { TextLink } from '@/components/TextLink/TextLink'
 import { EditSsnWarningContainer } from '@/features/priceCalculator/EditSsnWarningContainer'
 import { FormGridNew } from '@/features/priceCalculator/FormGridNew'
 import { gdprLink } from '@/features/priceCalculator/InsuranceDataForm.css'
@@ -72,15 +72,14 @@ export function InsuranceDataForm() {
         <>
           <InsuranceDataSection section={section} />
           {isLast && (
-            <TextWithLink
+            <TextLink
               href={PageLink.privacyPolicy({ locale })}
               className={clsx(sprinkles({ alignSelf: 'center' }), gdprLink)}
               target="_blank"
               size="xs"
             >
-              {/*TODO: Extract TextLink component and remove placeholder workaround */}
-              {'[[' + t('GDPR_LINK_BEFORE_OFFER') + ']]'}
-            </TextWithLink>
+              {t('GDPR_LINK_BEFORE_OFFER')}
+            </TextLink>
           )}
         </>
       )
