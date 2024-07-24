@@ -4,6 +4,9 @@ import experimentJson from './experiment.json' assert { type: 'json' }
 import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin'
 
 import { SiteCsp, StoryblokCsp } from './next-csp.config.mjs'
+import { patchServerConsole } from './src/utils/patchServerConsole.mjs'
+
+patchServerConsole()
 
 /** @type {import('next').NextConfig} */
 const config = {
