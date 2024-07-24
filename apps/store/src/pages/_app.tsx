@@ -17,7 +17,6 @@ import { GTMLoader } from '@/components/GTMLoader'
 import { GlobalLinkStyles } from '@/components/RichText/RichText.styles'
 import { usePublishWidgetInitEvent } from '@/features/widget/usePublishWidgetInitEvent'
 import { useApollo } from '@/services/apollo/client'
-import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
 import { CustomerFirstScript, hasHiddenChat } from '@/services/CustomerFirst'
 import { useInitDatadogAfterInteractive } from '@/services/logger/client'
@@ -108,11 +107,9 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
             <ShopSessionTrackingProvider>
               <BankIdContextProvider>
                 <BalancerProvider>
-                  <AppErrorProvider>
-                    <AppErrorDialog />
-                    <GlobalBannerDynamic />
-                    {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
-                  </AppErrorProvider>
+                  <AppErrorDialog />
+                  <GlobalBannerDynamic />
+                  {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
                 </BalancerProvider>
                 <BankIdDialogDynamic />
               </BankIdContextProvider>

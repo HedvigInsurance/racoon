@@ -2,7 +2,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { useTranslation } from 'next-i18next'
 import { Button, Dialog, Text } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
-import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+import { useShowAppError } from '@/services/appErrors/appErrorAtom'
 import {
   type CartFragment,
   ProductRecommendationsDocument,
@@ -23,7 +23,7 @@ type Props = {
 export const RemoveActionButton = (props: Props) => {
   const { t } = useTranslation('cart')
 
-  const { showError } = useAppErrorHandleContext()
+  const showError = useShowAppError()
   const tracking = useTracking()
   const [removeProductOffer, result] = useCartEntryRemoveMutation({
     variables: { shopSessionId: props.shopSessionId, offerId: props.offer.id },

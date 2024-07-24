@@ -1,6 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useCallback } from 'react'
-import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+import { useShowAppError } from '@/services/appErrors/appErrorAtom'
 import type { CartEntryAddMutation } from '@/services/graphql/generated'
 import {
   useCartEntryAddMutation,
@@ -25,7 +25,7 @@ export const useAddToCart = (params: Params) => {
   const [addEntry, { loading }] = useCartEntryAddMutation(options)
   const [replaceEntry, { loading: loadingReplace }] = useCartEntryReplaceMutation(options)
 
-  const { showError } = useAppErrorHandleContext()
+  const showError = useShowAppError()
   const addToCart = useCallback(
     async (productOfferId: string) => {
       const handleCompleted = (data: CartEntryAddMutation) => {

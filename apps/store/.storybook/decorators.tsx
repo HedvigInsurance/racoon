@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { type Decorator } from '@storybook/react'
 import { Global } from '@emotion/react'
 import { ApolloProvider } from '@apollo/client'
@@ -6,7 +6,6 @@ import { ThemeProvider, mainTheme } from 'ui'
 import { storybookFontStyles } from 'ui/src/theme/storybookFontStyles'
 import * as GridLayout from '../src/components/GridLayout/GridLayout'
 import { initializeApollo } from '../src/services/apollo/client'
-import { AppErrorProvider } from '../src/services/appErrors/AppErrorContext'
 
 export const themeDecorator: Decorator = (Story) => (
   <>
@@ -54,9 +53,7 @@ export const appProvidersDecorator: Decorator = (Story) => {
   const apolloClient = initializeApollo()
   return (
     <ApolloProvider client={apolloClient}>
-      <AppErrorProvider>
-        <Story />
-      </AppErrorProvider>
+      <Story />
     </ApolloProvider>
   )
 }

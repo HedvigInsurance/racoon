@@ -3,7 +3,7 @@ import { useSetAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { useEffect } from 'react'
 import { priceCalculatorLoadingAtom } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
-import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+import { useShowAppError } from '@/services/appErrors/appErrorAtom'
 import {
   type ShopSessionCustomerFragment,
   usePriceIntentDataUpdateMutation,
@@ -19,7 +19,7 @@ type Options = {
 
 export const useUpdatePriceIntent = ({ onSuccess }: Options) => {
   const { t } = useTranslation('purchase-form')
-  const { showError } = useAppErrorHandleContext()
+  const showError = useShowAppError()
 
   const [updatePriceIntent, { loading }] = usePriceIntentDataUpdateMutation({
     // priceIntent.suggestedData may be updated based on customer.ssn

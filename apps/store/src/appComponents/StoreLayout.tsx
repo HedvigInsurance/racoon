@@ -13,7 +13,6 @@ import { fetchGlobalProductMetadata } from '@/components/LayoutWithMenu/fetchPro
 import { CompanyReviewsMetadataProvider } from '@/features/memberReviews/CompanyReviewsMetadataProvider'
 import { fetchCompanyReviewsMetadata } from '@/features/memberReviews/memberReviews'
 import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
-import { AppErrorProvider } from '@/services/appErrors/AppErrorContext'
 import { getShopSessionId } from '@/services/shopSession/app-router/ShopSession.utils'
 import { ShopSessionProvider } from '@/services/shopSession/ShopSessionContext'
 import { type GlobalStory } from '@/services/storyblok/storyblok'
@@ -44,13 +43,11 @@ export async function StoreLayout({ locale, children }: StoreLayoutProps) {
         <ProductMetadataProvider productMetadata={productMetadata}>
           <CompanyReviewsMetadataProvider companyReviewsMetadata={companyReviewsMetadata}>
             <ShopSessionTrackingProvider>
-              <AppErrorProvider>
-                <AppErrorDialog />
-                <GlobalBannerDynamic />
-                <StoryblokProvider>
-                  <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
-                </StoryblokProvider>
-              </AppErrorProvider>
+              <AppErrorDialog />
+              <GlobalBannerDynamic />
+              <StoryblokProvider>
+                <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
+              </StoryblokProvider>
               <Suspense>
                 <AppTrackingTriggers />
               </Suspense>

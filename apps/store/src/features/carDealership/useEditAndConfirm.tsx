@@ -1,5 +1,5 @@
 import { type ApolloError } from '@apollo/client'
-import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+import { useShowAppError } from '@/services/appErrors/appErrorAtom'
 import {
   usePriceIntentConfirmMutation,
   usePriceIntentDataUpdateCarMutation,
@@ -11,7 +11,7 @@ type EditAndConfirmParams = {
 }
 
 export const useEditAndConfirm = (params: EditAndConfirmParams) => {
-  const { showError } = useAppErrorHandleContext()
+  const showError = useShowAppError()
 
   const handleError = (error: ApolloError) => {
     showError(error)

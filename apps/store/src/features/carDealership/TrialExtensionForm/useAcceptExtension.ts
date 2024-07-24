@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { dismissedBannerIdAtom } from '@/components/GlobalBanner/globalBannerState'
 import { CarDealershipBanners } from '@/features/carDealership/carDearlership.constants'
-import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+import { useShowAppError } from '@/services/appErrors/appErrorAtom'
 import { BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import {
@@ -28,7 +28,7 @@ export const useAcceptExtension = (params: Params) => {
   const { startCheckoutSign, currentOperation } = useBankIdContext()
   const router = useRouter()
   const setDismissedBannerId = useSetAtom(dismissedBannerIdAtom)
-  const { showError } = useAppErrorHandleContext()
+  const showError = useShowAppError()
   const [getCurrentMember] = useCurrentMemberLazyQuery()
   const locale = useRoutingLocale()
 

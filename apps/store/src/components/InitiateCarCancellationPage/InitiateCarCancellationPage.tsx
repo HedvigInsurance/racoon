@@ -14,7 +14,7 @@ import {
 } from '@/components/Header/Header.constants'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
-import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+import { useShowAppError } from '@/services/appErrors/appErrorAtom'
 import { getAccessToken } from '@/services/authApi/persist'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { useContractQuery } from '@/services/graphql/generated'
@@ -29,7 +29,7 @@ export const InitiateCarCancellationPage = (props: Props) => {
     return props.isAuthenticated || !!getAccessToken()
   })
 
-  const { showError } = useAppErrorHandleContext()
+  const showError = useShowAppError()
   const { data, loading } = useContractQuery({
     variables: { id: props.contractId },
     skip: !isAuthenticated,

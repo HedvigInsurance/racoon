@@ -2,7 +2,7 @@ import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useState } from 'react'
 import { Button, Dialog, theme } from 'ui'
-import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+import { useShowAppError } from '@/services/appErrors/appErrorAtom'
 import { useMemberAreaMemberInfoQuery, useTrustlyInitMutation } from '@/services/graphql/generated'
 import { getTrustlyInitMutationVariables } from '@/services/trustly/createTrustlyUrl'
 import {
@@ -15,7 +15,7 @@ import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 type State = { type: 'IDLE' } | { type: 'READY'; trustlyUrl: string }
 
 export const PaymentConnection = ({ startButtonText }: { startButtonText: string }) => {
-  const { showError } = useAppErrorHandleContext()
+  const showError = useShowAppError()
   const locale = useRoutingLocale()
   const [createTrustlyUrl, result] = useTrustlyInitMutation({
     onError: showError,

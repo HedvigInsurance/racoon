@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { Button, Space, Text, mq, theme } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
-import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+import { useShowAppError } from '@/services/appErrors/appErrorAtom'
 import { BankSigneringEvent } from '@/services/bankSignering'
 import { useBankSigneringInitMutation } from '@/services/graphql/generated'
 import { useFormatter } from '@/utils/useFormatter'
@@ -27,7 +27,7 @@ const PendingContractCard = (props: ContractCardProps) => {
   const { t } = useTranslation('checkout')
   const formatter = useFormatter()
 
-  const { showError } = useAppErrorHandleContext()
+  const showError = useShowAppError()
   const [initiateBankSignering, result] = useBankSigneringInitMutation({
     refetchQueries: 'active',
     onCompleted(data) {
