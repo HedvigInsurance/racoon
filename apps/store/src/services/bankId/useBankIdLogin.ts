@@ -5,7 +5,7 @@ import { loginMemberSeBankId } from '@/services/authApi/login'
 import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
 import { saveAuthTokens } from '@/services/authApi/persist'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
-import type { BankIdLoginOptions, LoginPromptOptions, StartLoginOptions } from './bankId.types'
+import type { BankIdLoginOptions, StartLoginOptions } from './bankId.types'
 import { apiStatusToBankIdState, bankIdLogger } from './bankId.utils'
 import type { BankIdDispatch } from './bankIdReducer'
 
@@ -14,19 +14,6 @@ type HookOptions = {
 }
 
 export const useBankIdLogin = ({ dispatch }: HookOptions) => {
-  const onLoginPromptCompletedRef = useRef<(() => void) | null>(null)
-  const showLoginPrompt = useCallback(
-    ({ ssn, onCompleted }: LoginPromptOptions) => {
-      datadogRum.addAction('bankIdLogin prompt')
-      onLoginPromptCompletedRef.current = onCompleted
-      dispatch({
-        type: 'showLoginPrompt',
-        ssn,
-      })
-    },
-    [dispatch],
-  )
-
   const { startLogin, cancelLogin } = useBankIdLoginApi({ dispatch })
 
   const startLoginWithCallbacks = useCallback(
@@ -38,7 +25,6 @@ export const useBankIdLogin = ({ dispatch }: HookOptions) => {
         ...options,
         async onSuccess() {
           datadogRum.addAction('bankIdLogin complete')
-          onLoginPromptCompletedRef.current?.()
           // Wrap into Promise.resolve to allow both sync and async callbacks
           await Promise.resolve(options.onSuccess?.())
           dispatch({ type: 'success' })
@@ -50,19 +36,17 @@ export const useBankIdLogin = ({ dispatch }: HookOptions) => {
 
   const cancelLoginWithCallbacks = useCallback(() => {
     cancelLogin()
-    onLoginPromptCompletedRef.current?.()
     datadogRum.addAction('bankIdLogin cancel')
     dispatch({ type: 'cancel' })
   }, [cancelLogin, dispatch])
 
   return {
-    showLoginPrompt,
     startLogin: startLoginWithCallbacks,
     cancelLogin: cancelLoginWithCallbacks,
   }
 }
 
-export const useBankIdLoginApi = ({ dispatch }: HookOptions) => {
+const useBankIdLoginApi = ({ dispatch }: HookOptions) => {
   const locale = useRoutingLocale()
   const subscriptionRef = useRef<Subscription | null>(null)
   const startLogin = useCallback(

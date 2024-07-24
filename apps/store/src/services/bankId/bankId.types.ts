@@ -1,7 +1,6 @@
 import { type ApolloError } from '@apollo/client'
 
 export enum BankIdState {
-  Idle = 'Idle',
   Starting = 'Starting',
   Pending = 'Pending', // Waiting for user to open BankId app
   Success = 'Success',
@@ -29,11 +28,6 @@ export type BankIdSignOperation = {
 }
 
 export type BankIdOperation = BankIdLoginOperation | BankIdSignOperation
-
-export type LoginPromptOptions = {
-  ssn: string
-  onCompleted: () => void
-}
 
 export type BankIdLoginOptions = {
   ssn: string
