@@ -1,4 +1,4 @@
-import { style, createVar } from '@vanilla-extract/css'
+import { style } from '@vanilla-extract/css'
 import { tokens } from 'ui'
 
 export const qrCode = style({
@@ -20,15 +20,11 @@ export const iconWithText = style({
   gap: tokens.space.xs,
 })
 
-export const contentWrapperMaxWidth = createVar()
 export const contentWrapper = style({
   display: 'grid',
   justifyItems: 'center',
-  width: `min(${contentWrapperMaxWidth}, 100%)`,
+  width: 'min(24rem, 100%)',
   marginInline: 'auto',
-  vars: {
-    [contentWrapperMaxWidth]: '24rem',
-  },
 })
 
 export const qrOnAnotherDeviceFooter = style({

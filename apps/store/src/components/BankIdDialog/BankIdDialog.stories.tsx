@@ -17,7 +17,6 @@ const defaultContextValue: BankIdContextValue = {
   dispatch: () => {},
   startCheckoutSign: () => {},
   cancelCheckoutSign: () => {},
-  showLoginPrompt: () => {},
   startLogin: () => {},
   cancelLogin: () => {},
 }
@@ -32,22 +31,8 @@ const Template: StoryFn<BankIdContextValue> = (contextValue) => {
   )
 }
 
-export const Idle = {
-  render: Template,
-
-  args: {
-    ...defaultContextValue,
-    currentOperation: {
-      type: 'login',
-      state: BankIdState.Idle,
-      ssn: '111122334455',
-    },
-  },
-}
-
 export const Pending = {
   render: Template,
-
   args: {
     ...defaultContextValue,
     currentOperation: {
@@ -63,7 +48,6 @@ export const Pending = {
 
 export const QrCodeRead = {
   render: Template,
-
   args: {
     ...defaultContextValue,
     currentOperation: {
@@ -80,7 +64,6 @@ export const QrCodeRead = {
 
 export const Success = {
   render: Template,
-
   args: {
     ...defaultContextValue,
     currentOperation: {
@@ -93,7 +76,6 @@ export const Success = {
 
 export const SessionTimedOutError = {
   render: Template,
-
   args: {
     ...defaultContextValue,
     currentOperation: {

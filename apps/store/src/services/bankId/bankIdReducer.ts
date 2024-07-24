@@ -4,7 +4,6 @@ import type { BankIdOperation } from './bankId.types'
 import { BankIdState } from './bankId.types'
 
 export type BankIdAction =
-  | ShowLoginPromptAction
   | StartLoginAction
   | StartSignAction
   | PropertiesUpdateAction
@@ -12,10 +11,6 @@ export type BankIdAction =
   | OperationStateChangeAction
   | ErrorAction
 
-type ShowLoginPromptAction = {
-  type: 'showLoginPrompt'
-  ssn: string
-}
 type StartLoginAction = {
   type: 'startLogin'
   ssn: string
@@ -53,14 +48,6 @@ export const bankIdReducer = (
   action: BankIdAction,
 ): BankIdReducerState => {
   switch (action.type) {
-    case 'showLoginPrompt':
-      return {
-        currentOperation: {
-          type: 'login',
-          state: BankIdState.Idle,
-          ssn: action.ssn,
-        },
-      }
     case 'startLogin':
       return {
         currentOperation: {

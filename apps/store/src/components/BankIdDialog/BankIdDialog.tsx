@@ -1,5 +1,4 @@
 'use client'
-import { assignInlineVars } from '@vanilla-extract/dynamic'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { QRCodeSVG } from 'qrcode.react'
@@ -15,7 +14,6 @@ import {
   WarningTriangleIcon,
   theme,
 } from 'ui'
-import { BankIdLoginForm } from '@/components/BankIdLoginForm'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { SIGN_FORM_ID } from '@/constants/sign.constants'
@@ -24,13 +22,11 @@ import { BankIdState } from '@/services/bankId/bankId.types'
 import { bankIdLogger } from '@/services/bankId/bankId.utils'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { useShopSessionId } from '@/services/shopSession/ShopSessionContext'
-import { wait } from '@/utils/wait'
 import {
   qrCode,
   qrCodeSkeleton,
   iconWithText,
   contentWrapper,
-  contentWrapperMaxWidth,
   qrOnAnotherDeviceFooter,
   qrOnAnotherDeviceLink,
 } from './BankIdDialog.css'
@@ -38,7 +34,7 @@ import {
 export function BankIdDialog() {
   const { t } = useTranslation('bankid')
   const shopSessionId = useShopSessionId()
-  const { startLogin, cancelLogin, cancelCheckoutSign, currentOperation } = useBankIdContext()
+  const { cancelLogin, cancelCheckoutSign, currentOperation } = useBankIdContext()
 
   useTriggerBankIdOnSameDevice(currentOperation)
   const tryAgainButtonProps = useTryAgainButtonProps(currentOperation)
@@ -64,46 +60,6 @@ export function BankIdDialog() {
   const { ssn } = currentOperation ?? {}
   if (currentOperation !== null && ssn) {
     switch (currentOperation.state) {
-      case BankIdState.Idle: {
-        // Sign operations don't need dialog in idle state
-        if (currentOperation.type !== 'login') {
-          break
-        }
-
-        Content = (
-          <div
-            className={contentWrapper}
-            style={assignInlineVars({
-              [contentWrapperMaxWidth]: '35rem',
-            })}
-          >
-            <Text align="center">{t('LOGIN_BANKID')}</Text>
-            <Text align="center" color="textSecondary" balance={true}>
-              {t('LOGIN_BANKID_EXPLANATION')}
-            </Text>
-          </div>
-        )
-        Footer = (
-          <>
-            <BankIdLoginForm
-              state={currentOperation.state}
-              title={t('LOGIN_BUTTON_TEXT', { ns: 'common' })}
-              onLoginStart={() =>
-                startLogin({
-                  ssn,
-                  // So use can see sucess screen
-                  onSuccess: () => wait(1500),
-                })
-              }
-            />
-            <Button variant="ghost" onClick={cancelLogin} fullWidth={true}>
-              {t('LOGIN_BANKID_SKIP')}
-            </Button>
-          </>
-        )
-        break
-      }
-
       case BankIdState.Starting:
       case BankIdState.Pending: {
         Content = (
