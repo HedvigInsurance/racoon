@@ -40,6 +40,7 @@ export const SE_HOUSE: Template = {
             name: 'ancillaryArea',
             label: { key: tKey('FIELD_ANCILLARY_AREA_LABEL') },
             required: true,
+            suffix: 'm²',
             min: 0,
           },
           layout: LAYOUT.HALF_WIDTH,
