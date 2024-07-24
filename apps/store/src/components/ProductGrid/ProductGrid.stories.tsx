@@ -16,10 +16,16 @@ const meta: Meta<typeof ProductGrid> = {
 
 export default meta
 
-type ProductItem = ProductCardProps & { key: string }
+type ProductItem = ProductCardProps
 
-const Template: StoryFn<ProductGridProps<ProductItem>> = (props) => {
-  return <ProductGrid {...props}>{(itemProps) => <ProductCard {...itemProps} />}</ProductGrid>
+const Template: StoryFn<ProductGridProps & { items: Array<ProductItem> }> = (props) => {
+  return (
+    <ProductGrid {...props}>
+      {props.items.map((itemProps) => (
+        <ProductCard key={itemProps.title} {...itemProps} />
+      ))}
+    </ProductGrid>
+  )
 }
 
 export const Default = {
@@ -28,35 +34,30 @@ export const Default = {
     title: 'Popular insurances',
     items: [
       {
-        key: '1',
         title: 'Hedvig Home',
         subtitle: 'Flexible and simple, for both renters and owners.',
         image: { src: 'https://via.placeholder.com/336x400' },
         link: { url: '/', type: 'product' },
       },
       {
-        key: '2',
         title: 'Hedvig House',
         subtitle: 'Lörem ipsum dålor, nufs plufs glufs och gruls.',
         image: { src: 'https://via.placeholder.com/336x400' },
         link: { url: '/', type: 'product' },
       },
       {
-        key: '3',
         title: 'Hedvig Car',
         subtitle: 'Lörem ipsum dålor, nufs plufs glufs och gruls.',
         image: { src: 'https://via.placeholder.com/336x400' },
         link: { url: '/', type: 'product' },
       },
       {
-        key: '4',
         title: 'Hedvig Student',
         subtitle: 'Lörem ipsum dålor, nufs plufs glufs och gruls.',
         image: { src: 'https://via.placeholder.com/336x400' },
         link: { url: '/', type: 'product' },
       },
       {
-        key: '3',
         title: 'Hedvig Accident',
         subtitle: 'Lörem ipsum dålor, nufs plufs glufs och gruls.',
         image: { src: 'https://via.placeholder.com/336x400' },

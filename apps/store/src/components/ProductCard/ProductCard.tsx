@@ -47,7 +47,7 @@ export const ProductCard = ({
   return (
     <Container y={1}>
       <ImageWrapper aspectRatio={aspectRatio}>
-        <Image {...imageProps} alt={alt} fill sizes="100vw" />
+        <Image {...imageProps} alt={alt} fill sizes="20rem" />
       </ImageWrapper>
       <ContentWrapper>
         <MainLink href={link.url}>{title}</MainLink>
