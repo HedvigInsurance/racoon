@@ -6,11 +6,11 @@ import { useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 import { theme } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
-import { InsurelyIframe, setInsurelyConfig } from '@/services/Insurely/Insurely'
 import {
   INSURELY_IFRAME_MAX_HEIGHT,
   INSURELY_IFRAME_MAX_WIDTH,
 } from '@/services/Insurely/Insurely.constants'
+import { InsurelyIframe, setInsurelyConfig } from '@/services/Insurely/InsurelyIframe'
 import { type GridColumnsField, type SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 // For Insurely Sales Support Tool
