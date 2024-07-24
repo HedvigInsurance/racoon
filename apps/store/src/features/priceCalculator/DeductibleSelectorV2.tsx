@@ -73,9 +73,14 @@ function DeductibleInfo() {
   return (
     <FullscreenDialog.Root>
       <FullscreenDialog.Trigger asChild={true}>
-        <Button variant="secondary" size="small" className={sprinkles({ alignSelf: 'center' })}>
+        <Button
+          variant="secondary"
+          size="small"
+          className={sprinkles({ alignSelf: 'center' })}
+          Icon={<PlusIcon size="1rem" />}
+          iconPosition="right"
+        >
           {t('DEDUCTIBLE_SELECTOR_FOOTER_LINK')}
-          <PlusIcon size="1rem" />
         </Button>
       </FullscreenDialog.Trigger>
       <FullscreenDialog.Modal>

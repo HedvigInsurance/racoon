@@ -20,7 +20,7 @@ const template: TemplateV2 = {
     {
       id: 'your-information',
       title: { key: tKey('SECTION_TITLE_YOUR_INFORMATION') },
-      subtitle: { key: tKey('SECTION_SUBTITLE_YOUR_INFORMATION') },
+      subtitle: { key: tKey('SECTION_SUBTITLE_YOUR_INFORMATION_ACCIDENT') },
       submitLabel: { key: tKey('SUBMIT_LABEL_FINISH') },
       items: [
         {

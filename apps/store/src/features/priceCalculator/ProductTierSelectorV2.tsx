@@ -55,9 +55,14 @@ export function ProductTierSelectorV2({ offers, selectedOffer, onValueChange }: 
         tiers={offers}
         selectedTierId={selectedOffer.id}
       >
-        <Button variant="secondary" size="small" className={sprinkles({ alignSelf: 'center' })}>
+        <Button
+          variant="secondary"
+          size="small"
+          className={sprinkles({ alignSelf: 'center' })}
+          Icon={<PlusIcon />}
+          iconPosition="right"
+        >
           {t('COMPARE_COVERAGE_BUTTON')}
-          <PlusIcon />
         </Button>
       </ComparisonTableModal>
     </>
