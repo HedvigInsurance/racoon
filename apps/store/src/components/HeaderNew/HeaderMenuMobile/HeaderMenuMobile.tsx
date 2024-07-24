@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import type { ReactNode } from 'react'
 import { startTransition, useEffect, useState } from 'react'
-import { AndroidIcon, AppleIcon, Button } from 'ui'
+import { AndroidIcon, AppleIcon, Button, visuallyHidden } from 'ui'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
@@ -63,6 +63,9 @@ export function HeaderMenuMobile(props: Props) {
         />
       </DialogPrimitive.Trigger>
       <DialogContent>
+        <DialogPrimitive.Title className={visuallyHidden}>
+          {t('NAV_MENU_DIALOG_OPEN')}
+        </DialogPrimitive.Title>
         <div className={contentWrapper}>
           <div className={HeaderMenuHeader}>
             <div className={logoWrapper}>
@@ -124,7 +127,7 @@ function DialogContent(props: DialogPrimitive.DialogContentProps) {
   return (
     <DialogPrimitive.Portal>
       <DialogPrimitive.Overlay className={dialogOverlay} />
-      <DialogPrimitive.Content {...props} />
+      <DialogPrimitive.Content {...props} aria-describedby={undefined} />
     </DialogPrimitive.Portal>
   )
 }
