@@ -4,7 +4,7 @@ import { useAtomValue, useSetAtom } from 'jotai'
 import { startTransition } from 'react'
 import { currentPriceIntentIdAtom } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { priceCalculatorStepAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
-import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+import { useShowAppError } from '@/services/appErrors/appErrorAtom'
 import { BankSigneringEvent } from '@/services/bankSignering'
 import {
   ExternalInsuranceCancellationOption,
@@ -13,7 +13,7 @@ import {
 
 export const useConfirmPriceIntent = () => {
   const priceIntentId = useAtomValue(currentPriceIntentIdAtom)
-  const { showError } = useAppErrorHandleContext()
+  const showError = useShowAppError()
   const setStep = useSetAtom(priceCalculatorStepAtom)
   const [confirmPriceIntent] = usePriceIntentConfirmMutation({
     variables: { priceIntentId: priceIntentId! },

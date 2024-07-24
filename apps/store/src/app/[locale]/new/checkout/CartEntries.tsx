@@ -6,7 +6,7 @@ import { ProductItem } from '@/components/ProductItemV2/ProductItem'
 import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
 import { Divider, ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
-import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+import { useShowAppError } from '@/services/appErrors/appErrorAtom'
 import { type ProductOfferFragment, useCartEntryRemoveMutation } from '@/services/graphql/generated'
 import { useShopSessionSuspense } from '@/services/shopSession/app-router/useShopSessionSuspense'
 import { useTracking } from '@/services/Tracking/useTracking'
@@ -16,7 +16,7 @@ type Props = { shopSessionId: string }
 export function CartEntries({ shopSessionId }: Props) {
   const shopSession = useShopSessionSuspense({ shopSessionId })
   const tracking = useTracking()
-  const { showError } = useAppErrorHandleContext()
+  const showError = useShowAppError()
 
   const [removeCartItem] = useCartEntryRemoveMutation({
     awaitRefetchQueries: true,

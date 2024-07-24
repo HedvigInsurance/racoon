@@ -18,7 +18,7 @@ import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import { ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
 import { TextWithLink } from '@/components/TextWithLink'
-import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+import { useShowAppError } from '@/services/appErrors/appErrorAtom'
 import { BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import type { Money, ProductOfferFragment } from '@/services/graphql/generated'
@@ -218,7 +218,7 @@ const useSignMigration = (
   offerIds: Array<string>,
 ) => {
   const { currentOperation, startCheckoutSign } = useBankIdContext()
-  const { showError } = useAppErrorHandleContext()
+  const showError = useShowAppError()
   const router = useRouter()
   const apolloClient = useApolloClient()
   const locale = useRoutingLocale()

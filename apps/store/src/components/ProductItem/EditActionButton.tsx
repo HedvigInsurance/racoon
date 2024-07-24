@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next'
 import Balancer from 'react-wrap-balancer'
 import { Button, Text } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
-import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+import { useShowAppError } from '@/services/appErrors/appErrorAtom'
 import type { ProductOfferFragment } from '@/services/graphql/generated'
 import { ActionButton } from './ProductItem'
 import { useEditProductOffer } from './useEditProductOffer'
@@ -14,7 +14,7 @@ type Props = {
 }
 
 export const EditActionButton = (props: Props) => {
-  const { showError } = useAppErrorHandleContext()
+  const showError = useShowAppError()
   const { t } = useTranslation(['cart', 'common'])
   const [editProductOffer, state] = useEditProductOffer()
 

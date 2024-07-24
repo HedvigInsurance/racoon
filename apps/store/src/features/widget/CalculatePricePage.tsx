@@ -16,7 +16,7 @@ import {
 } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { useSyncPriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+import { useShowAppError } from '@/services/appErrors/appErrorAtom'
 import {
   ExternalInsuranceCancellationOption,
   usePriceIntentConfirmMutation,
@@ -40,7 +40,7 @@ type Props = {
 
 export const CalculatePricePage = (props: Props) => {
   const [loading, setLoading] = useState(false)
-  const { showError } = useAppErrorHandleContext()
+  const showError = useShowAppError()
   const priceLoaderPromise = useRef<Promise<void> | null>(null)
 
   const locale = useRoutingLocale()

@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import { PRELOADED_PRICE_INTENT_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/usePreloadedPriceIntentId'
-import { useAppErrorHandleContext } from '@/services/appErrors/AppErrorContext'
+import { useShowAppError } from '@/services/appErrors/appErrorAtom'
 import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 
@@ -23,7 +23,7 @@ export const useEditProductOffer = () => {
   const apolloClient = useApolloClient()
   const products = useProductMetadata()
   const router = useRouter()
-  const { showError } = useAppErrorHandleContext()
+  const showError = useShowAppError()
 
   const editProductOffer = async (params: Params) => {
     setState('loading')
