@@ -15792,7 +15792,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns@npm:3.6.0":
+"date-fns@npm:3.6.0, date-fns@npm:^3.6.0":
   version: 3.6.0
   resolution: "date-fns@npm:3.6.0"
   checksum: 10c0/0b5fb981590ef2f8e5a3ba6cd6d77faece0ea7f7158948f2eaae7bbb7c80a8f63ae30b01236c2923cf89bb3719c33aeb150c715ea4fe4e86e37dcf06bed42fb6
@@ -24378,13 +24378,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-day-picker@npm:8.10.1":
-  version: 8.10.1
-  resolution: "react-day-picker@npm:8.10.1"
+"react-day-picker@npm:9.0.1":
+  version: 9.0.1
+  resolution: "react-day-picker@npm:9.0.1"
+  dependencies:
+    date-fns: "npm:^3.6.0"
   peerDependencies:
-    date-fns: ^2.28.0 || ^3.0.0
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 10c0/a0ff28c4b61b3882e6a825b19e5679e2fdf3256cf1be8eb0a0c028949815c1ae5a6561474c2c19d231c010c8e0e0b654d3a322610881e0655abca05a2e03d9df
+    react: ">=16.8.0"
+  checksum: 10c0/9552245f8aa05d36e472f33477df272a8c32e11fef99f580611f38a37689ebf9e9b45d6262bb840d8b278acaaaa45320a97e68b7b32d0c1114a9c8d39cc5ead3
   languageName: node
   linkType: hard
 
@@ -26359,7 +26360,7 @@ __metadata:
     prettier: "npm:3.3.3"
     qrcode.react: "npm:3.1.0"
     react: "npm:18.3.1"
-    react-day-picker: "npm:8.10.1"
+    react-day-picker: "npm:9.0.1"
     react-device-detect: "npm:2.2.3"
     react-dom: "npm:18.3.1"
     react-i18next: "npm:14.1.3"
