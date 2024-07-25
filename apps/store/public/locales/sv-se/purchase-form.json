@@ -82,6 +82,7 @@
   "FIELD_IS_SUBLETED_OPTION_YES": "Ja",
   "FIELD_LIVING_SPACE_LABEL": "Boyta",
   "FIELD_MILEAGE_LABEL": "Årlig körsträcka",
+  "FIELD_MILEAGE_PLACEHOLDER": "Välj förväntad körsträcka",
   "FIELD_MIXED_BREEDS_LABEL": "Lägg till de raser som är mest framträdande",
   "FIELD_MIXED_BREEDS_PLACEHOLDER": "Sök ras",
   "FIELD_NAME_PET_LABEL": "Namn",

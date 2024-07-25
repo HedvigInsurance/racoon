@@ -1,10 +1,16 @@
 'use client'
 
-import isValidProp from '@emotion/is-prop-valid'
-import styled from '@emotion/styled'
-import { type ChangeEventHandler } from 'react'
-import { ChevronIcon, InputBase, type InputBaseProps, type UIColorKeys, theme, getColor } from 'ui'
+import { clsx } from 'clsx'
+import { type ChangeEventHandler, useId } from 'react'
+import { ChevronIcon, InputBase, type InputBaseProps, type UIColorKeys, getColor } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
+import {
+  chevronIcon,
+  inputLabel,
+  wrapperWithLabelVariants,
+  select,
+  wrapperVariants,
+} from './InputSelect.css'
 
 export type InputSelectProps = InputBaseProps & {
   name: string
@@ -17,7 +23,7 @@ export type InputSelectProps = InputBaseProps & {
   placeholder?: string
   autoFocus?: boolean
   className?: string
-  size?: 'large' | 'small'
+  size?: 'small' | 'medium' | 'large'
   backgroundColor?: Extract<UIColorKeys, 'backgroundStandard' | 'backgroundFrostedGlass'>
 }
 
@@ -29,7 +35,8 @@ export const InputSelect = ({
   defaultValue,
   placeholder,
   label,
-  size = 'large',
+  size = 'medium',
+  className,
   backgroundColor: _backgroundColor,
   ...rest
 }: InputSelectProps) => {
@@ -42,25 +49,39 @@ export const InputSelect = ({
     highlight()
   }
 
-  const labelText = label || placeholder
+  const labelId = useId()
+  const selectId = useId()
 
   return (
     <InputBase {...rest}>
       {() => (
-        <Wrapper>
-          <StyledSelect
+        <div
+          className={clsx(
+            wrapperVariants.base,
+            wrapperVariants[size],
+            label && wrapperWithLabelVariants[size],
+            className,
+          )}
+        >
+          {label && (
+            <label id={labelId} htmlFor={selectId} className={inputLabel}>
+              {label}
+            </label>
+          )}
+          <select
+            id={selectId}
             name={name}
             onChange={handleChange}
             value={value}
-            defaultValue={value ? undefined : defaultValue ?? ''}
-            variantSize={size}
+            defaultValue={value ? undefined : (defaultValue ?? '')}
             style={{ backgroundColor }}
+            className={clsx(select)}
             {...animationProps}
             {...rest}
           >
-            {labelText && (
+            {placeholder && (
               <option value="" disabled>
-                {labelText}
+                {placeholder}
               </option>
             )}
             {options.map(({ name, value, disabled }) => (
@@ -68,61 +89,11 @@ export const InputSelect = ({
                 {name}
               </option>
             ))}
-          </StyledSelect>
+          </select>
 
-          <StyledChevronIcon size="1rem" />
-        </Wrapper>
+          <ChevronIcon size="1rem" className={chevronIcon} />
+        </div>
       )}
     </InputBase>
   )
 }
-
-const Wrapper = styled.div({ position: 'relative' })
-
-const StyledChevronIcon = styled(ChevronIcon)({
-  position: 'absolute',
-  top: '50%',
-  right: '1.125rem',
-  transform: 'translateY(-50%)',
-  pointerEvents: 'none',
-})
-
-type SelectProps = { variantSize: Required<InputSelectProps['size']> }
-
-const elementConfig = { shouldForwardProp: isValidProp }
-const StyledSelect = styled(
-  'select',
-  elementConfig,
-)<SelectProps>(({ variantSize }) => ({
-  color: theme.colors.textPrimary,
-  width: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  paddingLeft: theme.space.md,
-  paddingRight: theme.space.xxl,
-  cursor: 'pointer',
-  backgroundColor: theme.colors.translucent1,
-  // Truncate if there's not enough space
-  whiteSpace: 'nowrap',
-  textOverflow: 'ellipsis',
-
-  ...(variantSize === 'small' && {
-    height: '2.5rem',
-    fontSize: theme.fontSizes.md,
-    borderRadius: theme.radius.xs,
-  }),
-
-  ...(variantSize === 'large' && {
-    height: '3.5rem',
-    fontSize: theme.fontSizes.xl,
-    borderRadius: theme.radius.sm,
-  }),
-
-  '&:invalid, &:disabled': {
-    color: theme.colors.textSecondary,
-  },
-
-  '&:disabled': {
-    cursor: 'not-allowed',
-  },
-}))
