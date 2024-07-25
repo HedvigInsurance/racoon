@@ -2,10 +2,12 @@ type HedvigLogoProps = {
   color?: string
   width?: number
   height?: number
+  className?: string
 }
 
-export const HedvigLogo = ({ color, width = 78, height = 24 }: HedvigLogoProps) => (
+export const HedvigLogo = ({ color, width = 78, height = 24, className }: HedvigLogoProps) => (
   <svg
+    className={className}
     width={width}
     height={height}
     fill="none"

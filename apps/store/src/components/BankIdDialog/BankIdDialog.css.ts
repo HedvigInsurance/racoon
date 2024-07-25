@@ -1,11 +1,17 @@
 import { style } from '@vanilla-extract/css'
 import { tokens } from 'ui'
 
+export const hedvigLogo = style({
+  // Horizotally align logo in the header
+  marginInline: 'auto',
+})
+
 export const qrCode = style({
   padding: tokens.space.md,
-  borderRadius: tokens.radius.md,
+  borderRadius: tokens.radius.xl,
   border: `1px solid ${tokens.colors.grayTranslucent200}`,
   backgroundColor: tokens.colors.white,
+  boxShadow: tokens.shadow.default,
 })
 
 export const qrCodeSkeleton = style({
@@ -13,27 +19,12 @@ export const qrCodeSkeleton = style({
   aspectRatio: '1 / 1',
 })
 
-export const iconWithText = style({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  gap: tokens.space.xs,
-})
-
 export const contentWrapper = style({
-  display: 'grid',
-  justifyItems: 'center',
   width: 'min(24rem, 100%)',
   marginInline: 'auto',
 })
 
-export const qrOnAnotherDeviceFooter = style({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-})
-
-export const qrOnAnotherDeviceLink = style({
+export const link = style({
   fontSize: tokens.fontSizes.md,
   color: tokens.colors.textSecondary,
   textDecoration: 'underline',

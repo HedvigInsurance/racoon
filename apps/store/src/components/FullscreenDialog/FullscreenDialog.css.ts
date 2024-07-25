@@ -68,7 +68,6 @@ export const dialogMain = styleVariants({
     dialogMainBase,
     {
       height: '100%',
-      display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       paddingInline: tokens.space.md,

@@ -1,4 +1,5 @@
 'use client'
+import clsx from 'clsx'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { QRCodeSVG } from 'qrcode.react'
@@ -8,11 +9,13 @@ import {
   Button,
   type ButtonProps,
   Text,
-  Space,
-  CheckIcon,
+  HedvigLogo,
+  RoundCheckIcon,
   BankIdIcon,
   WarningTriangleIcon,
+  yStack,
   theme,
+  visuallyHidden,
 } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
@@ -22,14 +25,7 @@ import { BankIdState } from '@/services/bankId/bankId.types'
 import { bankIdLogger } from '@/services/bankId/bankId.utils'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { useShopSessionId } from '@/services/shopSession/ShopSessionContext'
-import {
-  qrCode,
-  qrCodeSkeleton,
-  iconWithText,
-  contentWrapper,
-  qrOnAnotherDeviceFooter,
-  qrOnAnotherDeviceLink,
-} from './BankIdDialog.css'
+import { hedvigLogo, qrCode, qrCodeSkeleton, contentWrapper, link } from './BankIdDialog.css'
 
 export function BankIdDialog() {
   const { t } = useTranslation('bankid')
@@ -55,62 +51,70 @@ export function BankIdDialog() {
 
   let Content: ReactNode = null
   let Footer: ReactNode = null
-  let Header: ReactNode = undefined
 
   const { ssn } = currentOperation ?? {}
   if (currentOperation !== null && ssn) {
     switch (currentOperation.state) {
       case BankIdState.Starting:
       case BankIdState.Pending: {
+        const dialogTitleText =
+          currentOperation.type === 'login' ? t('LOGIN_BANKID') : t('SIGN_BANKID')
+
         Content = (
-          <Space className={contentWrapper} y={2}>
-            <BankIdIcon color="blue900" size="4rem" />
+          <>
+            <FullscreenDialog.Title className={visuallyHidden}>
+              {dialogTitleText}
+            </FullscreenDialog.Title>
 
-            {currentOperation.qrCodeData ? (
-              <QRCodeSVG className={qrCode} size={200} value={currentOperation.qrCodeData} />
-            ) : (
-              <Skeleton className={qrCodeSkeleton} />
-            )}
+            <div className={clsx(contentWrapper, yStack({ gap: 'lg' }))}>
+              <div className={yStack({ alignItems: 'center', gap: 'xl' })}>
+                <BankIdIcon color="black" size="4rem" />
 
-            <Space y={1.5}>
-              <div>
-                {currentOperation.bankidAppOpened ? (
-                  <>
-                    <Text color="textPrimary" align="center">
-                      {t('QR_CODE_READ_TITLE')}
-                    </Text>
-                    <Text color="textSecondary" align="center">
-                      {t('QR_CODE_READ_SUBTITLE')}
-                    </Text>
-                  </>
+                {currentOperation.qrCodeData ? (
+                  <QRCodeSVG className={qrCode} size={200} value={currentOperation.qrCodeData} />
                 ) : (
-                  <>
-                    <Text color="textPrimary" align="center">
-                      {currentOperation.type === 'login' ? t('LOGIN_BANKID') : t('SIGN_BANKID')}
-                    </Text>
-                    <Text color="textSecondary" align="center" balance={true}>
-                      {isMobile
-                        ? t('LOGIN_BANKID_AUTHENTICATION_STEPS_MOBILE')
-                        : t('LOGIN_BANKID_AUTHENTICATION_STEPS_DESKTOP')}
-                    </Text>
-                  </>
+                  <Skeleton className={qrCodeSkeleton} />
                 )}
               </div>
 
-              <FullscreenDialog.Close asChild>
-                <Button variant="ghost" fullWidth={true}>
-                  {t('BANKID_CANCEL')}
-                </Button>
-              </FullscreenDialog.Close>
-            </Space>
-          </Space>
+              <div className={yStack({ alignItems: 'center', gap: 'xl' })}>
+                <div>
+                  {currentOperation.bankidAppOpened ? (
+                    <>
+                      <Text color="textPrimary" align="center">
+                        {t('QR_CODE_READ_TITLE')}
+                      </Text>
+                      <Text color="textSecondary" align="center">
+                        {t('QR_CODE_READ_SUBTITLE')}
+                      </Text>
+                    </>
+                  ) : (
+                    <>
+                      <Text color="textPrimary" align="center">
+                        {dialogTitleText}
+                      </Text>
+                      <Text color="textSecondary" align="center" balance={true}>
+                        {t('BANKID_AUTHENTICATION_STEPS')}
+                      </Text>
+                    </>
+                  )}
+                </div>
+
+                <FullscreenDialog.Close asChild>
+                  <Button variant="secondary" size="medium">
+                    {t('BANKID_CANCEL')}
+                  </Button>
+                </FullscreenDialog.Close>
+              </div>
+            </div>
+          </>
         )
         Footer =
           !isMobile && currentOperation.autoStartToken ? (
-            <div className={qrOnAnotherDeviceFooter}>
+            <div className={yStack({ alignItems: 'center', gap: 'none' })}>
               <Text>{t('NO_MOBILE_BANKID_TITLE')}</Text>
               <Link
-                className={qrOnAnotherDeviceLink}
+                className={link}
                 href={getBankIdUrl(currentOperation.autoStartToken)}
                 target="_self"
               >
@@ -122,15 +126,22 @@ export function BankIdDialog() {
       }
 
       case BankIdState.Success: {
-        // Remove close button from header
-        Header = null
+        const dialogTitleText =
+          currentOperation.type === 'login'
+            ? t('LOGIN_BANKID_SUCCESS')
+            : t('BANKID_MODAL_SUCCESS_PROMPT')
+
         Content = (
-          <Text className={iconWithText}>
-            <CheckIcon size="1rem" color={theme.colors.signalGreenElement} />
-            {currentOperation.type === 'login'
-              ? t('LOGIN_BANKID_SUCCESS')
-              : t('BANKID_MODAL_SUCCESS_PROMPT')}
-          </Text>
+          <>
+            <FullscreenDialog.Title className={visuallyHidden}>
+              {dialogTitleText}
+            </FullscreenDialog.Title>
+
+            <Text className={yStack({ alignItems: 'center', gap: 'md' })}>
+              <RoundCheckIcon size="2rem" color={theme.colors.signalGreenElement} />
+              {dialogTitleText}
+            </Text>
+          </>
         )
         Footer = null
         break
@@ -138,7 +149,7 @@ export function BankIdDialog() {
 
       case BankIdState.Error: {
         Content = (
-          <Space className={contentWrapper} y={1}>
+          <div className={clsx(contentWrapper, yStack({ alignItems: 'center', gap: 'md' }))}>
             <WarningTriangleIcon size="1.5rem" color={theme.colors.amber600} />
 
             {currentOperation.error ? (
@@ -156,7 +167,7 @@ export function BankIdDialog() {
             <Button variant="primary" size="medium" {...tryAgainButtonProps}>
               {t('LOGIN_BANKID_TRY_AGAIN')}
             </Button>
-          </Space>
+          </div>
         )
         Footer = (
           <FullscreenDialog.Close asChild>
@@ -172,7 +183,11 @@ export function BankIdDialog() {
 
   return (
     <FullscreenDialog.Root open={isOpen} onOpenChange={handleOpenChange}>
-      <FullscreenDialog.Modal center={true} Header={Header} Footer={Footer}>
+      <FullscreenDialog.Modal
+        center={true}
+        Header={<HedvigLogo className={hedvigLogo} />}
+        Footer={Footer}
+      >
         {Content}
       </FullscreenDialog.Modal>
     </FullscreenDialog.Root>
