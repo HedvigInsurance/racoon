@@ -8,10 +8,9 @@ import {
   useState,
   useId,
 } from 'react'
-import { MinusIcon, PlusIcon } from 'ui'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
+import { MinusIcon, PlusIcon, xStack, yStack } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
-import { outerWrapper, innerWrapper, select, inputLabel, stepButton } from './StepperInput.css'
+import { outerWrapper, select, inputLabel, stepButton } from './StepperInput.css'
 
 export type StepperInputProps = {
   name?: string
@@ -73,7 +72,7 @@ export const StepperInput = (props: StepperInputProps) => {
 
   return (
     <div className={clsx(outerWrapper, className)} {...animationProps}>
-      <div className={innerWrapper}>
+      <div className={yStack({ gap: 'none', flexGrow: 1 })}>
         {label && (
           <label id={labelId} className={inputLabel} htmlFor={selectId}>
             {label}
@@ -96,7 +95,7 @@ export const StepperInput = (props: StepperInputProps) => {
         </select>
       </div>
 
-      <SpaceFlex space={0.5}>
+      <div className={xStack({ gap: 'md' })}>
         <button
           className={stepButton}
           type="button"
@@ -117,7 +116,7 @@ export const StepperInput = (props: StepperInputProps) => {
         >
           <PlusIcon size="1rem" />
         </button>
-      </SpaceFlex>
+      </div>
     </div>
   )
 }
