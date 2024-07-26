@@ -53,6 +53,7 @@ export const AutomaticField = ({ field, autoFocus }: Props) => {
           required={field.required}
           defaultValue={field.value ?? field.defaultValue}
           autoFocus={autoFocus}
+          suffix={field.suffix}
         />
       )
 
