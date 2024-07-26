@@ -144,7 +144,7 @@
     "storybook-addon-apollo-client": "6.0.0",
     "subscriptions-transport-ws": "0.11.0",
     "ts-jest": "29.2.3",
-    "typescript": "5.5.3",
+    "typescript": "5.5.4",
     "webpack": "5.76.2",
     "whatwg-fetch": "3.6.20"
   },
