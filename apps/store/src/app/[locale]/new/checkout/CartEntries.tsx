@@ -2,6 +2,7 @@
 
 import { datadogLogs } from '@datadog/browser-logs'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useSearchParams } from 'next/navigation'
 import { ProductItem } from '@/components/ProductItemV2/ProductItem'
 import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
 import { Divider, ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
@@ -10,6 +11,7 @@ import { useShowAppError } from '@/services/appErrors/appErrorAtom'
 import { type ProductOfferFragment, useCartEntryRemoveMutation } from '@/services/graphql/generated'
 import { useShopSessionSuspense } from '@/services/shopSession/app-router/useShopSessionSuspense'
 import { useTracking } from '@/services/Tracking/useTracking'
+import { QueryParam } from './CheckoutPage.constants'
 
 type Props = { shopSessionId: string }
 
@@ -17,6 +19,7 @@ export function CartEntries({ shopSessionId }: Props) {
   const shopSession = useShopSessionSuspense({ shopSessionId })
   const tracking = useTracking()
   const showError = useShowAppError()
+  const searchParams = useSearchParams()
 
   const [removeCartItem] = useCartEntryRemoveMutation({
     awaitRefetchQueries: true,
@@ -46,7 +49,11 @@ export function CartEntries({ shopSessionId }: Props) {
               exit={{ opacity: 0, height: 0 }}
               style={{ position: 'relative' }}
             >
-              <ProductItem selectedOffer={offer} onDelete={handleRemoveCartItem(offer)} />
+              <ProductItem
+                selectedOffer={offer}
+                onDelete={handleRemoveCartItem(offer)}
+                defaultExpanded={searchParams?.get(QueryParam.ExpandCart) === '1'}
+              />
             </motion.div>
           ))}
         </AnimatePresence>
