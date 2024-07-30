@@ -8,15 +8,17 @@ import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountField
 import { Divider, ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
 import { useShowAppError } from '@/services/appErrors/appErrorAtom'
-import { type ProductOfferFragment, useCartEntryRemoveMutation } from '@/services/graphql/generated'
-import { useShopSessionSuspense } from '@/services/shopSession/app-router/useShopSessionSuspense'
+import {
+  useCartEntryRemoveMutation,
+  type ProductOfferFragment,
+  type ShopSessionFragment,
+} from '@/services/graphql/generated'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { QueryParam } from './CheckoutPage.constants'
 
-type Props = { shopSessionId: string }
+type Props = { shopSession: ShopSessionFragment }
 
-export function CartEntries({ shopSessionId }: Props) {
-  const shopSession = useShopSessionSuspense({ shopSessionId })
+export function CartEntries({ shopSession }: Props) {
   const tracking = useTracking()
   const showError = useShowAppError()
   const searchParams = useSearchParams()
