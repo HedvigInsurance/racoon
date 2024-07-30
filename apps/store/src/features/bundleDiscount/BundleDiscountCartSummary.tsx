@@ -38,7 +38,10 @@ export function BundleDiscountCartSummary({ cart }: Props) {
     })
   } else {
     // Safe to sort as strings, since API dates use ISO8601 format
-    const earliestStartDate = [...startDates.values()].toSorted()[0]
+    // GOTCHA: toSorted() not found when server side rendering on Vercel, hence `sort()`
+    const sortedStartDates = [...startDates.values()]
+    sortedStartDates.sort()
+    const earliestStartDate = sortedStartDates[0]
     content = t('BUNDLE_DISCOUNT_SUMMARY_WITHOUT_TOTAL', {
       percentage,
       startDate: formatter.dateFull(new Date(earliestStartDate), { abbreviateMonth: true }),
