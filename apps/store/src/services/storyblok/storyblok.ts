@@ -210,6 +210,12 @@ export type ConfirmationStory = ISbStoryData & {
   }
 }
 
+export type ConnectPaymentStory = ISbStoryData & {
+  content: ISbStoryData['content'] & {
+    body?: Array<SbBlokData>
+  }
+}
+
 export const initStoryblok = () => {
   // https://github.com/storyblok/storyblok-react/issues/156#issuecomment-1197764828
   let shouldUseBridge = false
