@@ -167,7 +167,8 @@ export const ExtraBuildingsField = ({ field, buildingOptions }: ExtraBuildingsFi
                 <Space y={0.25}>
                   <InputSelect
                     name={Field.Type}
-                    placeholder={t('FIELD_EXTRA_BUILDINGS_TYPE_LABEL')}
+                    label={t('FIELD_EXTRA_BUILDINGS_TYPE_LABEL')}
+                    size="large"
                     options={buildingOptionsInput}
                     required={true}
                   />

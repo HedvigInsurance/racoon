@@ -21,10 +21,13 @@ const options = [
 export const CarMileageField = ({ field, autoFocus, backgroundColor }: Props) => {
   const { t } = useTranslation('purchase-form')
 
+  // TODO: Use size=medium when text input styles are updated
   return (
     <InputSelect
       name={field.name}
-      placeholder={t(field.label.key, { defaultValue: t('FIELD_MILEAGE_LABEL') })}
+      label={t('FIELD_MILEAGE_LABEL')}
+      placeholder={t('FIELD_MILEAGE_PLACEHOLDER')}
+      size="large"
       required={field.required}
       defaultValue={field.value ?? field.defaultValue}
       options={options.map((option) => ({
