@@ -66,7 +66,7 @@ export function CheckoutForm({ shopSessionId }: CheckoutFormProps) {
       const nextCheckoutStep = getNextCheckoutStep(data.currentMember.paymentInformation.status)
       // TODO: router from next/navigation has a different API so we can't wait for the router to be updated
       // before we navigate to the next step. We probably gonna need to change how BankIdDialog works so
-      // we can have smooth transitions betweens sucess state and connect payment page.
+      // we can have smooth transitions between sucess state and connect payment page.
       router.push(
         getCheckoutStepLink({ locale, step: nextCheckoutStep, shopSessionId: shopSession.id }),
       )
