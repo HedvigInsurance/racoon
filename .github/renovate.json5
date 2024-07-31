@@ -46,6 +46,15 @@
       // By default, renovate does not group them and most updates break because of this
       "matchPackagePatterns": ["^@storyblok"],
       groupName: "storyblok packages",
+    },
+    {
+      // See https://vercel.com/docs/functions/runtimes/node-js/node-js-versions for available options
+      "description": "Ignore nodejs major versions, we want to use the same version as Vercel uses",
+      "matchPackageNames": ["node"],
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["engines"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
     }
   ],
   // Rate limits
