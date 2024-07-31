@@ -3,12 +3,13 @@ import { StoryblokComponent } from '@storyblok/react'
 import { useTranslation } from 'next-i18next'
 import { useMemo } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
-import { Button, Heading, PlusIcon, Text } from 'ui'
+import { Button, Heading, PlusIcon, Text, xStack, yStack } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { usePriceCalculatorDeductibleInfo } from '@/features/priceCalculator/priceCalculatorAtoms'
 import type { Money, ProductOfferFragment } from '@/services/graphql/generated'
 import { useFormatter } from '@/utils/useFormatter'
 import * as CardRadioGroup from './CardRadioGroup'
+import { priceLabel } from './DeductibleSelectorV2.css'
 
 type Deductible = {
   id: string
@@ -50,15 +51,22 @@ export function DeductibleSelectorV2({ offers, selectedOffer, onValueChange }: P
       <CardRadioGroup.Root value={selectedOffer.id} onValueChange={onValueChange}>
         {deductibleLevels.map((item) => (
           <CardRadioGroup.Item key={item.id} value={item.id}>
-            <Heading as="h2" variant="standard.24">
-              {item.title}
-            </Heading>
-            <Heading as="h3" variant="standard.24" color="textSecondary">
-              {formatter.monthlyPrice(item.price)}
-            </Heading>
-            <Text color="textSecondary" className={sprinkles({ marginTop: 'md' })}>
-              {item.description}
-            </Text>
+            <div className={xStack({ gap: 'xs' })}>
+              <CardRadioGroup.Indicator />
+              <div className={yStack({ flexGrow: 1, gap: 'xs' })}>
+                <div className={xStack({ justifyContent: 'space-between', alignItems: 'center' })}>
+                  <Heading as="h2" variant="standard.24">
+                    {item.title}
+                  </Heading>
+                  <Text as="div" size="xs" color="textPrimary" className={priceLabel}>
+                    {formatter.monthlyPrice(item.price)}
+                  </Text>
+                </div>
+                <Text size="xs" color="textSecondary">
+                  {item.description}
+                </Text>
+              </div>
+            </div>
           </CardRadioGroup.Item>
         ))}
       </CardRadioGroup.Root>
