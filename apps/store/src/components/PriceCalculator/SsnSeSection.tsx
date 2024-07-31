@@ -1,10 +1,14 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { useAtomValue } from 'jotai'
+import { useAtomValue, useSetAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { type FormEventHandler, memo } from 'react'
 import { Button, Space } from 'ui'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
-import { shopSessionCustomerAtom } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
+import {
+  activeFormSectionIdAtom,
+  GOTO_NEXT_SECTION,
+  shopSessionCustomerAtom,
+} from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { useShopSessionCustomerUpdateMutation } from '@/services/graphql/generated'
 import { useShopSessionId } from '@/services/shopSession/ShopSessionContext'
 import { useErrorMessage } from '@/utils/useErrorMessage'
@@ -14,14 +18,13 @@ const SsnFieldName = 'ssn'
 export const SsnSeSection = memo(() => {
   const shopSessionId = useShopSessionId()!
   const shopSessionCustomer = useAtomValue(shopSessionCustomerAtom)
-  const { t } = useTranslation('purchase-form')
+  const setActiveSectionId = useSetAtom(activeFormSectionIdAtom)
   const [updateCustomer, result] = useShopSessionCustomerUpdateMutation({
     // priceIntent.suggestedData may be updated based on customer.ssn
     refetchQueries: 'active',
     awaitRefetchQueries: true,
-    onCompleted(data) {
-      const { shopSession } = data.shopSessionCustomerUpdate
-      if (!shopSession) return
+    onCompleted() {
+      setActiveSectionId(GOTO_NEXT_SECTION)
     },
     onError(error) {
       datadogLogs.logger.debug(`Failed to update customer ssn: ${error.message}`, { error })
@@ -39,6 +42,7 @@ export const SsnSeSection = memo(() => {
     updateCustomer({ variables: { input: { shopSessionId: shopSessionId, ssn } } })
   }
 
+  const { t } = useTranslation('purchase-form')
   const errorMessage = useErrorMessage(result.error)
 
   return (

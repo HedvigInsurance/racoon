@@ -85,6 +85,13 @@ export const activeFormSectionIdAtom = atom(
     const priceIntentId = getAtomValueOrThrow(get, currentPriceIntentIdAtom)
     if (newValue === GOTO_NEXT_SECTION) {
       const oldValue = get(activeFormSectionIdAtom)
+      // Special case - write current calculated value if we had null before.
+      // No need to update it in this case, calculation already returned the result we want.
+      if (get(activeFormSectionIdAtomFamily(priceIntentId)) == null) {
+        set(activeFormSectionIdAtomFamily(priceIntentId), oldValue)
+        return
+      }
+
       const form = get(priceCalculatorFormAtom)
       const currentSectionIndex = form.sections.findIndex(({ id }) => id === oldValue)
 

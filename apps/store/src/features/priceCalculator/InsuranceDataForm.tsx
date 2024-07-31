@@ -131,6 +131,8 @@ function InsuranceDataSection({ section }: InsuranceDataSectionProps) {
   const confirmPriceIntent = useConfirmPriceIntent()
 
   const showPriceIntentWarning = useSetAtom(showPriceIntentWarningAtom)
+  const setActiveSectionId = useSetAtom(activeFormSectionIdAtom)
+
   const submitPriceCalculatorSection = useHandleSubmitPriceCalculatorSection({
     onSuccess({ priceIntent, customer }) {
       const form = setupForm({
@@ -156,21 +158,11 @@ function InsuranceDataSection({ section }: InsuranceDataSectionProps) {
         showPriceIntentWarning(true)
         datadogRum.addAction('Show PriceIntent Warning')
       } else {
-        goToNextSection()
-      }
-
-      if (priceIntent.externalInsurer) {
-        // FIXME: restore Insurely support
-        // NOTE: We're still going to the next section underneath Insurely prompt
-        // showFetchInsurance()
+        setActiveSectionId(GOTO_NEXT_SECTION)
       }
     },
   })
 
-  const setActiveSectionId = useSetAtom(activeFormSectionIdAtom)
-  const goToNextSection = () => {
-    setActiveSectionId(GOTO_NEXT_SECTION)
-  }
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault()
     const jsonData = formDataToJson(new FormData(event.currentTarget), section.items)
