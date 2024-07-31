@@ -1,17 +1,16 @@
 'use client'
 
 import clsx from 'clsx'
-import type { ChangeEventHandler, InputHTMLAttributes, MouseEventHandler } from 'react'
+import type { ChangeEventHandler, InputHTMLAttributes, MouseEventHandler, ReactNode } from 'react'
 import { useId, useRef, useState } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
-import { CrossIconSmall, LockIcon, Text, WarningTriangleIcon, theme, yStack } from 'ui'
+import { LockIcon, Text, WarningTriangleIcon, theme, yStack, CrossIcon } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 import {
   deleteButton,
   input,
   inputLabel,
   inputWrapper,
-  messageWithIcon,
   upperCaseInputStyle,
   wrapper,
 } from './TextField.css'
@@ -71,12 +70,33 @@ export const TextField = (props: Props) => {
 
   const inputValue = inputProps.value || value
 
+  let endIcon: ReactNode = null
+  if (warning) {
+    endIcon = <WarningTriangleIcon size="1.5em" color={theme.colors.amber600} />
+  } else if (inputValue) {
+    if (inputProps.disabled || inputProps.readOnly) {
+      endIcon = <LockIcon size="1.5rem" color={theme.colors.textSecondary} />
+    } else {
+      endIcon = (
+        <button
+          className={deleteButton}
+          type="button"
+          onClick={handleClickDelete}
+          aria-hidden={true}
+          tabIndex={-1}
+        >
+          <CrossIcon size="1.5rem" />
+        </button>
+      )
+    }
+  }
+
   return (
     <div className={yStack({ gap: 'xxs' })}>
       <div
         className={wrapper[size]}
         {...animationProps}
-        data-active={!!inputValue || !!inputProps.placeholder}
+        data-active={!!inputValue}
         data-warning={warning}
         data-readonly={inputProps.readOnly ? '' : undefined}
         data-hidden={inputProps.hidden ?? undefined}
@@ -89,7 +109,7 @@ export const TextField = (props: Props) => {
         >
           {label}
         </label>
-        <div className={inputWrapper[size]}>
+        <div className={inputWrapper}>
           <input
             className={clsx(input[size], upperCaseInput && upperCaseInputStyle)}
             {...inputProps}
@@ -106,33 +126,14 @@ export const TextField = (props: Props) => {
             </Text>
           )}
 
-          {inputValue &&
-            (inputProps.disabled || inputProps.readOnly ? (
-              <LockIcon size="1rem" color={theme.colors.textSecondary} />
-            ) : (
-              <button
-                className={deleteButton}
-                type="button"
-                onClick={handleClickDelete}
-                aria-hidden={true}
-                tabIndex={-1}
-              >
-                <CrossIconSmall />
-              </button>
-            ))}
+          {endIcon}
         </div>
       </div>
-      {message &&
-        (warning ? (
-          <Text className={messageWithIcon} size="sm">
-            <WarningTriangleIcon size="1em" color={theme.colors.amber600} />
-            {message}
-          </Text>
-        ) : (
-          <Text className={sprinkles({ paddingLeft: 'md' })} size="sm">
-            {message}
-          </Text>
-        ))}
+      {message && (
+        <Text className={sprinkles({ paddingLeft: 'md' })} size="xs">
+          {message}
+        </Text>
+      )}
     </div>
   )
 }

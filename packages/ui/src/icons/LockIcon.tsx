@@ -4,9 +4,8 @@ import { IconRoot } from './Root'
 export const LockIcon = ({ size = '1.5rem', color = 'currentColor', ...props }: IconRootProps) => {
   return (
     <IconRoot
-      width={size}
-      height={size}
-      viewBox="0 0 16 16"
+      size={size}
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
@@ -14,7 +13,7 @@ export const LockIcon = ({ size = '1.5rem', color = 'currentColor', ...props }: 
       <path
         fillRule="evenodd"
         clipRule="evenodd"
-        d="M8 1.25C5.92893 1.25 4.25 2.92893 4.25 5V7H4C2.89543 7 2 7.89543 2 9V13C2 14.1046 2.89543 15 4 15H12C13.1046 15 14 14.1046 14 13V9C14 7.89543 13.1046 7 12 7H11.75V5C11.75 2.92893 10.0711 1.25 8 1.25ZM10.25 7V5C10.25 3.75736 9.24264 2.75 8 2.75C6.75736 2.75 5.75 3.75736 5.75 5V7H10.25Z"
+        d="M12 5.25C13.7949 5.25 15.25 6.70507 15.25 8.5L15.25 9.75H8.75L8.75 8.5C8.75 6.70507 10.2051 5.25 12 5.25ZM7.25 9.76121V8.5C7.25 5.87665 9.37665 3.75 12 3.75C14.6234 3.75 16.75 5.87665 16.75 8.5L16.75 9.76121C18.1516 9.88752 19.25 11.0655 19.25 12.5V17.5C19.25 19.0188 18.0188 20.25 16.5 20.25H7.5C5.98122 20.25 4.75 19.0188 4.75 17.5V12.5C4.75 11.0655 5.84838 9.88752 7.25 9.76121Z"
         fill={color}
       />
     </IconRoot>
