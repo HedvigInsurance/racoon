@@ -106,6 +106,7 @@ export const OfferPresenter = memo((props: Props) => {
           datadogRum.addAction(BankSigneringEvent.Requested)
         }
       }
+
       onSuccessRef.current(addedProductOffer)
     },
   })

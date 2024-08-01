@@ -2,10 +2,9 @@
 
 import { QuickAddOfferContainer } from '@/components/QuickAdd/QuickAddOfferContainer'
 import { useBonusOffer } from '@/components/QuickAdd/useBonusOffer'
-import { useShopSessionSuspense } from '@/services/shopSession/app-router/useShopSessionSuspense'
+import { type ShopSessionFragment } from '@/services/graphql/generated'
 
-export function BonusOffer({ shopSessionId }: { shopSessionId: string }) {
-  const shopSession = useShopSessionSuspense({ shopSessionId })
+export function BonusOffer({ shopSession }: { shopSession: ShopSessionFragment }) {
   const offerRecommendation = useBonusOffer()
 
   if (!offerRecommendation) {
@@ -14,7 +13,7 @@ export function BonusOffer({ shopSessionId }: { shopSessionId: string }) {
 
   return (
     <QuickAddOfferContainer
-      shopSessionId={shopSessionId}
+      shopSessionId={shopSession.id}
       cart={shopSession.cart}
       {...offerRecommendation}
     />

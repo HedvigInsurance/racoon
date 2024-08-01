@@ -15,12 +15,11 @@ import {
   CurrentMemberDocument,
   type CurrentMemberQuery,
   type CurrentMemberQueryVariables,
+  type CartFragment,
   MemberPaymentConnectionStatus,
 } from '@/services/graphql/generated'
-import { useShopSessionSuspense } from '@/services/shopSession/app-router/useShopSessionSuspense'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
-import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { errorPrompt } from './CheckoutForm.css'
@@ -29,13 +28,19 @@ import { getCheckoutStepLink } from './CheckoutPage.helpers'
 
 type CheckoutFormProps = {
   shopSessionId: string
+  ssn: string
+  cart: CartFragment
+  shouldCollectName: boolean
+  shouldCollectEmail: boolean
 }
 
-export function CheckoutForm({ shopSessionId }: CheckoutFormProps) {
-  const shopSession = useShopSessionSuspense({ shopSessionId })
-  // We check for the presence of customer and ssn values at route level
-  const customer = shopSession.customer!
-  const ssn = customer.ssn!
+export function CheckoutForm({
+  shopSessionId,
+  ssn,
+  cart,
+  shouldCollectName,
+  shouldCollectEmail,
+}: CheckoutFormProps) {
   const { reset: resetShopSession } = useShopSession()
 
   const { t } = useTranslation('checkout')
@@ -48,7 +53,7 @@ export function CheckoutForm({ shopSessionId }: CheckoutFormProps) {
   const [shouldShowSignError, setShouldShowSignError] = useState(false)
 
   const [handleSubmitSign, { loading, userError }] = useHandleSubmitCheckout({
-    shopSessionId: shopSession.id,
+    shopSessionId,
     ssn,
     async onSuccess() {
       const { data } = await apolloClient.query<CurrentMemberQuery, CurrentMemberQueryVariables>({
@@ -57,7 +62,7 @@ export function CheckoutForm({ shopSessionId }: CheckoutFormProps) {
       const memberId = data.currentMember.id
 
       tracking.reportPurchase({
-        cart: shopSession.cart,
+        cart,
         memberId,
         customer: data.currentMember,
       })
@@ -67,17 +72,12 @@ export function CheckoutForm({ shopSessionId }: CheckoutFormProps) {
       // TODO: router from next/navigation has a different API so we can't wait for the router to be updated
       // before we navigate to the next step. We probably gonna need to change how BankIdDialog works so
       // we can have smooth transitions between sucess state and connect payment page.
-      router.push(
-        getCheckoutStepLink({ locale, step: nextCheckoutStep, shopSessionId: shopSession.id }),
-      )
+      router.push(getCheckoutStepLink({ locale, step: nextCheckoutStep, shopSessionId }))
     },
     onError() {
       setShouldShowSignError(true)
     },
   })
-
-  const shouldCollectName = getShouldCollectName(customer)
-  const shouldCollectEmail = getShouldCollectEmail(customer)
 
   return (
     <>
@@ -116,7 +116,7 @@ export function CheckoutForm({ shopSessionId }: CheckoutFormProps) {
 
           <div className={yStack({ gap: 'xs' })}>
             <Button Icon={<BankIdIcon color="white" />} loading={loading}>
-              {t('SIGN_BUTTON', { count: shopSession.cart.entries.length })}
+              {t('SIGN_BUTTON', { count: cart.entries.length })}
             </Button>
             {userError ? (
               <Text as="p" size="xs" color="textSecondary" align="center">
