@@ -1,5 +1,7 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import type { Meta, StoryFn } from '@storybook/react'
+import { type ReactNode } from 'react'
+import { yStack } from 'ui'
 import { TextField } from './TextField'
 
 const meta: Meta<typeof TextField> = {
@@ -18,52 +20,73 @@ export default meta
 
 const Template: StoryFn<typeof TextField> = ({ defaultValue, ...props }) => {
   return (
-    <>
-      <TextField {...props} />
-      <div style={{ marginTop: '0.25rem' }}></div>
-      <TextField {...props} defaultValue={defaultValue} />
-      <div style={{ marginTop: '0.25rem' }}></div>
-      <TextField {...props} defaultValue={defaultValue} disabled />
-      <div style={{ marginTop: '0.25rem' }}></div>
-      <TextField {...props} defaultValue={defaultValue} warning message="Wrong input, try again" />
-    </>
+    <div className={yStack({ gap: 'xl' })}>
+      <Variant label="Regular">
+        <TextField {...props} />
+      </Variant>
+      <Variant label="Filled">
+        <TextField {...props} defaultValue={defaultValue} />
+      </Variant>
+      <Variant label="Disabled">
+        <TextField {...props} defaultValue={defaultValue} disabled />
+      </Variant>
+      <Variant label="Warning">
+        <TextField
+          {...props}
+          defaultValue={defaultValue}
+          warning
+          message="There's something wrong with the value, try again"
+        />
+      </Variant>
+    </div>
   )
 }
 
-export const Large = {
+const Variant = ({ label, children }: { label: string; children: ReactNode }) => (
+  <>
+    <div className={yStack({ gap: 'xs' })}>
+      <div style={{ backgroundColor: '#ECF4F9', width: 'fit-content', padding: '0 0.5rem' }}>
+        {label}
+      </div>
+      {children}
+    </div>
+  </>
+)
+
+const textArgs = {
+  label: 'Name',
+  defaultValue: 'John Sculley',
+  type: 'text',
+  inputMode: 'text',
+}
+
+export const large = {
   render: Template,
   args: {
-    label: 'Name',
+    ...textArgs,
     size: 'large',
-    defaultValue: 'John Sculley',
-    type: 'text',
-    inputMode: 'text',
   },
 }
 
 export const medium = {
   render: Template,
   args: {
-    label: 'Name',
+    ...textArgs,
     size: 'medium',
-    defaultValue: 'John Sculley',
-    type: 'text',
-    inputMode: 'text',
   },
 }
 
-export const Small = {
+export const small = {
   render: Template,
   args: {
+    ...textArgs,
     label: 'Address',
     size: 'small',
     defaultValue: '786 Franklin Ave.',
-    type: 'text',
-    inputMode: 'text',
   },
 }
 
-export const Number = {
+export const number = {
   render: Template,
   args: {
     type: 'text',

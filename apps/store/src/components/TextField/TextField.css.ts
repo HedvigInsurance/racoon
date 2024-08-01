@@ -45,7 +45,7 @@ export const baseWrapper = style({
 export const wrapper = styleVariants({
   small: [baseWrapper, { height: '3.5rem' }],
   medium: [baseWrapper, { height: '4rem' }],
-  large: [baseWrapper, { height: '4.5rem' }],
+  large: [baseWrapper, { height: '4rem' }],
 })
 
 export const baseLabel = style({
@@ -74,6 +74,10 @@ export const baseLabel = style({
   },
 })
 
+// Transform logic
+// - `scale` is calculated to make small label have desired font size.
+//   Unfortunately, we cannot refer to our tokens since we need unitless values for calc
+// - `translateY` is matched manually to sync final look with figma
 export const inputLabel = styleVariants({
   small: [
     baseLabel,
@@ -81,7 +85,7 @@ export const inputLabel = styleVariants({
       fontSize: tokens.fontSizes.md,
       selectors: {
         [`${baseWrapper}:focus-within > &, ${baseWrapper}[data-active=true] > &`]: {
-          transform: `translateY(-0.4rem) scale(0.8)`,
+          transform: `translateY(-10px) scale(${14 / 18})`,
         },
       },
     },
@@ -92,7 +96,7 @@ export const inputLabel = styleVariants({
       fontSize: tokens.fontSizes.md,
       selectors: {
         [`${baseWrapper}:focus-within > &, ${baseWrapper}[data-active=true] > &`]: {
-          transform: `translateY(-0.5rem) scale(0.8)`,
+          transform: `translateY(-10px) scale(${14 / 18})`,
         },
       },
     },
@@ -104,30 +108,24 @@ export const inputLabel = styleVariants({
       selectors: {
         [`${baseWrapper}:focus-within > &, ${baseWrapper}[data-active=true] > &`]: {
           overflow: 'visible',
-          transform: `translateY(-0.6rem) scale(0.6)`,
+          transform: `translateY(-9px) scale(${14 / 24})`,
         },
       },
     },
   ],
 })
 
-export const baseInputWrapper = style([
+export const inputWrapper = style([
+  xStack({ alignItems: 'center', gap: 'xs', paddingRight: 'md' }),
   {
-    position: 'absolute',
     width: '100%',
   },
-  xStack({ alignItems: 'center', gap: 'xs', paddingRight: 'md' }),
 ])
-
-export const inputWrapper = styleVariants({
-  small: [baseInputWrapper, { bottom: '0.3125rem' }],
-  medium: [baseInputWrapper, { bottom: '0.78125rem' }],
-  large: [baseInputWrapper, { bottom: '0.625rem' }],
-})
 
 export const baseInput = style({
   width: '100%',
   paddingLeft: tokens.space.md,
+  paddingTop: tokens.space.md,
 
   selectors: {
     ['&:disabled, &:read-only']: {
@@ -152,12 +150,6 @@ export const input = styleVariants({
   small: [baseInput, { fontSize: tokens.fontSizes.lg }],
   medium: [baseInput, { fontSize: tokens.fontSizes.md }],
   large: [baseInput, { fontSize: tokens.fontSizes.xl }],
-})
-
-export const messageWithIcon = xStack({
-  alignItems: 'center',
-  gap: 'xs',
-  paddingLeft: 'xxs',
 })
 
 export const deleteButton = style({
