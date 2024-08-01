@@ -1,6 +1,8 @@
 import { cookies } from 'next/headers'
 import { notFound } from 'next/navigation'
+import { ConnectPaymentBlock } from '@/blocks/ConnectPaymentBlock'
 import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
+import { getStoryBySlug, type ConnectPaymentStory } from '@/services/storyblok/storyblok'
 import { createTrustlyUrl } from '@/services/trustly/createTrustlyUrl'
 import { type RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
@@ -19,6 +21,14 @@ export default async function Page({ params, searchParams }: Props) {
     notFound()
   }
 
+  // We shouldn't fail the page if the CMS content is missing
+  let story: ConnectPaymentStory | null = null
+  try {
+    story = await fetchConnectPaymentStory(params.locale)
+  } catch (error) {
+    console.log('Checkout Payment | No CMS content found')
+  }
+
   const nextUrl =
     typeof searchParams[QueryParam.NextUrl] === 'string'
       ? searchParams[QueryParam.NextUrl]
@@ -32,12 +42,21 @@ export default async function Page({ params, searchParams }: Props) {
   })
 
   return (
-    <CheckoutPaymentTrustlyPage
-      shopSessionId={params.shopSessionId}
-      trustlyUrl={trustlyUrl}
-      nextUrl={nextUrl}
-    />
+    <>
+      <CheckoutPaymentTrustlyPage
+        shopSessionId={params.shopSessionId}
+        trustlyUrl={trustlyUrl}
+        nextUrl={nextUrl}
+      />
+
+      {story && <ConnectPaymentBlock blok={story.content} />}
+    </>
   )
+}
+
+const CONNECT_PAYMENT_SLUG = 'connect-payment'
+function fetchConnectPaymentStory(locale: RoutingLocale): Promise<ConnectPaymentStory> {
+  return getStoryBySlug<ConnectPaymentStory>(CONNECT_PAYMENT_SLUG, { locale })
 }
 
 export const dynamic = 'force-dynamic'
