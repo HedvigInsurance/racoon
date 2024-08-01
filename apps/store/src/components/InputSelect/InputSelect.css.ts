@@ -106,6 +106,10 @@ export const select = style({
     '&:disabled': {
       cursor: 'not-allowed',
     },
+
+    '&:focus-within': {
+      border: `solid 1px ${tokens.colors.borderFocusedInput}`,
+    },
   },
 })
 

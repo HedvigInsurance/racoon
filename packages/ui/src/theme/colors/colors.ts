@@ -322,6 +322,7 @@ export const colors = {
   borderTranslucent3: grayTranslucent[700],
   borderOpaque4: gray[800],
   borderTranslucent4: grayTranslucent[800],
+  borderFocusedInput: grayTranslucent[300],
 
   // Fills
   opaque1: gray[100],

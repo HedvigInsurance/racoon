@@ -13,6 +13,10 @@ export const outerWrapper = style({
     '&:has(label)': {
       paddingBlock: tokens.space.sm,
     },
+
+    '&:focus-within': {
+      border: `solid 1px ${tokens.colors.borderFocusedInput}`,
+    },
   },
 })
 

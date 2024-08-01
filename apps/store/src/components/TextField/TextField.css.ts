@@ -39,6 +39,10 @@ export const baseWrapper = style({
     '&[data-warning=true]': {
       animation: `${warningAnimation} 1.5s cubic-bezier(0.2, -2, 0.8, 2) 1`,
     },
+
+    '&:focus-within': {
+      border: `solid 1px ${tokens.colors.borderFocusedInput}`,
+    },
   },
 })
 
