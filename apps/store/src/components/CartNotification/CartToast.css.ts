@@ -49,7 +49,7 @@ export const dialogContentWrapper = style({
   borderRadius: tokens.radius.xl,
   border: `1px solid ${tokens.colors.borderTranslucent1}`,
   backgroundColor: tokens.colors.light,
-  boxShadow: `0px 4px 10px -2px ${tokens.colors.translucent1}, 0px 2px 2px -1px ${tokens.colors.translucent2}`,
+  boxShadow: tokens.shadow.card,
 
   '@media': {
     [minWidth.lg]: {
