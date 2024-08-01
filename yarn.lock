@@ -19549,9 +19549,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next-parser@npm:9.0.0":
-  version: 9.0.0
-  resolution: "i18next-parser@npm:9.0.0"
+"i18next-parser@npm:9.0.1":
+  version: 9.0.1
+  resolution: "i18next-parser@npm:9.0.1"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
     broccoli-plugin: "npm:^4.0.7"
@@ -19572,7 +19572,7 @@ __metadata:
     vinyl-fs: "npm:^4.0.0"
   bin:
     i18next: bin/cli.js
-  checksum: 10c0/000dde4d182fe826e15155874516660e9760bb5b7bb3256e46c9e62b38ed1e4d544c1882fc83545cf4a3ea77506793d06eca2aa9c46aadf64a9c3164fb19938d
+  checksum: 10c0/691e2cd50b2e0751407ab68b9241231dff3bb9b71ba46ffe4150a726c4da547bc440d726b7245e3fc5638023074c6d187c32c2ec0ea7f53b39d9c433bc04ae32
   languageName: node
   linkType: hard
 
@@ -26335,7 +26335,7 @@ __metadata:
     graphql: "npm:16.9.0"
     graphql-tag: "npm:2.12.6"
     i18next: "npm:23.12.2"
-    i18next-parser: "npm:9.0.0"
+    i18next-parser: "npm:9.0.1"
     jest: "npm:29.7.0"
     jest-environment-jsdom: "npm:29.7.0"
     jotai: "npm:2.8.0"
