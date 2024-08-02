@@ -4,9 +4,8 @@ import { useInView } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import { memo, type MouseEventHandler, type ReactNode, useEffect, useMemo, useRef } from 'react'
-import { Button, Text, tokens, xStack, yStack } from 'ui'
+import { Button, Text, yStack } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
-import { Pillow } from '@/components/Pillow/Pillow'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { DiscountTooltip } from '@/components/ProductPage/PurchaseForm/DiscountTooltip/DiscountTooltip'
 import { useDiscountTooltipProps } from '@/components/ProductPage/PurchaseForm/DiscountTooltip/useDiscountTooltipProps'
@@ -14,10 +13,10 @@ import { usePriceIntent } from '@/components/ProductPage/PurchaseForm/priceInten
 import { useSelectedOffer } from '@/components/ProductPage/PurchaseForm/useSelectedOffer'
 import { useTiersAndDeductibles } from '@/components/ProductPage/PurchaseForm/useTiersAndDeductibles'
 import { useCartEntryToReplace } from '@/components/ProductPage/useCartEntryToReplace'
-import { pillow } from '@/components/ProductPillow/ProductPillow.css'
 import { BUNDLE_DISCOUNT_ELIGIBLE_PRODUCT_IDS } from '@/features/bundleDiscount/bundleDiscount'
 import { BundleDiscountOfferTooltip } from '@/features/bundleDiscount/BundleDiscountOfferTooltip'
 import { DeductibleSelectorV2 } from '@/features/priceCalculator/DeductibleSelectorV2'
+import { ProductCardSmall } from '@/features/priceCalculator/ProductCardSmall'
 import { ProductTierSelectorV2 } from '@/features/priceCalculator/ProductTierSelectorV2'
 import { BankSigneringEvent } from '@/services/bankSignering'
 import { ExternalInsuranceCancellationOption } from '@/services/graphql/generated'
@@ -175,24 +174,12 @@ function OfferSummary() {
   )
 
   return (
-    // TODO: Use Card from ui when it's available in new design
-    <div
-      style={{ border: 'solid 1px lightgray', borderRadius: tokens.radius.xl }}
-      className={yStack({ gap: 'md', padding: 'lg' })}
-    >
-      <div className={xStack({ alignItems: 'center' })}>
-        <Pillow src={productData.pillowImage.src} size="small" className={pillow} />
-        <div className={yStack({ gap: 'none' })}>
-          <Text as="span" size="lg">
-            {productData.displayNameFull}
-          </Text>
-          <Text as="span" size="lg" color="textSecondary">
-            {selectedOffer.exposure.displayNameShort}
-          </Text>
-        </div>
-      </div>
-
-      <Button variant="secondary-alt" onClick={() => window.alert('TODO: Show details')}>
+    <ProductCardSmall productData={productData} subtitle={selectedOffer.exposure.displayNameShort}>
+      <Button
+        variant="secondary-alt"
+        onClick={() => window.alert('TODO: Show details')}
+        fullWidth={true}
+      >
         {t('SHOW_DETAILS_BUTTON_LABEL', { ns: 'cart' })}
       </Button>
 
@@ -211,6 +198,6 @@ function OfferSummary() {
       >
         {t('ADD_TO_CART_BUTTON_LABEL')}
       </Button>
-    </div>
+    </ProductCardSmall>
   )
 }
