@@ -3,7 +3,7 @@
 import { useApolloClient } from '@apollo/client'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
-import { useState } from 'react'
+import { useCallback, useEffect, useRef, useState, useTransition } from 'react'
 import { Text, Button, BankIdIcon, yStack } from 'ui'
 import { useHandleSubmitCheckout } from '@/components/CheckoutPage/useHandleSubmitCheckout'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
@@ -47,7 +47,7 @@ export function CheckoutForm({
   const tracking = useTracking()
   const locale = useRoutingLocale()
 
-  const router = useRouter()
+  const push = useAsyncRouterPush()
   const apolloClient = useApolloClient()
 
   const [shouldShowSignError, setShouldShowSignError] = useState(false)
@@ -72,7 +72,7 @@ export function CheckoutForm({
       // TODO: router from next/navigation has a different API so we can't wait for the router to be updated
       // before we navigate to the next step. We probably gonna need to change how BankIdDialog works so
       // we can have smooth transitions between sucess state and connect payment page.
-      router.push(getCheckoutStepLink({ locale, step: nextCheckoutStep, shopSessionId }))
+      await push(getCheckoutStepLink({ locale, step: nextCheckoutStep, shopSessionId }))
     },
     onError() {
       setShouldShowSignError(true)
@@ -168,4 +168,37 @@ function getNextCheckoutStep(connectPaymentStatus: MemberPaymentConnectionStatus
   const nextCheckoutStep = checkoutSteps[1]
 
   return nextCheckoutStep
+}
+
+// Hacky solution to wait for the router to finish the transition as `router` from `next/navigation`
+// package doesn't have a promise based API to wait for the transition to finish. They don't expose
+// events either. They claim that all navigations in app router are built on React Transitions so
+// the way forward for knowing wherebouts of a navigation is to use `useTransition` hook from React.
+// More info https://github.com/vercel/next.js/discussions/41934#discussioncomment-8996669
+function useAsyncRouterPush() {
+  const router = useRouter()
+  // We assume no other transition will happening at the same time
+  const [isPending] = useTransition()
+  const promiseResolveFnRef = useRef<((value?: unknown) => void) | null>(null)
+
+  useEffect(() => {
+    if (!isPending) {
+      promiseResolveFnRef.current?.()
+    }
+  }, [isPending])
+
+  const push = useCallback(
+    (url: string) => {
+      return new Promise((resolve) => {
+        // Ideally we could attach the resolve function to a router event but they're not exposed
+        // by next/navigation router. So we're using a ref to store the resolve function and calling
+        // it when the transition is finished based on the `isPending` value.
+        promiseResolveFnRef.current = resolve
+        router.push(url)
+      })
+    },
+    [router],
+  )
+
+  return push
 }
