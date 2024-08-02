@@ -3,8 +3,8 @@ import { useTranslation } from 'next-i18next'
 import type { ChangeEventHandler } from 'react'
 import { useState } from 'react'
 import { Space } from 'ui'
+import * as InputRadio from '@/components/InputRadio/InputRadio'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
-import * as InputRadio from '../InputRadio'
 
 export type SelectOptions = ReadonlyArray<{ name: string; value: string }>
 
