@@ -1,5 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import type { SetStateAction } from 'jotai'
+import { type SetStateAction, useAtomValue } from 'jotai'
 import { atom, useAtom } from 'jotai'
 import { useCallback } from 'react'
 import type { ProductOfferFragment } from '@/services/graphql/generated'
@@ -37,4 +37,12 @@ export const useSelectedOffer = () => {
   )
 
   return [selectedOffer, setSelectedOffer] as const
+}
+
+export const useSelectedOfferValueOrThrow = (): ProductOfferFragment => {
+  const value = useAtomValue(selectedOfferAtom)
+  if (value == null) {
+    throw new Error('selectedOfferAtom must have value')
+  }
+  return value
 }

@@ -1,21 +1,43 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import { useInView } from 'framer-motion'
+import { useStore } from 'jotai'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
-import { memo, type MouseEventHandler, type ReactNode, useEffect, useMemo, useRef } from 'react'
+import {
+  memo,
+  type MouseEventHandler,
+  type ReactNode,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
+import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import { Button, Text, yStack } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
+import Collapsible from '@/components/Collapsible/Collapsible'
+import { SSN_SE_SECTION_ID } from '@/components/PriceCalculator/SsnSeSection'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
+import { useOfferDetails } from '@/components/ProductItem/useOfferDetails'
+import { ProductDetails } from '@/components/ProductItemV2/ProductDetails'
 import { DiscountTooltip } from '@/components/ProductPage/PurchaseForm/DiscountTooltip/DiscountTooltip'
 import { useDiscountTooltipProps } from '@/components/ProductPage/PurchaseForm/DiscountTooltip/useDiscountTooltipProps'
-import { usePriceIntent } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
-import { useSelectedOffer } from '@/components/ProductPage/PurchaseForm/useSelectedOffer'
+import {
+  activeFormSectionIdAtom,
+  priceCalculatorFormAtom,
+  usePriceIntent,
+} from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
+import {
+  useSelectedOffer,
+  useSelectedOfferValueOrThrow,
+} from '@/components/ProductPage/PurchaseForm/useSelectedOffer'
 import { useTiersAndDeductibles } from '@/components/ProductPage/PurchaseForm/useTiersAndDeductibles'
 import { useCartEntryToReplace } from '@/components/ProductPage/useCartEntryToReplace'
 import { BUNDLE_DISCOUNT_ELIGIBLE_PRODUCT_IDS } from '@/features/bundleDiscount/bundleDiscount'
 import { BundleDiscountOfferTooltip } from '@/features/bundleDiscount/BundleDiscountOfferTooltip'
 import { DeductibleSelectorV2 } from '@/features/priceCalculator/DeductibleSelectorV2'
+import { priceCalculatorStepAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
 import { ProductCardSmall } from '@/features/priceCalculator/ProductCardSmall'
 import { ProductTierSelectorV2 } from '@/features/priceCalculator/ProductTierSelectorV2'
 import { BankSigneringEvent } from '@/services/bankSignering'
@@ -111,10 +133,7 @@ function OfferSummary() {
   if (shopSession == null) {
     throw new Error('shopSession must be defined')
   }
-  const [selectedOffer] = useSelectedOffer()
-  if (selectedOffer == null) {
-    throw new Error('selectedOffer must be defined')
-  }
+  const selectedOffer = useSelectedOfferValueOrThrow()
   const { t } = useTranslation('purchase-form')
   const formatter = useFormatter()
   const priceIntent = usePriceIntent()
@@ -175,13 +194,7 @@ function OfferSummary() {
 
   return (
     <ProductCardSmall productData={productData} subtitle={selectedOffer.exposure.displayNameShort}>
-      <Button
-        variant="secondary-alt"
-        onClick={() => window.alert('TODO: Show details')}
-        fullWidth={true}
-      >
-        {t('SHOW_DETAILS_BUTTON_LABEL', { ns: 'cart' })}
-      </Button>
+      <OfferDetails />
 
       {discountTooltip}
       <Text as="p" align="center" size="xl">
@@ -199,5 +212,59 @@ function OfferSummary() {
         {t('ADD_TO_CART_BUTTON_LABEL')}
       </Button>
     </ProductCardSmall>
+  )
+}
+
+function OfferDetails() {
+  const [expanded, setExpanded] = useState(false)
+  const { t } = useTranslation('cart')
+  const selectedOffer = useSelectedOfferValueOrThrow()
+  const productDetails = useOfferDetails(selectedOffer)
+
+  // const productDocuments = selectedOffer.variant.documents.map((item) => ({
+  //   title: item.displayName,
+  //   url: item.url,
+  // }))
+  // TODO: Replace with commented code above when terms-hub starts returning something
+  const productDocuments = [
+    {
+      title: 'TODO: Terms and conditions',
+      url: 'about:blank',
+    },
+    {
+      title: 'TODO: One-pager',
+      url: 'about:blank',
+    },
+  ]
+
+  const store = useStore()
+  const handleEditClick = () => {
+    const form = store.get(priceCalculatorFormAtom)
+    const targetSectionId = form.sections.find((section) => section.id !== SSN_SE_SECTION_ID)!.id
+    store.set(activeFormSectionIdAtom, targetSectionId)
+    store.set(priceCalculatorStepAtom, 'fillForm')
+    // TODO: Scroll to form section top when opening to edit (atom effect?)
+  }
+
+  return (
+    <Collapsible.Root open={expanded} onOpenChange={setExpanded}>
+      <Collapsible.Trigger asChild>
+        <Button variant="secondary-alt" size="medium" fullWidth={true}>
+          {expanded ? t('HIDE_DETAILS_BUTTON_LABEL') : t('SHOW_DETAILS_BUTTON_LABEL')}
+        </Button>
+      </Collapsible.Trigger>
+      <Collapsible.Content>
+        <ProductDetails
+          items={productDetails}
+          documents={productDocuments}
+          className={sprinkles({ marginTop: 'md' })}
+          afterDetailsSection={
+            <Button variant="secondary" size="medium" fullWidth={true} onClick={handleEditClick}>
+              {t('EDIT_INFORMATION_BUTTON_LABEL')}
+            </Button>
+          }
+        />
+      </Collapsible.Content>
+    </Collapsible.Root>
   )
 }

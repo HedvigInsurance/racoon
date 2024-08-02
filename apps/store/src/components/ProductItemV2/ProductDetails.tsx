@@ -1,5 +1,6 @@
 import { clsx } from 'clsx'
 import { useTranslation } from 'next-i18next'
+import { type ReactNode } from 'react'
 import { Heading, Text } from 'ui'
 import { PDFViewer } from '@/components/PDFViewer'
 import { useIsEmbedded } from '@/utils/useIsEmbedded'
@@ -9,9 +10,16 @@ type Props = {
   items: Array<{ title: string; value: string }>
   documents: Array<{ title: string; url: string }>
   className?: string
+  afterDetailsSection?: ReactNode
 }
 
-export function ProductDetails({ items, documents, className, ...props }: Props) {
+export function ProductDetails({
+  items,
+  documents,
+  className,
+  afterDetailsSection = null,
+  ...props
+}: Props) {
   const { t } = useTranslation('cart')
   const isEmbedded = useIsEmbedded()
 
@@ -34,6 +42,8 @@ export function ProductDetails({ items, documents, className, ...props }: Props)
           ))}
         </ul>
       </section>
+
+      {afterDetailsSection}
 
       <section>
         <Heading as="h4" variant="standard.18" color="textTranslucentPrimary">
