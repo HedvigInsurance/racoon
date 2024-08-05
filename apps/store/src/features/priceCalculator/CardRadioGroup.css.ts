@@ -29,24 +29,3 @@ export const item = style([
     },
   },
 ])
-
-export const indicatorBorderColor = createVar('indicatorBorderColor')
-export const indicatorInnerColor = createVar('indicatorInnerColor')
-
-export const indicator = style({
-  vars: {
-    [indicatorBorderColor]: tokens.colors.borderTranslucent2,
-    [indicatorInnerColor]: tokens.colors.light,
-  },
-  selectors: {
-    '&[data-state=checked]': {
-      color: tokens.colors.signalGreenElement,
-    },
-    '&[data-state=unchecked]': {
-      color: 'transparent',
-      vars: {
-        [indicatorInnerColor]: 'transparent',
-      },
-    },
-  },
-})
