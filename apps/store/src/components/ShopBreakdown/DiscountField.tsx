@@ -1,7 +1,6 @@
-import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
-import { Text, theme } from 'ui'
+import { sprinkles, Text, xStack } from 'ui'
 import Collapsible from '@/components/Collapsible/Collapsible'
 import { Switch } from '@/components/Switch'
 import { AddCampaignForm } from './AddCampaignForm/AddCampaignForm'
@@ -33,37 +32,42 @@ export const DiscountField = (props: Props) => {
 
   return (
     <Collapsible.Root open={active} onOpenChange={handleOpenChange}>
-      <Wrapper>
+      <div
+        className={xStack({
+          alignItems: 'center',
+          gap: 'md',
+          paddingInline: 'xxs',
+          justifyContent: 'space-between',
+        })}
+      >
         <Text>{t('CAMPAIGN_CODE_HEADING')}</Text>
         <Collapsible.Trigger asChild={true}>
           <Switch checked={active} />
         </Collapsible.Trigger>
-      </Wrapper>
-      <Collapsible.Content style={{ paddingTop: theme.space.md }}>
-        {props.discount ? (
-          <AddedCampaignForm
-            campaignCode={props.discount.code}
-            onRemove={props.onRemove}
-            loading={props.loadingRemove}
-          >
-            {props.discount.explanation}
-          </AddedCampaignForm>
-        ) : (
-          <AddCampaignForm
-            onAdd={props.onAdd}
-            loading={props.loadingAdd}
-            errorMessage={props.errorMessage}
-          />
-        )}
+      </div>
+      <Collapsible.Content>
+        {/*
+        GOTCHA: padding has to be set on inner element, otherwise animation jumps
+        because it does not measure Collapsible.Content height correctly
+        */}
+        <div className={sprinkles({ paddingTop: 'md' })}>
+          {props.discount ? (
+            <AddedCampaignForm
+              campaignCode={props.discount.code}
+              onRemove={props.onRemove}
+              loading={props.loadingRemove}
+            >
+              {props.discount.explanation}
+            </AddedCampaignForm>
+          ) : (
+            <AddCampaignForm
+              onAdd={props.onAdd}
+              loading={props.loadingAdd}
+              errorMessage={props.errorMessage}
+            />
+          )}
+        </div>
       </Collapsible.Content>
     </Collapsible.Root>
   )
 }
-
-const Wrapper = styled.div({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  columnGap: theme.space.md,
-  paddingInline: theme.space.xxxs,
-})
