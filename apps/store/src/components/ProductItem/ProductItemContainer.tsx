@@ -1,6 +1,5 @@
-import { useTranslation } from 'next-i18next'
-import type { ComponentProps } from 'react'
-import { useMemo, type ReactNode } from 'react'
+import { type ComponentProps, type ReactNode } from 'react'
+import { useOfferDetails } from '@/components/ProductItem/useOfferDetails'
 import { type ProductOfferFragment } from '@/services/graphql/generated'
 import { getOfferPrice } from '@/utils/getOfferPrice'
 import { ProductItem } from './ProductItem'
@@ -26,7 +25,6 @@ type Props = {
 }
 
 export const ProductItemContainer = (props: Props) => {
-  const { t } = useTranslation('cart')
   const getStartDateProps = useGetStartDateProps()
 
   const price = getOfferPrice(props.offer.cost)
@@ -36,21 +34,7 @@ export const ProductItemContainer = (props: Props) => {
     startDate: props.offer.startDate,
   })
 
-  const productDetails = useMemo(() => {
-    const items = props.offer.displayItems.map((item) => ({
-      title: item.displayTitle,
-      value: item.displayValue,
-    }))
-    const tierLevelDisplayName = getTierLevelDisplayName(props.offer)
-    if (tierLevelDisplayName) {
-      items.push({ title: t('DATA_TABLE_TIER_LABEL'), value: tierLevelDisplayName })
-    }
-    const deductibleDisplayName = props.offer.deductible?.displayName
-    if (deductibleDisplayName) {
-      items.push({ title: t('DATA_TABLE_DEDUCTIBLE_LABEL'), value: deductibleDisplayName })
-    }
-    return items
-  }, [props.offer, t])
+  const productDetails = useOfferDetails(props.offer)
 
   const productDocuments = props.offer.variant.documents.map((item) => ({
     title: item.displayName,
@@ -72,11 +56,4 @@ export const ProductItemContainer = (props: Props) => {
       {props.children}
     </ProductItem>
   )
-}
-
-const getTierLevelDisplayName = (item: Pick<ProductOfferFragment, 'variant' | 'product'>) => {
-  // TODO: small hack, move logic to API
-  return item.variant.displayName !== item.product.displayNameFull
-    ? item.variant.displayName
-    : undefined
 }
