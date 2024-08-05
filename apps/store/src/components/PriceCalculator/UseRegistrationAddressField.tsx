@@ -1,6 +1,6 @@
 import { useAtom, useAtomValue } from 'jotai'
 import { useTranslation } from 'next-i18next'
-import * as InputRadio from '@/components/PriceCalculator/InputRadio'
+import * as InputRadio from '@/components/InputRadio/InputRadio'
 import {
   currentPriceIntentIdAtom,
   useRegistrationAddressAtomFamily,

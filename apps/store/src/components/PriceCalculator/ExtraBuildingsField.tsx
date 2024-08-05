@@ -14,6 +14,7 @@ import {
   CrossIcon,
   CrossIconSmall,
 } from 'ui'
+import * as InputRadio from '@/components/InputRadio/InputRadio'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { useUpdatePriceIntent } from '@/components/PriceCalculator/useUpdatePriceIntent'
 import {
@@ -28,7 +29,6 @@ import type {
   FieldOption,
 } from '@/services/PriceCalculator/Field.types'
 import { useShopSessionId } from '@/services/shopSession/ShopSessionContext'
-import * as InputRadio from './InputRadio'
 import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
 enum RadioOption {
