@@ -1,7 +1,10 @@
 import type { ApolloClient } from '@apollo/client'
-import type { GetServerSideProps } from 'next'
+import type { GetServerSideProps, NextPageWithLayout } from 'next'
+import Head from 'next/head'
+import { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage'
 import { type ConfirmationPageProps } from '@/components/ConfirmationPage/ConfirmationPage.types'
 import { getLayoutWithMenuProps } from '@/components/LayoutWithMenu/getLayoutWithMenuProps'
+import { LayoutWithMenu } from '@/components/LayoutWithMenu/LayoutWithMenu'
 import { STORYBLOK_CAR_DEALERSHIP_FOLDER_SLUG } from '@/features/carDealership/carDearlership.constants'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
 import type {
@@ -85,4 +88,17 @@ const fetchTrialExtensionData = async (
   }
 }
 
-export { default } from '@/pages/[locale]/confirmation/[shopSessionId]'
+const CarBuyerConfirmationPage: NextPageWithLayout<Props> = (props) => {
+  return (
+    <>
+      <Head>
+        <title>{props.story.content.seoTitle}</title>
+      </Head>
+      <ConfirmationPage {...props} />
+    </>
+  )
+}
+
+CarBuyerConfirmationPage.getLayout = (children) => <LayoutWithMenu>{children}</LayoutWithMenu>
+
+export default CarBuyerConfirmationPage
