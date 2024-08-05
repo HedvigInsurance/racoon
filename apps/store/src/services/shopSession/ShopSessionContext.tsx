@@ -44,6 +44,14 @@ export const useShopSession = (): ShopSessionResult => {
   return queryResult
 }
 
+export const useShopSessionValueOrThrow = (): ShopSession => {
+  const { shopSession } = useShopSession()
+  if (shopSession == null) {
+    throw new Error('shopSession cannot be null')
+  }
+  return shopSession
+}
+
 const useShopSessionContextValue = (initialShopSessionId?: string) => {
   const { countryCode } = useCurrentCountry()
 
@@ -126,4 +134,12 @@ ShopSessionIdContext.displayName = 'ShopSessionIdContext'
 
 export const useShopSessionId = (): string | null => {
   return useContext(ShopSessionIdContext)
+}
+
+export const useShopSessionIdOrThrow = (): string => {
+  const value = useContext(ShopSessionIdContext)
+  if (value == null) {
+    throw new Error('shopSessionId cannot be null')
+  }
+  return value
 }

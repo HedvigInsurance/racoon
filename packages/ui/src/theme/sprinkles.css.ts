@@ -32,7 +32,7 @@ const unresponsiveProperties = defineProperties({
   properties: {
     alignItems: ['flex-start', 'center', 'flex-end', 'stretch'],
     alignSelf: ['center'],
-    justifyContent: ['center', 'space-between'],
+    justifyContent: ['center', 'space-between', 'flex-end'],
     textAlign: ['left', 'center', 'right'],
     color: textColors,
     display: ['flex', 'grid', 'none'],

@@ -11,14 +11,14 @@ type Props = {
 }
 
 export const TotalAmountContainer = (props: Props) => {
-  const { getDiscountDurationExplanation, getReducedAmmount } = useDiscount()
+  const { getDiscountDurationExplanation, getReducedAmount } = useDiscount()
 
   const apiDiscount = props.cart.redeemedCampaign?.discount
   const totalCost = props.cart.cost.gross
 
   const discount = apiDiscount
     ? {
-        reducedAmount: getReducedAmmount(apiDiscount.type, props.cart.cost),
+        reducedAmount: getReducedAmount(apiDiscount.type, props.cart.cost),
         explanation: getDiscountDurationExplanation(apiDiscount, totalCost),
       }
     : undefined
@@ -56,20 +56,17 @@ const useDiscount = () => {
     [t, formatter],
   )
 
-  const getReducedAmmount = useCallback(
-    (campaignType: CampaignDiscountType, cartCost: CartCost) => {
-      switch (campaignType) {
-        case CampaignDiscountType.FreeMonths:
-          return cartCost.discount.amount
-        case CampaignDiscountType.MonthlyPercentage:
-        case CampaignDiscountType.MonthlyCost:
-        case CampaignDiscountType.IndefinitePercentage:
-        default:
-          return cartCost.net.amount
-      }
-    },
-    [],
-  )
+  const getReducedAmount = useCallback((campaignType: CampaignDiscountType, cartCost: CartCost) => {
+    switch (campaignType) {
+      case CampaignDiscountType.FreeMonths:
+        return cartCost.discount.amount
+      case CampaignDiscountType.MonthlyPercentage:
+      case CampaignDiscountType.MonthlyCost:
+      case CampaignDiscountType.IndefinitePercentage:
+      default:
+        return cartCost.net.amount
+    }
+  }, [])
 
-  return { getDiscountDurationExplanation, getReducedAmmount }
+  return { getDiscountDurationExplanation, getReducedAmount }
 }
