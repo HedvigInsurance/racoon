@@ -22,6 +22,7 @@ export const Default: Story = {
     <Space x={1}>
       <Badge size="big" {...args} />
       <Badge size="small" {...args} />
+      <Badge size="tiny" {...args} />
       <Badge size="responsive" {...args} />
     </Space>
   ),

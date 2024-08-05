@@ -2,7 +2,8 @@ import { createVar } from '@vanilla-extract/css'
 import { recipe } from '@vanilla-extract/recipes'
 import { tokens, minWidth } from 'ui'
 
-export const badgeBgColorVar = createVar()
+export const badgeBgColor = createVar('badgeBgColor')
+export const badgeFontColor = createVar('badgeFontColor')
 
 const smallVariant = {
   paddingBlock: tokens.space.xxs,
@@ -18,14 +19,23 @@ const bigVariant = {
 export const badge = recipe({
   base: {
     display: 'inline-block',
-    color: tokens.colors.dark,
-    backgroundColor: badgeBgColorVar,
+    color: badgeFontColor,
+    backgroundColor: badgeBgColor,
     borderRadius: tokens.radius.xxs,
+    vars: {
+      [badgeFontColor]: tokens.colors.textPrimary,
+    },
   },
   variants: {
     size: {
+      tiny: {
+        paddingBlock: '3px',
+        paddingInline: '6px',
+        fontSize: tokens.fontSizes.xxs,
+      },
       small: smallVariant,
       big: bigVariant,
+
       responsive: {
         ...smallVariant,
         '@media': {

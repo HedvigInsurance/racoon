@@ -1,7 +1,9 @@
+import { assignInlineVars } from '@vanilla-extract/dynamic'
 import { useTranslation } from 'next-i18next'
 import { useRef } from 'react'
+import { badgeFontColor } from 'ui/src/components/Badge/Badge.css'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
-import { Button, Heading, PlusIcon, Text, tokens, xStack, yStack } from 'ui'
+import { Badge, Button, Heading, PlusIcon, Text, tokens, xStack, yStack } from 'ui'
 import { ComparisonTableModal } from '@/components/ProductPage/PurchaseForm/ComparisonTableModal'
 import type { ProductOfferFragment } from '@/services/graphql/generated'
 import { useFormatter } from '@/utils/useFormatter'
@@ -32,7 +34,15 @@ export function ProductTierSelectorV2({ offers, selectedOffer, onValueChange }: 
                 <Heading as="h2" variant="standard.24">
                   {offer.variant.displayNameSubtype || offer.variant.displayName}
                 </Heading>
-                {isDefaultTier(offer) && <DefaultTierLabel />}
+                {isDefaultTier(offer) && (
+                  <Badge
+                    size="small"
+                    color="pinkFill3"
+                    style={assignInlineVars({ [badgeFontColor]: tokens.colors.gray1000 })}
+                  >
+                    {t('DEFAULT_TIER_LABEL')}
+                  </Badge>
+                )}
               </div>
               <Heading as="h3" variant="standard.24" color="textSecondary">
                 {formatter.monthlyPrice(offer.cost.net)}
@@ -66,24 +76,6 @@ export function ProductTierSelectorV2({ offers, selectedOffer, onValueChange }: 
         </Button>
       </ComparisonTableModal>
     </>
-  )
-}
-
-function DefaultTierLabel() {
-  const { t } = useTranslation('purchase-form')
-  return (
-    <Text
-      as="div"
-      size="xs"
-      style={{
-        paddingInline: tokens.space.xs,
-        paddingBlock: tokens.space.xxs,
-        borderRadius: tokens.radius.xxs,
-        backgroundColor: tokens.colors.pink300,
-      }}
-    >
-      {t('DEFAULT_TIER_LABEL')}
-    </Text>
   )
 }
 
