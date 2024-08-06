@@ -5,7 +5,7 @@ import { Text, Space } from 'ui'
 import { SubmitButton } from '@/appComponents/SubmitButton'
 import { ErrorMessages } from '@/components/FormErrors/ErrorMessages'
 import { InputCarRegistrationNumber } from '@/components/InputCarRegistrationNumber/InputCarRegistrationNumber'
-import * as InputRadio from '@/components/InputRadio/InputRadio'
+import { InputRadio } from '@/components/InputRadio/InputRadio'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { Field } from '@/features/carDealership/DebuggerCarTrial/debuggerCarTrial.types'
@@ -47,20 +47,12 @@ export const CarTrialDebuggerForm = () => {
             options={TIER_OPTIONS}
           />
 
-          <InputRadio.Root
+          <InputRadio
             name={Field.Product}
             label="Product"
             defaultValue={state?.fields?.[Field.Product]}
-          >
-            {PRODUCT_OPTIONS.map((option) => (
-              <InputRadio.Item
-                key={option.value}
-                id={`Product-${option.value}`}
-                label={option.name}
-                value={option.value}
-              />
-            ))}
-          </InputRadio.Root>
+            options={PRODUCT_OPTIONS.map((option) => ({ label: option.name, value: option.value }))}
+          />
 
           <Space y={0.5}>
             <SubmitButton>Create car trial</SubmitButton>

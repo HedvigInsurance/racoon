@@ -5,7 +5,7 @@ import { Space } from 'ui'
 import { Field } from '@/app/debugger/trial/debuggerTrial.types'
 import { SubmitButton } from '@/appComponents/SubmitButton'
 import { ErrorMessages } from '@/components/FormErrors/ErrorMessages'
-import * as InputRadio from '@/components/InputRadio/InputRadio'
+import { HorizontalInputRadio } from '@/components/InputRadio/InputRadio'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { TextField } from '@/components/TextField/TextField'
@@ -18,6 +18,16 @@ const partnerOptions = [
   { name: 'Byggvesta', value: 'BYGGVESTA' },
   { name: 'Samtrygg', value: 'SAMTRYGG' },
   { name: 'Hedvig', value: 'HEDVIG' },
+]
+
+const subtypeOptions = [
+  { label: 'Rent', value: 'RENT' },
+  { label: 'Own', value: 'BRF' },
+]
+
+const isStudentOptions = [
+  { label: 'Student', value: 'true' },
+  { label: 'Not student', value: 'false' },
 ]
 
 export function TrialContractForm() {
@@ -81,15 +91,13 @@ export function TrialContractForm() {
             pattern="\d{3} \d{2}"
             defaultValue={state?.fields?.[Field.zipCode]}
           />
-          <InputRadio.HorizontalRoot
+          <HorizontalInputRadio
             name={Field.subType}
             label="Sub Type"
             required={true}
             defaultValue={state?.fields?.[Field.subType]}
-          >
-            <InputRadio.HorizontalItem label="Rent" value="RENT" />
-            <InputRadio.HorizontalItem label="Own" value="BRF" />
-          </InputRadio.HorizontalRoot>
+            options={subtypeOptions}
+          />
 
           <TextField
             type="email"
@@ -111,10 +119,11 @@ export function TrialContractForm() {
             autoComplete="off"
             label="Living space (m²)"
           />
-          <InputRadio.HorizontalRoot name={Field.isStudent} label="Student?">
-            <InputRadio.HorizontalItem label="Student" value="true" />
-            <InputRadio.HorizontalItem label="Not student" value="false" />
-          </InputRadio.HorizontalRoot>
+          <HorizontalInputRadio
+            name={Field.isStudent}
+            label="Student?"
+            options={isStudentOptions}
+          />
 
           <SubmitButton>Create trial contract</SubmitButton>
         </Space>

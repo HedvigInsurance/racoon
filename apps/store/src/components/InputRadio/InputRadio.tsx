@@ -2,42 +2,54 @@
 
 import * as RadioGroup from '@radix-ui/react-radio-group'
 import clsx from 'clsx'
-import { type ComponentPropsWithoutRef, type MouseEventHandler } from 'react'
+import {
+  useId,
+  type ComponentProps,
+  type ComponentPropsWithoutRef,
+  type MouseEventHandler,
+} from 'react'
 import { Text, xStack } from 'ui'
 import { RadioIndicatorIcon } from '@/features/priceCalculator/RadioIndicatorIcon'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 import { card, option, item, horizontalRoot, horizontalItem } from './InputRadio.css'
 
-type RootProps = {
-  label: string
-  children: React.ReactNode
-  value?: string
-  onValueChange?: (value: string) => void
-  required?: boolean
-  defaultValue?: string
-  name?: string
-}
+type Option = { label: string; value: string; autoFocus?: boolean }
 
-export const Root = ({ children, label, onValueChange, ...props }: RootProps) => {
+type RootProps = { label: string; options: Array<Option> } & Omit<
+  ComponentProps<typeof RadioGroup.Root>,
+  'children'
+>
+
+export function InputRadio({ label, options, orientation = 'horizontal', ...props }: RootProps) {
   const { highlight, animationProps } = useHighlightAnimation<HTMLDivElement>()
 
   const handleValueChange = (value: string) => {
     highlight()
-    onValueChange?.(value)
+    props.onValueChange?.(value)
   }
 
+  if (orientation === 'vertical') {
+    // TODO: add support for vertical orientation layout
+    return null
+  }
+
+  // TODO: this is horizontal layout with label. Horizontal layout without label
+  // can be achieved by using HorizontalRoot at the moment, but in the future I'll
+  // be merging both and deciding between them based on the present of the label prop.
   return (
     <div className={card} {...animationProps}>
       <Text as="span" size="xs" color="textSecondary">
         {label}
       </Text>
       <RadioGroup.Root
-        className={xStack({ gap: 'md', alignItems: 'center' })}
-        onValueChange={handleValueChange}
-        aria-label={label}
         {...props}
+        className={xStack({ gap: 'md', alignItems: 'center' })}
+        aria-label={label}
+        onValueChange={handleValueChange}
       >
-        {children}
+        {options.map((option) => {
+          return <Item key={option.value} {...option} />
+        })}
       </RadioGroup.Root>
     </div>
   )
@@ -48,8 +60,8 @@ type ItemProps = {
   value: string
 } & Omit<ComponentPropsWithoutRef<'button'>, 'value'>
 
-export const Item = ({ value, label, id, className, ...itemProps }: ItemProps) => {
-  const identifier = id ?? `radio-${value}`
+function Item({ value, label, className, ...itemProps }: ItemProps) {
+  const identifier = useId()
 
   return (
     <label className={clsx(option, className)} htmlFor={identifier}>
@@ -65,15 +77,17 @@ export const Item = ({ value, label, id, className, ...itemProps }: ItemProps) =
   )
 }
 
-export const HorizontalRoot = ({ label, children, ...rootProps }: RootProps) => {
+export function HorizontalInputRadio({ label, options, ...rootProps }: RootProps) {
   return (
     <RadioGroup.Root className={horizontalRoot} aria-label={label} {...rootProps}>
-      {children}
+      {options.map((option) => (
+        <HorizontalItem key={option.value} {...option} />
+      ))}
     </RadioGroup.Root>
   )
 }
 
-export const HorizontalItem = ({ onClick, ...props }: ItemProps) => {
+function HorizontalItem({ onClick, ...props }: ItemProps) {
   const { highlight, animationProps } = useHighlightAnimation<HTMLDivElement>()
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {

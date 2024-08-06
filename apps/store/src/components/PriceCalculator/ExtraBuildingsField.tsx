@@ -14,7 +14,7 @@ import {
   CrossIcon,
   CrossIconSmall,
 } from 'ui'
-import * as InputRadio from '@/components/InputRadio/InputRadio'
+import { InputRadio } from '@/components/InputRadio/InputRadio'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { useUpdatePriceIntent } from '@/components/PriceCalculator/useUpdatePriceIntent'
 import {
@@ -183,13 +183,14 @@ export const ExtraBuildingsField = ({ field, buildingOptions }: ExtraBuildingsFi
                     suffix="m²"
                     required
                   />
-                  <InputRadio.Root
+                  <InputRadio
                     name={Field.HasWaterConnected}
                     label={t('FIELD_HAS_WATER_CONNECTED_LABEL')}
-                  >
-                    <InputRadio.Item label={t('LABEL_NO')} value={RadioOption.NO} />
-                    <InputRadio.Item label={t('LABEL_YES')} value={RadioOption.YES} />
-                  </InputRadio.Root>
+                    options={[
+                      { label: t('LABEL_NO'), value: RadioOption.NO },
+                      { label: t('LABEL_YES'), value: RadioOption.YES },
+                    ]}
+                  />
                 </Space>
 
                 <Button

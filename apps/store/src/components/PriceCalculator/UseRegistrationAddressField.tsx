@@ -1,6 +1,6 @@
 import { useAtom, useAtomValue } from 'jotai'
 import { useTranslation } from 'next-i18next'
-import * as InputRadio from '@/components/InputRadio/InputRadio'
+import { InputRadio } from '@/components/InputRadio/InputRadio'
 import {
   currentPriceIntentIdAtom,
   useRegistrationAddressAtomFamily,
@@ -20,15 +20,16 @@ export function UseRegistrationAddressField({ field }: Props) {
     setValue(newValue === 'true')
   }
   return (
-    <InputRadio.Root
+    <InputRadio
       name={field.name}
       label={t('FIELD_USE_REGISTRATION_ADDRESS_LABEL')}
       required={true}
       defaultValue={String(value)}
       onValueChange={handleChange}
-    >
-      <InputRadio.Item key={`${field.name}-true`} label={t('LABEL_YES')} value="true" />
-      <InputRadio.Item key={`${field.name}-false`} label={t('LABEL_NO')} value="false" />
-    </InputRadio.Root>
+      options={[
+        { label: t('LABEL_YES'), value: 'true' },
+        { label: t('LABEL_NO'), value: 'false' },
+      ]}
+    />
   )
 }

@@ -1,5 +1,5 @@
 import type { Meta } from '@storybook/react'
-import * as InputRadio from './InputRadio'
+import { InputRadio, HorizontalInputRadio } from './InputRadio'
 
 export default {
   title: 'Inputs / Radio',
@@ -12,16 +12,22 @@ export default {
   ],
 } as Meta<typeof InputRadio>
 
-export const Horizontal = () => (
-  <InputRadio.HorizontalRoot label="Horizontal">
-    <InputRadio.HorizontalItem value="1" label="Option 1" />
-    <InputRadio.HorizontalItem value="2" label="Option 2" />
-  </InputRadio.HorizontalRoot>
+export const HorizontalWithLabel = () => (
+  <InputRadio
+    label="Label"
+    options={[
+      { label: 'Option 1', value: '1' },
+      { label: 'Option 2', value: '2' },
+    ]}
+  />
 )
 
-export const Vertical = () => (
-  <InputRadio.Root label="Vertical">
-    <InputRadio.Item value="1" label="Option 1" />
-    <InputRadio.Item value="2" label="Option 2" />
-  </InputRadio.Root>
+export const HorizontalWithoutLabel = () => (
+  <HorizontalInputRadio
+    label="Horizontal"
+    options={[
+      { label: 'Option 1', value: '1' },
+      { label: 'Option 2', value: '2' },
+    ]}
+  />
 )
