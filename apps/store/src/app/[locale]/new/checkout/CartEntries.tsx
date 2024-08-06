@@ -2,8 +2,11 @@
 
 import { datadogLogs } from '@datadog/browser-logs'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { ProductItem } from '@/components/ProductItemV2/ProductItem'
+import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
+import { PRELOADED_PRICE_INTENT_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/usePreloadedPriceIntentId'
+import { CART_ENTRY_TO_REPLACE_QUERY_PARAM } from '@/components/ProductPage/useCartEntryToReplace'
 import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
 import { Divider, ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
@@ -14,6 +17,7 @@ import {
   type ShopSessionFragment,
 } from '@/services/graphql/generated'
 import { useTracking } from '@/services/Tracking/useTracking'
+import { Features } from '@/utils/Features'
 import { QueryParam } from './CheckoutPage.constants'
 
 type Props = { shopSession: ShopSessionFragment }
@@ -34,9 +38,30 @@ export function CartEntries({ shopSession }: Props) {
     },
   })
 
-  const handleRemoveCartItem = (offer: ProductOfferFragment) => () => {
+  const handleRemoveCartItem = (offer: ProductOfferFragment) => {
     tracking.reportDeleteFromCart(offer)
     removeCartItem({ variables: { shopSessionId: shopSession.id, offerId: offer.id } })
+  }
+
+  const router = useRouter()
+  const handleEditCartItem = (offer: ProductOfferFragment) => {
+    let targetUrl = new URL(offer.product.pageLink, window.location.origin)
+    if (
+      Features.enabled('PRICE_CALCULATOR_PAGE') &&
+      offer.product.priceCalculatorPageLink != null
+    ) {
+      targetUrl = new URL(offer.product.priceCalculatorPageLink, window.location.origin)
+    } else {
+      targetUrl.searchParams.set(OPEN_PRICE_CALCULATOR_QUERY_PARAM, '1')
+      // NOTE: Temporary code path, no need to handle this after PriceCalculatorPage is used everywhere
+      if (offer.priceIntentId == null) {
+        throw new Error('Expected to have offer.priceIntentId')
+      }
+      targetUrl.searchParams.set(PRELOADED_PRICE_INTENT_QUERY_PARAM, offer.priceIntentId)
+    }
+    targetUrl.searchParams.set(CART_ENTRY_TO_REPLACE_QUERY_PARAM, offer.id)
+
+    router.push(targetUrl.toString())
   }
 
   return (
@@ -53,7 +78,8 @@ export function CartEntries({ shopSession }: Props) {
             >
               <ProductItem
                 selectedOffer={offer}
-                onDelete={handleRemoveCartItem(offer)}
+                onDelete={() => handleRemoveCartItem(offer)}
+                onEdit={() => handleEditCartItem(offer)}
                 defaultExpanded={searchParams?.get(QueryParam.ExpandCart) === '1'}
               />
             </motion.div>

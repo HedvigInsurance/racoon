@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import { PRELOADED_PRICE_INTENT_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/usePreloadedPriceIntentId'
+import { CART_ENTRY_TO_REPLACE_QUERY_PARAM } from '@/components/ProductPage/useCartEntryToReplace'
 import { useShowAppError } from '@/services/appErrors/appErrorAtom'
 import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
@@ -63,7 +64,7 @@ export const useEditProductOffer = () => {
         pathname: product.pageLink,
         query: {
           [OPEN_PRICE_CALCULATOR_QUERY_PARAM]: 1,
-          replace: params.offerId,
+          [CART_ENTRY_TO_REPLACE_QUERY_PARAM]: params.offerId,
           [PRELOADED_PRICE_INTENT_QUERY_PARAM]: priceIntent.id,
         },
       })

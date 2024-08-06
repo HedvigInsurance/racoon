@@ -1,37 +1,36 @@
 'use client'
 
-import { useAtom, useStore } from 'jotai'
+import { useAtom } from 'jotai'
 import { useEffect } from 'react'
 import { yStack } from 'ui'
 import { PriceLoader } from '@/components/PriceLoader'
 import {
-  priceIntentAtom,
   useIsPriceIntentStateReady,
   useSyncPriceIntentState,
 } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
+import {
+  PRELOADED_PRICE_INTENT_QUERY_PARAM,
+  usePreloadedPriceIntentId,
+} from '@/components/ProductPage/PurchaseForm/usePreloadedPriceIntentId'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { OfferPresenterV2 } from '@/features/priceCalculator/OfferPresenterV2'
-import { priceCalculatorStepAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
+import {
+  INITIAL_STEP_AFTER_NAVIGATION,
+  priceCalculatorStepAtom,
+} from '@/features/priceCalculator/priceCalculatorAtoms'
 import { InsuranceDataForm } from './InsuranceDataForm'
 
-// TODO:
-// - support preloaded priceIntentId
-// - handle errors
-// - proceed to cart
 export function PurchaseFormV2() {
-  useSyncPriceIntentState(undefined)
-  const store = useStore()
+  useSyncPriceIntentState()
+  useWarnOnPreloadedPriceIntentId()
+
   const isReady = useIsPriceIntentStateReady()
   const [step, setStep] = useAtom(priceCalculatorStepAtom)
   useEffect(() => {
-    if (!isReady) return
-    const priceIntent = store.get(priceIntentAtom)
-    if (priceIntent?.offers.length) {
-      setStep('viewOffers')
-    } else {
-      setStep('fillForm')
+    if (isReady) {
+      setStep(INITIAL_STEP_AFTER_NAVIGATION)
     }
-  }, [isReady, setStep, store])
+  }, [isReady, setStep])
 
   switch (step) {
     case 'loadingForm':
@@ -54,4 +53,15 @@ export function PurchaseFormV2() {
     default:
       throw new Error(`Unexpected step: ${step}`)
   }
+}
+
+const useWarnOnPreloadedPriceIntentId = () => {
+  const preloadedPriceIntentId = usePreloadedPriceIntentId()
+  useEffect(() => {
+    if (preloadedPriceIntentId != null) {
+      console.warn(
+        `preloadedPriceIntentId is not supported on PriceCalculatorPage, please find and update the code that sets ${PRELOADED_PRICE_INTENT_QUERY_PARAM} query param`,
+      )
+    }
+  }, [preloadedPriceIntentId])
 }

@@ -11,6 +11,7 @@ import { PriceCalculatorStoryProvider } from '@/features/priceCalculator/PriceCa
 import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
 import { type TemplateV2 } from '@/services/PriceCalculator/PriceCalculator.types'
 import type { PriceCalculatorPageStory } from '@/services/storyblok/storyblok'
+import { Features } from '@/utils/Features'
 import { type RoutingLocale } from '@/utils/l10n/types'
 import { PurchaseFormV2 } from './PurchaseFormV2'
 
@@ -24,7 +25,7 @@ const HEADER_HEIGHT = '80px'
 
 // TODO: Convert to vanilla styles when we get to look and feel part
 export async function PriceCalculatorCmsPage({ locale, story }: Props) {
-  if (process.env.FEATURE_PRICE_CALCULATOR_PAGE !== 'true') {
+  if (!Features.enabled('PRICE_CALCULATOR_PAGE')) {
     throw notFound()
   }
   const { productName } = await getPriceTemplate(story.content.priceTemplate)

@@ -128,15 +128,24 @@ export const useSyncPriceIntentState = (preloadedPriceIntentId?: string): void =
   const shopSessionId = shopSession?.id
   const apolloClient = useApolloClient()
 
-  const initialPriceIntentId = preloadedPriceIntentId || entryToReplace?.priceIntentId
   const cart = shopSession?.cart
   const [priceIntentId, setPriceIntentId] = useState<string | null>(null)
   useEffect(() => {
     if (shopSessionId == null || priceTemplate == null) {
       return
     }
-    if (initialPriceIntentId != null) {
-      setPriceIntentId(initialPriceIntentId)
+    if (entryToReplace != null) {
+      console.log('Editing cart item, priceIntentId:', entryToReplace.priceIntentId)
+      if (entryToReplace.priceIntentId == null) {
+        throw new Error(
+          'TODO: Support creating priceIntent for editing cart items without priceIntentId',
+        )
+      }
+      setPriceIntentId(entryToReplace.priceIntentId)
+      return
+    } else if (preloadedPriceIntentId != null) {
+      console.log('Using preloaded priceIntentId:', preloadedPriceIntentId)
+      setPriceIntentId(preloadedPriceIntentId)
       return
     }
 
@@ -159,7 +168,15 @@ export const useSyncPriceIntentState = (preloadedPriceIntentId?: string): void =
         setPriceIntentId(savedId)
       }
     }
-  }, [apolloClient, cart?.entries, initialPriceIntentId, priceTemplate, productName, shopSessionId])
+  }, [
+    apolloClient,
+    cart?.entries,
+    entryToReplace,
+    preloadedPriceIntentId,
+    priceTemplate,
+    productName,
+    shopSessionId,
+  ])
 
   const queryResult = usePriceIntentQuery({
     skip: priceIntentId == null,
@@ -181,6 +198,11 @@ export const useSyncPriceIntentState = (preloadedPriceIntentId?: string): void =
       syncSelectedOffer(priceIntent)
     }
   }, [entryToReplace, priceIntentId, productName, queryResult.data, syncSelectedOffer, store])
+
+  useEffect(() => {
+    // Cleanup key atom on navigation, prevents flash of previous content when navigating between price calculators
+    return () => store.set(currentPriceIntentIdAtom, null)
+  }, [store])
 
   const setIsLoading = useSetAtom(priceCalculatorLoadingAtom)
   useEffect(() => {
