@@ -114,10 +114,6 @@ export function OfferPriceDetails() {
   )
 }
 
-function Separator() {
-  return <hr style={{ height: '1px', backgroundColor: tokens.colors.borderTranslucent1 }} />
-}
-
 function PriceBreakdownItem({ children, value }: { children: ReactNode; value: Money }) {
   const formatter = useFormatter()
   return (
@@ -133,6 +129,10 @@ function PriceBreakdownItem({ children, value }: { children: ReactNode; value: M
       </Text>
     </Text>
   )
+}
+
+function Separator() {
+  return <hr style={{ height: '1px', backgroundColor: tokens.colors.borderTranslucent1 }} />
 }
 
 const hasDiscountForOffer = (shopSession: ShopSession, offer: ProductOfferFragment) => {

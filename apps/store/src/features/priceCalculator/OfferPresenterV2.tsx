@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import { memo, type MouseEventHandler, useEffect, useMemo, useRef, useState } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
-import { Button, yStack } from 'ui'
+import { Button, tokens, yStack } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
 import Collapsible from '@/components/Collapsible/Collapsible'
 import { SSN_SE_SECTION_ID } from '@/components/PriceCalculator/SsnSeSection'
@@ -24,13 +24,17 @@ import {
 } from '@/components/ProductPage/PurchaseForm/useSelectedOffer'
 import { useTiersAndDeductibles } from '@/components/ProductPage/PurchaseForm/useTiersAndDeductibles'
 import { useCartEntryToReplace } from '@/components/ProductPage/useCartEntryToReplace'
+import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
 import { DeductibleSelectorV2 } from '@/features/priceCalculator/DeductibleSelectorV2'
 import { priceCalculatorStepAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
 import { ProductCardSmall } from '@/features/priceCalculator/ProductCardSmall'
 import { ProductTierSelectorV2 } from '@/features/priceCalculator/ProductTierSelectorV2'
 import { BankSigneringEvent } from '@/services/bankSignering'
 import { ExternalInsuranceCancellationOption } from '@/services/graphql/generated'
-import { useShopSessionIdOrThrow } from '@/services/shopSession/ShopSessionContext'
+import {
+  useShopSessionIdOrThrow,
+  useShopSessionValueOrThrow,
+} from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
@@ -157,11 +161,20 @@ function OfferSummary() {
     [priceIntent.offers],
   )
 
+  const shopSession = useShopSessionValueOrThrow()
+
   return (
     <ProductCardSmall productData={productData} subtitle={selectedOffer.exposure.displayNameShort}>
       <OfferDetails />
 
       <CancellationForm productOfferIds={productOfferIds} offer={selectedOffer} />
+
+      {shopSession.cart.campaignsEnabled && (
+        <>
+          <DiscountFieldContainer shopSession={shopSession} />
+          <Separator />
+        </>
+      )}
 
       <OfferPriceDetails />
 
@@ -229,4 +242,8 @@ function OfferDetails() {
       </Collapsible.Content>
     </Collapsible.Root>
   )
+}
+
+function Separator() {
+  return <hr style={{ height: '1px', backgroundColor: tokens.colors.borderTranslucent1 }} />
 }
