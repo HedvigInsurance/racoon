@@ -4,25 +4,15 @@ import { useInView } from 'framer-motion'
 import { useStore } from 'jotai'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
-import {
-  memo,
-  type MouseEventHandler,
-  type ReactNode,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import { memo, type MouseEventHandler, useEffect, useMemo, useRef, useState } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
-import { Button, Text, yStack } from 'ui'
+import { Button, yStack } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
 import Collapsible from '@/components/Collapsible/Collapsible'
 import { SSN_SE_SECTION_ID } from '@/components/PriceCalculator/SsnSeSection'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { useOfferDetails } from '@/components/ProductItem/useOfferDetails'
 import { ProductDetails } from '@/components/ProductItemV2/ProductDetails'
-import { DiscountTooltip } from '@/components/ProductPage/PurchaseForm/DiscountTooltip/DiscountTooltip'
-import { useDiscountTooltipProps } from '@/components/ProductPage/PurchaseForm/DiscountTooltip/useDiscountTooltipProps'
 import {
   activeFormSectionIdAtom,
   priceCalculatorFormAtom,
@@ -34,26 +24,20 @@ import {
 } from '@/components/ProductPage/PurchaseForm/useSelectedOffer'
 import { useTiersAndDeductibles } from '@/components/ProductPage/PurchaseForm/useTiersAndDeductibles'
 import { useCartEntryToReplace } from '@/components/ProductPage/useCartEntryToReplace'
-import { BUNDLE_DISCOUNT_ELIGIBLE_PRODUCT_IDS } from '@/features/bundleDiscount/bundleDiscount'
-import { BundleDiscountOfferTooltip } from '@/features/bundleDiscount/BundleDiscountOfferTooltip'
 import { DeductibleSelectorV2 } from '@/features/priceCalculator/DeductibleSelectorV2'
 import { priceCalculatorStepAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
 import { ProductCardSmall } from '@/features/priceCalculator/ProductCardSmall'
 import { ProductTierSelectorV2 } from '@/features/priceCalculator/ProductTierSelectorV2'
 import { BankSigneringEvent } from '@/services/bankSignering'
 import { ExternalInsuranceCancellationOption } from '@/services/graphql/generated'
-import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { useShopSessionIdOrThrow } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useAddToCart } from '@/utils/useAddToCart'
-import { useFormatter } from '@/utils/useFormatter'
+import { OfferPriceDetails } from './OfferPriceDetails'
 
 export const OfferPresenterV2 = memo(() => {
-  const { shopSession } = useShopSession()
-  if (shopSession == null) {
-    throw new Error('shopSession must be defined')
-  }
   const priceIntent = usePriceIntent()
   const [selectedOffer, setSelectedOffer] = useSelectedOffer()
   if (selectedOffer == null) {
@@ -129,34 +113,15 @@ export const OfferPresenterV2 = memo(() => {
 OfferPresenterV2.displayName = 'OfferPresenterV2'
 
 function OfferSummary() {
-  const { shopSession } = useShopSession()
-  if (shopSession == null) {
-    throw new Error('shopSession must be defined')
-  }
+  const shopSessionId = useShopSessionIdOrThrow()
   const selectedOffer = useSelectedOfferValueOrThrow()
   const { t } = useTranslation('purchase-form')
-  const formatter = useFormatter()
   const priceIntent = usePriceIntent()
-  const discountTooltipProps = useDiscountTooltipProps(
-    selectedOffer,
-    shopSession.cart.redeemedCampaign ?? undefined,
-  )
-  let discountTooltip: ReactNode = null
-  if (discountTooltipProps != null) {
-    discountTooltip = <DiscountTooltip {...discountTooltipProps} />
-  } else if (
-    shopSession.experiments?.bundleDiscount &&
-    BUNDLE_DISCOUNT_ELIGIBLE_PRODUCT_IDS.has(priceIntent.product.id)
-  ) {
-    discountTooltip = <BundleDiscountOfferTooltip offer={selectedOffer} />
-  }
-
-  const displayPrice = formatter.monthlyPrice(selectedOffer.cost.net)
 
   const entryToReplace = useCartEntryToReplace()
   const tracking = useTracking()
   const [addToCart, loadingAddToCart] = useAddToCart({
-    shopSessionId: shopSession.id,
+    shopSessionId,
     entryToReplace: entryToReplace?.id,
     onSuccess(productOfferId) {
       const addedProductOffer = priceIntent.offers.find((offer) => offer.id === productOfferId)
@@ -196,12 +161,9 @@ function OfferSummary() {
     <ProductCardSmall productData={productData} subtitle={selectedOffer.exposure.displayNameShort}>
       <OfferDetails />
 
-      {discountTooltip}
-      <Text as="p" align="center" size="xl">
-        {displayPrice}
-      </Text>
-
       <CancellationForm productOfferIds={productOfferIds} offer={selectedOffer} />
+
+      <OfferPriceDetails />
 
       <Button
         variant="primary"
