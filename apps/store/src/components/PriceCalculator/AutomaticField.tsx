@@ -1,4 +1,4 @@
-import { InputRadio, HorizontalInputRadio } from '@/components/InputRadio/InputRadio'
+import { InputRadio } from '@/components/InputRadio/InputRadio'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { UseRegistrationAddressField } from '@/components/PriceCalculator/UseRegistrationAddressField'
 import { StepperInput } from '@/components/StepperInput/StepperInput'
@@ -71,14 +71,14 @@ export const AutomaticField = ({ field, autoFocus }: Props) => {
       )
 
     case 'radio': {
-      const RadioComponent = field.stacking === 'horizontal' ? HorizontalInputRadio : InputRadio
-
       return (
-        <RadioComponent
+        <InputRadio
           name={field.name}
           label={translateLabel(field.label)}
+          displayLabel={field.displayLabel}
           required={field.required}
           defaultValue={field.value ?? field.defaultValue}
+          orientation={field.stacking}
           options={field.options.map((option, index) => ({
             label: translateLabel(option.label),
             value: option.value,

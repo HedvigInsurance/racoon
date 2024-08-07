@@ -5,7 +5,7 @@ import { Space } from 'ui'
 import { Field } from '@/app/debugger/trial/debuggerTrial.types'
 import { SubmitButton } from '@/appComponents/SubmitButton'
 import { ErrorMessages } from '@/components/FormErrors/ErrorMessages'
-import { HorizontalInputRadio } from '@/components/InputRadio/InputRadio'
+import { InputRadio } from '@/components/InputRadio/InputRadio'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { TextField } from '@/components/TextField/TextField'
@@ -91,7 +91,7 @@ export function TrialContractForm() {
             pattern="\d{3} \d{2}"
             defaultValue={state?.fields?.[Field.zipCode]}
           />
-          <HorizontalInputRadio
+          <InputRadio
             name={Field.subType}
             label="Sub Type"
             required={true}
@@ -119,11 +119,7 @@ export function TrialContractForm() {
             autoComplete="off"
             label="Living space (m²)"
           />
-          <HorizontalInputRadio
-            name={Field.isStudent}
-            label="Student?"
-            options={isStudentOptions}
-          />
+          <InputRadio name={Field.isStudent} label="Student?" options={isStudentOptions} />
 
           <SubmitButton>Create trial contract</SubmitButton>
         </Space>

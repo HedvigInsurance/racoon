@@ -29,6 +29,7 @@ export const SE_PET_CAT: Template = {
             stacking: 'horizontal',
             name: 'gender',
             label: { key: tKey('FIELD_GENDER_LABEL') },
+            displayLabel: false,
             required: true,
             options: [
               {

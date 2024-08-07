@@ -3,47 +3,64 @@
 import * as RadioGroup from '@radix-ui/react-radio-group'
 import clsx from 'clsx'
 import {
+  forwardRef,
   useId,
+  type MouseEventHandler,
   type ComponentProps,
   type ComponentPropsWithoutRef,
-  type MouseEventHandler,
 } from 'react'
-import { Text, xStack } from 'ui'
+import { Text } from 'ui'
 import { RadioIndicatorIcon } from '@/features/priceCalculator/RadioIndicatorIcon'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
-import { card, option, item, horizontalRoot, horizontalItem } from './InputRadio.css'
+import { horizontalRadioGroup, card, item, paddedItem, radioButton } from './InputRadio.css'
 
 type Option = { label: string; value: string; autoFocus?: boolean }
 
-type RootProps = { label: string; options: Array<Option> } & Omit<
-  ComponentProps<typeof RadioGroup.Root>,
-  'children'
->
+type InputRadioProps = {
+  label: string
+  options: Array<Option>
+  displayLabel?: boolean
+} & Omit<ComponentProps<typeof RadioGroup.Root>, 'children'>
 
-export function InputRadio({ label, options, orientation = 'horizontal', ...props }: RootProps) {
-  const { highlight, animationProps } = useHighlightAnimation<HTMLDivElement>()
-
-  const handleValueChange = (value: string) => {
-    highlight()
-    props.onValueChange?.(value)
+export function InputRadio({
+  displayLabel = true,
+  orientation = 'horizontal',
+  ...forwardedProps
+}: InputRadioProps) {
+  if (displayLabel) {
+    return <LabelledInputRadio orientation={orientation} {...forwardedProps} />
   }
 
-  if (orientation === 'vertical') {
-    // TODO: add support for vertical orientation layout
+  return <UnlabelledInputRadio orientation={orientation} {...forwardedProps} />
+}
+
+function LabelledInputRadio({
+  label,
+  options,
+  onValueChange,
+  ...forwardedProps
+}: Omit<InputRadioProps, 'displayLabel'>) {
+  const { highlight, animationProps } = useHighlightAnimation<HTMLDivElement>()
+
+  if (forwardedProps.orientation === 'vertical') {
+    // TODO: add support for vertical orientation layout in the future
+    // https://www.figma.com/design/5kmmDdh6StpXzbEfr7WevV/Hedvig-UI-Kit?node-id=15719-7413&t=0qSItK7IB6SKNJP3-4
     return null
   }
 
-  // TODO: this is horizontal layout with label. Horizontal layout without label
-  // can be achieved by using HorizontalRoot at the moment, but in the future I'll
-  // be merging both and deciding between them based on the present of the label prop.
+  const handleValueChange = (value: string) => {
+    highlight()
+    onValueChange?.(value)
+  }
+
   return (
     <div className={card} {...animationProps}>
       <Text as="span" size="xs" color="textSecondary">
         {label}
       </Text>
       <RadioGroup.Root
-        {...props}
-        className={xStack({ gap: 'md', alignItems: 'center' })}
+        {...forwardedProps}
+        className={horizontalRadioGroup.withLabel}
         aria-label={label}
         onValueChange={handleValueChange}
       >
@@ -55,49 +72,61 @@ export function InputRadio({ label, options, orientation = 'horizontal', ...prop
   )
 }
 
+function UnlabelledInputRadio({
+  label,
+  options,
+  ...forwardedProps
+}: Omit<InputRadioProps, 'displayLabel'>) {
+  if (forwardedProps.orientation === 'vertical') {
+    // TODO: add support for vertical orientation layout in the future
+    // https://www.figma.com/design/5kmmDdh6StpXzbEfr7WevV/Hedvig-UI-Kit?node-id=15719-7413&t=0qSItK7IB6SKNJP3-4
+    return null
+  }
+  return (
+    <RadioGroup.Root
+      {...forwardedProps}
+      className={horizontalRadioGroup.withoutLabel}
+      aria-label={label}
+    >
+      {options.map((option) => {
+        return <HighlightableItem key={option.value} className={paddedItem} {...option} />
+      })}
+    </RadioGroup.Root>
+  )
+}
+
 type ItemProps = {
   label: string
   value: string
 } & Omit<ComponentPropsWithoutRef<'button'>, 'value'>
 
-function Item({ value, label, className, ...itemProps }: ItemProps) {
-  const identifier = useId()
+const Item = forwardRef<HTMLLabelElement, ItemProps>(
+  ({ value, label, className, ...itemProps }, ref) => {
+    const identifier = useId()
 
-  return (
-    <label className={clsx(option, className)} htmlFor={identifier}>
-      <RadioGroup.Item id={identifier} className={item} value={value} {...itemProps}>
-        <RadioGroup.Indicator forceMount={true} asChild={true}>
-          <RadioIndicatorIcon />
-        </RadioGroup.Indicator>
-      </RadioGroup.Item>
-      <Text as="span" size="xl">
-        {label}
-      </Text>
-    </label>
-  )
-}
+    return (
+      <label ref={ref} className={clsx(item, className)} htmlFor={identifier}>
+        <RadioGroup.Item id={identifier} className={radioButton} value={value} {...itemProps}>
+          <RadioGroup.Indicator forceMount={true} asChild={true}>
+            <RadioIndicatorIcon />
+          </RadioGroup.Indicator>
+        </RadioGroup.Item>
+        <Text as="span" size="xl">
+          {label}
+        </Text>
+      </label>
+    )
+  },
+)
+Item.displayName = 'Item'
 
-export function HorizontalInputRadio({ label, options, ...rootProps }: RootProps) {
-  return (
-    <RadioGroup.Root className={horizontalRoot} aria-label={label} {...rootProps}>
-      {options.map((option) => (
-        <HorizontalItem key={option.value} {...option} />
-      ))}
-    </RadioGroup.Root>
-  )
-}
-
-function HorizontalItem({ onClick, ...props }: ItemProps) {
-  const { highlight, animationProps } = useHighlightAnimation<HTMLDivElement>()
+function HighlightableItem(props: ItemProps) {
+  const { highlight, animationProps } = useHighlightAnimation<HTMLLabelElement>()
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     highlight()
-    onClick?.(event)
+    props.onClick?.(event)
   }
 
-  return (
-    <div className={horizontalItem} {...animationProps}>
-      <Item {...props} onClick={handleClick} />
-    </div>
-  )
+  return <Item {...props} {...animationProps} onClick={handleClick} />
 }
