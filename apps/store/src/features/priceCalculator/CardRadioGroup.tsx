@@ -7,7 +7,7 @@ import {
 import { clsx } from 'clsx'
 import { yStack } from 'ui'
 import { RadioIndicatorIcon } from '@/features/priceCalculator/RadioIndicatorIcon'
-import { indicator, indicatorBorderColor, indicatorInnerColor, item } from './CardRadioGroup.css'
+import { item } from './CardRadioGroup.css'
 
 export function Root({ children, className, ...forwardedProps }: RadioGroupProps) {
   return (
@@ -25,18 +25,10 @@ export function Item({ children, className, value, ...forwardedProps }: RadioGro
   )
 }
 
-export function Indicator({
-  className,
-  forceMount = true,
-  ...forwardedProps
-}: RadioGroupIndicatorProps) {
+export function Indicator({ forceMount = true, ...forwardedProps }: RadioGroupIndicatorProps) {
   return (
-    <RadioGroup.Indicator
-      className={clsx(className, indicator)}
-      forceMount={forceMount}
-      {...forwardedProps}
-    >
-      <RadioIndicatorIcon borderColor={indicatorBorderColor} innerColor={indicatorInnerColor} />
+    <RadioGroup.Indicator forceMount={forceMount} {...forwardedProps} asChild={true}>
+      <RadioIndicatorIcon />
     </RadioGroup.Indicator>
   )
 }

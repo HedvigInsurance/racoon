@@ -1,27 +1,26 @@
+import clsx from 'clsx'
+import { forwardRef } from 'react'
 import { IconRoot, type IconRootProps } from 'ui'
+import { icon, indicatorBorderColor, indicatorMarkerColor } from './RadioIndicatorIcon.css'
 
-type Props = IconRootProps & {
-  borderColor?: string
-  fillColor?: string
-  innerColor?: string
-}
-
-// Single icon can cover 3 possible radio indicator states
-// - initial (border, no fill, no center color)
-// - selected (no border, green fill, optionally white center)
-// - selected disabled (no border, gray fill, optionally white center)
-export function RadioIndicatorIcon({
-  size = '1.5rem',
-  borderColor,
-  fillColor = 'currentColor',
-  innerColor = 'transparent',
-  ...props
-}: Props) {
-  return (
-    <IconRoot size={size} {...props} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="12" cy="12" r="11" stroke={borderColor ?? fillColor} strokeWidth={2} />
-      <circle cx="12" cy="12" r="12" fill={fillColor} />
-      <circle cx="12" cy="12" r="4" fill={innerColor} />
-    </IconRoot>
-  )
-}
+// Single icon can cover all possible radio indicator states based on
+// [data-state="checked"|"unchecked"] and [data-disabled] attributes
+export const RadioIndicatorIcon = forwardRef<SVGSVGElement, IconRootProps>(
+  ({ className, size = '1.5rem', ...props }, ref) => {
+    return (
+      <IconRoot
+        ref={ref}
+        className={clsx(icon, className)}
+        size={size}
+        {...props}
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle cx="12" cy="12" r="10" stroke={indicatorBorderColor} strokeWidth={2} />
+        <circle cx="12" cy="12" r="10" />
+        <circle cx="12" cy="12" r="4" fill={indicatorMarkerColor} />
+      </IconRoot>
+    )
+  },
+)
+RadioIndicatorIcon.displayName = 'RadioIndicatorIcon'
