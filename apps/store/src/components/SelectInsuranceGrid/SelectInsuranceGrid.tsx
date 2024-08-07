@@ -1,19 +1,17 @@
 import styled from '@emotion/styled'
 import { Heading, Space, mq, theme } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
+import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import { ProductItem } from '@/components/SelectInsuranceGrid/ProductItem'
-import type { Product as APIProduct } from '@/services/graphql/generated'
+import { type ProductFragment } from '@/services/graphql/generated'
+import { Features } from '@/utils/Features'
+import { getParameterizedLink } from '@/utils/getParameterizedLink'
 
 const ITEM_THRESHOLD = 4
 const LAYOUT = { GRID: 'grid', COLUMN: 'column' }
 
-export type Product = Pick<
-  APIProduct,
-  'id' | 'displayNameFull' | 'displayNameShort' | 'tagline' | 'pageLink' | 'pillowImage'
->
-
 type Props = {
-  products: Array<Product>
+  products: Array<ProductFragment>
   heading?: string
   className?: string
 }
@@ -34,7 +32,10 @@ export const SelectInsuranceGrid = ({ className, heading, products, ...others }:
               <ProductItem.Root key={product.id}>
                 <ProductItem.Pillow {...product.pillowImage} />
                 <ProductItem.Content>
-                  <ProductItem.TitleLink href={product.pageLink} title={product.displayNameFull}>
+                  <ProductItem.TitleLink
+                    href={getPriceCalculatorLink(product)}
+                    title={product.displayNameFull}
+                  >
                     {product.displayNameShort}
                   </ProductItem.TitleLink>
                   <ProductItem.Tagline>{product.tagline}</ProductItem.Tagline>
@@ -46,6 +47,16 @@ export const SelectInsuranceGrid = ({ className, heading, products, ...others }:
       </GridLayout.Content>
     </GridLayout.Root>
   )
+}
+
+const getPriceCalculatorLink = (product: ProductFragment): string => {
+  if (Features.enabled('PRICE_CALCULATOR_PAGE') && product.priceCalculatorPageLink != null) {
+    // False positive - typescript-eslint does not detect that property is definitely non-null
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return product.priceCalculatorPageLink
+  } else {
+    return getParameterizedLink(product.pageLink, [[OPEN_PRICE_CALCULATOR_QUERY_PARAM, '1']])
+  }
 }
 
 const Grid = styled.div({

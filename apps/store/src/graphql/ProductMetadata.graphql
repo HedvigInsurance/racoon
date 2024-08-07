@@ -1,16 +1,21 @@
 query ProductMetadata {
   availableProducts {
+    ...Product
+  }
+}
+
+fragment Product on Product {
+  id
+  name
+  displayNameShort
+  displayNameFull
+  tagline
+  pageLink
+  priceCalculatorPageLink
+  categoryPageLink
+  pillowImage {
     id
-    name
-    displayNameShort
-    displayNameFull
-    tagline
-    pageLink
-    categoryPageLink
-    pillowImage {
-      id
-      alt
-      src
-    }
+    alt
+    src
   }
 }

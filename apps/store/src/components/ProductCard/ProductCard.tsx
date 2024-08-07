@@ -1,10 +1,9 @@
-import type { UrlObject } from 'url'
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
-import { Button, mq, theme } from 'ui'
+import { Button, mq, theme, visuallyHidden } from 'ui'
 import type { ImageSize } from '@/blocks/ProductCardBlock'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
@@ -12,7 +11,6 @@ import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWit
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import { SelectInsuranceGrid } from '@/components/SelectInsuranceGrid/SelectInsuranceGrid'
-import { getParameterizedLink } from '@/utils/getParameterizedLink'
 import { isSameLink } from '@/utils/url'
 import { card } from './ProductCard.css'
 
@@ -23,8 +21,6 @@ type ImageProps = {
   objectPosition?: string
   priority?: boolean
 }
-
-type LinkHref = string | UrlObject
 
 export type LinkType = 'product' | 'category'
 
@@ -72,26 +68,24 @@ export const ProductCard = ({
   )
 }
 
-const getPriceLink = (productLink: string): LinkHref | undefined => {
-  if (productLink.includes('?')) {
-    console.warn(
-      "Product link has unexpected parameters, skipping price link generation.  Let's support it when we need it",
-    )
-    return
-  }
-  return {
-    pathname: productLink,
-    query: { [OPEN_PRICE_CALCULATOR_QUERY_PARAM]: 1 },
-  } as const
-}
-
 const ProductCTA = ({ link }: Pick<ProductCardProps, 'link'>) => {
   const { t } = useTranslation('common')
 
-  const priceLink = getPriceLink(link.url)
-  if (!priceLink) {
-    console.warn('[ProductCard]: Unable to generate a price link. Skipping cta render!')
-    return null
+  const products = useProductMetadata()
+  const product = products?.find((product) => isSameLink(product.pageLink, link.url))
+  if (product == null) {
+    console.warn(`Did not find product for link ${link.url}, skipping CTA render!`)
+    return
+  }
+
+  let priceLink: { pathname: string; query?: Record<string, string> }
+  if (product.priceCalculatorPageLink) {
+    priceLink = { pathname: product.priceCalculatorPageLink }
+  } else {
+    priceLink = {
+      pathname: product.pageLink,
+      query: { [OPEN_PRICE_CALCULATOR_QUERY_PARAM]: '1' },
+    }
   }
 
   return (
@@ -106,12 +100,9 @@ const CategoryCTA = ({ link }: Pick<ProductCardProps, 'link'>) => {
   const products = useProductMetadata()
   const { t } = useTranslation('common')
 
-  const productsByCategory = (products ?? [])
-    .filter((product) => product.categoryPageLink && isSameLink(product.categoryPageLink, link.url))
-    .map((product) => ({
-      ...product,
-      pageLink: getParameterizedLink(product.pageLink, [[OPEN_PRICE_CALCULATOR_QUERY_PARAM, '1']]),
-    }))
+  const productsByCategory = (products ?? []).filter(
+    (product) => product.categoryPageLink && isSameLink(product.categoryPageLink, link.url),
+  )
 
   if (productsByCategory.length < 1) {
     console.warn(
@@ -129,6 +120,9 @@ const CategoryCTA = ({ link }: Pick<ProductCardProps, 'link'>) => {
       </FullscreenDialog.Trigger>
 
       <FullscreenDialog.Modal>
+        <FullscreenDialog.Title className={visuallyHidden}>
+          {t('SELECT_INSURANCE')}
+        </FullscreenDialog.Title>
         <StyledSelectInsuranceGrid products={productsByCategory} heading={t('SELECT_INSURANCE')} />
       </FullscreenDialog.Modal>
     </FullscreenDialog.Root>

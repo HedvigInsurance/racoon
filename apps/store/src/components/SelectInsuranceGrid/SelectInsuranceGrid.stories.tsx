@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import type { Product } from './SelectInsuranceGrid'
+import { type ProductFragment } from '@/services/graphql/generated'
 import { SelectInsuranceGrid } from './SelectInsuranceGrid'
 
-const PRODUCTS_FIXTURE: Array<Product> = [
+const PRODUCTS_FIXTURE: Array<ProductFragment> = [
   {
     id: '1',
+    name: 'SE_APARTMENT_BRF',
     displayNameShort: 'Bostadsrätt',
     displayNameFull: 'Hemförsäkring Bostadsrätt',
     tagline: 'För dig, dina saker och din lägenhet',
@@ -16,6 +17,7 @@ const PRODUCTS_FIXTURE: Array<Product> = [
   },
   {
     id: '2',
+    name: 'SE_APARTMENT_RENT',
     displayNameShort: 'Hyresrätt',
     displayNameFull: 'Hemförsäkring Hyresrätt',
     tagline: 'Brett skydd för dig som hyr bostad',
@@ -27,6 +29,7 @@ const PRODUCTS_FIXTURE: Array<Product> = [
   },
   {
     id: '3',
+    name: 'SE_HOUSE',
     displayNameShort: 'Villa & Hus',
     displayNameFull: 'Villaförsäkring',
     tagline: 'För dig som äger hus eller villa och självklart dina saker',
@@ -38,6 +41,7 @@ const PRODUCTS_FIXTURE: Array<Product> = [
   },
   {
     id: '4',
+    name: 'SE_APARTMENT_STUDENT',
     displayNameShort: 'Student',
     displayNameFull: 'Hemförsäkring Student',
     tagline: 'Hemförsäkring fr. 49 kr/mån',
@@ -49,6 +53,7 @@ const PRODUCTS_FIXTURE: Array<Product> = [
   },
   {
     id: '5',
+    name: 'SE_CAR',
     displayNameShort: 'Bil',
     displayNameFull: 'Bilförsäkring',
     tagline: 'Gäller utan bindningstid',
@@ -60,6 +65,7 @@ const PRODUCTS_FIXTURE: Array<Product> = [
   },
   {
     id: '6',
+    name: 'SE_FAKE_TRAVEL',
     displayNameShort: 'Resa',
     displayNameFull: 'Resaförsäkring',
     tagline: 'För dig som vill resa tryggt',
@@ -71,6 +77,7 @@ const PRODUCTS_FIXTURE: Array<Product> = [
   },
   {
     id: '7',
+    name: 'SE_FAKE_FREE_TIME',
     displayNameShort: 'Fritid',
     displayNameFull: 'Fritidförsäkring',
     tagline: 'För dig som äger husvagn, husbil eller båt',
@@ -82,6 +89,7 @@ const PRODUCTS_FIXTURE: Array<Product> = [
   },
   {
     id: '8',
+    name: 'SE_BUSINESS',
     displayNameShort: 'Företag',
     displayNameFull: 'Företagförsäkring',
     tagline: 'Försäkringar för företag',

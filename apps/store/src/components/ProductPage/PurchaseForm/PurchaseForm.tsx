@@ -47,6 +47,7 @@ import {
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { sendDialogEvent } from '@/utils/dialogEvent'
+import { Features } from '@/utils/Features'
 import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
 import { ScrollPast } from '../ScrollPast/ScrollPast'
 import { loadOfferPresenter, OfferPresenterDynamic } from './OfferPresenterDynamic'
@@ -131,7 +132,13 @@ const PurchaseFormInner = (props: PurchaseFormInnerProps) => {
       id: productData.id,
       displayNameFull: productData.displayNameFull,
     })
-    editForm()
+    if (Features.enabled('PRICE_CALCULATOR_PAGE') && productData.priceCalculatorPageLink != null) {
+      // TODO: Replace with soft navigation (router.push) as soon as old price calculator is gone,
+      //  otherwise atoms get out of sync and UI crashes
+      window.location.href = productData.priceCalculatorPageLink
+    } else {
+      editForm()
+    }
   }
 
   const handleComplete = useCallback(
