@@ -130,30 +130,43 @@ export const useSyncPriceIntentState = (preloadedPriceIntentId?: string): void =
 
   const cart = shopSession?.cart
   const [priceIntentId, setPriceIntentId] = useState<string | null>(null)
+
   useEffect(() => {
     if (shopSessionId == null || priceTemplate == null) {
       return
     }
+    const service = priceIntentServiceInitClientSide(apolloClient)
+    const createPriceIntent = () =>
+      service.create({ productName, priceTemplate, shopSessionId }).then((priceIntent) => {
+        setPriceIntentId(priceIntent.id)
+      })
+
     if (entryToReplace != null) {
-      console.log('Editing cart item, priceIntentId:', entryToReplace.priceIntentId)
       if (entryToReplace.priceIntentId == null) {
-        throw new Error(
-          'TODO: Support creating priceIntent for editing cart items without priceIntentId',
-        )
+        console.log('Creating new priceIntent for cart item without priceIntentId')
+        ;(async () => {
+          const priceIntent = await service.create({ productName, priceTemplate, shopSessionId })
+          await service.update({
+            priceIntentId: priceIntent.id,
+            data: entryToReplace.priceIntentData,
+            // Not really updating the customer, but still need to pass required params to mutation input
+            customer: { shopSessionId },
+          })
+          setPriceIntentId(priceIntent.id)
+          console.log(
+            'Created priceIntent and prefilled with offer data, priceIntentId:',
+            priceIntent.id,
+          )
+        })()
+        return
       }
+      console.log('Editing cart item, priceIntentId:', entryToReplace.priceIntentId)
       setPriceIntentId(entryToReplace.priceIntentId)
       return
     } else if (preloadedPriceIntentId != null) {
       console.log('Using preloaded priceIntentId:', preloadedPriceIntentId)
       setPriceIntentId(preloadedPriceIntentId)
       return
-    }
-
-    const service = priceIntentServiceInitClientSide(apolloClient)
-    const createPriceIntent = () => {
-      service.create({ productName, priceTemplate, shopSessionId }).then((priceIntent) => {
-        setPriceIntentId(priceIntent.id)
-      })
     }
 
     const savedId = service.getStoredId(priceTemplate.name, shopSessionId)
