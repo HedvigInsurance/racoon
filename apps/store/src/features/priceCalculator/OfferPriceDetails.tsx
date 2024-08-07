@@ -1,6 +1,6 @@
 import { useTranslation } from 'next-i18next'
 import type { ReactNode } from 'react'
-import { Text, tokens, xStack, yStack } from 'ui'
+import { Badge, sprinkles, Text, tokens, xStack, yStack } from 'ui'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { useSelectedOfferValueOrThrow } from '@/components/ProductPage/PurchaseForm/useSelectedOffer'
 import { CampaignDiscountType, type ProductOfferFragment } from '@/services/graphql/generated'
@@ -28,19 +28,10 @@ export function OfferPriceDetails() {
           <PriceBreakdownItem value={selectedOffer.cost.gross}>
             {selectedOffer.product.displayNameFull}
             {hasTiers && (
-              <Text
-                as="span"
-                color="textPrimary"
-                size="xxs"
-                style={{
-                  paddingInline: tokens.space.xs,
-                  paddingBlock: tokens.space.xxs,
-                  borderRadius: tokens.radius.xxs,
-                  backgroundColor: tokens.colors.pink300,
-                }}
-              >
+              // NOTE: display: flex fixes auto height calculation
+              <Badge size="tiny" color="pinkFill3" className={sprinkles({ display: 'flex' })}>
                 {selectedOffer.variant.displayNameSubtype}
-              </Text>
+              </Badge>
             )}
           </PriceBreakdownItem>
           <PriceBreakdownItem

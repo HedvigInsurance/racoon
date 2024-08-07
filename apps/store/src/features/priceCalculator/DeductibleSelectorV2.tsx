@@ -3,7 +3,7 @@ import { StoryblokComponent } from '@storyblok/react'
 import { useTranslation } from 'next-i18next'
 import { useMemo } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
-import { Button, Heading, PlusIcon, Text, xStack, yStack } from 'ui'
+import { Badge, Button, Heading, PlusIcon, Text, xStack, yStack } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { usePriceCalculatorDeductibleInfo } from '@/features/priceCalculator/priceCalculatorAtoms'
 import type { Money, ProductOfferFragment } from '@/services/graphql/generated'
@@ -58,9 +58,9 @@ export function DeductibleSelectorV2({ offers, selectedOffer, onValueChange }: P
                   <Heading as="h2" variant="standard.24">
                     {item.title}
                   </Heading>
-                  <Text as="div" size="xs" color="textPrimary" className={priceLabel}>
+                  <Badge size="small" className={priceLabel}>
                     {formatter.monthlyPrice(item.price)}
-                  </Text>
+                  </Badge>
                 </div>
                 <Text size="xs" color="textSecondary">
                   {item.description}
