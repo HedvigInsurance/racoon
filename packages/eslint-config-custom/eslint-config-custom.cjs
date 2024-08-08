@@ -49,9 +49,12 @@ module.exports = {
     ],
     '@typescript-eslint/ban-ts-comment': ['error', { 'ts-expect-error': 'allow-with-description' }],
     '@typescript-eslint/no-unused-vars': 'error', // Also covers unused import
-    '@typescript-eslint/consistent-type-imports': ['error', {
-      fixStyle: 'inline-type-imports',
-    }],
+    '@typescript-eslint/consistent-type-imports': [
+      'error',
+      {
+        fixStyle: 'inline-type-imports',
+      },
+    ],
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-empty-interface': 'off',
@@ -59,6 +62,7 @@ module.exports = {
     '@typescript-eslint/no-unnecessary-condition': 'error', // Also unneeded optional chaining
     '@typescript-eslint/restrict-template-expressions': 'off', // Breaks with emotion styles referring to other components
     '@typescript-eslint/consistent-indexed-object-style': 'off',
+    '@typescript-eslint/unbound-method': 'off',
 
     // Typed lint rules
     '@typescript-eslint/dot-notation': [
