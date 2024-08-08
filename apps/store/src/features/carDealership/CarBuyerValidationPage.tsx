@@ -94,7 +94,7 @@ export const CarBuyerValidationPage = (props: Props) => {
                     name={Field.Tier}
                     label="Skyddsnivå"
                     required={true}
-                    defaultValue="1"
+                    defaultValue="2"
                     options={TIER_OPTIONS}
                   />
                   <Space y={0.5}>
