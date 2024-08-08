@@ -39,6 +39,7 @@ const unresponsiveProperties = defineProperties({
     flexDirection: ['row', 'column'],
     flexGrow: [1],
     gap: { ...spaceTokensSubset, none: 0 },
+    marginInline: spaceTokensSubset,
     marginTop: spaceTokensSubset,
     marginBottom: spaceTokensSubset,
     marginLeft: spaceTokensSubset,
