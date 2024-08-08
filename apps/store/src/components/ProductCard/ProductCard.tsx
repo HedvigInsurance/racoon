@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
-import { Button, mq, Space, theme } from 'ui'
+import { Button, mq, theme } from 'ui'
 import type { ImageSize } from '@/blocks/ProductCardBlock'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
@@ -14,6 +14,7 @@ import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/Purc
 import { SelectInsuranceGrid } from '@/components/SelectInsuranceGrid/SelectInsuranceGrid'
 import { getParameterizedLink } from '@/utils/getParameterizedLink'
 import { isSameLink } from '@/utils/url'
+import { card } from './ProductCard.css'
 
 type ImageProps = {
   src: string
@@ -45,7 +46,7 @@ export const ProductCard = ({
   const router = useRouter()
 
   return (
-    <Container y={1}>
+    <div className={card}>
       <ImageWrapper aspectRatio={aspectRatio}>
         <Image {...imageProps} alt={alt} fill sizes="20rem" />
       </ImageWrapper>
@@ -67,7 +68,7 @@ export const ProductCard = ({
           {link.type === 'category' && <CategoryCTA link={link} />}
         </CallToAction>
       </ContentWrapper>
-    </Container>
+    </div>
   )
 }
 
@@ -135,10 +136,6 @@ const CategoryCTA = ({ link }: Pick<ProductCardProps, 'link'>) => {
 }
 
 const CALL_TO_ACTION_HEIGHT = '2.5rem'
-
-const Container = styled(Space)({
-  position: 'relative',
-})
 
 const ImageWrapper = styled.div<ImageSize>(({ aspectRatio }) => ({
   display: 'block',
