@@ -2,11 +2,7 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "moduleResolution": "node",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "noEmit": true,
     "strict": true,
@@ -16,18 +12,9 @@
     "jsx": "react-jsx",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
     "module": "esnext"
   },
-  "include": [
-    ".",
-    "./.eslintrc.js",
-    "./jest-setup.ts"
-  ],
-  "exclude": [
-    "dist",
-    "build",
-    "node_modules"
-  ]
+  "include": [".", "./.eslintrc.cjs", "./jest-setup.ts"],
+  "exclude": ["dist", "build", "node_modules"]
 }

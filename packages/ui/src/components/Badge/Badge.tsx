@@ -1,6 +1,6 @@
 import { assignInlineVars } from '@vanilla-extract/dynamic'
 import { clsx } from 'clsx'
-import { type CSSProperties, type ReactNode } from 'react'
+import type { PropsWithChildren, CSSProperties } from 'react'
 import { getColor, type UIColors } from '../../theme'
 import { badge, badgeBgColor } from './Badge.css'
 
@@ -17,7 +17,6 @@ type BadgeColors = Pick<
 >
 
 export type BadgeProps = {
-  children: ReactNode
   as?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span' | 'div'
   className?: string
   color?: keyof BadgeColors
@@ -28,11 +27,11 @@ export type BadgeProps = {
 export function Badge({
   as = 'div',
   className,
-  children,
   color = 'blueFill1',
   size = 'small',
   style,
-}: BadgeProps) {
+  children,
+}: PropsWithChildren<BadgeProps>) {
   const Component = as
 
   return (

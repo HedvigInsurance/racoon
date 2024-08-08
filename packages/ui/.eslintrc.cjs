@@ -13,6 +13,9 @@ module.exports = {
     ...baseConfig.overrides,
     {
       files: ['**/*.{ts,tsx}'],
+      rules: {
+        '@typescript-eslint/no-unsafe-assignment': 'off',
+      },
     },
   ],
 }

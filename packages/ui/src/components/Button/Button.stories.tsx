@@ -2,14 +2,16 @@ import type { Meta, StoryFn } from '@storybook/react'
 import { CheckIcon, yStack } from 'ui'
 import { Button } from './Button'
 
-const meta: Meta<typeof Button> = {
+type Controls = typeof Button
+
+const meta: Meta<Controls> = {
   title: 'Button',
   component: Button,
 }
 
 export default meta
 
-const Template: StoryFn<typeof Button> = (props) => {
+const Template: StoryFn<Controls> = (props: Controls) => {
   return (
     <div className={yStack({ gap: 'xl' })}>
       <div className={yStack({ gap: 'md' })}>

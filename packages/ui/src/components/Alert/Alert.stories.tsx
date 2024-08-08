@@ -1,4 +1,4 @@
-import type { ArgTypes, Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import type { ComponentProps } from 'react'
 import { CheckIcon, InfoIcon, StarIcon, WarningTriangleIcon } from '../../icons'
 import { Alert } from './Alert'
@@ -10,7 +10,7 @@ const iconNameMap = {
   StarIcon,
 }
 
-const iconArg: ArgTypes = {
+const iconArg = {
   icon: {
     options: ['InfoIcon', 'WarningTriangleIcon', 'CheckIcon', 'StarIcon'],
     control: 'select',
@@ -21,7 +21,7 @@ type Controls = ComponentProps<typeof Alert.Root> & {
   icon: keyof typeof iconNameMap
 }
 
-const meta: Meta<typeof Alert.Root> = {
+const meta: Meta<Controls> = {
   title: 'Alert',
   component: Alert.Root,
   argTypes: {
@@ -46,7 +46,7 @@ export default meta
 type Story = StoryObj<Controls>
 
 export const Default: Story = {
-  render: (args) => (
+  render: (args: Controls) => (
     <div style={{ maxWidth: '400px' }}>
       <Alert.Root variant={args.variant}>
         <Alert.Body>
@@ -63,7 +63,7 @@ export const Default: Story = {
 }
 
 export const WithIcon: Story = {
-  render: (args) => (
+  render: (args: Controls) => (
     <div style={{ maxWidth: '400px' }}>
       <Alert.Root variant={args.variant}>
         <Alert.Icon icon={iconNameMap[args.icon]} />
@@ -82,7 +82,7 @@ export const WithIcon: Story = {
 }
 
 export const WithActions: Story = {
-  render: (args) => (
+  render: (args: Controls) => (
     <div style={{ maxWidth: '400px' }}>
       <Alert.Root variant={args.variant}>
         <Alert.Body>
@@ -100,7 +100,7 @@ export const WithActions: Story = {
 }
 
 export const WithIconAndActions: Story = {
-  render: (args) => (
+  render: (args: Controls) => (
     <div style={{ maxWidth: '400px' }}>
       <Alert.Root variant={args.variant}>
         <Alert.Icon icon={iconNameMap[args.icon]} />
