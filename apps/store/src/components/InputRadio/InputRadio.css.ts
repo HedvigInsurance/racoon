@@ -1,5 +1,18 @@
-import { style } from '@vanilla-extract/css'
+import { style, styleVariants } from '@vanilla-extract/css'
 import { tokens, yStack, xStack } from 'ui'
+
+export const horizontalRadioGroup = styleVariants({
+  withLabel: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: tokens.space.md,
+  },
+  withoutLabel: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: tokens.space.xxs,
+  },
+})
 
 export const card = style([
   yStack({ gap: 'xs' }),
@@ -11,37 +24,24 @@ export const card = style([
   },
 ])
 
-export const option = style([
-  xStack({ gap: 'xs', alignItems: 'center' }),
-  {
-    cursor: 'pointer',
-  },
-])
-
-export const item = style({
-  width: '1.5rem',
-  aspectRatio: '1 / 1',
+export const radioButton = style({
   borderRadius: '50%',
   cursor: 'pointer',
   selectors: {
-    '&[data-state=checked]': {
-      borderColor: tokens.colors.gray1000,
-    },
-
     '&:focus-visible': {
       boxShadow: tokens.shadow.focusAlt,
     },
   },
 })
 
-export const horizontalRoot = style({
-  display: 'grid',
-  gridTemplateColumns: '1fr 1fr',
-  gap: tokens.space.xxs,
-})
+export const item = style([
+  xStack({ gap: 'xs', alignItems: 'center' }),
+  {
+    cursor: 'pointer',
+  },
+])
 
-export const horizontalItem = style({
-  cursor: 'pointer',
+export const paddedItem = style({
   padding: `${tokens.space.sm} ${tokens.space.md}`,
   borderRadius: tokens.radius.sm,
   backgroundColor: tokens.colors.translucent1,

@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next'
 import type { ChangeEventHandler } from 'react'
 import { useState } from 'react'
 import { Space } from 'ui'
-import * as InputRadio from '@/components/InputRadio/InputRadio'
+import { InputRadio } from '@/components/InputRadio/InputRadio'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 
 export type SelectOptions = ReadonlyArray<{ name: string; value: string }>
@@ -40,14 +40,15 @@ export const InputCurrentInsurance = (props: InputCurrentInsuranceProps) => {
 
   return (
     <Space y={0.25}>
-      <InputRadio.Root
+      <InputRadio
         label={label}
         value={hasInsurance ? RadioOption.YES : RadioOption.NO}
         onValueChange={handleRadioValueChange}
-      >
-        <InputRadio.Item label={t('LABEL_YES')} value={RadioOption.YES} />
-        <InputRadio.Item label={t('LABEL_NO')} value={RadioOption.NO} />
-      </InputRadio.Root>
+        options={[
+          { label: t('LABEL_YES'), value: RadioOption.YES },
+          { label: t('LABEL_NO'), value: RadioOption.NO },
+        ]}
+      />
 
       {hasInsurance && (
         <InputSelect
