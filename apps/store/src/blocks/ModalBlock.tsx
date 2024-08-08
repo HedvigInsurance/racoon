@@ -4,7 +4,7 @@ import type { SbBlokData } from '@storyblok/react'
 import { StoryblokComponent, storyblokEditable } from '@storyblok/react'
 import type { ComponentProps } from 'react'
 import { useState } from 'react'
-import { Button, theme } from 'ui'
+import { Button, theme, visuallyHidden } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
@@ -28,6 +28,7 @@ export const ModalBlock = ({ blok }: ModalBlockProps) => {
         </FullscreenDialog.Trigger>
 
         <FullscreenDialog.Modal>
+          <FullscreenDialog.Title className={visuallyHidden} />
           {blok.modalContent.map((nestedBlock) => (
             <StoryblokComponent key={nestedBlock._uid} blok={nestedBlock} nested={true} />
           ))}
