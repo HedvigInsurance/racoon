@@ -22,6 +22,7 @@ const config = {
     process.env.NEXT_PUBLIC_HIDE_REVIEWS_FROM_PRODUCT_AVERAGE_RATING === 'true',
   NEW_HEADER: process.env.NEXT_PUBLIC_FEATURE_NEW_HEADER === 'true',
   CHECKOUT_PAGE_MERGE: process.env.NEXT_PUBLIC_FEATURE_CHECKOUT_PAGE_MERGE === 'true',
+  PRICE_CALCULATOR_PAGE: process.env.NEXT_PUBLIC_FEATURE_PRICE_CALCULATOR_PAGE === 'true',
 } as const
 
 export type FeatureFlag = keyof typeof config

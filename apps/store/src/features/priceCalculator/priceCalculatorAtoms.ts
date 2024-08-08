@@ -3,7 +3,10 @@
 import { type SbBlokData } from '@storyblok/react'
 import { atom, useAtomValue } from 'jotai'
 import { atomFamily } from 'jotai/utils'
-import { currentPriceIntentIdAtom } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
+import {
+  currentPriceIntentIdAtom,
+  priceIntentAtom,
+} from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { getAtomValueOrThrow } from '@/utils/jotaiUtils'
 
 type PriceCalculatorStep = 'loadingForm' | 'fillForm' | 'calculatingPrice' | 'viewOffers'
@@ -21,11 +24,22 @@ export const priceCalculatorStepAtom = atom(
     }
     return get(priceCalculatorStepAtomFamily(priceIntentId))
   },
-  (get, set, value: PriceCalculatorStep) => {
+  (get, set, value: PriceCalculatorStep | typeof INITIAL_STEP_AFTER_NAVIGATION) => {
     const priceIntentId = getAtomValueOrThrow(get, currentPriceIntentIdAtom)
-    set(priceCalculatorStepAtomFamily(priceIntentId), value)
+    const atom = priceCalculatorStepAtomFamily(priceIntentId)
+    if (value === INITIAL_STEP_AFTER_NAVIGATION) {
+      const priceIntent = get(priceIntentAtom)
+      if (priceIntent?.offers.length) {
+        set(atom, 'viewOffers')
+      } else {
+        set(atom, 'fillForm')
+      }
+    } else {
+      set(atom, value)
+    }
   },
 )
+export const INITIAL_STEP_AFTER_NAVIGATION = Symbol('INITIAL_STEP_AFTER_NAVIGATION')
 
 export const priceCalculatorDeductibleInfoAtom = atom<Array<SbBlokData> | null>(null)
 

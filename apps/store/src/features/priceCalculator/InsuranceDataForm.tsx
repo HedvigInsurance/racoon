@@ -2,7 +2,7 @@
 
 import { datadogRum } from '@datadog/browser-rum'
 import { clsx } from 'clsx'
-import { useAtomValue, useSetAtom } from 'jotai'
+import { useSetAtom, useStore } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { type FormEventHandler, type ReactNode } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
@@ -15,6 +15,7 @@ import { useHandleSubmitPriceCalculatorSection } from '@/components/PriceCalcula
 import { useTranslateFieldLabel } from '@/components/PriceCalculator/useTranslateFieldLabel'
 import {
   activeFormSectionIdAtom,
+  currentPriceIntentIdAtom,
   GOTO_NEXT_SECTION,
   priceCalculatorFormAtom,
 } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
@@ -38,20 +39,22 @@ import {
   type JSONData,
 } from '@/services/PriceCalculator/PriceCalculator.types'
 import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
-import { useShopSessionId } from '@/services/shopSession/ShopSessionContext'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 
 export function InsuranceDataForm() {
-  const shopSessionId = useShopSessionId()
-  if (shopSessionId == null) {
-    throw new Error('shopSession must be ready')
-  }
   const locale = useRoutingLocale()
   const { t } = useTranslation('purchase-form')
-  const form = useAtomValue(priceCalculatorFormAtom)
-  const activeSectionId = useAtomValue(activeFormSectionIdAtom)
-  const step = useAtomValue(priceCalculatorStepAtom)
+  const store = useStore()
+
+  // Special case: navigating away from price calculator
+  if (store.get(currentPriceIntentIdAtom) == null) {
+    return null
+  }
+
+  const form = store.get(priceCalculatorFormAtom)
+  const activeSectionId = store.get(activeFormSectionIdAtom)
+  const step = store.get(priceCalculatorStepAtom)
   const sections = form.sections.map((section, index) => {
     if (step !== 'fillForm' || section.id !== activeSectionId) {
       // No preview needed for sections that are not yet touched

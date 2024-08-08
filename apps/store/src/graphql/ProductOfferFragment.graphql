@@ -4,6 +4,7 @@ fragment ProductOffer on ProductOffer {
     id
     name
     pageLink
+    priceCalculatorPageLink
     displayNameFull
     pillowImage {
       id
