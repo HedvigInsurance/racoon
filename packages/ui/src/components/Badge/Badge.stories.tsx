@@ -2,7 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { Space } from '../Space'
 import { Badge } from './Badge'
 
-const meta: Meta<typeof Badge> = {
+type Controls = typeof Badge
+
+const meta: Meta<Controls> = {
   title: 'Badge',
   component: Badge,
   parameters: {
@@ -15,10 +17,10 @@ const meta: Meta<typeof Badge> = {
 }
 export default meta
 
-type Story = StoryObj<typeof Badge>
+type Story = StoryObj<Controls>
 
 export const Default: Story = {
-  render: (args) => (
+  render: (args: Controls) => (
     <Space x={1}>
       <Badge size="big" {...args} />
       <Badge size="small" {...args} />
@@ -27,4 +29,6 @@ export const Default: Story = {
     </Space>
   ),
 }
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 Default.args = { children: 'Badge' }

@@ -8,7 +8,6 @@ const getFonts = () => {
     family: fontName,
     style: 'normal',
     weight: 400,
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     src: require(`ui/fonts/${fontName}.woff2`),
     format: 'woff2',
   }))
