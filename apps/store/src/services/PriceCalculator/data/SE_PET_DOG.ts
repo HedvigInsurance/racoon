@@ -32,6 +32,7 @@ export const SE_PET_DOG: Template = {
             stacking: 'horizontal',
             name: 'gender',
             label: { key: tKey('FIELD_GENDER_LABEL') },
+            displayLabel: false,
             options: [
               { label: { key: tKey('FIELD_GENDER_OPTION_MALE_DOG') }, value: 'MALE' },
               { label: { key: tKey('FIELD_GENDER_OPTION_FEMALE_DOG') }, value: 'FEMALE' },

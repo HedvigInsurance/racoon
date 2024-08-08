@@ -36,7 +36,10 @@ export type DateField = BaseField<string> & {
 type RadioField = BaseField<string> & {
   type: 'radio'
   options: Array<FieldOption>
-  stacking?: 'horizontal'
+  // Defaults to 'horizontal'
+  stacking?: 'horizontal' | 'vertical'
+  // Defaults to 'true'
+  displayLabel?: boolean
 }
 
 export type FieldOption = {
