@@ -1,7 +1,8 @@
-import { style } from '@vanilla-extract/css'
+import { style, createVar } from '@vanilla-extract/css'
 import { tokens, hoverStyles } from 'ui'
 import { zIndexes } from '@/utils/zIndex'
 
+const inlinePadding = createVar('inputLateralPadding')
 export const wrapper = style({
   position: 'relative',
   isolation: 'isolate',
@@ -12,6 +13,24 @@ export const wrapper = style({
       borderTopLeftRadius: tokens.radius.sm,
       borderTopRightRadius: tokens.radius.sm,
     },
+    '&[data-size=small]': {
+      vars: {
+        [inlinePadding]: '0.875rem',
+      },
+      fontSize: tokens.fontSizes.md,
+    },
+    '&[data-size=medium]': {
+      vars: {
+        [inlinePadding]: tokens.space.md,
+      },
+      fontSize: tokens.fontSizes.md,
+    },
+    '&[data-size=large]': {
+      vars: {
+        [inlinePadding]: tokens.space.md,
+      },
+      fontSize: tokens.fontSizes.xl,
+    },
   },
 })
 
@@ -21,12 +40,11 @@ export const inputBackground = style({
   borderRadius: tokens.radius.sm,
   backgroundColor: tokens.colors.translucent1,
   selectors: {
-    '&[data-expanded=true]': {
+    ':has([data-expanded=true]) &': {
       borderBottomLeftRadius: 0,
       borderBottomRightRadius: 0,
     },
-
-    '&[data-warning=true]': {
+    ':has([data-warning=true]) &': {
       borderBottomLeftRadius: tokens.radius.sm,
       borderBottomRightRadius: tokens.radius.sm,
     },
@@ -35,26 +53,29 @@ export const inputBackground = style({
 
 export const input = style({
   width: '100%',
-  height: '2.5rem',
-  paddingLeft: tokens.space.md,
+  paddingLeft: inlinePadding,
   paddingRight: tokens.space.xxxl,
   color: tokens.colors.textPrimary,
-  fontSize: tokens.fontSizes.lg,
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
   selectors: {
-    '&[data-size=large]': {
+    ':has([data-size=small]) &': {
       height: '3rem',
-      fontSize: tokens.fontSizes.xl,
+    },
+    ':has([data-size=medium]) &': {
+      height: '4rem',
+    },
+    ':has([data-size=large]) &': {
+      height: '4rem',
     },
   },
 })
 
 export const actionsWrapper = style({
   position: 'absolute',
+  right: inlinePadding,
   top: '50%',
-  right: '1.125rem',
   display: 'flex',
   gap: tokens.space.xs,
   alignItems: 'center',
@@ -68,8 +89,7 @@ export const toggleButton = style({
     '&[aria-expanded=true]': {
       transform: 'rotate(180deg)',
     },
-
-    '&[data-warning=true]': {
+    ':has([data-warning=true]) &': {
       transform: 'rotate(0)',
     },
   },
@@ -95,10 +115,9 @@ export const list = style({
 })
 
 export const listItem = style({
-  minHeight: '2.5rem',
-  fontSize: tokens.fontSizes.lg,
   display: 'flex',
   alignItems: 'center',
+  minHeight: '2.5rem',
   paddingInline: tokens.space.md,
   paddingBlock: tokens.space.xs,
   ...hoverStyles({ backgroundColor: tokens.colors.gray300 }),
@@ -107,11 +126,6 @@ export const listItem = style({
     borderBottomRightRadius: tokens.radius.sm,
   },
   selectors: {
-    '&[data-size=large]': {
-      minHeight: '3rem',
-      fontSize: tokens.fontSizes.xl,
-    },
-
     '&[data-highlighted=true]': {
       backgroundColor: tokens.colors.gray200,
     },
