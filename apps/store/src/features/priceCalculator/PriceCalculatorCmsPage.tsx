@@ -3,7 +3,6 @@ import { type ReactNode, Suspense } from 'react'
 import { tokens, xStack, yStack } from 'ui'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
-import { ProductPageDataProvider } from '@/components/ProductPage/ProductPageDataProvider'
 import { ProductPageDebugDialog } from '@/components/ProductPage/ProductPageDebugDialog'
 import { ProductHero } from '@/components/ProductPage/PurchaseForm/ProductHero/ProductHero'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
@@ -13,6 +12,7 @@ import { type TemplateV2 } from '@/services/PriceCalculator/PriceCalculator.type
 import type { PriceCalculatorPageStory } from '@/services/storyblok/storyblok'
 import { Features } from '@/utils/Features'
 import { type RoutingLocale } from '@/utils/l10n/types'
+import { PriceTemplateProvider } from './PriceTemplateProvider'
 import { PurchaseFormV2 } from './PurchaseFormV2'
 
 type Props = {
@@ -121,14 +121,12 @@ async function PriceCalculatorProviders({
     productName,
   })
   const priceTemplate = await getPriceTemplate(story.content.priceTemplate)
-  // TODO: Decide where to take it from or refactor to stop needing it
-  const productPageData = {} as any
   return (
     <ProductDataProvider productData={productData}>
-      <ProductPageDataProvider productPageData={productPageData} priceTemplate={priceTemplate}>
-        <PriceCalculatorStoryProvider story={story}>{children}</PriceCalculatorStoryProvider>
-        <ProductPageDebugDialog />
-      </ProductPageDataProvider>
+      <PriceCalculatorStoryProvider story={story}>
+        <PriceTemplateProvider priceTemplate={priceTemplate}>{children}</PriceTemplateProvider>
+      </PriceCalculatorStoryProvider>
+      <ProductPageDebugDialog />
     </ProductDataProvider>
   )
 }
