@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { useCombobox } from 'downshift'
-import { Fragment, useState, useMemo, useDeferredValue } from 'react'
+import { useState, useMemo, useDeferredValue } from 'react'
 import { ChevronIcon, CrossIconSmall, Text, xStack, theme, WarningTriangleIcon } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 import {
@@ -13,8 +13,8 @@ import {
   actionsWrapper,
   toggleActionButton,
   deleteActionButton,
-  separator,
   list,
+  listHidden,
   listItem,
   listItemHighlighted,
 } from './Combobox.css'
@@ -176,19 +176,16 @@ export function Combobox<Item>({
         </div>
       </div>
 
-      <ul className={list} {...getMenuProps()}>
-        {isOpen &&
-          filteredItems.map((item, index) => (
-            <Fragment key={`${item}${index}`}>
-              <hr className={separator} />
-              <li
-                className={clsx(listItem, highlightedIndex === index && listItemHighlighted)}
-                {...getItemProps({ item, index })}
-              >
-                {displayValue(item)}
-              </li>
-            </Fragment>
-          ))}
+      <ul className={clsx(list, { [listHidden]: !isOpen || noOptions })} {...getMenuProps()}>
+        {filteredItems.map((item, index) => (
+          <li
+            key={`${item}${index}`}
+            className={clsx(listItem, highlightedIndex === index && listItemHighlighted)}
+            {...getItemProps({ item, index })}
+          >
+            {displayValue(item)}
+          </li>
+        ))}
       </ul>
 
       {noOptions && (
