@@ -1,5 +1,5 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import type { Meta, StoryFn } from '@storybook/react'
+import type { Meta, StoryObj, StoryFn } from '@storybook/react'
 import { useState } from 'react'
 import { Combobox } from './Combobox'
 
@@ -33,11 +33,14 @@ const FRUIT = [
 
 type Fruit = (typeof FRUIT)[number]
 
-export const Default: StoryFn = () => {
+type Story = StoryObj<typeof Combobox<Fruit>>
+
+const Template: StoryFn<typeof Combobox<Fruit>> = (args) => {
   const [selectedItem, setSelectedItem] = useState<Fruit | null>(FRUIT[1])
 
   return (
     <Combobox
+      {...args}
       placeholder="Search fruit..."
       items={FRUIT}
       selectedItem={selectedItem}
@@ -45,4 +48,25 @@ export const Default: StoryFn = () => {
       displayValue={(fruit) => fruit.name}
     />
   )
+}
+
+export const Small: Story = {
+  render: Template,
+  args: {
+    size: 'small',
+  },
+}
+
+export const Medium: Story = {
+  render: Template,
+  args: {
+    size: 'medium',
+  },
+}
+
+export const Large: Story = {
+  render: Template,
+  args: {
+    size: 'large',
+  },
 }

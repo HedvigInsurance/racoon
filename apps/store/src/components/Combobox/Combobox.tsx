@@ -30,7 +30,7 @@ type Props<Item> = {
   disabled?: boolean
   required?: boolean
   mutliSelect?: boolean
-  size?: 'large' | 'small'
+  size?: 'small' | 'medium' | 'large'
 }
 
 /**
@@ -144,15 +144,10 @@ export function Combobox<Item>({
   const isExanded = isOpen && !noOptions
 
   return (
-    <div data-expanded={isExanded} className={wrapper}>
+    <div data-expanded={isExanded} data-size={size} data-warning={noOptions} className={wrapper}>
       <div className={inputWrapper}>
-        <div
-          className={inputBackground}
-          {...animationProps}
-          data-expanded={isExanded}
-          data-warning={noOptions}
-        >
-          <input className={input} {...getInputProps()} {...externalInputProps} data-size={size} />
+        <div className={inputBackground} {...animationProps}>
+          <input className={input} {...getInputProps()} {...externalInputProps} />
         </div>
         {internalSelectedItem && (
           <input type="hidden" name={name} value={getFormValue(internalSelectedItem)} />
@@ -166,12 +161,7 @@ export function Combobox<Item>({
           >
             <CrossIconSmall />
           </button>
-          <button
-            className={toggleButton}
-            type="button"
-            {...getToggleButtonProps()}
-            data-warning={noOptions}
-          >
+          <button className={toggleButton} type="button" {...getToggleButtonProps()}>
             <ChevronIcon size="1rem" />
           </button>
         </div>
@@ -186,7 +176,6 @@ export function Combobox<Item>({
                 className={listItem}
                 {...getItemProps({ item, index })}
                 data-highlighted={highlightedIndex === index}
-                data-size={size}
               >
                 {displayValue(item)}
               </li>
