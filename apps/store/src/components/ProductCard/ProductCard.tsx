@@ -1,9 +1,9 @@
-import styled from '@emotion/styled'
+import { assignInlineVars } from '@vanilla-extract/dynamic'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
-import { Button, mq, theme, visuallyHidden } from 'ui'
+import { Button, Text, sprinkles, visuallyHidden } from 'ui'
 import type { ImageSize } from '@/blocks/ProductCardBlock'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
@@ -12,7 +12,16 @@ import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataH
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import { SelectInsuranceGrid } from '@/components/SelectInsuranceGrid/SelectInsuranceGrid'
 import { isSameLink } from '@/utils/url'
-import { card } from './ProductCard.css'
+import {
+  card,
+  image,
+  imageAspectRatio,
+  imageWrapper,
+  cardLinks,
+  selectInsuranceGrid,
+  readMoreLink,
+  mainLink,
+} from './ProductCard.css'
 
 type ImageProps = {
   src: string
@@ -31,6 +40,15 @@ export type ProductCardProps = {
   link: { url: string; type: LinkType }
 } & ImageSize
 
+/*
+SEO and a11y notes
+- We want full element to be clickable (UX), so main link is an absolutely positioned overlay that covers full card
+  except bottom row
+- We want keyboard focus to highlight "Read more" button (done with complex nested selector, see CSS part)
+- Links cannot be nested, hence "Read more" is actually a button that navigated with 'onClick'
+  to avoid duplicate hrefs (SEO). It also has negative tabindex to make sure keyboard navigation only sees
+  main link and extra buttons
+ */
 export const ProductCard = ({
   title,
   subtitle,
@@ -43,15 +61,19 @@ export const ProductCard = ({
 
   return (
     <div className={card}>
-      <ImageWrapper aspectRatio={aspectRatio}>
-        <Image {...imageProps} alt={alt} fill sizes="20rem" />
-      </ImageWrapper>
-      <ContentWrapper>
-        <MainLink href={link.url}>{title}</MainLink>
-        <Subtitle>{subtitle}</Subtitle>
-        <CallToAction>
+      <div className={imageWrapper} style={assignInlineVars({ [imageAspectRatio]: aspectRatio })}>
+        <ImageWithPlaceholder className={image} {...imageProps} alt={alt} fill sizes="20rem" />
+      </div>
+      <div className={sprinkles({ marginInline: 'xs' })}>
+        <Link className={mainLink} href={link.url}>
+          {title}
+        </Link>
+        <Text size="md" color="textSecondary">
+          {subtitle}
+        </Text>
+        <div className={cardLinks}>
           <Button
-            id="read-more-btn"
+            className={readMoreLink}
             onClick={() => router.push(link.url)}
             tabIndex={-1}
             aria-hidden={true}
@@ -62,8 +84,8 @@ export const ProductCard = ({
           </Button>
           {link.type === 'product' && <ProductCTA link={link} />}
           {link.type === 'category' && <CategoryCTA link={link} />}
-        </CallToAction>
-      </ContentWrapper>
+        </div>
+      </div>
     </div>
   )
 }
@@ -123,80 +145,12 @@ const CategoryCTA = ({ link }: Pick<ProductCardProps, 'link'>) => {
         <FullscreenDialog.Title className={visuallyHidden}>
           {t('SELECT_INSURANCE')}
         </FullscreenDialog.Title>
-        <StyledSelectInsuranceGrid products={productsByCategory} heading={t('SELECT_INSURANCE')} />
+        <SelectInsuranceGrid
+          products={productsByCategory}
+          heading={t('SELECT_INSURANCE')}
+          className={selectInsuranceGrid}
+        />
       </FullscreenDialog.Modal>
     </FullscreenDialog.Root>
   )
 }
-
-const CALL_TO_ACTION_HEIGHT = '2.5rem'
-
-const ImageWrapper = styled.div<ImageSize>(({ aspectRatio }) => ({
-  display: 'block',
-  position: 'relative',
-  marginBottom: theme.space.md,
-  ...(aspectRatio && { aspectRatio: aspectRatio }),
-
-  '@supports not (aspect-ratio: auto)': {
-    height: '0',
-    paddingTop: 'calc((6/5 * 100%))',
-    overflow: 'hidden',
-  },
-
-  ':hover, :active': {
-    opacity: 0.95,
-    transition: `opacity ${theme.transitions.hover}`,
-  },
-}))
-
-const Image = styled(ImageWithPlaceholder)({
-  objectFit: 'cover',
-  borderRadius: theme.radius.md,
-
-  [mq.md]: {
-    borderRadius: theme.radius.lg,
-  },
-})
-
-const ContentWrapper = styled.div({
-  marginInline: theme.space.xs,
-})
-
-const Subtitle = styled.p({
-  fontSize: theme.fontSizes.md,
-  color: theme.colors.textSecondary,
-})
-
-const CallToAction = styled.div({
-  display: 'flex',
-  height: CALL_TO_ACTION_HEIGHT,
-  gap: theme.space.sm,
-  marginTop: theme.space.lg,
-})
-
-const MainLink = styled(Link)({
-  fontSize: theme.fontSizes.md,
-  // Make the whole card clickable - CallToAction height
-  '&::after': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    bottom: CALL_TO_ACTION_HEIGHT,
-    left: 0,
-  },
-
-  [`&:focus-visible ~ ${CallToAction} #read-more-btn`]: {
-    boxShadow: theme.shadow.focus,
-  },
-})
-
-const StyledSelectInsuranceGrid = styled(SelectInsuranceGrid)({
-  [mq.lg]: {
-    paddingTop: '16vh',
-  },
-
-  [mq.xxl]: {
-    paddingTop: '20vh',
-  },
-})
