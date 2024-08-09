@@ -1,4 +1,5 @@
 import { get as getFromConfig } from '@vercel/edge-config'
+import { type NextURL } from 'next/dist/server/web/next-url'
 import { removeTrailingSlash } from 'next/dist/shared/lib/router/utils/remove-trailing-slash'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
@@ -57,7 +58,7 @@ const localeMiddleware = (req: NextRequest): NextResponse | undefined => {
     }
 
     // Otherwise redirect to the targeted page
-    return NextResponse.redirect(targetURL, 308)
+    return redirectResponse(targetURL)
   }
 
   // Localized route
@@ -71,7 +72,7 @@ const localeMiddleware = (req: NextRequest): NextResponse | undefined => {
       // Redirect to the root fomain
       targetURL.pathname = '/'
 
-      return NextResponse.redirect(targetURL, 308)
+      return redirectResponse(targetURL)
     }
 
     // Otherwise serve original route
@@ -89,6 +90,13 @@ const localeMiddleware = (req: NextRequest): NextResponse | undefined => {
   const defaultLocale = locales[FALLBACK_LOCALE].routingLocale
   console.info(`Routing traffic to /${defaultLocale}`)
   return handleLocaleRouting(defaultLocale)
+}
+
+const redirectResponse = (targetURL: string | NextURL) => {
+  const response = NextResponse.redirect(targetURL, 308)
+  // Prevents client from using old cached redirect with new language
+  response.headers.set('Vary', 'cookie')
+  return response
 }
 
 type Redirect = {
