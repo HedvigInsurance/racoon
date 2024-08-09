@@ -1,6 +1,6 @@
 import { atom, useAtomValue } from 'jotai'
 import { useHydrateAtoms } from 'jotai/utils'
-import { type Template } from '@/services/PriceCalculator/PriceCalculator.types'
+import { type Template, type TemplateV2 } from '@/services/PriceCalculator/PriceCalculator.types'
 
 export const priceTemplateAtom = atom<Template | null>(null)
 
@@ -12,11 +12,8 @@ export const usePriceTemplate = () => {
   return value
 }
 
-export const useSyncPriceTemplate = (template: Template) => {
-  useHydrateAtoms(
-    [[priceTemplateAtom, template]], // Force update during client side navigation
-    {
-      dangerouslyForceHydrate: true,
-    },
-  )
+export const useSyncPriceTemplate = (template: Template | TemplateV2) => {
+  useHydrateAtoms([[priceTemplateAtom, template]], {
+    dangerouslyForceHydrate: true,
+  })
 }
