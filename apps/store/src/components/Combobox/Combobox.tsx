@@ -1,18 +1,22 @@
+import clsx from 'clsx'
 import { useCombobox } from 'downshift'
 import { Fragment, useState, useMemo, useDeferredValue } from 'react'
 import { ChevronIcon, CrossIconSmall, Text, xStack, theme, WarningTriangleIcon } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 import {
   wrapper,
+  wrapperExpanded,
   inputWrapper,
-  inputBackground,
   input,
+  inputExpanded,
+  inputWarning,
   actionsWrapper,
-  toggleButton,
-  deleteButton,
+  toggleActionButton,
+  deleteActionButton,
   separator,
   list,
   listItem,
+  listItemHighlighted,
 } from './Combobox.css'
 
 const ITEMS_TO_SHOW = 5
@@ -30,7 +34,7 @@ type Props<Item> = {
   disabled?: boolean
   required?: boolean
   mutliSelect?: boolean
-  size?: 'large' | 'small'
+  size?: 'small' | 'medium' | 'large'
 }
 
 /**
@@ -51,7 +55,7 @@ export function Combobox<Item>({
   size = 'large',
   ...externalInputProps
 }: Props<Item>) {
-  const { highlight, animationProps } = useHighlightAnimation<HTMLDivElement>()
+  const { highlight, animationProps } = useHighlightAnimation<HTMLInputElement>()
 
   const [inputValue, setInputValue] = useState(() => {
     if (defaultSelectedItem) {
@@ -141,37 +145,32 @@ export function Combobox<Item>({
     openMenu()
   }
 
-  const isExanded = isOpen && !noOptions
+  const isExpanded = isOpen && !noOptions
 
   return (
-    <div data-expanded={isExanded} className={wrapper}>
+    <div className={clsx(wrapper[size], isExpanded && wrapperExpanded)}>
+      {/* We use a wrapper for the input here so we can position action buttons (toggle and delete) */}
+      {/* on the right side of the input. Doing it without a wrapper would required add those as children */}
+      {/* of the input, which is not valid HTML.*/}
       <div className={inputWrapper}>
-        <div
-          className={inputBackground}
-          {...animationProps}
-          data-expanded={isExanded}
-          data-warning={noOptions}
-        >
-          <input className={input} {...getInputProps()} {...externalInputProps} data-size={size} />
-        </div>
+        <input
+          className={clsx(input[size], isExpanded && inputExpanded, noOptions && inputWarning)}
+          {...getInputProps({ ref: animationProps.ref })}
+          {...externalInputProps}
+        />
         {internalSelectedItem && (
           <input type="hidden" name={name} value={getFormValue(internalSelectedItem)} />
         )}
         <div className={actionsWrapper}>
           <button
-            className={deleteButton}
+            className={deleteActionButton}
             type="button"
             onClick={handleClickDelete}
             hidden={inputValue.length === 0}
           >
             <CrossIconSmall />
           </button>
-          <button
-            className={toggleButton}
-            type="button"
-            {...getToggleButtonProps()}
-            data-warning={noOptions}
-          >
+          <button className={toggleActionButton} type="button" {...getToggleButtonProps()}>
             <ChevronIcon size="1rem" />
           </button>
         </div>
@@ -183,10 +182,8 @@ export function Combobox<Item>({
             <Fragment key={`${item}${index}`}>
               <hr className={separator} />
               <li
-                className={listItem}
+                className={clsx(listItem, highlightedIndex === index && listItemHighlighted)}
                 {...getItemProps({ item, index })}
-                data-highlighted={highlightedIndex === index}
-                data-size={size}
               >
                 {displayValue(item)}
               </li>
