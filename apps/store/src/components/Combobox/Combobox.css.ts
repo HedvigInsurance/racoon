@@ -47,8 +47,13 @@ const inputBase = style({
   width: '100%',
   paddingLeft: inlinePadding,
   paddingRight: tokens.space.xxxl,
+  // Avoids jumpings when border is added for focused state
+  border: '1px solid transparent',
   borderRadius: tokens.radius.sm,
   backgroundColor: tokens.colors.translucent1,
+  ':focus-within': {
+    borderColor: tokens.colors.borderFocusedInput,
+  },
 })
 
 export const input = styleVariants({
@@ -92,17 +97,18 @@ export const deleteActionButton = style({
   cursor: 'pointer',
 })
 
-export const separator = style({
-  height: 1,
-  backgroundColor: tokens.colors.opaque2,
-  marginInline: tokens.space.md,
-})
-
 export const list = style({
   width: '100%',
   borderBottomLeftRadius: tokens.radius.sm,
   borderBottomRightRadius: tokens.radius.sm,
-  backgroundColor: tokens.colors.opaque1,
+  padding: tokens.space.xxs,
+  backgroundColor: tokens.colors.translucent1,
+  border: `1px solid ${tokens.colors.borderFocusedInput}`,
+  borderTop: 'none',
+})
+
+export const listHidden = style({
+  display: 'none',
 })
 
 export const listItem = style({
@@ -111,7 +117,11 @@ export const listItem = style({
   minHeight: '2.5rem',
   paddingInline: tokens.space.md,
   paddingBlock: tokens.space.xs,
-  ...hoverStyles({ backgroundColor: tokens.colors.gray300 }),
+  borderRadius: tokens.radius.md,
+  ...hoverStyles({
+    cursor: 'pointer',
+    backgroundColor: tokens.colors.gray200,
+  }),
   ':last-of-type': {
     borderBottomLeftRadius: tokens.radius.sm,
     borderBottomRightRadius: tokens.radius.sm,
