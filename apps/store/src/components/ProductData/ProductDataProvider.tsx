@@ -1,7 +1,7 @@
 'use client'
 import { atom, useAtom, useAtomValue } from 'jotai'
-import { atomFamily, useHydrateAtoms } from 'jotai/utils'
 import { type ReactNode } from 'react'
+import { JotaiScopeProvider } from '@/components/JotaiScopeProvider'
 import type { RoutingLocale } from '@/utils/l10n/types'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import type { ProductData } from './ProductData.types'
@@ -10,17 +10,9 @@ import type { ProductData } from './ProductData.types'
 // Using string key seems simpler
 const productKey = (productId: string, locale: RoutingLocale) => `${locale}/${productId}`
 
-const currentProductAtom = atom<string | null>(null)
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const productDataAtomFamily = atomFamily((_key) => atom<ProductData | null>(null))
-const productDataAtom = atom<ProductData | null>((get) => {
-  const key = get(currentProductAtom)
-  if (key == null) return null
-  const productData = get(productDataAtomFamily(key))
-  return productData
-})
+export const productDataAtom = atom<ProductData | null>(null)
 
-const selectedTypeOfContractAtom = atom<string | undefined>(undefined)
+export const selectedTypeOfContractAtom = atom<string | undefined>(undefined)
 const selectedProductVariantItem = atom((get) => {
   const productData = get(productDataAtom)
   const typeOfContract = get(selectedTypeOfContractAtom)
@@ -33,24 +25,21 @@ type Props = {
   selectedTypeOfContract?: string
 }
 
-export const ProductDataProvider = (props: Props) => {
+export function ProductDataProvider(props: Props) {
   const locale = useRoutingLocale()
-  const key = productKey(props.productData.id, locale)
-  useHydrateAtoms(
-    [
-      [currentProductAtom, key],
-      [productDataAtomFamily(key), props.productData],
-      [selectedTypeOfContractAtom, props.selectedTypeOfContract],
-    ],
-    // Force update during client side navigation
-    {
-      dangerouslyForceHydrate: true,
-    },
+  const atomsWithValues = [
+    [productDataAtom, props.productData],
+    [selectedTypeOfContractAtom, props.selectedTypeOfContract],
+  ] as const
+  return (
+    <JotaiScopeProvider
+      key={productKey(props.productData.name, locale)}
+      atomsWithValues={atomsWithValues}
+    >
+      {props.children}
+    </JotaiScopeProvider>
   )
-
-  return props.children
 }
-
 export const useProductData = () => {
   const value = useAtomValue(productDataAtom)
   if (value === null) throw new Error('ProductData accessed without hydrating')

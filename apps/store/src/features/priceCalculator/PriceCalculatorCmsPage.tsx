@@ -2,17 +2,14 @@ import { notFound } from 'next/navigation'
 import { type ReactNode, Suspense } from 'react'
 import { tokens, xStack, yStack } from 'ui'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
-import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
-import { ProductPageDebugDialog } from '@/components/ProductPage/ProductPageDebugDialog'
 import { ProductHero } from '@/components/ProductPage/PurchaseForm/ProductHero/ProductHero'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
-import { PriceCalculatorStoryProvider } from '@/features/priceCalculator/PriceCalculatorStoryProvider'
+import { PriceCalculatorStateProvider } from '@/features/priceCalculator/PriceCalculatorStateProvider'
 import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
 import { type TemplateV2 } from '@/services/PriceCalculator/PriceCalculator.types'
 import type { PriceCalculatorPageStory } from '@/services/storyblok/storyblok'
 import { Features } from '@/utils/Features'
 import { type RoutingLocale } from '@/utils/l10n/types'
-import { PriceTemplateProvider } from './PriceTemplateProvider'
 import { PurchaseFormV2 } from './PurchaseFormV2'
 
 type Props = {
@@ -94,11 +91,7 @@ async function ProductHeroContainer({ locale, productName }: ProductHeroContaine
     productName,
   })
   return (
-    <ProductHero
-      name={productData.displayNameFull}
-      pillow={productData.pillowImage}
-      size={'large'}
-    />
+    <ProductHero name={productData.displayNameFull} pillow={productData.pillowImage} size="large" />
   )
 }
 
@@ -122,11 +115,12 @@ async function PriceCalculatorProviders({
   })
   const priceTemplate = await getPriceTemplate(story.content.priceTemplate)
   return (
-    <ProductDataProvider productData={productData}>
-      <PriceCalculatorStoryProvider story={story}>
-        <PriceTemplateProvider priceTemplate={priceTemplate}>{children}</PriceTemplateProvider>
-      </PriceCalculatorStoryProvider>
-      <ProductPageDebugDialog />
-    </ProductDataProvider>
+    <PriceCalculatorStateProvider
+      productData={productData}
+      priceTemplate={priceTemplate}
+      priceCalculatorPageStory={story}
+    >
+      {children}
+    </PriceCalculatorStateProvider>
   )
 }
