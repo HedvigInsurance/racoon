@@ -1,9 +1,19 @@
-import styled from '@emotion/styled'
 import { useCombobox } from 'downshift'
 import { Fragment, useState, useMemo, useDeferredValue } from 'react'
-import { ChevronIcon, CrossIconSmall, Text, theme, WarningTriangleIcon } from 'ui'
+import { ChevronIcon, CrossIconSmall, Text, xStack, theme, WarningTriangleIcon } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
-import { zIndexes } from '@/utils/zIndex'
+import {
+  wrapper,
+  inputWrapper,
+  inputBackground,
+  input,
+  actionsWrapper,
+  toggleButton,
+  deleteButton,
+  separator,
+  list,
+  listItem,
+} from './Combobox.css'
 
 const ITEMS_TO_SHOW = 5
 
@@ -27,7 +37,7 @@ type Props<Item> = {
  * Combobox component
  * @see https://www.downshift-js.com/use-combobox
  */
-export const Combobox = <Item,>({
+export function Combobox<Item>({
   items,
   selectedItem,
   onSelectedItemChange,
@@ -40,7 +50,7 @@ export const Combobox = <Item,>({
   name,
   size = 'large',
   ...externalInputProps
-}: Props<Item>) => {
+}: Props<Item>) {
   const { highlight, animationProps } = useHighlightAnimation<HTMLDivElement>()
 
   const [inputValue, setInputValue] = useState(() => {
@@ -134,190 +144,80 @@ export const Combobox = <Item,>({
   const isExanded = isOpen && !noOptions
 
   return (
-    <Wrapper data-expanded={isExanded}>
-      <InputWrapper>
-        <InputBackground {...animationProps} data-expanded={isExanded} data-warning={noOptions}>
-          <Input {...getInputProps()} {...externalInputProps} data-size={size} />
-        </InputBackground>
+    <div data-expanded={isExanded} className={wrapper}>
+      <div className={inputWrapper}>
+        <div
+          className={inputBackground}
+          {...animationProps}
+          data-expanded={isExanded}
+          data-warning={noOptions}
+        >
+          <input className={input} {...getInputProps()} {...externalInputProps} data-size={size} />
+        </div>
         {internalSelectedItem && (
           <input type="hidden" name={name} value={getFormValue(internalSelectedItem)} />
         )}
-        <Actions>
-          <DeleteButton type="button" onClick={handleClickDelete} hidden={inputValue.length === 0}>
+        <div className={actionsWrapper}>
+          <button
+            className={deleteButton}
+            type="button"
+            onClick={handleClickDelete}
+            hidden={inputValue.length === 0}
+          >
             <CrossIconSmall />
-          </DeleteButton>
-          <ToggleButton type="button" {...getToggleButtonProps()} data-warning={noOptions}>
+          </button>
+          <button
+            className={toggleButton}
+            type="button"
+            {...getToggleButtonProps()}
+            data-warning={noOptions}
+          >
             <ChevronIcon size="1rem" />
-          </ToggleButton>
-        </Actions>
-      </InputWrapper>
+          </button>
+        </div>
+      </div>
 
-      <List {...getMenuProps()}>
+      <ul className={list} {...getMenuProps()}>
         {isOpen &&
           filteredItems.map((item, index) => (
             <Fragment key={`${item}${index}`}>
-              <Separator />
-              <ComboboxOption
+              <hr className={separator} />
+              <li
+                className={listItem}
                 {...getItemProps({ item, index })}
                 data-highlighted={highlightedIndex === index}
                 data-size={size}
               >
                 {displayValue(item)}
-              </ComboboxOption>
+              </li>
             </Fragment>
           ))}
-      </List>
+      </ul>
 
       {noOptions && (
-        <WarningBox>
+        <div
+          className={xStack({
+            alignItems: 'center',
+            gap: 'xxs',
+            paddingTop: 'xxs',
+            paddingInline: 'xs',
+          })}
+        >
           <WarningTriangleIcon color={theme.colors.signalAmberElement} size={theme.fontSizes.xs} />
-          <SingleLineText as="p" size="xs">
+          <Text as="p" size="xs" singleLine={true}>
             {noMatchesMessage}
-          </SingleLineText>
-        </WarningBox>
+          </Text>
+        </div>
       )}
-    </Wrapper>
+    </div>
   )
 }
 
-const Wrapper = styled.div({
-  position: 'relative',
-  isolation: 'isolate',
-
-  '&[data-expanded=true]': {
-    zIndex: zIndexes.header,
-    boxShadow: theme.shadow.default,
-    borderTopLeftRadius: theme.radius.sm,
-    borderTopRightRadius: theme.radius.sm,
-  },
-})
-
-const InputWrapper = styled.div({
-  position: 'relative',
-})
-
-const InputBackground = styled.div({
-  borderRadius: theme.radius.sm,
-  backgroundColor: theme.colors.translucent1,
-
-  '&[data-expanded=true]': {
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
-  },
-
-  '&[data-warning=true]': {
-    borderBottomLeftRadius: theme.radius.sm,
-    borderBottomRightRadius: theme.radius.sm,
-  },
-})
-
-const Input = styled.input({
-  color: theme.colors.textPrimary,
-  width: '100%',
-  height: '2.5rem',
-  paddingLeft: theme.space.md,
-  paddingRight: theme.space.xxxl,
-  fontSize: theme.fontSizes.lg,
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-
-  '&[data-size=large]': {
-    height: '3rem',
-    fontSize: theme.fontSizes.xl,
-  },
-})
-
-const Actions = styled.div({
-  position: 'absolute',
-  top: '50%',
-  right: '1.125rem',
-  transform: 'translateY(-50%)',
-  display: 'flex',
-  gap: theme.space.xs,
-  alignItems: 'center',
-})
-
-const ToggleButton = styled.button({
-  cursor: 'pointer',
-
-  transition: 'transform 200ms cubic-bezier(0.77,0,0.18,1)',
-
-  ['&[aria-expanded=true]']: {
-    transform: 'rotate(180deg)',
-  },
-
-  ['&[data-warning=true]']: {
-    transform: 'rotate(0)',
-  },
-})
-
-const DeleteButton = styled.button({
-  cursor: 'pointer',
-})
-
-const Separator = styled.hr({
-  height: 1,
-  backgroundColor: theme.colors.opaque2,
-  marginInline: theme.space.md,
-})
-
-const List = styled.ul({
-  backgroundColor: theme.colors.opaque1,
-  borderBottomLeftRadius: theme.radius.sm,
-  borderBottomRightRadius: theme.radius.sm,
-
-  position: 'absolute',
-  width: '100%',
-  boxShadow: theme.shadow.default,
-})
-
-export const ComboboxOption = styled.li({
-  minHeight: '2.5rem',
-  fontSize: theme.fontSizes.lg,
-  display: 'flex',
-  alignItems: 'center',
-  paddingInline: theme.space.md,
-  paddingBlock: theme.space.xs,
-
-  '&[data-size=large]': {
-    minHeight: '3rem',
-    fontSize: theme.fontSizes.xl,
-  },
-
-  '&[data-highlighted=true]': {
-    backgroundColor: theme.colors.gray200,
-  },
-
-  '&:hover': {
-    backgroundColor: theme.colors.gray300,
-  },
-
-  '&:last-of-type': {
-    borderBottomLeftRadius: theme.radius.sm,
-    borderBottomRightRadius: theme.radius.sm,
-  },
-})
-
-const WarningBox = styled.div({
-  display: 'flex',
-  alignItems: 'center',
-  paddingTop: theme.space.xxs,
-  paddingInline: theme.space.xs,
-  gap: theme.space.xxs,
-})
-
-const SingleLineText = styled(Text)({
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-})
-
-const filterItems = <Item,>(
+function filterItems<Item>(
   items: Array<Item>,
   value: string,
   parseItemIntoString?: (item: Item) => string,
-) => {
+) {
   return items
     .filter((item) => {
       const itemStringValue = parseItemIntoString?.(item) ?? String(item)

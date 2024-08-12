@@ -1,3 +1,4 @@
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import type { Meta, StoryFn } from '@storybook/react'
 import { useState } from 'react'
 import { Combobox } from './Combobox'
@@ -6,7 +7,13 @@ export default {
   title: 'Inputs / Combobox',
   component: Combobox,
   argTypes: {},
-  parameters: { grid: { width: '1/3' } },
+  parameters: {
+    viewport: {
+      viewports: INITIAL_VIEWPORTS,
+      defaultViewport: 'iphonese2',
+    },
+    grid: { width: '1/3' },
+  },
 } as Meta<typeof Combobox>
 
 const FRUIT = [
