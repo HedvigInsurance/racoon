@@ -5,11 +5,9 @@ import { clsx } from 'clsx'
 import { motion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
-import { memo, type ReactNode } from 'react'
-import { useMemo } from 'react'
-import { Suspense } from 'react'
-import { useCallback, useRef, useState } from 'react'
+import { Suspense, useCallback, useRef, useState, useMemo, memo, type ReactNode } from 'react'
 import { Button, framerTransitions, Space } from 'ui'
+import { ButtonNextLink } from '@/components/ButtonNextLink'
 import type { CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { CartToast } from '@/components/CartNotification/CartToast'
 import { PriceCalculatorDynamic } from '@/components/PriceCalculator/PriceCalculatorDynamic'
@@ -67,6 +65,23 @@ export function PurchaseForm(props: PurchaseFormProps) {
   const toastRef = useRef<CartToastAttributes | null>(null)
   const notifyProductAdded = () => {
     toastRef.current?.show()
+  }
+
+  const { t } = useTranslation('purchase-form')
+  const productData = useProductData()
+  // Intermediate state: some products use price calculator page, and we only need a link to it (this),
+  // some use inline purchase form (further below)
+  if (Features.enabled('PRICE_CALCULATOR_PAGE') && productData.priceCalculatorPageLink != null) {
+    return (
+      <div className={purchaseFormTop}>
+        <ProductHeroContainer size="large">
+          <ButtonNextLink fullWidth={true} href={productData.priceCalculatorPageLink}>
+            {t('OPEN_PRICE_CALCULATOR_BUTTON')}
+          </ButtonNextLink>
+          {props.showAverageRating && <ProductAverageRating />}
+        </ProductHeroContainer>
+      </div>
+    )
   }
 
   return (
@@ -132,13 +147,7 @@ const PurchaseFormInner = (props: PurchaseFormInnerProps) => {
       id: productData.id,
       displayNameFull: productData.displayNameFull,
     })
-    if (Features.enabled('PRICE_CALCULATOR_PAGE') && productData.priceCalculatorPageLink != null) {
-      // TODO: Replace with soft navigation (router.push) as soon as old price calculator is gone,
-      //  otherwise atoms get out of sync and UI crashes
-      window.location.href = productData.priceCalculatorPageLink
-    } else {
-      editForm()
-    }
+    editForm()
   }
 
   const handleComplete = useCallback(
