@@ -41,7 +41,7 @@ export const baseWrapper = style({
     },
 
     '&:focus-within': {
-      border: `solid 1px ${tokens.colors.borderFocusedInput}`,
+      outline: `solid 1px ${tokens.colors.borderFocusedInput}`,
     },
   },
 })
