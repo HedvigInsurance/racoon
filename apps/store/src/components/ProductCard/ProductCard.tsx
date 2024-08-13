@@ -11,6 +11,7 @@ import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWit
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import { SelectInsuranceGrid } from '@/components/SelectInsuranceGrid/SelectInsuranceGrid'
+import { Features } from '@/utils/Features'
 import { isSameLink } from '@/utils/url'
 import {
   card,
@@ -101,7 +102,7 @@ const ProductCTA = ({ link }: Pick<ProductCardProps, 'link'>) => {
   }
 
   let priceLink: { pathname: string; query?: Record<string, string> }
-  if (product.priceCalculatorPageLink) {
+  if (Features.enabled('PRICE_CALCULATOR_PAGE') && product.priceCalculatorPageLink) {
     priceLink = { pathname: product.priceCalculatorPageLink }
   } else {
     priceLink = {
