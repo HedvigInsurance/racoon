@@ -1,13 +1,13 @@
 import { type ChangeEventHandler, useMemo } from 'react'
-import { InputSelect } from '@/components/InputSelect/InputSelect'
+import { InputSelect, type InputSelectProps } from '@/components/InputSelect/InputSelect'
 import {
   useProductData,
   useSelectedTypeOfContract,
 } from '@/components/ProductData/ProductDataProvider'
 
-type Props = { className?: string }
+type Props = Pick<InputSelectProps, 'className' | 'backgroundColor'>
 
-export const ProductVariantSelector = ({ className }: Props) => {
+export const ProductVariantSelector = ({ className, backgroundColor }: Props) => {
   const productData = useProductData()
   const [selectedTypeOfContract, setSelectedTypeOfContract] = useSelectedTypeOfContract()
 
@@ -33,6 +33,7 @@ export const ProductVariantSelector = ({ className }: Props) => {
       options={variantOptions}
       onChange={handleChange}
       defaultValue={defaultValue}
+      backgroundColor={backgroundColor}
       size="small"
     />
   )
