@@ -11403,7 +11403,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:22.1.0":
+"@types/node@npm:*":
   version: 22.1.0
   resolution: "@types/node@npm:22.1.0"
   dependencies:
@@ -11418,6 +11418,15 @@ __metadata:
   dependencies:
     undici-types: "npm:~5.26.4"
   checksum: 10c0/093713db52dc544f3931a3dec9d7d8ef661f323e57becd083a7918c778cef1eb6ec32d1017bf5ade06bb06dc5c7551f4f4d749a14e40868cce44d51e54acd8ed
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:22.2.0":
+  version: 22.2.0
+  resolution: "@types/node@npm:22.2.0"
+  dependencies:
+    undici-types: "npm:~6.13.0"
+  checksum: 10c0/c17900b34faecfec204f72970bd658d0c217aaf739c1bf7690c969465b6b26b77a8be1cd9ba735aadbd1dd20b5c3e4f406ec33528bf7c6eec90744886c5d5608
   languageName: node
   linkType: hard
 
@@ -23142,7 +23151,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "racoon@workspace:."
   dependencies:
-    "@types/node": "npm:22.1.0"
+    "@types/node": "npm:22.2.0"
     eslint: "npm:8.57.0"
     eslint-config-custom: "workspace:"
     husky: "npm:9.1.4"
