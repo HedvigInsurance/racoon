@@ -1,13 +1,11 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import type { Meta, StoryObj, StoryFn } from '@storybook/react'
-import { useState } from 'react'
 import { yStack } from 'ui'
 import { Combobox } from './Combobox'
 
 export default {
   title: 'Inputs / Combobox',
   component: Combobox,
-  argTypes: {},
   parameters: {
     viewport: {
       viewports: INITIAL_VIEWPORTS,
@@ -38,7 +36,6 @@ type Story = StoryObj<typeof Combobox<Fruit>>
 
 const Template: StoryFn<typeof Combobox<Fruit>> = (args) => {
   const availableSizes = ['small', 'medium', 'large'] as const
-  const [selectedItem, setSelectedItem] = useState<Fruit | null>(FRUIT[1])
 
   return (
     <section className={yStack({ gap: 'lg' })}>
@@ -46,13 +43,11 @@ const Template: StoryFn<typeof Combobox<Fruit>> = (args) => {
         <div key={size} className={yStack({ gap: 'sm' })}>
           <p>{size.toUpperCase()}</p>
           <Combobox
-            {...args}
             size={size}
             placeholder="Search fruit..."
-            items={FRUIT}
-            selectedItem={selectedItem}
-            onSelectedItemChange={setSelectedItem}
             displayValue={(fruit) => fruit.name}
+            {...args}
+            items={FRUIT}
           />
         </div>
       ))}
@@ -62,4 +57,19 @@ const Template: StoryFn<typeof Combobox<Fruit>> = (args) => {
 
 export const Default: Story = {
   render: Template,
+}
+
+export const WithLabel: Story = {
+  render: Template,
+  args: {
+    label: 'Fruit',
+    placeholder: undefined,
+  },
+}
+
+export const WithLabelAndPlaceholder: Story = {
+  render: Template,
+  args: {
+    label: 'Fruit',
+  },
 }

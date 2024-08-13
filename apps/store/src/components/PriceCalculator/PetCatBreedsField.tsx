@@ -33,7 +33,8 @@ export const PetCatBreedsField = ({ field }: Props) => {
       key={breeds.length}
       items={breeds}
       defaultSelectedItem={defaultSelectedBreed}
-      placeholder={translateLabel(field.label)}
+      label={translateLabel(field.label)}
+      placeholder={t('FIELD_BREEDS_PLACEHOLDER')}
       displayValue={breedToString}
       getFormValue={breedToFormValue}
       name={field.name}

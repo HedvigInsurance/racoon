@@ -1,15 +1,18 @@
 import clsx from 'clsx'
 import { useCombobox } from 'downshift'
-import { useState, useMemo, useDeferredValue } from 'react'
+import { useState, useMemo, useDeferredValue, useId } from 'react'
 import { ChevronIcon, CrossIconSmall, Text, xStack, theme, WarningTriangleIcon } from 'ui'
 import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 import {
   wrapper,
   wrapperExpanded,
   inputWrapper,
+  inputWrapperSmall,
   input,
   inputExpanded,
   inputWarning,
+  inputWithLabel,
+  inputLabel,
   actionsWrapper,
   toggleActionButton,
   deleteActionButton,
@@ -29,8 +32,10 @@ type Props<Item> = {
   displayValue?: (item: Item) => string
   getFormValue?: (item: Item) => string | undefined
   noMatchesMessage?: string
+  id?: string
   placeholder?: string
   name?: string
+  label?: string
   disabled?: boolean
   required?: boolean
   mutliSelect?: boolean
@@ -51,10 +56,13 @@ export function Combobox<Item>({
   getFormValue = (item) => String(item) ?? undefined,
   mutliSelect = false,
   noMatchesMessage = 'No matches found',
+  id,
   name,
+  label,
   size = 'large',
   ...externalInputProps
 }: Props<Item>) {
+  const generatedInputId = useId()
   const { highlight, animationProps } = useHighlightAnimation<HTMLInputElement>()
 
   const [inputValue, setInputValue] = useState(() => {
@@ -146,17 +154,32 @@ export function Combobox<Item>({
   }
 
   const isExpanded = isOpen && !noOptions
+  const identifier = id ?? generatedInputId
 
   return (
     <div className={clsx(wrapper[size], isExpanded && wrapperExpanded)}>
       {/* We use a wrapper for the input here so we can position action buttons (toggle and delete) */}
       {/* on the right side of the input. Doing it without a wrapper would required add those as children */}
       {/* of the input, which is not valid HTML.*/}
-      <div className={inputWrapper}>
+      <div
+        className={clsx(inputWrapper, { [inputWrapperSmall]: size === 'small' })}
+        data-active={Boolean(inputValue || externalInputProps.placeholder)}
+      >
+        {label && (
+          <label className={inputLabel[size]} htmlFor={identifier}>
+            {label}
+          </label>
+        )}
         <input
-          className={clsx(input[size], isExpanded && inputExpanded, noOptions && inputWarning)}
           {...getInputProps({ ref: animationProps.ref })}
           {...externalInputProps}
+          id={identifier}
+          className={clsx(
+            input[size],
+            isExpanded && inputExpanded,
+            noOptions && inputWarning,
+            label && inputWithLabel[size],
+          )}
         />
         {internalSelectedItem && (
           <input type="hidden" name={name} value={getFormValue(internalSelectedItem)} />

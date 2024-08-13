@@ -5,33 +5,22 @@ import { zIndexes } from '@/utils/zIndex'
 const wrapperBase = style({
   isolation: 'isolate',
 })
-
-const inlinePadding = createVar('inputLateralPadding')
 export const wrapper = styleVariants({
   small: [
     wrapperBase,
     {
-      vars: {
-        [inlinePadding]: '0.875rem',
-      },
       fontSize: tokens.fontSizes.md,
     },
   ],
   medium: [
     wrapperBase,
     {
-      vars: {
-        [inlinePadding]: tokens.space.md,
-      },
       fontSize: tokens.fontSizes.md,
     },
   ],
   large: [
     wrapperBase,
     {
-      vars: {
-        [inlinePadding]: tokens.space.md,
-      },
       fontSize: tokens.fontSizes.xl,
     },
   ],
@@ -41,13 +30,25 @@ export const wrapperExpanded = style({
   zIndex: zIndexes.header,
 })
 
-export const inputWrapper = style({ position: 'relative' })
+const inlinePadding = createVar('inputLateralPadding')
+export const inputWrapper = style({
+  vars: {
+    [inlinePadding]: tokens.space.md,
+  },
+  position: 'relative',
+})
+export const inputWrapperSmall = style({
+  vars: {
+    [inlinePadding]: '0.875rem',
+  },
+})
 
 const inputBase = style({
   width: '100%',
   paddingLeft: inlinePadding,
   paddingRight: tokens.space.xxxl,
-  // Avoids jumpings when border is added for focused state
+  // Avoids jumpings when border is added for focused state.
+  // We can't easily achive that with `outline` for this case as we do for TextField.
   border: '1px solid transparent',
   borderRadius: tokens.radius.sm,
   backgroundColor: tokens.colors.translucent1,
@@ -57,7 +58,7 @@ const inputBase = style({
 })
 
 export const input = styleVariants({
-  small: [inputBase, { height: '3rem' }],
+  small: [inputBase, { height: '3.5rem' }],
   medium: [inputBase, { height: '4rem' }],
   large: [inputBase, { height: '4rem' }],
 })
@@ -70,6 +71,64 @@ export const inputExpanded = style({
 export const inputWarning = style({
   borderBottomLeftRadius: tokens.radius.sm,
   borderBottomRightRadius: tokens.radius.sm,
+})
+
+export const inputWithLabel = styleVariants({
+  small: { paddingTop: '1.5rem', paddingBottom: '0.5rem' },
+  medium: { paddingTop: '1.625rem', paddingBottom: '0.375rem' },
+  large: { paddingTop: '1.625rem', paddingBottom: '0.5rem' },
+})
+
+const inputLabelBase = style({
+  position: 'absolute',
+  color: tokens.colors.textSecondary,
+  lineHeight: 1,
+  overflow: 'hidden',
+  whiteSpace: 'nowrap',
+  textOverflow: 'ellipsis',
+  pointerEvents: 'none',
+  transformOrigin: 'top left',
+  transition: 'transform 200ms',
+})
+
+// Transform logic
+// - `scale` is calculated to make small label have desired font size.
+//   Unfortunately, we cannot refer to our tokens since we need unitless values for calc
+// - `translateY` is matched manually to sync final look with figma
+export const inputLabel = styleVariants({
+  small: [
+    inputLabelBase,
+    {
+      transform: `translate(${inlinePadding}, 100%) scale(1)`,
+      selectors: {
+        [`:is(${inputWrapper}:focus-within, ${inputWrapper}[data-active=true])  &`]: {
+          transform: `translate(${inlinePadding}, 40%) scale(${14 / 18})`,
+        },
+      },
+    },
+  ],
+  medium: [
+    inputLabelBase,
+    {
+      transform: `translate(${inlinePadding}, 125%) scale(1)`,
+      selectors: {
+        [`:is(${inputWrapper}:focus-within, ${inputWrapper}[data-active=true])  &`]: {
+          transform: `translate(${inlinePadding}, 70%) scale(${14 / 18})`,
+        },
+      },
+    },
+  ],
+  large: [
+    inputLabelBase,
+    {
+      transform: `translate(${inlinePadding}, 75%) scale(1)`,
+      selectors: {
+        [`:is(${inputWrapper}:focus-within, ${inputWrapper}[data-active=true])  &`]: {
+          transform: `translate(${inlinePadding}, 40%) scale(${14 / 24})`,
+        },
+      },
+    },
+  ],
 })
 
 export const actionsWrapper = style({
@@ -120,7 +179,7 @@ export const listItem = style({
   borderRadius: tokens.radius.md,
   ...hoverStyles({
     cursor: 'pointer',
-    backgroundColor: tokens.colors.gray200,
+    backgroundColor: tokens.colors.grayTranslucent200,
   }),
   ':last-of-type': {
     borderBottomLeftRadius: tokens.radius.sm,
@@ -129,5 +188,5 @@ export const listItem = style({
 })
 
 export const listItemHighlighted = style({
-  backgroundColor: tokens.colors.gray200,
+  backgroundColor: tokens.colors.grayTranslucent200,
 })
