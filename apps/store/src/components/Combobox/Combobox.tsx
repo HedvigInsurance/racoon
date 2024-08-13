@@ -40,6 +40,7 @@ type Props<Item> = {
   required?: boolean
   mutliSelect?: boolean
   size?: 'small' | 'medium' | 'large'
+  className?: string
 }
 
 /**
@@ -60,6 +61,7 @@ export function Combobox<Item>({
   name,
   label,
   size = 'large',
+  className,
   ...externalInputProps
 }: Props<Item>) {
   const generatedInputId = useId()
@@ -157,7 +159,7 @@ export function Combobox<Item>({
   const identifier = id ?? generatedInputId
 
   return (
-    <div className={clsx(wrapper[size], isExpanded && wrapperExpanded)}>
+    <div className={clsx(wrapper[size], isExpanded && wrapperExpanded, className)}>
       {/* We use a wrapper for the input here so we can position action buttons (toggle and delete) */}
       {/* on the right side of the input. Doing it without a wrapper would required add those as children */}
       {/* of the input, which is not valid HTML.*/}

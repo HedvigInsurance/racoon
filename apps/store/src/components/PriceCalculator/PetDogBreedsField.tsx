@@ -61,7 +61,6 @@ export const PetDogBreedsField = ({ field }: Props) => {
           breeds={pureBreeds}
           defaultSelectedBreeds={defaultSelectedBreeds}
           name={field.name}
-          required={field.required}
           loading={loading}
         />
       )}
