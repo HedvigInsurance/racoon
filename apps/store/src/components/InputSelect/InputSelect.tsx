@@ -1,5 +1,6 @@
 'use client'
 
+import { assignInlineVars } from '@vanilla-extract/dynamic'
 import { clsx } from 'clsx'
 import { type ChangeEventHandler, useId } from 'react'
 import { ChevronIcon, InputBase, type InputBaseProps, type UIColorKeys, getColor } from 'ui'
@@ -10,6 +11,7 @@ import {
   wrapperWithLabelVariants,
   select,
   wrapperVariants,
+  selectBackgroundColor,
 } from './InputSelect.css'
 
 export type InputSelectProps = InputBaseProps & {
@@ -24,7 +26,7 @@ export type InputSelectProps = InputBaseProps & {
   autoFocus?: boolean
   className?: string
   size?: 'small' | 'medium' | 'large'
-  backgroundColor?: Extract<UIColorKeys, 'backgroundStandard' | 'backgroundFrostedGlass'>
+  backgroundColor?: UIColorKeys
 }
 
 export const InputSelect = ({
@@ -74,8 +76,12 @@ export const InputSelect = ({
             onChange={handleChange}
             value={value}
             defaultValue={value ? undefined : (defaultValue ?? '')}
-            style={{ backgroundColor }}
-            className={clsx(select)}
+            style={
+              backgroundColor
+                ? assignInlineVars({ [selectBackgroundColor]: backgroundColor })
+                : undefined
+            }
+            className={select}
             {...animationProps}
             {...rest}
           >

@@ -31,7 +31,6 @@ export function LanguageSelectForm() {
   }
   const { language: currentLanguage } = useCurrentLocale()
 
-  // TODO: Override background color via css vars when InputSelect supports it
   return (
     <div className={languageSelectForm}>
       <InputSelect
@@ -39,7 +38,7 @@ export function LanguageSelectForm() {
         onChange={handleChangeLanguage}
         defaultValue={currentLanguage}
         options={languageList}
-        backgroundColor={'gray300' as any}
+        backgroundColor="gray300"
       />
     </div>
   )

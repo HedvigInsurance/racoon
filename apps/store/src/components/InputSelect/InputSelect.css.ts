@@ -12,6 +12,8 @@ const paddingTop = createVar('selectPaddingTop')
 const labelTop = createVar('selectLabelTop')
 const labelHeight = createVar('selectLabelHeight')
 
+export const selectBackgroundColor = createVar('selectBackgroundColor')
+
 export const wrapperVariants = styleVariants({
   base: {
     position: 'relative',
@@ -93,10 +95,14 @@ export const select = style({
   paddingLeft: paddingHorizontal,
   paddingRight: `calc(${paddingHorizontal} + 1.125rem)`,
 
-  backgroundColor: tokens.colors.translucent1,
+  backgroundColor: selectBackgroundColor,
   borderRadius: tokens.radius.md,
 
   cursor: 'pointer',
+
+  vars: {
+    [selectBackgroundColor]: tokens.colors.translucent1,
+  },
 
   selectors: {
     '&:invalid, &:disabled': {

@@ -21,7 +21,7 @@ export const ProductVariantSelectorBlock = ({ nested }: ProductVariantSelectorBl
       condition={!nested}
       wrapWith={(children) => <VariantSelectorWrapper>{children}</VariantSelectorWrapper>}
     >
-      <StyledProductVariantSelector />
+      <ProductVariantSelector backgroundColor="signalGreenFill" />
     </ConditionalWrapper>
   )
 }
@@ -37,14 +37,5 @@ const VariantSelectorWrapper = styled.div({
   [mq.md]: {
     top: `calc(${NAVIGATION_LIST_HEIGHT} + 1.5rem)`,
     paddingInline: theme.space.lg,
-  },
-})
-
-const StyledProductVariantSelector = styled(ProductVariantSelector)({
-  backgroundColor: theme.colors.signalGreenFill,
-  boxShadow: theme.shadow.default,
-
-  ':hover, :focus-within': {
-    backgroundColor: theme.colors.signalGreenHighlight,
   },
 })
