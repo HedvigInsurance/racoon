@@ -23,6 +23,7 @@ const config = {
   NEW_HEADER: process.env.NEXT_PUBLIC_FEATURE_NEW_HEADER === 'true',
   CHECKOUT_PAGE_MERGE: process.env.NEXT_PUBLIC_FEATURE_CHECKOUT_PAGE_MERGE === 'true',
   PRICE_CALCULATOR_PAGE: process.env.NEXT_PUBLIC_FEATURE_PRICE_CALCULATOR_PAGE === 'true',
+  PRODUCT_PAGE_V2: process.env.NEXT_PUBLIC_FEATURE_PRODUCT_PAGE_V2 === 'true',
 } as const
 
 export type FeatureFlag = keyof typeof config
