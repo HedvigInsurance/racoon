@@ -45,8 +45,14 @@ const logRequests = process.env.NODE_ENV === 'development'
 const requestLogger = new ApolloLink((operation, forward) => {
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (logRequests) {
+    let locale: string | undefined
+    try {
+      locale = operation.getContext()['headers']['Hedvig-Language']
+    } catch (err) {
+      // ignore errors
+    }
     console.log(
-      `GraphQL operation ${operation.operationName}, variables=${JSON.stringify(operation.variables)}`,
+      `GraphQL operation ${operation.operationName}, variables=${JSON.stringify(operation.variables)}, locale=${locale}`,
     )
   }
   return forward(operation)

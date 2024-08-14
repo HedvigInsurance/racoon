@@ -22,6 +22,7 @@ type Props = {
   children: ReactNode
   productData: ProductData
   selectedTypeOfContract?: string
+  productKey?: string
 }
 
 const ProductKeyContext = createContext<string | null>(null)
@@ -29,7 +30,9 @@ const ProductKeyContext = createContext<string | null>(null)
 // NOTE: No cleanup on atomFamilies here - we don't have that many products, so it's easier to retain all data
 export const ProductDataProvider = (props: Props) => {
   const locale = useRoutingLocale()
-  const key = productKey(props.productData.id, locale)
+  // Custom key is only used in terms debugger page when we want to have several providers (one per variant)
+  // on the same page - different key makes them not clash
+  const key = props.productKey ?? productKey(props.productData.id, locale)
   useHydrateAtoms([
     [productDataAtomFamily(key), props.productData],
     [selectedTypeOfContractAtomFamily(key), props.selectedTypeOfContract ?? null],

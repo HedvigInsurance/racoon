@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react'
-import { DebuggerMenu } from '@/appComponents/DebuggerMenu/DebuggerMenu'
+import { DebuggerMenu } from '@/app/debugger/DebuggerMenu'
 import { RootLayout } from '@/appComponents/RootLayout/RootLayout'
 import { Header } from '@/components/Header/Header'
 import { contentWrapper } from './debugger.css'
