@@ -12,6 +12,7 @@ import type {
 } from '@/services/PriceCalculator/Field.types'
 import { MIXED_BREED_OPTION_ID } from '@/services/PriceCalculator/Field.types'
 import { MixedBreedPicker } from './MixedBreedPicker/MixedBreedPicker'
+import { useTranslateFieldLabel } from './useTranslateFieldLabel'
 
 type Props = {
   field: InputFieldPetDogBreeds
@@ -19,6 +20,7 @@ type Props = {
 
 export const PetDogBreedsField = ({ field }: Props) => {
   const loading = useAtomValue(priceCalculatorLoadingAtom)
+  const translateLabel = useTranslateFieldLabel()
   const [showMixedPicker, setShowMixedPicker] = useState(() => (field.value ?? []).length > 1)
   const { t } = useTranslation('purchase-form')
 
@@ -45,6 +47,7 @@ export const PetDogBreedsField = ({ field }: Props) => {
         defaultSelectedItem={comboboxDefaultSelectedBreed}
         displayValue={(item) => item.displayName}
         getFormValue={breedToFormValue}
+        label={translateLabel(field.label)}
         placeholder={t('FIELD_BREEDS_PLACEHOLDER')}
         onSelectedItemChange={handleComboboxChange}
         name={field.name}
