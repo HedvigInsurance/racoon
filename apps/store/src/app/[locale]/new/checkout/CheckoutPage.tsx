@@ -10,6 +10,7 @@ import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
 import type { RoutingLocale } from '@/utils/l10n/types'
 import { BonusOffer } from './BonusOffer'
 import { CartEntries } from './CartEntries'
+import { CheckoutDebugDialog } from './CheckoutDebugDialog'
 import { CheckoutForm } from './CheckoutForm'
 import { layout, content } from './CheckoutPage.css'
 import { EmptyCart, type Product } from './EmptyCart'
@@ -44,28 +45,32 @@ export function CheckoutPage({
   }
 
   return (
-    <main className={layout}>
-      <div className={content}>
-        <section className={yStack({ gap: 'md' })}>
-          <CartEntries shopSession={shopSession} />
-        </section>
+    <>
+      <main className={layout}>
+        <div className={content}>
+          <section className={yStack({ gap: 'md' })}>
+            <CartEntries shopSession={shopSession} />
+          </section>
 
-        <section className={yStack({ gap: 'xl' })}>
-          <BonusOffer shopSession={shopSession} />
+          <section className={yStack({ gap: 'xl' })}>
+            <BonusOffer shopSession={shopSession} />
 
-          <BankIdContextProvider>
-            <CheckoutForm
-              shopSessionId={shopSession.id}
-              ssn={shopSession.customer.ssn}
-              cart={shopSession.cart}
-              shouldCollectName={getShouldCollectName(shopSession.customer)}
-              shouldCollectEmail={getShouldCollectEmail(shopSession.customer)}
-            />
-            <BankIdDialog />
-          </BankIdContextProvider>
-        </section>
-      </div>
-    </main>
+            <BankIdContextProvider>
+              <CheckoutForm
+                shopSessionId={shopSession.id}
+                ssn={shopSession.customer.ssn}
+                cart={shopSession.cart}
+                shouldCollectName={getShouldCollectName(shopSession.customer)}
+                shouldCollectEmail={getShouldCollectEmail(shopSession.customer)}
+              />
+              <BankIdDialog />
+            </BankIdContextProvider>
+          </section>
+        </div>
+      </main>
+
+      <CheckoutDebugDialog />
+    </>
   )
 }
 
