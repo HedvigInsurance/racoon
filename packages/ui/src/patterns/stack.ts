@@ -5,16 +5,16 @@ type StackPatternParams = {
   direction?: 'row' | 'column'
 } & Omit<Sprinkles, 'display' | 'flexDirection'>
 
-export const stack = ({ direction = 'column', gap = 'md', ...params }: StackPatternParams) => {
-  return sprinkles({ display: 'flex', flexDirection: direction, gap, ...params })
+const stack = ({ direction = 'column', ...params }: StackPatternParams) => {
+  return sprinkles({ display: 'flex', flexDirection: direction, ...params })
 }
 
 type DirectedStackPatternParams = Omit<StackPatternParams, 'direction'>
 
-export const xStack = (params: DirectedStackPatternParams) => {
+export const xStack = (params?: DirectedStackPatternParams) => {
   return stack({ direction: 'row', ...params })
 }
 
-export const yStack = (params: DirectedStackPatternParams) => {
+export const yStack = (params?: DirectedStackPatternParams) => {
   return stack({ direction: 'column', ...params })
 }

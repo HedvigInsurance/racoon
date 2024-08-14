@@ -111,7 +111,7 @@ export function BankIdDialog() {
         )
         Footer =
           !isMobile && currentOperation.autoStartToken ? (
-            <div className={yStack({ alignItems: 'center', gap: 'none' })}>
+            <div className={yStack({ alignItems: 'center' })}>
               <Text>{t('NO_MOBILE_BANKID_TITLE')}</Text>
               <Link
                 className={link}
