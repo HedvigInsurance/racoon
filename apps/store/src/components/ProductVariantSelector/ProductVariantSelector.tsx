@@ -1,15 +1,18 @@
+import { useAtom } from 'jotai'
 import { type ChangeEventHandler, useMemo } from 'react'
 import { InputSelect, type InputSelectProps } from '@/components/InputSelect/InputSelect'
 import {
   useProductData,
-  useSelectedTypeOfContract,
+  useSelectedTypeOfContractAtom,
 } from '@/components/ProductData/ProductDataProvider'
 
 type Props = Pick<InputSelectProps, 'className' | 'backgroundColor'>
 
 export const ProductVariantSelector = ({ className, backgroundColor }: Props) => {
   const productData = useProductData()
-  const [selectedTypeOfContract, setSelectedTypeOfContract] = useSelectedTypeOfContract()
+  const [selectedTypeOfContract, setSelectedTypeOfContract] = useAtom(
+    useSelectedTypeOfContractAtom(),
+  )
 
   const variantOptions = useMemo(
     () =>
