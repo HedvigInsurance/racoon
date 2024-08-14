@@ -1,17 +1,15 @@
-import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useMemo, useState } from 'react'
-import { Space, Text, CrossIconSmall, InfoIcon, theme } from 'ui'
+import { Text, CrossIconSmall, xStack, yStack } from 'ui'
 import { Combobox } from '@/components/Combobox/Combobox'
-import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import type { Breed } from '@/services/PriceCalculator/Field.types'
+import { wrapper, content, deleteButton, combobox } from './MixedBreedPicker.css'
 
 type Props = {
   breeds: Array<Breed>
   defaultSelectedBreeds?: Array<Breed>
   onBreedsChange?: (selectedBreeds: Array<Breed>) => void
   loading?: boolean
-  required?: boolean
   name?: string
 }
 
@@ -21,7 +19,6 @@ export const MixedBreedPicker = ({
   onBreedsChange,
   loading,
   name,
-  required,
 }: Props) => {
   const [selectedBreeds, setSelectedBreeds] = useState<Array<Breed>>(defaultSelectedBreeds ?? [])
   const { t } = useTranslation('purchase-form')
@@ -45,106 +42,49 @@ export const MixedBreedPicker = ({
   }, [breeds, selectedBreeds])
 
   return (
-    <Wrapper>
-      <Space y={0.5}>
-        <Content>
-          <Space y={0.5}>
-            <Text size="xs" color="textSecondary">
-              {t('FIELD_MIXED_BREEDS_LABEL')}
-            </Text>
+    <div className={wrapper}>
+      <div className={content}>
+        <Text size="xs" color="textSecondary">
+          {t('FIELD_MIXED_BREEDS_LABEL')}
+        </Text>
 
-            {selectedBreeds.length > 0 && (
-              <>
-                <List>
-                  {selectedBreeds.map((breed) => (
-                    <ListItem key={breed.id}>
-                      <Text size="xl">{breed.displayName}</Text>
-                      <DeleteButton
-                        type="button"
-                        onClick={handleDelete(breed.id)}
-                        disabled={loading}
-                      >
-                        <CrossIconSmall />
-                      </DeleteButton>
-                    </ListItem>
-                  ))}
-                </List>
-                {selectedBreeds.map((breed) => (
-                  <input key={breed.id} type="hidden" name={name} value={breed.id} />
-                ))}
-              </>
-            )}
-          </Space>
-        </Content>
+        {selectedBreeds.length > 0 && (
+          <>
+            <ul className={yStack({ gap: 'xs' })}>
+              {selectedBreeds.map((breed) => (
+                <li key={breed.id} className={xStack({ justifyContent: 'space-between' })}>
+                  <Text size="xl">{breed.displayName}</Text>
+                  <button
+                    className={deleteButton}
+                    type="button"
+                    onClick={handleDelete(breed.id)}
+                    disabled={loading}
+                  >
+                    <CrossIconSmall />
+                  </button>
+                </li>
+              ))}
+            </ul>
+            {selectedBreeds.map((breed) => (
+              <input key={breed.id} type="hidden" name={name} value={breed.id} />
+            ))}
+          </>
+        )}
+      </div>
 
-        <ComboboxWrapper>
-          <Combobox
-            items={availableBreeds}
-            displayValue={(breed) => breed.displayName}
-            selectedItem={null}
-            onSelectedItemChange={handleAdd}
-            placeholder={t('FIELD_MIXED_BREEDS_PLACEHOLDER')}
-            noMatchesMessage={t('FIELD_BREEDS_NO_OPTIONS')}
-            mutliSelect={true}
-            disabled={loading}
-            required={required && selectedBreeds.length === 0}
-            size="small"
-          />
-        </ComboboxWrapper>
-      </Space>
-    </Wrapper>
+      <Combobox
+        className={combobox}
+        items={availableBreeds}
+        displayValue={(breed) => breed.displayName}
+        selectedItem={null}
+        onSelectedItemChange={handleAdd}
+        placeholder={t('FIELD_MIXED_BREEDS_PLACEHOLDER')}
+        noMatchesMessage={t('FIELD_BREEDS_NO_OPTIONS')}
+        mutliSelect={true}
+        disabled={loading}
+        required={selectedBreeds.length === 0}
+        size="small"
+      />
+    </div>
   )
 }
-
-const Wrapper = styled.div({
-  backgroundColor: theme.colors.opaque1,
-  borderRadius: theme.radius.sm,
-  paddingBlock: theme.space.sm,
-})
-
-const Content = styled.div({
-  paddingInline: theme.space.md,
-})
-
-const ComboboxWrapper = styled.div({
-  paddingInline: theme.space.sm,
-})
-
-const List = styled.ul({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: theme.space.xs,
-})
-
-const ListItem = styled.li({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-})
-
-const DeleteButton = styled.button({
-  cursor: 'pointer',
-})
-
-type MessageProps = { children: string }
-
-export const Message = ({ children }: MessageProps) => {
-  return (
-    <MessageWrapper>
-      <SpaceFlex space={0.25}>
-        <MessageIcon size={theme.fontSizes.xs} color={theme.colors.textSecondary} />
-        <Text size="xs">{children}</Text>
-      </SpaceFlex>
-    </MessageWrapper>
-  )
-}
-
-const MessageWrapper = styled.div({
-  paddingInline: theme.space.md,
-})
-
-const MessageIcon = styled(InfoIcon)({
-  flexShrink: 0,
-  position: 'relative',
-  top: 2,
-})

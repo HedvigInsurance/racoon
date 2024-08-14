@@ -1,3 +1,4 @@
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import type { Meta, StoryFn } from '@storybook/react'
 import type { Breed } from '@/services/PriceCalculator/Field.types'
 import { MixedBreedPicker } from './MixedBreedPicker'
@@ -5,7 +6,13 @@ import { MixedBreedPicker } from './MixedBreedPicker'
 export default {
   title: 'Inputs / Mixed Breed Picker',
   component: MixedBreedPicker,
-  parameters: { grid: { width: '1/3' } },
+  parameters: {
+    viewport: {
+      viewports: INITIAL_VIEWPORTS,
+      defaultViewport: 'iphonese2',
+    },
+    grid: { width: '1/3' },
+  },
 } as Meta<typeof MixedBreedPicker>
 
 const BREEDS: Array<Breed> = [
