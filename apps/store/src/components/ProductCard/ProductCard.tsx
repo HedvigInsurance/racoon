@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
-import { Button, Text, sprinkles, visuallyHidden } from 'ui'
+import { Button, Text, sprinkles, visuallyHidden, breakpoints } from 'ui'
 import type { ImageSize } from '@/blocks/ProductCardBlock'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
@@ -60,10 +60,21 @@ export const ProductCard = ({
   const { t } = useTranslation('common')
   const router = useRouter()
 
+  // Hand-picked to match grid styles on ProductGrid
+  // Edge cases:
+  // - single column on small screens
+  // - 2-column grid with just 2 elements is displayed on wide monitor
+  const imageSizes = `(max-width: ${breakpoints.sm}px) 100vw, 50vw`
   return (
     <div className={card}>
       <div className={imageWrapper} style={assignInlineVars({ [imageAspectRatio]: aspectRatio })}>
-        <ImageWithPlaceholder className={image} {...imageProps} alt={alt} fill sizes="20rem" />
+        <ImageWithPlaceholder
+          className={image}
+          {...imageProps}
+          alt={alt}
+          fill={true}
+          sizes={imageSizes}
+        />
       </div>
       <div className={sprinkles({ marginInline: 'xs' })}>
         <Link className={mainLink} href={link.url}>
