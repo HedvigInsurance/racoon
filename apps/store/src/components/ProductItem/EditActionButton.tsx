@@ -3,33 +3,19 @@ import { useTranslation } from 'next-i18next'
 import Balancer from 'react-wrap-balancer'
 import { Button, Text } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
-import { useShowAppError } from '@/services/appErrors/appErrorAtom'
 import type { ProductOfferFragment } from '@/services/graphql/generated'
 import { ActionButton } from './ProductItem'
 import { useEditProductOffer } from './useEditProductOffer'
 
 type Props = {
-  shopSessionId: string
   offer: ProductOfferFragment
 }
 
-export const EditActionButton = (props: Props) => {
-  const showError = useShowAppError()
+export const EditActionButton = ({ offer }: Props) => {
   const { t } = useTranslation(['cart', 'common'])
   const [editProductOffer, state] = useEditProductOffer()
 
-  const handleConfirmEdit = () => {
-    try {
-      editProductOffer({
-        shopSessionId: props.shopSessionId,
-        offerId: props.offer.id,
-        productName: props.offer.product.name,
-        data: props.offer.priceIntentData,
-      })
-    } catch (error) {
-      showError(new Error(t('common:UNKNOWN_ERROR_MESSAGE')))
-    }
-  }
+  const handleConfirmEdit = () => editProductOffer({ offer })
 
   return (
     <FullscreenDialog.Root>
