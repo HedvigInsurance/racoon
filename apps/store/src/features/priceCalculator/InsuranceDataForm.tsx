@@ -2,7 +2,7 @@
 
 import { datadogRum } from '@datadog/browser-rum'
 import { clsx } from 'clsx'
-import { useSetAtom, useStore } from 'jotai'
+import { useAtomValue, useSetAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { type FormEventHandler, type ReactNode } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
@@ -15,7 +15,6 @@ import { useHandleSubmitPriceCalculatorSection } from '@/components/PriceCalcula
 import { useTranslateFieldLabel } from '@/components/PriceCalculator/useTranslateFieldLabel'
 import {
   activeFormSectionIdAtom,
-  currentPriceIntentIdAtom,
   GOTO_NEXT_SECTION,
   priceCalculatorFormAtom,
 } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
@@ -45,16 +44,10 @@ import { PageLink } from '@/utils/PageLink'
 export function InsuranceDataForm() {
   const locale = useRoutingLocale()
   const { t } = useTranslation('purchase-form')
-  const store = useStore()
 
-  // Special case: navigating away from price calculator
-  if (store.get(currentPriceIntentIdAtom) == null) {
-    return null
-  }
-
-  const form = store.get(priceCalculatorFormAtom)
-  const activeSectionId = store.get(activeFormSectionIdAtom)
-  const step = store.get(priceCalculatorStepAtom)
+  const form = useAtomValue(priceCalculatorFormAtom)
+  const activeSectionId = useAtomValue(activeFormSectionIdAtom)
+  const step = useAtomValue(priceCalculatorStepAtom)
   const sections = form.sections.map((section, index) => {
     if (step !== 'fillForm' || section.id !== activeSectionId) {
       // No preview needed for sections that are not yet touched
