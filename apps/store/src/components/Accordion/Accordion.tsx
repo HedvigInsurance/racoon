@@ -1,98 +1,69 @@
-import styled from '@emotion/styled'
 import * as AccordionPrimitives from '@radix-ui/react-accordion'
+import { clsx } from 'clsx'
 import { motion } from 'framer-motion'
-import type { PropsWithChildren, ReactElement } from 'react'
+import type { ComponentProps, PropsWithChildren, ReactElement } from 'react'
 import { forwardRef } from 'react'
-import { MinusIcon, mq, PlusIcon, theme } from 'ui'
+import { MinusIcon, PlusIcon } from 'ui'
+import {
+  closeIcon,
+  content,
+  item,
+  openIcon,
+  root,
+  trigger,
+  TRIGGER_ICON_SIZE,
+} from './Accordion.css'
 
-export const Root = styled(AccordionPrimitives.Root)({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: theme.space.xxs,
+export const Root = ({
+  className,
+  ...forwardedProps
+}: ComponentProps<typeof AccordionPrimitives.Root>) => (
+  <AccordionPrimitives.Root className={clsx(root, className)} {...forwardedProps} />
+)
 
-  [mq.lg]: {
-    gap: theme.space.xs,
-  },
-})
+export const Trigger = ({
+  className,
+  ...forwardedProps
+}: ComponentProps<typeof AccordionPrimitives.Trigger>) => (
+  <AccordionPrimitives.Trigger className={clsx(trigger, className)} {...forwardedProps} />
+)
 
-export const Trigger = styled(AccordionPrimitives.Trigger)({
-  width: '100%',
-  cursor: 'pointer',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  gap: theme.space.md,
-  paddingBlock: theme.space.sm,
-  paddingInline: theme.space.md,
-  fontSize: theme.fontSizes.md,
-
-  [mq.lg]: {
-    fontSize: theme.fontSizes.lg,
-    paddingBlock: theme.space.md,
-    paddingInline: theme.space.lg,
-  },
-
-  '@media (hover: hover)': {
-    ':hover': {
-      cursor: 'pointer',
-    },
-  },
-
-  ':focus-visible': {
-    boxShadow: theme.shadow.focus,
-    borderRadius: theme.radius.sm,
-  },
-})
-
-export const Item = styled(AccordionPrimitives.Item)({
-  backgroundColor: theme.colors.opaque1,
-  borderRadius: theme.radius.sm,
-
-  '@media (hover: hover)': {
-    [`:has(${Trigger}:hover)`]: {
-      backgroundColor: theme.colors.gray200,
-      transition: `background ${theme.transitions.hover}`,
-    },
-  },
-})
-
-const OPEN_CLOSE_ICON_SIZE = '1rem'
+export const Item = ({
+  className,
+  ...forwardedProps
+}: ComponentProps<typeof AccordionPrimitives.Item>) => (
+  <AccordionPrimitives.Item className={clsx(item, className)} {...forwardedProps} />
+)
 
 type HeaderWithTriggerProps = PropsWithChildren<unknown> & {
   icon?: ReactElement
+  className?: string
 }
 
-export const HeaderWithTrigger = ({ children }: HeaderWithTriggerProps) => {
+export const HeaderWithTrigger = ({ children, className }: HeaderWithTriggerProps) => {
   return (
     <AccordionPrimitives.Header>
-      <Trigger>
+      <Trigger className={className}>
         {children}
 
-        <OpenIcon size={OPEN_CLOSE_ICON_SIZE} />
-        <CloseIcon size={OPEN_CLOSE_ICON_SIZE} />
+        <PlusIcon size={TRIGGER_ICON_SIZE} className={openIcon} />
+        <MinusIcon size={TRIGGER_ICON_SIZE} className={closeIcon} />
       </Trigger>
     </AccordionPrimitives.Header>
   )
 }
 
-const OpenIcon = styled(PlusIcon)({
-  flexShrink: 0,
-  display: 'block',
-  '[data-state=open] > &': { display: 'none' },
-})
-
-const CloseIcon = styled(MinusIcon)({
-  flexShrink: 0,
-  display: 'none',
-  '[data-state=open] > &': { display: 'block' },
-})
-
 type ContentProps = AccordionPrimitives.AccordionContentProps & { open: boolean }
 
 export const Content = forwardRef<HTMLDivElement, ContentProps>(
-  ({ children, open, ...props }, forwardedRef) => {
+  ({ children, open, className, ...props }, forwardedRef) => {
     return (
-      <StyledContent {...props} ref={forwardedRef} forceMount={true}>
+      <AccordionPrimitives.Content
+        className={clsx(content, className)}
+        {...props}
+        ref={forwardedRef}
+        forceMount={true}
+      >
         <motion.div
           initial={open ? 'opened' : 'closed'}
           transition={{
@@ -111,21 +82,8 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
         >
           {children}
         </motion.div>
-      </StyledContent>
+      </AccordionPrimitives.Content>
     )
   },
 )
 Content.displayName = 'AccordionContent'
-
-const StyledContent = styled(AccordionPrimitives.Content)({
-  fontSize: theme.fontSizes.md,
-  color: theme.colors.textSecondaryOnGray,
-  lineHeight: 1.32,
-  overflow: 'hidden',
-  paddingInline: theme.space.md,
-
-  [mq.lg]: {
-    paddingLeft: theme.space.lg,
-    paddingRight: `calc(${theme.space.lg} + ${OPEN_CLOSE_ICON_SIZE})`,
-  },
-})
