@@ -72,7 +72,7 @@ export const StepperInput = (props: StepperInputProps) => {
 
   return (
     <div className={clsx(outerWrapper, className)} {...animationProps}>
-      <div className={yStack({ gap: 'none', flexGrow: 1 })}>
+      <div className={yStack({ flexGrow: 1 })}>
         {label && (
           <label id={labelId} className={inputLabel} htmlFor={selectId}>
             {label}

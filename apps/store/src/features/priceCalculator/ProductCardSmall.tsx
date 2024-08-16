@@ -17,7 +17,7 @@ export function ProductCardSmall({ children, productData, subtitle }: Props) {
     <div className={card}>
       <div className={xStack({ alignItems: 'center', gap: 'sm' })}>
         <Pillow src={productData.pillowImage.src} size="small" />
-        <div className={yStack({ gap: 'none' })}>
+        <div className={yStack()}>
           <Text as="span" size="lg">
             {productData.displayNameFull}
           </Text>

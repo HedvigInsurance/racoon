@@ -45,7 +45,7 @@ export function PurchaseFormV2() {
       )
     case 'viewOffers':
       return (
-        <div className={yStack({})} style={{ gap: '2.75rem' }}>
+        <div className={yStack({ gap: 'md' })} style={{ gap: '2.75rem' }}>
           <InsuranceDataForm />
           <OfferPresenterV2 />
         </div>
