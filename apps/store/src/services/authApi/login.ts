@@ -11,7 +11,7 @@ enum MemberLoginMethod {
 }
 
 export const loginMemberSeBankId = (
-  ssn: string,
+  ssn: string | null,
   locale?: RoutingLocale,
 ): Observable<MemberLoginStatusResponse> => {
   return new Observable((subscriber) => {
@@ -83,7 +83,7 @@ type MemberLoginResponseError = {
 
 type MemberLoginResponse = MemberLoginResponseSuccess | MemberLoginResponseError
 
-const memberLoginCreateSE = async (personalNumber: string, locale?: RoutingLocale) => {
+const memberLoginCreateSE = async (personalNumber: string | null, locale?: RoutingLocale) => {
   const data = await fetchJson<MemberLoginResponse>(AuthEndpoint.MEMBER_LOGIN, {
     method: 'POST',
     body: JSON.stringify({

@@ -5,7 +5,7 @@ import { loginMemberSeBankId } from '@/services/authApi/login'
 import { exchangeAuthorizationCode } from '@/services/authApi/oauth'
 import { saveAuthTokens } from '@/services/authApi/persist'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
-import type { BankIdLoginOptions, StartLoginOptions } from './bankId.types'
+import type { BankIdLoginOptions } from './bankId.types'
 import { apiStatusToBankIdState, bankIdLogger } from './bankId.utils'
 import type { BankIdDispatch } from './bankIdReducer'
 
@@ -17,7 +17,7 @@ export const useBankIdLogin = ({ dispatch }: HookOptions) => {
   const { startLogin, cancelLogin } = useBankIdLoginApi({ dispatch })
 
   const startLoginWithCallbacks = useCallback(
-    (options: StartLoginOptions) => {
+    (options: BankIdLoginOptions) => {
       datadogRum.addAction('bankIdLogin start')
       dispatch({ type: 'startLogin', ssn: options.ssn })
 
@@ -76,7 +76,7 @@ const useBankIdLoginApi = ({ dispatch }: HookOptions) => {
             )
             saveAuthTokens({ accessToken, refreshToken })
             bankIdLogger.info('Got access token')
-            onSuccess()
+            onSuccess?.()
           }
         },
         complete() {

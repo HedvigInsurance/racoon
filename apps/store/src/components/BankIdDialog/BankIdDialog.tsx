@@ -52,8 +52,7 @@ export function BankIdDialog() {
   let Content: ReactNode = null
   let Footer: ReactNode = null
 
-  const { ssn } = currentOperation ?? {}
-  if (currentOperation !== null && ssn) {
+  if (currentOperation !== null) {
     switch (currentOperation.state) {
       case BankIdState.Starting:
       case BankIdState.Pending: {
