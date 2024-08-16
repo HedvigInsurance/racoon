@@ -86,7 +86,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
                       offer={item}
                       defaultExpanded={router.query[QueryParam.ExpandCart] === '1'}
                     >
-                      <EditActionButton shopSessionId={shopSession.id} offer={item} />
+                      <EditActionButton offer={item} />
                       <RemoveActionButton
                         shopSessionId={shopSession.id}
                         offer={item}
