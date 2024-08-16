@@ -1,3 +1,4 @@
+import * as process from 'node:process'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import type { ReactNode } from 'react'
@@ -13,6 +14,7 @@ import {
   isPriceCalculatorPageStory,
   isProductPageStory,
   isProductStory,
+  type PageLink,
 } from '@/services/storyblok/Storyblok.helpers'
 import { getCmsPageLinks, getStoryBySlug } from '@/services/storyblok/storyblok.rsc'
 import { Features } from '@/utils/Features'
@@ -156,10 +158,18 @@ export async function generateStaticParams({
   params: Pick<CmsPageRoutingParams, 'locale'>
 }): Promise<Array<{ slug: Array<string> }>> {
   const pageLinks = await getCmsPageLinks(`${params.locale}/`)
-  const mostVisitedLinks = pageLinks.filter((item) =>
-    MOST_VISITED_PATHS.has(`/${removeTrailingSlash(item.link.slug)}`),
-  )
-  const result = mostVisitedLinks.map((link) => ({
+  const shouldPrebuild = (pageLink: PageLink) => {
+    if (
+      process.env.VERCEL_ENV !== 'production' &&
+      pageLink.link.slug === 'se/forsakringar/hemforsakring/hyresratt'
+    ) {
+      // Temporary workaround: don't let terms-hub error on SE_APARTMENT_RENT break builds in staging
+      // Remove when root cause is fixed
+      return false
+    }
+    return MOST_VISITED_PATHS.has(`/${removeTrailingSlash(pageLink.link.slug)}`)
+  }
+  const result = pageLinks.filter(shouldPrebuild).map((link) => ({
     slug: link.slugParts,
   }))
   return result
