@@ -9,7 +9,7 @@ export enum BankIdState {
 
 export type BankIdLoginOperation = {
   type: 'login'
-  ssn: string
+  ssn: string | null
   state: BankIdState
   error?: string
   qrCodeData?: string
@@ -30,11 +30,9 @@ export type BankIdSignOperation = {
 export type BankIdOperation = BankIdLoginOperation | BankIdSignOperation
 
 export type BankIdLoginOptions = {
-  ssn: string
-  onSuccess: () => void
+  ssn: string | null
+  onSuccess?: () => void | Promise<void>
 }
-
-export type StartLoginOptions = { ssn: string; onSuccess?: () => void | Promise<void> }
 
 export type CheckoutSignOptions = {
   shopSessionId: string

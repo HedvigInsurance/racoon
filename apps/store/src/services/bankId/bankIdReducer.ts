@@ -13,7 +13,7 @@ export type BankIdAction =
 
 type StartLoginAction = {
   type: 'startLogin'
-  ssn: string
+  ssn: string | null
 }
 type StartSignAction = {
   type: 'startCheckoutSign'
