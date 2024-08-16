@@ -15,7 +15,7 @@ export const layout = style({
 
 export const content = style([
   yStack({
-    gap: 'md',
+    gap: 'lg',
   }),
   {
     gridColumn: '1 / -1',
