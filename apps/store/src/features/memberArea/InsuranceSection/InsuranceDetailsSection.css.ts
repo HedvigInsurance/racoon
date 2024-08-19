@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 import { tokens } from 'ui'
-import { CONTENT_WIDTH } from './InsuranceSection.constants'
+import { CONTENT_WIDTH } from '@/features/memberArea/components/MemberAreaLayout.css'
 
 export const tabList = style({
   display: 'flex',

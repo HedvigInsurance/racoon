@@ -1,6 +1,7 @@
 import type { CSSProperties } from '@vanilla-extract/css'
 import type { Level } from './media-query'
 import { breakpoints } from './media-query'
+import { type PartialRecord } from './utilTypes'
 
 export const animationAllowed = '(prefers-reduced-motion: no-preference)'
 
@@ -23,4 +24,12 @@ export const hoverStyles = (styles: CSSProperties) => {
       '&:hover': styles,
     },
   }
+}
+
+export const responsiveStyles = (breakpointStyles: PartialRecord<Level, CSSProperties>) => {
+  return {
+    '@media': Object.fromEntries(
+      Object.entries(breakpointStyles).map(([key, styles]) => [minWidth[key as Level], styles]),
+    ),
+  } as const
 }
