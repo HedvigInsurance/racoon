@@ -10,6 +10,24 @@ export const wrapperStyle = style({
   paddingBottom: tokens.space[10],
 })
 
+export const languageSelectForm = style({
+  gridColumn: '1 / -1',
+
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, 1fr)',
+  gap: tokens.space.md,
+
+  '@media': {
+    [minWidth.md]: {
+      gridRow: 2,
+      gridColumn: '7 / -1',
+    },
+    [minWidth.xxl]: {
+      gridColumn: '7 / span 4',
+    },
+  },
+})
+
 export const disclaimerStyle = style({
   gridColumn: '1 / -1',
   textAlign: 'center',
