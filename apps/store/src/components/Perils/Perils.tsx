@@ -1,12 +1,20 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import styled from '@emotion/styled'
 import { useCallback, useMemo, useRef, useState } from 'react'
-import { mq, Text, theme } from 'ui'
+import { Text, tokens } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
 import type { PerilFragment } from '@/services/graphql/generated'
 import { isBrowser } from '@/utils/env'
 import { useElementSize } from '@/utils/useElementSize'
 import { CoverageList } from './CoverageList'
+import {
+  colorIcon,
+  header,
+  column,
+  grid,
+  triggerText,
+  contentWrapper,
+  disabledPeril,
+} from './Perils.css'
 
 type Peril = PerilFragment & { disabled?: boolean }
 
@@ -39,17 +47,17 @@ export const Perils = ({ items, missingItems = [] }: Props) => {
   const numOfColumns = getColumnsCount(size.width)
 
   return (
-    <PerilsAccordionGrid ref={containerRef}>
+    <div className={grid} ref={containerRef}>
       {numOfColumns == 0
         ? null // We don't want to render anything before sizing to prevent rendering rework and content jump
         : getPerilColumns(perilItems, numOfColumns).map((perils, index) => (
-            <PerilColumnFlex key={index}>
+            <div key={index} className={column}>
               {perils.map((peril) => (
                 <PerilsAccordion key={`${index}-${peril.title}`} peril={peril} />
               ))}
-            </PerilColumnFlex>
+            </div>
           ))}
-    </PerilsAccordionGrid>
+    </div>
   )
 }
 
@@ -62,25 +70,6 @@ const getColumnsCount = (width: number) => {
   return Math.min(1 + extraColumns, 4)
 }
 
-const PerilsAccordionGrid = styled.div({
-  display: 'grid',
-  gap: theme.space.xxs,
-  gridTemplateColumns: 'repeat(auto-fit, minmax(18rem, 1fr))',
-  [mq.md]: {
-    columnGap: theme.space.md,
-    rowGap: theme.space.xs,
-  },
-})
-
-const PerilColumnFlex = styled.div({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: theme.space.xxs,
-  [mq.md]: {
-    gap: theme.space.xs,
-  },
-})
-
 const PerilsAccordion = ({ peril }: { peril: Peril }) => {
   const { title, description, covered, colorCode } = peril
   const [openItems, setOpenItems] = useState<Array<string>>()
@@ -91,88 +80,45 @@ const PerilsAccordion = ({ peril }: { peril: Peril }) => {
 
   if (peril.disabled) {
     return (
-      <FakeAccordionItem>
-        <HeaderWrapper>
-          <Color color={theme.colors.textDisabled} />
-          <TriggerText size="lg" color="textSecondary">
+      <div className={disabledPeril}>
+        <div className={header}>
+          <ColorIcon color={tokens.colors.textDisabled} />
+          <Text size="lg" color="textSecondary" className={triggerText}>
             {title}
-          </TriggerText>
-        </HeaderWrapper>
-      </FakeAccordionItem>
+          </Text>
+        </div>
+      </div>
     )
   }
 
   return (
     <Accordion.Root type="multiple" value={openItems} onValueChange={handleValueChange}>
       <Accordion.Item key={title} value={title}>
-        <Accordion.HeaderWithTrigger>
-          <HeaderWrapper>
-            <Color color={colorCode ?? titleToColor(title)} />
-            <TriggerText size="lg">{title}</TriggerText>
-          </HeaderWrapper>
+        <Accordion.HeaderWithTrigger className={header}>
+          <div className={header}>
+            <ColorIcon color={colorCode ?? titleToColor(title)} />
+            <Text size="lg" className={triggerText}>
+              {title}
+            </Text>
+          </div>
         </Accordion.HeaderWithTrigger>
         <Accordion.Content open={(openItems ?? []).includes(title)}>
-          <ContentWrapper>
+          {/* styles need to be applied to child of content, otherwise height measurement fails */}
+          <div className={contentWrapper}>
             <Text as="p" size="xs" color="textPrimary">
               {description}
             </Text>
             <CoverageList items={covered} />
-          </ContentWrapper>
+          </div>
         </Accordion.Content>
       </Accordion.Item>
     </Accordion.Root>
   )
 }
 
-const ContentWrapper = styled.div({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: theme.space.md,
-  paddingLeft: '1.75rem',
-  paddingBottom: theme.space.md,
-  fontSize: theme.fontSizes.xs,
-
-  [mq.lg]: {
-    paddingTop: theme.space.xs,
-    paddingBottom: theme.space.lg,
-  },
-})
-
-const FakeAccordionItem = styled.div({
-  backgroundColor: theme.colors.opaque1,
-  borderRadius: theme.radius.sm,
-  paddingInline: theme.space.md,
-  paddingBlock: theme.space.sm,
-  cursor: 'not-allowed',
-
-  [mq.lg]: {
-    paddingInline: theme.space.lg,
-    paddingBlock: theme.space.md,
-  },
-})
-
-const HeaderWrapper = styled.span({
-  display: 'flex',
-  alignItems: 'center',
-  gap: theme.space.sm,
-  overflow: 'hidden',
-})
-
-const TriggerText = styled(Text)({
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-
-  '[data-state=open] &': { whiteSpace: 'normal' },
-})
-
-const Color = styled.div<{ color?: string }>(({ color }) => ({
-  flexShrink: 0,
-  width: '1rem',
-  height: '1rem',
-  borderRadius: '50%',
-  backgroundColor: color,
-}))
+function ColorIcon({ color }: { color?: string }) {
+  return <div className={colorIcon} style={{ backgroundColor: color }} />
+}
 
 const perilsWithoutColorCode = new Set()
 const titleToColor = (title: string) => {
@@ -187,159 +133,159 @@ const titleToColor = (title: string) => {
   switch (title.trim()) {
     case 'Fire':
     case 'Eldsvåda':
-      return theme.colors.red700
+      return tokens.colors.red700
     case 'Water leaks':
     case 'Vattenläcka':
-      return theme.colors.blue500
+      return tokens.colors.blue500
     case 'Storms':
     case 'Oväder':
-      return theme.colors.blue700
+      return tokens.colors.blue700
     case 'Burglary':
     case 'Inbrott':
-      return theme.colors.gray500
+      return tokens.colors.gray500
     case 'Theft and damage':
     case 'Stöld och skadegörelse':
-      return theme.colors.gray700
+      return tokens.colors.gray700
     case 'Liability protection':
     case 'Ansvarsskydd':
-      return theme.colors.yellow500
+      return tokens.colors.yellow500
     case 'Legal protection':
     case 'Rättskydd':
-      return theme.colors.yellow500
+      return tokens.colors.yellow500
     case 'Travel insurance':
     case 'Resetrubbel':
-      return theme.colors.amber600
+      return tokens.colors.amber600
     case 'Assault':
     case 'Överfall':
-      return theme.colors.amber500
+      return tokens.colors.amber500
     case 'Travel illness':
     case 'Sjuk på resa':
-      return theme.colors.teal500
+      return tokens.colors.teal500
     case 'White goods':
     case 'Vitvaror':
-      return theme.colors.grayTranslucent25
+      return tokens.colors.grayTranslucent25
     case 'All-risk':
     case 'Drulle':
-      return theme.colors.yellow700
+      return tokens.colors.yellow700
     case 'Criminal damage':
     case 'Skadegörelse':
-      return theme.colors.gray700
+      return tokens.colors.gray700
     case 'Tenant ownership':
     case 'Bostadsrättstillägg':
-      return theme.colors.green600
+      return tokens.colors.green600
     case 'Care and treatment':
     case 'Vård & Behandling':
-      return theme.colors.teal500
+      return tokens.colors.teal500
     case 'Dental injury':
     case 'Tandskada':
-      return theme.colors.teal500
+      return tokens.colors.teal500
     case 'Hospitalisation':
     case 'Sjukhusvistelse':
-      return theme.colors.teal700
+      return tokens.colors.teal700
     case 'Scarring':
     case 'Ärr':
-      return theme.colors.yellow500
+      return tokens.colors.yellow500
     case 'Crisis cover':
     case 'Krishjälp':
-      return theme.colors.teal700
+      return tokens.colors.teal700
     case 'Permanent injury':
     case 'Bestående men':
-      return theme.colors.purple500
+      return tokens.colors.purple500
     case 'Lost or reduced working capacity':
     case 'Förlorad arbetsförmåga':
-      return theme.colors.purple500
+      return tokens.colors.purple500
     case 'Death':
     case 'Dödsfall':
-      return theme.colors.purple700
+      return tokens.colors.purple700
     case 'Pests':
     case 'Skadedjur':
-      return theme.colors.gray700
+      return tokens.colors.gray700
     case 'Rebuilding':
     case 'Ombyggnation':
-      return theme.colors.pink700
+      return tokens.colors.pink700
     case 'Traffic insurance, personal injury':
     case 'Trafikförsäkring, personskador':
-      return theme.colors.amber700
+      return tokens.colors.amber700
     case 'Traffic insurance, third-party property':
     case 'Trafikförsäkring, annans egendom':
-      return theme.colors.yellow700
+      return tokens.colors.yellow700
     case 'Theft & burglary':
     case 'Stöld & inbrott':
-      return theme.colors.gray700
+      return tokens.colors.gray700
     case 'Brand':
-      return theme.colors.red700
+      return tokens.colors.red700
     case 'Glass damage':
     case 'Glas':
-      return theme.colors.blue500
+      return tokens.colors.blue500
     case 'Roadside assistance':
     case 'Räddningshjälp och bärgning':
-      return theme.colors.red600
+      return tokens.colors.red600
     case 'Motor insurance':
     case 'Maskinskydd':
-      return theme.colors.green600
+      return tokens.colors.green600
     case 'Liability coverage':
     case 'Rättsskydd':
-      return theme.colors.yellow500
+      return tokens.colors.yellow500
     case 'Crisis counseling':
     case 'Kristerapi':
-      return theme.colors.teal700
+      return tokens.colors.teal700
     case 'Car body damage':
     case 'Vagnskada':
-      return theme.colors.green500
+      return tokens.colors.green500
     case 'Veterinärvård':
     case 'Veterinary care':
-      return theme.colors.teal600
+      return tokens.colors.teal600
 
     case 'Dolda fel':
     case 'Hidden defects':
-      return theme.colors.gray700
+      return tokens.colors.gray700
 
     case 'Förlossning':
     case 'Pregnancy OR Giving birth':
-      return theme.colors.teal700
+      return tokens.colors.teal700
 
     case 'Kastrering/Sterilisering':
     case 'Castration & Sterilization':
-      return theme.colors.pink700
+      return tokens.colors.pink700
 
     case 'Specialkost':
     case 'Food':
-      return theme.colors.yellow500
+      return tokens.colors.yellow500
 
     case 'Tandvård':
     case 'Dental care':
-      return theme.colors.teal500
+      return tokens.colors.teal500
 
     case 'Diagnostik':
     case 'Advanced diagnostics':
-      return theme.colors.gray500
+      return tokens.colors.gray500
 
     case 'Medicin':
     case 'Medicine':
-      return theme.colors.teal500
+      return tokens.colors.teal500
 
     case 'Avlivning':
     case 'Euthanasia':
-      return theme.colors.purple700
+      return tokens.colors.purple700
 
     case 'Plastikoperation':
     case 'Plastic surgery':
-      return theme.colors.pink600
+      return tokens.colors.pink600
 
     case 'Rehabilitering':
     case 'Rehabilitation':
-      return theme.colors.yellow500
+      return tokens.colors.yellow500
 
     case 'Vård av djur':
-      return theme.colors.yellow700
+      return tokens.colors.yellow700
 
     case 'Sorgbearbetning':
-      return theme.colors.purple500
+      return tokens.colors.purple500
 
     case 'Livförsäkring':
-      return theme.colors.purple600
+      return tokens.colors.purple600
 
     case 'Strålning och kemoterapi':
-      return theme.colors.pink500
+      return tokens.colors.pink500
   }
 }
