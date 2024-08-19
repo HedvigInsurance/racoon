@@ -31,11 +31,9 @@ export const useEditProductOffer = () => {
         targetUrl = new URL(offer.product.priceCalculatorPageLink, window.location.origin)
       } else {
         targetUrl.searchParams.set(OPEN_PRICE_CALCULATOR_QUERY_PARAM, '1')
-        // NOTE: Temporary code path, no need to handle this after PriceCalculatorPage is used everywhere
-        if (offer.priceIntentId == null) {
-          throw new Error('Expected to have offer.priceIntentId')
+        if (offer.priceIntentId != null) {
+          targetUrl.searchParams.set(PRELOADED_PRICE_INTENT_QUERY_PARAM, offer.priceIntentId)
         }
-        targetUrl.searchParams.set(PRELOADED_PRICE_INTENT_QUERY_PARAM, offer.priceIntentId)
       }
       targetUrl.searchParams.set(CART_ENTRY_TO_REPLACE_QUERY_PARAM, offer.id)
       await push(targetUrl.toString())
