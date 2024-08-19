@@ -23,6 +23,10 @@ export function DebuggerMenu() {
         <NavigationMenuPrimitive.Item className={navigationItem}>
           <NavigationLink href="/debugger/car-trial">Car trial debugger</NavigationLink>
         </NavigationMenuPrimitive.Item>
+
+        <NavigationMenuPrimitive.Item className={navigationItem}>
+          <NavigationLink href="/debugger/terms">Terms viewer</NavigationLink>
+        </NavigationMenuPrimitive.Item>
       </NavigationMenuPrimitive.List>
     </NavigationMenuPrimitive.Root>
   )

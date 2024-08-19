@@ -1,33 +1,41 @@
+fragment ProductVariant on ProductVariant {
+  typeOfContract
+  displayName
+  displayNameSubtype
+  perils {
+    ...Peril
+  }
+  insurableLimits {
+    type
+    label
+    limit
+    description
+  }
+  documents {
+    ...InsuranceDocument
+  }
+}
+
+fragment ProductDataFull on Product {
+  id
+  name
+  displayNameFull
+  displayNameShort
+  tagline
+  pageLink
+  priceCalculatorPageLink
+  pillowImage {
+    id
+    alt
+    src
+  }
+  variants {
+    ...ProductVariant
+  }
+}
+
 query ProductData($productName: String!, $partnerName: String) {
   product(productName: $productName, partnerName: $partnerName) {
-    id
-    name
-    displayNameFull
-    displayNameShort
-    tagline
-    pageLink
-    priceCalculatorPageLink
-    pillowImage {
-      id
-      alt
-      src
-    }
-    variants {
-      typeOfContract
-      displayName
-      displayNameSubtype
-      perils {
-        ...Peril
-      }
-      insurableLimits {
-        type
-        label
-        limit
-        description
-      }
-      documents {
-        ...InsuranceDocument
-      }
-    }
+    ...ProductDataFull
   }
 }
