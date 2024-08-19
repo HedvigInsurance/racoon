@@ -4,7 +4,6 @@ import { minWidth, tokens } from 'ui'
 export const navigation = style({
   paddingInline: tokens.space.md,
   paddingBottom: tokens.space.sm,
-  overflowX: 'auto',
 
   '@media': {
     [minWidth.lg]: {
@@ -29,7 +28,7 @@ export const navigationList = style({
   display: 'flex',
   alignItems: 'baseline',
   gap: tokens.space.xs,
-  width: 'fit-content',
+  flexWrap: 'wrap',
 
   '@media': {
     [minWidth.lg]: {
