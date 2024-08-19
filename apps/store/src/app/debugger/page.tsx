@@ -1,10 +1,8 @@
-import { CreateSessionForm } from './components/CreateSessionForm/CreateSessionForm'
+import { redirect } from 'next/navigation'
 
-const Page = () => {
-  return <CreateSessionForm />
+export default function DebuggerIndex() {
+  return redirect('/debugger/session')
 }
-
-export default Page
 
 export const metadata = {
   robots: 'noindex, nofollow',
