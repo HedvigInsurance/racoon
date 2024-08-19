@@ -2,8 +2,9 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 import { useRef, useState } from 'react'
-import { Heading, mq, Space, theme } from 'ui'
+import { Heading, mq, Space, theme, visuallyHidden } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { Pillow } from '@/components/Pillow/Pillow'
@@ -39,6 +40,7 @@ type Props = {
 }
 
 export const CalculatePricePage = (props: Props) => {
+  const { t } = useTranslation('purchase-form')
   const [loading, setLoading] = useState(false)
   const showError = useShowAppError()
   const priceLoaderPromise = useRef<Promise<void> | null>(null)
@@ -157,6 +159,9 @@ export const CalculatePricePage = (props: Props) => {
 
       <FullscreenDialog.Root open={loading}>
         <FullscreenDialog.Modal center={true} Header={null}>
+          <FullscreenDialog.Title className={visuallyHidden}>
+            {t('LOADING_PRICE_ANIMATION_LABEL')}
+          </FullscreenDialog.Title>
           <PriceLoaderWrapper>
             <PriceLoader />
           </PriceLoaderWrapper>
