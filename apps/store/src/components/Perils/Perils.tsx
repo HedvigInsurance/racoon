@@ -4,7 +4,7 @@ import { Text, tokens } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
 import type { PerilFragment } from '@/services/graphql/generated'
 import { isBrowser } from '@/utils/env'
-import { useElementSize } from '@/utils/useElementSize'
+import { useResizeObserver } from '@/utils/useResizeObserver'
 import { CoverageList } from './CoverageList'
 import {
   colorIcon,
@@ -42,15 +42,27 @@ export const Perils = ({ items, missingItems = [] }: Props) => {
     [items, missingItems],
   )
 
+  const [columns, setColumns] = useState(0)
   const containerRef = useRef<HTMLDivElement>(null)
-  const size = useElementSize(containerRef)
-  const numOfColumns = getColumnsCount(size.width)
+  // Optimization:
+  //
+  // We're using lower-level utility compared to potential `useElementSize()` hook because we only care
+  // about number of columns as a function of container width
+  //
+  // Older version used to handle box resize as a state update which effectively meant
+  // ~30 renders on every expand/collapse animation
+  const handleResize: ResizeObserverCallback = useCallback(([resizeEntry]) => {
+    const width = resizeEntry.borderBoxSize[0].inlineSize
+    setColumns(getColumnsCount(width))
+  }, [])
+  useResizeObserver({ elementRef: containerRef, onResize: handleResize })
 
+  const perilsByColumn = getPerilColumns(perilItems, columns)
   return (
     <div className={grid} ref={containerRef}>
-      {numOfColumns == 0
+      {columns == 0
         ? null // We don't want to render anything before sizing to prevent rendering rework and content jump
-        : getPerilColumns(perilItems, numOfColumns).map((perils, index) => (
+        : perilsByColumn.map((perils, index) => (
             <div key={index} className={column}>
               {perils.map((peril) => (
                 <PerilsAccordion key={`${index}-${peril.title}`} peril={peril} />
