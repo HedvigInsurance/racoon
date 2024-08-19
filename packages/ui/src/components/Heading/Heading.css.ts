@@ -7,7 +7,6 @@ export const responsiveVariantStyles = responsiveVariants({
     fontWeight: 400,
     lineHeight: 1.2,
     whiteSpace: 'pre-wrap',
-    color: 'currentcolor',
   },
   variants: {
     'standard.18': {
