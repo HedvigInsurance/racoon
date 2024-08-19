@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { Space } from 'ui'
+import { CONTENT_WIDTH } from '@/features/memberArea/components/MemberAreaLayout.css'
 import { useMemberAreaInfo } from '../useMemberAreaInfo'
 import { InsuranceCard } from './InsuranceCard'
-import { CONTENT_WIDTH } from './InsuranceSection.constants'
 
 export const Insurances = () => {
   const currentMember = useMemberAreaInfo()

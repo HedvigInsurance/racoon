@@ -1,6 +1,7 @@
 import { type CSSObject } from '@emotion/styled'
 import type { Level } from './media-query'
 import { mq } from './media-query'
+import { type PartialRecord } from './utilTypes'
 
 export enum HedvigFont {
   HEDVIG_LETTERS_BIG = 'HedvigLetters-Big',
@@ -47,8 +48,6 @@ export const fontSizes = {
 } as const
 
 export type FontSizes = keyof typeof fontSizes
-
-export type PartialRecord<K extends keyof any, T> = Partial<Record<K, T>>
 
 export type FontSizeProps = FontSizes | PartialRecord<Level | '_', FontSizes>
 

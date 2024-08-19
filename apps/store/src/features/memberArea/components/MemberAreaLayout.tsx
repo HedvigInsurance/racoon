@@ -1,7 +1,6 @@
-import styled from '@emotion/styled'
+import { clsx } from 'clsx'
 import Head from 'next/head'
 import type { ReactElement } from 'react'
-import { mq, theme } from 'ui'
 import { HeaderBlock } from '@/blocks/HeaderBlock/HeaderBlock'
 import type {
   GLOBAL_PRODUCT_METADATA_PROP_NAME,
@@ -11,7 +10,13 @@ import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { useMemberAreaMemberInfoQuery } from '@/services/graphql/generated'
 import type { GlobalStory, PageStory } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
-import { CONTENT_WIDTH } from '../InsuranceSection/InsuranceSection.constants'
+import {
+  content,
+  contentSkeleton,
+  layoutWrapper,
+  loadingWrapper,
+  main,
+} from './MemberAreaLayout.css'
 import { Menu, MenuLoadingState } from './Menu/Menu'
 
 type Props = {
@@ -37,73 +42,31 @@ export const MemberAreaLayout = ({ children }: Props) => {
         <title>Member page</title>
         <meta name="robots" content="noindex,follow" />
       </Head>
-      <Wrapper className={className}>
+      <div className={clsx(layoutWrapper, className)}>
         {headerBlock.map((nestedBlock) => (
           <HeaderBlock key={nestedBlock._uid} blok={nestedBlock} />
         ))}
         {loading ? (
-          <Main>
+          <main className={main}>
             <MenuLoadingState />
             <ContentLoadingState />
-          </Main>
+          </main>
         ) : (
-          <Main>
+          <main className={main}>
             <Menu />
-            <Content>{children}</Content>
-          </Main>
+            <div className={content}>{children}</div>
+          </main>
         )}
-      </Wrapper>
+      </div>
     </>
   )
 }
 
-const Wrapper = styled.div({
-  minHeight: '100vh',
-  isolation: 'isolate',
-})
-
-const Main = styled.main({
-  display: 'grid',
-  gridTemplateRows: '60px 1fr',
-  width: '100%',
-  marginInline: 'auto',
-  paddingBottom: theme.space.xxl,
-
-  [mq.lg]: {
-    paddingTop: `5rem`,
-    gridTemplateColumns: '18rem 1fr 18rem',
-    gridTemplateRows: 'auto',
-  },
-})
-
-const Content = styled.div({
-  display: 'flex',
-  justifyContent: 'center',
-  width: '100%',
-  marginInline: 'auto',
-  paddingInline: theme.space.md,
-})
-
 const ContentLoadingState = () => {
   return (
-    <LoadingWrapper>
-      <ContentSkeleton />
-      <ContentSkeleton />
-    </LoadingWrapper>
+    <div className={loadingWrapper}>
+      <Skeleton className={contentSkeleton} />
+      <Skeleton className={contentSkeleton} />
+    </div>
   )
 }
-
-const ContentSkeleton = styled(Skeleton)({
-  width: '100%',
-  maxWidth: CONTENT_WIDTH,
-  aspectRatio: '343/182',
-})
-
-const LoadingWrapper = styled.div({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: theme.space.lg,
-  width: '100%',
-  maxWidth: CONTENT_WIDTH,
-  marginInline: 'auto',
-})
