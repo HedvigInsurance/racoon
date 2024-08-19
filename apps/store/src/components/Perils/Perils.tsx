@@ -1,11 +1,11 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import styled from '@emotion/styled'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 import { mq, Text, theme } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
 import type { PerilFragment } from '@/services/graphql/generated'
 import { isBrowser } from '@/utils/env'
-import { useBreakpoint } from '@/utils/useBreakpoint/useBreakpoint'
+import { useElementSize } from '@/utils/useElementSize'
 import { CoverageList } from './CoverageList'
 
 type Peril = PerilFragment & { disabled?: boolean }
@@ -29,36 +29,37 @@ type Props = {
 }
 
 export const Perils = ({ items, missingItems = [] }: Props) => {
-  const BREAKPOINTS = {
-    xl: useBreakpoint('xl'),
-    lg: useBreakpoint('lg'),
-    md: useBreakpoint('md'),
-    sm: useBreakpoint('sm'),
-  } as const
-
-  const getColumnCountByBreakpoint = (breakpoints: typeof BREAKPOINTS) => {
-    if (breakpoints.xl) return 4
-    if (breakpoints.lg) return 3
-    if (breakpoints.md) return 2
-    return 1
-  }
-
   const perilItems = useMemo<Array<Peril>>(
     () => [...items, ...missingItems.map((item) => ({ ...item, disabled: true }))],
     [items, missingItems],
   )
 
+  const containerRef = useRef<HTMLDivElement>(null)
+  const size = useElementSize(containerRef)
+  const numOfColumns = getColumnsCount(size.width)
+
   return (
-    <PerilsAccordionGrid>
-      {getPerilColumns(perilItems, getColumnCountByBreakpoint(BREAKPOINTS)).map((perils, index) => (
-        <PerilColumnFlex key={index}>
-          {perils.map((peril) => (
-            <PerilsAccordion key={`${index}-${peril.title}`} peril={peril} />
+    <PerilsAccordionGrid ref={containerRef}>
+      {numOfColumns == 0
+        ? null // We don't want to render anything before sizing to prevent rendering rework and content jump
+        : getPerilColumns(perilItems, numOfColumns).map((perils, index) => (
+            <PerilColumnFlex key={index}>
+              {perils.map((peril) => (
+                <PerilsAccordion key={`${index}-${peril.title}`} peril={peril} />
+              ))}
+            </PerilColumnFlex>
           ))}
-        </PerilColumnFlex>
-      ))}
     </PerilsAccordionGrid>
   )
+}
+
+const getColumnsCount = (width: number) => {
+  if (width === 0) return 0
+  // Matching peril grid styles below
+  const colSize = 18 * 16
+  const gapSize = 16
+  const extraColumns = Math.floor((width - colSize) / (colSize + gapSize))
+  return Math.min(1 + extraColumns, 4)
 }
 
 const PerilsAccordionGrid = styled.div({
