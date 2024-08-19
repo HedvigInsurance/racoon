@@ -1,7 +1,7 @@
 import { storyblokEditable } from '@storyblok/react'
 import Link from 'next/link'
 import { Text, yStack } from 'ui'
-import { LanguageSelectForm } from '@/blocks/FooterBlock/LanguageSelectForm'
+import { LanguageSelector } from '@/blocks/FooterBlock/LanguageSelector'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import type { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
@@ -12,6 +12,7 @@ import {
   gridLayout,
   footerLink,
   wrapperStyle,
+  languageSelectForm,
 } from './FooterBlock.css'
 
 type FooterLinkProps = SbBaseBlockProps<{
@@ -71,7 +72,9 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
           </div>
         ))}
 
-        <LanguageSelectForm />
+        <div className={languageSelectForm}>
+          <LanguageSelector />
+        </div>
 
         <div className={disclaimerStyle}>
           <Text color="textSecondary" size="sm">

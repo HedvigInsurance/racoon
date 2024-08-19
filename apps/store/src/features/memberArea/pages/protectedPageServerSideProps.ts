@@ -26,11 +26,14 @@ export const protectedPageServerSideProps: GetServerSideProps<PageProps> = async
     return { redirect: { destination: redirectTarget.toString(), permanent: false } }
   }
 
+  // /se-en/member/insurances -> /member/insurances
+  const pathnameWithoutLocale = `/${context.resolvedUrl.split('/').slice(2).join('/')}`
   const apolloClient = await initializeApolloServerSide({ locale, req, res })
   const layoutWithMenuProps = await getLayoutWithMenuProps(context, apolloClient)
   const translations = await serverSideTranslations(locale)
   return addApolloState(apolloClient, {
     props: {
+      pathnameWithoutLocale,
       ...layoutWithMenuProps,
       ...translations,
     },

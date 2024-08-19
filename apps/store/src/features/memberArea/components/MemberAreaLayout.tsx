@@ -10,6 +10,9 @@ import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { useMemberAreaMemberInfoQuery } from '@/services/graphql/generated'
 import type { GlobalStory, PageStory } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
+import { getCountryByLocale } from '@/utils/l10n/countryUtils'
+import { getHrefLang, toRoutingLocale } from '@/utils/l10n/localeUtils'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import {
   content,
   contentSkeleton,
@@ -25,11 +28,12 @@ type Props = {
     [GLOBAL_PRODUCT_METADATA_PROP_NAME]: GlobalProductMetadata
     story: PageStory | undefined
     globalStory: GlobalStory | undefined
+    pathnameWithoutLocale: string
   }>
 }
 
 export const MemberAreaLayout = ({ children }: Props) => {
-  const { className, globalStory } = children.props
+  const { className, globalStory, pathnameWithoutLocale } = children.props
   const { loading } = useMemberAreaMemberInfoQuery()
 
   // Happens for transitions from pages with layout to pages without layout
@@ -42,6 +46,7 @@ export const MemberAreaLayout = ({ children }: Props) => {
         <title>Member page</title>
         <meta name="robots" content="noindex,follow" />
       </Head>
+      <AlternateLinks pathnameWithoutLocale={pathnameWithoutLocale} />
       <div className={clsx(layoutWrapper, className)}>
         {headerBlock.map((nestedBlock) => (
           <HeaderBlock key={nestedBlock._uid} blok={nestedBlock} />
@@ -59,6 +64,24 @@ export const MemberAreaLayout = ({ children }: Props) => {
         )}
       </div>
     </>
+  )
+}
+
+function AlternateLinks({ pathnameWithoutLocale }: { pathnameWithoutLocale: string }) {
+  const locale = useRoutingLocale()
+  const { locales: availableLocales } = getCountryByLocale(locale)
+
+  return (
+    <Head>
+      {availableLocales.map((locale) => (
+        <link
+          key={locale}
+          rel="alternate"
+          hrefLang={getHrefLang(toRoutingLocale(locale))}
+          href={`/${toRoutingLocale(locale)}${pathnameWithoutLocale}`}
+        />
+      ))}
+    </Head>
   )
 }
 

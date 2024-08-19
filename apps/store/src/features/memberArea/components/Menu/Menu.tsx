@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { Text } from 'ui'
+import { LanguageSelector } from '@/blocks/FooterBlock/LanguageSelector'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { resetAuthTokens } from '@/services/authApi/persist'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
@@ -78,6 +79,7 @@ export const Menu = () => {
           </Link>
         </li>
         <LogoutButton />
+        <LanguageSelector />
       </ul>
     </nav>
   )
