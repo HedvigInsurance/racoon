@@ -1,6 +1,7 @@
 'use client'
 
-import { yStack } from 'ui'
+import { useTranslation } from 'next-i18next'
+import { Heading, yStack } from 'ui'
 import { BankIdDialog } from '@/components/BankIdDialog/BankIdDialog'
 import { type GlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
@@ -12,7 +13,7 @@ import { BonusOffer } from './BonusOffer'
 import { CartEntries } from './CartEntries'
 import { CheckoutDebugDialog } from './CheckoutDebugDialog'
 import { CheckoutForm } from './CheckoutForm'
-import { layout, content } from './CheckoutPage.css'
+import { layout, content, headings } from './CheckoutPage.css'
 import { EmptyCart, type Product } from './EmptyCart'
 
 export function CheckoutPage({
@@ -22,6 +23,7 @@ export function CheckoutPage({
   locale: RoutingLocale
   shopSessionId: string
 }) {
+  const { t } = useTranslation(['cart', 'checkout'])
   const shopSession = useShopSessionSuspense({
     shopSessionId,
     options: {
@@ -48,6 +50,21 @@ export function CheckoutPage({
     <>
       <main className={layout}>
         <div className={content}>
+          <div className={headings}>
+            <Heading as="h2" align="center" variant="standard.24">
+              {t('CART_PAGE_HEADING')} ({shopSession.cart.entries.length})
+            </Heading>
+            <Heading
+              as="h2"
+              balance={true}
+              color="textSecondary"
+              variant="standard.24"
+              align="center"
+            >
+              {t('CHECKOUT_PAGE_SUBHEADING', { ns: 'checkout' })}
+            </Heading>
+          </div>
+
           <section className={yStack({ gap: 'md' })}>
             <CartEntries shopSession={shopSession} />
           </section>

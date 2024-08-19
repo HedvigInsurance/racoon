@@ -35,3 +35,9 @@ export const content = style([
     },
   },
 ])
+
+export const headings = style({
+  maxWidth: '35ch',
+  marginInline: 'auto',
+  marginBottom: tokens.space.md,
+})
