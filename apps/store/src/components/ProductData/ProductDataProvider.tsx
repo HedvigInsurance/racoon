@@ -1,7 +1,7 @@
 'use client'
-import { atom, useAtom, useAtomValue } from 'jotai'
+import { atom, useAtomValue } from 'jotai'
 import { atomFamily, useHydrateAtoms } from 'jotai/utils'
-import { type ReactNode } from 'react'
+import { createContext, type ReactNode, useContext } from 'react'
 import type { RoutingLocale } from '@/utils/l10n/types'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import type { ProductData } from './ProductData.types'
@@ -10,22 +10,13 @@ import type { ProductData } from './ProductData.types'
 // Using string key seems simpler
 const productKey = (productId: string, locale: RoutingLocale) => `${locale}/${productId}`
 
-const currentProductAtom = atom<string | null>(null)
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const productDataAtomFamily = atomFamily((_key) => atom<ProductData | null>(null))
-const productDataAtom = atom<ProductData | null>((get) => {
-  const key = get(currentProductAtom)
-  if (key == null) return null
-  const productData = get(productDataAtomFamily(key))
-  return productData
-})
+const productDataAtomFamily = atomFamily((productKey: string) => atom<ProductData | null>(null))
 
-const selectedTypeOfContractAtom = atom<string | undefined>(undefined)
-const selectedProductVariantItem = atom((get) => {
-  const productData = get(productDataAtom)
-  const typeOfContract = get(selectedTypeOfContractAtom)
-  return productData?.variants.find((item) => item.typeOfContract === typeOfContract)
-})
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const selectedTypeOfContractAtomFamily = atomFamily((productKey: string) =>
+  atom<string | null>(null),
+)
 
 type Props = {
   children: ReactNode
@@ -33,34 +24,43 @@ type Props = {
   selectedTypeOfContract?: string
 }
 
+const ProductKeyContext = createContext<string | null>(null)
+
+// NOTE: No cleanup on atomFamilies here - we don't have that many products, so it's easier to retain all data
 export const ProductDataProvider = (props: Props) => {
   const locale = useRoutingLocale()
   const key = productKey(props.productData.id, locale)
-  useHydrateAtoms(
-    [
-      [currentProductAtom, key],
-      [productDataAtomFamily(key), props.productData],
-      [selectedTypeOfContractAtom, props.selectedTypeOfContract],
-    ],
-    // Force update during client side navigation
-    {
-      dangerouslyForceHydrate: true,
-    },
-  )
+  useHydrateAtoms([
+    [productDataAtomFamily(key), props.productData],
+    [selectedTypeOfContractAtomFamily(key), props.selectedTypeOfContract ?? null],
+  ])
 
-  return props.children
+  return <ProductKeyContext.Provider value={key}>{props.children}</ProductKeyContext.Provider>
+}
+
+const useProductKey = (): string => {
+  const value = useContext(ProductKeyContext)
+  if (value == null) {
+    throw new Error('useProductKey called outside of ProductKeyContext.Provider')
+  }
+  return value
 }
 
 export const useProductData = () => {
-  const value = useAtomValue(productDataAtom)
+  const productKey = useProductKey()
+  const value = useAtomValue(productDataAtomFamily(productKey))
   if (value === null) throw new Error('ProductData accessed without hydrating')
   return value
 }
 
-export const useSelectedTypeOfContract = () => {
-  return useAtom(selectedTypeOfContractAtom)
+export const useSelectedTypeOfContractAtom = () => {
+  const productKey = useProductKey()
+  return selectedTypeOfContractAtomFamily(productKey)
 }
 
 export const useSelectedProductVariant = () => {
-  return useAtomValue(selectedProductVariantItem)
+  const productData = useProductData()
+  const typeOfContract = useAtomValue(useSelectedTypeOfContractAtom())
+  if (typeOfContract == null) return null
+  return productData.variants.find((item) => item.typeOfContract === typeOfContract)
 }

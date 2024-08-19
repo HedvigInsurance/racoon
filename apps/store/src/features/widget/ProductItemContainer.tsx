@@ -1,9 +1,10 @@
 import { datadogRum } from '@datadog/browser-rum'
+import { useSetAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { useMemo, type ComponentProps } from 'react'
 import { Button, Space } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
-import { useSelectedTypeOfContract } from '@/components/ProductData/ProductDataProvider'
+import { useSelectedTypeOfContractAtom } from '@/components/ProductData/ProductDataProvider'
 import { ProductItem } from '@/components/ProductItemV2/ProductItem'
 import type { Offer } from '@/components/ProductItemV2/ProductItem.types'
 import { ComparisonTableModal } from '@/components/ProductPage/PurchaseForm/ComparisonTableModal'
@@ -29,7 +30,7 @@ export function ProductItemContainer({
   ...delegated
 }: Props) {
   const { t } = useTranslation('purchase-form')
-  const [, setSelectedTypeOfContract] = useSelectedTypeOfContract()
+  const setSelectedTypeOfContract = useSetAtom(useSelectedTypeOfContractAtom())
   const { tiers, deductibles } = useTiersAndDeductibles({
     offers,
     selectedOffer,
