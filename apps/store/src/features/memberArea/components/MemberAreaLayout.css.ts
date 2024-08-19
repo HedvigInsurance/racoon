@@ -8,7 +8,7 @@ export const layoutWrapper = style({
 
 export const main = style({
   display: 'grid',
-  gridTemplateRows: '60px 1fr',
+  gridTemplateRows: 'auto 1fr',
   width: '100%',
   marginInline: 'auto',
   paddingBottom: tokens.space.xxl,
