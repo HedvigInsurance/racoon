@@ -1,33 +1,31 @@
 'use client'
-
-import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
-import { navigation, navigationItem, navigationPrimaryList } from '@/components/Header/Header.css'
-import { NavigationLink } from '@/components/Header/NavigationLink/NavigationLink'
+import { usePathname } from 'next/navigation'
+import { type ReactNode } from 'react'
+import { Text, yStack } from 'ui'
+import { ButtonNextLink } from '@/components/ButtonNextLink'
 
 export function DebuggerMenu() {
   return (
-    <NavigationMenuPrimitive.Root className={navigation}>
-      <NavigationMenuPrimitive.List className={navigationPrimaryList}>
-        <NavigationMenuPrimitive.Item className={navigationItem}>
-          <NavigationLink href="/debugger">Session debugger</NavigationLink>
-        </NavigationMenuPrimitive.Item>
+    <div className={yStack({ alignItems: 'stretch' })}>
+      <MenuItem href="/debugger/session">Session debugger</MenuItem>
+      <MenuItem href="/debugger/iframe">iframe debugger</MenuItem>
+      <MenuItem href="/debugger/car-trial">Car trial debugger</MenuItem>
+      <MenuItem href="/debugger/terms">Terms viewer</MenuItem>
+    </div>
+  )
+}
 
-        <NavigationMenuPrimitive.Item className={navigationItem}>
-          <NavigationLink href="/debugger/iframe">iframe debugger</NavigationLink>
-        </NavigationMenuPrimitive.Item>
-
-        <NavigationMenuPrimitive.Item className={navigationItem}>
-          <NavigationLink href="/debugger/trial">Trial debugger</NavigationLink>
-        </NavigationMenuPrimitive.Item>
-
-        <NavigationMenuPrimitive.Item className={navigationItem}>
-          <NavigationLink href="/debugger/car-trial">Car trial debugger</NavigationLink>
-        </NavigationMenuPrimitive.Item>
-
-        <NavigationMenuPrimitive.Item className={navigationItem}>
-          <NavigationLink href="/debugger/terms">Terms viewer</NavigationLink>
-        </NavigationMenuPrimitive.Item>
-      </NavigationMenuPrimitive.List>
-    </NavigationMenuPrimitive.Root>
+function MenuItem({ href, children }: { href: string; children: ReactNode }) {
+  const pathname = usePathname()
+  const isActive = pathname?.startsWith(href)
+  return (
+    <ButtonNextLink
+      variant={isActive ? 'secondary' : 'ghost'}
+      size="medium"
+      href={href}
+      style={{ borderRadius: 0 }}
+    >
+      <Text>{children}</Text>
+    </ButtonNextLink>
   )
 }
