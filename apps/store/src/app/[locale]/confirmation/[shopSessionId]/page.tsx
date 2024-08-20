@@ -4,6 +4,7 @@ import { ConfirmationPage } from '@/components/ConfirmationPage/ConfirmationPage
 import { fetchMemberPartnerData } from '@/components/ConfirmationPage/fetchMemberPartnerData'
 import { fetchSwitchingData } from '@/components/ConfirmationPage/SwitchingAssistantSection/fetchSwitchingData'
 import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
+import { getAccessToken } from '@/services/authApi/app-router/persist'
 import { setupShopSession } from '@/services/shopSession/app-router/ShopSession.utils'
 import type { ConfirmationStory } from '@/services/storyblok/storyblok'
 import { getStoryBySlug } from '@/services/storyblok/storyblok'
@@ -15,14 +16,16 @@ type Props = { params: Params }
 
 export default async function Page({ params }: Props) {
   const confirmationStory = await fetchConfirmationStory(params.locale)
-
-  const { getApolloClient } = setupApolloClient({ locale: params.locale, cookies: cookies() })
+  const cookiesStore = cookies()
+  const { getApolloClient } = setupApolloClient({ locale: params.locale, cookies: cookiesStore })
   const apolloClient = getApolloClient()
   const shopSessionService = setupShopSession(apolloClient)
+
+  const accessToken = getAccessToken(cookiesStore)
   const [shopSession, switchingData, memberPartnerData] = await Promise.all([
     shopSessionService.fetchById(params.shopSessionId),
-    fetchSwitchingData(shopSessionService, params.shopSessionId),
-    fetchMemberPartnerData(apolloClient),
+    accessToken ? fetchSwitchingData(shopSessionService, params.shopSessionId) : null,
+    accessToken ? fetchMemberPartnerData(apolloClient) : null,
   ])
 
   return (
