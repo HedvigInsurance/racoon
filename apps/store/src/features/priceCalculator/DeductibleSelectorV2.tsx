@@ -54,7 +54,13 @@ export function DeductibleSelectorV2({ offers, selectedOffer, onValueChange }: P
             <div className={xStack({ gap: 'xs' })}>
               <CardRadioGroup.Indicator />
               <div className={yStack({ flexGrow: 1, gap: 'xs' })}>
-                <div className={xStack({ justifyContent: 'space-between', alignItems: 'center' })}>
+                <div
+                  className={xStack({
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    gap: 'md',
+                  })}
+                >
                   <Heading as="h2" variant="standard.24">
                     {item.title}
                   </Heading>

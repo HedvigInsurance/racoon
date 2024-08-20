@@ -30,7 +30,10 @@ export async function PriceCalculatorCmsPage({ locale, story }: Props) {
   }
   const { productName } = await getPriceTemplate(story.content.priceTemplate)
   return (
-    <div className={xStack()} style={{ backgroundColor: tokens.colors.backgroundStandard }}>
+    <div
+      className={xStack({ gap: 'md' })}
+      style={{ backgroundColor: tokens.colors.backgroundStandard }}
+    >
       <div
         style={{
           position: 'sticky',
@@ -38,7 +41,7 @@ export async function PriceCalculatorCmsPage({ locale, story }: Props) {
           width: '50%',
           height: `calc(100vh - ${HEADER_HEIGHT})`,
         }}
-        className={yStack({ justifyContent: 'center', alignItems: 'center' })}
+        className={yStack({ gap: 'md', justifyContent: 'center', alignItems: 'center' })}
       >
         <Suspense>
           <ProductHeroContainer locale={locale} productName={productName} />

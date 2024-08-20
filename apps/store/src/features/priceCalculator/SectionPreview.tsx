@@ -51,7 +51,7 @@ export function SectionPreview({ section }: { section: FormSection }) {
 
   return (
     <div
-      className={xStack({ padding: 'md', alignItems: 'center' })}
+      className={xStack({ padding: 'md', alignItems: 'center', gap: 'xs' })}
       style={{ backgroundColor: tokens.colors.backgroundStandard, borderRadius: tokens.radius.md }}
     >
       <div className={sprinkles({ flexGrow: 1, overflow: 'hidden' })}>
