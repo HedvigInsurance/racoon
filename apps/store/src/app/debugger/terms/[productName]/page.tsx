@@ -18,7 +18,12 @@ const LOCALES = ['sv-SE', 'en-SE'] as const
 async function ProductTermsPage({ params }: Props) {
   const apolloClient = setupApolloClient({ locale: toRoutingLocale(LOCALES[0]) }).getApolloClient()
   const { productName } = params
-  const defaultData = await fetchProductData({ apolloClient, productName })
+  const defaultData = await fetchProductData({
+    apolloClient,
+    productName,
+    // Disable all caching for debugging purposes. We may want to revert it after terms-hub is in production
+    context: { fetchOptions: { cache: 'no-store' } },
+  })
 
   return (
     <main className={yStack({ gap: 'xl' })} style={{ maxWidth: '80rem', marginInline: 'auto' }}>
