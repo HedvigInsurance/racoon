@@ -4,6 +4,7 @@ import Head from 'next/head'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import type { ComponentPropsWithoutRef, ReactNode } from 'react'
+import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import { type ProductData } from '@/components/ProductData/ProductData.types'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
 import { CalculatePricePage } from '@/features/widget/CalculatePricePage'
@@ -29,6 +30,7 @@ type Props = Pick<
 > & {
   priceIntentId: string
   shopSessionId: string
+  productData: ProductData
   partner?: string
 }
 
@@ -66,8 +68,14 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     ])
 
     const compareInsurance = story.content.compareInsurance ?? false
-    const partner = story.content.partner
+    const partnerName = story.content.partner
+    const productName = priceIntent.product.name
     const priceTemplate = getWidgetPriceTemplate(priceIntent.product.name, compareInsurance)
+    const productData = await fetchProductData({
+      apolloClient,
+      productName,
+      partnerName,
+    })
 
     console.info(`Widget | Calculate Price: ${priceIntent.product.name}/${priceTemplate.name}`)
     console.info(`Widget | Compare insurance: ${compareInsurance}`)
@@ -76,7 +84,8 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       props: {
         priceIntent,
         priceTemplate,
-        partner,
+        partnerName,
+        productData,
         ...hideChatOnPage(),
         ...translations,
         ...context.params,
@@ -90,7 +99,13 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   }
 }
 
-export default function Page({ partner, shopSessionId, priceIntentId, ...forwardedProps }: Props) {
+export default function Page({
+  partner,
+  shopSessionId,
+  priceIntentId,
+  productData,
+  ...forwardedProps
+}: Props) {
   const { t } = useTranslation('widget')
 
   const shopSessionResult = useShopSessionQuery({
@@ -104,9 +119,6 @@ export default function Page({ partner, shopSessionId, priceIntentId, ...forward
   const priceIntent = priceIntentResult.data?.priceIntent
 
   if (shopSession == null || priceIntent == null) return null
-
-  // Does not have variants and some CMS fields, but we're not currently using them in widget flow components
-  const productData = priceIntent.product as ProductData
 
   return (
     <>
