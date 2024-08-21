@@ -1,4 +1,3 @@
-'use client'
 import type { IconRootProps } from './Root'
 import { IconRoot } from './Root'
 
