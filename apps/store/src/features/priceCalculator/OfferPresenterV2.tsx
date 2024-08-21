@@ -91,7 +91,7 @@ export const OfferPresenterV2 = memo(() => {
   return (
     <div className={yStack({ gap: 'md' })}>
       {tiers.length > 1 && (
-        <div className={yStack({ alignItems: 'stretch' })}>
+        <div className={yStack({ alignItems: 'stretch', gap: 'md' })}>
           <ProductTierSelectorV2
             offers={tiers}
             selectedOffer={selectedTier}
@@ -101,7 +101,7 @@ export const OfferPresenterV2 = memo(() => {
       )}
 
       {deductibles.length > 1 && (
-        <div className={yStack({ alignItems: 'stretch' })}>
+        <div className={yStack({ alignItems: 'stretch', gap: 'md' })}>
           <DeductibleSelectorV2
             offers={deductibles}
             selectedOffer={selectedOffer}

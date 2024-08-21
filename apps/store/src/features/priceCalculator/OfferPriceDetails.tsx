@@ -71,7 +71,7 @@ export function OfferPriceDetails() {
 
     total = (
       <div>
-        <Text as="div" size="md" className={xStack({ justifyContent: 'flex-end' })}>
+        <Text as="div" size="md" className={xStack({ justifyContent: 'flex-end', gap: 'md' })}>
           {hasReducedPrice(selectedOffer) && (
             <Text as="span" size="md" color="textSecondary" strikethrough={true}>
               {formatter.monthlyPrice(selectedOffer.cost.gross)}
@@ -97,7 +97,7 @@ export function OfferPriceDetails() {
           <Separator />
         </>
       )}
-      <Text as="div" size="md" className={xStack({ alignItems: 'flex-start' })}>
+      <Text as="div" size="md" className={xStack({ alignItems: 'flex-start', gap: 'md' })}>
         {t('OFFER_SUMMARY_TOTAL_LABEL')}{' '}
         <div style={{ flexGrow: 1, textAlign: 'right' }}>{total}</div>
       </Text>

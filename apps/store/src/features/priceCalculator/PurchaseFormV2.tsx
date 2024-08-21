@@ -39,7 +39,10 @@ export function PurchaseFormV2() {
       return <InsuranceDataForm />
     case 'calculatingPrice':
       return (
-        <div className={yStack({ justifyContent: 'center' })} style={{ minHeight: '75vh' }}>
+        <div
+          className={yStack({ gap: 'md', justifyContent: 'center' })}
+          style={{ minHeight: '75vh' }}
+        >
           <PriceLoader />
         </div>
       )

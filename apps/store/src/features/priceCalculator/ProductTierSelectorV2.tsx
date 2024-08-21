@@ -30,7 +30,13 @@ export function ProductTierSelectorV2({ offers, selectedOffer, onValueChange }: 
         {offers.map((offer) => (
           <CardRadioGroup.Item key={offer.id} value={offer.id} style={{ padding: tokens.space.lg }}>
             <div className={yStack()}>
-              <div className={xStack({ justifyContent: 'space-between', alignItems: 'center' })}>
+              <div
+                className={xStack({
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  gap: 'md',
+                })}
+              >
                 <Heading as="h2" variant="standard.24">
                   {offer.variant.displayNameSubtype || offer.variant.displayName}
                 </Heading>
