@@ -91,9 +91,11 @@ const fetchTrialExtensionData = async (
 const CarBuyerConfirmationPage: NextPageWithLayout<Props> = (props) => {
   return (
     <>
-      <Head>
-        <title>{props.story.content.seoTitle}</title>
-      </Head>
+      {props.story && (
+        <Head>
+          <title>{props.story.content.seoTitle}</title>
+        </Head>
+      )}
       <ConfirmationPage {...props} />
     </>
   )

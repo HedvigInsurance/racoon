@@ -15,5 +15,5 @@ export type ConfirmationPageProps = {
     companyDisplayName: string
   }
   carTrialContract?: TrialContractFragment
-  story: ConfirmationStory
+  story?: ConfirmationStory
 }
