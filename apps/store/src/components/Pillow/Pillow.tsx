@@ -1,21 +1,23 @@
-import styled from '@emotion/styled'
+import clsx from 'clsx'
 import Image from 'next/image'
 import { memo } from 'react'
 import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
+import { pillowVariants } from './Pillow.css'
 
 type PillowProps = {
-  size?: 'mini' | 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge'
+  size: 'mini' | 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge'
   src?: string
   alt?: string | null
   priority?: boolean
   className?: string
 }
 
-export const Pillow = memo(({ alt, src, priority, ...props }: PillowProps) => {
-  if (!src) return <FallbackPillow {...props} size={props.size} />
+export const Pillow = memo(({ alt, src, priority, className, size, ...props }: PillowProps) => {
+  if (!src) return <FallbackPillow {...props} size={size} />
   return (
-    <StyledImage
+    <Image
       {...props}
+      className={clsx(pillowVariants(size), className)}
       src={getImgSrc(src)}
       alt={alt ?? ''}
       width={208}
@@ -28,13 +30,11 @@ export const Pillow = memo(({ alt, src, priority, ...props }: PillowProps) => {
 })
 Pillow.displayName = 'Pillow'
 
-const StyledImage = styled(Image)<PillowProps>(({ size = 'medium' }) => getSize(size))
-
-const FallbackPillow = ({ size, ...props }: Pick<PillowProps, 'size'>) => {
+const FallbackPillow = ({ size, className, ...props }: PillowProps) => {
   return (
     <svg
       {...props}
-      {...getSize(size)}
+      className={clsx(pillowVariants(size), className)}
       viewBox="0 0 480 480"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -45,25 +45,4 @@ const FallbackPillow = ({ size, ...props }: Pick<PillowProps, 'size'>) => {
       />
     </svg>
   )
-}
-
-const getSize = (size: PillowProps['size']) => {
-  switch (size) {
-    case 'mini':
-      return { width: '1.5rem', height: '1.5rem' }
-    case 'xxsmall':
-      return { width: '1.75rem', height: '1.75rem' }
-    case 'xsmall':
-      return { width: '2rem', height: '2rem' }
-    case 'small':
-      return { width: '3rem', height: '3rem' }
-    case 'medium':
-      return { width: '3.5rem', height: '3.5rem' }
-    case 'large':
-      return { width: '5rem', height: '5rem' }
-    case 'xlarge':
-      return { width: '6rem', height: '6rem' }
-    case 'xxlarge':
-      return { width: '13rem', height: '13rem' }
-  }
 }

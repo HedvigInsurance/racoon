@@ -53,7 +53,7 @@ type Props = {
   initialOffer: OfferRecommendationFragment
   title: string
   subtitle: string
-  pillow: ComponentProps<typeof Pillow>
+  pillow: Omit<ComponentProps<typeof Pillow>, 'size'>
   productPageLink: string
   badge?: string
   Body?: ReactNode

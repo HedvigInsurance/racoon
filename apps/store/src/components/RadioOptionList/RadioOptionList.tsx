@@ -15,7 +15,7 @@ export const Root = (props: RootProps) => {
 type ProductOptionProps = RadioGroup.RadioGroupItemProps & {
   title: string
   subtitle: string
-  pillow: ComponentProps<typeof Pillow>
+  pillow: Omit<ComponentProps<typeof Pillow>, 'size'>
 }
 
 export const ProductOption = (props: ProductOptionProps) => {

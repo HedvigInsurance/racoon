@@ -6,7 +6,7 @@ import { Pillow } from '@/components/Pillow/Pillow'
 
 type Props = {
   pillows: Array<
-    ComponentProps<typeof Pillow> & {
+    Omit<ComponentProps<typeof Pillow>, 'size'> & {
       id: string
     }
   >
@@ -18,7 +18,7 @@ export const RetargetingPage = (props: Props) => {
       <Grid>
         {props.pillows.map((item, index) => (
           <PillowWrapper key={item.id} index={index}>
-            <Pillow {...item} priority={true} />
+            <Pillow size="small" {...item} priority={true} />
           </PillowWrapper>
         ))}
       </Grid>
