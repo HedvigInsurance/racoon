@@ -25,10 +25,11 @@ export const ConfirmationPage = (props: ConfirmationPageProps) => {
             <GridLayout.Content width="1/3" align="center">
               <Space y={4}>
                 <Space y={{ base: 3, lg: 4.5 }}>
-                  <Heading as="h1" variant="standard.24" align="center">
-                    {props.story.content.title}
-                  </Heading>
-
+                  {props.story && (
+                    <Heading as="h1" variant="standard.24" align="center">
+                      {props.story.content.title}
+                    </Heading>
+                  )}
                   <ShopBreakdown>
                     {props.carTrialContract && (
                       <ProductItemContractContainerCar contract={props.carTrialContract} />
@@ -52,7 +53,8 @@ export const ConfirmationPage = (props: ConfirmationPageProps) => {
             </GridLayout.Content>
           </GridLayout.Root>
 
-          <StaticContent content={props.story.content} />
+          {/* Treating 'story' as optional here to provide a fallback confirmation page instead crashing the page */}
+          {props.story && <StaticContent content={props.story.content} />}
         </Space>
       </Wrapper>
     </SuccessAnimation>
