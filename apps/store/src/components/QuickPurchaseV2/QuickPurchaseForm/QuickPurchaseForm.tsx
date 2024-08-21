@@ -24,6 +24,7 @@ export type FormError = {
 
 type Props = {
   productOptions: Array<ProductOption>
+  defaultValue?: ProductOption['value']
   submitting?: boolean
   showSsnField?: boolean
   ssnDefaultValue?: string
@@ -32,6 +33,7 @@ type Props = {
 
 export const QuickPurchaseForm = ({
   productOptions,
+  defaultValue,
   submitting = false,
   ssnDefaultValue = '',
   showSsnField = false,
@@ -47,6 +49,7 @@ export const QuickPurchaseForm = ({
       {productOptions.length > 1 && (
         <ProductSelector
           productOptions={productOptions}
+          defaultValue={defaultValue}
           name={PRODUCT_FIELDNAME}
           disabled={submitting}
           required={true}

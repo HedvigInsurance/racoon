@@ -4,18 +4,11 @@ import { useTranslation } from 'next-i18next'
 import { Fragment } from 'react'
 import { CheckIcon, ChevronIcon, theme } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
-
-export type ProductOption = {
-  name: string
-  value: string
-  img: {
-    src: string
-    alt?: string
-  }
-}
+import { type ProductOption } from './QuickPurchaseForm'
 
 type Props = {
   productOptions: Array<ProductOption>
+  defaultValue?: ProductOption['value']
 } & Omit<SelectPrimitive.SelectProps, 'children'>
 
 export const ProductSelector = ({ productOptions, ...delegated }: Props) => {
