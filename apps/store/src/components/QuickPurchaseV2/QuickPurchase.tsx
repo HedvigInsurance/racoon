@@ -25,6 +25,7 @@ import { wrapper } from './QuickPurchase.css'
 
 type QuickPurchaseProps = {
   products: Array<string>
+  preSelectFirstProduct?: boolean
   showSsnField: boolean
   campaignCode?: string
   attributedTo?: string
@@ -171,6 +172,7 @@ export const QuickPurchaseV2 = (props: QuickPurchaseProps) => {
     <form onSubmit={handleSubmit} data-nested={props.nested} className={wrapper}>
       <QuickPurchaseForm
         productOptions={productOptions}
+        defaultValue={props.preSelectFirstProduct ? productOptions[0].value : undefined}
         submitting={isSubmitting}
         showSsnField={props.showSsnField}
         ssnDefaultValue={currentShopSession?.customer?.ssn ?? ''}

@@ -6,6 +6,7 @@ import { Features } from '@/utils/Features'
 
 type QuickPurchaseBlockProps = SbBaseBlockProps<{
   products: Array<string>
+  preSelectFirstProduct?: boolean
   showSsnField: boolean
   campaignCode?: string
   attributedTo?: string
@@ -16,6 +17,7 @@ export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) =>
     return (
       <QuickPurchaseV2
         products={blok.products}
+        preSelectFirstProduct={blok.preSelectFirstProduct}
         showSsnField={blok.showSsnField}
         campaignCode={blok.campaignCode}
         attributedTo={blok.attributedTo}
