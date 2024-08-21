@@ -38,7 +38,7 @@ const Item = styled.div({
 
 const Content = styled.div({ flex: 1, width: 0 })
 
-const Pillow = (props: ComponentProps<typeof BasePillow>) => {
+const Pillow = (props: Omit<ComponentProps<typeof BasePillow>, 'size'>) => {
   return <BasePillow size="small" {...props} />
 }
 

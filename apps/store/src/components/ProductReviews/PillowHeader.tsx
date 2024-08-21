@@ -11,7 +11,7 @@ type Props = {
   title: string
   score: number
   reviewsCount: number
-  pillow: Omit<ComponentProps<typeof Pillow>, 'className'>
+  pillow: Omit<ComponentProps<typeof Pillow>, 'className' | 'size'>
   className?: string
 }
 
