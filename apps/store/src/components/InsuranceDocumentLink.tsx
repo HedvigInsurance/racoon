@@ -43,7 +43,7 @@ const getExtensionFromUrl = (urlString: string): string => {
       return url.pathname.split('.').at(-1)!
     }
     return ''
-  } catch (err) {
+  } catch {
     console.warn(`Failed to parse url: ${urlString}`)
     return ''
   }

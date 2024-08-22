@@ -37,6 +37,8 @@ module.exports = {
         '@typescript-eslint/no-unsafe-argument': 'off',
         '@typescript-eslint/no-unsafe-assignment': 'off',
         '@typescript-eslint/no-unsafe-member-access': 'off',
+        '@typescript-eslint/no-require-imports': 'off',
+        '@typescript-eslint/only-throw-error': 'off', // Enable throwing things like `notFound()` in Next
         'no-restricted-imports': [
           'error',
           {

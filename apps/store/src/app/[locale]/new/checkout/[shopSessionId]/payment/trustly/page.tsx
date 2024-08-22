@@ -25,7 +25,7 @@ export default async function Page({ params, searchParams }: Props) {
   let story: ConnectPaymentStory | null = null
   try {
     story = await fetchConnectPaymentStory(params.locale)
-  } catch (error) {
+  } catch {
     console.log('Checkout Payment | No CMS content found')
   }
 

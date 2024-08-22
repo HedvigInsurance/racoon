@@ -48,7 +48,7 @@ const requestLogger = new ApolloLink((operation, forward) => {
     let locale: string | undefined
     try {
       locale = operation.getContext()['headers']['Hedvig-Language']
-    } catch (err) {
+    } catch {
       // ignore errors
     }
     console.log(

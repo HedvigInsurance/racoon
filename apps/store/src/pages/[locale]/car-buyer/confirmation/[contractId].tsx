@@ -83,7 +83,7 @@ const fetchTrialExtensionData = async (
     }
 
     return data.carTrial
-  } catch (err) {
+  } catch {
     return null
   }
 }
