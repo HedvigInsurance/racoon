@@ -1,11 +1,22 @@
 import clsx from 'clsx'
 import Image from 'next/image'
 import { memo } from 'react'
+import { type Level } from 'ui'
 import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 import { pillowVariants } from './Pillow.css'
 
+type PillowSize =
+  | 'mini'
+  | 'xxsmall'
+  | 'xsmall'
+  | 'small'
+  | 'medium'
+  | 'large'
+  | 'xlarge'
+  | 'xxlarge'
+
 type PillowProps = {
-  size: 'mini' | 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge'
+  size: PillowSize | Partial<Record<Level | '_', PillowSize>>
   src?: string
   alt?: string | null
   priority?: boolean
