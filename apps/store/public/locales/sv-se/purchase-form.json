@@ -4,6 +4,7 @@
   "AUTO_SWITCH_FIELD_MESSAGE": "Vi avslutar din försäkring hos {{COMPANY}} åt dig. Hedvig aktiveras när den går ut.",
   "AUTO_SWITCH_INVALID_START_DATE_MESSAGE": "Eftersom din försäkring hos {{company}} går ut ganska snart behöver du själv säga upp den. Oroa dig inte, vi mejlar instruktioner till dig.",
   "AUTO_SWITCH_START_DATE_LABEL": "Slutdatum {{company}}",
+  "BACK_TO_PRODUCT_PAGE": "Tillbaka",
   "BUNDLE_DISCOUNT_CART_TOAST_QUICK_LINKS_SUBTITLE": "Få {{percentage}} rabatt på hela ditt köp",
   "BUNDLE_DISCOUNT_CART_TOAST_SUMMARY": "Du har {{percentage}} rabatt på hela köpet i din varukorg.",
   "BUNDLE_DISCOUNT_FIRST_OFFER": "Få {{percentage}} rabatt om du lägger\ntill fler försäkringar",
