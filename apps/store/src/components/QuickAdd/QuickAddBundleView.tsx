@@ -14,11 +14,13 @@ import {
   priceWrapper,
 } from './QuickAddBundleView.css'
 
+type PillowParams = Omit<ComponentProps<typeof Pillow>, 'size'>
+
 type Props = {
   title: string
   subtitle: string
-  primaryPillow: ComponentProps<typeof Pillow>
-  secondaryPillow?: ComponentProps<typeof Pillow>
+  primaryPillow: PillowParams
+  secondaryPillow?: PillowParams
   price: ComponentProps<typeof Price>
   // TODO: evaluate if 'href' this is actually is agood addition design wise
   // or at least came up with a better name for it

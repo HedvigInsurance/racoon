@@ -26,7 +26,14 @@ export const hoverStyles = (styles: CSSProperties) => {
   }
 }
 
-export const responsiveStyles = (breakpointStyles: PartialRecord<Level, CSSProperties>) => {
+// Copied from vanilla-extract since it does not export it
+type CSSPropertiesWithVars = CSSProperties & {
+  vars?: {
+    [key: string]: string
+  }
+}
+
+export const responsiveStyles = (breakpointStyles: PartialRecord<Level, CSSPropertiesWithVars>) => {
   return {
     '@media': Object.fromEntries(
       Object.entries(breakpointStyles).map(([key, styles]) => [minWidth[key as Level], styles]),
