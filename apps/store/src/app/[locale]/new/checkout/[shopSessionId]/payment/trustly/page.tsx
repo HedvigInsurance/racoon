@@ -54,9 +54,23 @@ export default async function Page({ params, searchParams }: Props) {
   )
 }
 
-const CONNECT_PAYMENT_SLUG = 'connect-payment'
 function fetchConnectPaymentStory(locale: RoutingLocale): Promise<ConnectPaymentStory> {
-  return getStoryBySlug<ConnectPaymentStory>(CONNECT_PAYMENT_SLUG, { locale })
+  return getStoryBySlug<ConnectPaymentStory>(getConnectPaymentSlug(locale), { locale })
+}
+
+// It's not pefect but we have fewer cases to handle today and that gives editor more
+// flexibility when it comes about organizing content in storyblok
+function getConnectPaymentSlug(locale: RoutingLocale): string {
+  const CONNECT_PAYMENT_SLUG = 'connect-payment'
+
+  switch (locale) {
+    case 'se':
+      return `hjalp/${CONNECT_PAYMENT_SLUG}`
+    case 'se-en':
+      return `help/${CONNECT_PAYMENT_SLUG}`
+    default:
+      return ''
+  }
 }
 
 export const dynamic = 'force-dynamic'
