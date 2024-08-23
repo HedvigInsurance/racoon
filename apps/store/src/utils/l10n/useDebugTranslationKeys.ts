@@ -1,16 +1,20 @@
-import { useRouter } from 'next/router'
+'use client'
+
+import { useSearchParams } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import { useEffect } from 'react'
 
-export const useDebugTranslationKeys = () => {
-  const { query } = useRouter()
+export function useDebugTranslationKeys() {
+  const searchParams = useSearchParams()
   const { i18n } = useTranslation()
 
+  const debugQueryParam = searchParams?.get('debug')
+
   useEffect(() => {
-    if (query.debug === 'textkeys') {
+    if (debugQueryParam === 'textkeys') {
       i18n.changeLanguage('cimode')
-    } else if (query.debug === 'none') {
+    } else if (debugQueryParam === 'none') {
       i18n.changeLanguage()
     }
-  }, [i18n, query.debug])
+  }, [i18n, debugQueryParam])
 }
