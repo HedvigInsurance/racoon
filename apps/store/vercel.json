@@ -3,7 +3,7 @@
   "framework": "nextjs",
   "buildCommand": "cd ../.. && yarn codegen:ci && STORYBLOK_CACHE_VERSION=$(node ./apps/store/scripts/storyblok-cache-version.cjs) yarn build && ./apps/store/scripts/upload-sourcemaps-vercel.sh",
   "ignoreCommand": "../../bin/vercel-ignore-step.sh",
-  "installCommand": "cd ../.. && yarn install --immutable",
+  "installCommand": "cd ../.. && YARN_CACHE_FOLDER=./apps/store/.next/cache/yarn-cache yarn install --immutable",
   "regions": ["arn1"],
   "github": {
     "autoJobCancelation": true
