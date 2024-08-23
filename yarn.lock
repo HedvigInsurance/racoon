@@ -12045,12 +12045,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/dynamic@npm:2.1.1":
-  version: 2.1.1
-  resolution: "@vanilla-extract/dynamic@npm:2.1.1"
+"@vanilla-extract/dynamic@npm:2.1.2":
+  version: 2.1.2
+  resolution: "@vanilla-extract/dynamic@npm:2.1.2"
   dependencies:
-    "@vanilla-extract/private": "npm:^1.0.5"
-  checksum: 10c0/0c353b6326e73054a5ca1cfbb02e865cd8853e88976d7f53794e91ccf3fdfcab18211ad93750927b05c8d57e3816c1e56b55a8e24ad7f616b5e627339a3d36b6
+    "@vanilla-extract/private": "npm:^1.0.6"
+  checksum: 10c0/7361863bbc1260fda447be80e888e3ad5dea09957651288d7aba81ba7f59594d11476a840c9162adc452f9a43dbc379b58621b5b500a49f537b0efc7737aac9c
   languageName: node
   linkType: hard
 
@@ -25146,7 +25146,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:8.1.0"
     "@typescript-eslint/parser": "npm:8.1.0"
     "@vanilla-extract/css": "npm:1.15.4"
-    "@vanilla-extract/dynamic": "npm:2.1.1"
+    "@vanilla-extract/dynamic": "npm:2.1.2"
     "@vanilla-extract/next-plugin": "npm:2.4.3"
     "@vanilla-extract/recipes": "npm:0.5.3"
     "@vanilla-extract/sprinkles": "npm:1.6.2"
@@ -26702,7 +26702,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:8.1.0"
     "@typescript-eslint/parser": "npm:8.1.0"
     "@vanilla-extract/css": "npm:1.15.4"
-    "@vanilla-extract/dynamic": "npm:2.1.1"
+    "@vanilla-extract/dynamic": "npm:2.1.2"
     "@vanilla-extract/recipes": "npm:0.5.3"
     "@vanilla-extract/sprinkles": "npm:1.6.2"
     babel-jest: "npm:29.7.0"
