@@ -5,8 +5,9 @@ import { Heading, yStack } from 'ui'
 import { BankIdDialog } from '@/components/BankIdDialog/BankIdDialog'
 import { type GlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
+import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
-import { useShopSessionSuspense } from '@/services/shopSession/app-router/useShopSessionSuspense'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
 import type { RoutingLocale } from '@/utils/l10n/types'
 import { BonusOffer } from './BonusOffer'
@@ -16,21 +17,14 @@ import { CheckoutForm } from './CheckoutForm'
 import { layout, content, headings } from './CheckoutPage.css'
 import { EmptyCart, type Product } from './EmptyCart'
 
-export function CheckoutPage({
-  locale,
-  shopSessionId,
-}: {
-  locale: RoutingLocale
-  shopSessionId: string
-}) {
+export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
   const { t } = useTranslation(['cart', 'checkout'])
-  const shopSession = useShopSessionSuspense({
-    shopSessionId,
-    options: {
-      context: { fetchOptions: 'no-store' },
-    },
-  })
   const productMetadata = useProductMetadata()
+  const { shopSession } = useShopSession()
+
+  if (!shopSession) {
+    return <CartSkeleton />
+  }
 
   const isCartEmpty = shopSession.cart.entries.length === 0
   if (isCartEmpty) {
@@ -106,4 +100,22 @@ function getAvailableProducts(productMetadata: GlobalProductMetadata): Array<Pro
   )
 
   return products
+}
+
+export function CartSkeleton() {
+  return (
+    <main className={layout}>
+      <div className={content}>
+        <section className={yStack({ gap: 'md' })}>
+          <Skeleton style={{ height: 200 }} />
+          <Skeleton style={{ height: 200 }} />
+        </section>
+
+        <section className={yStack({ gap: 'xl' })}>
+          <Skeleton style={{ height: 500 }} />
+          <Skeleton style={{ height: 180 }} />
+        </section>
+      </div>
+    </main>
+  )
 }
