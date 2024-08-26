@@ -1,9 +1,12 @@
+import { datadogLogs } from '@datadog/browser-logs'
 import { useTranslation } from 'next-i18next'
 import type { FormEventHandler } from 'react'
 import { BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
+import { useShopSessionCustomerUpdateMutation } from '@/services/graphql/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { useUpdateCustomer } from './useUpdateCustomer'
+import { useErrorMessage } from '@/utils/useErrorMessage'
+import { FormElement } from './CheckoutPage.constants'
 
 type Options = {
   shopSessionId: string
@@ -12,7 +15,7 @@ type Options = {
   onSuccess: () => void
 }
 
-export const useHandleSubmitCheckout = (options: Options) => {
+export function useHandleSubmitCheckout(options: Options) {
   const { t } = useTranslation('common')
   const { shopSessionId, ssn, onSuccess, onError } = options
   const [updateCustomer, updateCustomerResult] = useUpdateCustomer({ shopSessionId })
@@ -48,6 +51,32 @@ export const useHandleSubmitCheckout = (options: Options) => {
     {
       loading: updateCustomerResult.loading || signLoading,
       userError,
+    },
+  ] as const
+}
+
+function useUpdateCustomer({ shopSessionId }: { shopSessionId: string }) {
+  const [updateCustomer, result] = useShopSessionCustomerUpdateMutation({
+    onError(error) {
+      datadogLogs.logger.warn('Failed to update contact details', { error })
+    },
+  })
+
+  const handleSubmit = (formData: FormData) => {
+    datadogLogs.logger.debug('Checkout | Submit contact details')
+    const email = formData.get(FormElement.Email) as string | null
+    const firstName = formData.get(FormElement.FirstName) as string | null
+    const lastName = formData.get(FormElement.LastName) as string | null
+    return updateCustomer({
+      variables: { input: { shopSessionId, email, firstName, lastName } },
+    })
+  }
+
+  return [
+    handleSubmit,
+    {
+      loading: result.loading,
+      userError: useErrorMessage(result.error),
     },
   ] as const
 }
