@@ -1,5 +1,5 @@
 import { type NextApiRequest, type NextApiResponse } from 'next'
-import { QueryParam as CartPageQueryParam } from '@/components/CartPage/CartPage.constants'
+import { QueryParam as CheckoutPageQueryParam } from '@/app/[locale]/new/checkout/CheckoutPage.constants'
 import { addOffersToCart } from '@/features/retargeting/addOffersToCart'
 import { fetchRetargetingData } from '@/features/retargeting/fetchRetargetingData'
 import { getUserRedirect } from '@/features/retargeting/getUserRedirect'
@@ -27,7 +27,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   // TODO: handle the case where we fail to add offers
   if (redirect.type === RedirectType.ModifiedCart) {
     await addOffersToCart(apolloClient, userParams.shopSessionId, redirect.offers)
-    redirect.url.searchParams.set(CartPageQueryParam.ExpandCart, '1')
+    redirect.url.searchParams.set(CheckoutPageQueryParam.ExpandCart, '1')
   }
 
   userParams.queryParams.forEach(([key, value]) =>
