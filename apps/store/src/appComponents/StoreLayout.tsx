@@ -19,6 +19,7 @@ import { type GlobalStory } from '@/services/storyblok/storyblok'
 import { getStoryBySlug } from '@/services/storyblok/storyblok.rsc'
 import { Features } from '@/utils/Features'
 import { type RoutingLocale } from '@/utils/l10n/types'
+import { TranslationKeysDebugger } from './TranslationKeysDebugger'
 
 type StoreLayoutProps = {
   locale: RoutingLocale
@@ -44,6 +45,7 @@ export async function StoreLayout({ locale, children }: StoreLayoutProps) {
           <CompanyReviewsMetadataProvider companyReviewsMetadata={companyReviewsMetadata}>
             <ShopSessionTrackingProvider>
               <AppErrorDialog />
+              <TranslationKeysDebugger />
               <GlobalBannerDynamic />
               <StoryblokProvider>
                 <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>

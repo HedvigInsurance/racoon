@@ -15,7 +15,7 @@ export const ShoppingCartMenuItem = () => {
     <div className={wrapper}>
       <Link
         className={cartLink}
-        href={PageLink.cart({ locale }).pathname}
+        href={PageLink.checkout({ locale }).pathname}
         aria-label="shopping cart"
       >
         <ShoppingBagIcon count={cartLineCount} />

@@ -83,7 +83,7 @@ export const createCustomerSession = async (
     throw new Error('Unable to create ShopSession with products', { cause: error })
   }
 
-  const destination = PageLink.cart({ locale: DEFAULT_LOCALE }).href
+  const destination = PageLink.checkout({ locale: DEFAULT_LOCALE }).href
   console.log(`Re-directing to destination: ${destination}`)
 
   redirect(destination)

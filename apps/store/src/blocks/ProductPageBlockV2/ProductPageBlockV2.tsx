@@ -6,7 +6,7 @@ import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { type PurchaseFormProps } from '@/components/ProductPage/PurchaseForm/PurchaseForm'
 import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { Features } from '@/utils/Features'
-import { wrapper } from './ProductPageBlockV2.css'
+import { gridRoot, wrapper } from './ProductPageBlockV2.css'
 
 export type ProductPageBlockProps = SbBaseBlockProps<
   {
@@ -23,7 +23,7 @@ export const ProductPageBlockV2 = ({ blok }: ProductPageBlockProps) => {
 
   return (
     <main className={wrapper} {...storyblokEditable(blok)}>
-      <GridLayout.Root>
+      <GridLayout.Root className={gridRoot}>
         <GridLayout.Content width={{ lg: '1/2' }} align="left">
           {blok.topSectionFirstColumn.map((nestedBlock) => (
             <StoryblokComponent blok={nestedBlock} key={nestedBlock._uid} />

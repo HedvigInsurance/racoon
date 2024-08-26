@@ -12099,21 +12099,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/recipes@npm:0.5.3":
-  version: 0.5.3
-  resolution: "@vanilla-extract/recipes@npm:0.5.3"
+"@vanilla-extract/recipes@npm:0.5.5":
+  version: 0.5.5
+  resolution: "@vanilla-extract/recipes@npm:0.5.5"
   peerDependencies:
     "@vanilla-extract/css": ^1.0.0
-  checksum: 10c0/1a8a155c53031efeafd67e0e429bb766049a61ca1dda8dfc6144f09882ccf7058557d6a89c2454cd2726452fedd5110a55a4d89a5f1e2846d815eca095494aea
+  checksum: 10c0/5e032bc3f7873b1deb39fc64e2ab6871ac3d70dd527309b4e08310def142180fd346df48ca33306ac0ea7626673856e3995fab03f56f54a967c48a3e5e4545d3
   languageName: node
   linkType: hard
 
-"@vanilla-extract/sprinkles@npm:1.6.2":
-  version: 1.6.2
-  resolution: "@vanilla-extract/sprinkles@npm:1.6.2"
+"@vanilla-extract/sprinkles@npm:1.6.3":
+  version: 1.6.3
+  resolution: "@vanilla-extract/sprinkles@npm:1.6.3"
   peerDependencies:
     "@vanilla-extract/css": ^1.0.0
-  checksum: 10c0/c9b648f7641e443492f45299d06d8cef1a50bc3615ff95b0bf60d5ac2249a774e58a559c537d7c3c7f9fe8a2e154bb198daee94fe64d37f7ec4057e3ff20f195
+  checksum: 10c0/17e03af9d090aa175bdeae646ae4a5bf1da37b7e473caa4ab92efbbd7678e53137e10281a0669f50ab5bd985a59e621da2bfc3e0cc28bded32becd72b8cfaf13
   languageName: node
   linkType: hard
 
@@ -25148,8 +25148,8 @@ __metadata:
     "@vanilla-extract/css": "npm:1.15.4"
     "@vanilla-extract/dynamic": "npm:2.1.2"
     "@vanilla-extract/next-plugin": "npm:2.4.3"
-    "@vanilla-extract/recipes": "npm:0.5.3"
-    "@vanilla-extract/sprinkles": "npm:1.6.2"
+    "@vanilla-extract/recipes": "npm:0.5.5"
+    "@vanilla-extract/sprinkles": "npm:1.6.3"
     "@vanilla-extract/webpack-plugin": "npm:2.3.11"
     "@vercel/edge-config": "npm:1.2.1"
     "@vercel/kv": "npm:2.0.0"
@@ -26703,8 +26703,8 @@ __metadata:
     "@typescript-eslint/parser": "npm:8.1.0"
     "@vanilla-extract/css": "npm:1.15.4"
     "@vanilla-extract/dynamic": "npm:2.1.2"
-    "@vanilla-extract/recipes": "npm:0.5.3"
-    "@vanilla-extract/sprinkles": "npm:1.6.2"
+    "@vanilla-extract/recipes": "npm:0.5.5"
+    "@vanilla-extract/sprinkles": "npm:1.6.3"
     babel-jest: "npm:29.7.0"
     babel-loader: "npm:9.1.3"
     clsx: "npm:2.1.1"

@@ -1,5 +1,4 @@
 import type { ApolloClient } from '@apollo/client'
-import type { GetServerSidePropsContext } from 'next'
 import type {
   PriceIntentCreateMutation,
   PriceIntentCreateMutationVariables,
@@ -23,6 +22,7 @@ import { CookiePersister } from '@/services/persister/CookiePersister'
 import type { SimplePersister } from '@/services/persister/Persister.types'
 import type { Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { SHOP_SESSION_COOKIE_MAX_AGE } from '@/services/shopSession/ShopSession.constants'
+import { type CookieParams } from '@/utils/types'
 import { ServerCookiePersister } from '../persister/ServerCookiePersister'
 import type { PriceIntent, PriceIntentCreateParams } from './priceIntent.types'
 
@@ -193,9 +193,7 @@ export const priceIntentServiceInitClientSide = (apolloClient: ApolloClient<unkn
   return PRICE_INTENT_SERVICE
 }
 
-type ServerSideParams = {
-  req: GetServerSidePropsContext['req']
-  res: GetServerSidePropsContext['res']
+type ServerSideParams = CookieParams & {
   apolloClient: ApolloClient<unknown>
 }
 

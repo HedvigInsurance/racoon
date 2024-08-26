@@ -152,7 +152,7 @@ function OfferSummary() {
   const handleAddToCart: MouseEventHandler = async (event) => {
     event.preventDefault()
     await addToCart(selectedOffer.id)
-    router.push(PageLink.cart({ locale }).pathname)
+    router.push(PageLink.checkout({ locale }).pathname)
   }
 
   const productData = useProductData()
