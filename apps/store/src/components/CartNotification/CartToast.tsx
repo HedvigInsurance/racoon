@@ -87,7 +87,7 @@ export const CartToast = forwardRef<CartToastAttributes>((_, forwardedRef) => {
               )}
               <div className={yStack({ gap: 'xs' })}>
                 <ButtonNextLink
-                  href={PageLink.cart({ locale }).pathname}
+                  href={PageLink.checkout({ locale }).pathname}
                   variant="primary"
                   onClick={handleClickLink('Primary')}
                   fullWidth={true}

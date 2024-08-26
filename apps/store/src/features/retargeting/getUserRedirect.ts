@@ -4,7 +4,7 @@ import { type UserParams } from './retargeting.types'
 
 export enum RedirectType {
   Product = 'product',
-  Cart = 'cart',
+  Checkout = 'checkout',
   ModifiedCart = 'modified-cart',
   Fallback = 'fallback',
 }
@@ -35,11 +35,11 @@ export const getUserRedirect = (
 
   if (hasAddedCartEntries(data)) {
     return {
-      type: RedirectType.Cart,
+      type: RedirectType.Checkout,
       url: PageLink.session({
         locale: userParams.locale,
         shopSessionId: data.shopSession.id,
-        next: PageLink.cart({ locale: userParams.locale }).pathname,
+        next: PageLink.checkout({ locale: userParams.locale }).pathname,
         code: userParams.campaignCode,
       }),
     }
@@ -68,7 +68,7 @@ export const getUserRedirect = (
       url: PageLink.session({
         locale: userParams.locale,
         shopSessionId: data.shopSession.id,
-        next: PageLink.cart({ locale: userParams.locale }).pathname,
+        next: PageLink.checkout({ locale: userParams.locale }).pathname,
         code: userParams.campaignCode,
       }),
       offers: offerIds,

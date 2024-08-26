@@ -45,7 +45,7 @@ test('should return cart redirect if cart is not empty', () => {
   const result = getUserRedirect(userParams, data)
 
   // Assert
-  expect(result.type).toEqual(RedirectType.Cart)
+  expect(result.type).toEqual(RedirectType.Checkout)
   expect(result.url.searchParams.keys()).toContain('code')
 })
 
