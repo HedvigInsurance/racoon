@@ -1,6 +1,6 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "pipeline": {
+  "tasks": {
     "codegen": {
       "inputs": ["src/graphql/*.graphql", "codegen.yml"],
       "outputs": ["src/services/**/generated.ts", "src/services/apollo/types.ts"]
@@ -46,7 +46,8 @@
       "outputs": ["storybook-static/**"]
     },
     "chromatic": {
-      "dependsOn": ["storybook:build"]
+      "dependsOn": ["storybook:build"],
+      "env": ["CHROMATIC_PROJECT_TOKEN"]
     }
   }
 }

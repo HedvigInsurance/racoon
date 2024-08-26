@@ -1,12 +1,10 @@
 {
   "$schema": "http://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
-  "buildCommand": "cd ../.. && yarn turbo run codegen --filter=store --force && STORYBLOK_CACHE_VERSION=$(node ./apps/store/scripts/storyblok-cache-version.cjs) yarn turbo run build --filter=store && ./apps/store/scripts/upload-sourcemaps-vercel.sh",
+  "buildCommand": "yarn codegen && STORYBLOK_CACHE_VERSION=$(node ./scripts/storyblok-cache-version.cjs) yarn build && ./scripts/upload-sourcemaps-vercel.sh",
   "ignoreCommand": "../../bin/vercel-ignore-step.sh",
-  "installCommand": "cd ../.. && YARN_CACHE_FOLDER=./apps/store/.next/cache/yarn-cache yarn install --immutable",
-  "regions": [
-    "arn1"
-  ],
+  "installCommand": "YARN_CACHE_FOLDER=./.next/cache/yarn-cache yarn install --immutable",
+  "regions": ["arn1"],
   "github": {
     "autoJobCancelation": true
   },
