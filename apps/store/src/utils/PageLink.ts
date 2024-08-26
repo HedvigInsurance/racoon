@@ -1,5 +1,5 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { QueryParam as CheckoutPageQueryParam } from '@/components/CheckoutPage/CheckoutPage.constants'
+import { QueryParam as CheckoutPageQueryParam } from '@/app/[locale]/new/checkout/CheckoutPage.constants'
 import { QueryParam as CheckoutTrustlyQueryParam } from '@/components/CheckoutPaymentTrustlyPage/CheckoutPaymentTrustlyPage constants'
 import type { RoutingLocale } from '@/utils/l10n/types'
 import { ORIGIN_URL } from '@/utils/url'
