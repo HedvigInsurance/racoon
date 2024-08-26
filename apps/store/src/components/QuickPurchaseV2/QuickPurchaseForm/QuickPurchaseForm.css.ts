@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { responsiveStyles, tokens, xStack, yStack } from 'ui'
+import { minWidth, responsiveStyles, sprinkles, tokens, xStack, yStack } from 'ui'
 
 export const wrapper = style([
   yStack({
@@ -36,3 +36,18 @@ export const productSingleOption = style([
     }),
   },
 ])
+
+export const stickyButtonWrapper = style([
+  sprinkles({ display: 'flex', justifyContent: 'center', paddingInline: 'md' }),
+  {
+    '@media': {
+      [minWidth.lg]: { display: 'none' },
+    },
+  },
+])
+
+export const stickyButton = style({
+  '@media': {
+    [minWidth.xs]: { maxWidth: '18.75rem' },
+  },
+})
