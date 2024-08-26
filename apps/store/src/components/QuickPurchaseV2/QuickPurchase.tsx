@@ -25,6 +25,7 @@ import { wrapper } from './QuickPurchase.css'
 
 type QuickPurchaseProps = {
   products: Array<string>
+  productByline?: string
   preSelectFirstProduct?: boolean
   showSsnField: boolean
   campaignCode?: string
@@ -174,9 +175,9 @@ export const QuickPurchaseV2 = (props: QuickPurchaseProps) => {
         productOptions={productOptions}
         defaultValue={props.preSelectFirstProduct ? productOptions[0].value : undefined}
         submitting={isSubmitting}
-        showSsnField={props.showSsnField}
         ssnDefaultValue={currentShopSession?.customer?.ssn ?? ''}
         error={error}
+        {...props}
       />
     </form>
   )

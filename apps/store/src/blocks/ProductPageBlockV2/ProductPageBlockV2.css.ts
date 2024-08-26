@@ -10,3 +10,7 @@ export const wrapper = style({
     },
   },
 })
+
+export const gridRoot = style({
+  rowGap: '5rem',
+})

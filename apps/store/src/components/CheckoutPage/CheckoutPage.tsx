@@ -48,7 +48,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
 
   const handleRemoveCartEntry = (cart: CartFragment) => {
     if (cart.entries.length === 0) {
-      router.push(PageLink.cart({ locale }).pathname)
+      router.push(PageLink.checkout({ locale }).pathname)
     }
   }
 
@@ -58,7 +58,7 @@ const CheckoutPage = (props: CheckoutPageProps) => {
     <>
       <Space y={{ base: 2.5 }}>
         <CheckoutHeader steps={checkoutSteps} activeStep={CheckoutStep.Checkout}>
-          <TextLink href={PageLink.cart({ locale }).pathname}>{t('BACK_BUTTON')}</TextLink>
+          <TextLink href={PageLink.checkout({ locale }).pathname}>{t('BACK_BUTTON')}</TextLink>
         </CheckoutHeader>
         <Layout>
           <Content y={{ base: 2.5, md: 3.5 }}>

@@ -1,3 +1,4 @@
+import * as process from 'node:process'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import type { ReactNode } from 'react'
@@ -158,7 +159,8 @@ export async function generateStaticParams({
 }): Promise<Array<{ slug: Array<string> }>> {
   const pageLinks = await getCmsPageLinks(`${params.locale}/`)
   const shouldPrebuild = (pageLink: PageLink) =>
-    MOST_VISITED_PATHS.has(`/${removeTrailingSlash(pageLink.link.slug)}`)
+    MOST_VISITED_PATHS.has(`/${removeTrailingSlash(pageLink.link.slug)}`) &&
+    process.env.SKIP_BUILD_STATIC_GENERATION != 'true'
   const result = pageLinks.filter(shouldPrebuild).map((link) => ({
     slug: link.slugParts,
   }))

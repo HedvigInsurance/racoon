@@ -2,7 +2,7 @@ import { useSetAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { startTransition, useMemo } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
-import { Button, Text, tokens, xStack } from 'ui'
+import { Button, Text } from 'ui'
 import { SSN_SE_SECTION_ID } from '@/components/PriceCalculator/SsnSeSection'
 import { useTranslateFieldLabel } from '@/components/PriceCalculator/useTranslateFieldLabel'
 import { activeFormSectionIdAtom } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
@@ -12,6 +12,7 @@ import {
 } from '@/features/priceCalculator/priceCalculatorAtoms'
 import { type FormSection } from '@/services/PriceCalculator/PriceCalculator.types'
 import { useAutoFormat } from '@/utils/useFormatter'
+import { editButton, sectionPreview } from './SectionPreview.css'
 
 export function SectionPreview({ section }: { section: FormSection }) {
   const autoFormat = useAutoFormat()
@@ -50,22 +51,16 @@ export function SectionPreview({ section }: { section: FormSection }) {
   }
 
   return (
-    <div
-      className={xStack({ padding: 'md', alignItems: 'center', gap: 'xs' })}
-      style={{ backgroundColor: tokens.colors.backgroundStandard, borderRadius: tokens.radius.md }}
-    >
+    <div className={sectionPreview}>
       <div className={sprinkles({ flexGrow: 1, overflow: 'hidden' })}>
-        <Text color="textSecondary">{translateLabel(section.title)}</Text>
-        <Text size="xl" color="textSecondary" singleLine={true}>
+        <Text size="xs" color="textSecondary">
+          {translateLabel(section.title)}
+        </Text>
+        <Text size="md" singleLine={true}>
           {previewText}
         </Text>
       </div>
-      <Button
-        variant="secondary"
-        size="medium"
-        style={{ backgroundColor: tokens.colors.white }}
-        onClick={handleEdit}
-      >
+      <Button variant="secondary" size="small" onClick={handleEdit} className={editButton}>
         {t('PRICE_CALCULATOR_SECTION_EDIT_BUTTON')}
       </Button>
     </div>
