@@ -20,7 +20,7 @@ export type NavigationLinkProps = Pick<HTMLAnchorElement, 'href'> &
 export const NavigationLink = ({ href, className, children, ...rest }: NavigationLinkProps) => {
   // Render a regular <a> tag for manual URLs containing https://. Thats because when linking between locales (/no -> /se),
   // you end up on /no/se with using Next internal routing. This will also work for external links.
-  const isExternalLink = href.match(/^(https?:)?\/\//)
+  const isExternalLink = /^(https?:)?\/\//.exec(href)
   if (isExternalLink) {
     return (
       <NavigationMenuPrimitive.Link

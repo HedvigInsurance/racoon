@@ -46,7 +46,7 @@ export const CarBuyerValidationPage = (props: Props) => {
         parameters,
         result,
       })
-    } catch (error) {
+    } catch {
       setState({
         type: 'IDLE',
         parameters,

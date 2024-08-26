@@ -15,6 +15,7 @@ module.exports = {
       files: ['**/*.{ts,tsx}'],
       rules: {
         '@typescript-eslint/no-unsafe-assignment': 'off',
+        '@typescript-eslint/no-require-imports': 'off',
       },
     },
   ],

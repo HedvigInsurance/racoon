@@ -19,7 +19,7 @@ export async function GET(request: Request) {
   let story: ISbStoryData
   try {
     story = await fetchStory(getStoryblokApi(), slug, { version })
-  } catch (error) {
+  } catch {
     return new Response('Invalid page ID', { status: 404 })
   }
 

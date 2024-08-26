@@ -61,7 +61,7 @@ export const submitSwitchConfirmation = async (
     if (userError) {
       errors.push(userError)
     }
-  } catch (error) {
+  } catch {
     errors.push(t('SWITCH_CONFIRMATION_FORM_ERROR', { ns: 'contractSwitchConfirmationForm' }))
   }
 

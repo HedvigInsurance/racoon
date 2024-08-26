@@ -57,7 +57,7 @@ const deserialize = (value: string) => {
     const data = JSON.parse(value)
     const accessToken = data[ACCESS_TOKEN_SESSION_FIELD]
     return typeof accessToken === 'string' ? accessToken : undefined
-  } catch (error) {
+  } catch {
     console.warn('Unable to deserialize session')
     return undefined
   }

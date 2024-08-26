@@ -40,7 +40,7 @@ export const getStoryblokPageProps = async ({
   let story: PageStory | ProductStory
   try {
     story = await getStoryBySlug<PageStory | ProductStory>(slug, { version, locale })
-  } catch (error) {
+  } catch {
     throw new Error(`Story with slug ${locale}/${slug} not found`)
   } finally {
     console.timeEnd(timerName)
