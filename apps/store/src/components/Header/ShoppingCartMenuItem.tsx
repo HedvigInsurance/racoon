@@ -14,7 +14,7 @@ export const ShoppingCartMenuItem = () => {
   const locale = useRoutingLocale()
   return (
     <Wrapper>
-      <StyledLink href={PageLink.cart({ locale }).pathname} aria-label="shopping cart">
+      <StyledLink href={PageLink.checkout({ locale }).pathname} aria-label="shopping cart">
         <ShoppingBagIcon count={cartLineCount} />
       </StyledLink>
     </Wrapper>

@@ -34,7 +34,7 @@ export const MockedShoppingCartMenuItem = ({ count = 0 }) => {
 
   return (
     <ShoppingCartMenuItemWrapper>
-      <StyledLink href={PageLink.cart({ locale })} tabIndex={0} aria-label="shopping cart">
+      <StyledLink href={PageLink.checkout({ locale })} tabIndex={0} aria-label="shopping cart">
         <ShoppingBagIcon count={count} />
       </StyledLink>
     </ShoppingCartMenuItemWrapper>
