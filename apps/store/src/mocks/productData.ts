@@ -18,6 +18,7 @@ export const productData: ProductData = {
   variants: [
     {
       __typename: 'ProductVariant',
+      termsVersion: 'xxx',
       typeOfContract: 'SE_APARTMENT_BRF',
       displayName: 'Home Insurance Homeowner',
       displayNameSubtype: 'Homeowner',
