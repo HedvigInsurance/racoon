@@ -63,7 +63,7 @@ export class ShopSessionService {
     if (!shopSessionId) return null
     try {
       return await this.fetchById(shopSessionId)
-    } catch (error) {
+    } catch {
       console.info(`ShopSession not found: ${shopSessionId}`)
       return null
     }

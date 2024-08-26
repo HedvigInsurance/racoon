@@ -73,7 +73,7 @@ export const isPriceCalculatorPageStory = (
 }
 
 export const getStoryblokImageSize = (filename: string) => {
-  const [, width, height] = filename.match(/\/(\d+)x(\d+)\//) ?? []
+  const [, width, height] = /\/(\d+)x(\d+)\//.exec(filename) ?? []
 
   if (!width || !height) return null
 

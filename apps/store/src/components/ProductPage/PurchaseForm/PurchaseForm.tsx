@@ -153,7 +153,10 @@ const PurchaseFormInner = (props: PurchaseFormInnerProps) => {
   const handleComplete = useCallback(
     (error?: string) => {
       setFormState(error != null ? { state: 'ERROR', errorMsg: error } : 'IDLE')
-      !isLarge && window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+
+      if (isLarge) {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+      }
     },
     [isLarge, setFormState],
   )

@@ -77,7 +77,7 @@ export function NavigationProgressIndicator() {
         }
 
         startProgress()
-      } catch (error) {
+      } catch {
         stopProgress()
       }
     }
