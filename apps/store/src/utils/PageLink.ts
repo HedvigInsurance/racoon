@@ -1,6 +1,6 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { QueryParam as CheckoutTrustlyQueryParam } from '@/app/[locale]/new/checkout/[shopSessionId]/payment/trustly/CheckoutPaymentTrustlyPage.constants'
-import { QueryParam as CheckoutPageQueryParam } from '@/app/[locale]/new/checkout/CheckoutPage.constants'
+import { QueryParam as CheckoutTrustlyQueryParam } from '@/app/[locale]/checkout/[shopSessionId]/payment/trustly/CheckoutPaymentTrustlyPage.constants'
+import { QueryParam as CheckoutPageQueryParam } from '@/app/[locale]/checkout/CheckoutPage.constants'
 import type { RoutingLocale } from '@/utils/l10n/types'
 import { ORIGIN_URL } from '@/utils/url'
 import { locales } from './l10n/locales'
@@ -64,7 +64,7 @@ export const PageLink = {
     return new URL(`${locale}/${slug}`, ORIGIN_URL)
   },
   checkout: ({ locale, expandCart = false }: CheckoutPage) => {
-    const url = new ExtendedURL(`${locale}/new/checkout`, ORIGIN_URL)
+    const url = new ExtendedURL(`${locale}/checkout`, ORIGIN_URL)
 
     if (expandCart) {
       url.searchParams.set(CheckoutPageQueryParam.ExpandCart, '1')
@@ -73,7 +73,7 @@ export const PageLink = {
     return url
   },
   checkoutPaymentTrustly: ({ locale, shopSessionId, nextUrl }: CheckoutPaymentTrustlyPage) => {
-    const url = new URL(`${locale}/new/checkout/${shopSessionId}/payment/trustly`, ORIGIN_URL)
+    const url = new URL(`${locale}/checkout/${shopSessionId}/payment/trustly`, ORIGIN_URL)
 
     if (nextUrl) {
       url.searchParams.append(CheckoutTrustlyQueryParam.NextUrl, nextUrl)
