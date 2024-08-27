@@ -6,7 +6,7 @@
   "AUTO_SWITCH_START_DATE_LABEL": "End date {{company}}",
   "BACK_TO_PRODUCT_PAGE": "Back",
   "BUNDLE_DISCOUNT_CART_TOAST_QUICK_LINKS_SUBTITLE": "Get {{percentage}} off your entire purchase",
-  "BUNDLE_DISCOUNT_CART_TOAST_SUMMARY": "You get {{percentage}} off on your entire purchase in cart.",
+  "BUNDLE_DISCOUNT_CART_TOAST_SUMMARY": "You have {{percentage}} off on your purchase in the cart.",
   "BUNDLE_DISCOUNT_FIRST_OFFER": "Get a {{percentage}} discount if you \nadd more insurances",
   "BUNDLE_DISCOUNT_SECOND_OFFER": "You'll get {{percentage}} off your entire purchase",
   "BUTTON_LABEL_GET_PRICE": "See your price",
