@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react'
-import { Heading, tokens, yStack } from 'ui'
+import { Heading, Text, tokens, yStack } from 'ui'
 import { InsurableLimitsBlock } from '@/blocks/InsurableLimitsBlock'
 import { PerilsBlock } from '@/blocks/PerilsBlock'
 import { ProductDocumentsBlock } from '@/blocks/ProductDocumentsBlock'
@@ -33,6 +33,7 @@ async function ProductTermsPage({ params }: Props) {
       {defaultData.variants.map((variant) => (
         <VariantDetails
           key={variant.typeOfContract}
+          termsVersion={variant.termsVersion}
           productName={productName}
           typeOfContract={variant.typeOfContract}
         />
@@ -58,9 +59,11 @@ const variantDetailsStyle = {
 
 function VariantDetails({
   productName,
+  termsVersion,
   typeOfContract,
 }: {
   productName: string
+  termsVersion: string
   typeOfContract: string
 }) {
   return (
@@ -73,6 +76,7 @@ function VariantDetails({
         {typeOfContract}
       </Heading>
       <div style={variantDetailsStyle} className={yStack({ gap: 'md' })}>
+        <Text>termsVersion: {termsVersion}</Text>
         <SectionHeader>Perils</SectionHeader>
         {LOCALES.map((locale) => (
           <VariantDataProvider

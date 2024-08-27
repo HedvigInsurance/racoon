@@ -1,5 +1,6 @@
 fragment ProductVariant on ProductVariant {
   typeOfContract
+  termsVersion
   displayName
   displayNameSubtype
   perils {
