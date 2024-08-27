@@ -23,4 +23,7 @@ fragment PriceIntent on PriceIntent {
   warning {
     ...PriceIntentWarning
   }
+  notifications {
+    message
+  }
 }
