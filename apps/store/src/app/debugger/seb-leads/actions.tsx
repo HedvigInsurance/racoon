@@ -3,8 +3,8 @@
 import {SEBFormElement} from "@/app/debugger/seb-leads/types";
 import type { FormStateWithErrors } from '@/app/types/formStateTypes'
 
-const INSURELY_API_URL = 'https://api.insurely.com/sessions' // Add this url to secrets
-const INSURELY_API_KEY = 'XXXXXXXXXXXXX' // Add this key to secrets
+const API_URL = process.env.SEB_LEADS_API_URL || ''
+const API_KEY = process.env.SEB_LEADS_API_KEY || ''
 
 export const createSebLead = async (
     _: FormStateWithErrors,
@@ -29,9 +29,6 @@ export const createSebLead = async (
             productType: product
         }
     }
-    console.log('Creating SEB lead with parameters:', parameters)
-    console.table(parameters)
-
     let sebSessionId: string|null
 
     try {
@@ -72,11 +69,11 @@ type CreateSebLeadsResponse = {
 const createSebLeadStaging = async (
     params: CreateSebLeadsParams,
 ): Promise<CreateSebLeadsResponse> => {
-    const url = new URL(INSURELY_API_URL)
+    const url = new URL(API_URL)
     const headers = new Headers(
         {
             'Content-Type': 'application/json',
-            'Authorization-token': INSURELY_API_KEY,
+            'Authorization-token': API_KEY,
         }
     )
 
