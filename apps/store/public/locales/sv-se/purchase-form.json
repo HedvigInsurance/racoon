@@ -129,7 +129,7 @@
   "PRICE_INTENT_WARNING_MEMBER_NOT_CAR_OWNER_AND_CAR_DECOMMISSIONED_MESSAGE": "För att försäkringen ska börja gälla behöver {{regNumber}} vara påställd och du stå som ägare inom 8 dagar",
   "PRICE_INTENT_WARNING_MEMBER_NOT_CAR_OWNER_HEADER": "Du står inte som ägare",
   "PRICE_INTENT_WARNING_MEMBER_NOT_CAR_OWNER_MESSAGE": "För att försäkringen ska börja gälla behöver du stå som registrerad ägare för {{regNumber}} inom 8 dagar",
-  "PRICE_MATCH_BUBBLE_INCOMPARABLE_SUBTITLE": "Vi kunde inte matcha ditt pris. Det kan bero på skillnader i skyddet.",
+  "PRICE_MATCH_BUBBLE_INCOMPARABLE_SUBTITLE": "Vi kunde inte matcha ditt pris. Det kan \nbero på skillnader i skyddet.",
   "PRICE_MATCH_BUBBLE_INCOMPARABLE_TITLE": "Du betalar {{amount}} hos {{company}}",
   "PRICE_MATCH_BUBBLE_SUCCESS_SUBTITLE": "jämfört med {{company}}",
   "PRICE_MATCH_BUBBLE_SUCCESS_TITLE": "Du sparar {{amount}}",
