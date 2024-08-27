@@ -37,7 +37,7 @@ const bundleExtraProductGroups = [
       'se-en': 'Car insurance',
     },
     subtitle: {
-      se: 'Flexibelt skydd',
+      se: 'Smidigt skydd',
       'se-en': 'Easy to use',
     },
   },
@@ -49,7 +49,7 @@ const bundleExtraProductGroups = [
       'se-en': 'Pet insurance',
     },
     subtitle: {
-      se: 'Hund eller katt',
+      se: 'Hund och katt',
       'se-en': 'For dog and cat',
     },
   },
