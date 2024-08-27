@@ -1,8 +1,6 @@
 # robots.txt for hedvig.com
 
 User-agent: *
-Disallow: /se/checkout
-Disallow: /se-en/checkout
 Disallow: /se/confirmation
 Disallow: /se-en/confirmation
 Disallow: /country-selector

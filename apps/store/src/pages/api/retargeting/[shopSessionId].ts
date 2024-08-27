@@ -1,5 +1,5 @@
 import { type NextApiRequest, type NextApiResponse } from 'next'
-import { QueryParam as CheckoutPageQueryParam } from '@/app/[locale]/new/checkout/CheckoutPage.constants'
+import { QueryParam as CheckoutPageQueryParam } from '@/app/[locale]/checkout/CheckoutPage.constants'
 import { addOffersToCart } from '@/features/retargeting/addOffersToCart'
 import { fetchRetargetingData } from '@/features/retargeting/fetchRetargetingData'
 import { getUserRedirect } from '@/features/retargeting/getUserRedirect'
