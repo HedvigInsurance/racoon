@@ -1,4 +1,5 @@
 import { isApolloError, useApolloClient } from '@apollo/client'
+import type { ApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
@@ -7,11 +8,6 @@ import { useTranslation } from 'next-i18next'
 import type { FormEventHandler, ReactNode } from 'react'
 import { useCallback, useRef } from 'react'
 import { BankIdIcon, Button, Heading, HedvigLogo, mq, Space, theme } from 'ui'
-import { CheckoutStep } from '@/components/CheckoutHeader/Breadcrumbs'
-import {
-  fetchCheckoutSteps,
-  getCheckoutStepLink,
-} from '@/components/CheckoutHeader/CheckoutHeader.helpers'
 import * as ComparisonTable from '@/components/ComparisonTable/ComparisonTable'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
@@ -19,18 +15,38 @@ import { ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
 import { TextWithLink } from '@/components/TextWithLink'
 import { useShowAppError } from '@/services/appErrors/appErrorAtom'
+import { getAccessToken } from '@/services/authApi/persist'
 import { BankIdState } from '@/services/bankId/bankId.types'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
-import type { Money, ProductOfferFragment } from '@/services/graphql/generated'
-import { useManyPetsFillCartMutation, useShopSessionQuery } from '@/services/graphql/generated'
+import type {
+  CurrentMemberQuery,
+  CurrentMemberQueryVariables,
+  Money,
+  ProductOfferFragment,
+} from '@/services/graphql/generated'
+import {
+  CurrentMemberDocument,
+  MemberPaymentConnectionStatus,
+  useManyPetsFillCartMutation,
+  useShopSessionQuery,
+} from '@/services/graphql/generated'
 import { setupShopSessionServiceClientSide } from '@/services/shopSession/ShopSession.helpers'
 import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
+import { type RoutingLocale } from '@/utils/l10n/types'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
+import { type CookieParams } from '@/utils/types'
 import { type ComparisonTableData } from '../manyPets.types'
 import { LatestAdoptionNote } from './LatestAdoptionNote'
 import { ManypetsLogo } from './ManypetsLogo'
+
+enum CheckoutStep {
+  Checkout = 'checkout',
+  Payment = 'payment',
+  Confirmation = 'confirmation',
+  Done = 'done',
+}
 
 const manypetsLogger = datadogLogs.createLogger('manypets')
 
@@ -311,4 +327,48 @@ const parseTableValue = (value: string | boolean): ReactNode => {
   }
 
   return value
+}
+
+type Params = {
+  apolloClient: ApolloClient<unknown>
+  shopSession: Pick<ShopSession, 'cart'>
+} & CookieParams
+
+const fetchCheckoutSteps = async ({ apolloClient, req, res }: Params) => {
+  let showPayment = true
+  const isAuthenticated = !!getAccessToken({ req, res })
+  if (isAuthenticated) {
+    const { data } = await apolloClient.query<CurrentMemberQuery, CurrentMemberQueryVariables>({
+      query: CurrentMemberDocument,
+    })
+
+    showPayment =
+      data.currentMember.paymentInformation.status === MemberPaymentConnectionStatus.NeedsSetup
+  }
+
+  const steps: Array<CheckoutStep> = [CheckoutStep.Checkout]
+
+  if (showPayment) steps.push(CheckoutStep.Payment)
+  if (steps.length < 3) steps.push(CheckoutStep.Confirmation)
+  if (steps.length < 3) steps.push(CheckoutStep.Done)
+
+  return steps
+}
+
+type GetCheckoutStepLinkParams = {
+  step: CheckoutStep
+  shopSessionId: string
+  locale: RoutingLocale
+}
+
+const getCheckoutStepLink = ({ step, shopSessionId, locale }: GetCheckoutStepLinkParams) => {
+  switch (step) {
+    case CheckoutStep.Checkout:
+      return PageLink.checkout({ locale }).href
+    case CheckoutStep.Payment:
+      return PageLink.checkoutPaymentTrustly({ locale, shopSessionId }).href
+    case CheckoutStep.Confirmation:
+    case CheckoutStep.Done:
+      return PageLink.confirmation({ locale, shopSessionId }).href
+  }
 }
