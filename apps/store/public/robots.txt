@@ -8,5 +8,7 @@ Disallow: /reusable-blocks
 Disallow: /referrals
 Disallow: /se/widget/run
 Disallow: /se-en/widget/run
+Disallow: /se/widget/flows
+Disallow: /se-en/widget/flows
 
 Sitemap: https://www.hedvig.com/sitemap.xml
