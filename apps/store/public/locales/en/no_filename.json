@@ -1,0 +1,6 @@
+{
+  "CURRENT_INSURER_OTHER_DISPLAY_NAME": "your current insurer",
+  "PRICE_INTENT_NOTIFICATION_CURRENT_INSURER_AND_STARTDATE_KNOWN": "We fetched your end date from {{COMPANY_NAME}}. Don't forget to cancel your current insurance.",
+  "PRICE_INTENT_NOTIFICATION_CURRENT_INSURER_AND_STARTDATE_UNKNOWN": "The car is insured at {{COMPANY_NAME}}. Provide your end date below. Don't forget to cancel your old insurnace.",
+  "PRICE_INTENT_NOTIFICATION_CURRENT_INSURER_KNOWN_STARTDATE_UNKNOWN": "The car is insured at {{COMPANY_NAME}}. Provide your end date below. Don't forget to cancel your old insurance."
+}

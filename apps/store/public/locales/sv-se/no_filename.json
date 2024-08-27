@@ -1,0 +1,6 @@
+{
+  "CURRENT_INSURER_OTHER_DISPLAY_NAME": "ditt nuvarande bolag",
+  "PRICE_INTENT_NOTIFICATION_CURRENT_INSURER_AND_STARTDATE_KNOWN": "Vi hämtade ditt slutdatum hos {{COMPANY_NAME}}. Glöm inte att säga upp din gamla försäkring.",
+  "PRICE_INTENT_NOTIFICATION_CURRENT_INSURER_AND_STARTDATE_UNKNOWN": "Bilen är försäkrad hos {{COMPANY_NAME}}. Ange ditt slutdatum nedan. Glöm inte att säga upp din gamla försäkring.",
+  "PRICE_INTENT_NOTIFICATION_CURRENT_INSURER_KNOWN_STARTDATE_UNKNOWN": "Bilen är försäkrad hos {{COMPANY_NAME}}. Ange ditt slutdatum nedan. Glöm inte att säga upp din gamla försäkring."
+}
