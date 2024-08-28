@@ -1,4 +1,5 @@
 import type { ApolloClient } from '@apollo/client'
+import { productDataFetchOptions } from '@/services/apollo/productDataFetchOptions'
 import type { ProductMetadataQuery } from '@/services/graphql/generated'
 import { ProductMetadataDocument } from '@/services/graphql/generated'
 
@@ -11,6 +12,7 @@ type Params = {
 export const fetchGlobalProductMetadata = async ({ apolloClient }: Params) => {
   const { data } = await apolloClient.query<ProductMetadataQuery>({
     query: ProductMetadataDocument,
+    context: { fetchOptions: productDataFetchOptions },
   })
   return data.availableProducts
 }

@@ -1,4 +1,5 @@
 import { type ApolloClient, type DefaultContext } from '@apollo/client'
+import { productDataFetchOptions } from '@/services/apollo/productDataFetchOptions'
 import {
   ProductDataDocument,
   type ProductDataQuery,
@@ -19,7 +20,7 @@ export const fetchProductData = async ({
   const { data } = await apolloClient.query<ProductDataQuery, ProductDataQueryVariables>({
     query: ProductDataDocument,
     variables,
-    context,
+    context: context ?? { fetchOptions: productDataFetchOptions },
   })
 
   if (!data.product) {
