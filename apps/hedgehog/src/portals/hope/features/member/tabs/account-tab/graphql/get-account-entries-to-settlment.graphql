@@ -1,0 +1,19 @@
+query GetAccountEntriesToSettlement($settlementId: ID!) {
+  accountEntriesToSettlement(settlementId: $settlementId) {
+    entryId
+    instalment {
+      instalmentId
+      agreementId
+      insuranceType
+      periodStart
+      periodEnd
+    }
+    type
+    subtype
+    chargeDueDate
+    amount
+    currency
+    createdAt
+    comment
+  }
+}

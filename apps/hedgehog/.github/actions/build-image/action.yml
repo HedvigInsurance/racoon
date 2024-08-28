@@ -1,0 +1,37 @@
+name: 'Build and Push Docker Image'
+description: 'Builds and pushes a Docker image to Amazon ECR'
+inputs:
+  environment:
+    description: 'Deployment environment'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ env.ACTIONS_AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ env.ACTIONS_AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-central-1
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v2
+
+    - name: Build, tag, and push image to Amazon ECR
+      uses: docker/build-push-action@v6
+      with:
+        context: .
+        push: true
+        tags: ${{ steps.login-ecr.outputs.registry }}/${{ github.event.repository.name }}:${{ github.sha }}.${{ inputs.environment }}
+        build-args: |
+          NEXT_PUBLIC_API_URL=${{ env.NEXT_PUBLIC_API_URL }}
+          NEXT_PUBLIC_AUTH_HOST=${{ env.NEXT_PUBLIC_AUTH_HOST }}
+          NEXT_PUBLIC_HEDVIG_COM=${{ env.NEXT_PUBLIC_HEDVIG_COM }}
+          NEXT_PUBLIC_HEDVIG_APP=${{ env.NEXT_PUBLIC_HEDVIG_APP }}
+          NEXT_PUBLIC_STAGING_TOOLS_ENABLED=${{ env.NEXT_PUBLIC_STAGING_TOOLS_ENABLED }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max

@@ -1,0 +1,48 @@
+name: 'Deploy to Environment'
+description: 'Deploys a Docker image to the specified environment'
+inputs:
+  environment:
+    description: 'Deployment environment'
+    required: true
+  cluster:
+    description: 'Cluster path'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout prod-env repo
+      uses: actions/checkout@v4
+      with:
+        repository: 'HedvigInsurance/prod-env'
+        ref: master
+        token: ${{ env.ACTIONS_GITHUB_PAT }}
+
+    - name: Update image tag in kustomization.yml
+      env:
+        SHA: ${{ github.sha }}
+        REPO: ${{ github.event.repository.name }}
+      shell: bash
+      run: |
+        cd ${{ inputs.cluster }}/default/$REPO
+        curl -s 'https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh' | bash
+        ./kustomize edit set image $REPO=201427539538.dkr.ecr.eu-central-1.amazonaws.com/$REPO:$SHA.${{ inputs.environment }}
+        cat kustomization.yml
+        rm kustomize
+
+    - name: Commit and push to prod-env
+      env:
+        IMAGE_TAG: ${{ github.sha }}.${{ inputs.environment }}
+        REPO: ${{ github.event.repository.name }}
+        AUTHOR: ${{ github.event.pull_request.user.login }}
+      shell: bash
+      run: |
+        git config user.name github_actions
+        git config user.email tech@hedvig.com
+        git add -u
+        git commit -m "Auto-release ${{ inputs.environment }}. (service: $REPO, tag: $IMAGE_TAG, author: $AUTHOR)"
+        git push
+    
+    - name: Checkout Hedgehog repo
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ github.repository }}

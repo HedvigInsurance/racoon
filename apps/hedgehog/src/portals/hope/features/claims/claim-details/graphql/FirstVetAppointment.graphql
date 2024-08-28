@@ -1,0 +1,12 @@
+fragment FirstVetAppointment on FirstVetAppointment {
+  id
+  memberId
+  contractId
+  claimId
+  appointmentId
+  journalId
+  journalComplete
+  invoiceComplete
+  createdAt
+  updatedAt
+}

@@ -1,0 +1,5 @@
+fragment ClaimMemberStatement on ClaimMemberStatement {
+  generalStatement
+  liableParty
+  reasonOfLiability
+}

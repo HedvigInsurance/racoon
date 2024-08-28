@@ -1,0 +1,6 @@
+query GetClaimProperty($id: ID!) {
+  claimProperty(id: $id) {
+    id
+    name
+  }
+}

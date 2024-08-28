@@ -1,0 +1,13 @@
+
+fragment ClaimInsurableLimits on InsurableLimits {
+    id
+    description
+    totalLimit
+    totalUsage
+    categories {
+        id
+        displayName
+        usage
+        limit
+    }
+}

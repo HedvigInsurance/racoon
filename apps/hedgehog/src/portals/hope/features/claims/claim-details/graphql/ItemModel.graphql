@@ -1,0 +1,16 @@
+fragment ItemModel on ItemModel {
+  addedAt
+  addedBy
+  availableRepairProblems
+  brand
+  id
+  imageUrl
+  name
+  repurchasePrice
+  repairInfos {
+    ...RepairInfo
+  }
+  type
+  updatedAt
+  updatedBy
+}

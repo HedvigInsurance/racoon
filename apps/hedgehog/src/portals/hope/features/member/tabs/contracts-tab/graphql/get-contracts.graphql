@@ -1,0 +1,124 @@
+query GetContracts($memberId: ID!) {
+  member(id: $memberId) {
+    memberId
+    contracts {
+      id
+      holderMember {
+        memberId
+      }
+      insurableLimits {
+        ...ClaimInsurableLimits
+      }
+      switchedFrom
+      masterInception
+      status
+      terminationDate
+      terminationReason
+      terminationComment
+      terminatedBy
+      deletedAt
+      currentAgreement {
+        id
+        fromDate
+        toDate
+        carrier
+        typeOfContractDisplayName
+        address {
+          street
+          city
+          postalCode
+        }
+        registrationNumber
+        ...AgreementPetInfo
+      }
+      hasPendingAgreement
+      genericAgreements {
+        id
+        fromDate
+        toDate
+        premium {
+          amount
+          currency
+        }
+        certificateUrl
+        status
+        typeOfContract
+        termsAndConditions {
+          commencementDate
+          displayName
+          url
+        }
+        address {
+          street
+          city
+          postalCode
+        }
+        objectTitle
+        objectValue
+        objectDescription
+        numberCoInsured
+        coInsured {
+          ...AgreementCoInsured
+        }
+        squareMeters
+        ancillaryArea
+        yearOfConstruction
+        yearOfOwnership
+        numberOfBathrooms
+        extraBuildings {
+          id
+          type
+          area
+          hasWaterConnected
+        }
+        isSubleted
+        typeOfContract
+        typeOfContractDisplayName
+        registrationNumber
+        mileage
+        carrier
+        partner
+        createdAt
+        ...AgreementPetInfo
+      }
+      hasQueuedRenewal
+      renewal {
+        renewalDate
+        draftOfAgreementId
+      }
+      preferredCurrency
+      market
+      signSource
+      insuranceType
+      createdAt
+      isLocked
+      selfChangeBlockers
+      travelCertificates {
+        id
+        startDate
+        endDate
+        expiryDate
+        url
+        createdByUser {
+          __typename
+          ... on AdminSystemUser {
+            ...AdminSystemUser
+          }
+          ... on EmailSystemUser {
+            id
+            email
+            name
+          }
+          ... on MemberSystemUser {
+            memberId
+          }
+          ... on UnknownSystemUser {
+            id
+            name
+          }
+        }
+        source
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+query GetClaimTypeTemplate($claimType: String!) {
+  claimTypeTemplate(claimType: $claimType) {
+    claimType
+    properties {
+      propertyId
+      name
+      options {
+        id
+        name
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+mutation refundDeptToMember(
+  $memberId: ID!
+  $initiateAutomaticPayout: Boolean!
+) {
+  refundDeptToMember(
+    memberId: $memberId
+    initiateAutomaticPayout: $initiateAutomaticPayout
+  ) {
+    memberId
+  }
+}

@@ -1,0 +1,11 @@
+fragment PropertySelection on ClaimPropertySelection {
+  claimType
+  property {
+    id
+    name
+  }
+  option {
+    id
+    name
+  }
+}

@@ -1,0 +1,8 @@
+mutation writeOffMemberDebt($memberId: ID!, $untilIncludingDate: Date) {
+  writeOffMemberDebt(
+    memberId: $memberId
+    untilIncludingDate: $untilIncludingDate
+  ) {
+    memberId
+  }
+}

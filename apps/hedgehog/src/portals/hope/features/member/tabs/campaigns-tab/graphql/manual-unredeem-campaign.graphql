@@ -1,0 +1,13 @@
+mutation ManualUnRedeemCampaign(
+  $memberId: ID!
+  $request: ManualUnRedeemCampaignInput!
+) {
+  manualUnRedeemCampaign(memberId: $memberId, request: $request) {
+    memberId
+    referralInformation {
+      redeemedCampaigns {
+        code
+      }
+    }
+  }
+}

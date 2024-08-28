@@ -1,0 +1,9 @@
+mutation RevertTermination($contractId: ID!) {
+  revertTermination(contractId: $contractId) {
+    id
+    holderMember {
+      memberId
+    }
+    terminationDate
+  }
+}

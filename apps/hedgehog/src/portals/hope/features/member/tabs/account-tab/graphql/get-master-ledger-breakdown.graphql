@@ -1,0 +1,72 @@
+query GetMasterLedgerBreakdown($memberId: ID!) {
+  member(id: $memberId) {
+    memberId
+    countryCode
+    contractMarketInfo {
+      market
+    }
+    payoutMethodStatus {
+      activated
+    }
+    contracts {
+      terminationDate
+    }
+    masterLedgerBreakdown {
+      upcomingChargeEstimation {
+        amount
+        currency
+        chargeDueDate
+        accountEntries {
+          entryId
+          instalment {
+            instalmentId
+            agreementId
+            insuranceType
+            periodStart
+            periodEnd
+          }
+          type
+          subtype
+          chargeDueDate
+          amount
+          currency
+          createdAt
+          comment
+        }
+      }
+      outstandingAmountBreakdown {
+        amount
+        currency
+        accountEntries {
+          entryId
+          instalment {
+            instalmentId
+            agreementId
+            insuranceType
+            periodStart
+            periodEnd
+          }
+          type
+          subtype
+          chargeDueDate
+          amount
+          currency
+          createdAt
+          comment
+        }
+      }
+      settlements {
+        settlementId
+        type
+        status
+        failedReason
+        transactionId
+        createdAt
+        settledAt
+        amount
+        currency
+        comment
+      }
+    }
+  }
+}

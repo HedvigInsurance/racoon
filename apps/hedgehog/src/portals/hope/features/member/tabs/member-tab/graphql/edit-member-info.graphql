@@ -1,0 +1,9 @@
+mutation EditMemberInfo($request: EditMemberInfoInput!) {
+  editMemberInfo(request: $request) {
+    memberId
+    firstName
+    lastName
+    email
+    phoneNumber
+  }
+}

@@ -1,0 +1,6 @@
+mutation CreateClaimProperty($name: String!) {
+  createClaimProperty(name: $name) {
+    id
+    name
+  }
+}

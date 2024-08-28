@@ -1,0 +1,12 @@
+mutation PayoutMember($memberId: ID!, $request: PayoutMemberInput!) {
+  payoutMember(memberId: $memberId, request: $request) {
+    id
+    amount {
+      amount
+      currency
+    }
+    timestamp
+    type
+    status
+  }
+}

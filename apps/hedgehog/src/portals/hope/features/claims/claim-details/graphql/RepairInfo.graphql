@@ -1,0 +1,5 @@
+fragment RepairInfo on RepairInfo {
+  cost
+  createdAt
+  problem
+}

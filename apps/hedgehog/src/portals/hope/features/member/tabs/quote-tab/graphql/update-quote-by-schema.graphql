@@ -1,0 +1,15 @@
+mutation UpdateQuoteBySchema(
+  $quoteId: ID!
+  $schemaData: JSON!
+  $bypassUnderwritingGuidelines: Boolean!
+  $startDate: Date
+) {
+  updateQuoteBySchema(
+    quoteId: $quoteId
+    schemaData: $schemaData
+    bypassUnderwritingGuidelines: $bypassUnderwritingGuidelines
+    startDate: $startDate
+  ) {
+    id
+  }
+}

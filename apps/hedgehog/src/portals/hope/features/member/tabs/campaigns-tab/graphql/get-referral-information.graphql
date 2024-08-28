@@ -1,0 +1,71 @@
+query GetReferralInformation($memberId: ID!) {
+  member(id: $memberId) {
+    memberId
+
+    referralInformation {
+      eligible
+      redeemedCampaigns {
+        code
+        type
+        redemptionState {
+          redeemedAt
+          activatedAt
+          activeTo
+          unRedeemedAt
+        }
+        incentive {
+          __typename
+          ... on MonthlyPercentageDiscountFixedPeriod {
+            numberOfMonths
+            percentage
+          }
+          ... on FreeMonths {
+            numberOfMonths
+          }
+          ... on CostDeduction {
+            amount
+          }
+          ... on IndefinitePercentageDiscount {
+            percentageDiscount
+          }
+        }
+        voucherCampaignData {
+          partnerName
+          insuranceTypes
+        }
+      }
+      campaign {
+        code
+        incentive {
+          __typename
+          ... on MonthlyPercentageDiscountFixedPeriod {
+            numberOfMonths
+            percentage
+          }
+          ... on FreeMonths {
+            numberOfMonths
+          }
+          ... on CostDeduction {
+            amount
+          }
+          ... on NoDiscount {
+            _
+          }
+          ... on IndefinitePercentageDiscount {
+            percentageDiscount
+          }
+        }
+      }
+      referredBy {
+        memberId
+        name
+        status
+      }
+      hasReferred {
+        memberId
+        name
+        status
+      }
+    }
+  }
+}

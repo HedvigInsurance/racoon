@@ -1,0 +1,3 @@
+mutation DeleteClaimTypeRelation($id: ID!) {
+  deleteClaimTypeRelation(id: $id)
+}

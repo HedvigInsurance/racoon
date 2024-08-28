@@ -1,0 +1,422 @@
+[
+  {
+    "codeID": "0101",
+    "codeDescription": "HEM, HYRES-/BOSTADSRÄTT, BRAND"
+  },
+  {
+    "codeID": "0102",
+    "codeDescription": "HEM, HYRES-/BOSTADSRÄTT, INBROTT"
+  },
+  {
+    "codeID": "0103",
+    "codeDescription": "HEM, HYRES-/BOSTADSRÄTT, CYKEL"
+  },
+  {
+    "codeID": "0104",
+    "codeDescription": "HEM, HYRES-/BOSTADSRÄTT, RÅN/ÖVERFALL"
+  },
+  {
+    "codeID": "0105",
+    "codeDescription": "HEM, HYRES-/BOSTADSRÄTT, ÖVRIG STÖLD Stöld av medförd egendom utanför bostaden"
+  },
+  {
+    "codeID": "0106",
+    "codeDescription": "HEM, HYRES-/BOSTADSRÄTT, ALLRISK Även sjukdom/olycksfall på resa"
+  },
+  {
+    "codeID": "0204",
+    "codeDescription": "SEPARAT RESE, RÅN/ÖVERFALL"
+  },
+  {
+    "codeID": "0205",
+    "codeDescription": "SEPARAT RESE, ÖVRIG STÖLD Stöld av medförd egendom på resa"
+  },
+  {
+    "codeID": "0301",
+    "codeDescription": "HEM, VILLA, BRAND"
+  },
+  {
+    "codeID": "0302",
+    "codeDescription": "HEM, VILLA, INBROTT"
+  },
+  {
+    "codeID": "0303",
+    "codeDescription": "HEM, VILLA, CYKEL "
+  },
+  {
+    "codeID": "0304",
+    "codeDescription": "HEM, VILLA, RÅN/ÖVERFALL"
+  },
+  {
+    "codeID": "0305",
+    "codeDescription": "HEM, VILLA, ÖVRIG STÖLD Stöld av medförd egendom utanför bostaden"
+  },
+  {
+    "codeID": "0306",
+    "codeDescription": "HEM, VILLA, ALLRISK Även sjukdom/olycksfall på resa"
+  },
+  {
+    "codeID": "0401",
+    "codeDescription": "FRITIDSHUS, BRAND             "
+  },
+  {
+    "codeID": "0402",
+    "codeDescription": "FRITIDSHUS, INBROTT           "
+  },
+  {
+    "codeID": "0403",
+    "codeDescription": "FRITIDSHUS, CYKEL             "
+  },
+  {
+    "codeID": "0404",
+    "codeDescription": "FRITIDSHUS, RÅN/ÖVERFALL"
+  },
+  {
+    "codeID": "0405",
+    "codeDescription": "FRITIDSHUS, ÖVRIG STÖLD       "
+  },
+  {
+    "codeID": "0406",
+    "codeDescription": "FRITIDSHUS, ALLRISK           "
+  },
+  {
+    "codeID": "0801",
+    "codeDescription": "SEPARAT BÅT, BRAND            "
+  },
+  {
+    "codeID": "0802",
+    "codeDescription": "SEPARAT BÅT, INBROTT Även stöld och skadegörelse"
+  },
+  {
+    "codeID": "0905",
+    "codeDescription": "SEPARAT SPECIAL, ÖVRIG STÖLD  "
+  },
+  {
+    "codeID": "0906",
+    "codeDescription": "SEPARAT SPECIAL, ALLRISK      "
+  },
+  {
+    "codeID": "2001",
+    "codeDescription": "PRIVATMOTOR, KASKO, BRAND"
+  },
+  {
+    "codeID": "2002",
+    "codeDescription": "PRIVATMOTOR, KASKO, INBROTT Även tillgrepp"
+  },
+  {
+    "codeID": "3000",
+    "codeDescription": "OLYCKSFALL INDIVIDUELL"
+  },
+  {
+    "codeID": "3100",
+    "codeDescription": "OLYCKSFALL GRUPP"
+  },
+  {
+    "codeID": "4000",
+    "codeDescription": "SJUK INDIVIDUELL              "
+  },
+  {
+    "codeID": "4100",
+    "codeDescription": "SJUK GRUPP                    "
+  },
+  {
+    "codeID": "8081",
+    "codeDescription": "TRAFIKSKADA, SAK"
+  },
+  {
+    "codeID": "8082",
+    "codeDescription": "TRAFIKSKADA, PERSON"
+  },
+  {
+    "codeID": "0202",
+    "codeDescription": "SEPARAT RESE, INBROTT"
+  },
+  {
+    "codeID": "0206",
+    "codeDescription": "SEPARAT RESE, ALLRISK Även sjukdom/olycksfall på resa"
+  },
+  {
+    "codeID": "2007",
+    "codeDescription": "PRIVATMOTOR, KASKO, VAGNSKADA"
+  },
+  {
+    "codeID": "2008",
+    "codeDescription": "PRIVATMOTOR, KASKO, VAGNSKADEGARANTI"
+  },
+  {
+    "codeID": "7101",
+    "codeDescription": "FÖRETAG, BRAND"
+  },
+  {
+    "codeID": "7102",
+    "codeDescription": "FÖRETAG, INBROTT"
+  },
+  {
+    "codeID": "7104",
+    "codeDescription": "FÖRETAG, RÅN/ÖVERFALL"
+  },
+  {
+    "codeID": "7105",
+    "codeDescription": "FÖRETAG, ÖVRIG STÖLD"
+  },
+  {
+    "codeID": "7106",
+    "codeDescription": "FÖRETAG, ALLRISK"
+  },
+  {
+    "codeID": "7109",
+    "codeDescription": "FÖRETAG, AVBROTT"
+  },
+  {
+    "codeID": "7201",
+    "codeDescription": "FÖRETAGSMOTOR, KASKO, BRAND"
+  },
+  {
+    "codeID": "7202",
+    "codeDescription": "FÖRETAGSMOTOR, KASKO, INBROTT Även tillgrepp"
+  },
+  {
+    "codeID": "7204",
+    "codeDescription": "FÖRETAGSMOTOR, KASKO, RÅN/ÖVERFALL"
+  },
+  {
+    "codeID": "7205",
+    "codeDescription": "FÖRETAGSMOTOR, KASKO, ÖVRIG STÖLD"
+  },
+  {
+    "codeID": "7206",
+    "codeDescription": "FÖRETAGSMOTOR, KASKO, ALLRISK"
+  },
+  {
+    "codeID": "7209",
+    "codeDescription": "FÖRETAGSMOTOR, KASKO, AVBROTT"
+  },
+  {
+    "codeID": "7301",
+    "codeDescription": "FÖRETAGSTRANSPORT, BRAND"
+  },
+  {
+    "codeID": "7302",
+    "codeDescription": "FÖRETAGSTRANSPORT, INBROTT"
+  },
+  {
+    "codeID": "7304",
+    "codeDescription": "FÖRETAGSTRANSPORT, RÅN/ÖVERFALL"
+  },
+  {
+    "codeID": "7305",
+    "codeDescription": "FÖRETAGSTRANSPORT, ÖVRIG STÖLD"
+  },
+  {
+    "codeID": "7306",
+    "codeDescription": "FÖRETAGSTRANSPORT, ALLRISK"
+  },
+  {
+    "codeID": "7401",
+    "codeDescription": "FÖRETAGSFASTIGHET, BRAND"
+  },
+  {
+    "codeID": "7402",
+    "codeDescription": "FÖRETAGSFASTIGHET, INBROTT"
+  },
+  {
+    "codeID": "7404",
+    "codeDescription": "FÖRETAGSFASTIGHET, RÅN/ÖVERFALL "
+  },
+  {
+    "codeID": "7405",
+    "codeDescription": "FÖRETAGSFASTIGHET, ÖVRIG STÖLD"
+  },
+  {
+    "codeID": "7406",
+    "codeDescription": "FÖRETAGSFASTIGHET, ALLRISK"
+  },
+  {
+    "codeID": "7409",
+    "codeDescription": "FÖRETAGSFASTIGHET, AVBROTT"
+  },
+  {
+    "codeID": "7501",
+    "codeDescription": "TJÄNSTERESA, BRAND            "
+  },
+  {
+    "codeID": "7502",
+    "codeDescription": "TJÄNSTERESA, INBROTT          "
+  },
+  {
+    "codeID": "7504",
+    "codeDescription": "TJÄNSTERESA, RÅN/ÖVERFALL     "
+  },
+  {
+    "codeID": "7505",
+    "codeDescription": "TJÄNSTERESA, ÖVRIG STÖLD      "
+  },
+  {
+    "codeID": "7506",
+    "codeDescription": "TJÄNSTERESA, ALLRISK          "
+  },
+  {
+    "codeID": "0805",
+    "codeDescription": "SEPARAT BÅT, ÖVRIG STÖLD      "
+  },
+  {
+    "codeID": "0201",
+    "codeDescription": "SEPARAT RESE, BRAND"
+  },
+  {
+    "codeID": "4010",
+    "codeDescription": "INDIVIDUELL, LIV Enbart dödsfall"
+  },
+  {
+    "codeID": "4110",
+    "codeDescription": "GRUPP, LIV Enbart dödsfall"
+  },
+  {
+    "codeID": "3010",
+    "codeDescription": "OLYCKSFALL INDIVIDUELL, LIV Enbart dödsfall"
+  },
+  {
+    "codeID": "3110",
+    "codeDescription": "OLYCKSFALL GRUPP, LIV Enbart dödsfall"
+  },
+  {
+    "codeID": "4020",
+    "codeDescription": "SJUK INDIVIDUELL, INKOMSTBORTFALL"
+  },
+  {
+    "codeID": "4120",
+    "codeDescription": "SJUK GRUPP, INKOMSTBORTFALL"
+  },
+  {
+    "codeID": "0830",
+    "codeDescription": "SEPARAT BÅT, SJÖSKADA         "
+  },
+  {
+    "codeID": "4030",
+    "codeDescription": "SJUK INDIVIDUELL, PREMIEBEFRIELSE"
+  },
+  {
+    "codeID": "4130",
+    "codeDescription": "SJUK GRUPP, PREMIEBEFRIELSE"
+  },
+  {
+    "codeID": "9001",
+    "codeDescription": "HÄST, VETERINÄRVÅRD           "
+  },
+  {
+    "codeID": "9002",
+    "codeDescription": "HÄST, AVEL                    "
+  },
+  {
+    "codeID": "9003",
+    "codeDescription": "HÄST, ANVÄNDBARHET            "
+  },
+  {
+    "codeID": "9004",
+    "codeDescription": "HÄST, LIV                     "
+  },
+  {
+    "codeID": "9005",
+    "codeDescription": "HÄST, ÖVRIGT                  "
+  },
+  {
+    "codeID": "9101",
+    "codeDescription": "HUND, VETERINÄRVÅRD           "
+  },
+  {
+    "codeID": "9102",
+    "codeDescription": "HUND, AVEL                    "
+  },
+  {
+    "codeID": "9103",
+    "codeDescription": "HUND, ANVÄNDBARHET            "
+  },
+  {
+    "codeID": "9104",
+    "codeDescription": "HUND, LIV                     "
+  },
+  {
+    "codeID": "9105",
+    "codeDescription": "HUND, ÖVRIGT                  "
+  },
+  {
+    "codeID": "9201",
+    "codeDescription": "KATT, VETERINÄRVÅRD           "
+  },
+  {
+    "codeID": "9202",
+    "codeDescription": "KATT, AVEL                    "
+  },
+  {
+    "codeID": "9203",
+    "codeDescription": "KATT, ANVÄNDBARHET            "
+  },
+  {
+    "codeID": "9204",
+    "codeDescription": "KATT, LIV                     "
+  },
+  {
+    "codeID": "9205",
+    "codeDescription": "KATT, ÖVRIGT                  "
+  },
+  {
+    "codeID": "9301",
+    "codeDescription": "ÖVRIGA SMÅDJUR, VETERINÄRVÅRD "
+  },
+  {
+    "codeID": "9302",
+    "codeDescription": "ÖVRIGA SMÅDJUR, AVEL          "
+  },
+  {
+    "codeID": "9303",
+    "codeDescription": "ÖVRIGA SMÅDJUR, ANVÄNDBARHET  "
+  },
+  {
+    "codeID": "9304",
+    "codeDescription": "ÖVRIGA SMÅDJUR, LIV           "
+  },
+  {
+    "codeID": "9305",
+    "codeDescription": "ÖVRIGA SMÅDJUR, ÖVRIGT        "
+  },
+  {
+    "codeID": "9401",
+    "codeDescription": "NÖT, VETERINÄRVÅRD            "
+  },
+  {
+    "codeID": "9402",
+    "codeDescription": "NÖT, AVEL                     "
+  },
+  {
+    "codeID": "9403",
+    "codeDescription": "NÖT, ANVÄNDBARHET             "
+  },
+  {
+    "codeID": "9404",
+    "codeDescription": "NÖT, LIV                      "
+  },
+  {
+    "codeID": "9405",
+    "codeDescription": "NÖT, ÖVRIGT                   "
+  },
+  {
+    "codeID": "9501",
+    "codeDescription": "Ö LANTBRUKSDJUR, VETERINÄRVÅRD"
+  },
+  {
+    "codeID": "9502",
+    "codeDescription": "Ö LANTBRUKSDJUR, AVEL         "
+  },
+  {
+    "codeID": "9503",
+    "codeDescription": "Ö LANTBRUKSDJUR, ANVÄNDBARHET "
+  },
+  {
+    "codeID": "9504",
+    "codeDescription": "Ö LANTBRUKSDJUR, LIV          "
+  },
+  {
+    "codeID": "9505",
+    "codeDescription": "Ö LANTBRUKSDJUR , ÖVRIGT"
+  }
+]

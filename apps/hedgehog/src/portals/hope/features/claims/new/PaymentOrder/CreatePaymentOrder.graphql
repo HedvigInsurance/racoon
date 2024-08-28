@@ -1,0 +1,17 @@
+
+
+mutation SubclaimCreatePaymentOrder(
+    $subclaimId: ID!
+    $paymentOrder: UpsertPaymentOrderInput!
+  ) {
+    subclaim_createPaymentOrder(
+      subclaimId: $subclaimId
+      paymentOrder: $paymentOrder
+    ) {
+      id
+      outcome
+      paymentOrders {
+        ...PaymentOrderInformation
+      }
+    }
+  }

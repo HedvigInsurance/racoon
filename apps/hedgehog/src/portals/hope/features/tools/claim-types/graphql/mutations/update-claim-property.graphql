@@ -1,0 +1,6 @@
+mutation UpdateClaimProperty($id: ID!, $name: String!) {
+  updateClaimProperty(id: $id, name: $name) {
+    id
+    name
+  }
+}

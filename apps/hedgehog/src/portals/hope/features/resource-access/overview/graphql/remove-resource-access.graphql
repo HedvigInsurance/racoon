@@ -1,0 +1,27 @@
+mutation RemoveResourceAccess(
+  $resourceId: ID!
+  $grantHolder: String!
+  $grantHolderType: GrantHolderType!
+) {
+  removeResourceAccess(
+    resourceId: $resourceId
+    grantHolder: $grantHolder
+    grantHolderType: $grantHolderType
+  ) {
+    resourceId
+    usersGranted {
+      id
+      email
+      fullName
+      role
+    }
+    usersRestricted {
+      id
+      email
+      fullName
+      role
+    }
+    rolesGranted
+    rolesRestricted
+  }
+}

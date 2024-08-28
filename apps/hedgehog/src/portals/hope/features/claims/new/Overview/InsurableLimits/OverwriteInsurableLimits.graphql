@@ -1,0 +1,6 @@
+
+mutation OverwriterInsurableLimits($input: InsurableLimitsOverwriteInput!) {
+    insurableLimits_overwrite(input: $input) {
+        ...ClaimInsurableLimits
+    }
+}

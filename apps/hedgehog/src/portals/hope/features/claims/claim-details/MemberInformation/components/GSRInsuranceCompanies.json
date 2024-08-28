@@ -1,0 +1,662 @@
+[
+  {
+    "companyId": "22073",
+    "name": "AKTSAM"
+  },
+  {
+    "companyId": "21004",
+    "name": "ASPIS LIVFÖRSÄKRING"
+  },
+  {
+    "companyId": "99999",
+    "name": "BISNODE"
+  },
+  {
+    "companyId": "21150",
+    "name": "BLIWA"
+  },
+  {
+    "companyId": "21080",
+    "name": "BNP PARIBAS CARDIF"
+  },
+  {
+    "companyId": "22450",
+    "name": "BSB FÖRSÄKRINGAR"
+  },
+  {
+    "companyId": "13337",
+    "name": "byBrick Development AB"
+  },
+  {
+    "companyId": "23024",
+    "name": "DALARNAS FÖRSÄKRING"
+  },
+  {
+    "companyId": "23800",
+    "name": "DINA ALFTA OVANÅKER"
+  },
+  {
+    "companyId": "23330",
+    "name": "DINA ALMUNDSRYD"
+  },
+  {
+    "companyId": "23930",
+    "name": "DINA BERG-ÅRE"
+  },
+  {
+    "companyId": "23630",
+    "name": "DINA BOLSTAD"
+  },
+  {
+    "companyId": "23902",
+    "name": "DINA BORGSJÖ-HAVERÖ"
+  },
+  {
+    "companyId": "23501",
+    "name": "DINA BREARED"
+  },
+  {
+    "companyId": "23730",
+    "name": "DINA BRUNSKOG"
+  },
+  {
+    "companyId": "23201",
+    "name": "DINA CENTRALT"
+  },
+  {
+    "companyId": "23340",
+    "name": "DINA DACKE-VÄXJÖBY"
+  },
+  {
+    "companyId": "23503",
+    "name": "DINA FALKENBERGSORT"
+  },
+  {
+    "companyId": "23804",
+    "name": "DINA GÄVLE-SANDVIKEN"
+  },
+  {
+    "companyId": "23709",
+    "name": "DINA GÖTEBORG"
+  },
+  {
+    "companyId": "23708",
+    "name": "DINA HABO"
+  },
+  {
+    "companyId": "23808",
+    "name": "DINA HELSINGE"
+  },
+  {
+    "companyId": "23917",
+    "name": "DINA HÄRNÖSANDSBYGD"
+  },
+  {
+    "companyId": "23912",
+    "name": "DINA HÖGA KUSTEN"
+  },
+  {
+    "companyId": "23900",
+    "name": "DINA JÄMTLAND"
+  },
+  {
+    "companyId": "23360",
+    "name": "DINA KALMAR-NYBRO"
+  },
+  {
+    "companyId": "23633",
+    "name": "DINA KNALLEBYGDEN"
+  },
+  {
+    "companyId": "23508",
+    "name": "DINA KUNGSBACKAORT"
+  },
+  {
+    "companyId": "23603",
+    "name": "DINA KVILLE"
+  },
+  {
+    "companyId": "23506",
+    "name": "DINA LAGADALEN"
+  },
+  {
+    "companyId": "23601",
+    "name": "DINA LANE-RYR"
+  },
+  {
+    "companyId": "23711",
+    "name": "DINA LIDKÖPINGSORT"
+  },
+  {
+    "companyId": "23333",
+    "name": "DINA LINNERYD"
+  },
+  {
+    "companyId": "23732",
+    "name": "DINA LÅNGSERUD"
+  },
+  {
+    "companyId": "23710",
+    "name": "DINA MELL.VÄSTERGÖTA"
+  },
+  {
+    "companyId": "23951",
+    "name": "DINA MELLANBYGDEN"
+  },
+  {
+    "companyId": "23809",
+    "name": "DINA MELLANLJUSNAN"
+  },
+  {
+    "companyId": "23925",
+    "name": "DINA MELLANNORRLAND"
+  },
+  {
+    "companyId": "23707",
+    "name": "DINA MELLANSJÖ"
+  },
+  {
+    "companyId": "23906",
+    "name": "DINA MITTFÖRSÄKRING"
+  },
+  {
+    "companyId": "23420",
+    "name": "DINA MÄLARDALEN"
+  },
+  {
+    "companyId": "23806",
+    "name": "DINA NEDRE DALÄLVEN"
+  },
+  {
+    "companyId": "23761",
+    "name": "DINA NERIKE"
+  },
+  {
+    "companyId": "23909",
+    "name": "DINA NOLASKOG"
+  },
+  {
+    "companyId": "23337",
+    "name": "DINA NOTTEBÄCK"
+  },
+  {
+    "companyId": "23913",
+    "name": "DINA NÄTRA"
+  },
+  {
+    "companyId": "23810",
+    "name": "DINA OCKELBO"
+  },
+  {
+    "companyId": "23361",
+    "name": "DINA OSKARHAMNSBYGD"
+  },
+  {
+    "companyId": "23960",
+    "name": "DINA PITEORTEN"
+  },
+  {
+    "companyId": "23602",
+    "name": "DINA SKREDSVIK"
+  },
+  {
+    "companyId": "23812",
+    "name": "DINA SKYDD"
+  },
+  {
+    "companyId": "23509",
+    "name": "DINA SNÖSTORP-TRÖNN"
+  },
+  {
+    "companyId": "23304",
+    "name": "DINA STENGÅRDSHULT"
+  },
+  {
+    "companyId": "23430",
+    "name": "DINA SVELAND"
+  },
+  {
+    "companyId": "23813",
+    "name": "DINA SYDÖSTRA HÄLSIN"
+  },
+  {
+    "companyId": "23703",
+    "name": "DINA SÄRESTAD-BÄREB"
+  },
+  {
+    "companyId": "23332",
+    "name": "DINA SÖDRA VÄREND"
+  },
+  {
+    "companyId": "23704",
+    "name": "DINA TIBRO-TIDAN"
+  },
+  {
+    "companyId": "23904",
+    "name": "DINA TIMRÅORTEN"
+  },
+  {
+    "companyId": "23916",
+    "name": "DINA TORP"
+  },
+  {
+    "companyId": "23814",
+    "name": "DINA TORSÅKER"
+  },
+  {
+    "companyId": "23635",
+    "name": "DINA TUNHEM"
+  },
+  {
+    "companyId": "23706",
+    "name": "DINA TÖREBODA"
+  },
+  {
+    "companyId": "23950",
+    "name": "DINA UMEÅ"
+  },
+  {
+    "companyId": "23344",
+    "name": "DINA UPPVIDINGE ÖST"
+  },
+  {
+    "companyId": "23634",
+    "name": "DINA VALBODALEN"
+  },
+  {
+    "companyId": "23512",
+    "name": "DINA VARBERGSORTEN"
+  },
+  {
+    "companyId": "23303",
+    "name": "DINA VISINGSÖ"
+  },
+  {
+    "companyId": "23513",
+    "name": "DINA VISKADALEN"
+  },
+  {
+    "companyId": "23342",
+    "name": "DINA VÄCKELSÅNG"
+  },
+  {
+    "companyId": "23514",
+    "name": "DINA VÄRÖ"
+  },
+  {
+    "companyId": "23931",
+    "name": "DINA VÄSTRA FÖRSÄKRI"
+  },
+  {
+    "companyId": "23335",
+    "name": "DINA VÄSTRA VÄREND"
+  },
+  {
+    "companyId": "23636",
+    "name": "DINA VÄTTLE"
+  },
+  {
+    "companyId": "23362",
+    "name": "DINA ÅLEM"
+  },
+  {
+    "companyId": "23516",
+    "name": "DINA ÄLVSÅKER"
+  },
+  {
+    "companyId": "23515",
+    "name": "DINA ÄTRADALEN"
+  },
+  {
+    "companyId": "23363",
+    "name": "DINA ÖLAND"
+  },
+  {
+    "companyId": "23230",
+    "name": "DINA ÖSTGÖTA-GRÄNNA"
+  },
+  {
+    "companyId": "22124",
+    "name": "DUNSTAN (HDI)"
+  },
+  {
+    "companyId": "22888",
+    "name": "EIR FÖRSÄKRING"
+  },
+  {
+    "companyId": "21005",
+    "name": "EURO ACCIDENT"
+  },
+  {
+    "companyId": "21959",
+    "name": "EVIDENT LIFE FÖRSÄKRING"
+  },
+  {
+    "companyId": "22764",
+    "name": "EVOLI (EIR)"
+  },
+  {
+    "companyId": "22001",
+    "name": "FOLKSAM SAK"
+  },
+  {
+    "companyId": "21006",
+    "name": "FOLKSAM ÖMSES. LIV"
+  },
+  {
+    "companyId": "21009",
+    "name": "FÖRENADE LIV GRUPP"
+  },
+  {
+    "companyId": "21010",
+    "name": "FÖRENADE LIV LIV"
+  },
+  {
+    "companyId": "22069",
+    "name": "GJENSIDIGE"
+  },
+  {
+    "companyId": "22294",
+    "name": "GOFIDO (EIR)"
+  },
+  {
+    "companyId": "88888",
+    "name": "GSR AB"
+  },
+  {
+    "companyId": "21105",
+    "name": "HANDELSBANKEN LIV"
+  },
+  {
+    "companyId": "21300",
+    "name": "HANNOVER RE"
+  },
+  {
+    "companyId": "21403",
+    "name": "HEDVIG (EIR)"
+  },
+  {
+    "companyId": "21402",
+    "name": "HEDVIG (HDI SPECIALTY)"
+  },
+  {
+    "companyId": "21340",
+    "name": "HEDVIG FÖRSÄKRING AB"
+  },
+  {
+    "companyId": "22161",
+    "name": "ICA FÖRSÄKRING"
+  },
+  {
+    "companyId": "21053",
+    "name": "IDUN LIV FÖRSÄKRING"
+  },
+  {
+    "companyId": "22063",
+    "name": "IF MÄRKESFÖRSÄKRING"
+  },
+  {
+    "companyId": "22062",
+    "name": "IF SKADEFÖRSÄKRING"
+  },
+  {
+    "companyId": "22059",
+    "name": "IKANO FÖRSÄKRING"
+  },
+  {
+    "companyId": "21042",
+    "name": "IKANO LIVFÖRSÄKRING"
+  },
+  {
+    "companyId": "20210",
+    "name": "KAMMARKOLLEGIET"
+  },
+  {
+    "companyId": "21202",
+    "name": "KP PENSION"
+  },
+  {
+    "companyId": "23043",
+    "name": "LF BERGSLAGEN"
+  },
+  {
+    "companyId": "23011",
+    "name": "LF BLEKINGE"
+  },
+  {
+    "companyId": "23099",
+    "name": "LF FÖRETAG"
+  },
+  {
+    "companyId": "23009",
+    "name": "LF GOTLAND"
+  },
+  {
+    "companyId": "23046",
+    "name": "LF GÄVLEBORG"
+  },
+  {
+    "companyId": "23012",
+    "name": "LF GÖINGE"
+  },
+  {
+    "companyId": "23018",
+    "name": "LF GÖTEBORG BOHUS"
+  },
+  {
+    "companyId": "23017",
+    "name": "LF HALLAND"
+  },
+  {
+    "companyId": "23028",
+    "name": "LF JÄMTLAND"
+  },
+  {
+    "companyId": "23005",
+    "name": "LF JÖNKÖPING"
+  },
+  {
+    "companyId": "23007",
+    "name": "LF KALMAR LÄN"
+  },
+  {
+    "companyId": "23014",
+    "name": "LF KRISTIANSTAD"
+  },
+  {
+    "companyId": "23006",
+    "name": "LF KRONOBERG"
+  },
+  {
+    "companyId": "21057",
+    "name": "LF LIV"
+  },
+  {
+    "companyId": "23030",
+    "name": "LF NORRBOTTEN"
+  },
+  {
+    "companyId": "23090",
+    "name": "LF OLYCKSFALL"
+  },
+  {
+    "companyId": "23020",
+    "name": "LF SKARABORG"
+  },
+  {
+    "companyId": "23016",
+    "name": "LF SKÅNE"
+  },
+  {
+    "companyId": "23001",
+    "name": "LF STOCKHOLM"
+  },
+  {
+    "companyId": "23003",
+    "name": "LF SÖDERMANLAND"
+  },
+  {
+    "companyId": "23002",
+    "name": "LF UPPSALA"
+  },
+  {
+    "companyId": "23056",
+    "name": "LF VÄRMLAND"
+  },
+  {
+    "companyId": "23029",
+    "name": "LF VÄSTERBOTTEN"
+  },
+  {
+    "companyId": "23027",
+    "name": "LF VÄSTERNORRLAND"
+  },
+  {
+    "companyId": "23019",
+    "name": "LF ÄLVSBORG"
+  },
+  {
+    "companyId": "23004",
+    "name": "LF ÖSTGÖTA"
+  },
+  {
+    "companyId": "23000",
+    "name": "LFAB"
+  },
+  {
+    "companyId": "22081",
+    "name": "MODERNA FÖRSÄKRINGAR"
+  },
+  {
+    "companyId": "21303",
+    "name": "MOVESTIC LIVFÖRSÄKR"
+  },
+  {
+    "companyId": "21014",
+    "name": "MOVESTIC LIVFÖRSÄKRING"
+  },
+  {
+    "companyId": "21029",
+    "name": "NORDEA LIV"
+  },
+  {
+    "companyId": "21206",
+    "name": "NORDEA LIV O PENSION"
+  },
+  {
+    "companyId": "21302",
+    "name": "NORDEA LIV O PENSION"
+  },
+  {
+    "companyId": "21082",
+    "name": "NORDEUROPA"
+  },
+  {
+    "companyId": "21207",
+    "name": "NORDNET PENSIONSFÖRS"
+  },
+  {
+    "companyId": "21304",
+    "name": "NORDNET PENSIONSFÖRS"
+  },
+  {
+    "companyId": "21203",
+    "name": "PP PENSION"
+  },
+  {
+    "companyId": "21204",
+    "name": "PP PENSION FOND"
+  },
+  {
+    "companyId": "21102",
+    "name": "SALUSANSVAR PERSON"
+  },
+  {
+    "companyId": "21103",
+    "name": "SEB PENSION OCH FÖRSÄKRING"
+  },
+  {
+    "companyId": "22448",
+    "name": "SENSOR (EIR)"
+  },
+  {
+    "companyId": "21003",
+    "name": "SKANDIA"
+  },
+  {
+    "companyId": "22090",
+    "name": "SOLID"
+  },
+  {
+    "companyId": "21100",
+    "name": "SPP"
+  },
+  {
+    "companyId": "22003",
+    "name": "SV.KONSUMENTFÖRSÄKR"
+  },
+  {
+    "companyId": "21205",
+    "name": "SWEDBANK FÖRSÄKRING"
+  },
+  {
+    "companyId": "21101",
+    "name": "SWEDBANK FÖRSÄKRING"
+  },
+  {
+    "companyId": "21401",
+    "name": "SVEDEA (HDI SPECIALTY)"
+  },
+  {
+    "companyId": "21200",
+    "name": "SWEDEN RE"
+  },
+  {
+    "companyId": "22430",
+    "name": "SVELAND"
+  },
+  {
+    "companyId": "22071",
+    "name": "SVELAND DJURFÖRSÄKRINGAR"
+  },
+  {
+    "companyId": "21208",
+    "name": "SVENSK HANDEL FÖRSÄK"
+  },
+  {
+    "companyId": "22002",
+    "name": "TRE KRONOR"
+  },
+  {
+    "companyId": "22074",
+    "name": "TRE KRONOR"
+  },
+  {
+    "companyId": "22072",
+    "name": "TRYGG-HANSA"
+  },
+  {
+    "companyId": "22145",
+    "name": "VARDIA"
+  },
+  {
+    "companyId": "22168",
+    "name": "WATERCIRCLES FORSIKRING ASA NORGE, SVENSK FILIAL"
+  },
+  {
+    "companyId": "21081",
+    "name": "VITAL FÖRSÄKRING"
+  },
+  {
+    "companyId": "22064",
+    "name": "VOLVIA"
+  },
+  {
+    "companyId": "22419",
+    "name": "ZURICH"
+  },
+  {
+    "companyId": "22080",
+    "name": "ÅLANDS ÖMSES. FBOLAG"
+  }
+]

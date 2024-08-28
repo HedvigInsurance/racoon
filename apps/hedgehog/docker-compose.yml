@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  # Docker compose is only used for local image building
+  # In production images are built and deployed through CI and k9s
+  hedgehog:
+    container_name: hedgehog
+    image: hedgehog
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+        NEXT_PUBLIC_AUTH_HOST: ${NEXT_PUBLIC_AUTH_HOST}
+        NEXT_PUBLIC_HEDVIG_COM: ${NEXT_PUBLIC_HEDVIG_COM}
+        NEXT_PUBLIC_HEDVIG_APP: ${NEXT_PUBLIC_HEDVIG_APP}
+        NEXT_PUBLIC_STAGING_TOOLS_ENABLED: ${NEXT_PUBLIC_STAGING_TOOLS_ENABLED}
+    ports:
+      - "3000:3000"

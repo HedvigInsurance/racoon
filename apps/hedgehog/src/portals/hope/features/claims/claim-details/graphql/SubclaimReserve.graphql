@@ -1,0 +1,29 @@
+fragment SubclaimReserve on Reserve {
+  __typename
+  id
+  costCategory
+  amount
+  notes {
+    id
+    text
+    timestamp
+    author {
+      __typename
+      ... on AdminSystemUser {
+        ...AdminSystemUser
+      }
+      ... on EmailSystemUser {
+        id
+        email
+        name
+      }
+      ... on MemberSystemUser {
+        memberId
+      }
+      ... on UnknownSystemUser {
+        id
+        name
+      }
+    }
+  }
+}

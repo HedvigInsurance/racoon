@@ -1,0 +1,15 @@
+mutation CreateQuoteForMemberBySchema(
+  $memberId: ID!
+  $schemaData: JSON!
+  $bypassUnderwritingGuidelines: Boolean!
+  $startDate: Date
+) {
+  createQuoteForMemberBySchema(
+    memberId: $memberId
+    schemaData: $schemaData
+    bypassUnderwritingGuidelines: $bypassUnderwritingGuidelines
+    startDate: $startDate
+  ) {
+    id
+  }
+}

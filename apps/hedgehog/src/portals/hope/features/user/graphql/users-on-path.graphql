@@ -1,0 +1,12 @@
+query UsersOnPath($path: String!) {
+  usersOnPath(path: $path) {
+    id
+    fullName
+    signature
+    role
+    email
+    latestPresence
+    latestLocation
+    checkedIn
+  }
+}

@@ -1,0 +1,3 @@
+mutation CreateCampaignPartner($partnerId: ID!, $partnerName: String!) {
+  createCampaignPartner(partnerId: $partnerId, partnerName: $partnerName)
+}

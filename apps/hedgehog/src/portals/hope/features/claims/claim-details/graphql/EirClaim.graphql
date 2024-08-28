@@ -1,0 +1,16 @@
+fragment EirClaim on EirClaim {
+  id
+  eirClaimCaseId
+  memberId
+  contract {
+    ...Contract
+  }
+  agreement {
+    ...GenericAgreement
+  }
+  overriddenOutcome
+  syncedAt
+  subclaims {
+    ...EirSubclaim
+  }
+}

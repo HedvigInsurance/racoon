@@ -1,0 +1,8 @@
+mutation TagClaimNote($claimId: ID!, $noteId: ID!, $tags: [ClaimNoteTag!]) {
+    tagClaimNote(claimId: $claimId, noteId: $noteId, tags: $tags) {
+        id
+        notes {
+            ...ClaimNote
+        }
+    }
+}

@@ -1,0 +1,51 @@
+fragment Contract on Contract {
+  id
+  insuranceType
+  masterInception
+  preferredCurrency
+  market
+  status
+  terminationDate
+  deletedAt
+  currentAgreement {
+    ...GenericAgreement
+  }
+  genericAgreements {
+    ...GenericAgreement
+  }
+  availableClaimTypes {
+    id
+    displayName
+    defaultReserve
+    defaultDeductible
+  }
+}
+
+fragment GenericAgreement on GenericAgreement {
+  id
+  fromDate
+  toDate
+  address {
+    street
+    postalCode
+    city
+  }
+  partner
+  registrationNumber
+  typeOfContract
+  typeOfContractDisplayName
+  carrier
+  numberCoInsured
+  ...AgreementPetInfo
+  termsAndConditions {
+    commencementDate
+    url
+    displayName
+  }
+  valuationTable {
+    ...ValuationTable
+  }
+  coInsured {
+    ...AgreementCoInsured
+  }
+}

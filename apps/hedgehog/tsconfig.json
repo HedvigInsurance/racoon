@@ -1,0 +1,43 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "esnext",
+    "esModuleInterop": true,
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "jsx": "preserve",
+    "allowJs": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "types": ["jest", "node"],
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "src",
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "noEmit": true,
+    "paths": {
+      "@hope/*": ["./portals/hope/*"]
+    },
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true
+  },
+  "include": [
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    "./src/**/*.js",
+    "./dist/types/**/*.ts",
+    "./next-env.d.ts",
+    "./hedvig.d.ts"
+  ],
+  "exclude": ["src/gql/apollo/**/*", "./node_modules"]
+}

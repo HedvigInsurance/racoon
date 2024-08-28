@@ -1,0 +1,10 @@
+fragment ClaimPetDiagnosis on PetDiagnosis {
+  categoryLimits {
+    category
+    limit
+  }
+  createdAt
+  date
+  id
+  name
+}

@@ -1,0 +1,1 @@
+export { ClaimMemberDetails } from './ClaimMemberDetails'

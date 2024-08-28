@@ -1,0 +1,1 @@
+export { ClaimInsuranceCoInsured } from './ClaimInsuranceCoInsured'

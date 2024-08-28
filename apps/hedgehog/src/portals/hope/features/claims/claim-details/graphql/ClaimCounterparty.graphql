@@ -1,0 +1,31 @@
+fragment ClaimCounterparty on Counterparty {
+  id
+  reference
+  liabilityLevel
+  insuranceProvider {
+    id
+  }
+  recoveryInvoices {
+    id
+    content
+    amount
+    invoiceNumber
+    memberReference
+    dateOfOccurrence
+    recoveryData {
+      recoveryId
+      amount
+      claimType
+    }
+    bankgiroNumber
+    bankAccountNumber
+    paymentDueDate
+    counterparty {
+      id
+      reference
+      insuranceProvider {
+        displayName
+      }
+    }
+  }
+}

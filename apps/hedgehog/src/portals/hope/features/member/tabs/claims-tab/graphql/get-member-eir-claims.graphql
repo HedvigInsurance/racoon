@@ -1,0 +1,8 @@
+query GetMemberEirClaims($memberId: String!) {
+  eirClaims(memberId: $memberId) {
+    ...EirClaim
+    subclaims {
+      ...EirSubclaim
+    }
+  }
+}

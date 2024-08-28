@@ -1,0 +1,6 @@
+query GetClaimProperties {
+  claimProperties {
+    id
+    name
+  }
+}

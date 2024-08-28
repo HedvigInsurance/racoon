@@ -1,0 +1,3 @@
+mutation CancelAutoRescue($transactionId: String!) {
+  cancelAutoRescue(transactionId: $transactionId)
+}

@@ -1,0 +1,21 @@
+query MemberSearch($query: String!, $options: MemberSearchOptions!) {
+  memberSearch(query: $query, options: $options) {
+    members {
+      memberId
+      firstName
+      lastName
+      status
+      signedOn
+      birthDate
+      contractMarketInfo {
+        market
+        preferredCurrency
+      }
+      contracts {
+        status
+        masterInception
+        terminationDate
+      }
+    }
+  }
+}

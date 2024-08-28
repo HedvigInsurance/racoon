@@ -1,0 +1,5 @@
+mutation OverrideQuotePrice($input: OverrideQuotePriceInput!) {
+  overrideQuotePrice(input: $input) {
+    id
+  }
+}

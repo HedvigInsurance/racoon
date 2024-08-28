@@ -1,0 +1,7 @@
+fragment ClaimCoInsured on CoInsured {
+  id
+  fullName
+  personalNumber
+  email
+  phoneNumber
+}

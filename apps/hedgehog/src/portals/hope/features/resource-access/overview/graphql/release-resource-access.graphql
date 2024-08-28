@@ -1,0 +1,3 @@
+mutation ReleaseResourceAccess($resourceId: ID!) {
+  releaseResourceAccess(resourceId: $resourceId)
+}

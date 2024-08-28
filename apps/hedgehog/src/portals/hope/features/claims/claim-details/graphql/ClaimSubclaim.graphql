@@ -1,0 +1,27 @@
+fragment ClaimSubclaim on Subclaim {
+  id
+  type
+  createdAt
+  cause
+  reserve
+  reserves {
+    ...SubclaimReserve
+  }
+  type
+  outcome
+  claimType {
+    id
+    displayName
+    defaultDeductible
+    defaultReserve
+  }
+  propertySelections {
+    ...PropertySelection
+  }
+  paymentOrders {
+    ...PaymentOrderInformation
+  }
+  recoveries {
+    ...SubclaimRecovery
+  }
+}

@@ -1,0 +1,30 @@
+query FindPartnerCampaigns($input: CampaignFilter!) {
+  findPartnerCampaigns(input: $input) {
+    id
+    campaignCode
+    partnerId
+    partnerName
+    validFrom
+    validTo
+    incentive {
+      ... on MonthlyPercentageDiscountFixedPeriod {
+        numberOfMonths
+        percentage
+      }
+      ... on FreeMonths {
+        numberOfMonths
+      }
+      ... on CostDeduction {
+        amount
+      }
+      ... on NoDiscount {
+        __typename
+      }
+      ... on IndefinitePercentageDiscount {
+        percentageDiscount
+      }
+    }
+    codeType
+    insuranceTypes
+  }
+}

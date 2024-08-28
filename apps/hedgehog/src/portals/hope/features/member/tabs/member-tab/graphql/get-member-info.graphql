@@ -1,0 +1,56 @@
+query GetMemberInfo($memberId: ID!) {
+  member(id: $memberId) {
+    memberId
+    email
+    phoneNumber
+    firstName
+    lastName
+    birthDate
+    personalNumber
+    fraudulentStatus
+    fraudulentStatusDescription
+    status
+    signedOn
+    createdOn
+    contractMarketInfo {
+      market
+      preferredCurrency
+    }
+    pickedLocale
+    selfChangeBlockers
+    tags {
+      ...Tag
+    }
+    countryCode
+  }
+}
+
+query getMemberClaimsInfo($memberId: ID!) {
+  member(id: $memberId) {
+    memberId
+    claims {
+      id
+      registrationDate
+      state
+      subclaims {
+        id
+        type
+        outcome
+      }
+    }
+    gsrClaims {
+      id
+      entityId
+      caseOfficer
+      claimCodes
+      claimNumber
+      dateOfOccurrence
+      hasAffectedEntities
+      insuranceCompanyId
+      registrationNumber
+      animalId
+      updatedOn
+      registeredOn
+    }
+  }
+}

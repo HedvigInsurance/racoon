@@ -1,0 +1,3 @@
+mutation DeleteClaimTypeBinding($id: ID!) {
+  claimTypeBinding_delete(id: $id)
+}

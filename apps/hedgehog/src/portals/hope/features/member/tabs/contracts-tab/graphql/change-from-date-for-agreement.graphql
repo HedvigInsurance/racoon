@@ -1,0 +1,11 @@
+mutation ChangeFromDate($agreementId: ID!, $request: ChangeFromDateInput!) {
+  changeFromDate(agreementId: $agreementId, request: $request) {
+    id
+    masterInception
+    genericAgreements {
+      id
+      fromDate
+      certificateUrl
+    }
+  }
+}

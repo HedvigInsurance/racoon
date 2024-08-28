@@ -1,0 +1,13 @@
+query GetClaimTypeTemplates {
+  claimTypeTemplates {
+    claimType
+    properties {
+      propertyId
+      name
+      options {
+        id
+        name
+      }
+    }
+  }
+}

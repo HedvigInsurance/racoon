@@ -1,0 +1,19 @@
+mutation SyncGsrClaim($input: SyncGsrClaimInput!) {
+    gsr_syncClaim(input: $input) {
+      memberId
+      gsrClaims {
+        id
+        entityId
+        caseOfficer
+        claimCodes
+        claimNumber
+        dateOfOccurrence
+        hasAffectedEntities
+        insuranceCompanyId
+        registrationNumber
+        animalId
+        updatedOn
+        registeredOn
+      }
+    }
+  }

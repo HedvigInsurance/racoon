@@ -1,0 +1,213 @@
+{
+  "name": "hedgehog",
+  "version": "1.5.0",
+  "main": "build/index.js",
+  "type": "module",
+  "engines": {
+    "yarn": "4.4.0"
+  },
+  "browserslist": [
+    "> 0.25%, not dead, not IE > 0, not op_mini all"
+  ],
+  "prettier": {
+    "semi": false,
+    "tabWidth": 2,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "printWidth": 80,
+    "arrowParens": "always"
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint",
+      "eslint-plugin-react-hooks"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "prettier",
+      "plugin:prettier/recommended",
+      "plugin:compat/recommended"
+    ],
+    "env": {
+      "browser": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 2018,
+      "sourceType": "module"
+    },
+    "ignorePatterns": [
+      "/src/types/**/*"
+    ],
+    "rules": {
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-var-requires": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "ignoreRestSiblings": true
+        }
+      ],
+      "react-hooks/rules-of-hooks": "warn",
+      "react-hooks/exhaustive-deps": "warn"
+    }
+  },
+  "lint-staged": {
+    "*.{js,cjs,mjs,jsx,ts,tsx}": [
+      "prettier --ignore-unknown --write",
+      "eslint --fix"
+    ]
+  },
+  "dependencies": {
+    "@apollo/client": "^3.5.6",
+    "@apollo/experimental-nextjs-app-support": "^0.11.2",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@emotion/utils": "^1.2.0",
+    "@hedviginsurance/brand": "^5.0.1",
+    "@hookform/error-message": "^2.0.0",
+    "@radix-ui/react-collapsible": "^1.1.0",
+    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-dropdown-menu": "^2.0.6",
+    "@radix-ui/react-tooltip": "^1.0.7",
+    "@rjsf/core": "^5.0.0",
+    "@rjsf/utils": "^5.16.1",
+    "@rjsf/validator-ajv8": "^5.16.1",
+    "@tiptap/core": "^2.3.0",
+    "@tiptap/extension-blockquote": "^2.3.0",
+    "@tiptap/extension-link": "^2.3.0",
+    "@tiptap/extension-placeholder": "^2.3.0",
+    "@tiptap/pm": "^2.3.0",
+    "@tiptap/react": "^2.3.0",
+    "@tiptap/starter-kit": "^2.3.0",
+    "@types/node": "^20.0.0",
+    "@vanilla-extract/css": "^1.14.1",
+    "@vanilla-extract/next-plugin": "^2.4.1",
+    "apollo3-cache-persist": "^0.15.0",
+    "chroma-js": "^2.1.2",
+    "clsx": "^2.1.0",
+    "compromise": "^14.0.0",
+    "compromise-dates": "^3.0.0",
+    "compromise-numbers": "^1.4.0",
+    "cookies-next": "^4.2.1",
+    "copy-to-clipboard": "^3.3.1",
+    "date-fns": "^3.0.0",
+    "downshift": "^9.0.4",
+    "file-saver": "^2.0.5",
+    "framer-motion": "11.3.28",
+    "graphql": "^16.0.0",
+    "graphql-tag": "^2.11.0",
+    "jotai": "^2.6.2",
+    "jszip": "^3.10.1",
+    "jwt-decode": "^4.0.0",
+    "mathjs": "^13.0.0",
+    "next": "^14.2.3",
+    "react": "18.3.1",
+    "react-bootstrap-icons": "^1.6.1",
+    "react-cookie": "^7.0.0",
+    "react-datepicker": "^6.0.0",
+    "react-dom": "18.3.1",
+    "react-draggable": "^4.4.6",
+    "react-dropzone": "^14.0.0",
+    "react-gtm-module": "^2.0.11",
+    "react-hook-form": "^7.28.1",
+    "react-hot-toast": "^2.1.0",
+    "react-json-view": "^1.21.3",
+    "react-linkify": "^1.0.0-alpha",
+    "react-markdown": "^9.0.1",
+    "react-qr-code": "^2.0.3",
+    "react-router": "^6.8.0",
+    "react-router-dom": "^6.8.0",
+    "react-select": "^5.2.2",
+    "react-swipeable-views": "^0.14.0",
+    "react-textarea-autosize": "^8.3.3",
+    "recharts": "^2.8.0",
+    "remark-breaks": "^4.0.0",
+    "typescript": "5.5.4",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "5.0.2",
+    "@graphql-codegen/fragment-matcher": "5.0.2",
+    "@graphql-codegen/introspection": "^4.0.3",
+    "@graphql-codegen/schema-ast": "^4.0.0",
+    "@graphql-codegen/typescript": "4.0.9",
+    "@graphql-codegen/typescript-document-nodes": "4.0.9",
+    "@graphql-codegen/typescript-graphql-request": "^6.2.0",
+    "@graphql-codegen/typescript-msw": "^3.0.0",
+    "@graphql-codegen/typescript-operations": "4.2.3",
+    "@graphql-codegen/typescript-react-apollo": "4.3.0",
+    "@hypnosphi/create-react-context": "0.3.1",
+    "@parcel/watcher": "^2.4.0",
+    "@playwright/test": "^1.46.1",
+    "@swc/core": "1.7.11",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.0.0",
+    "@types/chroma-js": "2.4.4",
+    "@types/file-saver": "^2",
+    "@types/jest": "29.5.12",
+    "@types/react": "^18.3.3",
+    "@types/react-datepicker": "^6.0.0",
+    "@types/react-dom": "^18.3.0",
+    "@types/react-gtm-module": "2.0.3",
+    "@types/react-linkify": "^1.0.1",
+    "@types/react-page-visibility": "6.4.4",
+    "@types/react-router": "^5.1.20",
+    "@types/react-router-dom": "^5.3.3",
+    "@types/react-swipeable-views": "^0.13.1",
+    "@typescript-eslint/eslint-plugin": "7.18.0",
+    "@typescript-eslint/parser": "7.18.0",
+    "@vanilla-extract/vite-plugin": "^4.0.4",
+    "@vitejs/plugin-react": "^4.0.3",
+    "concurrently": "8.2.2",
+    "dotenv": "^16.3.1",
+    "eslint": "8.57.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-compat": "6.0.0",
+    "eslint-plugin-prettier": "5.2.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^9.0.0",
+    "jsdom": "24.1.1",
+    "lint-staged": "^15.2.0",
+    "msw": "^2.3.5",
+    "prettier": "3.3.3",
+    "vite": "^5.0.0",
+    "vitest": "^2.0.0"
+  },
+  "scripts": {
+    "codegen": "graphql-codegen --require dotenv/config",
+    "watch-graphql": "yarn codegen -w",
+    "watch-client": "next dev",
+    "dev": "concurrently 'yarn watch-graphql' 'yarn watch-client'",
+    "dev:local": "NEXT_PUBLIC_API_URL=http://localhost:8443 yarn dev",
+    "dev:test": "NEXT_PUBLIC_MOCK_ENABLED=true yarn dev",
+    "build": "yarn codegen && next build",
+    "next:build": "next build",
+    "clean": "rm -rf ./dist && rm -rf tsconfig.tsbuildinfo && rm -rf .eslintcache",
+    "test": "NODE_ENV=test vitest",
+    "typecheck": "tsc --incremental",
+    "lint": "eslint --cache 'src/**/*.{ts,tsx}'",
+    "fix": "eslint 'src/**/*.{ts,tsx}' --fix && pretty-quick",
+    "format": "prettier src shared --write",
+    "prepare": "husky install",
+    "test:pw": "playwright test",
+    "test:pw:debug": "playwright test --debug",
+    "test:pw:ui": "playwright test --ui",
+    "postinstall": "yarn exec playwright install"
+  },
+  "peerDependencies": {
+    "graphql": "^0.13.0 || ^16.0.0"
+  },
+  "packageManager": "yarn@4.4.0",
+  "dependenciesMeta": {
+    "prettier@3.3.3": {
+      "unplugged": true
+    }
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
+}

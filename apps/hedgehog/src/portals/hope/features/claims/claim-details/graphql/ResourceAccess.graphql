@@ -1,0 +1,24 @@
+fragment ResourceAccess on ResourceAccessInformation {
+  resourceId
+  usersGranted {
+    id
+    email
+    fullName
+    role
+  }
+  usersRestricted {
+    id
+    email
+    fullName
+    role
+  }
+  rolesGranted
+  rolesRestricted
+  restrictedBy {
+    id
+    fullName
+    email
+    role
+  }
+  restrictedByMe
+}

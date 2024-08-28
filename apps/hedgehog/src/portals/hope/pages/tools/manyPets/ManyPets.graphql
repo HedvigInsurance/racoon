@@ -1,0 +1,45 @@
+query FetchManyPetsPolicy($ssn: ID!) {
+  fetchManyPetsPolicies(ssn: $ssn) {
+    ...ManyPetsPolicy
+  }
+}
+
+mutation SetManyPetsPolicyState($id: ID!, $state: ManyPetsPolicyState!) {
+  manyPetsPolicy_updateState(id: $id, state: $state) {
+    ...ManyPetsPolicy
+  }
+}
+
+mutation CreateManyPetsOfferLinksNewOwner(
+  $policyOwnershipTransferRequest: PolicyOwnershipTransferRequestInput!
+) {
+  manyPetsOfferLinks_createNewOwner(
+    policyOwnershipTransferRequest: $policyOwnershipTransferRequest
+  ) {
+    ...ManyPetsLink
+  }
+}
+
+mutation CreateManyPetsOfferLinks($ssn: String!) {
+  manyPetsOfferLinks_create(ssn: $ssn) {
+    ...ManyPetsLink
+  }
+}
+
+fragment ManyPetsLink on ManyPetsLink {
+  __typename
+  url
+  pets
+}
+
+fragment ManyPetsPolicy on ManyPetsPolicy {
+  __typename
+  name
+  ssn
+  address
+  email
+  phoneNumber
+  renewalDate
+  policyId
+  state
+}

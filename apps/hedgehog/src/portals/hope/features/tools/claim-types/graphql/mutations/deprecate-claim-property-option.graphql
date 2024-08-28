@@ -1,0 +1,3 @@
+mutation DeprecateClaimPropertyOption($id: ID!) {
+  deprecateClaimPropertyOption(id: $id)
+}

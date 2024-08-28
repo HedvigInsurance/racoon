@@ -1,0 +1,13 @@
+fragment AgreementPetInfo on GenericAgreement {
+  name
+  birthDate
+  gender
+  breeds
+  isNeutered
+  isPreviousDogOwner
+  hasOutsideAccess
+  fixedDeductible
+  percentageDeductible
+  deathOption
+  preExistingConditionOption
+}

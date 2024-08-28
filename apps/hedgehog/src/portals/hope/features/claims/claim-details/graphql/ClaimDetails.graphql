@@ -1,0 +1,68 @@
+fragment ClaimDetails on Claim {
+  id
+  claimNumber
+  state
+  assignedAdmin {
+    ...AdminSystemUser
+  }
+  contract {
+    ...Contract
+  }
+  agreement {
+    ...GenericAgreement
+  }
+  registrationDate
+  openedAt
+  dateOfOccurrence
+  recordingUrl
+  memberFreeText
+  transcriptions {
+    __typename
+    text
+    languageCode
+  }
+  location
+  coveringEmployee
+  memberStatement {
+    ...ClaimMemberStatement
+  }
+  claimFiles {
+    ...ClaimFile
+  }
+  conversation {
+    ...Conversation
+  }
+  notes {
+    ...ClaimNote
+  }
+  coInsured {
+    ...ClaimCoInsured
+  }
+  subclaims {
+    ...ClaimSubclaim
+  }
+  member {
+    ...ClaimMember
+  }
+  items {
+    ...ClaimItem
+  }
+  insurableLimits {
+    ...ClaimInsurableLimits
+  }
+  petDiagnoses {
+    ...ClaimPetDiagnosis
+  }
+  counterparties {
+    ...ClaimCounterparty
+  }
+  restriction {
+    ...ResourceAccess
+  }
+  tags {
+    ...Tag
+  }
+  tasks {
+    ...Task
+  }
+}

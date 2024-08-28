@@ -1,0 +1,5 @@
+mutation CreateMemberAuthorizationCode($memberId: ID!) {
+  auth_createMemberAuthorizationCode(memberId: $memberId) {
+    authorizationCode
+  }
+}

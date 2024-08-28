@@ -1,0 +1,17 @@
+fragment EirSubclaim on EirSubclaim {
+  id
+  type {
+    id
+    displayName
+    defaultReserve
+    defaultDeductible
+  }
+  syncedAt
+  registrationDate
+  dateOfOccurrence
+  reserve
+  payment
+  recoveryReserve
+  recovery
+  closedAt
+}

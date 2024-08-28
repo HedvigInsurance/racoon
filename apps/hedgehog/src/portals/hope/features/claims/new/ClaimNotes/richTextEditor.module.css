@@ -1,0 +1,28 @@
+.richTextEditor {
+  --baseBg: #fafafa;
+
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+}
+
+.richTextEditor [role='toolbar'] {
+  display: inline-flex;
+}
+
+.richTextEditor [role='textbox'] {
+  min-height: 6em; /* ~3 lines */
+  max-height: 18em; /* ~9 lines */
+  overflow-y: scroll;
+  padding-block: 0;
+  margin-block: 0.75rem;
+  padding-block: 0.75rem;
+}
+
+.richTextEditor input::placeholder {
+  color: red;
+}
+
+.content {
+  margin-left: -8px; /* Align with toolbar on left */
+}

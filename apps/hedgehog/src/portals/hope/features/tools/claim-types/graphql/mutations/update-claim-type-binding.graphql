@@ -1,0 +1,12 @@
+mutation UpdateClaimTypeBinding(
+  $id: ID!
+  $request: UpdateClaimTypeBindingInput!
+) {
+  claimTypeBinding_update(id: $id, request: $request) {
+    id
+    claimType
+    insuranceType
+    defaultReserve
+    defaultDeductible
+  }
+}

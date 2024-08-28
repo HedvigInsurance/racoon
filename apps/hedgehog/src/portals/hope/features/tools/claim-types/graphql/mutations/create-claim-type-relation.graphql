@@ -1,0 +1,14 @@
+mutation CreateClaimTypeRelation($request: CreateClaimTypeRelationInput) {
+  createClaimTypeRelation(request: $request) {
+    id
+    claimType
+    property {
+      id
+      name
+    }
+    propertyOption {
+      id
+      name
+    }
+  }
+}

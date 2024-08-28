@@ -1,0 +1,26 @@
+query GetMemberTransactions($id: ID!) {
+  member(id: $id) {
+    memberId
+    contractMarketInfo {
+      market
+      preferredCurrency
+    }
+    directDebitStatus {
+      activated
+    }
+    payoutMethodStatus {
+      activated
+    }
+    adyenShopperReference
+    transactions {
+      id
+      amount {
+        amount
+        currency
+      }
+      timestamp
+      type
+      status
+    }
+  }
+}

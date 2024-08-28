@@ -1,0 +1,36 @@
+query GetMemberClaims($memberId: ID!) {
+  member(id: $memberId) {
+    memberId
+    claims {
+      id
+      member {
+        memberId
+        firstName
+        lastName
+      }
+      contract {
+        ...Contract
+      }
+      agreement {
+        ...GenericAgreement
+      }
+      subclaims {
+        id
+        type
+        outcome
+        reserve
+        reserves {
+          ...SubclaimReserve
+        }
+        paymentOrders {
+          id
+          amount
+          settledAt
+        }
+      }
+      registrationDate
+      openedAt
+      state
+    }
+  }
+}

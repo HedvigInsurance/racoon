@@ -1,0 +1,9 @@
+mutation RegenerateCertificate($agreementId: ID!) {
+  regenerateCertificate(agreementId: $agreementId) {
+    id
+    genericAgreements {
+      id
+      certificateUrl
+    }
+  }
+}

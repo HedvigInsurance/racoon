@@ -1,0 +1,9 @@
+mutation CreateClaimTypeBinding($request: CreateClaimTypeBindingInput!) {
+  claimTypeBinding_create(request: $request) {
+    id
+    claimType
+    insuranceType
+    defaultReserve
+    defaultDeductible
+  }
+}

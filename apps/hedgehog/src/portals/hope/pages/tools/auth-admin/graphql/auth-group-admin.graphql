@@ -1,0 +1,27 @@
+query ListAuthGroups {
+  auth_groups {
+    ...AuthGroup
+  }
+}
+
+mutation CreateAuthGroup($groupName: String!) {
+  auth_createGroup(groupName: $groupName) {
+    ...AuthGroup
+  }
+}
+
+mutation SetAuthGroupPermissions(
+  $groupId: ID!
+  $permissions: [AuthPermissionInput!]!
+) {
+  auth_setPermissions(groupId: $groupId, permissions: $permissions)
+}
+
+fragment AuthGroup on AuthGroup {
+  id
+  oktaName
+  permissions {
+    domain
+    permission
+  }
+}

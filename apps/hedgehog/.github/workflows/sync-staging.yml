@@ -1,0 +1,25 @@
+name: Sync Back to Staging
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  sync-branches:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    name: Syncing branches
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # otherwise, there would be errors pushing refs to the destination repository.
+          fetch-depth: 0
+
+      - name: Sync branches
+        run: |
+          git push --force-with-lease origin HEAD:staging

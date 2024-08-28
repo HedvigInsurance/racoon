@@ -1,0 +1,13 @@
+mutation CreateQuoteFromAgreement(
+  $agreementId: ID!
+  $memberId: ID!
+  $startDate: Date
+) {
+  createQuoteFromAgreement(
+    agreementId: $agreementId
+    memberId: $memberId
+    startDate: $startDate
+  ) {
+    id
+  }
+}

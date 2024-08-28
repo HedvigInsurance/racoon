@@ -1,0 +1,5 @@
+query ResourceAccessInformation($resourceId: String!) {
+  resourceAccess(resourceId: $resourceId) {
+    ...ResourceAccess
+  }
+}

@@ -1,0 +1,26 @@
+fragment ClaimNote on ClaimNote {
+  id
+  text
+  type
+  insertedAt
+  handlerReference
+  insertedBy {
+    __typename
+    ... on AdminSystemUser {
+      ...AdminSystemUser
+    }
+    ... on EmailSystemUser {
+      id
+      email
+      name
+    }
+    ... on MemberSystemUser {
+      memberId
+    }
+    ... on UnknownSystemUser {
+      id
+      name
+    }
+  }
+  tags
+}

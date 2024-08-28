@@ -1,0 +1,112 @@
+query Conversation($id: ID!) {
+  conversation(id: $id) {
+    ...Conversation
+  }
+}
+
+query MemberConversations($memberId: ID!) {
+  member(id: $memberId) {
+    memberId
+    conversations {
+      ...Conversation
+    }
+  }
+}
+
+fragment MemberChatInfo on Member {
+  memberId
+  firstName
+  lastName
+  fraudulentStatus
+  fraudulentStatusDescription
+}
+
+query MemberChatInfo($memberId: ID!) {
+  member(id: $memberId) {
+    ...MemberChatInfo
+  }
+}
+
+mutation CreateConversation($input: ConversationCreateInput!) {
+  conversation_create(input: $input) {
+    id
+    createdAt
+    newestMessage {
+      ...ChatMessage2
+    }
+  }
+}
+
+mutation ForwardMessages($input: ConversationForwardInput!) {
+  conversation_forward(input: $input) {
+    ...Conversation
+  }
+}
+
+fragment Conversation on Conversation {
+  id
+  createdAt
+  closedAt
+  newestMessage {
+    ...ChatMessage2
+  }
+  claimId
+  claim {
+    claimNumber
+    dateOfOccurrence
+    openedAt
+    subclaims {
+      claimType {
+        displayName
+      }
+    }
+  }
+  latestTask {
+    resourceType
+    area
+    resolvedAt
+    areaAssignment {
+      area
+      assignedAt
+      assignedBy
+      assignedByUser {
+        __typename
+        ... on AdminSystemUser {
+          ...AdminSystemUser
+        }
+        ... on EmailSystemUser {
+          id
+          email
+          name
+        }
+        ... on MemberSystemUser {
+          memberId
+        }
+        ... on UnknownSystemUser {
+          id
+          name
+        }
+      }
+      note
+    }
+  }
+  outboundForwardings {
+    ...ConversationForwarding
+  }
+  inboundForwardings {
+    ...ConversationForwarding
+  }
+}
+
+fragment ConversationForwarding on ConversationForwarding {
+  fromConversationId
+  toConversationId
+  admin {
+    ...AdminSystemUser
+  }
+  note
+  entries {
+    fromMessageId
+    toMessageId
+  }
+}

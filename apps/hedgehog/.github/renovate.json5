@@ -1,0 +1,51 @@
+{
+  // https://docs.renovatebot.com/
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base"],
+
+  // Scheduling
+  "timezone": "Europe/Stockholm",
+  "schedule": ["before 2pm every weekday"],
+  "automergeSchedule": ["after 6am and before 2pm every weekday"],
+
+  // Do not create PRs for changes than will be automerged
+  // https://docs.renovatebot.com/key-concepts/automerge/#branch-vs-pr-automerging
+  automergeType: "branch",
+
+  "labels": ["needs approval/merge"],
+
+  "ignoreDeps": [
+    // Newer versions break typecheck.  Either we're using it wrong or there's something strange with a library
+    // I've spent >2h trying to figure it out without success so far
+    "react-hook-form"
+  ],
+
+  "packageRules": [
+    {
+      "matchDepTypes": ["dependencies"],
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true,
+      "labels": ["deps"]
+    },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "automerge": true,
+      // It's much less likely that dev dependencies will break our site, so let's automerge starting from midnight
+      "automergeSchedule": ["before 2pm every weekday"],
+      "labels": ["dev-deps"]
+    }
+  ],
+  // Rate limits
+  // Load on our build system is effectively quadratic per number of open branches / PRs
+  // When we merge something or commit to main, all other PRs are rebased and run
+  // To keep this load manageable, we should try to limit number of open branches from renovate
+  // It's more efficient to have queue of unprocessed change on Renovate side if we have many pending
+  // updates than to have it in form of branches that trigger builds on every rebase
+  "branchConcurrentLimit": null, // Inherit prConcurrentLimit below
+  "prConcurrentLimit": 4,
+  "prHourlyLimit": 0,
+
+  // Npm packages can be unpublished during first 72h, let's use older ones
+  // https://docs.renovatebot.com/configuration-options/#minimumreleaseage
+  "minimumReleaseAge": "3 days"
+}

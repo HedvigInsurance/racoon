@@ -1,0 +1,12 @@
+mutation createClaim($memberId: ID!, $date: LocalDateTime!, $source: String!) {
+  createClaim(memberId: $memberId, date: $date, source: $source) {
+    id
+    state
+    registrationDate
+    member {
+      memberId
+      firstName
+      lastName
+    }
+  }
+}

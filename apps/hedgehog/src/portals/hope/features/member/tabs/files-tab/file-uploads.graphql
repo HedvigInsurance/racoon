@@ -1,0 +1,12 @@
+query FileUploadsQuery($memberId: ID!) {
+  member(id: $memberId) {
+    memberId
+
+    fileUploads {
+      fileUploadUrl
+      memberId
+      timestamp
+      mimeType
+    }
+  }
+}

@@ -1,0 +1,85 @@
+name: Build and deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-staging:
+    name: 'Staging: Build image'
+    runs-on: ubuntu-latest-8-vcpu
+    environment: hedvig-hope-staging
+    env:
+      ACTIONS_AWS_ACCESS_KEY_ID: ${{ secrets.ACTIONS_AWS_ACCESS_KEY_ID }}
+      ACTIONS_AWS_SECRET_ACCESS_KEY: ${{ secrets.ACTIONS_AWS_SECRET_ACCESS_KEY }}
+      NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
+      NEXT_PUBLIC_AUTH_HOST: ${{ vars.NEXT_PUBLIC_AUTH_HOST }}
+      NEXT_PUBLIC_HEDVIG_COM: ${{ vars.NEXT_PUBLIC_HEDVIG_COM }}
+      NEXT_PUBLIC_HEDVIG_APP: ${{ vars.NEXT_PUBLIC_HEDVIG_APP }}
+      NEXT_PUBLIC_STAGING_TOOLS_ENABLED: ${{ vars.NEXT_PUBLIC_STAGING_TOOLS_ENABLED }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Build and push staging image
+        uses: ./.github/actions/build-image
+        with:
+          environment: 'staging'
+
+  deploy-staging:
+    name: 'Staging: Deploy'
+    runs-on: ubuntu-latest
+    needs: build-staging
+    env:
+      ACTIONS_GITHUB_PAT: ${{ secrets.ACTIONS_GITHUB_PAT }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Deploy to Staging
+        uses: ./.github/actions/deploy
+        with:
+          environment: 'staging'
+          cluster: 'dev/dev-cluster'
+
+  build-prod:
+    name: 'Prod: Build image'
+    runs-on: ubuntu-latest-8-vcpu
+    environment: hedvig-hope-prod
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.ACTIONS_AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.ACTIONS_AWS_SECRET_ACCESS_KEY }}
+      NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
+      NEXT_PUBLIC_AUTH_HOST: ${{ vars.NEXT_PUBLIC_AUTH_HOST }}
+      NEXT_PUBLIC_HEDVIG_COM: ${{ vars.NEXT_PUBLIC_HEDVIG_COM }}
+      NEXT_PUBLIC_HEDVIG_APP: ${{ vars.NEXT_PUBLIC_HEDVIG_APP }}
+      NEXT_PUBLIC_STAGING_TOOLS_ENABLED: ${{ vars.NEXT_PUBLIC_STAGING_TOOLS_ENABLED }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Build and push production image
+        uses: ./.github/actions/build-image
+        with:
+          environment: 'prod'
+
+  deploy-prod:
+    name: 'Prod: Deploy'
+    runs-on: ubuntu-latest
+    needs: build-prod
+    env:
+      ACTIONS_GITHUB_PAT: ${{ secrets.ACTIONS_GITHUB_PAT }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Deploy to Production
+        uses: ./.github/actions/deploy
+        with:
+          environment: 'prod'
+          cluster: 'prod/prod-cluster'

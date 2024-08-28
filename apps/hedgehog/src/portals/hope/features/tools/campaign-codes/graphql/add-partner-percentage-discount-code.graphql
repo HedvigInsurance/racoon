@@ -1,0 +1,5 @@
+mutation AssignCampaignToPartnerPercentageDiscount(
+  $request: AssignVoucherPercentageDiscount
+) {
+  assignCampaignToPartnerPercentageDiscount(request: $request)
+}

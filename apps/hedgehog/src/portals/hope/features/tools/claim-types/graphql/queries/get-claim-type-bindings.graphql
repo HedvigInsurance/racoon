@@ -1,0 +1,9 @@
+query GetClaimTypeBindings($claimType: String, $insuranceType: String) {
+  claimTypeBindings(claimType: $claimType, insuranceType: $insuranceType) {
+    id
+    claimType
+    insuranceType
+    defaultReserve
+    defaultDeductible
+  }
+}

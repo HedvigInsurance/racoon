@@ -1,0 +1,6 @@
+query GetClaimPropertyOptions {
+  claimPropertyOptions {
+    id
+    name
+  }
+}

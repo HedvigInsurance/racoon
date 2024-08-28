@@ -1,0 +1,37 @@
+fragment ClaimItem on ClaimItem {
+  id
+  type
+  brand
+  modelName
+  modelId
+  itemModel {
+    ...ItemModel
+  }
+  customName
+  problems
+  purchaseDate
+  purchasePrice
+  valuation
+  note
+  valuationCalculation {
+    amount
+    price
+    type
+    performedAt
+  }
+  repairCostCalculation {
+    amount
+    coveredRepairs {
+      problem
+      cost
+    }
+    notCoveredProblems
+    performedAt
+  }
+  compensationCalculation {
+    type
+    deductible
+    amount
+    performedAt
+  }
+}

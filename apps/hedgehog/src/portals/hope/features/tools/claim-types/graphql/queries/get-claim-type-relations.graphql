@@ -1,0 +1,14 @@
+query GetClaimTypeRelations {
+  claimTypeRelations {
+    id
+    claimType
+    property {
+      id
+      name
+    }
+    propertyOption {
+      id
+      name
+    }
+  }
+}

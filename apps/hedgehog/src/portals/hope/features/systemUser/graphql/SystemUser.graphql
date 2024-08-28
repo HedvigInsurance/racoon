@@ -1,0 +1,24 @@
+fragment SystemUser on SystemUser {
+  __typename
+  ... on AdminSystemUser {
+    ...AdminSystemUser
+  }
+  ... on EmailSystemUser {
+    id
+    email
+    name
+  }
+  ... on MemberSystemUser {
+    memberId
+  }
+  ... on UnknownSystemUser {
+    id
+    name
+  }
+}
+
+fragment AdminSystemUser on AdminSystemUser {
+  adminId
+  email
+  name
+}

@@ -1,0 +1,11 @@
+mutation createApplication($applicationName: String!) {
+  auth_createApplication(applicationName: $applicationName) {
+    id
+    name
+    createdAt
+    credentials {
+      clientId
+      createdAt
+    }
+  }
+}

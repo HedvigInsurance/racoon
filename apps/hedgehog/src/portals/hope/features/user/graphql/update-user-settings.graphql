@@ -1,0 +1,15 @@
+mutation UpdateUserSettings($settings: UpdateUserSettingInput!) {
+  updateUserSettings(settings: $settings) {
+    darkMode
+    featureFlags
+    claimComplexityFilterClaims
+    claimStatesFilterClaims
+    claimStatesFilterQuestions
+    marketFilterClaims
+    marketFilterQuestions
+    numberOfClaimsFilter
+    outcomeFilterClaims
+    focusMarkets
+    languages
+  }
+}

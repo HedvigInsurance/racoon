@@ -1,0 +1,29 @@
+mutation SetCampaignOwner($id: ID!, $partnerId: String!) {
+  setCampaignOwner(id: $id, partnerId: $partnerId) {
+    id
+    campaignCode
+    partnerId
+    partnerName
+    validFrom
+    validTo
+    incentive {
+      ... on MonthlyPercentageDiscountFixedPeriod {
+        numberOfMonths
+        percentage
+      }
+      ... on FreeMonths {
+        numberOfMonths
+      }
+      ... on CostDeduction {
+        amount
+      }
+      ... on NoDiscount {
+        __typename
+      }
+      ... on IndefinitePercentageDiscount {
+        percentageDiscount
+      }
+    }
+    codeType
+  }
+}

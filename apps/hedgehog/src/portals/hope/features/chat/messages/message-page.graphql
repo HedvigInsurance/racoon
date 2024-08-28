@@ -1,0 +1,49 @@
+query MessagePage(
+  $conversationId: ID!
+  $newerToken: String
+  $olderToken: String
+) {
+  conversationMessagePage(
+    conversationId: $conversationId
+    newerToken: $newerToken
+    olderToken: $olderToken
+  ) {
+    ...ChatMessagePage
+  }
+}
+
+fragment ChatMessagePage on ChatMessagePage {
+  messages {
+    ...ChatMessage2
+  }
+  olderToken
+  newerToken
+}
+
+fragment ChatMessage2 on ChatMessage2 {
+  id
+  type
+  author {
+    __typename
+    ... on AdminSystemUser {
+      ...AdminSystemUser
+    }
+    ... on EmailSystemUser {
+      id
+      email
+      name
+    }
+    ... on MemberSystemUser {
+      memberId
+    }
+    ... on UnknownSystemUser {
+      id
+      name
+    }
+  }
+  timestamp
+
+  text
+  url
+  mimeType
+}

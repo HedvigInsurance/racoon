@@ -1,0 +1,36 @@
+query GetMe {
+  me {
+    email
+    scopes
+    role
+    user {
+      id
+      checkedIn
+      distributionPausedMinutes
+      checkoutPausedMinutes
+      email
+      fullName
+      signature
+      phoneNumber
+      role
+      markets
+      resources
+      areas
+    }
+    settings {
+      darkMode
+      featureFlags
+      claimComplexityFilterClaims
+      claimStatesFilterClaims
+      claimStatesFilterQuestions
+      marketFilterClaims
+      marketFilterQuestions
+      numberOfClaimsFilter
+      outcomeFilterClaims
+      focusMarkets
+      languages
+    }
+    portal
+    availablePortals
+  }
+}

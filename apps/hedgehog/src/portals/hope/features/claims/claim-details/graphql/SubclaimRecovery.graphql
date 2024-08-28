@@ -1,0 +1,21 @@
+fragment SubclaimRecovery on Recovery {
+  id
+  liableCounterparty {
+    id
+    reference
+    liabilityLevel
+    insuranceProvider {
+      id
+    }
+  }
+  expectedAmount {
+    amount
+    currency
+  }
+  settledAmount {
+    amount
+    currency
+  }
+  paymentDate
+  note
+}

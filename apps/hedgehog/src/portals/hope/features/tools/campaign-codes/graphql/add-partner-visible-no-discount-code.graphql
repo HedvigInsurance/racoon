@@ -1,0 +1,5 @@
+mutation AssignCampaignToPartnerVisibleNoDiscount(
+  $request: AssignVoucherVisibleNoDiscount
+) {
+  assignCampaignToPartnerVisibleNoDiscount(request: $request)
+}

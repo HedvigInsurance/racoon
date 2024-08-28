@@ -1,0 +1,5 @@
+query GetCarInfo($registrationNumber: String!) {
+  getCarInfo(registrationNumber: $registrationNumber) {
+    response
+  }
+}

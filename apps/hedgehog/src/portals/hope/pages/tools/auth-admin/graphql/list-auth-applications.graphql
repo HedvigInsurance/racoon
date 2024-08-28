@@ -1,0 +1,11 @@
+query listAuthApplications {
+  auth_applications {
+    id
+    name
+    createdAt
+    credentials {
+      clientId
+      createdAt
+    }
+  }
+}

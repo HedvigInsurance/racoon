@@ -1,0 +1,215 @@
+fragment ClaimMember on Member {
+  memberId
+  firstName
+  lastName
+  email
+  pickedLocale
+  personalNumber
+  phoneNumber
+  person {
+    debtFlag
+  }
+  fraudulentStatus
+  sanctionStatus
+  contractMarketInfo {
+    market
+    preferredCurrency
+  }
+  directDebitStatus {
+    activated
+  }
+  payoutMethodStatus {
+    activated
+  }
+  masterLedgerBreakdown {
+    outstandingAmountBreakdown {
+      amount
+      currency
+    }
+  }
+  numberFailedCharges {
+    numberFailedCharges
+  }
+  adyenShopperReference
+  transactions {
+    id
+    amount {
+      amount
+      currency
+    }
+    timestamp
+    type
+    status
+  }
+  contracts {
+    ...Contract
+  }
+  signedOn
+  claims {
+    id
+    registrationDate
+    dateOfOccurrence
+    openedAt
+    state
+    contract {
+      ...Contract
+    }
+    claimFiles {
+      ...ClaimFile
+    }
+    subclaims {
+      id
+      type
+      outcome
+      paymentOrders {
+        id
+        claimId
+        origin
+        recipientName
+        recipientType
+        amount
+        deductible
+        costType
+        costCategory
+        type
+        method
+        carrier
+        state
+        createdAt
+        createdBy
+        createdByUser {
+          __typename
+          ... on AdminSystemUser {
+            ...AdminSystemUser
+          }
+          ... on EmailSystemUser {
+            id
+            email
+            name
+          }
+          ... on MemberSystemUser {
+            memberId
+          }
+          ... on UnknownSystemUser {
+            id
+            name
+          }
+        }
+        isExGratia
+        sanctionListSkipped
+        dueDate
+        bankName
+        bic
+        number
+        reference
+        approvedAt
+        approvedBy
+        approvedByUser {
+          __typename
+          ... on AdminSystemUser {
+            ...AdminSystemUser
+          }
+          ... on EmailSystemUser {
+            id
+            email
+            name
+          }
+          ... on MemberSystemUser {
+            memberId
+          }
+          ... on UnknownSystemUser {
+            id
+            name
+          }
+        }
+        settledAt
+        settledBy
+        settledByUser {
+          __typename
+          ... on AdminSystemUser {
+            ...AdminSystemUser
+          }
+          ... on EmailSystemUser {
+            id
+            email
+            name
+          }
+          ... on MemberSystemUser {
+            memberId
+          }
+          ... on UnknownSystemUser {
+            id
+            name
+          }
+        }
+        payoutId
+        dismissedAt
+        dismissedBy
+        dismissedByUser {
+          __typename
+          ... on AdminSystemUser {
+            ...AdminSystemUser
+          }
+          ... on EmailSystemUser {
+            id
+            email
+            name
+          }
+          ... on MemberSystemUser {
+            memberId
+          }
+          ... on UnknownSystemUser {
+            id
+            name
+          }
+        }
+        notes {
+          text
+          type
+          addedByUser {
+            __typename
+            ... on AdminSystemUser {
+              ...AdminSystemUser
+            }
+            ... on EmailSystemUser {
+              id
+              email
+              name
+            }
+            ... on MemberSystemUser {
+              memberId
+            }
+            ... on UnknownSystemUser {
+              id
+              name
+            }
+          }
+          addedAt
+        }
+        transitionedAt
+        correctsOrderId
+        correctedByOrderId
+      }
+    }
+  }
+  gsrClaims {
+    id
+    entityId
+    caseOfficer
+    claimCodes
+    claimNumber
+    dateOfOccurrence
+    hasAffectedEntities
+    insuranceCompanyId
+    registrationNumber
+    animalId
+    updatedOn
+    registeredOn
+  }
+  firstVetAppointments {
+    ...FirstVetAppointment
+  }
+  tags {
+    ...Tag
+  }
+}

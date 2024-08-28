@@ -1,0 +1,35 @@
+fragment ClaimFile on ClaimFile {
+  claimFileId
+  claimId
+  url
+  thumbnailUrl
+  uploadedAt
+  contentType
+  uploadSource
+  uploadedBy {
+    __typename
+    ... on AdminSystemUser {
+      ...AdminSystemUser
+    }
+    ... on EmailSystemUser {
+      id
+      email
+      name
+    }
+    ... on MemberSystemUser {
+      memberId
+    }
+    ... on UnknownSystemUser {
+      id
+      name
+    }
+  }
+  displayName
+  fileName
+  folder
+  note
+  isMemberAccessible
+  handledBy {
+    ...AdminSystemUser
+  }
+}
