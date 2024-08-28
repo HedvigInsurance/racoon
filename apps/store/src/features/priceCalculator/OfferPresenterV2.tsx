@@ -196,21 +196,10 @@ function OfferDetails() {
   const selectedOffer = useSelectedOfferValueOrThrow()
   const productDetails = useOfferDetails(selectedOffer)
 
-  // const productDocuments = selectedOffer.variant.documents.map((item) => ({
-  //   title: item.displayName,
-  //   url: item.url,
-  // }))
-  // TODO: Replace with commented code above when terms-hub starts returning something
-  const productDocuments = [
-    {
-      title: 'TODO: Terms and conditions',
-      url: 'about:blank',
-    },
-    {
-      title: 'TODO: One-pager',
-      url: 'about:blank',
-    },
-  ]
+  const productDocuments = selectedOffer.variant.documents.map((item) => ({
+    title: item.displayName,
+    url: item.url,
+  }))
 
   const store = useStore()
   const handleEditClick = () => {

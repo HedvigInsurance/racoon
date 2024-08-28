@@ -6,7 +6,9 @@ import { type ProductPageData } from '@/components/ProductPage/getProductPageDat
 import { useSyncPriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
 import type { ProductPageProps } from './ProductPage.types'
 
-const productPageDataAtom = atom<ProductPageData | null>(null)
+// TODO: Only use ProductPageDataProviderV2 once new product pages are live
+
+export const productPageDataAtom = atom<ProductPageData | null>(null)
 
 type Props = Pick<ProductPageProps, 'priceTemplate'> & {
   children: ReactNode
@@ -19,7 +21,7 @@ export function ProductPageDataProvider({ children, priceTemplate, productPageDa
   return children
 }
 
-const useSyncProductPageData = (productPageData: ProductPageData) => {
+export const useSyncProductPageData = (productPageData: ProductPageData) => {
   useHydrateAtoms([[productPageDataAtom, productPageData]], {
     dangerouslyForceHydrate: true,
   })
