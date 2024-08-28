@@ -136,12 +136,26 @@ const config = {
       console.log(`Loaded ${storyblokRedirects.length} redirects from storyblok`)
     }
 
+    const cartRedirects = [
+      {
+        source: '/se/cart',
+        destination: '/se/checkout',
+        permanent: true,
+      },
+      {
+        source: '/se-en/cart',
+        destination: '/se-en/checkout',
+        permanent: true,
+      },
+    ]
+
     return [
       ...noDkRedirects,
       ...oldSiteRedirects,
       ...getExperimentVariantRedirects(),
       ...memberAreaDefault,
       ...storyblokRedirects,
+      ...cartRedirects,
     ]
   },
 }
