@@ -4611,14 +4611,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/react@npm:11.13.0":
-  version: 11.13.0
-  resolution: "@emotion/react@npm:11.13.0"
+"@emotion/react@npm:11.13.3":
+  version: 11.13.3
+  resolution: "@emotion/react@npm:11.13.3"
   dependencies:
     "@babel/runtime": "npm:^7.18.3"
     "@emotion/babel-plugin": "npm:^11.12.0"
     "@emotion/cache": "npm:^11.13.0"
-    "@emotion/serialize": "npm:^1.3.0"
+    "@emotion/serialize": "npm:^1.3.1"
     "@emotion/use-insertion-effect-with-fallbacks": "npm:^1.1.0"
     "@emotion/utils": "npm:^1.4.0"
     "@emotion/weak-memoize": "npm:^0.4.0"
@@ -4628,11 +4628,11 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10c0/28ee0ba6818ccf2726b31da0ecf3a6ac091983c8e03b3f5d6d2eb02165e3b3d1b95c267fccd08bff2f9769e0ff7361d791810583b858a9dd788de7cf82f6667d
+  checksum: 10c0/a55e770b9ea35de5d35db05a7ad40a4a3f442809fa8e4fabaf56da63ac9444f09aaf691c4e75a1455dc388991ab0c0ab4e253ce67c5836f27513e45ebd01b673
   languageName: node
   linkType: hard
 
-"@emotion/serialize@npm:*, @emotion/serialize@npm:^1.2.0, @emotion/serialize@npm:^1.3.0":
+"@emotion/serialize@npm:*, @emotion/serialize@npm:^1.2.0, @emotion/serialize@npm:^1.3.0, @emotion/serialize@npm:^1.3.1":
   version: 1.3.1
   resolution: "@emotion/serialize@npm:1.3.1"
   dependencies:
@@ -23052,7 +23052,7 @@ __metadata:
     "@datadog/datadog-ci": "npm:2.41.0"
     "@emotion/babel-plugin": "npm:11.12.0"
     "@emotion/is-prop-valid": "npm:1.3.0"
-    "@emotion/react": "npm:11.13.0"
+    "@emotion/react": "npm:11.13.3"
     "@emotion/styled": "npm:11.13.0"
     "@graphql-codegen/cli": "npm:5.0.2"
     "@graphql-codegen/client-preset": "npm:4.3.3"
@@ -24604,7 +24604,7 @@ __metadata:
     "@emotion/babel-plugin": "npm:11.12.0"
     "@emotion/is-prop-valid": "npm:1.3.0"
     "@emotion/jest": "npm:11.13.0"
-    "@emotion/react": "npm:11.13.0"
+    "@emotion/react": "npm:11.13.3"
     "@emotion/styled": "npm:11.13.0"
     "@radix-ui/react-dialog": "npm:1.1.1"
     "@storybook/react": "npm:8.2.9"
