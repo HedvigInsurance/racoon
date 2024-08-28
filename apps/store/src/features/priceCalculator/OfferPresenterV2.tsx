@@ -1,8 +1,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import { useInView } from 'framer-motion'
-import { useStore } from 'jotai'
-import { useRouter } from 'next/navigation'
+import { useSetAtom, useStore } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { memo, type MouseEventHandler, useEffect, useMemo, useRef, useState } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
@@ -37,8 +36,6 @@ import {
   useShopSessionValueOrThrow,
 } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
-import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
-import { PageLink } from '@/utils/PageLink'
 import { useAddToCart } from '@/utils/useAddToCart'
 import { OfferPriceDetails } from './OfferPriceDetails'
 
@@ -118,10 +115,12 @@ export const OfferPresenterV2 = memo(() => {
 OfferPresenterV2.displayName = 'OfferPresenterV2'
 
 function OfferSummary() {
+  const { t } = useTranslation('purchase-form')
   const shopSessionId = useShopSessionIdOrThrow()
   const selectedOffer = useSelectedOfferValueOrThrow()
-  const { t } = useTranslation('purchase-form')
   const priceIntent = usePriceIntent()
+
+  const setPriceCalculatorStep = useSetAtom(priceCalculatorStepAtom)
 
   const entryToReplace = useCartEntryToReplace()
   const tracking = useTracking()
@@ -148,12 +147,10 @@ function OfferSummary() {
     },
   })
 
-  const router = useRouter()
-  const locale = useRoutingLocale()
   const handleAddToCart: MouseEventHandler = async (event) => {
     event.preventDefault()
     await addToCart(selectedOffer.id)
-    router.push(PageLink.checkout({ locale }).pathname)
+    setPriceCalculatorStep('viewBonusOffer')
   }
 
   const productData = useProductData()

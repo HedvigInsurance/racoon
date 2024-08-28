@@ -18,6 +18,7 @@ import {
   INITIAL_STEP_AFTER_NAVIGATION,
   priceCalculatorStepAtom,
 } from '@/features/priceCalculator/priceCalculatorAtoms'
+import { BonusOfferPresenter } from './BonusOfferPresenter'
 import { InsuranceDataForm } from './InsuranceDataForm'
 
 export function PurchaseFormV2() {
@@ -53,6 +54,8 @@ export function PurchaseFormV2() {
           <OfferPresenterV2 />
         </div>
       )
+    case 'viewBonusOffer':
+      return <BonusOfferPresenter />
     default:
       throw new Error(`Unexpected step: ${step}`)
   }

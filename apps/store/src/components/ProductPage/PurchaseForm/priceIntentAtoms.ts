@@ -173,13 +173,7 @@ export const useSyncPriceIntentState = (preloadedPriceIntentId?: string): void =
     if (savedId == null) {
       createPriceIntent()
     } else {
-      const cartPriceIntentIds = new Set(cart?.entries.map((item) => item.priceIntentId))
-      if (cartPriceIntentIds.has(savedId)) {
-        console.log('Current priceIntent used in one of cart items, creating new one')
-        createPriceIntent()
-      } else {
-        setPriceIntentId(savedId)
-      }
+      setPriceIntentId(savedId)
     }
   }, [
     apolloClient,
