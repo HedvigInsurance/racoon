@@ -1,5 +1,6 @@
 import { MainHeadline } from '@hedvig-ui'
 import * as React from 'react'
+import { Button, yStack } from 'ui'
 
 const getDayPartGreeting = (name: string) => {
   const hours = new Date().getHours()
@@ -18,5 +19,12 @@ const getDayPartGreeting = (name: string) => {
 
 export const Greeting: React.FC<{ userName: string }> = ({ userName }) => {
   const greeting = getDayPartGreeting(userName)
-  return <MainHeadline>{greeting}</MainHeadline>
+  return (
+    <div className={yStack({ gap: 'xl' })}>
+      <MainHeadline>{greeting}</MainHeadline>
+      <Button variant="secondary" size="large">
+        click me
+      </Button>
+    </div>
+  )
 }
