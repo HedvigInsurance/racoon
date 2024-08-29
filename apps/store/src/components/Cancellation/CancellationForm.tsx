@@ -50,11 +50,15 @@ export const CancellationForm = (props: Props) => {
     companyName: switcherCompanyName ?? 'Unknown',
   }
 
+  // TODO: Remove when all switchable products have priceIntent.notification. For now only car uses it
+  const shouldShowManualSwitchingNote =
+    props.offer.product.name !== 'SE_CAR' && switcherCompanyName != null
+
   switch (props.offer.cancellation.option) {
     case ExternalInsuranceCancellationOption.None:
       return (
         <>
-          {switcherCompanyName && (
+          {shouldShowManualSwitchingNote && (
             <InfoCard>{t('MANUAL_SWITCH_INFO', { COMPANY_NAME: switcherCompanyName })}</InfoCard>
           )}
 
@@ -69,9 +73,11 @@ export const CancellationForm = (props: Props) => {
     case ExternalInsuranceCancellationOption.Iex:
       return <IEXCancellation {...autoSwitchProps} {...startDateProps} />
 
+    // TODO: Remove when no longer supported for new purchases and old sessions have expired
     case ExternalInsuranceCancellationOption.Banksignering:
       return <BankSigneringCancellation {...autoSwitchProps} {...startDateProps} />
 
+    // TODO: Remove when no longer supported for new purchases and old sessions have expired
     case ExternalInsuranceCancellationOption.BanksigneringInvalidRenewalDate:
       if (startDateProps.startDate === undefined) {
         throw new Error('Cancellation | Missing start date')

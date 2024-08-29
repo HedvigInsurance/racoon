@@ -8,6 +8,7 @@ import { memo, type MouseEventHandler, type ReactNode, type RefObject } from 're
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Button, Space, Text, PlusIcon, theme } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
+import { InfoCard } from '@/components/InfoCard/InfoCard'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import { ScrollToTopButton } from '@/components/ProductPage/ScrollToButton/ScrollToButton'
 import { useCartEntryToReplace } from '@/components/ProductPage/useCartEntryToReplace'
@@ -213,6 +214,10 @@ export const OfferPresenter = memo((props: Props) => {
                 defaultOpen={true}
               />
             )}
+
+            {priceIntent.notifications?.map((notification, index) => (
+              <InfoCard key={index}>{notification.message}</InfoCard>
+            ))}
 
             <CancellationForm productOfferIds={productOfferIds} offer={selectedOffer} />
 

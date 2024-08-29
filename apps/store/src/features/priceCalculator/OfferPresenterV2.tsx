@@ -9,6 +9,7 @@ import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import { Button, tokens, yStack } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
 import Collapsible from '@/components/Collapsible/Collapsible'
+import { InfoCard } from '@/components/InfoCard/InfoCard'
 import { SSN_SE_SECTION_ID } from '@/components/PriceCalculator/SsnSeSection'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { useOfferDetails } from '@/components/ProductItem/useOfferDetails'
@@ -166,6 +167,10 @@ function OfferSummary() {
   return (
     <ProductCardSmall productData={productData} subtitle={selectedOffer.exposure.displayNameShort}>
       <OfferDetails />
+
+      {priceIntent.notifications?.map((notification, index) => (
+        <InfoCard key={index}>{notification.message}</InfoCard>
+      ))}
 
       <CancellationForm productOfferIds={productOfferIds} offer={selectedOffer} />
 

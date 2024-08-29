@@ -60,6 +60,9 @@ export const iconStyles = style({
 
 export const bodyStyles = style({
   flex: 1,
+  // Prevent overflow when seeing untranslated key. Harmless otherwise
+  minWidth: 0,
+  overflowWrap: 'break-word',
 })
 
 export const messageStyles = style({
