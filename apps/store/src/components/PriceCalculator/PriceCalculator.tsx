@@ -1,5 +1,5 @@
 import { datadogRum } from '@datadog/browser-rum'
-import { useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import { useRouter } from 'next/navigation'
 import { useCallback, useMemo, useState } from 'react'
 import { ChangeSsnWarningDialog } from '@/components/ChangeSsnWarningDialog/ChangeSsnWarningDialog'
@@ -26,8 +26,6 @@ import * as Accordion from './Accordion'
 import { FetchInsuranceContainer } from './FetchInsuranceContainer'
 import { FormGrid } from './FormGrid/FormGrid'
 import { PriceCalculatorSection } from './PriceCalculatorSection'
-import { PriceIntentWarningDialog } from './PriceIntentWarningDialog/PriceIntentWarningDialog'
-import { showPriceIntentWarningAtom } from './PriceIntentWarningDialog/showPriceIntentWarningAtom'
 import { useShowFetchInsurance } from './useFetchInsurance'
 import { useHandleSubmitPriceCalculatorSection } from './useHandleSubmitPriceCalculatorSection'
 
@@ -66,8 +64,6 @@ export const PriceCalculator = (props: Props) => {
 
   const showFetchInsurance = useShowFetchInsurance({ priceIntentId })
 
-  const showPriceIntentWarning = useSetAtom(showPriceIntentWarningAtom)
-
   const handleSubmitSection = useHandleSubmitPriceCalculatorSection({
     onSuccess({ priceIntent, customer }) {
       const form = setupForm({
@@ -78,20 +74,11 @@ export const PriceCalculator = (props: Props) => {
       if (isFormReadyToConfirm({ form, priceIntent, customer })) {
         props.onConfirm()
       } else {
-        if (priceIntent.warning) {
-          showPriceIntentWarning(true)
-          datadogRum.addAction('Show PriceIntent Warning')
-        }
         if (priceIntent.externalInsurer) {
           // NOTE: We're still going to the next section underneath Insurely prompt
           showFetchInsurance()
         }
-
-        // If we show a warning, prevent the user from going to the
-        // next section without interacting with the warning dialog
-        if (!priceIntent.warning) {
-          setActiveSectionId(GOTO_NEXT_SECTION)
-        }
+        setActiveSectionId(GOTO_NEXT_SECTION)
       }
     },
   })
@@ -178,8 +165,6 @@ export const PriceCalculator = (props: Props) => {
         onAccept={handleAcceptChangeSsn}
         onDecline={handleDeclineChangeSsn}
       />
-
-      <PriceIntentWarningDialog />
 
       <FetchInsuranceContainer />
     </>

@@ -20,9 +20,6 @@ fragment PriceIntent on PriceIntent {
     configName
     partner
   }
-  warning {
-    ...PriceIntentWarning
-  }
   notifications {
     message
   }

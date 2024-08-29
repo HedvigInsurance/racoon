@@ -1,6 +1,5 @@
 'use client'
 
-import { datadogRum } from '@datadog/browser-rum'
 import { clsx } from 'clsx'
 import { useAtomValue, useSetAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
@@ -8,8 +7,6 @@ import { type FormEventHandler, type ReactNode } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import { Heading, yStack } from 'ui'
 import { FetchInsuranceContainer } from '@/components/PriceCalculator/FetchInsuranceContainer'
-import { PriceIntentWarningDialog } from '@/components/PriceCalculator/PriceIntentWarningDialog/PriceIntentWarningDialog'
-import { showPriceIntentWarningAtom } from '@/components/PriceCalculator/PriceIntentWarningDialog/showPriceIntentWarningAtom'
 import { SSN_SE_SECTION_ID, SsnSeSection } from '@/components/PriceCalculator/SsnSeSection'
 import { useHandleSubmitPriceCalculatorSection } from '@/components/PriceCalculator/useHandleSubmitPriceCalculatorSection'
 import { useTranslateFieldLabel } from '@/components/PriceCalculator/useTranslateFieldLabel'
@@ -92,7 +89,6 @@ export function InsuranceDataForm() {
     <>
       <div className={yStack({ gap: 'xs' })}>{sections}</div>
       <EditSsnWarningContainer />
-      <PriceIntentWarningDialog />
       <FetchInsuranceContainer />
     </>
   )
@@ -126,7 +122,6 @@ function InsuranceDataSection({ section }: InsuranceDataSectionProps) {
 
   const confirmPriceIntent = useConfirmPriceIntent()
 
-  const showPriceIntentWarning = useSetAtom(showPriceIntentWarningAtom)
   const setActiveSectionId = useSetAtom(activeFormSectionIdAtom)
 
   const submitPriceCalculatorSection = useHandleSubmitPriceCalculatorSection({
@@ -142,20 +137,7 @@ function InsuranceDataSection({ section }: InsuranceDataSectionProps) {
         return
       }
 
-      if (priceIntent.warning) {
-        // SIDE EFFECTS: This solution is simple, but comes with quirks
-        // 1. As soon as warning appears, we'll start showing it when non-final form section is submitted
-        //    Currently, it's OK because we only have warnings for car not owned by current customer,
-        //    and it appears when submitting second-to-last section of insurance data form
-        // 2. Warning will be shown again if user has dismissed it, then went to edit the same form section
-        //    and submitted it - minor UX inconvenience we'll not prioritize for now
-        //
-        // If we ever want better model, we need to remember which warning(s) we had shown for priceIntent
-        showPriceIntentWarning(true)
-        datadogRum.addAction('Show PriceIntent Warning')
-      } else {
-        setActiveSectionId(GOTO_NEXT_SECTION)
-      }
+      setActiveSectionId(GOTO_NEXT_SECTION)
     },
   })
 
