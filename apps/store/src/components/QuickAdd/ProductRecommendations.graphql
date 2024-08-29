@@ -2,12 +2,7 @@ query ProductRecommendations($shopSessionId: UUID!) {
   shopSession(id: $shopSessionId) {
     id
     recommendations {
-      product {
-        ...ProductRecommendation
-      }
-      offer {
-        ...OfferRecommendation
-      }
+      ...Recommendation
     }
   }
 }
@@ -17,6 +12,7 @@ fragment ProductRecommendation on Product {
   name
   displayNameFull
   displayNameShort
+  tagline
   pageLink
   pillowImage {
     id
@@ -63,5 +59,14 @@ fragment OfferRecommendation on ProductOffer {
       amount
       currencyCode
     }
+  }
+}
+
+fragment Recommendation on ProductRecommendation {
+  product {
+    ...ProductRecommendation
+  }
+  offer {
+    ...OfferRecommendation
   }
 }
