@@ -47,7 +47,7 @@
     "@storyblok/js": "3.0.8",
     "@storyblok/react": "3.0.10",
     "@types/uuid": "10.0.0",
-    "@vanilla-extract/css": "1.15.4",
+    "@vanilla-extract/css": "1.15.5",
     "@vanilla-extract/dynamic": "2.1.2",
     "@vanilla-extract/recipes": "0.5.5",
     "@vanilla-extract/sprinkles": "1.6.3",
