@@ -9,7 +9,12 @@ import {
 } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { getAtomValueOrThrow } from '@/utils/jotaiUtils'
 
-type PriceCalculatorStep = 'loadingForm' | 'fillForm' | 'calculatingPrice' | 'viewOffers'
+type PriceCalculatorStep =
+  | 'loadingForm'
+  | 'fillForm'
+  | 'calculatingPrice'
+  | 'viewOffers'
+  | 'viewBonusOffer'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const priceCalculatorStepAtomFamily = atomFamily((priceIntentId: string) =>
