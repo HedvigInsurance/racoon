@@ -115,7 +115,10 @@ const PurchaseFormInner = (props: PurchaseFormInnerProps) => {
   const isLarge = useBreakpoint('lg')
 
   const preloadedPriceIntentId = usePreloadedPriceIntentId()
-  useSyncPriceIntentState(preloadedPriceIntentId)
+  useSyncPriceIntentState({
+    preloadedPriceIntentId,
+    replacePriceIntentWhenCurrentIsAddedToCart: true,
+  })
 
   const isPriceCalculatorExpanded = useIsPriceCalculatorExpanded()
   const [formState, setFormState] = usePurchaseFormState(

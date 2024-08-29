@@ -120,7 +120,13 @@ export const activeFormSectionIdAtom = atom(
 )
 export const GOTO_NEXT_SECTION = Symbol('GOTO_NEXT_SECTION')
 
-export const useSyncPriceIntentState = (preloadedPriceIntentId?: string): void => {
+export const useSyncPriceIntentState = ({
+  preloadedPriceIntentId,
+  replacePriceIntentWhenCurrentIsAddedToCart = false,
+}: {
+  preloadedPriceIntentId?: string
+  replacePriceIntentWhenCurrentIsAddedToCart?: boolean
+} = {}): void => {
   const priceTemplate = useAtomValue(priceTemplateAtom)
   const productName = useProductData().name
   const entryToReplace = useCartEntryToReplace()
@@ -173,13 +179,28 @@ export const useSyncPriceIntentState = (preloadedPriceIntentId?: string): void =
     if (savedId == null) {
       createPriceIntent()
     } else {
-      setPriceIntentId(savedId)
+      // This is a workaround as 'priceIntentAtoms' is used for new and old price calculator.
+      // For the old price calculator, we need to created a new price intent if there's a cart entry
+      // for that price intent. When we remove support for the old price calculator, we'll be able to
+      // remove of the config paramenters that can be provided to 'useSyncPriceIntentState'
+      if (replacePriceIntentWhenCurrentIsAddedToCart) {
+        const cartPriceIntentIds = new Set(cart?.entries.map((item) => item.priceIntentId))
+        if (cartPriceIntentIds.has(savedId)) {
+          console.log('Current priceIntent used in one of cart items, creating new one')
+          createPriceIntent()
+        } else {
+          setPriceIntentId(savedId)
+        }
+      } else {
+        setPriceIntentId(savedId)
+      }
     }
   }, [
     apolloClient,
     cart?.entries,
     entryToReplace,
     preloadedPriceIntentId,
+    replacePriceIntentWhenCurrentIsAddedToCart,
     priceTemplate,
     productName,
     shopSessionId,

@@ -131,7 +131,7 @@ export const CalculatePricePage = (props: Props) => {
   }
 
   useSyncPriceTemplate(props.priceTemplate)
-  useSyncPriceIntentState(priceIntentId)
+  useSyncPriceIntentState({ preloadedPriceIntentId: priceIntentId })
 
   const isReady = useIsPriceIntentStateReady()
   if (!isReady) {
