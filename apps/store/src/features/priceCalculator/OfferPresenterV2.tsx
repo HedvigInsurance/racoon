@@ -162,7 +162,11 @@ function OfferSummary() {
   const shopSession = useShopSessionValueOrThrow()
 
   return (
-    <ProductCardSmall productData={productData} subtitle={selectedOffer.exposure.displayNameShort}>
+    <ProductCardSmall
+      productName={productData.displayNameFull}
+      pillowImageSrc={productData.pillowImage.src}
+      subtitle={selectedOffer.exposure.displayNameShort}
+    >
       <OfferDetails />
 
       {priceIntent.notifications?.map((notification, index) => (
