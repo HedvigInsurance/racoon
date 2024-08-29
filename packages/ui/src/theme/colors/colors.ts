@@ -334,6 +334,10 @@ export const colors = {
   offWhite: gray[25],
   offWhiteTranslucent: grayTranslucent[25],
 
+  // Surface
+  surfaceOpaquePrimary: gray[100],
+  surfaceOpaqueSecondary: gray[200],
+
   // Highlight colors
   // Used as fill on light backgrounds
   blueFill1: highlight.blue.fill1,
