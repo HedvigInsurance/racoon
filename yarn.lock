@@ -8518,33 +8518,43 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storyblok/js@npm:3.0.8":
-  version: 3.0.8
-  resolution: "@storyblok/js@npm:3.0.8"
+"@storyblok/js@npm:3.0.12":
+  version: 3.0.12
+  resolution: "@storyblok/js@npm:3.0.12"
   dependencies:
-    storyblok-js-client: "npm:^6.7.2"
-  checksum: 10c0/8ef58a31fa5890f8c04f1030e693d0e7155ca399cac5dc4a542a66906a51d14d61848d4861238cf7577690ee97b83937a011242de74eadb8845518d9db28b63d
+    storyblok-js-client: "npm:^6.9.0"
+  checksum: 10c0/e265cfe3a3ea51ed6692184b2a1dbc79f5fbb860c29321e96f983856ffc85c1f94d36ff86b3aed068eed09ebd0723bc2276daa538ed28f1463b6a54061d2b430
   languageName: node
   linkType: hard
 
-"@storyblok/js@npm:^3.0.8":
-  version: 3.0.11
-  resolution: "@storyblok/js@npm:3.0.11"
+"@storyblok/js@npm:^3.0.12":
+  version: 3.1.1
+  resolution: "@storyblok/js@npm:3.1.1"
   dependencies:
-    storyblok-js-client: "npm:^6.8.4"
-  checksum: 10c0/13edf05cf5eb643f6506b3c1fd2a52c1cef1b01631bc518893b1472aaa319bddbb4684376642e7bf940282c178afe9988970b94dad0d824c84913d29679c137a
+    "@storyblok/richtext": "npm:^2.0.0"
+    storyblok-js-client: "npm:^6.9.1"
+  checksum: 10c0/566d74daf95bde30e65f3859ee8741127153cfd3cefc2a0c5bdc76e5c1f7b52847d051c85db05989452c84b697831039bcf5a7de8334b2f5356071ca221b0f2a
   languageName: node
   linkType: hard
 
-"@storyblok/react@npm:3.0.10":
-  version: 3.0.10
-  resolution: "@storyblok/react@npm:3.0.10"
+"@storyblok/react@npm:3.0.13":
+  version: 3.0.13
+  resolution: "@storyblok/react@npm:3.0.13"
   dependencies:
-    "@storyblok/js": "npm:^3.0.8"
+    "@storyblok/js": "npm:^3.0.12"
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
     react-dom: ^17.0.0 || ^18.0.0
-  checksum: 10c0/fb0415861f18d2e19891dde315e4d20d88a59e9c9bf4dba994fbbb4836052a356e0547bb5506347b5c0ffc0db2bf2bc4542d2ac1123ced633d0526f99dd66431
+  checksum: 10c0/5e28c9aec94cee463bc0a860cf10e923afba71df5eebb2683838d5110890d98bcc977ef820fa0e9d56be13ff04c9e8f6ae2e37d91d0ae6ac0aa93b8229c47924
+  languageName: node
+  linkType: hard
+
+"@storyblok/richtext@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@storyblok/richtext@npm:2.0.0"
+  dependencies:
+    consola: "npm:^3.2.3"
+  checksum: 10c0/ea15e9c8b1cceadf03a2795c860e73763e8c48db8096869ce0f6bdef94c8ce2f00b5b94dcb5e78bbea1d92de71e855d716469883a6c586526aa4a3bf1ec944f8
   languageName: node
   linkType: hard
 
@@ -22849,8 +22859,8 @@ __metadata:
     "@radix-ui/react-switch": "npm:1.1.0"
     "@radix-ui/react-tabs": "npm:1.1.0"
     "@radix-ui/react-tooltip": "npm:1.1.2"
-    "@storyblok/js": "npm:3.0.8"
-    "@storyblok/react": "npm:3.0.10"
+    "@storyblok/js": "npm:3.0.12"
+    "@storyblok/react": "npm:3.0.13"
     "@storybook/addon-actions": "npm:8.2.9"
     "@storybook/addon-designs": "npm:8.0.3"
     "@storybook/addon-essentials": "npm:8.2.9"
@@ -22939,10 +22949,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"storyblok-js-client@npm:^6.7.2, storyblok-js-client@npm:^6.8.4":
-  version: 6.8.4
-  resolution: "storyblok-js-client@npm:6.8.4"
-  checksum: 10c0/da262064695d249fb0363e457dc0045c2266d8004084c88bbc0ec3d812f2f24bd0836e0f58a7047ae0ead5d8e5fd597a86f57bfc2187522868297b9cabfa5511
+"storyblok-js-client@npm:^6.9.0, storyblok-js-client@npm:^6.9.1":
+  version: 6.9.1
+  resolution: "storyblok-js-client@npm:6.9.1"
+  checksum: 10c0/4299c12461dbaef54546310eb8b2cd74c3c72e89647c73bfae8b5eae5a5fc51d6784b4a09cd0c09d598f6721907bf5e0182bb141287d4b76b5c85be01ec67c72
   languageName: node
   linkType: hard
 
