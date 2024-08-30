@@ -53,7 +53,7 @@
     "@vanilla-extract/sprinkles": "1.6.3",
     "@vercel/edge-config": "1.2.1",
     "@vercel/kv": "2.0.0",
-    "@vercel/otel": "1.9.1",
+    "@vercel/otel": "1.10.0",
     "ajv": "8.17.1",
     "apollo-link-timeout": "4.0.0",
     "clone-deep": "4.0.1",
