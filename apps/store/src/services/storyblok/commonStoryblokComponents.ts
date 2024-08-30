@@ -26,6 +26,7 @@ import { MediaListBlock } from '@/blocks/MediaListBlock'
 import { ModalBlock } from '@/blocks/ModalBlock'
 import { PageBlock } from '@/blocks/PageBlock'
 import { PerilsBlock } from '@/blocks/PerilsBlock'
+import { PerilsTableBlock } from '@/blocks/PerilsTableBlock'
 import { ProductCardBlock } from '@/blocks/ProductCardBlock'
 import { ProductDocumentsBlock } from '@/blocks/ProductDocumentsBlock'
 import { ProductGridBlock } from '@/blocks/ProductGridBlock'
@@ -85,6 +86,7 @@ export const commonStoryblokComponents = {
   modal: ModalBlock,
   page: PageBlock,
   perils: PerilsBlock,
+  perilsTable: PerilsTableBlock,
   product: ProductPageBlock,
   productPage: ProductPageBlockV2,
   productCard: ProductCardBlock,
