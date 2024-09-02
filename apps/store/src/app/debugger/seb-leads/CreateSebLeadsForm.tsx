@@ -1,14 +1,14 @@
 'use client'
 
 import { useFormState } from 'react-dom'
-import { yStack } from 'ui'
-import { createSebLead } from '@/app/debugger/seb-leads/actions'
-import { SEBFormElement } from '@/app/debugger/seb-leads/types'
+import { Alert, yStack } from 'ui'
 import { SubmitButton } from '@/appComponents/SubmitButton'
 import { ErrorMessages } from '@/components/FormErrors/ErrorMessages'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { TextField } from '@/components/TextField/TextField'
+import { createSebLead } from './createSebLead'
+import { SEBFormElement } from './types'
 
 const PRODUCT_OPTIONS = [
   { name: 'SE_CAR (carInsurance)', value: 'carInsurance' },
@@ -35,6 +35,7 @@ export const SebLeadsDebuggerForm = () => {
   return (
     <form action={formAction} className={yStack({ gap: 'xs' })}>
       <PersonalNumberField
+        label="SSN"
         name={SEBFormElement.SSN}
         required={true}
         defaultValue={state?.fields?.[SEBFormElement.SSN]}
@@ -68,9 +69,9 @@ export const SebLeadsDebuggerForm = () => {
         defaultValue={state?.fields?.[SEBFormElement.PhoneNumber]}
       />
       {/*
-              TODO: select multiple values to be pushed to an array
-                  // multiple={true} looked bad
-          */}
+      TODO: select multiple values to be pushed to an array
+          // multiple={true} looked bad
+      */}
       <InputSelect
         name={SEBFormElement.Product}
         required={true}
@@ -79,6 +80,11 @@ export const SebLeadsDebuggerForm = () => {
       />
       <SubmitButton>Create SEB lead</SubmitButton>
       <ErrorMessages errors={state?.errors?.generic} />
+      {state?.messages?.map((message, index) => (
+        <Alert.Root key={index} variant={message.type}>
+          <Alert.Message>{message.content}</Alert.Message>
+        </Alert.Root>
+      ))}
     </form>
   )
 }
