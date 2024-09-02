@@ -1,4 +1,0 @@
-fragment PriceIntentWarning on PriceIntentWarning {
-  header
-  message
-}
