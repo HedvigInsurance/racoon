@@ -5,7 +5,7 @@ export const hasBundleDiscount = (shopSession: ShopSession) => {
 }
 
 // TODO: Move these settings to API if we decide to convert experiment into real feature
-export const BUNDLE_DISCOUNT_PERCENTAGE = '20%'
+export const BUNDLE_DISCOUNT_PERCENTAGE = '15%'
 // TODO: Calculate # of eligible items on server and return in API. This should probably be related to priceIntent
 export const BUNDLE_DISCOUNT_ELIGIBLE_PRODUCT_IDS = new Set([
   'Product:SE_APARTMENT_RENT',
