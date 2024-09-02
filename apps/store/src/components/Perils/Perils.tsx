@@ -1,3 +1,4 @@
+'use client'
 import { datadogLogs } from '@datadog/browser-logs'
 import { useCallback, useMemo, useRef, useState } from 'react'
 import { Text, tokens } from 'ui'
