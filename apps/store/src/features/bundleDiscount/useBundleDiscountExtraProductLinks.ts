@@ -26,7 +26,7 @@ const bundleExtraProductGroups = [
     },
     subtitle: {
       se: 'Drulle ingår',
-      'se-en': 'Drulle included',
+      'se-en': 'With all-risk',
     },
   },
   {
@@ -37,7 +37,7 @@ const bundleExtraProductGroups = [
       'se-en': 'Car insurance',
     },
     subtitle: {
-      se: 'Smidigt skydd',
+      se: 'För din bil',
       'se-en': 'Easy to use',
     },
   },
@@ -50,7 +50,7 @@ const bundleExtraProductGroups = [
     },
     subtitle: {
       se: 'Hund och katt',
-      'se-en': 'For dog and cat',
+      'se-en': 'Dog or cat',
     },
   },
 ]
