@@ -1,18 +1,18 @@
 'use server'
 
-import { SEBFormElement } from '@/app/debugger/seb-leads/types'
 import type { FormStateWithErrors } from '@/app/types/formStateTypes'
+import { SebDebuggerFormElement } from './constants'
 
 export const createSebLead = async (
   _: FormStateWithErrors,
   formData: FormData,
 ): Promise<FormStateWithErrors> => {
-  const ssn = formData.get(SEBFormElement.SSN) as string
-  const firstName = formData.get(SEBFormElement.FirstName) as string
-  const lastName = formData.get(SEBFormElement.LastName) as string
-  const email = formData.get(SEBFormElement.Email) as string
-  const phoneNumber = formData.get(SEBFormElement.PhoneNumber) as string
-  const product = formData.get(SEBFormElement.Product) as string
+  const ssn = formData.get(SebDebuggerFormElement.SSN) as string
+  const firstName = formData.get(SebDebuggerFormElement.FirstName) as string
+  const lastName = formData.get(SebDebuggerFormElement.LastName) as string
+  const email = formData.get(SebDebuggerFormElement.Email) as string
+  const phoneNumber = formData.get(SebDebuggerFormElement.PhoneNumber) as string
+  const product = formData.get(SebDebuggerFormElement.Product) as string
 
   const parameters = {
     personalNumber: ssn,
@@ -37,7 +37,7 @@ export const createSebLead = async (
       messages: [{ type: 'success', content: message }],
     }
   } catch (error) {
-    console.error('Error creating car trial', error)
+    console.error('Error creating SEB lead', error)
     const errorMessage = error instanceof Error ? error.message : 'Unknown error'
 
     return {
@@ -67,11 +67,11 @@ type CreateSebLeadsResponse = {
 const createSebLeadStaging = async (
   params: CreateSebLeadsParams,
 ): Promise<CreateSebLeadsResponse> => {
-  const API_URL = process.env.SEB_LEADS_API_URL
+  const API_URL = process.env.SEB_LEADS_INSURELY_API_URL
   if (!API_URL) {
     throw new Error('SEB_LEADS_API_URL not configured')
   }
-  const API_KEY = process.env.SEB_LEADS_API_KEY
+  const API_KEY = process.env.SEB_LEADS_INSURELY_API_KEY
   if (!API_KEY) {
     throw new Error('SEB_LEADS_API_KEY not configured')
   }

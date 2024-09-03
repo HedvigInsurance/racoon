@@ -1,14 +1,14 @@
 'use client'
 
 import { useFormState } from 'react-dom'
-import { Alert, yStack } from 'ui'
+import { yStack } from 'ui'
+import { FormResults } from '@/app/debugger/seb-leads/FormResults'
 import { SubmitButton } from '@/appComponents/SubmitButton'
-import { ErrorMessages } from '@/components/FormErrors/ErrorMessages'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { TextField } from '@/components/TextField/TextField'
+import { SebDebuggerFormElement } from './constants'
 import { createSebLead } from './createSebLead'
-import { SEBFormElement } from './types'
 
 const PRODUCT_OPTIONS = [
   { name: 'SE_CAR (carInsurance)', value: 'carInsurance' },
@@ -36,55 +36,46 @@ export const SebLeadsDebuggerForm = () => {
     <form action={formAction} className={yStack({ gap: 'xs' })}>
       <PersonalNumberField
         label="SSN"
-        name={SEBFormElement.SSN}
+        name={SebDebuggerFormElement.SSN}
         required={true}
-        defaultValue={state?.fields?.[SEBFormElement.SSN]}
+        defaultValue={state?.fields?.[SebDebuggerFormElement.SSN]}
       />
       <TextField
-        name={SEBFormElement.FirstName}
-        type="text"
-        label={SEBFormElement.FirstName}
-        defaultValue={state?.fields?.[SEBFormElement.FirstName]}
+        name={SebDebuggerFormElement.FirstName}
+        label={SebDebuggerFormElement.FirstName}
+        defaultValue={state?.fields?.[SebDebuggerFormElement.FirstName]}
         required={true}
       />
       <TextField
-        type="text"
-        label={SEBFormElement.LastName}
-        name={SEBFormElement.LastName}
+        label={SebDebuggerFormElement.LastName}
+        name={SebDebuggerFormElement.LastName}
         required={true}
-        defaultValue={state?.fields?.[SEBFormElement.LastName]}
+        defaultValue={state?.fields?.[SebDebuggerFormElement.LastName]}
       />
       <TextField
-        type="text"
-        label={SEBFormElement.Email}
-        name={SEBFormElement.Email}
+        label={SebDebuggerFormElement.Email}
+        name={SebDebuggerFormElement.Email}
         required={true}
-        defaultValue={state?.fields?.[SEBFormElement.Email]}
+        defaultValue={state?.fields?.[SebDebuggerFormElement.Email]}
       />
       <TextField
-        type="text"
-        label={SEBFormElement.PhoneNumber}
-        name={SEBFormElement.PhoneNumber}
+        label={SebDebuggerFormElement.PhoneNumber}
+        name={SebDebuggerFormElement.PhoneNumber}
         required={true}
-        defaultValue={state?.fields?.[SEBFormElement.PhoneNumber]}
+        defaultValue={state?.fields?.[SebDebuggerFormElement.PhoneNumber]}
       />
       {/*
       TODO: select multiple values to be pushed to an array
           // multiple={true} looked bad
       */}
       <InputSelect
-        name={SEBFormElement.Product}
+        name={SebDebuggerFormElement.Product}
         required={true}
-        defaultValue={state?.fields?.[SEBFormElement.Product]}
+        defaultValue={state?.fields?.[SebDebuggerFormElement.Product]}
         options={PRODUCT_OPTIONS}
       />
       <SubmitButton>Create SEB lead</SubmitButton>
-      <ErrorMessages errors={state?.errors?.generic} />
-      {state?.messages?.map((message, index) => (
-        <Alert.Root key={index} variant={message.type}>
-          <Alert.Message>{message.content}</Alert.Message>
-        </Alert.Root>
-      ))}
+      <FormResults formState={state} />
     </form>
   )
 }
