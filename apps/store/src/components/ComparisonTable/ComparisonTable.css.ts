@@ -1,9 +1,6 @@
 import { style, styleVariants } from '@vanilla-extract/css'
 import { tokens, minWidth } from 'ui'
 
-const TRIGGER_ICON_SIZE = '1rem'
-const TRIGGER_ICON_GAP = '1rem'
-
 export const table = style({
   width: '100%',
   borderCollapse: 'collapse',
@@ -12,7 +9,7 @@ export const table = style({
 export const row = style({
   selectors: {
     '&:not(:last-child)': {
-      borderBottom: `1px solid ${tokens.colors.borderOpaque1}`,
+      borderBottom: `1px solid ${tokens.colors.borderPrimary}`,
     },
   },
 })
@@ -73,18 +70,17 @@ export const aligner = styleVariants({
 export const collapsibleTrigger = style({
   display: 'flex',
   alignItems: 'center',
-  gap: TRIGGER_ICON_GAP,
+  gap: '1rem',
   width: '100%',
 })
 
 export const collapsibleContent = style({
   maxWidth: '45ch',
-  paddingLeft: `calc(${TRIGGER_ICON_SIZE} + ${TRIGGER_ICON_GAP})`,
 })
 
 export const triggerIcon = style({
   flexShrink: 0,
-  width: TRIGGER_ICON_SIZE,
+  width: '1rem',
   aspectRatio: '1',
   transition: 'transform 300ms',
   selectors: {

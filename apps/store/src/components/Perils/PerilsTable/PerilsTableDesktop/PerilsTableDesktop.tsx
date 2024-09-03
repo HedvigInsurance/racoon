@@ -7,7 +7,8 @@ import {
 } from '@/components/ComparisonTable/ComparisonTable.types'
 import { DesktopComparisonTable } from '@/components/ComparisonTable/DesktopComparisonTable'
 import type { PerilFragment } from '@/services/graphql/generated'
-import type { VariantPerils } from './PerilsTable'
+import type { VariantPerils } from '../PerilsTable'
+import { tableWrapper } from './PerilsTableDesktop.css'
 
 type Props = {
   allPerils: Array<PerilFragment>
@@ -16,7 +17,11 @@ type Props = {
 
 export function PerilsTableDesktop({ allPerils, variantsPerils }: Props) {
   const { table } = useTableData(allPerils, variantsPerils)
-  return <DesktopComparisonTable {...table} />
+  return (
+    <div className={tableWrapper}>
+      <DesktopComparisonTable {...table} />
+    </div>
+  )
 }
 
 const variantHasPeril = (perils: Array<PerilFragment>, perilTitle: string) =>
@@ -33,7 +38,7 @@ const useTableData = (allPerils: Array<PerilFragment>, variantsPerils: Array<Var
     ]
 
     const body: Body = allPerils.map((peril) => [
-      { title: peril.title, description: peril.description },
+      { title: peril.title, description: peril.description, perilsColor: peril.colorCode },
       ...variantsPerils.map((variant) =>
         variantHasPeril(variant.perils, peril.title)
           ? TableMarkers.Covered

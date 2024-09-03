@@ -4,7 +4,7 @@ export const TableMarkers = {
   NotCovered: '[]',
 } as const
 
-type RowTitle = { title: string; description?: string }
+type RowTitle = { title: string; description?: string; perilsColor?: string | null }
 
 type Row = [RowTitle, ...Array<string>]
 
