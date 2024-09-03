@@ -12,6 +12,7 @@ export * as Dialog from './components/Dialog/Dialog'
 export { Badge, type BadgeProps } from './components/Badge/Badge'
 export { ConditionalWrapper } from './components/ConditionalWrapper'
 export * from './components/ThemeProvider'
+export * from './components/Tabs/Tabs'
 
 export { responsiveVariants } from './utils/responsiveVariants/responsiveVariants'
 export * from './utils/responsiveVariants/repsonsiveVariants.types'
