@@ -4,13 +4,15 @@ import { getFormValueOrThrow } from '@/utils/getFormValueOrTrrow'
 import { SebDebuggerFormElement } from './constants'
 import { storefrontLeadsApiRequest } from './storefrontLeadsApiRequest'
 
-export const importSebLead = async (
+export const createWidgetSession = async (
   _: FormStateWithErrors,
   formData: FormData,
 ): Promise<FormStateWithErrors> => {
   try {
-    const sebInsurelyId = getFormValueOrThrow(formData, SebDebuggerFormElement.SebInsurelyId)
-    const result = await storefrontLeadsApiRequest(`/leads/${sebInsurelyId}`, { method: 'POST' })
+    const leadId = getFormValueOrThrow(formData, SebDebuggerFormElement.LeadId)
+    const result = await storefrontLeadsApiRequest(`/leads/${leadId}/widgetSession`, {
+      method: 'POST',
+    })
     return {
       messages: (result as { messages: Array<string> }).messages.map((message) => ({
         type: 'success',
@@ -18,7 +20,7 @@ export const importSebLead = async (
       })),
     }
   } catch (err) {
-    console.error('Error creating SEB lead', err)
+    console.error('Error generating widget session', err)
     const errorMessage = err instanceof Error ? err.message : 'Unknown error'
 
     return {

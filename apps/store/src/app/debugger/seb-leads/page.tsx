@@ -1,7 +1,8 @@
 import { Heading, sprinkles, Text, yStack } from 'ui'
-import { SebLeadsDebuggerForm } from '@/app/debugger/seb-leads/CreateSebLeadsForm'
-import { ImportSebLeadForm } from '@/app/debugger/seb-leads/ImportSebLeadForm'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
+import { SebLeadsDebuggerForm } from './CreateSebLeadsForm'
+import { CreateWidgetSessionForm } from './CreateWidgetSessionForm'
+import { ImportSebLeadForm } from './ImportSebLeadForm'
 
 function SebLeadsDebuggerPage() {
   if (process.env.VERCEL_ENV === 'production') {
@@ -17,6 +18,10 @@ function SebLeadsDebuggerPage() {
             Import SEB Lead
           </Heading>
           <ImportSebLeadForm />
+          <Heading as="h2" className={sprinkles({ marginTop: 'xl' })}>
+            Create widget session
+          </Heading>
+          <CreateWidgetSessionForm />
         </div>
       </GridLayout.Content>
     </GridLayout.Root>
