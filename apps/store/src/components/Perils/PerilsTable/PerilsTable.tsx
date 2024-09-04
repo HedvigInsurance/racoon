@@ -6,7 +6,12 @@ import { useResponsiveVariant } from '@/utils/useResponsiveVariant'
 import { PerilsTableDesktop } from './PerilsTableDesktop/PerilsTableDesktop'
 import { PerilsTabs } from './PerilsTabs'
 
-export function PerilsTable() {
+export type PerilsTableProps = {
+  heading?: string
+  description?: string
+}
+
+export function PerilsTable({ heading, description }: PerilsTableProps) {
   const variant = useResponsiveVariant('lg')
   const { variants: productVariants } = useProductData()
 
@@ -34,9 +39,17 @@ export function PerilsTable() {
 
   return (
     <>
-      {variant === 'mobile' && <PerilsTabs variantsPerils={variantsPerils} />}
+      {variant === 'mobile' && (
+        <div>
+          <PerilsTabs heading={heading} description={description} variantsPerils={variantsPerils} />
+        </div>
+      )}
       {variant === 'desktop' && (
-        <PerilsTableDesktop variantsPerils={variantsPerils} allPerils={allPerils} />
+        <PerilsTableDesktop
+          heading={heading}
+          variantsPerils={variantsPerils}
+          allPerils={allPerils}
+        />
       )}
     </>
   )
