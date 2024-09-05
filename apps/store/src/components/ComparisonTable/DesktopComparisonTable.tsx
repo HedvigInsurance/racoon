@@ -39,6 +39,7 @@ export const DesktopComparisonTable = ({ className, head, body, selectedColumn }
                 style={{ width: '60%' }}
                 title={rowTitle.title}
                 description={rowTitle.description}
+                perilColor={rowTitle.perilsColor}
               />
               {values.map((value, index) => (
                 <ComparisonTable.DataCell

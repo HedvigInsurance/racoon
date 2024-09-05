@@ -129,7 +129,7 @@ const PerilsAccordion = ({ peril }: { peril: Peril }) => {
   )
 }
 
-function ColorIcon({ color }: { color?: string }) {
+export function ColorIcon({ color }: { color?: string }) {
   return <div className={colorIcon} style={{ backgroundColor: color }} />
 }
 

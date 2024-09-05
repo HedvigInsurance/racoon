@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import type { PerilFragment } from '@/services/graphql/generated'
 import { useResponsiveVariant } from '@/utils/useResponsiveVariant'
-import { PerilsTableDesktop } from './PerilsTableDesktop'
+import { PerilsTableDesktop } from './PerilsTableDesktop/PerilsTableDesktop'
 import { PerilsTabs } from './PerilsTabs'
 
 export function PerilsTable() {
@@ -33,12 +33,12 @@ export function PerilsTable() {
   }, [productVariants, allPerils])
 
   return (
-    <div>
+    <>
       {variant === 'mobile' && <PerilsTabs variantsPerils={variantsPerils} />}
       {variant === 'desktop' && (
         <PerilsTableDesktop variantsPerils={variantsPerils} allPerils={allPerils} />
       )}
-    </div>
+    </>
   )
 }
 

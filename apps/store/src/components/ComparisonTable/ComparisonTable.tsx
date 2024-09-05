@@ -8,8 +8,10 @@ import {
   theme,
   type CheckIconProps as PerilsCheckIconProps,
   type MinusIconProps,
+  sprinkles,
 } from 'ui'
 import Collapsible from '@/components/Collapsible/Collapsible'
+import { ColorIcon } from '../Perils/Perils'
 import {
   table,
   row,
@@ -56,22 +58,34 @@ export function Header({ children, active, ...props }: HeaderProps) {
 type TitleDataCellProps = Omit<ComponentPropsWithoutRef<'td'>, 'children'> & {
   title: string
   description?: string
+  perilColor?: string | null
 }
 
-export function TitleDataCell({ className, title, description, ...props }: TitleDataCellProps) {
+export function TitleDataCell({
+  className,
+  title,
+  description,
+  perilColor,
+  ...props
+}: TitleDataCellProps) {
   const Title = (
-    <Text className={title} as="span" size={{ _: 'xs', lg: 'md' }} color="textPrimary">
-      {title}
-    </Text>
+    <>
+      {perilColor && <ColorIcon color={perilColor} />}
+      <Text className={title} as="span" size={{ _: 'xs', lg: 'md' }} color="textPrimary">
+        {title}
+      </Text>
+    </>
   )
   const Children = description ? (
     <Collapsible.Root>
       <Collapsible.Trigger className={collapsibleTrigger}>
-        <ChevronIcon className={triggerIcon} />
         {Title}
+        <ChevronIcon className={triggerIcon} />
       </Collapsible.Trigger>
 
-      <Collapsible.Content className={collapsibleContent}>
+      <Collapsible.Content
+        className={clsx(collapsibleContent, perilColor && sprinkles({ pl: 'xl' }))}
+      >
         <Text as="span" size="xs" color="textSecondary">
           {description}
         </Text>

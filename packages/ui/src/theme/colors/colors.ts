@@ -314,6 +314,9 @@ export const colors = {
   backgroundFrostedGlass: 'hsla(0, 0%, 98%, 0.75)',
 
   // Border
+  borderPrimary: grayTranslucent[200],
+  borderSecondary: grayTranslucent[300],
+  // Deprecated
   borderOpaque1: gray[200],
   borderTranslucent1: grayTranslucent[200],
   borderOpaque2: gray[300],
