@@ -6,4 +6,5 @@ export enum SebDebuggerFormElement {
   Email = 'email',
   Product = 'product',
   SebInsurelyId = 'sebInsurelyId',
+  LeadId = 'leadId',
 }
