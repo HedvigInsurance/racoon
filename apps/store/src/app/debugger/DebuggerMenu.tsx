@@ -11,6 +11,7 @@ export function DebuggerMenu() {
       <MenuItem href="/debugger/iframe">iframe debugger</MenuItem>
       <MenuItem href="/debugger/car-trial">Car trial debugger</MenuItem>
       <MenuItem href="/debugger/terms">Terms viewer</MenuItem>
+      <MenuItem href="/debugger/seb-leads">SEB Leads</MenuItem>
     </div>
   )
 }
