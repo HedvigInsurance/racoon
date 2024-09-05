@@ -1,32 +1,18 @@
-'use client'
-import { useMemo } from 'react'
 import * as Tabs from 'ui'
 import { yStack } from 'ui'
-import type { PerilFragment, ProductVariantFragment } from '@/services/graphql/generated'
 import { Perils } from '../Perils'
+import type { VariantPerils } from './PerilsTable'
 
 type Props = {
-  variants: Array<ProductVariantFragment>
+  variantsPerils: Array<VariantPerils>
 }
 
-export const PerilsTabs = ({ variants }: Props) => {
-  const allPerils = useMemo(() => {
-    const perilsMap = new Map(
-      variants.flatMap((item) => item.perils.map((peril) => [peril.title, peril])),
-    )
-    return Array.from(perilsMap.values())
-  }, [variants])
-
-  const getMissingItems = (items: Array<PerilFragment>) => {
-    const addedPerils = new Set<string>(items.map((item) => item.title))
-    return allPerils.filter((item) => !addedPerils.has(item.title))
-  }
-
+export const PerilsTabs = ({ variantsPerils }: Props) => {
   return (
-    <Tabs.Root defaultValue={variants[1].typeOfContract}>
+    <Tabs.Root defaultValue={variantsPerils[1].typeOfContract}>
       <div className={yStack({ gap: 'lg' })}>
         <Tabs.List type="filled">
-          {variants.map((variant) => {
+          {variantsPerils.map((variant) => {
             return (
               <Tabs.Trigger
                 key={variant.typeOfContract}
@@ -39,14 +25,14 @@ export const PerilsTabs = ({ variants }: Props) => {
           })}
         </Tabs.List>
 
-        {variants.map((variant) => {
+        {variantsPerils.map((variant) => {
           return (
             <Tabs.Content
               key={variant.typeOfContract}
               value={variant.typeOfContract}
               data-value={variant.typeOfContract}
             >
-              <Perils items={variant.perils} missingItems={getMissingItems(variant.perils)} />
+              <Perils items={variant.perils} missingItems={variant.missingPerils} />
             </Tabs.Content>
           )
         })}
