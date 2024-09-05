@@ -1,9 +1,15 @@
 'use client'
 import styled from '@emotion/styled'
 import { type ISbRichtext, storyblokEditable } from '@storyblok/react'
+import {
+  MarkTypes,
+  richTextResolver,
+  type StoryblokRichTextDocumentNode,
+  type StoryblokRichTextOptions,
+} from '@storyblok/richtext'
 import Link from 'next/link'
 import { useMemo, type ReactNode } from 'react'
-import { render, type RenderOptions, MARK_LINK } from 'storyblok-rich-text-react-renderer'
+// import { render, type RenderOptions, MARK_LINK } from 'storyblok-rich-text-react-renderer'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { RichText } from '@/components/RichText/RichText'
 import { type GridColumnsField, type SbBaseBlockProps } from '@/services/storyblok/storyblok'
@@ -11,13 +17,59 @@ import { getLinkRel } from '@/services/storyblok/Storyblok.helpers'
 import { ImageBlock, type ImageBlockProps } from '../ImageBlock'
 
 export type RichTextBlockProps = SbBaseBlockProps<{
-  content: ISbRichtext
+  content: StoryblokRichTextDocumentNode
   layout?: GridColumnsField
   largeText?: boolean
 }>
 
+const RENDER_OPTIONS: RenderOptions = {
+  // blokResolvers: {
+  //   image: (props) => <ImageBlock blok={props as ImageBlockProps['blok']} nested={true} />,
+  // },
+  resolvers: {
+    [MarkTypes.LINK]: (node) => {
+      // const { linktype, target, anchor, custom } = node
+
+      let href = ''
+      if (node.attrs?.href) {
+        href = node.attrs.href
+      } else {
+        console.warn(
+          "[RichTextBlock]: No 'href' provided to link. This is probably a configuration issue. Using '' as placholder",
+        )
+      }
+
+      if (node.attrs?.linktype === 'email') {
+        return <a href={`mailto:${href}`}>{node.children}</a>
+      }
+
+      const linkProps = {
+        href: appendAnchor(href, node.attrs?.anchor),
+        children: node.children,
+        target: node.attrs?.target,
+        ...node.attrs?.custom,
+      }
+
+      // External links
+      if (isExternalLink(href)) {
+        const rel = getLinkRel(linkProps)
+        return <a {...linkProps} rel={rel} />
+      }
+
+      // Internal links
+      return <Link {...linkProps} />
+    },
+  },
+}
+
+const isExternalLink = (href?: string) => href?.match(/^(https?:)?\/\//)
+
+const appendAnchor = (href: string, anchor?: string) => (anchor ? `${href}#${anchor}` : href)
+
 export const RichTextBlock = ({ blok, nested }: RichTextBlockProps) => {
-  const content = useMemo(() => renderRichText(blok.content), [blok.content])
+  // const content = useMemo(() => renderRichText(blok.content), [blok.content])
+  // @ts-expect-error not supported by Vanilla-extract types yet
+  const content = richTextResolver().render(blok.content) as ReactNode
 
   if (nested) {
     return <NestedRichText largeText={blok.largeText}>{content}</NestedRichText>
@@ -42,51 +94,47 @@ const NestedRichText = styled(RichText)({
   },
 })
 
-const RENDER_OPTIONS: RenderOptions = {
-  blokResolvers: {
-    image: (props) => <ImageBlock blok={props as ImageBlockProps['blok']} nested={true} />,
-  },
-  markResolvers: {
-    [MARK_LINK]: (children, props) => {
-      const { linktype, target, anchor, custom } = props
+type RenderOptions = StoryblokRichTextOptions<React.ReactElement>
 
-      let href = ''
-      if (props.href) {
-        href = props.href
-      } else {
-        console.warn(
-          "[RichTextBlock]: No 'href' provided to link. This is probably a configuration issue. Using '' as placholder",
-        )
-      }
+// const RENDER_OPTIONS: RenderOptions = {
+//   // blokResolvers: {
+//   //   image: (props) => <ImageBlock blok={props as ImageBlockProps['blok']} nested={true} />,
+//   // },
+//   resolvers: {
+//     [MarkTypes.LINK]: (node) => {
+//       // const { linktype, target, anchor, custom } = node
 
-      if (linktype === 'email') {
-        return <a href={`mailto:${href}`}>{children}</a>
-      }
+//       let href = ''
+//       if (node.attrs?.href) {
+//         href = node.attrs.href
+//       } else {
+//         console.warn(
+//           "[RichTextBlock]: No 'href' provided to link. This is probably a configuration issue. Using '' as placholder",
+//         )
+//       }
 
-      const linkProps = {
-        href: appendAnchor(href, anchor),
-        children,
-        target,
-        ...custom,
-      }
+//       if (node.attrs?.linktype === 'email') {
+//         return <a href={`mailto:${href}`}>{node.children}</a>
+//       }
 
-      // External links
-      if (isExternalLink(href)) {
-        const rel = getLinkRel(linkProps)
-        return <a {...linkProps} rel={rel} />
-      }
+//       const linkProps = {
+//         href: appendAnchor(href, node.attrs?.anchor),
+//         children: node.children,
+//         target: node.attrs?.target,
+//         ...node.attrs?.custom,
+//       }
 
-      // Internal links
-      return <Link {...linkProps} />
-    },
-  },
-}
+//       // External links
+//       if (isExternalLink(href)) {
+//         const rel = getLinkRel(linkProps)
+//         return <a {...linkProps} rel={rel} />
+//       }
 
-const isExternalLink = (href?: string) => href?.match(/^(https?:)?\/\//)
+//       // Internal links
+//       return <Link {...linkProps} />
+//     },
+//   },
+// }
 
-const appendAnchor = (href: string, anchor?: string) => (anchor ? `${href}#${anchor}` : href)
-
-export const renderRichText = (
-  content: ISbRichtext,
-  renderOptions: RenderOptions = RENDER_OPTIONS,
-) => render(content, renderOptions) as ReactNode
+// export const renderRichText = (content: ISbRichtext, renderOptions: RenderOptions = RENDER_OPTIONS) =>
+//   richTextResolver(renderOptions).render(content) as ReactNode

@@ -8548,7 +8548,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storyblok/richtext@npm:^2.0.0":
+"@storyblok/richtext@npm:2.0.0, @storyblok/richtext@npm:^2.0.0":
   version: 2.0.0
   resolution: "@storyblok/richtext@npm:2.0.0"
   dependencies:
@@ -22872,6 +22872,7 @@ __metadata:
     "@radix-ui/react-tooltip": "npm:1.1.2"
     "@storyblok/js": "npm:3.0.12"
     "@storyblok/react": "npm:3.0.13"
+    "@storyblok/richtext": "npm:2.0.0"
     "@storybook/addon-actions": "npm:8.2.9"
     "@storybook/addon-designs": "npm:8.0.3"
     "@storybook/addon-essentials": "npm:8.2.9"
