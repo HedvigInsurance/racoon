@@ -17,12 +17,17 @@ export const row = style({
 export const header = style({
   paddingBlock: tokens.space.sm,
   paddingInline: tokens.space.xs,
-  textAlign: 'center',
 
   '@media': {
     [minWidth.lg]: {
       paddingBlock: tokens.space.md,
       paddingInline: tokens.space.sm,
+    },
+  },
+
+  selectors: {
+    '&:not(:first-child)': {
+      textAlign: 'center',
     },
   },
 })

@@ -41,13 +41,17 @@ export function Row({ className, ...props }: ComponentPropsWithoutRef<'tr'>) {
   return <tr className={clsx(row, className)} {...props} />
 }
 
-type HeaderProps = ComponentPropsWithoutRef<'th'> & { active?: boolean }
+type HeaderProps = ComponentPropsWithoutRef<'th'> & { active?: boolean; tableTitle?: boolean }
 
-export function Header({ children, active, ...props }: HeaderProps) {
+export function Header({ children, active, tableTitle, ...props }: HeaderProps) {
   return (
     <th className={clsx(header, active && activeHeader)} {...props}>
       {children && (
-        <Text as="span" size="xs" color="textSecondary" align="center">
+        <Text
+          as="span"
+          size={tableTitle ? 'lg' : 'sm'}
+          color={tableTitle ? 'textPrimary' : 'textTranslucentSecondary'}
+        >
           {children}
         </Text>
       )}

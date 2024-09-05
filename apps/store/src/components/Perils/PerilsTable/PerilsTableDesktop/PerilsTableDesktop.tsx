@@ -13,10 +13,11 @@ import { tableWrapper } from './PerilsTableDesktop.css'
 type Props = {
   allPerils: Array<PerilFragment>
   variantsPerils: Array<VariantPerils>
+  heading?: string
 }
 
-export function PerilsTableDesktop({ allPerils, variantsPerils }: Props) {
-  const { table } = useTableData(allPerils, variantsPerils)
+export function PerilsTableDesktop({ allPerils, variantsPerils, heading }: Props) {
+  const { table } = useTableData(allPerils, variantsPerils, heading)
   return (
     <div className={tableWrapper}>
       <DesktopComparisonTable {...table} />
@@ -27,10 +28,14 @@ export function PerilsTableDesktop({ allPerils, variantsPerils }: Props) {
 const variantHasPeril = (perils: Array<PerilFragment>, perilTitle: string) =>
   perils.some((peril) => peril.title === perilTitle)
 
-const useTableData = (allPerils: Array<PerilFragment>, variantsPerils: Array<VariantPerils>) => {
+const useTableData = (
+  allPerils: Array<PerilFragment>,
+  variantsPerils: Array<VariantPerils>,
+  heading?: string,
+) => {
   const table = useMemo<Table>(() => {
     const head: Head = [
-      TableMarkers.EmptyHeader,
+      heading ?? TableMarkers.EmptyHeader,
       ...variantsPerils.map((variant) => {
         const headerValue = variant.displayNameSubtype
         return headerValue
@@ -47,7 +52,7 @@ const useTableData = (allPerils: Array<PerilFragment>, variantsPerils: Array<Var
     ])
 
     return { head, body }
-  }, [variantsPerils, allPerils])
+  }, [variantsPerils, allPerils, heading])
 
   return { table }
 }

@@ -21,7 +21,11 @@ export const DesktopComparisonTable = ({ className, head, body, selectedColumn }
               return <ComparisonTable.Header key={`empty-header-${index}`} />
 
             return (
-              <ComparisonTable.Header key={headerValue} active={headerValue === selectedColumn}>
+              <ComparisonTable.Header
+                key={headerValue}
+                active={headerValue === selectedColumn}
+                tableTitle={index === 0}
+              >
                 {headerValue}
               </ComparisonTable.Header>
             )
