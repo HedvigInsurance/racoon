@@ -37,6 +37,23 @@ export const getServerSideProps: GetServerSideProps<any, Params> = async (contex
   resetAuthTokensIfPresent(context)
 
   const apolloClient = await initializeApolloServerSide({ ...context, locale: context.locale })
+
+  if (url.searchParams.has('shopSessionId') && url.searchParams.has('priceIntentId')) {
+    // Special case, redirect to prefilled price calculator
+    // Used in SEB leads flow
+    return {
+      redirect: {
+        destination: PageLink.widgetCalculatePrice({
+          locale: context.locale,
+          flow: flowMetadata.flow,
+          shopSessionId: url.searchParams.get('shopSessionId') as string,
+          priceIntentId: url.searchParams.get('priceIntentId') as string,
+        }).href,
+        permanent: false,
+      },
+    }
+  }
+
   const [shopSessionId, searchParams] = await createPartnerShopSession({
     apolloClient,
     countryCode: getCountryByLocale(context.locale).countryCode,
