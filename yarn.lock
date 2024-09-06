@@ -44,15 +44,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client-react-streaming@npm:0.11.2":
-  version: 0.11.2
-  resolution: "@apollo/client-react-streaming@npm:0.11.2"
+"@apollo/client-react-streaming@npm:0.11.3":
+  version: 0.11.3
+  resolution: "@apollo/client-react-streaming@npm:0.11.3"
   dependencies:
     ts-invariant: "npm:^0.10.3"
   peerDependencies:
     "@apollo/client": ^3.10.4
     react: ^18
-  checksum: 10c0/fe0d75d8ae495472e094ad05d126d4d82601892e452568e443cba8c7d6f52e64f2bd10c180e70e1a578f224144a2b38a18234a3eefcef4c63f1796851fdc0be2
+  checksum: 10c0/69e746ae33bce1a97c0cabab74ffd24173d0009ccd44891fed94126b0db15082b31051d3b372b3761375fa6ba3a96c889e6605a117e23f54856bff5f1d84ab5e
   languageName: node
   linkType: hard
 
@@ -93,16 +93,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/experimental-nextjs-app-support@npm:0.11.2":
-  version: 0.11.2
-  resolution: "@apollo/experimental-nextjs-app-support@npm:0.11.2"
+"@apollo/experimental-nextjs-app-support@npm:0.11.3":
+  version: 0.11.3
+  resolution: "@apollo/experimental-nextjs-app-support@npm:0.11.3"
   dependencies:
-    "@apollo/client-react-streaming": "npm:0.11.2"
+    "@apollo/client-react-streaming": "npm:0.11.3"
   peerDependencies:
     "@apollo/client": ^3.10.4
     next: ^13.4.1 || ^14.0.0 || 15.0.0-rc.0
     react: ^18
-  checksum: 10c0/bb3c1e19bb01d09ef8bcaab7f13d440faff7fce288f816e1aa9899fb9fcfcf8c739fb34df24a15430a6308394b9dea4bc70431a4f999e52c7136848fa3c3f7b3
+  checksum: 10c0/b70e1945cac03c153e94bef5aa23d85a40d21ee1342010cdf7d0995d3fff9a274144e35a87e7b4cf27a8ec33513995dc93169aeb068bb2abed87a8e61d6020bc
   languageName: node
   linkType: hard
 
@@ -22836,7 +22836,7 @@ __metadata:
   dependencies:
     "@adyen/adyen-web": "npm:3.23.0"
     "@apollo/client": "npm:3.11.5"
-    "@apollo/experimental-nextjs-app-support": "npm:0.11.2"
+    "@apollo/experimental-nextjs-app-support": "npm:0.11.3"
     "@babel/core": "npm:7.25.2"
     "@babel/preset-env": "npm:7.25.4"
     "@babel/preset-react": "npm:7.24.7"
