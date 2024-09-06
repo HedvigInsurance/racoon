@@ -20943,12 +20943,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qrcode.react@npm:3.1.0":
-  version: 3.1.0
-  resolution: "qrcode.react@npm:3.1.0"
+"qrcode.react@npm:3.2.0":
+  version: 3.2.0
+  resolution: "qrcode.react@npm:3.2.0"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 10c0/af183e99ecaad90f7ef14bd027510ae7866935693c53ccf81b172438abbbf7f29c283c5dc7c2141b420d2413960b8f8dca8d9949646475afe669ed638e8fb722
+  checksum: 10c0/86479ce19c7711baccf4a4d84ffddf008823e080f5209fc38c84b9d47435bc0568a81972e021eb147ee9dc3090638731f4169ec07a1e243185e5a548d75a18cc
   languageName: node
   linkType: hard
 
@@ -22937,7 +22937,7 @@ __metadata:
     path-browserify: "npm:1.0.1"
     personnummer: "npm:3.2.1"
     prettier: "npm:3.3.3"
-    qrcode.react: "npm:3.1.0"
+    qrcode.react: "npm:3.2.0"
     react: "npm:18.3.1"
     react-day-picker: "npm:8.10.1"
     react-device-detect: "npm:2.2.3"
