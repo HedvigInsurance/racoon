@@ -33,7 +33,7 @@
     ]
   },
   "devDependencies": {
-    "@types/node": "22.5.2",
+    "@types/node": "22.5.4",
     "eslint": "8.57.0",
     "eslint-config-custom": "workspace:",
     "husky": "9.1.5",
