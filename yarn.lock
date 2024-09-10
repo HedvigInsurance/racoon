@@ -10362,6 +10362,33 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vercel/speed-insights@npm:1.0.12":
+  version: 1.0.12
+  resolution: "@vercel/speed-insights@npm:1.0.12"
+  peerDependencies:
+    "@sveltejs/kit": ^1 || ^2
+    next: ">= 13"
+    react: ^18 || ^19
+    svelte: ^4
+    vue: ^3
+    vue-router: ^4
+  peerDependenciesMeta:
+    "@sveltejs/kit":
+      optional: true
+    next:
+      optional: true
+    react:
+      optional: true
+    svelte:
+      optional: true
+    vue:
+      optional: true
+    vue-router:
+      optional: true
+  checksum: 10c0/d1cc16952fdaddf8aff76e6c5909e8417cf11efe2458c70392e5172da620bcca39aea9eeaa8eb83b77fb2cb072a69047d62ba890f0c3a75cb110e3edb35b1648
+  languageName: node
+  linkType: hard
+
 "@vitest/expect@npm:1.6.0":
   version: 1.6.0
   resolution: "@vitest/expect@npm:1.6.0"
@@ -22893,6 +22920,7 @@ __metadata:
     "@vercel/edge-config": "npm:1.2.1"
     "@vercel/kv": "npm:2.0.0"
     "@vercel/otel": "npm:1.10.0"
+    "@vercel/speed-insights": "npm:1.0.12"
     ajv: "npm:8.17.1"
     apollo-link-timeout: "npm:4.0.0"
     babel-loader: "npm:9.1.3"
