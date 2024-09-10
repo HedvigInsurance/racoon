@@ -15,7 +15,7 @@ export type Props = Omit<
   warning?: boolean
   message?: string
   onValidValueEntered?: (value: string) => void
-} & Pick<TextFieldProps, 'onClear'>
+} & Pick<TextFieldProps, 'onClear' | 'size'>
 
 /**
  * Personal Number input field.
@@ -27,6 +27,7 @@ export const PersonalNumberField = memo((props: Props) => {
     defaultValue,
     label,
     warning,
+    size,
     onClear,
     onValidValueEntered,
     ...forwardedProps
@@ -59,6 +60,7 @@ export const PersonalNumberField = memo((props: Props) => {
           defaultValue={propValue ?? defaultValue}
           label={label}
           type="text"
+          size={size}
           name={undefined}
           inputMode="numeric"
           minLength={10}

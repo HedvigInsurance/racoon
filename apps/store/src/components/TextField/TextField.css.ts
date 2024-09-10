@@ -1,6 +1,10 @@
 import { style, keyframes, styleVariants } from '@vanilla-extract/css'
 import { tokens, xStack } from 'ui'
 
+export const SMALL_HEIGHT = '3.5rem'
+export const MEDIUM_HEIGHT = '4rem'
+export const LARGE_HEIGHT = '4rem'
+
 const warningAnimation = keyframes({
   '0%': {
     backgroundColor: tokens.colors.signalAmberFill,
@@ -47,9 +51,9 @@ export const baseWrapper = style({
 })
 
 export const wrapper = styleVariants({
-  small: [baseWrapper, { height: '3.5rem' }],
-  medium: [baseWrapper, { height: '4rem' }],
-  large: [baseWrapper, { height: '4rem' }],
+  small: [baseWrapper, { height: SMALL_HEIGHT }],
+  medium: [baseWrapper, { height: MEDIUM_HEIGHT }],
+  large: [baseWrapper, { height: LARGE_HEIGHT }],
 })
 
 export const baseLabel = style({

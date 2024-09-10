@@ -3,7 +3,7 @@ import { Button, sprinkles, Text } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { ProductSelector } from './ProductSelector'
 import { productSingleOption, wrapper } from './QuickPurchaseForm.css'
-import { SsnField } from './SsnField'
+import { SsnField } from './SsnField/SsnField'
 
 export const SSN_FIELDNAME = 'ssn'
 export const PRODUCT_FIELDNAME = 'product'
