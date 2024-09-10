@@ -16204,7 +16204,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql@npm:16.9.0":
+"graphql@npm:16.9.0, graphql@npm:^16.8.1":
   version: 16.9.0
   resolution: "graphql@npm:16.9.0"
   checksum: 10c0/a8850f077ff767377237d1f8b1da2ec70aeb7623cdf1dfc9e1c7ae93accc0c8149c85abe68923be9871a2934b1bce5a2496f846d4d56e1cfb03eaaa7ddba9b6a
@@ -19390,9 +19390,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"msw@npm:2.4.2":
-  version: 2.4.2
-  resolution: "msw@npm:2.4.2"
+"msw@npm:2.4.3":
+  version: 2.4.3
+  resolution: "msw@npm:2.4.3"
   dependencies:
     "@bundled-es-modules/cookie": "npm:^2.0.0"
     "@bundled-es-modules/statuses": "npm:^1.0.1"
@@ -19403,6 +19403,7 @@ __metadata:
     "@types/cookie": "npm:^0.6.0"
     "@types/statuses": "npm:^2.0.4"
     chalk: "npm:^4.1.2"
+    graphql: "npm:^16.8.1"
     headers-polyfill: "npm:^4.0.2"
     is-node-process: "npm:^1.2.0"
     outvariant: "npm:^1.4.2"
@@ -19411,16 +19412,13 @@ __metadata:
     type-fest: "npm:^4.9.0"
     yargs: "npm:^17.7.2"
   peerDependencies:
-    graphql: ">= 16.8.x"
     typescript: ">= 4.8.x"
   peerDependenciesMeta:
-    graphql:
-      optional: true
     typescript:
       optional: true
   bin:
     msw: cli/index.js
-  checksum: 10c0/8fcee7f0e3e1cda33d135969a00f1650e53caf582b6dbc0e070f4d9380369caf019c634fc148232b00534b1d9279649c57e5e3ae0a78cedd6025e1335bd4b5aa
+  checksum: 10c0/5d9283e60c2950cc94863095bf196a0fd8f003fbd3783bcad868a7abe0560f05f8c24d84122d24a4cfb31d75fecdf6ca14772fa736b96e24e8455fbe3f709c85
   languageName: node
   linkType: hard
 
@@ -22947,7 +22945,7 @@ __metadata:
     jwt-decode: "npm:4.0.0"
     md5: "npm:2.3.0"
     mini-css-extract-plugin: "npm:2.9.1"
-    msw: "npm:2.4.2"
+    msw: "npm:2.4.3"
     next: "npm:14.2.7"
     next-i18next: "npm:15.3.1"
     next-router-mock: "npm:0.9.13"
