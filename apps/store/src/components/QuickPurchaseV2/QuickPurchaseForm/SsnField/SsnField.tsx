@@ -1,5 +1,5 @@
 import { useTranslation } from 'next-i18next'
-import { useCallback, useState } from 'react'
+import { type MouseEventHandler, useCallback, useState } from 'react'
 import { Button, sprinkles, Text } from 'ui'
 import { ChangeSsnWarningDialog } from '@/components/ChangeSsnWarningDialog/ChangeSsnWarningDialog'
 import type { Props as PersonalNumberFieldProps } from '@/components/PersonalNumberField/PersonalNumberField'
@@ -17,9 +17,14 @@ export const SsnField = (props: Props) => {
   const { t } = useTranslation(['common', 'purchase-form'])
   const formatter = useFormatter()
 
-  const openChangeSsnDialog = useCallback(() => {
-    setShowChangeSsnDialog(true)
-  }, [setShowChangeSsnDialog])
+  const openChangeSsnDialog: MouseEventHandler = useCallback(
+    (event) => {
+      // Prevent submit of the form
+      event.preventDefault()
+      setShowChangeSsnDialog(true)
+    },
+    [setShowChangeSsnDialog],
+  )
 
   const closeChangeSsnDialog = useCallback(() => {
     setShowChangeSsnDialog(false)
@@ -30,6 +35,8 @@ export const SsnField = (props: Props) => {
   if (props.defaultValue) {
     return (
       <>
+        <input type="hidden" readOnly={true} name={props.name} value={props.defaultValue} />
+
         <div className={fakeInput}>
           <div className={sprinkles({ flexGrow: 1, overflow: 'hidden' })}>
             <Text size="xs" color="textSecondary">
