@@ -1,3 +1,4 @@
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import { cookies } from 'next/headers'
 import { type ReactNode, Suspense } from 'react'
 import { AppTrackingTriggers } from '@/app/[locale]/AppTrackingTriggers'
@@ -58,6 +59,7 @@ export async function StoreLayout({ locale, children }: StoreLayoutProps) {
         </ProductMetadataProvider>
         {Features.enabled('COOKIE_BANNER_INP_IMPROVEMENT') && <CookieConsent />}
       </ShopSessionProvider>
+      <SpeedInsights />
     </RootLayout>
   )
 }

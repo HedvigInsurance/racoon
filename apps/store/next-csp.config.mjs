@@ -54,6 +54,9 @@ const scriptSrc = [
   // Linkedin
   'https://snap.licdn.com',
 
+  // Vercel Speed Insights
+  'https://va.vercel-scripts.com',
+
   'https://vercel.live',
   "'unsafe-inline'",
   "'unsafe-eval'",
