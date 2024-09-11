@@ -1,8 +1,10 @@
 'use client'
 import { useMemo } from 'react'
+import { Heading, yStack } from 'ui'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import type { PerilFragment } from '@/services/graphql/generated'
 import { useResponsiveVariant } from '@/utils/useResponsiveVariant'
+import { Perils } from '../Perils'
 import { PerilsTableDesktop } from './PerilsTableDesktop/PerilsTableDesktop'
 import { PerilsTabs } from './PerilsTabs'
 
@@ -40,10 +42,33 @@ export function PerilsTable({ heading, description }: PerilsTableProps) {
   return (
     <>
       {variant === 'mobile' && (
-        <div>
-          <PerilsTabs heading={heading} description={description} variantsPerils={variantsPerils} />
-        </div>
+        <>
+          {variantsPerils.length === 1 && (
+            <div className={yStack({ gap: 'lg' })}>
+              {heading && (
+                <Heading as="p" color="textPrimary" variant="standard.24" balance={true}>
+                  {heading}
+                </Heading>
+              )}
+              {description && (
+                <Heading as="p" color="textSecondary" variant="standard.24" balance={true}>
+                  {description}
+                </Heading>
+              )}
+              <Perils items={variantsPerils[0].perils} />
+            </div>
+          )}
+
+          {variantsPerils.length > 1 && (
+            <PerilsTabs
+              heading={heading}
+              description={description}
+              variantsPerils={variantsPerils}
+            />
+          )}
+        </>
       )}
+
       {variant === 'desktop' && (
         <PerilsTableDesktop
           heading={heading}
