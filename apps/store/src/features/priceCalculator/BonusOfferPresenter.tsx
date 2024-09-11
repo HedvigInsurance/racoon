@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import { useMemo } from 'react'
-import { Text, yStack } from 'ui'
+import { yStack } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
 import {
@@ -9,12 +9,14 @@ import {
   type RecommendationFragment,
 } from '@/services/graphql/generated'
 import { useShopSessionId } from '@/services/shopSession/ShopSessionContext'
+import { Features } from '@/utils/Features'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { actions } from './BonusOfferPresenter.css'
 import { ProductCardSmall } from './ProductCardSmall'
 
 export function BonusOfferPresenter() {
+  const { t } = useTranslation('cart')
   const locale = useRoutingLocale()
   const router = useRouter()
   const { loading, recommendations } = useProductRecommendations()
@@ -31,19 +33,11 @@ export function BonusOfferPresenter() {
 
   return (
     <div className={yStack({ gap: 'xl' })}>
-      {/* TODO: Lokalise this */}
-      <div>
-        <Text size="xl">Lägg till fler försäkringar</Text>
-        <Text size="xl" color="textSecondary">
-          Få 20% rabatt under första året
-        </Text>
-      </div>
-
       <div className={yStack({ gap: 'md' })}>
         {recommendations.map((recommendation) => (
           <RecommendationCard key={recommendation.product.id} recommendation={recommendation} />
         ))}
-        <ButtonNextLink href={PageLink.checkout({ locale })}>Go to checkout</ButtonNextLink>
+        <ButtonNextLink href={PageLink.checkout({ locale })}>{t('CHECKOUT_BUTTON')}</ButtonNextLink>
       </div>
     </div>
   )
@@ -62,6 +56,16 @@ function RecommendationCard({ recommendation }: { recommendation: Recommendation
         <ButtonNextLink href={recommendation.product.pageLink} variant="secondary" size="medium">
           {t('READ_MORE')}
         </ButtonNextLink>
+        {Features.enabled('PRICE_CALCULATOR_PAGE') &&
+          recommendation.product.priceCalculatorPageLink && (
+            <ButtonNextLink
+              href={recommendation.product.priceCalculatorPageLink}
+              variant="primary"
+              size="medium"
+            >
+              {t('GET_PRICE_LINK')}
+            </ButtonNextLink>
+          )}
       </div>
     </ProductCardSmall>
   )
