@@ -1,6 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { responsiveStyles } from 'ui'
-import { pillowSize } from '@/components/Pillow/Pillow.css'
+import { pillowSize, responsiveStyles } from 'ui'
 
 export const pillow = style({
   vars: {
