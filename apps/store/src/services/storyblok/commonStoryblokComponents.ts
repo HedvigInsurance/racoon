@@ -27,9 +27,9 @@ import { ModalBlock } from '@/blocks/ModalBlock'
 import { PageBlock } from '@/blocks/PageBlock'
 import { PerilsBlock } from '@/blocks/PerilsBlock'
 import { PerilsTableBlock } from '@/blocks/PerilsTableBlock'
-import { ProductCardBlock } from '@/blocks/ProductCardBlock'
 import { ProductDocumentsBlock } from '@/blocks/ProductDocumentsBlock'
 import { ProductGridBlock } from '@/blocks/ProductGridBlock'
+import { ProductGridItemBlock } from '@/blocks/ProductGridItemBlock/ProductGridItemBlock'
 import { ProductPageBlock } from '@/blocks/ProductPageBlock'
 import { ProductPageBlockV2 } from '@/blocks/ProductPageBlockV2/ProductPageBlockV2'
 import { ProductPillowBlock } from '@/blocks/ProductPillowsBlock/ProductPillowBlock'
@@ -89,7 +89,7 @@ export const commonStoryblokComponents = {
   perilsTable: PerilsTableBlock,
   product: ProductPageBlock,
   productPage: ProductPageBlockV2,
-  productCard: ProductCardBlock,
+  productGridItemBlock: ProductGridItemBlock,
   productDocuments: ProductDocumentsBlock,
   productGrid: ProductGridBlock,
   productPillow: ProductPillowBlock,
