@@ -3,6 +3,7 @@ import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { SebLeadsDebuggerForm } from './CreateSebLeadsForm'
 import { CreateWidgetSessionForm } from './CreateWidgetSessionForm'
 import { ImportSebLeadForm } from './ImportSebLeadForm'
+import {GenerateAndSendOfferButton} from "@/app/debugger/seb-leads/GenerateAndSendOfferButton";
 
 function SebLeadsDebuggerPage() {
   if (process.env.VERCEL_ENV === 'production') {
@@ -22,6 +23,10 @@ function SebLeadsDebuggerPage() {
             Create widget session
           </Heading>
           <CreateWidgetSessionForm />
+          <Heading as="h2" className={sprinkles({ marginTop: 'xl' })}>
+            Create widget session from existing leads And send offer to customer
+          </Heading>
+          <GenerateAndSendOfferButton />
         </div>
       </GridLayout.Content>
     </GridLayout.Root>
