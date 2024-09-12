@@ -9,6 +9,7 @@ import { MenuItemBlock, type MenuItemBlockProps } from '@/blocks/HeaderBlockNew/
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import {
   navigationItem,
+  navigationItemProductMenu,
   navigationMenuWrapper,
   navigationProductList,
 } from '@/components/HeaderNew/Header.css'
@@ -85,7 +86,7 @@ export const ProductMenuBlock = ({ blok, variant }: ProductMenuBlockProps) => {
   } else {
     return (
       <NavigationMenuPrimitive.Item
-        className={navigationItem}
+        className={clsx(navigationItem, navigationItemProductMenu)}
         value={blok.name}
         {...storyblokEditable(blok)}
       >

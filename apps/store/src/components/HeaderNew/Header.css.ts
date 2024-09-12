@@ -2,6 +2,7 @@ import { createVar, style } from '@vanilla-extract/css'
 import { minWidth, tokens, yStack } from 'ui'
 import { zIndexes } from '@/utils/zIndex'
 import { MAX_WIDTH } from '../GridLayout/GridLayout.constants'
+import { displaySubmenus } from './HeaderMenu/HeaderMenu.css'
 import {
   HEADER_HEIGHT_MOBILE,
   MENU_BAR_HEIGHT_MOBILE,
@@ -121,12 +122,15 @@ export const navigationItem = style({
     [minWidth.lg]: {
       selectors: {
         '&&': { borderBottom: 'unset' },
-
-        // Position second item on the right side of the header
-        '&:nth-child(2)': {
-          marginLeft: 'auto',
-        },
       },
+    },
+  },
+})
+
+export const navigationItemProductMenu = style({
+  '@media': {
+    [minWidth.lg]: {
+      display: displaySubmenus,
     },
   },
 })
@@ -146,18 +150,28 @@ export const navigationItemSubMenu = style({
   },
 })
 
+export const navigationItemSupportMenu = style({
+  '@media': {
+    [minWidth.lg]: {
+      marginLeft: 'auto',
+    },
+  },
+})
+
 export const navigationContentMinWidth = createVar()
 
 export const navigationItemGeneralMenu = style({
   vars: {
     [navigationContentMinWidth]: '16rem',
   },
+
   '@media': {
     [minWidth.lg]: {
       // Make general menu item first in the header menu in desktop
       ':last-child': {
         order: -1,
       },
+      display: displaySubmenus,
     },
   },
 })

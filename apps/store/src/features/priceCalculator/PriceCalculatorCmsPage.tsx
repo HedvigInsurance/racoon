@@ -1,15 +1,10 @@
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { type ReactNode, Suspense } from 'react'
-import { ArrowForwardIcon } from 'ui'
-import { initTranslations } from '@/app/i18n'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
 import { ProductPageDebugDialog } from '@/components/ProductPage/ProductPageDebugDialog'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
 import {
-  arrowBackWrapper,
-  backLink,
   pageGrid,
   priceCalculatorSection,
   productHero,
@@ -31,24 +26,15 @@ type Props = {
   story: PriceCalculatorPageStory
 }
 
-export async function PriceCalculatorCmsPage({ locale, story }: Props) {
+export function PriceCalculatorCmsPage({ locale, story }: Props) {
   if (!Features.enabled('PRICE_CALCULATOR_PAGE')) {
     throw notFound()
   }
-  const { productName } = await getPriceTemplate(story.content.priceTemplate)
-  const productData = await getProductData(locale, productName)
-  const { t } = await initTranslations(locale)
   return (
     <div className={pageGrid}>
       <Suspense fallback={<Skeleton style={{ height: '50vh' }} />}>
         <PriceCalculatorProviders locale={locale} story={story}>
           <section className={productHeroSection}>
-            <Link href={productData.pageLink} className={backLink}>
-              <div className={arrowBackWrapper}>
-                <ArrowForwardIcon size="1.5rem" />
-              </div>
-              {t('BACK_TO_PRODUCT_PAGE', { ns: 'purchase-form' })}
-            </Link>
             <ProductHeroV2 className={productHero} />
           </section>
           <section className={priceCalculatorSection}>
