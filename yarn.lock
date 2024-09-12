@@ -24417,6 +24417,7 @@ __metadata:
     "@emotion/react": "npm:11.13.3"
     "@emotion/styled": "npm:11.13.0"
     "@radix-ui/react-dialog": "npm:1.1.1"
+    "@radix-ui/react-slot": "npm:1.1.0"
     "@radix-ui/react-tabs": "npm:1.1.0"
     "@storybook/react": "npm:8.2.9"
     "@testing-library/dom": "npm:10.4.0"
