@@ -6669,17 +6669,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mswjs/interceptors@npm:^0.29.0":
-  version: 0.29.1
-  resolution: "@mswjs/interceptors@npm:0.29.1"
+"@mswjs/interceptors@npm:^0.35.0":
+  version: 0.35.1
+  resolution: "@mswjs/interceptors@npm:0.35.1"
   dependencies:
     "@open-draft/deferred-promise": "npm:^2.2.0"
     "@open-draft/logger": "npm:^0.3.0"
     "@open-draft/until": "npm:^2.0.0"
     is-node-process: "npm:^1.2.0"
-    outvariant: "npm:^1.2.1"
+    outvariant: "npm:^1.4.3"
     strict-event-emitter: "npm:^0.5.1"
-  checksum: 10c0/816660a17b0e89e6e6955072b96882b5807c8c9faa316eab27104e8ba80e8e7d78b1862af42e1044156a5ae3ae2071289dc9211ecdc8fd5f7078d8c8a8a7caa3
+  checksum: 10c0/4185f6da4362b705eb4c8013a454e367bd06e8fb3911a0edb4370d91ee9be98244d46131b325c84808104409eaa1868ed8082875231ca78265d6a39276fa9332
   languageName: node
   linkType: hard
 
@@ -19390,15 +19390,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"msw@npm:2.4.3":
-  version: 2.4.3
-  resolution: "msw@npm:2.4.3"
+"msw@npm:2.4.4":
+  version: 2.4.4
+  resolution: "msw@npm:2.4.4"
   dependencies:
     "@bundled-es-modules/cookie": "npm:^2.0.0"
     "@bundled-es-modules/statuses": "npm:^1.0.1"
     "@bundled-es-modules/tough-cookie": "npm:^0.1.6"
     "@inquirer/confirm": "npm:^3.0.0"
-    "@mswjs/interceptors": "npm:^0.29.0"
+    "@mswjs/interceptors": "npm:^0.35.0"
     "@open-draft/until": "npm:^2.1.0"
     "@types/cookie": "npm:^0.6.0"
     "@types/statuses": "npm:^2.0.4"
@@ -19418,7 +19418,7 @@ __metadata:
       optional: true
   bin:
     msw: cli/index.js
-  checksum: 10c0/5d9283e60c2950cc94863095bf196a0fd8f003fbd3783bcad868a7abe0560f05f8c24d84122d24a4cfb31d75fecdf6ca14772fa736b96e24e8455fbe3f709c85
+  checksum: 10c0/0be51fbd6ef1b4fd8906353b6e40473f9466ea7ef9cc805e49c5937886721db20801b2322535b456d523040c012afb34e0e76a5beaa4891cbdde2408d2652094
   languageName: node
   linkType: hard
 
@@ -20058,13 +20058,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"outvariant@npm:^1.2.1":
-  version: 1.4.3
-  resolution: "outvariant@npm:1.4.3"
-  checksum: 10c0/5976ca7740349cb8c71bd3382e2a762b1aeca6f33dc984d9d896acdf3c61f78c3afcf1bfe9cc633a7b3c4b295ec94d292048f83ea2b2594fae4496656eba992c
-  languageName: node
-  linkType: hard
-
 "outvariant@npm:^1.4.0":
   version: 1.4.0
   resolution: "outvariant@npm:1.4.0"
@@ -20076,6 +20069,13 @@ __metadata:
   version: 1.4.2
   resolution: "outvariant@npm:1.4.2"
   checksum: 10c0/48041425a4cb725ff8871b7d9889bfc2eaded867b9b35b6c2450a36fb3632543173098654990caa6c9e9f67d902b2a01f4402c301835e9ecaf4b4695d3161853
+  languageName: node
+  linkType: hard
+
+"outvariant@npm:^1.4.3":
+  version: 1.4.3
+  resolution: "outvariant@npm:1.4.3"
+  checksum: 10c0/5976ca7740349cb8c71bd3382e2a762b1aeca6f33dc984d9d896acdf3c61f78c3afcf1bfe9cc633a7b3c4b295ec94d292048f83ea2b2594fae4496656eba992c
   languageName: node
   linkType: hard
 
@@ -22945,7 +22945,7 @@ __metadata:
     jwt-decode: "npm:4.0.0"
     md5: "npm:2.3.0"
     mini-css-extract-plugin: "npm:2.9.1"
-    msw: "npm:2.4.3"
+    msw: "npm:2.4.4"
     next: "npm:14.2.7"
     next-i18next: "npm:15.3.1"
     next-router-mock: "npm:0.9.13"
