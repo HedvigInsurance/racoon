@@ -1,9 +1,9 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import type { Meta, StoryObj } from '@storybook/react'
-import { ProductCard } from './ProductCard'
+import { ProductGridItem } from './ProductGridItem'
 
-const meta: Meta<typeof ProductCard> = {
-  component: ProductCard,
+const meta: Meta<typeof ProductGridItem> = {
+  component: ProductGridItem,
   argTypes: {},
   parameters: {
     viewport: {
@@ -15,7 +15,7 @@ const meta: Meta<typeof ProductCard> = {
 }
 
 export default meta
-type Story = StoryObj<typeof ProductCard>
+type Story = StoryObj<typeof ProductGridItem>
 
 export const Default: Story = {
   args: {
@@ -26,5 +26,10 @@ export const Default: Story = {
     },
     aspectRatio: '4 / 5',
     link: { url: '/', type: 'product' },
+  },
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
   },
 }

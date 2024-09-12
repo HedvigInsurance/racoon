@@ -1,6 +1,8 @@
 import type { Meta, StoryFn } from '@storybook/react'
-import type { ProductCardProps } from '@/components/ProductCard/ProductCard'
-import { ProductCard } from '@/components/ProductCard/ProductCard'
+import {
+  ProductGridItem,
+  type ProductGridItemProps,
+} from '@/components/ProductGridItem/ProductGridItem'
 import type { ProductGridProps } from './ProductGrid'
 import { ProductGrid } from './ProductGrid'
 
@@ -16,13 +18,13 @@ const meta: Meta<typeof ProductGrid> = {
 
 export default meta
 
-type ProductItem = ProductCardProps
+type ProductItem = ProductGridItemProps
 
 const Template: StoryFn<ProductGridProps & { items: Array<ProductItem> }> = (props) => {
   return (
     <ProductGrid {...props}>
       {props.items.map((itemProps) => (
-        <ProductCard key={itemProps.title} {...itemProps} />
+        <ProductGridItem key={itemProps.title} {...itemProps} />
       ))}
     </ProductGrid>
   )
