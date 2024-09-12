@@ -1,9 +1,9 @@
 import Image from 'next/image'
-import { type ComponentProps, memo } from 'react'
-import { BasePillow } from 'ui'
+import { memo } from 'react'
+import { BasePillow, type PillowProps } from 'ui'
 import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 
-export const Pillow = memo(({ alt, src, ...props }: ComponentProps<typeof BasePillow>) => {
+export const Pillow = memo(({ alt, src, ...props }: PillowProps) => {
   return (
     <BasePillow shouldFallback={!src} {...props}>
       <Image
