@@ -23,6 +23,7 @@ type BaseProps = {
   loading?: boolean
   Icon?: ReactNode
   iconPosition?: 'left' | 'right'
+  isIconButton?: boolean
 }
 
 export type ButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -51,6 +52,7 @@ export const Button: PolymorphicComponent = forwardRef(function Button<
     children,
     Icon,
     iconPosition = 'left',
+    isIconButton,
     ...props
   }: ButtonProps<C>,
   ref?: PolymorphicRef<C>,
@@ -83,7 +85,7 @@ export const Button: PolymorphicComponent = forwardRef(function Button<
     >
       <span className={childrenWrapper} style={{ opacity: loading ? 0 : 1 }}>
         {iconPosition === 'left' && Icon}
-        {children && <span className={textWrapper}>{children}</span>}
+        {children && <span className={clsx(!isIconButton && textWrapper)}>{children}</span>}
         {iconPosition === 'right' && Icon}
       </span>
       {hiddenText && hiddenText}
