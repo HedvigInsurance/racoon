@@ -53,4 +53,5 @@ export const cardAside = style({
   position: 'absolute',
   top: cardPadding,
   insetInlineEnd: cardPadding,
+  zIndex: 1,
 })
