@@ -1,13 +1,17 @@
-import { style } from '@vanilla-extract/css'
+import { createVar, style } from '@vanilla-extract/css'
 import { recipe } from '@vanilla-extract/recipes'
 import { xStack, yStack } from '../../patterns'
-import { sprinkles, tokens } from '../../theme'
+import { tokens } from '../../theme'
+
+const cardPadding = createVar()
 
 export const cardRoot = recipe({
   base: [
     yStack({ gap: 'md' }),
     {
+      position: 'relative',
       borderRadius: tokens.radius.xl,
+      padding: cardPadding,
     },
   ],
   variants: {
@@ -18,9 +22,17 @@ export const cardRoot = recipe({
         borderColor: tokens.colors.borderPrimary,
         boxShadow: tokens.shadow.card,
       },
+      secondary: {
+        background: tokens.colors.surfaceOpaqueSecondary,
+      },
     },
+
     size: {
-      md: sprinkles({ padding: 'lg' }),
+      md: {
+        vars: {
+          [cardPadding]: tokens.space.lg,
+        },
+      },
     },
   },
 
@@ -39,6 +51,6 @@ export const cardHeader = style([
 
 export const cardAside = style({
   position: 'absolute',
-  top: 0,
-  insetInlineEnd: 0,
+  top: cardPadding,
+  insetInlineEnd: cardPadding,
 })

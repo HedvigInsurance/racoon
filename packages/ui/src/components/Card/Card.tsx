@@ -7,31 +7,26 @@ import { cardAside, cardHeader, cardRoot } from './Card.css'
 
 type RootStyleProps = RecipeVariants<typeof cardRoot>
 type RootProps = ComponentProps<'div'> & RootStyleProps
-
 function CardRoot({ variant, size, className, children }: PropsWithChildren<RootProps>) {
   return <article className={clsx(cardRoot({ variant, size }), className)}>{children}</article>
 }
 
 type HeaderProps = ComponentProps<'header'>
-
 function CardHeader({ className, children }: PropsWithChildren<HeaderProps>) {
   return <header className={clsx(cardHeader, className)}>{children}</header>
 }
 
 type MediaProps = ComponentProps<typeof Slot>
-
 function CardMedia({ children }: PropsWithChildren<MediaProps>) {
   return <Slot>{children}</Slot>
 }
 
 type HeadingProps = ComponentProps<'div'>
-
 function CardHeading({ className, children }: PropsWithChildren<HeadingProps>) {
   return <div className={className}>{children}</div>
 }
 
 type TitleProps = ComponentProps<typeof Heading>
-
 function CardTitle({ className, children }: PropsWithChildren<TitleProps>) {
   return (
     <Heading variant="standard.18" className={className}>
@@ -41,7 +36,6 @@ function CardTitle({ className, children }: PropsWithChildren<TitleProps>) {
 }
 
 type SubtitleProps = ComponentProps<typeof Text>
-
 function CardSubtitle({ className, children }: PropsWithChildren<SubtitleProps>) {
   return (
     <Text color="textSecondary" className={className}>
@@ -50,8 +44,8 @@ function CardSubtitle({ className, children }: PropsWithChildren<SubtitleProps>)
   )
 }
 
-type HeaderAsideProps = ComponentProps<typeof Slot>
-function CardHeaderAside({ className, children, ...props }: PropsWithChildren<HeaderAsideProps>) {
+type AsideProps = ComponentProps<typeof Slot>
+function CardAside({ className, children, ...props }: PropsWithChildren<AsideProps>) {
   return (
     <Slot className={clsx(cardAside, className)} {...props}>
       {children}
@@ -66,5 +60,5 @@ export const Card = {
   Heading: CardHeading,
   Title: CardTitle,
   Subtitle: CardSubtitle,
-  HeaderAside: CardHeaderAside,
+  Aside: CardAside,
 }
