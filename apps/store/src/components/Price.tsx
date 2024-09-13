@@ -1,10 +1,10 @@
-import styled from '@emotion/styled'
+import clsx from 'clsx'
 import type { ComponentProps } from 'react'
-import { Text, theme } from 'ui'
+import { Text, xStack } from 'ui'
 import type { CurrencyCode } from '@/services/graphql/generated'
 import { useFormatter } from '@/utils/useFormatter'
 
-type Props = {
+type Props = ComponentProps<'div'> & {
   currencyCode: CurrencyCode
   amount: number
   reducedAmount?: number
@@ -16,31 +16,30 @@ type Props = {
 export const Price = ({
   color = 'textPrimary',
   secondaryColor = 'textSecondary',
+  reducedAmount,
+  amount,
+  currencyCode,
+  className,
   ...props
 }: Props) => {
   const formatter = useFormatter()
 
   return (
-    <Wrapper>
-      {props.reducedAmount !== undefined && (
+    <div className={clsx(xStack({ gap: 'xs' }), className)} {...props}>
+      {reducedAmount !== undefined && (
         <Text as="p" size="md" strikethrough={true} color={secondaryColor}>
           {formatter.monthlyPrice({
-            amount: props.amount,
-            currencyCode: props.currencyCode,
+            amount,
+            currencyCode,
           })}
         </Text>
       )}
       <Text as="p" size="md" color={color}>
         {formatter.monthlyPrice({
-          currencyCode: props.currencyCode,
-          amount: props.reducedAmount ?? props.amount,
+          currencyCode,
+          amount: reducedAmount ?? amount,
         })}
       </Text>
-    </Wrapper>
+    </div>
   )
 }
-
-const Wrapper = styled.div({
-  display: 'flex',
-  columnGap: theme.space.xs,
-})
