@@ -2,7 +2,7 @@ import { useApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
 import { atom, useAtomValue, useSetAtom, useStore } from 'jotai'
 import { atomFamily } from 'jotai/utils'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import {
   priceTemplateAtom,
@@ -133,6 +133,7 @@ export const useSyncPriceIntentState = ({
   const { shopSession } = useShopSession()
   const shopSessionId = shopSession?.id
   const apolloClient = useApolloClient()
+  const createPriceIntentStatus = useRef<'idle' | 'pending' | 'done'>('idle')
 
   const cart = shopSession?.cart
   const [priceIntentId, setPriceIntentId] = useState<string | null>(null)
@@ -142,10 +143,15 @@ export const useSyncPriceIntentState = ({
       return
     }
     const service = priceIntentServiceInitClientSide(apolloClient)
-    const createPriceIntent = () =>
-      service.create({ productName, priceTemplate, shopSessionId }).then((priceIntent) => {
-        setPriceIntentId(priceIntent.id)
-      })
+    const createPriceIntent = () => {
+      if (createPriceIntentStatus.current !== 'pending') {
+        createPriceIntentStatus.current = 'pending'
+        service
+          .create({ productName, priceTemplate, shopSessionId })
+          .then((priceIntent) => setPriceIntentId(priceIntent.id))
+          .finally(() => (createPriceIntentStatus.current = 'done'))
+      }
+    }
 
     if (entryToReplace != null) {
       if (entryToReplace.priceIntentId == null) {
