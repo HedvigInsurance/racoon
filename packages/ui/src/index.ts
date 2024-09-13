@@ -7,7 +7,7 @@ export { Space } from './components/Space'
 export { Button, type ButtonProps } from './components/Button/Button'
 export { IconButton } from './components/Button/IconButton'
 export { Tooltip } from './components/Tooltip/Tooltip'
-
+export { Card } from './components/Card/Card'
 export { InputBase } from './components/InputBase'
 export type { InputBaseProps } from './components/InputBase'
 export { Heading } from './components/Heading/Heading'
