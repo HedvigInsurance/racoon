@@ -1,10 +1,13 @@
 import { style } from '@vanilla-extract/css'
-import { tokens, xStack } from 'ui'
+import { tokens, xStack, yStack } from 'ui'
 
-export const detailsListRoot = style({
-  listStyle: 'none',
-  color: tokens.colors.textTranslucentSecondary,
-})
+export const detailsListRoot = style([
+  yStack({ gap: 'xxs' }),
+  {
+    listStyle: 'none',
+    color: tokens.colors.textTranslucentSecondary,
+  },
+])
 
 export const detailsListItem = style([
   xStack({ justifyContent: 'space-between' }),

@@ -168,6 +168,24 @@ export const buttonVariant = styleVariants({
       },
     },
   },
+
+  outline: {
+    backgroundColor: 'transparent',
+    color: tokens.colors.textPrimary,
+    border: '1px solid',
+    borderColor: tokens.colors.borderPrimary,
+
+    ':active': {
+      backgroundColor: tokens.colors.buttonGhostHover,
+    },
+
+    selectors: {
+      '&:disabled:not([data-loading])': {
+        color: tokens.colors.buttonDisabledText,
+        backgroundColor: 'transparent',
+      },
+    },
+  },
 })
 
 const HEIGHT = {
