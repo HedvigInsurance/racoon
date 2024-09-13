@@ -3,7 +3,7 @@ import { type RecipeVariants } from '@vanilla-extract/recipes'
 import clsx from 'clsx'
 import { type ComponentProps, type PropsWithChildren } from 'react'
 import { Heading, Text } from 'ui'
-import { cardHeader, cardRoot } from './Card.css'
+import { cardAside, cardHeader, cardRoot } from './Card.css'
 
 type RootStyleProps = RecipeVariants<typeof cardRoot>
 type RootProps = ComponentProps<'div'> & RootStyleProps
@@ -50,6 +50,15 @@ function CardSubtitle({ className, children }: PropsWithChildren<SubtitleProps>)
   )
 }
 
+type HeaderAsideProps = ComponentProps<typeof Slot>
+function CardHeaderAside({ className, children, ...props }: PropsWithChildren<HeaderAsideProps>) {
+  return (
+    <Slot className={clsx(cardAside, className)} {...props}>
+      {children}
+    </Slot>
+  )
+}
+
 export const Card = {
   Root: CardRoot,
   Header: CardHeader,
@@ -57,4 +66,5 @@ export const Card = {
   Heading: CardHeading,
   Title: CardTitle,
   Subtitle: CardSubtitle,
+  HeaderAside: CardHeaderAside,
 }
