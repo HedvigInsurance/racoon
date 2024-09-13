@@ -19,7 +19,7 @@ const meta: Meta<Controls> = {
     design: {
       allowFullscreen: true,
       type: 'figma',
-      url: 'https://www.figma.com/file/5kmmDdh6StpXzbEfr7WevV/Hedvig-UI-Kit?type=design&node-id=15721-17893&mode=design&t=FQrv0wWXT2aihaTB-1',
+      url: 'https://www.figma.com/file/5kmmDdh6StpXzbEfr7WevV/Hedvig-UI-Kit?type=design&node-id=16269-14623&mode=design&t=AWGrq69c6GtZiBoY-1',
     },
   },
 }
