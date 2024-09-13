@@ -42,7 +42,7 @@ function CardTitle({ className, children }: PropsWithChildren<TitleProps>) {
 
 type SubtitleProps = ComponentProps<typeof Text>
 
-function CartSubtitle({ className, children }: PropsWithChildren<SubtitleProps>) {
+function CardSubtitle({ className, children }: PropsWithChildren<SubtitleProps>) {
   return (
     <Text color="textSecondary" className={className}>
       {children}
@@ -56,5 +56,5 @@ export const Card = {
   Media: CardMedia,
   Heading: CardHeading,
   Title: CardTitle,
-  Subtitle: CartSubtitle,
+  Subtitle: CardSubtitle,
 }
