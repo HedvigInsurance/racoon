@@ -86,7 +86,7 @@ export const WithBadge: Story = {
   },
 }
 
-export const WithoutButton: Story = {
+export const WithoutAside: Story = {
   render: (args: Controls) => (
     <div style={{ maxWidth: '400px' }}>
       <Card.Root variant={args.variant}>
