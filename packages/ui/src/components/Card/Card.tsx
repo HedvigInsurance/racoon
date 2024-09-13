@@ -12,7 +12,6 @@ function CardRoot({ variant, size, className, children }: PropsWithChildren<Root
   return <article className={clsx(cardRoot({ variant, size }), className)}>{children}</article>
 }
 
-// type HeaderStyleProps = RecipeVariants<typeof card>
 type HeaderProps = ComponentProps<'header'>
 
 function CardHeader({ className, children }: PropsWithChildren<HeaderProps>) {
