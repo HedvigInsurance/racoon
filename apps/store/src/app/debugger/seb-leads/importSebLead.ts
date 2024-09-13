@@ -10,7 +10,7 @@ export const importSebLead = async (
 ): Promise<FormStateWithErrors> => {
   try {
     const sebInsurelyId = getFormValueOrThrow(formData, SebDebuggerFormElement.SebInsurelyId)
-    const result = await storefrontLeadsApiRequest(`/leads/${sebInsurelyId}`, { method: 'POST' })
+    const result = await storefrontLeadsApiRequest(`/debugg/leads/${sebInsurelyId}`, { method: 'POST' })
     return {
       messages: (result as { messages: Array<string> }).messages.map((message) => ({
         type: 'success',
