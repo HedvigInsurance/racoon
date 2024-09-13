@@ -15,7 +15,7 @@ export const theme = {
   space,
   transitions,
   shadow: {
-    card: `0px 2px 2px -1px rgba(18, 18, 18, 0.10), 0px 4px 10px -2px rgba(18, 18, 18, 0.05)`,
+    card: `0px 2px 2px -1px ${colors.borderTranslucent2}, 0px 4px 10px -2px ${colors.translucent1}`,
     default: '0 1px 2px 0 rgb(0 0 0 / 15%)',
     focus: `0 0 0 2px ${colors.textPrimary}`,
     focusAlt: `0 0 0 2px ${colors.signalBlueElement}`,
