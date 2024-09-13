@@ -4,6 +4,8 @@ export { HedvigLogo } from './components/HedvigLogo/HedvigLogo'
 export { HedvigSymbol } from './components/HedvigSymbol/HedvigSymbol'
 export { Space } from './components/Space'
 export { Button, type ButtonProps } from './components/Button/Button'
+export { IconButton } from './components/Button/IconButton'
+
 export { InputBase } from './components/InputBase'
 export type { InputBaseProps } from './components/InputBase'
 export { Heading } from './components/Heading/Heading'
