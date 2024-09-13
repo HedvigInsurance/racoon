@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { type ComponentProps } from 'react'
+import { CrossIcon } from '../../icons'
 import { tokens } from '../../theme'
+import { Badge } from '../Badge/Badge'
 import { BasePillow } from '../BasePillow/BasePillow'
+import { IconButton } from '../Button/IconButton'
 import { Card } from './Card'
 
 type Controls = ComponentProps<typeof Card.Root>
@@ -39,8 +42,88 @@ export const Default: Story = {
             <Card.Title>Homeowner Insurance</Card.Title>
             <Card.Subtitle>Bellmansgatan 19A</Card.Subtitle>
           </Card.Heading>
+          <Card.HeaderAside>
+            <IconButton variant="secondary">
+              <CrossIcon />
+            </IconButton>
+          </Card.HeaderAside>
         </Card.Header>
-        A short message about something that needs attention, an error, info or...
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam fugit cumque unde
+        officiis, reprehenderit accusamus tempora.
+      </Card.Root>
+    </div>
+  ),
+  args: {
+    variant: 'primary',
+  },
+}
+
+export const WithBadge: Story = {
+  render: (args: Controls) => (
+    <div style={{ maxWidth: '400px' }}>
+      <Card.Root variant={args.variant}>
+        <Card.Header>
+          <Card.Media>
+            <BasePillow shouldFallback fill={tokens.colors.amber300} />
+          </Card.Media>
+          <Card.Heading>
+            <Card.Title>Homeowner Insurance</Card.Title>
+            <Card.Subtitle>Bellmansgatan 19A</Card.Subtitle>
+          </Card.Heading>
+          <Card.HeaderAside>
+            <Badge color="green50">20%</Badge>
+          </Card.HeaderAside>
+        </Card.Header>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam fugit cumque unde
+        officiis, reprehenderit accusamus tempora.
+      </Card.Root>
+    </div>
+  ),
+  args: {
+    variant: 'primary',
+  },
+}
+
+export const WithoutButton: Story = {
+  render: (args: Controls) => (
+    <div style={{ maxWidth: '400px' }}>
+      <Card.Root variant={args.variant}>
+        <Card.Header>
+          <Card.Media>
+            <BasePillow shouldFallback fill={tokens.colors.amber300} />
+          </Card.Media>
+          <Card.Heading>
+            <Card.Title>Homeowner Insurance</Card.Title>
+            <Card.Subtitle>Bellmansgatan 19A</Card.Subtitle>
+          </Card.Heading>
+        </Card.Header>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam fugit cumque unde
+        officiis, reprehenderit accusamus tempora.
+      </Card.Root>
+    </div>
+  ),
+  args: {
+    variant: 'primary',
+  },
+}
+
+export const WithoutPillow: Story = {
+  render: (args: Controls) => (
+    <div style={{ maxWidth: '400px' }}>
+      <Card.Root variant={args.variant}>
+        <Card.Header>
+          <Card.Heading>
+            <Card.Title>Homeowner Insurance</Card.Title>
+            <Card.Subtitle>Bellmansgatan 19A</Card.Subtitle>
+          </Card.Heading>
+          <Card.HeaderAside>
+            <IconButton variant="secondary">
+              <CrossIcon />
+            </IconButton>
+          </Card.HeaderAside>
+        </Card.Header>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam fugit cumque unde
+        officiis, reprehenderit accusamus tempora.
       </Card.Root>
     </div>
   ),

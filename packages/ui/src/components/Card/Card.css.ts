@@ -30,4 +30,15 @@ export const cardRoot = recipe({
   },
 })
 
-export const cardHeader = style([xStack({ gap: 'sm' })])
+export const cardHeader = style([
+  xStack({ gap: 'sm' }),
+  {
+    position: 'relative',
+  },
+])
+
+export const cardAside = style({
+  position: 'absolute',
+  top: 0,
+  insetInlineEnd: 0,
+})
