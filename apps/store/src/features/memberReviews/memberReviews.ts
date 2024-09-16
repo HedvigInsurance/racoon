@@ -1,4 +1,5 @@
 import { kv } from '@vercel/kv'
+import { unstable_cache as nextCache } from 'next/cache'
 import type { z } from 'zod'
 import { getReviewsDistribution, type ReviewsCountByScore } from './getReviewsDistribution'
 import type { Score, ReviewsMetadata, ReviewsByScore } from './memberReviews.types'
@@ -16,11 +17,13 @@ import {
 // Data format and used keys are defined in the cloud function:
 // https://shorturl.at/eoQRV
 const KV_KEY = {
-  AVRAGE_RATING: 'averageRating',
+  AVERAGE_RATING: 'averageRating',
   LATEST_REVIEWS: 'latestReviews',
-  AVRAGE_RATING_BY_PRODUCT: 'averageRatingByProduct',
+  AVERAGE_RATING_BY_PRODUCT: 'averageRatingByProduct',
   LATEST_REVIEWS_BY_PRODUCT: 'latestReviewsByProduct',
 }
+
+const reviewCacheTtl = process.env.VERCEL_ENV === 'production' ? 60 * 60 : 60
 
 export const fetchCompanyReviewsMetadata = async (): Promise<ReviewsMetadata | null> => {
   try {
@@ -69,8 +72,8 @@ export const fetchProductReviewsMetadata = async (
   }
 }
 
-const fetchCompanyAverageRating = async (): Promise<ReviewsMetadata['averageRating'] | null> => {
-  const averageRating = await kv.get<z.infer<typeof averageRatingSchema>>(KV_KEY.AVRAGE_RATING)
+const _fetchCompanyAverageRating = async (): Promise<ReviewsMetadata['averageRating'] | null> => {
+  const averageRating = await kv.get<z.infer<typeof averageRatingSchema>>(KV_KEY.AVERAGE_RATING)
 
   if (!averageRating) {
     console.log('Member Reviews | Could not found get average rating data')
@@ -90,10 +93,13 @@ const fetchCompanyAverageRating = async (): Promise<ReviewsMetadata['averageRati
     totalOfReviews: averageRating.reviewCount,
   }
 }
+const fetchCompanyAverageRating = nextCache(_fetchCompanyAverageRating, undefined, {
+  revalidate: reviewCacheTtl,
+})
 
 type CompanyLatestReviewsResponse = { updatedAt: string } & z.infer<typeof commentByScoreSchema>
 
-export const fetchCompanyReviewsByScore = async (): Promise<ReviewsByScore | null> => {
+const _fetchCompanyReviewsByScore = async (): Promise<ReviewsByScore | null> => {
   const latestReviews = await kv.get<CompanyLatestReviewsResponse>(KV_KEY.LATEST_REVIEWS)
 
   if (!latestReviews) {
@@ -110,16 +116,20 @@ export const fetchCompanyReviewsByScore = async (): Promise<ReviewsByScore | nul
   return transformReviews(latestReviews)
 }
 
+export const fetchCompanyReviewsByScore = nextCache(_fetchCompanyReviewsByScore, undefined, {
+  revalidate: reviewCacheTtl,
+})
+
 type AverageRatingsResponse = { updatedAt: string } & Record<
   string,
   z.infer<typeof averageRatingSchema> | undefined
 >
 
-const fetchProductAverageRating = async (
+const _fetchProductAverageRating = async (
   productId: string,
 ): Promise<ReviewsMetadata['averageRating'] | null> => {
   const averageRatingByProduct = await kv.get<AverageRatingsResponse>(
-    KV_KEY.AVRAGE_RATING_BY_PRODUCT,
+    KV_KEY.AVERAGE_RATING_BY_PRODUCT,
   )
 
   if (!averageRatingByProduct) {
@@ -146,6 +156,9 @@ const fetchProductAverageRating = async (
     totalOfReviews: productAverageRating.reviewCount,
   }
 }
+const fetchProductAverageRating = nextCache(_fetchProductAverageRating, undefined, {
+  revalidate: reviewCacheTtl,
+})
 
 type ReviewCommentsResponse = Record<string, z.infer<typeof reviewCommentsSchema> | undefined>
 

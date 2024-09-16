@@ -1,16 +1,11 @@
 'use server'
 import type { FormStateWithErrors } from '@/app/types/formStateTypes'
-import { getFormValueOrThrow } from '@/utils/getFormValueOrTrrow'
-import { SebDebuggerFormElement } from './constants'
 import { storefrontLeadsApiRequest } from './storefrontLeadsApiRequest'
 
-export const createWidgetSession = async (
-  _: FormStateWithErrors,
-  formData: FormData,
+export const generateAndSendOffer = async (
 ): Promise<FormStateWithErrors> => {
   try {
-    const leadId = getFormValueOrThrow(formData, SebDebuggerFormElement.LeadId)
-    const result = await storefrontLeadsApiRequest(`/debug/leads/${leadId}/widgetSession`, {
+    const result = await storefrontLeadsApiRequest(`/debug/generate-and-send-offer`, {
       method: 'POST',
     })
     return {

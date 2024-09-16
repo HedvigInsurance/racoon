@@ -1,6 +1,7 @@
 'use server'
 
 import type { FormStateWithErrors } from '@/app/types/formStateTypes'
+import {getEnvOrThrow} from "@/utils/getEnvOrThrow";
 import { SebDebuggerFormElement } from './constants'
 
 export const createSebLead = async (
@@ -12,7 +13,17 @@ export const createSebLead = async (
   const lastName = formData.get(SebDebuggerFormElement.LastName) as string
   const email = formData.get(SebDebuggerFormElement.Email) as string
   const phoneNumber = formData.get(SebDebuggerFormElement.PhoneNumber) as string
-  const product = formData.get(SebDebuggerFormElement.Product) as string
+  let product = formData.get(SebDebuggerFormElement.Product) as string
+  let  maybeProductSubType = null
+
+  if (product === 'condoInsuranceBrf') {
+    product = 'condoInsurance'
+    maybeProductSubType = 'condoInsurance.condoInsuranceCondominium'
+  } else if (product === 'condoInsuranceRent') {
+    product = 'condoInsurance'
+    maybeProductSubType = 'condoInsurance.condoInsuranceRental'
+  }
+
 
   const parameters = {
     personalNumber: ssn,
@@ -22,6 +33,7 @@ export const createSebLead = async (
     contactEmail: email,
     metadata: {
       productType: product,
+      productSubType: maybeProductSubType
     },
   }
   let sebSessionId: string | null
@@ -67,14 +79,9 @@ type CreateSebLeadsResponse = {
 const createSebLeadStaging = async (
   params: CreateSebLeadsParams,
 ): Promise<CreateSebLeadsResponse> => {
-  const API_URL = process.env.SEB_LEADS_INSURELY_API_URL
-  if (!API_URL) {
-    throw new Error('SEB_LEADS_API_URL not configured')
-  }
-  const API_KEY = process.env.SEB_LEADS_INSURELY_API_KEY
-  if (!API_KEY) {
-    throw new Error('SEB_LEADS_API_KEY not configured')
-  }
+  const API_URL = getEnvOrThrow('SEB_LEADS_API_URL')
+  const API_KEY = getEnvOrThrow ('SEB_LEADS_API_KEY')
+
   const url = new URL(API_URL)
   const headers = new Headers({
     'Content-Type': 'application/json',
@@ -92,7 +99,7 @@ const createSebLeadStaging = async (
     body: body,
     headers: headers,
   })
-  const result = (await await response.json()) as CreateSebLeadsResponse
+  const result = (await response.json()) as CreateSebLeadsResponse
   console.log('API response', result)
   if (!response.ok) {
     throw new Error(`${result.errorCode}: ${result.errorMessage ?? 'Unknown error'}`)
