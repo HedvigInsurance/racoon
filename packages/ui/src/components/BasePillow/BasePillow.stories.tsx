@@ -26,6 +26,6 @@ export const Default: Story = {
   render: ({ size, fill }: Controls) => <BasePillow size={size} fill={fill} />,
   args: {
     size: 'medium',
-    fill: 'orange',
+    fill: 'rebeccapurple',
   },
 }
