@@ -1,5 +1,10 @@
 export { Alert } from './components/Alert/Alert'
-export { BasePillow, pillowSize, type PillowProps } from './components/BasePillow/BasePillow'
+export {
+  BasePillow,
+  pillowSize,
+  pillowSizeStyles,
+  type PillowSizeProp,
+} from './components/BasePillow/BasePillow'
 export { HedvigLogo } from './components/HedvigLogo/HedvigLogo'
 export { HedvigSymbol } from './components/HedvigSymbol/HedvigSymbol'
 export { Space } from './components/Space'

@@ -3,7 +3,7 @@ import { responsiveVariants } from 'ui'
 
 export const pillowSize = createVar('pillowSize')
 
-export const pillowVariants = responsiveVariants({
+export const pillowSizeStyles = responsiveVariants({
   base: {
     width: pillowSize,
     height: pillowSize,
