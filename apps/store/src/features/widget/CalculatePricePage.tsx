@@ -18,10 +18,7 @@ import {
 import { useSyncPriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { useShowAppError } from '@/services/appErrors/appErrorAtom'
-import {
-  ExternalInsuranceCancellationOption,
-  usePriceIntentConfirmMutation,
-} from '@/services/graphql/generated'
+import { usePriceIntentConfirmMutation } from '@/services/graphql/generated'
 import { type Template } from '@/services/PriceCalculator/PriceCalculator.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
@@ -29,8 +26,6 @@ import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useAddToCart } from '@/utils/useAddToCart'
 import { Header } from './Header'
-
-const CAR_INSURANCE = 'SE_CAR'
 
 type Props = {
   priceIntentId: string
@@ -72,32 +67,14 @@ export const CalculatePricePage = (props: Props) => {
 
       await priceLoaderPromise.current
 
-      const addedOffer = updatedCart.entries.find((item) => item.id === productOfferId)
-      // Later that 'insurance base' check will be removed. At first, switching directly to sign page will be available
-      // only for car. Other insurances like home sould keep using "switch page"
-      const isCarInsurance = addedOffer?.product.name === CAR_INSURANCE
-      if (
-        !isCarInsurance &&
-        addedOffer?.cancellation.option !== ExternalInsuranceCancellationOption.None
-      ) {
-        await router.push(
-          PageLink.widgetSwitch({
-            locale,
-            flow: props.flow,
-            shopSessionId,
-            priceIntentId,
-          }),
-        )
-      } else {
-        await router.push(
-          PageLink.widgetSign({
-            locale,
-            flow: props.flow,
-            shopSessionId,
-            priceIntentId,
-          }),
-        )
-      }
+      await router.push(
+        PageLink.widgetSign({
+          locale,
+          flow: props.flow,
+          shopSessionId,
+          priceIntentId,
+        }),
+      )
     },
   })
 
