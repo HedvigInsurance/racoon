@@ -50,6 +50,7 @@ export type VideoProps = React.ComponentPropsWithoutRef<'video'> & {
   poster?: string
   showControls?: boolean
   hideSoundControl?: boolean
+  className?: string
 } & VideoSize
 
 const autoplaySettings = {
@@ -70,6 +71,7 @@ export const Video = ({
   onPause,
   showControls = true,
   hideSoundControl = false,
+  className,
   ...delegated
 }: VideoProps) => {
   const videoRef = useRef<HTMLVideoElement | null>(null)
@@ -194,7 +196,7 @@ export const Video = ({
     - We don't want to preload full video.  This is ignored by browsers if autoPlay is set
     */}
       <video
-        className={clsx(videoBase, roundedCorners && videoRoundedCorners)}
+        className={clsx(videoBase, roundedCorners && videoRoundedCorners, className)}
         ref={videoRef}
         data-poster={poster}
         poster={delegated.autoPlay ? poster : undefined}

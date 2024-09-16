@@ -5,6 +5,12 @@ import { zIndexes } from '@/utils/zIndex'
 
 export const pillowWrapper = style({
   position: 'relative',
+  height: '13rem',
+  width: '13rem',
+})
+
+export const test = style({
+  transform: 'translateY(-7.6rem)',
 })
 
 export const priceWrapper = style({ position: 'relative', height: tokens.space.lg })

@@ -8,6 +8,7 @@ import { Pillow } from '@/components/Pillow/Pillow'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { useSelectedOffer } from '@/components/ProductPage/PurchaseForm/useSelectedOffer'
 import { useHasScrolledPast } from '@/components/ProductPage/ScrollPast/useHasScrolledPast'
+import { Video } from '@/components/Video/Video'
 import { useFormatter } from '@/utils/useFormatter'
 import {
   pillowWrapper,
@@ -17,7 +18,10 @@ import {
   stickyProductHeaderContent,
   subTypeBadge,
   subTypeLabel,
+  test,
 } from './ProductHeroV2.css'
+import { assignInlineVars } from '@vanilla-extract/dynamic'
+import { heightLandscapeVar } from '@/components/Video/Video.css'
 
 const TRAVEL_DISTANCE = '1em'
 const ANIMATION: Variants = {
@@ -87,10 +91,29 @@ export function ProductHeroV2({ className }: { className?: string }) {
       <div ref={ref} className={clsx(yStack({ alignItems: 'center' }), className)}>
         <div className={pillowWrapper}>
           <Pillow
+            className={sprinkles({ position: 'absolute' })}
             size={{ _: 'xlarge', lg: 'xxlarge' }}
             {...productData.pillowImage}
             priority={true}
           />
+          <div
+            style={assignInlineVars({
+              [heightLandscapeVar]: '28.9rem',
+            })}
+          >
+            <Video
+              autoPlay
+              className={test}
+              muted
+              playsInline
+              showControls={false}
+              sources={[
+                {
+                  url: 'https://cdn.hedvig.com/hedvig-dot-com/videos/pillow_animation_car.webm',
+                },
+              ]}
+            />
+          </div>
           {subType && (
             <Badge className={subTypeBadge} size="big">
               {subType}
