@@ -13,7 +13,17 @@ export const createSebLead = async (
   const lastName = formData.get(SebDebuggerFormElement.LastName) as string
   const email = formData.get(SebDebuggerFormElement.Email) as string
   const phoneNumber = formData.get(SebDebuggerFormElement.PhoneNumber) as string
-  const product = formData.get(SebDebuggerFormElement.Product) as string
+  let product = formData.get(SebDebuggerFormElement.Product) as string
+  let  maybeProductSubType = null
+
+  if (product === 'condoInsuranceBrf') {
+    product = 'condoInsurance'
+    maybeProductSubType = 'condoInsurance.condoInsuranceCondominium'
+  } else if (product === 'condoInsuranceRent') {
+    product = 'condoInsurance'
+    maybeProductSubType = 'condoInsurance.condoInsuranceRental'
+  }
+
 
   const parameters = {
     personalNumber: ssn,
@@ -23,6 +33,7 @@ export const createSebLead = async (
     contactEmail: email,
     metadata: {
       productType: product,
+      productSubType: maybeProductSubType
     },
   }
   let sebSessionId: string | null
