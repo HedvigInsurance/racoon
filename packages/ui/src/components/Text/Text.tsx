@@ -1,8 +1,6 @@
 import clsx from 'clsx'
 import type { ReactNode, CSSProperties } from 'react'
-import Balancer from 'react-wrap-balancer'
-import type { FontSizeProps } from '../../theme'
-import { type Sprinkles, sprinkles } from '../../theme/sprinkles.css'
+import { type FontSizeProps, type Sprinkles, sprinkles } from '../../theme'
 import {
   textBase,
   textFallbackColor,
@@ -52,7 +50,6 @@ export const getTextStyles = ({
 
 export const Text = ({
   as,
-  balance,
   align,
   color,
   children,
@@ -77,7 +74,9 @@ export const Text = ({
       })}
       {...rest}
     >
-      {!balance ? children : <Balancer>{children}</Balancer>}
+      {/*Temporary removed, breaks build optimization from NextJs */}
+      {/*{!balance ? children : <Balancer>{children}</Balancer>}*/}
+      {children}
     </Component>
   )
 }
