@@ -10,7 +10,7 @@ export const createWidgetSession = async (
 ): Promise<FormStateWithErrors> => {
   try {
     const leadId = getFormValueOrThrow(formData, SebDebuggerFormElement.LeadId)
-    const result = await storefrontLeadsApiRequest(`/leads/${leadId}/widgetSession`, {
+    const result = await storefrontLeadsApiRequest(`/debug/leads/${leadId}/widgetSession`, {
       method: 'POST',
     })
     return {
