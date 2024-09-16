@@ -5,7 +5,7 @@ import { storefrontLeadsApiRequest } from './storefrontLeadsApiRequest'
 export const generateAndSendOffer = async (
 ): Promise<FormStateWithErrors> => {
   try {
-    const result = await storefrontLeadsApiRequest(`/debugg/generate-and-send-offer`, {
+    const result = await storefrontLeadsApiRequest(`/debug/generate-and-send-offer`, {
       method: 'POST',
     })
     return {
