@@ -1,4 +1,3 @@
-
 import type { Meta, StoryObj } from '@storybook/react'
 import { type ComponentProps } from 'react'
 import { Badge, BasePillow, Button, Card, CrossIcon, IconButton, sprinkles, Text, tokens } from 'ui'
