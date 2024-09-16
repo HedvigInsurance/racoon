@@ -1,9 +1,11 @@
-import { storyblokEditable } from '@storyblok/react'
-import Link from 'next/link'
 import { Text, yStack } from 'ui'
 import { LanguageSelector } from '@/blocks/FooterBlock/LanguageSelector'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
-import type { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import {
+  type ExpectedBlockType,
+  type LinkField,
+  type SbBaseBlockProps,
+} from '@/services/storyblok/storyblok'
 import { filterByBlockType, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 import { BUSINESS_REGISTRATION_NUMBER, organization } from '@/utils/jsonSchema'
 import {
@@ -14,49 +16,6 @@ import {
   wrapperStyle,
   languageSelectForm,
 } from './FooterBlock.css'
-
-type FooterLinkProps = SbBaseBlockProps<{
-  link: LinkField
-  linkText: string
-}>
-
-export const FooterLinkBlock = ({ blok }: FooterLinkProps) => {
-  return (
-    <Link
-      {...storyblokEditable(blok)}
-      className={footerLink}
-      href={getLinkFieldURL(blok.link, blok.linkText)}
-      target={blok.link.target}
-      rel={blok.link.rel}
-      prefetch={false}
-    >
-      {blok.linkText}
-    </Link>
-  )
-}
-FooterLinkBlock.blockName = 'footerLink' as const
-
-type FooterSectionProps = SbBaseBlockProps<{
-  footerLinks: ExpectedBlockType<FooterLinkProps>
-  title: string
-}>
-
-export const FooterSectionBlock = ({ blok }: FooterSectionProps) => {
-  const filteredFooterLinks = filterByBlockType(blok.footerLinks, FooterLinkBlock.blockName)
-  return (
-    <div className={yStack({ gap: 'lg' })} {...storyblokEditable(blok)}>
-      <Text size="sm" color="textSecondary">
-        {blok.title}
-      </Text>
-      <div className={yStack({ gap: 'xs' })}>
-        {filteredFooterLinks.map((nestedBlock) => (
-          <FooterLinkBlock key={nestedBlock._uid} blok={nestedBlock} />
-        ))}
-      </div>
-    </div>
-  )
-}
-FooterSectionBlock.blockName = 'footerSection' as const
 
 export type FooterBlockProps = SbBaseBlockProps<{
   sections: ExpectedBlockType<FooterSectionProps>
@@ -93,3 +52,45 @@ export const FooterBlock = ({ blok }: FooterBlockProps) => {
   )
 }
 FooterBlock.blockName = 'footer' as const
+
+type FooterSectionProps = SbBaseBlockProps<{
+  footerLinks: ExpectedBlockType<FooterLinkProps>
+  title: string
+}>
+
+export const FooterSectionBlock = ({ blok }: FooterSectionProps) => {
+  const filteredFooterLinks = filterByBlockType(blok.footerLinks, FooterLinkBlock.blockName)
+  return (
+    <div className={yStack({ gap: 'lg' })}>
+      <Text size="sm" color="textSecondary">
+        {blok.title}
+      </Text>
+      <div className={yStack({ gap: 'xs' })}>
+        {filteredFooterLinks.map((nestedBlock) => (
+          <FooterLinkBlock key={nestedBlock._uid} blok={nestedBlock} />
+        ))}
+      </div>
+    </div>
+  )
+}
+FooterSectionBlock.blockName = 'footerSection' as const
+
+type FooterLinkProps = SbBaseBlockProps<{
+  link: LinkField
+  linkText: string
+}>
+
+export const FooterLinkBlock = ({ blok }: FooterLinkProps) => {
+  // Optimization: Using next/link here causes preloading of other pages's code even with prefetch={false}
+  return (
+    <a
+      className={footerLink}
+      href={getLinkFieldURL(blok.link, blok.linkText)}
+      target={blok.link.target}
+      rel={blok.link.rel}
+    >
+      <div>{blok.linkText}</div>
+    </a>
+  )
+}
+FooterLinkBlock.blockName = 'footerLink' as const
