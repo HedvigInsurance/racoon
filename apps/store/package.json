@@ -6,7 +6,7 @@
   "scripts": {
     "analyze-bundle": "ANALYZE=true next build",
     "dev": "next dev --port 8040",
-    "build": "next build --no-lint",
+    "build": "next build --no-lint --experimental-debug-memory-usage",
     "start": "next start",
     "test": "jest --passWithNoTests --coverage",
     "lint": "next lint",
