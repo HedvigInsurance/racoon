@@ -1,4 +1,3 @@
-
 import { Slot } from '@radix-ui/react-slot'
 import { type RecipeVariants } from '@vanilla-extract/recipes'
 import clsx from 'clsx'
@@ -19,9 +18,9 @@ function CardHeader({ className, children }: PropsWithChildren<HeaderProps>) {
   return <header className={clsx(cardHeader, className)}>{children}</header>
 }
 
-type MediaProps = ComponentProps<typeof Slot>
+type MediaProps = PropsWithChildren<ComponentProps<typeof Slot>>
 
-function CardMedia({ children }: PropsWithChildren<MediaProps>) {
+function CardMedia({ children }: MediaProps) {
   // Slot ensures only one element is passed as children
   return <Slot>{children}</Slot>
 }
