@@ -33,7 +33,7 @@ export const Default: Story = {
       <Card.Root variant={args.variant}>
         <Card.Header>
           <Card.Media>
-            <BasePillow shouldFallback fill={tokens.colors.amber300} />
+            <BasePillow fill={tokens.colors.amber300} />
           </Card.Media>
           <Card.Heading>
             <Card.Title>Homeowner Insurance</Card.Title>
