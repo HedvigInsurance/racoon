@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
 import Image from 'next/image'
-import { DEFAULT_IMAGE_QUALITY, mq } from 'ui'
+import { mq } from 'ui'
 import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
+import { DEFAULT_IMAGE_QUALITY } from '@/utils/config'
 
 type Props = {
   image: { src: string; alt: string }
