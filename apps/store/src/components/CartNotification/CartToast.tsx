@@ -15,6 +15,7 @@ import { BundleDiscountSummary } from '@/features/bundleDiscount/BundleDiscountS
 import type { CartFragment } from '@/services/graphql/generated'
 import { ExternalInsuranceCancellationOption } from '@/services/graphql/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { useTracking } from '@/services/Tracking/useTracking'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
@@ -39,10 +40,13 @@ export const CartToast = forwardRef<CartToastAttributes>((_, forwardedRef) => {
   const locale = useRoutingLocale()
   const { shopSession } = useShopSession()
   const { cart } = shopSession ?? {}
+  const tracking = useTracking()
+
   if (shopSession == null || cart == null) return null
 
   const handleClickLink = (type: 'Primary' | 'Secondary') => () => {
     datadogRum.addAction(`CartToast Link ${type}`)
+    tracking.reportBeginCheckout(cart)
   }
 
   let bundleDiscountHeader: ReactNode
