@@ -1,0 +1,65 @@
+import { useState, type ComponentProps } from 'react'
+
+import type { Meta, StoryObj } from '@storybook/react'
+
+import { Tooltip } from './Tooltip'
+import { IconButton } from '../Button/IconButton'
+import { InfoIcon } from '../../icons'
+import { Button } from '../Button/Button'
+
+type Controls = ComponentProps<typeof Tooltip.Root>
+
+const meta: Meta<Controls> = {
+  title: 'Tooltip',
+  component: Tooltip.Root,
+}
+export default meta
+
+type Story = StoryObj<Controls>
+
+export const Default: Story = {
+  render: () => (
+    <div style={{ maxWidth: '400px' }}>
+      <Tooltip.Root>
+        <Tooltip.Trigger>Hover me to show tooltip content</Tooltip.Trigger>
+        <Tooltip.Content>Lorem ipsum dolor sit amet consectetur adipisicing elit.</Tooltip.Content>
+      </Tooltip.Root>
+    </div>
+  ),
+}
+
+export const WithCustomTrigger: Story = {
+  render: () => (
+    <div style={{ maxWidth: '400px' }}>
+      <Tooltip.Root>
+        <Tooltip.Trigger asChild>
+          <IconButton>
+            <InfoIcon />
+          </IconButton>
+        </Tooltip.Trigger>
+        <Tooltip.Content>Lorem ipsum dolor sit amet consectetur adipisicing elit.</Tooltip.Content>
+      </Tooltip.Root>
+    </div>
+  ),
+}
+
+export const controlled: Story = {
+  render: () => {
+    const [isOpen, setIsOpen] = useState(false)
+
+    const toggle = () => setIsOpen((currentOpenState) => !currentOpenState)
+
+    return (
+      <div style={{ maxWidth: '400px' }}>
+        <Tooltip.Root open={isOpen}>
+          <Tooltip.Trigger asChild>
+            <Button onClick={toggle}>Clicking me toggles the tooltip</Button>
+          </Tooltip.Trigger>
+          <Tooltip.Content>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          </Tooltip.Content>
+        </Tooltip.Root>
+      </div>
+    )
+  },
+}
