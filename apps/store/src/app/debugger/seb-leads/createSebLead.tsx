@@ -79,8 +79,8 @@ type CreateSebLeadsResponse = {
 const createSebLeadStaging = async (
   params: CreateSebLeadsParams,
 ): Promise<CreateSebLeadsResponse> => {
-  const API_URL = getEnvOrThrow('SEB_LEADS_API_URL')
-  const API_KEY = getEnvOrThrow ('SEB_LEADS_API_KEY')
+  const API_URL = getEnvOrThrow('SEB_LEADS_INSURELY_API_URL')
+  const API_KEY = getEnvOrThrow ('SEB_LEADS_INSURELY_API_KEY')
 
   const url = new URL(API_URL)
   const headers = new Headers({
