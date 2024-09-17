@@ -50,7 +50,9 @@ export const cardHeader = style([
 ])
 
 export const cardAside = style({
-  position: 'absolute',
+  // @ts-expect-error: Hack to make sure aside content is always absolute. Should probably rething how we achieve this
+  // The main reason right now is giving tooltip trigger an explicit relative position, which is overriding this rule
+  position: 'absolute !important',
   top: cardPadding,
   insetInlineEnd: cardPadding,
 })

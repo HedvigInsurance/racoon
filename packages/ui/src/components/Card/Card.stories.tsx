@@ -6,7 +6,7 @@ import { Badge } from '../Badge/Badge'
 import { BasePillow } from '../BasePillow/BasePillow'
 import { IconButton } from '../Button/IconButton'
 import { Text } from '../Text/Text'
-import { Tooltip } from '../Tooltip'
+import { Tooltip } from '../Tooltip/Tooltip'
 import { Card } from './Card'
 
 type Controls = ComponentProps<typeof Card.Root>
