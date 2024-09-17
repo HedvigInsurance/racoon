@@ -6,36 +6,46 @@ import { Heading, Text } from 'ui'
 import { cardHeader, cardRoot } from './Card.css'
 
 type RootStyleProps = RecipeVariants<typeof cardRoot>
-type RootProps = ComponentProps<'div'> & RootStyleProps
+type RootProps = ComponentProps<'article'> & RootStyleProps
 
-function CardRoot({ variant, size, className, children }: PropsWithChildren<RootProps>) {
-  return <article className={clsx(cardRoot({ variant, size }), className)}>{children}</article>
+function CardRoot({ variant, size, className, children, ...props }: RootProps) {
+  return (
+    <article className={clsx(cardRoot({ variant, size }), className)} {...props}>
+      {children}
+    </article>
+  )
 }
 
 type HeaderProps = ComponentProps<'header'>
 
-function CardHeader({ className, children }: PropsWithChildren<HeaderProps>) {
-  return <header className={clsx(cardHeader, className)}>{children}</header>
+function CardHeader({ className, children, ...props }: HeaderProps) {
+  return (
+    <header className={clsx(cardHeader, className)} {...props}>
+      {children}
+    </header>
+  )
 }
 
-type MediaProps = PropsWithChildren<ComponentProps<typeof Slot>>
-
-function CardMedia({ children }: MediaProps) {
+function CardMedia({ children }: PropsWithChildren) {
   // Slot ensures only one element is passed as children
   return <Slot>{children}</Slot>
 }
 
 type HeadingProps = ComponentProps<'div'>
 
-function CardHeading({ className, children }: PropsWithChildren<HeadingProps>) {
-  return <div className={className}>{children}</div>
+function CardHeading({ className, children, ...props }: HeadingProps) {
+  return (
+    <div className={className} {...props}>
+      {children}
+    </div>
+  )
 }
 
 type TitleProps = ComponentProps<typeof Heading>
 
-function CardTitle({ className, children }: PropsWithChildren<TitleProps>) {
+function CardTitle({ className, children, ...props }: TitleProps) {
   return (
-    <Heading variant="standard.18" className={className}>
+    <Heading variant="standard.18" className={className} {...props}>
       {children}
     </Heading>
   )
@@ -43,9 +53,9 @@ function CardTitle({ className, children }: PropsWithChildren<TitleProps>) {
 
 type SubtitleProps = ComponentProps<typeof Text>
 
-function CardSubtitle({ className, children }: PropsWithChildren<SubtitleProps>) {
+function CardSubtitle({ className, children, ...props }: SubtitleProps) {
   return (
-    <Text color="textSecondary" className={className}>
+    <Text color="textSecondary" className={className} {...props}>
       {children}
     </Text>
   )
