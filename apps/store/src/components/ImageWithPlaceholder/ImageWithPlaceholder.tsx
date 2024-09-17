@@ -1,9 +1,7 @@
 import { clsx } from 'clsx'
-import type { ImageProps } from 'next/image'
-import { default as NextImage } from 'next/image'
-import type { SyntheticEvent } from 'react'
-import { useState } from 'react'
-import { DEFAULT_IMAGE_QUALITY } from 'ui'
+import { default as NextImage, type ImageProps } from 'next/image'
+import { type SyntheticEvent, useState } from 'react'
+import { DEFAULT_IMAGE_QUALITY } from '@/utils/config'
 import { imageStyles } from './ImageWithPlaceholder.css'
 
 export const ImageWithPlaceholder = ({

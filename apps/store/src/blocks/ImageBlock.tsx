@@ -4,7 +4,7 @@ import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import type { ImageProps } from 'next/image'
-import { ConditionalWrapper, mq, theme, DEFAULT_IMAGE_QUALITY } from 'ui'
+import { ConditionalWrapper, mq, theme } from 'ui'
 import type { HeadingBlockProps } from '@/blocks/HeadingBlock'
 import { HeadingBlock } from '@/blocks/HeadingBlock'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
@@ -16,6 +16,7 @@ import {
   type StoryblokAsset,
 } from '@/services/storyblok/storyblok'
 import { filterByBlockType, getImgSrc } from '@/services/storyblok/Storyblok.helpers'
+import { DEFAULT_IMAGE_QUALITY } from '@/utils/config'
 
 export type ImageAspectRatio = '1 / 1' | '2 / 1' | '3 / 2' | '4 / 3' | '5 / 4' | '16 / 9'
 
