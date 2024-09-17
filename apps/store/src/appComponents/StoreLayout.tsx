@@ -5,7 +5,6 @@ import { AppTrackingTriggers } from '@/app/[locale]/AppTrackingTriggers'
 import { StoryblokLayout } from '@/app/[locale]/StoryblokLayout'
 import { ProductMetadataProvider } from '@/appComponents/providers/ProductMetadataProvider'
 import { ShopSessionTrackingProvider } from '@/appComponents/providers/ShopSessionTrackingProvider'
-import { StoryblokProvider } from '@/appComponents/providers/StoryblokProvider'
 import { RootLayout } from '@/appComponents/RootLayout/RootLayout'
 import { AppErrorDialog } from '@/components/AppErrorDialog'
 import { CookieConsent } from '@/components/CookieConsent/CookieConsent'
@@ -48,9 +47,7 @@ export async function StoreLayout({ locale, children }: StoreLayoutProps) {
               <AppErrorDialog />
               <TranslationKeysDebugger />
               <GlobalBannerDynamic />
-              <StoryblokProvider>
-                <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
-              </StoryblokProvider>
+              <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
               <Suspense>
                 <AppTrackingTriggers />
               </Suspense>

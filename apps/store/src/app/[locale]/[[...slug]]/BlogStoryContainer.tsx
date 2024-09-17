@@ -2,6 +2,7 @@ import 'server-only'
 import type { ISbStoryData } from '@storyblok/js'
 import type { SbBlokData } from '@storyblok/react'
 import type { ReactNode } from 'react'
+import { StoryblokProvider } from '@/appComponents/providers/StoryblokProvider'
 import {
   BLOG_ARTICLE_CATEGORIES_PAGE_PROP,
   BLOG_ARTICLE_CATEGORY_CONTENT_TYPE,
@@ -50,7 +51,11 @@ export async function BlogStoryContainer({ locale, story, children }: Props) {
 
   return (
     <BlogContextProvider blogPageProps={blogPageProps}>
-      {shouldLoadBlogBlocks ? <BlogStoryblokProvider>{children}</BlogStoryblokProvider> : children}
+      {shouldLoadBlogBlocks ? (
+        <BlogStoryblokProvider>{children}</BlogStoryblokProvider>
+      ) : (
+        <StoryblokProvider>{children}</StoryblokProvider>
+      )}
     </BlogContextProvider>
   )
 }

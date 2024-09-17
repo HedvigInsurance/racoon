@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers'
 import { notFound } from 'next/navigation'
+import { StoryblokProvider } from '@/appComponents/providers/StoryblokProvider'
 import { ConnectPaymentBlock } from '@/blocks/ConnectPaymentBlock'
 import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
 import { getStoryBySlug, type ConnectPaymentStory } from '@/services/storyblok/storyblok'
@@ -49,7 +50,11 @@ export default async function Page({ params, searchParams }: Props) {
         nextUrl={nextUrl}
       />
 
-      {story && <ConnectPaymentBlock blok={story.content} />}
+      {story && (
+        <StoryblokProvider>
+          <ConnectPaymentBlock blok={story.content} />
+        </StoryblokProvider>
+      )}
     </>
   )
 }

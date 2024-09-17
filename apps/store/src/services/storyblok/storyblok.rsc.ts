@@ -8,7 +8,6 @@ import {
   BLOG_ARTICLE_CONTENT_TYPE,
 } from '@/features/blog/blog.constants'
 import type { BlogArticleContentType } from '@/features/blog/blog.types'
-import { commonStoryblokComponents } from '@/services/storyblok/commonStoryblokComponents'
 import { LINKS_EXCLUDE_PATHS } from '@/services/storyblok/Storyblok.constant'
 import type { LinkData, PageLink } from '@/services/storyblok/Storyblok.helpers'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
@@ -28,7 +27,8 @@ const STORYBLOK_CACHE_SETTINGS = {
 storyblokInit({
   accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN,
   use: [apiPlugin],
-  components: commonStoryblokComponents,
+  // Optimization: No components provided, we don't want to grow client bundle here
+  // It's responsibility of inner page to init components via `StoryblokProvider`
 })
 
 export const getStoryBySlug = async <T extends ISbStoryData>(
