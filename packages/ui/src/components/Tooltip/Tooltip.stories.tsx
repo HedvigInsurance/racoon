@@ -1,11 +1,9 @@
-import { useState, type ComponentProps } from 'react'
-
 import type { Meta, StoryObj } from '@storybook/react'
-
-import { Tooltip } from './Tooltip'
-import { IconButton } from '../Button/IconButton'
+import { useState, type ComponentProps } from 'react'
 import { InfoIcon } from '../../icons'
 import { Button } from '../Button/Button'
+import { IconButton } from '../Button/IconButton'
+import { Tooltip } from './Tooltip'
 
 type Controls = ComponentProps<typeof Tooltip.Root>
 

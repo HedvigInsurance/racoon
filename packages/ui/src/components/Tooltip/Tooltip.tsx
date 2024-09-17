@@ -1,10 +1,7 @@
-import { type ComponentProps } from 'react'
-
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
-
+import { type ComponentProps } from 'react'
 import { Text, theme } from 'ui'
 
 type RootProps = ComponentProps<typeof TooltipPrimitive.Root>
