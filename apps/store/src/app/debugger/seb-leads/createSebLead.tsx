@@ -14,7 +14,7 @@ export const createSebLead = async (
   const email = formData.get(SebDebuggerFormElement.Email) as string
   const phoneNumber = formData.get(SebDebuggerFormElement.PhoneNumber) as string
   let product = formData.get(SebDebuggerFormElement.Product) as string
-  let  maybeProductSubType = null
+  let  maybeProductSubType: string | undefined
 
   if (product === 'condoInsuranceBrf') {
     product = 'condoInsurance'
