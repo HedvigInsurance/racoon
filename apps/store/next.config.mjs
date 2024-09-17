@@ -43,7 +43,7 @@ const config = {
     ],
   },
   productionBrowserSourceMaps: true,
-  transpilePackages: ['ui', 'i18next'],
+  transpilePackages: ['ui'],
   // Docs: https://nextjs.org/docs/advanced-features/security-headers
   async headers() {
     return [
