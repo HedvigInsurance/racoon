@@ -63,11 +63,6 @@ const config = {
       },
     ]
   },
-  webpack(config) {
-    // Suppress known warnings from webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo complaining about PNP modules
-    config.infrastructureLogging = { level: 'error' }
-    return config
-  },
   async rewrites() {
     const foreverRedirect = {
       source: '/forever',
