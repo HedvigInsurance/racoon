@@ -1,6 +1,6 @@
 import { buttonSizeStyles } from './Button.css'
 
-type ButtonSizeVariant = 'small' | 'medium' | 'large'
+type ButtonSizeVariant = 'small' | 'medium' | 'large' | 'icon'
 type ButtonLevels = 'base' | 'lg'
 
 export type ButtonSize = ButtonSizeVariant | Record<ButtonLevels, ButtonSizeVariant>
