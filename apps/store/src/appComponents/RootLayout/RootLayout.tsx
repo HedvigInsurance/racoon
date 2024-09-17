@@ -1,6 +1,5 @@
 import clsx from 'clsx'
 import { Suspense, type PropsWithChildren } from 'react'
-import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import globalCss from 'ui/src/global.css'
 import { mainTheme } from 'ui'
 import { NavigationProgressIndicator } from '@/appComponents/RootLayout/NavigationProgressIndicator'
@@ -33,9 +32,7 @@ export function RootLayout({
         </Suspense>
         <NavigationProgressIndicator />
 
-        <ApolloProvider locale={locale}>
-          <BalancerProvider>{children}</BalancerProvider>
-        </ApolloProvider>
+        <ApolloProvider locale={locale}>{children}</ApolloProvider>
       </body>
     </html>
   )

@@ -5,7 +5,6 @@ import Head from 'next/head'
 import Router from 'next/router'
 import { appWithTranslation } from 'next-i18next'
 import { type ReactNode } from 'react'
-import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import globalCss from 'ui/src/global.css'
 import { theme } from 'ui'
 import { AppErrorDialog } from '@/components/AppErrorDialog'
@@ -106,11 +105,9 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
           <ShopSessionProvider shopSessionId={pageProps[SHOP_SESSION_PROP_NAME]}>
             <ShopSessionTrackingProvider>
               <BankIdContextProvider>
-                <BalancerProvider>
-                  <AppErrorDialog />
-                  <GlobalBannerDynamic />
-                  {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
-                </BalancerProvider>
+                <AppErrorDialog />
+                <GlobalBannerDynamic />
+                {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
                 <BankIdDialogDynamic />
               </BankIdContextProvider>
             </ShopSessionTrackingProvider>

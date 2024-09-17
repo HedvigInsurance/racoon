@@ -1,9 +1,9 @@
 'use client'
 
 import { clsx } from 'clsx'
-import Balancer from 'react-wrap-balancer'
 import type { UIColors, Level } from '../../theme'
 import { sprinkles } from '../../theme/sprinkles.css'
+import { balanceTextStyles } from '../Text/Text.css'
 import type { PolymorphicComponentsProps } from '../TypeUtils'
 import { responsiveVariantStyles } from './Heading.css'
 
@@ -48,11 +48,12 @@ export function Heading({
       className={clsx(
         responsiveVariantStyles(variant),
         sprinkles({ color, textAlign: align }),
+        balance && balanceTextStyles,
         className,
       )}
       {...rest}
     >
-      {balance ? <Balancer>{children}</Balancer> : children}
+      {children}
     </Component>
   )
 }
