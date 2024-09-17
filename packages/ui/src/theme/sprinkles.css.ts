@@ -1,7 +1,7 @@
 import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
-import { tokens } from '../theme'
 import { createSubset } from '../utils/createSubset'
 import { mediaQueries } from './media'
+import { tokens } from './theme.css'
 import { fontSizes } from './typography'
 
 const textColors = {
