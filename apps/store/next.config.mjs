@@ -17,6 +17,7 @@ const config = {
       // Fixes next-i18next config and resources not loading specifically in Vercel environment
       '*': ['./next-i18next.config.cjs', './public/locales/**/*'],
     },
+    webpackBuildWorker: true,
   },
   logging: {
     fetches: {
