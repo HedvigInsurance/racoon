@@ -1,8 +1,8 @@
 'use client'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { storyblokEditable } from '@storyblok/react'
-import { navigationItem } from '@/components/HeaderNew/Header.css'
-import { NavigationLink } from '@/components/HeaderNew/NavigationLink/NavigationLink'
+import { navigationItem } from '@/components/Header/Header.css'
+import { NavigationLink } from '@/components/Header/NavigationLink/NavigationLink'
 import type { LinkField, SbBaseBlockProps, StoryblokAsset } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 

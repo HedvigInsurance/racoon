@@ -14,8 +14,8 @@ import { useShowAppError } from '@/services/appErrors/appErrorAtom'
 import { getAccessToken } from '@/services/authApi/persist'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { useContractQuery } from '@/services/graphql/generated'
-import { MENU_BAR_HEIGHT_DESKTOP } from '../HeaderNew/Header.css'
-import { MENU_BAR_HEIGHT_MOBILE } from '../HeaderNew/HeaderMenuMobile/HeaderMenuMobile.css'
+import { MENU_BAR_HEIGHT_DESKTOP } from '../Header/Header.css'
+import { MENU_BAR_HEIGHT_MOBILE } from '../Header/HeaderMenuMobile/HeaderMenuMobile.css'
 
 const SSN_FIELD_NAME = 'ssn'
 

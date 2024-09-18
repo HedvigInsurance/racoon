@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
 import { TranslationsProvider } from '@/appComponents/providers/TranslationsProvider'
 import { RootLayout } from '@/appComponents/RootLayout/RootLayout'
-import { Header } from '@/components/HeaderNew/Header'
+import { Header } from '@/components/Header/Header'
 import { FALLBACK_LOCALE } from '@/utils/l10n/locales'
 import { toRoutingLocale } from '@/utils/l10n/localeUtils'
 import { initTranslations } from '../i18n'

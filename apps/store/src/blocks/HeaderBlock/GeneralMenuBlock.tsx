@@ -2,7 +2,7 @@
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { storyblokEditable } from '@storyblok/react'
 import clsx from 'clsx'
-import { MenuItemBlock, type MenuItemBlockProps } from '@/blocks/HeaderBlockNew/MenuItemBlock'
+import { MenuItemBlock, type MenuItemBlockProps } from '@/blocks/HeaderBlock/MenuItemBlock'
 import {
   navigationItem,
   navigationMenuWrapper,
@@ -10,10 +10,10 @@ import {
   navigationSecondaryList,
   navigationItemGeneralMenu,
   navigationItemSubMenu,
-} from '@/components/HeaderNew/Header.css'
-import { NavigationContent } from '@/components/HeaderNew/NavigationContent'
-import { SecondaryNavigationLink } from '@/components/HeaderNew/NavigationLink/NavigationLink'
-import { NavigationTriggerGeneralMenu } from '@/components/HeaderNew/NavigationTrigger/NavigationTriggerGeneralMenu'
+} from '@/components/Header/Header.css'
+import { NavigationContent } from '@/components/Header/NavigationContent'
+import { SecondaryNavigationLink } from '@/components/Header/NavigationLink/NavigationLink'
+import { NavigationTriggerGeneralMenu } from '@/components/Header/NavigationTrigger/NavigationTriggerGeneralMenu'
 import type { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 
