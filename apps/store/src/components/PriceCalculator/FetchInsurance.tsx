@@ -10,7 +10,6 @@ import {
   usePriceIntentInsurelyUpdateMutation,
 } from '@/services/graphql/generated'
 import { InsurelyIframe, setInsurelyConfig } from '@/services/Insurely/InsurelyIframe'
-import { Features } from '@/utils/Features'
 import {
   dialogContent,
   dialogIframeContent,
@@ -139,10 +138,7 @@ export const FetchInsurance = (props: Props) => {
         </Dialog.Window>
       </Dialog.Content>
     )
-  } else if (
-    state === 'COMPARE' ||
-    (state === 'SUCCESS' && Features.enabled('INSURELY_NATIVE_SUCCESS'))
-  ) {
+  } else if (state === 'COMPARE') {
     content = (
       <Dialog.Content className={dialogIframeContent} onClose={dismiss} centerContent={true}>
         <Dialog.Window className={dialogIframeWindow}>
@@ -160,7 +156,7 @@ export const FetchInsurance = (props: Props) => {
         </Dialog.Window>
       </Dialog.Content>
     )
-  } else if (state === 'SUCCESS' && !Features.enabled('INSURELY_NATIVE_SUCCESS')) {
+  } else if (state === 'SUCCESS') {
     content = (
       <Dialog.Content className={dialogContent} onClose={dismiss} centerContent={true}>
         <Dialog.Window className={dialogWindow}>
