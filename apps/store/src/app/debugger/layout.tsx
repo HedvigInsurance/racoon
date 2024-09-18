@@ -2,7 +2,7 @@ import { type ReactNode } from 'react'
 import { Heading, xStack } from 'ui'
 import { DebuggerMenu } from '@/app/debugger/DebuggerMenu'
 import { RootLayout } from '@/appComponents/RootLayout/RootLayout'
-import { Header } from '@/components/HeaderNew/Header'
+import { Header } from '@/components/Header/Header'
 import { contentWrapper } from './debugger.css'
 
 type Props = {

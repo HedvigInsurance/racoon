@@ -5,17 +5,17 @@ import clsx from 'clsx'
 import { useTranslation } from 'next-i18next'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import type { ButtonBlockProps } from '@/blocks/ButtonBlock'
-import { MenuItemBlock, type MenuItemBlockProps } from '@/blocks/HeaderBlockNew/MenuItemBlock'
+import { MenuItemBlock, type MenuItemBlockProps } from '@/blocks/HeaderBlock/MenuItemBlock'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import {
   navigationItem,
   navigationItemProductMenu,
   navigationMenuWrapper,
   navigationProductList,
-} from '@/components/HeaderNew/Header.css'
-import { NavigationContent } from '@/components/HeaderNew/NavigationContent'
-import { ProductNavigationLink } from '@/components/HeaderNew/NavigationLink/NavigationLink'
-import { NavigationTrigger } from '@/components/HeaderNew/NavigationTrigger/NavigationTrigger'
+} from '@/components/Header/Header.css'
+import { NavigationContent } from '@/components/Header/NavigationContent'
+import { ProductNavigationLink } from '@/components/Header/NavigationLink/NavigationLink'
+import { NavigationTrigger } from '@/components/Header/NavigationTrigger/NavigationTrigger'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
 import type { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'

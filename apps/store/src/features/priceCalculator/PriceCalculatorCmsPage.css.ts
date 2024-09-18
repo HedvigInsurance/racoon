@@ -1,7 +1,7 @@
 import { style } from '@vanilla-extract/css'
 import { hoverStyles, responsiveStyles, tokens, xStack, yStack } from 'ui'
-import { HEADER_HEIGHT_DESKTOP } from '@/components/HeaderNew/Header.css'
-import { HEADER_HEIGHT_MOBILE } from '@/components/HeaderNew/HeaderMenuMobile/HeaderMenuMobile.css'
+import { HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header.css'
+import { HEADER_HEIGHT_MOBILE } from '@/components/Header/HeaderMenuMobile/HeaderMenuMobile.css'
 
 export const pageGrid = style({
   display: 'grid',
