@@ -1,3 +1,4 @@
+import { style } from '@vanilla-extract/css'
 import { theme } from '../../theme'
 import { responsiveVariants } from '../../utils/responsiveVariants/responsiveVariants'
 
@@ -93,4 +94,9 @@ export const responsiveVariantStyles = responsiveVariants({
       lineHeight: 1.12,
     },
   },
+})
+
+export const balanceTextStyles = style({
+  whiteSpace: 'unset',
+  textWrap: 'balance',
 })

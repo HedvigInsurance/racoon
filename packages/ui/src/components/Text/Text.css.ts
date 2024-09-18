@@ -23,5 +23,6 @@ export const textUppercase = style({
 })
 
 export const balanceTextStyles = style({
+  whiteSpace: 'unset',
   textWrap: 'balance',
 })
