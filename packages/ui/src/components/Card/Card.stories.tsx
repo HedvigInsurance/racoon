@@ -19,6 +19,10 @@ const meta: Meta<Controls> = {
       options: ['primary', 'secondary'],
       control: { type: 'select' },
     },
+    size: {
+      options: ['md', 'lg'],
+      control: { type: 'radio' },
+    },
   },
   parameters: {
     design: {
@@ -35,7 +39,7 @@ type Story = StoryObj<Controls>
 export const Default: Story = {
   render: (args: Controls) => (
     <div style={{ maxWidth: '400px' }}>
-      <Card.Root variant={args.variant}>
+      <Card.Root variant={args.variant} size={args.size}>
         <Card.Aside>
           <IconButton variant="secondary">
             <CrossIcon />
@@ -57,13 +61,14 @@ export const Default: Story = {
   ),
   args: {
     variant: 'primary',
+    size: 'lg',
   },
 }
 
 export const WithBadge: Story = {
   render: (args: Controls) => (
     <div style={{ maxWidth: '400px' }}>
-      <Card.Root variant={args.variant}>
+      <Card.Root variant={args.variant} size={args.size}>
         <Card.Aside>
           <Badge color="green50">20%</Badge>
         </Card.Aside>
@@ -83,13 +88,14 @@ export const WithBadge: Story = {
   ),
   args: {
     variant: 'primary',
+    size: 'lg',
   },
 }
 
 export const WithoutAside: Story = {
   render: (args: Controls) => (
     <div style={{ maxWidth: '400px' }}>
-      <Card.Root variant={args.variant}>
+      <Card.Root variant={args.variant} size={args.size}>
         <Card.Header>
           <Card.Media>
             <BasePillow fill={tokens.colors.amber300} />
@@ -106,13 +112,14 @@ export const WithoutAside: Story = {
   ),
   args: {
     variant: 'primary',
+    size: 'lg',
   },
 }
 
 export const WithoutPillow: Story = {
   render: (args: Controls) => (
     <div style={{ maxWidth: '400px' }}>
-      <Card.Root variant={args.variant}>
+      <Card.Root variant={args.variant} size={args.size}>
         <Card.Header>
           <Card.Heading>
             <Card.Title>Homeowner Insurance</Card.Title>
@@ -126,13 +133,14 @@ export const WithoutPillow: Story = {
   ),
   args: {
     variant: 'primary',
+    size: 'lg',
   },
 }
 
 export const Secondary: Story = {
   render: (args: Controls) => (
     <div style={{ maxWidth: '400px' }}>
-      <Card.Root variant={args.variant}>
+      <Card.Root variant={args.variant} size={args.size}>
         <Tooltip.Root>
           <Card.Aside>
             <Tooltip.Trigger>
@@ -151,5 +159,6 @@ export const Secondary: Story = {
   ),
   args: {
     variant: 'secondary',
+    size: 'md',
   },
 }
