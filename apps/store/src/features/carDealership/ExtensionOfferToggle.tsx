@@ -1,23 +1,31 @@
 import { atom, useAtom, useAtomValue } from 'jotai'
 import { useTranslation } from 'next-i18next'
-import { CampaignIcon, Text, theme } from 'ui'
-import { ToggleCard } from '@/components/ToggleCard/ToggleCard'
+import { CampaignIcon, sprinkles, theme, ToggleCard } from 'ui'
 
 export const ExtensionOfferToggle = () => {
   const { t } = useTranslation('carDealership')
   const [userWantsExtension, setUserWantsExtension] = useSetUserWantsExtension()
 
   return (
-    <ToggleCard
-      label={t('TOGGLE_EXTENSION_LABEL')}
-      defaultChecked={userWantsExtension}
-      onCheckedChange={setUserWantsExtension}
-      Icon={<CampaignIcon size="1rem" color={theme.colors.signalGreenElement} />}
-    >
-      <Text as="p" color="textTranslucentSecondary" size="xs">
-        {t('TOGGLE_EXTENSION_DESCRIPTION')}
-      </Text>
-    </ToggleCard>
+    <ToggleCard.Root>
+      <ToggleCard.Label
+        pre={
+          <CampaignIcon
+            size="1rem"
+            color={theme.colors.signalGreenElement}
+            className={sprinkles({ mr: 'xxs' })}
+          />
+        }
+      >
+        {t('TOGGLE_EXTENSION_LABEL')}
+      </ToggleCard.Label>
+      <ToggleCard.Switch
+        defaultChecked={userWantsExtension}
+        onCheckedChange={setUserWantsExtension}
+      />
+
+      <ToggleCard.Description>{t('TOGGLE_EXTENSION_DESCRIPTION')}</ToggleCard.Description>
+    </ToggleCard.Root>
   )
 }
 
