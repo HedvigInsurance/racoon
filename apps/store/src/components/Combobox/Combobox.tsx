@@ -1,8 +1,15 @@
 import clsx from 'clsx'
 import { useCombobox } from 'downshift'
 import { useState, useMemo, useDeferredValue, useId } from 'react'
-import { ChevronIcon, CrossIconSmall, Text, xStack, theme, WarningTriangleIcon } from 'ui'
-import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
+import {
+  ChevronIcon,
+  CrossIconSmall,
+  Text,
+  xStack,
+  theme,
+  WarningTriangleIcon,
+  useHighlightAnimation,
+} from 'ui'
 import {
   wrapper,
   wrapperExpanded,

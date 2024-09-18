@@ -2,8 +2,7 @@
 
 import styled from '@emotion/styled'
 import { useEffect, useState } from 'react'
-import { Text, theme } from 'ui'
-import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
+import { Text, theme, useHighlightAnimation } from 'ui'
 
 export const CopyToClipboard = (props: { label: string; children: string }) => {
   const { highlight, animationProps } = useHighlightAnimation<HTMLButtonElement>()

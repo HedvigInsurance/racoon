@@ -1,11 +1,24 @@
 'use client'
 
 import { type KeyboardEvent, useCallback, useRef, useState, useEffect } from 'react'
-import { theme } from 'ui'
+import { theme } from '../theme/theme'
 
 const SIGNAL_GREEN_FILL_HSLA = theme.colors.signalGreenFill
   .replace('hsl', 'hsla')
   .replace(')', ', 0.99)')
+
+const EXCLUDE_SET = new Set([
+  'Tab',
+  'Enter',
+  'ArrowDown',
+  'ArrowUp',
+  'ArrowRight',
+  'ArrowLeft',
+  'Shift',
+  'Alt',
+  'Meta',
+  'Control',
+])
 
 export function useHighlightAnimation<Element extends HTMLElement>() {
   const ref = useRef<Element | null>(null)
@@ -44,16 +57,3 @@ export function useHighlightAnimation<Element extends HTMLElement>() {
 
   return { highlight, animationProps: { ref } } as const
 }
-
-const EXCLUDE_SET = new Set([
-  'Tab',
-  'Enter',
-  'ArrowDown',
-  'ArrowUp',
-  'ArrowRight',
-  'ArrowLeft',
-  'Shift',
-  'Alt',
-  'Meta',
-  'Control',
-])
