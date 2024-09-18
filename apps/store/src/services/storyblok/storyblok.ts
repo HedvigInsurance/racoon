@@ -2,8 +2,7 @@ import * as process from 'process'
 import type { ISbStoriesParams, ISbStoryData, SbBlokData, StoryblokClient } from '@storyblok/react'
 import { apiPlugin, getStoryblokApi, storyblokInit } from '@storyblok/react'
 import type { FooterBlockProps } from '@/blocks/FooterBlock/FooterBlock'
-import { type NavMenuContainerProps } from '@/blocks/HeaderBlock/HeaderBlock'
-import { type HeaderMenuProps } from '@/blocks/HeaderBlockNew/HeaderBlock'
+import { type HeaderBlockProps } from '@/blocks/HeaderBlockNew/HeaderBlock'
 import type { ReusableBlockReferenceProps } from '@/blocks/ReusableBlockReference'
 import { type ContentAlignment, type ContentWidth } from '@/components/GridLayout/GridLayout.helper'
 import type { BreadcrumbListItem } from '@/components/PageBreadcrumbs/PageBreadcrumbs'
@@ -180,14 +179,9 @@ export type PriceCalculatorPageStory = ISbStoryData<{
   deductibleInfo?: Array<SbBlokData>
 }>
 
-type HeaderProps = SbBaseBlockProps<{
-  navMenuContainer: NavMenuContainerProps
-  headerMenu: HeaderMenuProps
-}>
-
 export type GlobalStory = ISbStoryData & {
   content: ISbStoryData['content'] & {
-    header: ExpectedBlockType<HeaderProps>
+    header: ExpectedBlockType<HeaderBlockProps>
     footer: ExpectedBlockType<FooterBlockProps>
   }
 }

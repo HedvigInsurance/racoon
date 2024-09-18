@@ -10,7 +10,7 @@ import {
 
 export const MENU_BAR_HEIGHT_DESKTOP = '4.5rem'
 export const MENU_BAR_HEIGHT_PX = 72
-const HEADER_HEIGHT_DESKTOP = `calc(${MENU_BAR_HEIGHT_DESKTOP} + ${tokens.space.xs})`
+export const HEADER_HEIGHT_DESKTOP = `calc(${MENU_BAR_HEIGHT_DESKTOP} + ${tokens.space.xs})`
 
 export const focusableStyles = style({
   cursor: 'pointer',
