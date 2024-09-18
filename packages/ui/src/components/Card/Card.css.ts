@@ -4,12 +4,10 @@ import { xStack, yStack } from '../../patterns'
 import { tokens } from '../../theme'
 
 const cardPadding = createVar()
-const cardRadius = createVar()
 
 export const cardRoot = recipe({
   base: {
     position: 'relative',
-    borderRadius: cardRadius,
     padding: cardPadding,
   },
   variants: {
@@ -27,20 +25,20 @@ export const cardRoot = recipe({
 
     size: {
       md: [
-        yStack({ gap: 'xs' }),
+        yStack({ gap: 'sm' }),
         {
+          borderRadius: tokens.radius.md,
           vars: {
             [cardPadding]: tokens.space.md,
-            [cardRadius]: tokens.radius.md,
           },
         },
       ],
       lg: [
         yStack({ gap: 'md' }),
         {
+          borderRadius: tokens.radius.xl,
           vars: {
             [cardPadding]: tokens.space.lg,
-            [cardRadius]: tokens.radius.xl,
           },
         },
       ],
