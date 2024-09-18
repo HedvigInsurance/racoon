@@ -1,4 +1,6 @@
-import { type ComponentProps } from 'react'
+import clsx from 'clsx'
+import { type ReactNode, type ComponentProps } from 'react'
+import { xStack } from '../../patterns'
 import { Card } from '../Card/Card'
 import { Switch } from '../Switch/Switch'
 import { Text } from '../Text/Text'
@@ -23,10 +25,13 @@ const ToggleSwitch = (props: ToggleSwitchProps) => {
   )
 }
 
-type ToggleLabelProps = ComponentProps<'label'>
-const ToggleLabel = ({ children, ...props }: ToggleLabelProps) => {
+type ToggleLabelProps = ComponentProps<'label'> & {
+  pre?: ReactNode
+}
+const ToggleLabel = ({ pre, children, className, ...props }: ToggleLabelProps) => {
   return (
-    <label {...props}>
+    <label className={clsx(xStack({ gap: 'xxs', alignItems: 'center' }), className)} {...props}>
+      {pre}
       <Text size="md" as="span">
         {children}
       </Text>
