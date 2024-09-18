@@ -1,14 +1,16 @@
+import clsx from 'clsx'
 import { type ComponentProps, forwardRef } from 'react'
 import { Button } from './Button'
+import { iconButtonStyles } from './Button.css'
 
 type ButtonProps = ComponentProps<typeof Button<'button'>>
 
 export const IconButton = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ children, ...props }, forwardedRef) => (
+  ({ className, children, ...props }, forwardedRef) => (
     <Button
+      className={clsx(iconButtonStyles, className)}
       variant="ghost"
       size="icon"
-      style={{ aspectRatio: '1', height: 'auto' }}
       Icon={children}
       {...props}
       ref={forwardedRef}

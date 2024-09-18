@@ -83,7 +83,7 @@ export const Button: PolymorphicComponent = forwardRef(function Button<
     >
       <span className={childrenWrapper} style={{ opacity: loading ? 0 : 1 }}>
         {iconPosition === 'left' && Icon}
-        {children && <span className={clsx(textWrapper)}>{children}</span>}
+        {children && <span className={textWrapper}>{children}</span>}
         {iconPosition === 'right' && Icon}
       </span>
       {hiddenText && hiddenText}

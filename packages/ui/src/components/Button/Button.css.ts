@@ -234,6 +234,8 @@ export const buttonSizeStyles = {
   },
 }
 
+export const iconButtonStyles = style({ aspectRatio: '1', height: 'auto' })
+
 export const childrenWrapper = style({
   display: 'flex',
   alignItems: 'center',
