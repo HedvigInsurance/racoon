@@ -1,46 +1,38 @@
 import { storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
-import { NestedNavigationBlock } from '@/blocks/HeaderBlock/NestedNavigationBlock'
-import { Header } from '@/components/Header/Header'
-import { ShoppingCartMenuItem } from '@/components/Header/ShoppingCartMenuItem'
-import { TopMenu } from '@/components/Header/TopMenu/TopMenu'
+import { Header } from '@/components/HeaderNew/Header'
+import { HeaderMenu } from '@/components/HeaderNew/HeaderMenu/HeaderMenu'
+import { ShoppingCartMenuItem } from '@/components/HeaderNew/ShoppingCartMenuItem/ShoppingCartMenuItem'
 import type { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { checkBlockType } from '@/services/storyblok/Storyblok.helpers'
-import { type NavItemBlockProps } from './NavItemBlock'
-import { type NestedNavContainerBlockProps } from './NestedNavContainerBlock'
-import {
-  ProductNavContainerBlock,
-  type ProductNavContainerBlockProps,
-} from './ProductNavContainerBlock'
+import { type GeneralMenuBlockProps } from './GeneralMenuBlock'
+import { type MenuItemBlockProps } from './MenuItemBlock'
+import { ProductMenuBlock, type ProductMenuBlockProps } from './ProductMenuBlock'
+import { type SubMenuBlockProps } from './SubMenuBlock'
 
-export type NavMenuContainerProps = ExpectedBlockType<
-  NestedNavContainerBlockProps | NavItemBlockProps | ProductNavContainerBlockProps
+export type HeaderMenuProps = ExpectedBlockType<
+  SubMenuBlockProps | MenuItemBlockProps | ProductMenuBlockProps | GeneralMenuBlockProps
 >
 
-export type HeaderBlockProps = SbBaseBlockProps<{
-  navMenuContainer: NavMenuContainerProps
+export type HeaderBlockNewProps = SbBaseBlockProps<{
+  headerMenu: HeaderMenuProps | []
 }>
 
 // Performance considerations
 // - this block is important for site-wide INP since it's present on most pages and is used often
-export const HeaderBlock = ({ blok }: HeaderBlockProps) => {
+export const HeaderBlock = ({ blok }: HeaderBlockNewProps) => {
   const productNavItem = useMemo(
     () =>
-      blok.navMenuContainer.find((item) =>
-        checkBlockType<ProductNavContainerBlockProps['blok']>(
-          item,
-          ProductNavContainerBlock.blockName,
-        ),
+      blok.headerMenu.find((item) =>
+        checkBlockType<ProductMenuBlockProps['blok']>(item, ProductMenuBlock.blockName),
       )?.name,
-    [blok.navMenuContainer],
+    [blok.headerMenu],
   )
   return (
     <Header {...storyblokEditable(blok)}>
-      <TopMenu defaultValue={productNavItem}>
-        {blok.navMenuContainer.map((item) => (
-          <NestedNavigationBlock key={item._uid} blok={item} />
-        ))}
-      </TopMenu>
+      {blok.headerMenu.length > 0 && (
+        <HeaderMenu defaultValue={productNavItem} items={blok.headerMenu} />
+      )}
 
       <ShoppingCartMenuItem />
     </Header>

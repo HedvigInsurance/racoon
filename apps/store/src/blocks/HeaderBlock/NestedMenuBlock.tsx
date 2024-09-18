@@ -1,11 +1,8 @@
 'use client'
-import { type HeaderBlockNewProps } from '@/blocks/HeaderBlockNew/HeaderBlock'
-import { MenuItemBlock, type MenuItemBlockProps } from '@/blocks/HeaderBlockNew/MenuItemBlock'
-import {
-  ProductMenuBlock,
-  type ProductMenuBlockProps,
-} from '@/blocks/HeaderBlockNew/ProductMenuBlock'
-import { SubMenuBlock, type SubMenuBlockProps } from '@/blocks/HeaderBlockNew/SubMenuBlock'
+import { type HeaderBlockNewProps } from '@/blocks/HeaderBlock/HeaderBlock'
+import { MenuItemBlock, type MenuItemBlockProps } from '@/blocks/HeaderBlock/MenuItemBlock'
+import { ProductMenuBlock, type ProductMenuBlockProps } from '@/blocks/HeaderBlock/ProductMenuBlock'
+import { SubMenuBlock, type SubMenuBlockProps } from '@/blocks/HeaderBlock/SubMenuBlock'
 import { checkBlockType } from '@/services/storyblok/Storyblok.helpers'
 import { GeneralMenuBlock, type GeneralMenuBlockProps } from './GeneralMenuBlock'
 

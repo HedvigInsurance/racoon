@@ -1,68 +1,43 @@
+'use client'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { storyblokEditable } from '@storyblok/react'
 import clsx from 'clsx'
-import { MinusIcon, PlusIcon } from 'ui'
-import { MenuItemBlock, type MenuItemBlockProps } from '@/blocks/HeaderBlockNew/MenuItemBlock'
-import { ButtonNextLink } from '@/components/ButtonNextLink'
+import { MenuItemBlock, type MenuItemBlockProps } from '@/blocks/HeaderBlock/MenuItemBlock'
 import {
   navigationItem,
-  navigationItemSubMenu,
-  navigationItemSupportMenu,
   navigationMenuWrapper,
   navigationSecondaryItem,
   navigationSecondaryList,
+  navigationItemGeneralMenu,
+  navigationItemSubMenu,
 } from '@/components/HeaderNew/Header.css'
 import { NavigationContent } from '@/components/HeaderNew/NavigationContent'
 import { SecondaryNavigationLink } from '@/components/HeaderNew/NavigationLink/NavigationLink'
-import { NavigationTrigger } from '@/components/HeaderNew/NavigationTrigger/NavigationTrigger'
-import { openIcon, closeIcon } from '@/components/HeaderNew/NavigationTrigger/NavigationTrigger.css'
+import { NavigationTriggerGeneralMenu } from '@/components/HeaderNew/NavigationTrigger/NavigationTriggerGeneralMenu'
 import type { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 
-export type SubMenuBlockProps = SbBaseBlockProps<{
+export type GeneralMenuBlockProps = SbBaseBlockProps<{
   name: string
   menuItems: ExpectedBlockType<MenuItemBlockProps>
   currentActiveItem?: string
-}> & { variant: 'mobile' | 'desktop' }
-export const SubMenuBlock = ({ blok, variant }: SubMenuBlockProps) => {
+}>
+export const GeneralMenuBlock = ({ blok }: GeneralMenuBlockProps) => {
   const filteredMenuItems = filterByBlockType(blok.menuItems, MenuItemBlock.blockName)
 
   if (filteredMenuItems.length === 0) {
     return null
   }
 
-  const firstMenuItem = filteredMenuItems[0]
-
   return (
     <NavigationMenuPrimitive.Item
-      className={clsx(navigationItem, navigationItemSubMenu, navigationItemSupportMenu)}
+      className={clsx(navigationItem, navigationItemGeneralMenu, navigationItemSubMenu)}
       value={blok.name}
       {...storyblokEditable(blok)}
     >
-      {variant === 'mobile' ? (
-        <NavigationTrigger
-          onPointerEnter={(event) => event.preventDefault()}
-          onPointerLeave={(event) => event.preventDefault()}
-          onPointerMove={(event) => event.preventDefault()}
-        >
-          <button>
-            {blok.name}
-            <PlusIcon className={openIcon} size="1rem" />
-            <MinusIcon className={closeIcon} size="1rem" />
-          </button>
-        </NavigationTrigger>
-      ) : (
-        <NavigationTrigger>
-          <ButtonNextLink
-            size="medium"
-            variant="secondary"
-            href={getLinkFieldURL(firstMenuItem.link, firstMenuItem.name)}
-          >
-            {blok.name}
-          </ButtonNextLink>
-        </NavigationTrigger>
-      )}
-      <NavigationContent>
+      <NavigationTriggerGeneralMenu>{blok.name}</NavigationTriggerGeneralMenu>
+      {/* Prevent closing the menu when cursor leaves content */}
+      <NavigationContent onPointerLeave={(event) => event.preventDefault()}>
         <div className={navigationMenuWrapper}>
           <NavigationMenuPrimitive.Sub defaultValue={blok.name}>
             <NavigationMenuPrimitive.List className={navigationSecondaryList}>
@@ -87,4 +62,4 @@ export const SubMenuBlock = ({ blok, variant }: SubMenuBlockProps) => {
     </NavigationMenuPrimitive.Item>
   )
 }
-SubMenuBlock.blockName = 'subMenu'
+GeneralMenuBlock.blockName = 'generalMenu'
