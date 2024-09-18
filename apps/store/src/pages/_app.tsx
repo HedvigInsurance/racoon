@@ -12,7 +12,6 @@ import { BankIdDialogDynamic } from '@/components/BankIdDialog/BankIdDialogDynam
 import { ContactUs } from '@/components/ContactUs/ContactUs'
 import { CookieConsent } from '@/components/CookieConsent/CookieConsent'
 import { GlobalBannerDynamic } from '@/components/GlobalBanner/GlobalBannerDynamic'
-import { GTMLoader } from '@/components/GTMLoader'
 import { GlobalLinkStyles } from '@/components/RichText/RichText.styles'
 import { usePublishWidgetInitEvent } from '@/features/widget/usePublishWidgetInitEvent'
 import { useApollo } from '@/services/apollo/client'
@@ -95,8 +94,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       <Head>
         <meta key="viewport" name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      {Features.enabled('COOKIE_BANNER') && <GTMLoader />}
-      {Features.enabled('COOKIE_BANNER_INP_IMPROVEMENT') && <CookieConsent />}
+      {Features.enabled('COOKIE_BANNER') && <CookieConsent />}
       <GlobalLinkStyles />
       <OneTrustStyles />
       <PageTransitionProgressBar />

@@ -57,7 +57,7 @@ export async function StoreLayout({ locale, children }: StoreLayoutProps) {
             </ShopSessionTrackingProvider>
           </CompanyReviewsMetadataProvider>
         </ProductMetadataProvider>
-        {Features.enabled('COOKIE_BANNER_INP_IMPROVEMENT') && <CookieConsent />}
+        {Features.enabled('COOKIE_BANNER') && <CookieConsent />}
       </ShopSessionProvider>
       <SpeedInsights />
     </RootLayout>
