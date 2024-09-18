@@ -3,9 +3,6 @@ import { type ComponentProps } from 'react'
 import { type Level } from '../../theme'
 import { pillowSizeStyles } from './BasePillow.css'
 
-// Re-export to use in other packages and apps
-export { pillowSize, pillowSizeStyles } from './BasePillow.css'
-
 type PillowSize =
   | 'mini'
   | 'xxsmall'
