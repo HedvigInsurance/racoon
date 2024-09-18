@@ -14,13 +14,13 @@ export type HeaderMenuProps = ExpectedBlockType<
   SubMenuBlockProps | MenuItemBlockProps | ProductMenuBlockProps | GeneralMenuBlockProps
 >
 
-export type HeaderBlockNewProps = SbBaseBlockProps<{
+export type HeaderBlockProps = SbBaseBlockProps<{
   headerMenu: HeaderMenuProps | []
 }>
 
 // Performance considerations
 // - this block is important for site-wide INP since it's present on most pages and is used often
-export const HeaderBlock = ({ blok }: HeaderBlockNewProps) => {
+export const HeaderBlock = ({ blok }: HeaderBlockProps) => {
   const productNavItem = useMemo(
     () =>
       blok.headerMenu.find((item) =>

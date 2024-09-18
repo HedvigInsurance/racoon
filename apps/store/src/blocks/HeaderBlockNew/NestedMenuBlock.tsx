@@ -1,5 +1,5 @@
 'use client'
-import { type HeaderBlockNewProps } from '@/blocks/HeaderBlockNew/HeaderBlock'
+import { type HeaderBlockProps } from '@/blocks/HeaderBlockNew/HeaderBlock'
 import { MenuItemBlock, type MenuItemBlockProps } from '@/blocks/HeaderBlockNew/MenuItemBlock'
 import {
   ProductMenuBlock,
@@ -10,7 +10,7 @@ import { checkBlockType } from '@/services/storyblok/Storyblok.helpers'
 import { GeneralMenuBlock, type GeneralMenuBlockProps } from './GeneralMenuBlock'
 
 type NestedMenuBlockProps = {
-  blok: HeaderBlockNewProps['blok']['headerMenu'][number]
+  blok: HeaderBlockProps['blok']['headerMenu'][number]
   variant: 'mobile' | 'desktop'
 }
 export const NestedMenuBlock = ({ blok, variant }: NestedMenuBlockProps) => {
