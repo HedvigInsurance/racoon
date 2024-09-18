@@ -47,6 +47,7 @@ module.exports = {
         pathGroupsExcludedImportTypes: ['internal'],
       },
     ],
+    'import/no-cycle': ['error', { maxDepth: 5 }],
     '@typescript-eslint/ban-ts-comment': ['error', { 'ts-expect-error': 'allow-with-description' }],
     '@typescript-eslint/no-unused-vars': 'error', // Also covers unused import
     '@typescript-eslint/consistent-type-imports': [

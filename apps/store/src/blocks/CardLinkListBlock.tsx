@@ -1,10 +1,9 @@
 'use client'
 import styled from '@emotion/styled'
-import { theme, mq } from 'ui'
-import * as GridLayout from '@/components/GridLayout/GridLayout'
+import { mq } from 'ui'
 import type { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import type { CardLinkBlockProps } from './CardLinkBlock'
-import { CardLinkBlock } from './CardLinkBlock'
+import { CardLinkBlock, Grid } from './CardLinkBlock'
 
 type CardLinkListBlockProps = SbBaseBlockProps<{
   cardLinks: ExpectedBlockType<CardLinkBlockProps>
@@ -21,16 +20,6 @@ export const CardLinkListBlock = ({ blok }: CardLinkListBlockProps) => {
     </Grid>
   )
 }
-
-export const Grid = styled(GridLayout.Root)({
-  gap: theme.space.xs,
-  gridAutoRows: '9rem', // 144px
-
-  [mq.lg]: {
-    gap: theme.space.md,
-    gridAutoRows: '16rem', // 256px
-  },
-})
 
 const Content = styled.div({
   gridColumn: '1 / span 12',

@@ -1,6 +1,6 @@
 import { createVar } from '@vanilla-extract/css'
 import { recipe } from '@vanilla-extract/recipes'
-import { tokens, minWidth } from 'ui'
+import { minWidth, tokens } from '../../theme'
 
 export const badgeBgColor = createVar('badgeBgColor')
 export const badgeFontColor = createVar('badgeFontColor')
