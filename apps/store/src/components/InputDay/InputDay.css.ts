@@ -85,6 +85,7 @@ export const popoverContent = style({
       animationFillMode: 'forwards',
     },
   },
+  zIndex: 1,
 })
 
 export const dayPicker = style({
