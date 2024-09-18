@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import Balancer from 'react-wrap-balancer'
 import { Badge, Text, theme } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { badge } from './InsurableLimits.css'
@@ -35,11 +34,9 @@ export const InsurableLimits = ({ items }: InsurableLimitsProps) => {
             {item.label}
           </Badge>
           <Text size="xl">{item.value}</Text>
-          <Balancer ratio={0.65}>
-            <Text size="xl" color="textSecondary">
-              {item.description}
-            </Text>
-          </Balancer>
+          <Text size="xl" color="textSecondary" balance={true}>
+            {item.description}
+          </Text>
         </GridLayout.Content>
       ))}
     </Grid>

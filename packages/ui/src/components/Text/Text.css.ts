@@ -21,3 +21,7 @@ export const textStrikethrough = style({
 export const textUppercase = style({
   textTransform: 'uppercase',
 })
+
+export const balanceTextStyles = style({
+  textWrap: 'balance',
+})
