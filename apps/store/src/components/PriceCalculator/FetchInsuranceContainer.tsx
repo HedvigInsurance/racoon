@@ -11,7 +11,6 @@ export const FetchInsuranceContainer = () => {
   const priceIntent = usePriceIntent()
 
   if (!Features.enabled('INSURELY')) return null
-  if (priceIntent.product.name === 'SE_CAR' && !Features.enabled('INSURELY_CAR')) return null
   if (!priceIntent.externalInsurer) return null
   if (!priceIntent.insurely) return null
 
