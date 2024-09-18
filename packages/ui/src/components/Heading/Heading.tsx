@@ -3,9 +3,8 @@
 import { clsx } from 'clsx'
 import type { UIColors, Level } from '../../theme'
 import { sprinkles } from '../../theme/sprinkles.css'
-import { balanceTextStyles } from '../Text/Text.css'
 import type { PolymorphicComponentsProps } from '../TypeUtils'
-import { responsiveVariantStyles } from './Heading.css'
+import { balanceTextStyles, responsiveVariantStyles } from './Heading.css'
 
 type StandardHeadingSize = '18' | '20' | '24' | '32' | '40' | '48' | '56' | '72' | '96'
 type SerifHeadingSize = Exclude<StandardHeadingSize, '18'>
