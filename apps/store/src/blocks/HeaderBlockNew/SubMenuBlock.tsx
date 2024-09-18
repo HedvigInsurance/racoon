@@ -7,6 +7,7 @@ import { ButtonNextLink } from '@/components/ButtonNextLink'
 import {
   navigationItem,
   navigationItemSubMenu,
+  navigationItemSupportMenu,
   navigationMenuWrapper,
   navigationSecondaryItem,
   navigationSecondaryList,
@@ -34,7 +35,7 @@ export const SubMenuBlock = ({ blok, variant }: SubMenuBlockProps) => {
 
   return (
     <NavigationMenuPrimitive.Item
-      className={clsx(navigationItem, navigationItemSubMenu)}
+      className={clsx(navigationItem, navigationItemSubMenu, navigationItemSupportMenu)}
       value={blok.name}
       {...storyblokEditable(blok)}
     >
