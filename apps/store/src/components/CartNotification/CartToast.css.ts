@@ -1,8 +1,8 @@
 import { style, keyframes } from '@vanilla-extract/css'
 import { minWidth, tokens } from 'ui'
 import { MAX_WIDTH } from '../GridLayout/GridLayout.constants'
-import { MENU_BAR_HEIGHT_DESKTOP } from '../HeaderNew/Header.css'
-import { MENU_BAR_HEIGHT_MOBILE } from '../HeaderNew/HeaderMenuMobile/HeaderMenuMobile.css'
+import { MENU_BAR_HEIGHT_DESKTOP } from '../Header/Header.css'
+import { MENU_BAR_HEIGHT_MOBILE } from '../Header/HeaderMenuMobile/HeaderMenuMobile.css'
 
 const overlayShow = keyframes({
   '0%': { opacity: 0 },

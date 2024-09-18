@@ -1,7 +1,7 @@
 import { clsx } from 'clsx'
 import Head from 'next/head'
 import type { ReactElement } from 'react'
-import { HeaderBlock } from '@/blocks/HeaderBlockNew/HeaderBlock'
+import { HeaderBlock } from '@/blocks/HeaderBlock/HeaderBlock'
 import type {
   GLOBAL_PRODUCT_METADATA_PROP_NAME,
   GlobalProductMetadata,
