@@ -1,11 +1,10 @@
-import type { ReactNode } from 'react'
+import type { ComponentProps, ReactNode } from 'react'
 import { useId } from 'react'
-import { Space, useHighlightAnimation } from 'ui'
+import { Space, Switch, useHighlightAnimation } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
-import { Switch, type SwitchProps } from '@/components/Switch'
 import { wrapper, checkboxHeader, labelText } from './ToggleCard.css'
 
-type Props = SwitchProps & {
+type Props = ComponentProps<typeof Switch> & {
   label: string
   Icon?: ReactNode
 }

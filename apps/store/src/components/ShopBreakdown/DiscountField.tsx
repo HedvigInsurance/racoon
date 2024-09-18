@@ -1,8 +1,7 @@
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
-import { sprinkles, Text, xStack } from 'ui'
+import { sprinkles, Switch, Text, xStack } from 'ui'
 import Collapsible from '@/components/Collapsible/Collapsible'
-import { Switch } from '@/components/Switch'
 import { AddCampaignForm } from './AddCampaignForm/AddCampaignForm'
 import { AddedCampaignForm } from './AddedCampaignForm'
 
