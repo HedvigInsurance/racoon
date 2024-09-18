@@ -1,4 +1,4 @@
-import { type ComponentProps, createContext, type PropsWithChildren, useContext, useState } from 'react'
+import { type ComponentProps, createContext, type ReactNode, useContext, useState } from 'react'
 import { Button } from 'ui'
 import Collapsible from '@/components/Collapsible/Collapsible'
 
@@ -34,14 +34,16 @@ const Root = ({ children, ...props }: RootProps) => {
   )
 }
 
-type TriggerProps = ComponentProps<typeof Collapsible.Trigger>
+type TriggerProps = Omit<ComponentProps<typeof Collapsible.Trigger>, 'children'> & {
+  children?: ((isOpen: boolean) => ReactNode) | ReactNode
+}
 const Trigger = ({ children, ...props }: TriggerProps) => {
-  const { toggle } = useProductDetails()
+  const { isOpen, toggle } = useProductDetails()
 
   return (
     <Collapsible.Trigger asChild {...props}>
       <Button variant="outline" size="medium" onClick={toggle} fullWidth>
-        {children}
+        {typeof children === 'function' ? children(isOpen) : children}
       </Button>
     </Collapsible.Trigger>
   )
@@ -57,30 +59,8 @@ const Content = ({ children, ...props }: ContentProps) => {
   )
 }
 
-const ExpandedLabel = ({ children }: PropsWithChildren) => {
-  const { isOpen } = useProductDetails()
-
-  if (!isOpen) {
-    return null
-  }
-
-  return children
-}
-
-const CollapsedLabel = ({ children }: PropsWithChildren) => {
-  const { isOpen } = useProductDetails()
-
-  if (isOpen) {
-    return null
-  }
-
-  return children
-}
-
 export const ProductCardDetails = {
   Root,
   Trigger,
   Content,
-  ExpandedLabel,
-  CollapsedLabel,
 }

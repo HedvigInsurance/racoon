@@ -52,8 +52,7 @@ export const Default: Story = {
 
         <ProductCardDetails.Root>
           <ProductCardDetails.Trigger>
-            <ProductCardDetails.CollapsedLabel>Show details</ProductCardDetails.CollapsedLabel>
-            <ProductCardDetails.ExpandedLabel>Hide details</ProductCardDetails.ExpandedLabel>
+            {(isOpen) => (isOpen ? 'Hide details' : 'Show details')}
           </ProductCardDetails.Trigger>
 
           <ProductCardDetails.Content className={sprinkles({ paddingBlock: 'md' })}>
