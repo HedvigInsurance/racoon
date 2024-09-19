@@ -1,8 +1,10 @@
 import type { Meta, StoryFn } from '@storybook/react'
-import { CheckIcon, yStack } from 'ui'
+import { type ComponentProps } from 'react'
+import { CheckIcon, CrossIcon, yStack } from 'ui'
 import { Button } from './Button'
+import { IconButton } from './IconButton'
 
-type Controls = typeof Button
+type Controls = ComponentProps<typeof Button>
 
 const meta: Meta<Controls> = {
   title: 'Button',
@@ -107,5 +109,13 @@ export const WithIcon = {
   args: {
     children: 'Button label',
     Icon: <CheckIcon size="18px" />,
+  },
+}
+
+export const IconButtonDefault = {
+  render: (args: Controls) => <IconButton variant={args.variant}>{args.Icon}</IconButton>,
+  args: {
+    Icon: <CrossIcon size="18px" />,
+    variant: 'primary',
   },
 }

@@ -197,6 +197,10 @@ const SIZE_STYLES = {
     textAlign: 'center',
     borderRadius: tokens.radius.md,
   },
+  icon: {
+    borderRadius: tokens.radius.xxs,
+    padding: tokens.space.xxxs,
+  },
 } as const
 
 export const buttonSizeStyles = {
@@ -204,6 +208,7 @@ export const buttonSizeStyles = {
     small: style(SIZE_STYLES.small),
     medium: style(SIZE_STYLES.medium),
     large: style(SIZE_STYLES.large),
+    icon: style(SIZE_STYLES.icon),
   },
   lg: {
     small: style({
@@ -221,8 +226,15 @@ export const buttonSizeStyles = {
         [minWidth.lg]: SIZE_STYLES.large,
       },
     }),
+    icon: style({
+      '@media': {
+        [minWidth.lg]: SIZE_STYLES.icon,
+      },
+    }),
   },
 }
+
+export const iconButtonStyles = style({ aspectRatio: '1', height: 'auto' })
 
 export const childrenWrapper = style({
   display: 'flex',
