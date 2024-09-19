@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { type ComponentProps } from 'react'
 import { Heading } from 'ui'
 import { CarBuyerValidationPage } from '@/features/carDealership/CarBuyerValidationPage'
-import { hideChatOnPage } from '@/services/CustomerFirst'
+import { hideChatOnPage } from '@/services/pageChat'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
 
 type Props = ComponentProps<typeof CarBuyerValidationPage> & { authenticated: boolean }

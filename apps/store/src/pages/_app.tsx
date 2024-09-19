@@ -16,10 +16,10 @@ import { GlobalLinkStyles } from '@/components/RichText/RichText.styles'
 import { usePublishWidgetInitEvent } from '@/features/widget/usePublishWidgetInitEvent'
 import { useApollo } from '@/services/apollo/client'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
-import { CustomerFirstScript, hasHiddenChat } from '@/services/CustomerFirst'
 import { useInitDatadogAfterInteractive } from '@/services/logger/client'
 import { PageTransitionProgressBar } from '@/services/nprogress/pageTransition'
 import { OneTrustStyles } from '@/services/OneTrust'
+import { hasHiddenChat } from '@/services/pageChat'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { ShopSessionProvider, useShopSessionId } from '@/services/shopSession/ShopSessionContext'
 import { initStoryblok } from '@/services/storyblok/storyblok'
@@ -84,9 +84,9 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   const apolloClient = useApollo(pageProps)
   const getLayout = Component.getLayout ?? ((page) => page)
 
-  let Chat: ReactNode = null
+  let chat: ReactNode = null
   if (!hasHiddenChat(pageProps)) {
-    Chat = Features.enabled('CUSTOM_CHAT') ? <ContactUs /> : <CustomerFirstScript />
+    chat = <ContactUs />
   }
 
   return (
@@ -110,7 +110,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
               </BankIdContextProvider>
             </ShopSessionTrackingProvider>
           </ShopSessionProvider>
-          {Chat}
+          {chat}
         </JotaiProvider>
       </ApolloProvider>
     </>
