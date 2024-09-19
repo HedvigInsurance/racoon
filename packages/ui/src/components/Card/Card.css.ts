@@ -1,13 +1,17 @@
-import { style } from '@vanilla-extract/css'
+import { createVar, style } from '@vanilla-extract/css'
 import { recipe } from '@vanilla-extract/recipes'
 import { xStack, yStack } from '../../patterns'
-import { sprinkles, tokens } from '../../theme'
+import { tokens } from '../../theme'
+
+const cardPadding = createVar()
 
 export const cardRoot = recipe({
   base: [
     yStack({ gap: 'md' }),
     {
+      position: 'relative',
       borderRadius: tokens.radius.xl,
+      padding: cardPadding,
     },
   ],
   variants: {
@@ -18,9 +22,17 @@ export const cardRoot = recipe({
         borderColor: tokens.colors.borderPrimary,
         boxShadow: tokens.shadow.card,
       },
+      secondary: {
+        background: tokens.colors.surfaceOpaqueSecondary,
+      },
     },
+
     size: {
-      md: sprinkles({ padding: 'lg' }),
+      md: {
+        vars: {
+          [cardPadding]: tokens.space.lg,
+        },
+      },
     },
   },
 
@@ -38,7 +50,9 @@ export const cardHeader = style([
 ])
 
 export const cardAside = style({
-  position: 'absolute',
-  top: 0,
-  insetInlineEnd: 0,
+  // @ts-expect-error: Hack to make sure aside content is always absolute. Should probably rething how we achieve this
+  // The main reason right now is giving tooltip trigger an explicit relative position, which is overriding this rule
+  position: 'absolute !important',
+  top: cardPadding,
+  insetInlineEnd: cardPadding,
 })
