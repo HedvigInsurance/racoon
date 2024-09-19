@@ -12,7 +12,6 @@ const config = {
   // Keeping it around as a way to quickly disable Insurely if anything goes wrong
   INSURELY: process.env.NEXT_PUBLIC_FEATURE_INSURELY === 'true',
 
-  MYMONEY: process.env.NEXT_PUBLIC_FEATURE_MYMONEY === 'true',
   PRICE_CALCULATOR_PAGE: process.env.NEXT_PUBLIC_FEATURE_PRICE_CALCULATOR_PAGE === 'true',
   PRODUCT_PAGE_V2: process.env.NEXT_PUBLIC_FEATURE_PRODUCT_PAGE_V2 === 'true',
 } as const

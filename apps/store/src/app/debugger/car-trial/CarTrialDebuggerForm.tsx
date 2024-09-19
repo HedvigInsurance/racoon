@@ -16,10 +16,7 @@ const TIER_OPTIONS = [
   { name: 'Full insurance', value: '2' },
 ]
 
-const PRODUCT_OPTIONS = [
-  { name: 'Hedvig', value: 'HEDVIG' },
-  { name: 'My Money', value: 'MYMONEY' },
-]
+const PRODUCT_OPTIONS = [{ name: 'Hedvig', value: 'HEDVIG' }]
 
 export const CarTrialDebuggerForm = () => {
   const [state, formAction] = useFormState(createCarTrial, {

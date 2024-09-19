@@ -2,7 +2,6 @@
 
 import { type QueryHookOptions } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
-import { datadogRum } from '@datadog/browser-rum'
 import { storyblokEditable } from '@storyblok/react'
 import { addDays } from 'date-fns'
 import { useSetAtom } from 'jotai'
@@ -13,9 +12,8 @@ import { Space } from 'ui'
 import { globalBannerAtom } from '@/components/GlobalBanner/globalBannerState'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { CarDealershipBanners } from '@/features/carDealership/carDearlership.constants'
-import { useCarTrialExtensionQuery, useUpdateConsentMutation } from '@/services/graphql/generated'
+import { useCarTrialExtensionQuery } from '@/services/graphql/generated'
 import { type SbBaseBlockProps } from '@/services/storyblok/storyblok'
-import { Features } from '@/utils/Features'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
@@ -42,15 +40,6 @@ export const CarTrialExtensionBlock = (props: Props) => {
     },
   })
 
-  const [updateMyMoneyConsent] = useUpdateConsentMutation({
-    onCompleted() {
-      datadogLogs.logger.info('Car Trial | MyMoney consent updated')
-    },
-    onError() {
-      datadogLogs.logger.error('Car Trial | Failed to update MyMoney consent')
-    },
-  })
-
   const trialContact: TrialContract | null = useMemo(() => {
     if (data?.carTrial) {
       return {
@@ -61,21 +50,6 @@ export const CarTrialExtensionBlock = (props: Props) => {
 
     return null
   }, [data])
-
-  const handleMyMoneyConsent = useCallback(
-    (consentGiven: boolean) => {
-      if (data?.carTrial) {
-        updateMyMoneyConsent({
-          variables: {
-            trialId: data.carTrial.id,
-            consentGiven: consentGiven,
-          },
-        })
-        datadogRum.addAction('MyMoney Consent | consent given', { value: consentGiven })
-      }
-    },
-    [updateMyMoneyConsent, data?.carTrial],
-  )
 
   return (
     <GridLayout.Root>
@@ -91,10 +65,6 @@ export const CarTrialExtensionBlock = (props: Props) => {
                 priceIntent={data.carTrial.priceIntent}
                 shopSession={data.carTrial.shopSession}
                 requirePaymentConnection={props.blok.requirePaymentConnection ?? false}
-                {...(Features.enabled('MYMONEY') && {
-                  collectConsent: data.carTrial.collectConsent,
-                  onConsentChange: handleMyMoneyConsent,
-                })}
               />
             ) : (
               <PayForTrial
@@ -102,10 +72,6 @@ export const CarTrialExtensionBlock = (props: Props) => {
                 shopSessionId={data.carTrial.shopSession.id}
                 defaultOffer={data.carTrial.priceIntent.defaultOffer ?? undefined}
                 ssn={data.carTrial.shopSession.customer?.ssn ?? undefined}
-                {...(Features.enabled('MYMONEY') && {
-                  collectConsent: data.carTrial.collectConsent,
-                  onConsentChange: handleMyMoneyConsent,
-                })}
               />
             )}
           </Space>
