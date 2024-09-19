@@ -18,7 +18,7 @@ const bigVariant = {
 }
 export const badge = recipe({
   base: {
-    display: 'inline-block',
+    display: 'inline-flex',
     color: badgeFontColor,
     backgroundColor: badgeBgColor,
     borderRadius: tokens.radius.xxs,
