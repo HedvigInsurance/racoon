@@ -10,13 +10,13 @@ import { ProductDataProvider } from '@/components/ProductData/ProductDataProvide
 import { CalculatePricePage } from '@/features/widget/CalculatePricePage'
 import { fetchFlowStory, getWidgetPriceTemplate } from '@/features/widget/widget.helpers'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
-import { hideChatOnPage } from '@/services/CustomerFirst'
 import {
   useShopSessionQuery,
   useWidgetPriceIntentQuery,
   WidgetPriceIntentDocument,
   type WidgetPriceIntentQuery,
 } from '@/services/graphql/generated'
+import { hideChatOnPage } from '@/services/pageChat'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { ShopSessionProvider, useShopSessionId } from '@/services/shopSession/ShopSessionContext'

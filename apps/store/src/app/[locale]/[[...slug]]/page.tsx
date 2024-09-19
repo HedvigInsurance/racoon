@@ -6,7 +6,6 @@ import { cache } from 'react'
 import { ContactUs } from '@/components/ContactUs/ContactUs'
 import { DefaultDebugDialog } from '@/components/DebugDialog/DefaultDebugDialog'
 import { PriceCalculatorCmsPage } from '@/features/priceCalculator/PriceCalculatorCmsPage'
-import { CustomerFirstScript } from '@/services/CustomerFirst'
 import type { PageStory } from '@/services/storyblok/storyblok'
 import { MOST_VISITED_PATHS } from '@/services/storyblok/Storyblok.constant'
 import {
@@ -17,7 +16,6 @@ import {
   type PageLink,
 } from '@/services/storyblok/Storyblok.helpers'
 import { getCmsPageLinks, getStoryBySlug } from '@/services/storyblok/storyblok.rsc'
-import { Features } from '@/utils/Features'
 import { locales } from '@/utils/l10n/locales'
 import {
   getHrefLang,
@@ -50,7 +48,7 @@ export default async function CmsPage({ params }: Props) {
   const { hideBreadcrumbs, hideChat } = story.content
   let chat: ReactNode = null
   if (!hideChat) {
-    chat = Features.enabled('CUSTOM_CHAT') ? <ContactUs /> : <CustomerFirstScript />
+    chat = <ContactUs />
   }
   if (isProductStory(story)) {
     return (
