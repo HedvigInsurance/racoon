@@ -129,5 +129,12 @@ module.exports = {
         '@typescript-eslint/no-var-requires': 'off',
       },
     },
+    // Allow usage of hooks inside stories `render` function
+    {
+      files: ['**/*.stories.tsx'],
+      rules: {
+        'react-hooks/rules-of-hooks': 'off',
+      },
+    },
   ],
 }
