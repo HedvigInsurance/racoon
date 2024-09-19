@@ -4,6 +4,7 @@ import { tokens } from '../../theme'
 export const switchStyles = style({
   boxSizing: 'border-box',
   width: '1.75rem',
+  height: '1.125rem',
   borderRadius: 9999,
   display: 'flex',
   alignItems: 'center',
