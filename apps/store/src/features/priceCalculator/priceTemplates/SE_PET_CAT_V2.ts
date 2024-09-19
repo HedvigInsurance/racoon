@@ -2,7 +2,7 @@ import {
   LAYOUT,
   petBirthDate,
   petNameField,
-  ssnSeSection,
+  ssnSeSectionV2,
   yourAddressSectionWithLivingSpaceV2,
 } from '@/services/PriceCalculator/formFragments'
 import type { TemplateV2 } from '@/services/PriceCalculator/PriceCalculator.types'
@@ -14,7 +14,7 @@ const template: TemplateV2 = {
   name: 'SE_PET_CAT_V2',
   productName: 'SE_PET_CAT',
   sections: [
-    ssnSeSection,
+    ssnSeSectionV2,
     {
       id: 'your-cat',
       title: { key: tKey('SECTION_TITLE_YOUR_CAT') },

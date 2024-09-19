@@ -123,6 +123,23 @@ export const ssnSeSection: TemplateSection = {
   },
 }
 
+export const ssnSeSectionV2: TemplateSection = {
+  id: 'ssn-se',
+  title: { key: tKey('SSN_SECTION_TITLE') },
+  subtitle: { key: tKey('SSN_SECTION_SUBTITLE') },
+  // TODO: Ignored, remove or remodel
+  submitLabel: { key: tKey('SUBMIT_LABEL_PROCEED') },
+  items: [
+    {
+      field: ssnSeField,
+      layout: LAYOUT.FULL_WIDTH,
+    },
+  ],
+  preview: {
+    fieldName: ssnSeField.name,
+  },
+}
+
 export const yourApartmentSection: TemplateSection = {
   id: 'your-home',
   title: { key: tKey('SECTION_TITLE_YOUR_HOME') },

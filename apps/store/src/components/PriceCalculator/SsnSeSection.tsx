@@ -1,8 +1,9 @@
 import { datadogLogs } from '@datadog/browser-logs'
+import clsx from 'clsx'
 import { useAtomValue, useSetAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { type FormEventHandler, memo } from 'react'
-import { Button, Space } from 'ui'
+import { Button, yStack } from 'ui'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import {
   activeFormSectionIdAtom,
@@ -15,7 +16,7 @@ import { useErrorMessage } from '@/utils/useErrorMessage'
 
 const SsnFieldName = 'ssn'
 
-export const SsnSeSection = memo(() => {
+export const SsnSeSection = memo(({ className }: { className?: string }) => {
   const shopSessionId = useShopSessionId()!
   const shopSessionCustomer = useAtomValue(shopSessionCustomerAtom)
   const setActiveSectionId = useSetAtom(activeFormSectionIdAtom)
@@ -46,21 +47,22 @@ export const SsnSeSection = memo(() => {
   const errorMessage = useErrorMessage(result.error)
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Space y={errorMessage ? 1 : 0.25}>
-        <PersonalNumberField
-          label={t('FIELD_SSN_SE_LABEL')}
-          name={SsnFieldName}
-          defaultValue={shopSessionCustomer?.ssn ?? ''}
-          required={true}
-          warning={!!errorMessage}
-          message={errorMessage}
-          onValidValueEntered={handleValidValueEntered}
-        />
-        <Button type="submit" loading={result.loading} fullWidth={true}>
-          {t('SUBMIT_LABEL_PROCEED')}
-        </Button>
-      </Space>
+    <form
+      className={clsx(yStack({ gap: errorMessage ? 'md' : 'xxs' }), className)}
+      onSubmit={handleSubmit}
+    >
+      <PersonalNumberField
+        label={t('FIELD_SSN_SE_LABEL')}
+        name={SsnFieldName}
+        defaultValue={shopSessionCustomer?.ssn ?? ''}
+        required={true}
+        warning={!!errorMessage}
+        message={errorMessage}
+        onValidValueEntered={handleValidValueEntered}
+      />
+      <Button type="submit" loading={result.loading} fullWidth={true}>
+        {t('SUBMIT_LABEL_PROCEED')}
+      </Button>
     </form>
   )
 })

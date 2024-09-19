@@ -2,7 +2,7 @@ import {
   carRegistrationNumberField,
   LAYOUT,
   mileageField,
-  ssnSeSection,
+  ssnSeSectionV2,
   yourAddressSectionV2,
 } from '@/services/PriceCalculator/formFragments'
 import { type TemplateV2 } from '@/services/PriceCalculator/PriceCalculator.types'
@@ -14,7 +14,7 @@ const SE_CAR_V2: TemplateV2 = {
   name: 'SE_CAR_V2',
   productName: 'SE_CAR',
   sections: [
-    ssnSeSection,
+    ssnSeSectionV2,
     {
       id: 'your-car',
       title: { key: tKey('SECTION_TITLE_YOUR_CAR') },
