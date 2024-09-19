@@ -10,7 +10,6 @@ const config = {
   COOKIE_BANNER: process.env.NEXT_PUBLIC_FEATURE_COOKIE_BANNER === 'true',
   INSURELY: process.env.NEXT_PUBLIC_FEATURE_INSURELY === 'true',
   SAS_PARTNERSHIP: process.env.NEXT_PUBLIC_FEATURE_SAS_PARTNERSHIP === 'true',
-  INSURELY_CAR: process.env.NEXT_PUBLIC_FEATURE_INSURELY_CAR === 'true',
   CUSTOM_CHAT: process.env.NEXT_PUBLIC_FEATURE_CUSTOM_CHAT === 'true',
   MYMONEY: process.env.NEXT_PUBLIC_FEATURE_MYMONEY === 'true',
   CROSS_SELL_CARD_V2: process.env.NEXT_PUBLIC_CROSS_SELL_CARD_V2 === 'true',
