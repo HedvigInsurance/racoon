@@ -1,6 +1,6 @@
 'use client'
 import styled from '@emotion/styled'
-import { storyblokEditable, renderRichText } from '@storyblok/react'
+import { storyblokEditable } from '@storyblok/react'
 import { useState, useCallback } from 'react'
 import { Heading, Text, theme, mq } from 'ui'
 import type { AccordionItemBlockProps } from '@/blocks/AccordionItemBlock'
@@ -11,6 +11,7 @@ import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { TEXT_CONTENT_MAX_WIDTH } from '@/components/GridLayout/GridLayout.constants'
 import type { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
+import { renderRichTextToString } from './RichTextBlock/richTextReactRenderer'
 
 type Props = SbBaseBlockProps<{
   items: ExpectedBlockType<AccordionItemBlockProps>
@@ -139,7 +140,7 @@ const getFAQStructuredData = (
       name: item.title,
       acceptedAnswer: {
         '@type': 'Answer',
-        text: renderRichText(item.body),
+        text: renderRichTextToString(item.body),
       },
     })),
   }

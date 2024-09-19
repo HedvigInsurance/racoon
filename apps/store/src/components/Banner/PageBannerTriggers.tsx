@@ -1,10 +1,10 @@
 'use client'
-import type { ISbRichtext } from '@storyblok/react'
-import { renderRichText } from '@storyblok/react'
+import { type StoryblokRichTextNode } from '@storyblok/richtext'
 import { useAtom, useSetAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { useEffect } from 'react'
 import type { ReusableBlockReferenceProps } from '@/blocks/ReusableBlockReference'
+import { renderRichTextToString } from '@/blocks/RichTextBlock/richTextReactRenderer'
 import type { BannerVariant } from '@/components/Banner/Banner.types'
 import { globalBannerAtom } from '@/components/GlobalBanner/globalBannerState'
 import { hasBundleDiscount } from '@/features/bundleDiscount/bundleDiscount'
@@ -46,7 +46,7 @@ export const useCampaignBanner = () => {
 
 type AnnouncementBlok = {
   id: string
-  content: ISbRichtext
+  content: StoryblokRichTextNode
   variant?: BannerVariant
 }
 
@@ -56,7 +56,7 @@ const usePageAnnouncement = (blok?: AnnouncementBlok) => {
     if (blok != null) {
       setGlobalBanner({
         id: blok.id,
-        content: renderRichText(blok.content),
+        content: renderRichTextToString(blok.content),
         variant: blok.variant ?? 'info',
       })
     }

@@ -127,6 +127,7 @@ const config = {
     ]
 
     let storyblokRedirects = []
+    // It's OK to skip it locally to make startup a bit faster
     if (process.env.NEXT_PUBLIC_FEATURE_STORYBLOK_REDIRECTS === 'true') {
       storyblokRedirects = await getStoryblokRedirects()
       console.log(`Loaded ${storyblokRedirects.length} redirects from storyblok`)
