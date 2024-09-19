@@ -2,11 +2,9 @@ import { useTranslation } from 'next-i18next'
 import { CertifiedIcon } from 'ui'
 import type { ProductData } from '@/components/ProductData/ProductData.types'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
-import { ReviewsDialog } from '@/components/ProductReviews/ReviewsDialog'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
 import { useProuctReviewsMetadata } from '@/features/memberReviews/ProductReviewsMetadataProvider'
 import { sendDialogEvent } from '@/utils/dialogEvent'
-import { Features } from '@/utils/Features'
 import { useFormatter } from '@/utils/useFormatter'
 import { AverageRating } from './AverageRating'
 import { wrapper, trigger, certifiedIcon, disclaimerText } from './ProductAverageRating.css'
@@ -70,25 +68,13 @@ export const ProductAverageRating = () => {
 
       <div className={wrapper}>
         <CertifiedIcon className={certifiedIcon} size="1.15rem" />
-
-        {Features.enabled('HIDE_REVIEWS_FROM_PRODUCT_AVERAGE_RATING') ? (
-          <ReviewsDistributionDialog
-            Header={Header}
-            reviewsDistribution={reviewsDistribution}
-            onClose={closeDialog}
-          >
-            {Trigger}
-          </ReviewsDistributionDialog>
-        ) : (
-          <ReviewsDialog
-            productIds={[productData.name]}
-            Header={Header}
-            reviewsDistribution={reviewsDistribution}
-            onClose={closeDialog}
-          >
-            {Trigger}
-          </ReviewsDialog>
-        )}
+        <ReviewsDistributionDialog
+          Header={Header}
+          reviewsDistribution={reviewsDistribution}
+          onClose={closeDialog}
+        >
+          {Trigger}
+        </ReviewsDistributionDialog>
       </div>
     </>
   )

@@ -7,11 +7,12 @@ export const Features = {
 }
 
 const config = {
+  // We're using it to disable cookie banner outside of production and staging
   COOKIE_BANNER: process.env.NEXT_PUBLIC_FEATURE_COOKIE_BANNER === 'true',
+  // Keeping it around as a way to quickly disable Insurely if anything goes wrong
   INSURELY: process.env.NEXT_PUBLIC_FEATURE_INSURELY === 'true',
+
   MYMONEY: process.env.NEXT_PUBLIC_FEATURE_MYMONEY === 'true',
-  HIDE_REVIEWS_FROM_PRODUCT_AVERAGE_RATING:
-    process.env.NEXT_PUBLIC_HIDE_REVIEWS_FROM_PRODUCT_AVERAGE_RATING === 'true',
   PRICE_CALCULATOR_PAGE: process.env.NEXT_PUBLIC_FEATURE_PRICE_CALCULATOR_PAGE === 'true',
   PRODUCT_PAGE_V2: process.env.NEXT_PUBLIC_FEATURE_PRODUCT_PAGE_V2 === 'true',
 } as const
