@@ -1,9 +1,8 @@
 import type { ReactNode } from 'react'
 import { useId } from 'react'
-import { Space } from 'ui'
+import { Space, useHighlightAnimation } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 import { Switch, type SwitchProps } from '@/components/Switch'
-import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 import { wrapper, checkboxHeader, labelText } from './ToggleCard.css'
 
 type Props = SwitchProps & {

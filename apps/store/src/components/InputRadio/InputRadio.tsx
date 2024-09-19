@@ -9,9 +9,8 @@ import {
   type ComponentProps,
   type ComponentPropsWithoutRef,
 } from 'react'
-import { Text } from 'ui'
+import { Text, useHighlightAnimation } from 'ui'
 import { RadioIndicatorIcon } from '@/features/priceCalculator/RadioIndicatorIcon'
-import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 import { horizontalRadioGroup, card, item, paddedItem, radioButton } from './InputRadio.css'
 
 type Option = { label: string; value: string; autoFocus?: boolean }

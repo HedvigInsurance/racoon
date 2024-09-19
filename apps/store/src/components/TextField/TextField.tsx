@@ -4,8 +4,15 @@ import clsx from 'clsx'
 import type { ChangeEventHandler, InputHTMLAttributes, MouseEventHandler, ReactNode } from 'react'
 import { useId, useRef, useState } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
-import { LockIcon, Text, WarningTriangleIcon, theme, yStack, CrossIcon } from 'ui'
-import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
+import {
+  LockIcon,
+  Text,
+  WarningTriangleIcon,
+  theme,
+  yStack,
+  CrossIcon,
+  useHighlightAnimation,
+} from 'ui'
 import {
   deleteButton,
   input,

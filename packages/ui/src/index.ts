@@ -22,6 +22,7 @@ export * from './components/Tabs/Tabs'
 export { responsiveVariants } from './utils/responsiveVariants/responsiveVariants'
 export * from './utils/responsiveVariants/repsonsiveVariants.types'
 export { visuallyHidden } from './utils/visuallyHidden.css'
+export { useHighlightAnimation } from './utils/useHighlightAnimation'
 
 export * from './icons'
 

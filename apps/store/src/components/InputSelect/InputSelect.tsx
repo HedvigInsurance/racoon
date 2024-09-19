@@ -3,8 +3,14 @@
 import { assignInlineVars } from '@vanilla-extract/dynamic'
 import { clsx } from 'clsx'
 import { type ChangeEventHandler, useId } from 'react'
-import { ChevronIcon, InputBase, type InputBaseProps, type UIColorKeys, getColor } from 'ui'
-import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
+import {
+  ChevronIcon,
+  InputBase,
+  type InputBaseProps,
+  type UIColorKeys,
+  getColor,
+  useHighlightAnimation,
+} from 'ui'
 import {
   chevronIcon,
   inputLabel,
