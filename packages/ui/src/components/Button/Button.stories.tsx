@@ -32,6 +32,9 @@ const Template: StoryFn<Controls> = (props: Controls) => {
         <div>
           <Button {...props} variant="ghost" />
         </div>
+        <div>
+          <Button {...props} variant="outline" />
+        </div>
       </div>
 
       <div className={yStack({ gap: 'md' })}>
@@ -50,6 +53,9 @@ const Template: StoryFn<Controls> = (props: Controls) => {
         <div>
           <Button {...props} variant="ghost" disabled />
         </div>
+        <div>
+          <Button {...props} variant="outline" disabled />
+        </div>
       </div>
 
       <div className={yStack({ gap: 'md' })}>
@@ -67,6 +73,9 @@ const Template: StoryFn<Controls> = (props: Controls) => {
         </div>
         <div>
           <Button {...props} variant="ghost" loading />
+        </div>
+        <div>
+          <Button {...props} variant="outline" loading />
         </div>
       </div>
     </div>

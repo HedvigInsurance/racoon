@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { type ComponentProps } from 'react'
-import { type FontSizeProps, sprinkles } from 'ui'
+import { type FontSizeProps, type Sprinkles, yStack } from 'ui'
 import {
   detailsListItem,
   detailsListLabel,
@@ -10,10 +10,17 @@ import {
 
 type RootProps = ComponentProps<'ul'> & {
   size?: FontSizeProps
+  gap?: Sprinkles['gap']
 }
-const DetailsListRoot = ({ size = 'xs', className, children, ...props }: RootProps) => {
+const DetailsListRoot = ({
+  size = 'xs',
+  gap = 'xxs',
+  className,
+  children,
+  ...props
+}: RootProps) => {
   return (
-    <ul className={clsx(detailsListRoot, sprinkles({ fontSize: size }), className)} {...props}>
+    <ul className={clsx(detailsListRoot, yStack({ gap, fontSize: size }), className)} {...props}>
       {children}
     </ul>
   )

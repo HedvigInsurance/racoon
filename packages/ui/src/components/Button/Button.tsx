@@ -16,7 +16,14 @@ import { getButtonSizeStyles } from './Button.helpers'
 import { DotPulse } from './DotPulse'
 
 type BaseProps = {
-  variant?: 'primary' | 'primary-alt' | 'secondary' | 'secondary-alt' | 'ghost' | 'ghost-alt'
+  variant?:
+    | 'primary'
+    | 'primary-alt'
+    | 'secondary'
+    | 'secondary-alt'
+    | 'ghost'
+    | 'ghost-alt'
+    | 'outline'
   size?: ButtonSize
   fullWidth?: boolean
   hiddenText?: ReactNode
