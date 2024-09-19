@@ -2,7 +2,8 @@ import { Slot } from '@radix-ui/react-slot'
 import { type RecipeVariants } from '@vanilla-extract/recipes'
 import clsx from 'clsx'
 import { type ComponentProps, type PropsWithChildren } from 'react'
-import { Heading, Text } from 'ui'
+import { Heading } from '../Heading/Heading'
+import { Text } from '../Text/Text'
 import { cardAside, cardHeader, cardRoot } from './Card.css'
 
 type RootStyleProps = RecipeVariants<typeof cardRoot>
