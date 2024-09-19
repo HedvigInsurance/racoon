@@ -8,7 +8,6 @@ import { ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
 import { ProductItemContractContainerCar } from '@/features/carDealership/ProductItemContractContainer'
 import { SasEurobonusSectionContainer } from '@/features/sas/SasEurobonusSection'
-import { Features } from '@/utils/Features'
 import type { ConfirmationPageProps } from './ConfirmationPage.types'
 import { StaticContent } from './StaticContent'
 import { SuccessAnimation } from './SuccessAnimation/SuccessAnimation'
@@ -44,7 +43,7 @@ export const ConfirmationPage = (props: ConfirmationPageProps) => {
 
                 {props.switching && <SwitchingAssistantSection {...props.switching} />}
 
-                {Features.enabled('SAS_PARTNERSHIP') && props.memberPartnerData?.sas?.eligible && (
+                {props.memberPartnerData?.sas?.eligible && (
                   <SasEurobonusSectionContainer
                     initialValue={props.memberPartnerData.sas.eurobonusNumber ?? ''}
                   />
