@@ -1,6 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { type ComponentProps } from 'react'
-import { Badge, BasePillow, Button, Card, CrossIcon, IconButton, sprinkles, Text, tokens } from 'ui'
+import {
+  Alert,
+  Badge,
+  BasePillow,
+  Button,
+  Card,
+  CrossIcon,
+  IconButton,
+  InfoIcon,
+  sprinkles,
+  Text,
+  tokens,
+} from 'ui'
 import { CurrencyCode } from '@/services/graphql/graphql'
 import { InputStartDay } from '../InputDay/InputStartDay'
 import { Price } from '../Price'
@@ -80,6 +92,105 @@ export const Default: Story = {
         </ProductCardDetails.Root>
 
         <InputStartDay />
+
+        <DetailsList.Root>
+          <DetailsList.Item>
+            <DetailsList.Label>
+              Homeowner Insurance{' '}
+              <Badge color="pinkFill1" size="tiny">
+                Max
+              </Badge>
+            </DetailsList.Label>
+            <DetailsList.Value>379 kr/mo</DetailsList.Value>
+          </DetailsList.Item>
+
+          <DetailsList.Item>
+            <DetailsList.Label>Extended travel 60 days</DetailsList.Label>
+            <DetailsList.Value>79 kr/mo</DetailsList.Value>
+          </DetailsList.Item>
+        </DetailsList.Root>
+
+        <Divider />
+
+        <DetailsList.Root size="md">
+          <DetailsList.Item className={sprinkles({ color: 'textPrimary' })}>
+            <DetailsList.Label>Total</DetailsList.Label>
+            <DetailsList.Value>
+              <Price
+                className={sprinkles({ justifyContent: 'flex-end' })}
+                currencyCode={CurrencyCode.Sek}
+                amount={458}
+              />
+            </DetailsList.Value>
+          </DetailsList.Item>
+        </DetailsList.Root>
+      </Card.Root>
+    </div>
+  ),
+  args: {
+    variant: 'primary',
+  },
+}
+
+export const Info: Story = {
+  render: (args: Controls) => (
+    <div style={{ maxWidth: '400px' }}>
+      <Card.Root variant={args.variant}>
+        <Card.Aside>
+          <IconButton variant="secondary">
+            <CrossIcon />
+          </IconButton>
+        </Card.Aside>
+        <Card.Header>
+          <Card.Media>
+            <BasePillow fill={tokens.colors.amber300} />
+          </Card.Media>
+          <Card.Heading>
+            <Card.Title>Homeowner Insurance</Card.Title>
+            <Card.Subtitle>Bellmansgatan 19A</Card.Subtitle>
+          </Card.Heading>
+        </Card.Header>
+
+        <ProductCardDetails.Root>
+          <ProductCardDetails.Trigger>
+            {(isOpen) => (isOpen ? 'Hide details' : 'Show details')}
+          </ProductCardDetails.Trigger>
+
+          <ProductCardDetails.Content className={sprinkles({ paddingBlock: 'md' })}>
+            <Text className={sprinkles({ mb: 'xxs' })}>Details</Text>
+            <DetailsList.Root size="md" className={sprinkles({ mb: 'md' })}>
+              <DetailsList.Item>
+                <DetailsList.Label>Home type</DetailsList.Label>
+                <DetailsList.Value>Homeowner</DetailsList.Value>
+              </DetailsList.Item>
+
+              <DetailsList.Item>
+                <DetailsList.Label>Address</DetailsList.Label>
+                <DetailsList.Value>Bellmansgatan 19A</DetailsList.Value>
+              </DetailsList.Item>
+
+              <DetailsList.Item>
+                <DetailsList.Label>Zip code</DetailsList.Label>
+                <DetailsList.Value>118 47</DetailsList.Value>
+              </DetailsList.Item>
+            </DetailsList.Root>
+            <Button variant="secondary" size="medium" fullWidth>
+              Edit information
+            </Button>
+          </ProductCardDetails.Content>
+        </ProductCardDetails.Root>
+
+        <InputStartDay />
+
+        <Alert.Root variant="info">
+          <Alert.Icon icon={InfoIcon} />
+          <Alert.Body>
+            <Alert.Message>
+              Unfortunately we are unable to cancel your old insurance with Folksam. Please provide
+              your end date above.
+            </Alert.Message>
+          </Alert.Body>
+        </Alert.Root>
 
         <DetailsList.Root>
           <DetailsList.Item>
