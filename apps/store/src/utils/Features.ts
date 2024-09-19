@@ -9,7 +9,6 @@ export const Features = {
 const config = {
   COOKIE_BANNER: process.env.NEXT_PUBLIC_FEATURE_COOKIE_BANNER === 'true',
   INSURELY: process.env.NEXT_PUBLIC_FEATURE_INSURELY === 'true',
-  SAS_PARTNERSHIP: process.env.NEXT_PUBLIC_FEATURE_SAS_PARTNERSHIP === 'true',
   MYMONEY: process.env.NEXT_PUBLIC_FEATURE_MYMONEY === 'true',
   HIDE_REVIEWS_FROM_PRODUCT_AVERAGE_RATING:
     process.env.NEXT_PUBLIC_HIDE_REVIEWS_FROM_PRODUCT_AVERAGE_RATING === 'true',
