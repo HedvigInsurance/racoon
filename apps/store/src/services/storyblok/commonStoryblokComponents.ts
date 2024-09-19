@@ -9,7 +9,6 @@ import { CheckListBlock } from '@/blocks/CheckListBlock'
 import { ComparisonTableBlock } from '@/blocks/ComparisonTableBlock'
 import { ConfirmationPageBlock } from '@/blocks/ConfirmationPageBlock'
 import { ConnectPaymentBlock } from '@/blocks/ConnectPaymentBlock'
-import { ContactSupportBlock } from '@/blocks/ContactSupportBlock'
 import { ContentBlock } from '@/blocks/ContentBlock'
 import { CookieListBlock } from '@/blocks/CookieListBlock'
 import { DownloadableContentItemBlock } from '@/blocks/DownloadableContentItemBlock'
@@ -69,7 +68,6 @@ export const commonStoryblokComponents = {
   comparisonTable: ComparisonTableBlock,
   confirmation: ConfirmationPageBlock,
   connectPayment: ConnectPaymentBlock,
-  contactSupport: ContactSupportBlock,
   content: ContentBlock,
   cookieList: CookieListBlock,
   downloadableContentItem: DownloadableContentItemBlock,
