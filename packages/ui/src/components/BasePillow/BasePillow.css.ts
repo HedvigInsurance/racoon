@@ -1,9 +1,9 @@
 import { createVar } from '@vanilla-extract/css'
-import { responsiveVariants } from 'ui'
+import { responsiveVariants } from '../../utils/responsiveVariants/responsiveVariants'
 
 export const pillowSize = createVar('pillowSize')
 
-export const pillowVariants = responsiveVariants({
+export const pillowSizeStyles = responsiveVariants({
   base: {
     width: pillowSize,
     height: pillowSize,
