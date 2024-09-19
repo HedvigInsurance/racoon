@@ -1,22 +1,29 @@
 import { useTranslation } from 'next-i18next'
 import { type ComponentProps } from 'react'
-import { Text } from 'ui'
-import { ToggleCard } from '@/components/ToggleCard/ToggleCard'
+import { ToggleCard } from 'ui'
 
-type Props = Omit<ComponentProps<typeof ToggleCard>, 'label'> & {
+type Props = ComponentProps<typeof ToggleCard.Root> & {
   companyName: string
+  checked: boolean
+  onCheckedChange?: (checked: boolean) => void
 }
 
-export const AutoSwitchToggleCard = ({ checked, companyName, ...props }: Props) => {
+export const AutoSwitchToggleCard = ({
+  companyName,
+  checked,
+  onCheckedChange,
+  ...props
+}: Props) => {
   const { t } = useTranslation('purchase-form')
 
   return (
-    <ToggleCard {...props} label={t('AUTO_SWITCH_FIELD_LABEL')} defaultChecked={checked}>
-      {checked && (
-        <Text as="p" size="xs" color="textSecondary">
-          {t('AUTO_SWITCH_FIELD_MESSAGE', { COMPANY: companyName })}
-        </Text>
-      )}
-    </ToggleCard>
+    <ToggleCard.Root {...props}>
+      <ToggleCard.Label>{t('AUTO_SWITCH_FIELD_LABEL')}</ToggleCard.Label>
+      <ToggleCard.Switch checked={checked} onCheckedChange={onCheckedChange} />
+
+      <ToggleCard.Description>
+        {t('AUTO_SWITCH_FIELD_MESSAGE', { COMPANY: companyName })}
+      </ToggleCard.Description>
+    </ToggleCard.Root>
   )
 }
