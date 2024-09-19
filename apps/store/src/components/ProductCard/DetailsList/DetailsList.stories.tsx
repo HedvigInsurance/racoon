@@ -8,7 +8,7 @@ import { DetailsList } from './DetailsList'
 type Controls = ComponentProps<typeof DetailsList.Root>
 
 const meta: Meta<Controls> = {
-  title: 'Components / Product Card / DetailsList',
+  title: 'Components / ProductCard / DetailsList',
   component: DetailsList.Root,
   parameters: {
     design: {
