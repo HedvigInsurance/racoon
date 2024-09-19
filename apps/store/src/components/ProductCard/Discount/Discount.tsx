@@ -16,7 +16,7 @@ import Collapsible from '@/components/Collapsible/Collapsible'
 import { TextField } from '@/components/TextField/TextField'
 import { formInput, formSubmitButton } from './Discount.css'
 
-const FORM_CAMPAIGN_CODE = 'campaignCode'
+export const FORM_CAMPAIGN_CODE = 'campaignCode'
 
 type RootProps = Omit<ComponentProps<typeof Collapsible.Root>, 'open'>
 const DiscountRoot = ({ children, defaultOpen, ...props }: RootProps) => {
@@ -97,7 +97,7 @@ const DiscountCode = ({ children, className, code, ...props }: CodeProps) => {
         <Text as="span" size="xs">
           {code}
         </Text>
-        <input hidden value={code} readOnly />
+        <input hidden name={FORM_CAMPAIGN_CODE} value={code} readOnly />
         <IconButton variant="ghost" style={{ padding: 0 }} data-no-hover>
           <CrossIconSmall color={tokens.colors.textTertiary} />
         </IconButton>
