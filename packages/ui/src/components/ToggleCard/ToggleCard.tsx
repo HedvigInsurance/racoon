@@ -7,7 +7,6 @@ import { Text } from '../Text/Text'
 import { toggleCardSwitchStyles } from './ToggleCard.css'
 
 type RootProps = ComponentProps<typeof Card.Root>
-
 const ToggleRoot = ({ children, ...props }: RootProps) => {
   return (
     <Card.Root variant="secondary" size="md" {...props}>
