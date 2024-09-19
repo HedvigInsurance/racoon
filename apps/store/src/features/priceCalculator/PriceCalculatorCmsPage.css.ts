@@ -34,6 +34,12 @@ export const productHeroSection = style([
   },
 ])
 
+export const priceCalculatorSection = style({
+  position: 'relative',
+  padding: tokens.space.md,
+  backgroundColor: tokens.colors.white,
+})
+
 export const productHero = style({
   marginBlock: 'auto',
   gap: 'xs',
@@ -59,11 +65,6 @@ export const arrowBackWrapper = style({
   backgroundColor: tokens.colors.grayTranslucent100,
   borderRadius: tokens.radius.xxs,
   padding: tokens.space.xs,
-})
-
-export const priceCalculatorSection = style({
-  padding: tokens.space.md,
-  backgroundColor: tokens.colors.white,
 })
 
 export const purchaseFormWrapper = style({

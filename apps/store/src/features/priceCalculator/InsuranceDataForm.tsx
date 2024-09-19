@@ -57,7 +57,13 @@ export function InsuranceDataForm() {
     let sectionBody: ReactNode
     let sectionStyle = {}
     if (section.id === SSN_SE_SECTION_ID) {
-      sectionBody = <SsnSeSection />
+      sectionStyle = {
+        position: 'absolute',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        maxWidth: '23rem',
+      }
+      sectionBody = <SsnSeSection className={yStack({ gap: 'lg' })} />
     } else {
       sectionStyle = { marginTop: '3.75rem' }
       const isLast = index === form.sections.length - 1
@@ -78,7 +84,7 @@ export function InsuranceDataForm() {
       )
     }
     return (
-      <div key={section.id} className={yStack({ gap: 'xl' })} style={sectionStyle}>
+      <div key={section.id} className={yStack({ gap: 'lg' })} style={sectionStyle}>
         <SectionTitle section={section} />
         {sectionBody}
       </div>
