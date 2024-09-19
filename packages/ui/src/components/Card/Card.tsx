@@ -1,20 +1,23 @@
 import { Slot } from '@radix-ui/react-slot'
 import { type RecipeVariants } from '@vanilla-extract/recipes'
 import clsx from 'clsx'
-import { type ComponentProps, type PropsWithChildren } from 'react'
+import { forwardRef, type ComponentProps, type PropsWithChildren } from 'react'
 import { Heading } from '../Heading/Heading'
 import { Text } from '../Text/Text'
 import { cardAside, cardHeader, cardRoot } from './Card.css'
 
 type RootStyleProps = RecipeVariants<typeof cardRoot>
 type RootProps = ComponentProps<'article'> & RootStyleProps
-function CardRoot({ variant, size, className, children, ...props }: RootProps) {
+const CardRoot = forwardRef(function CardRoot(
+  { variant, size, className, children, ...props }: RootProps,
+  ref: RootProps['ref'],
+) {
   return (
-    <article className={clsx(cardRoot({ variant, size }), className)} {...props}>
+    <article className={clsx(cardRoot({ variant, size }), className)} {...props} ref={ref}>
       {children}
     </article>
   )
-}
+})
 
 type HeaderProps = ComponentProps<'header'>
 function CardHeader({ className, children, ...props }: HeaderProps) {
