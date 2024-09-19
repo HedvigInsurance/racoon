@@ -51,6 +51,7 @@ export const TextField = (props: Props) => {
     onValueChange,
     onClear,
     upperCaseInput,
+    className,
     ...inputProps
   } = props
   const [value, setValue] = useState(defaultValue || '')
@@ -99,7 +100,7 @@ export const TextField = (props: Props) => {
   }
 
   return (
-    <div className={yStack({ gap: 'xxs' })}>
+    <div className={clsx(yStack({ gap: 'xxs' }), className)}>
       <div
         className={wrapper[size]}
         {...animationProps}

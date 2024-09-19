@@ -129,12 +129,12 @@ export const buttonVariant = styleVariants({
     color: tokens.colors.textPrimary,
 
     '@media (hover: hover)': {
-      '&:hover': {
+      '&:hover:not([data-no-hover])': {
         backgroundColor: tokens.colors.buttonGhostHover,
       },
     },
 
-    ':active': {
+    '&:active:not([data-no-hover])': {
       backgroundColor: tokens.colors.buttonGhostHover,
     },
 
