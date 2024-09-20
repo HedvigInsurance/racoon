@@ -1,8 +1,15 @@
 import { useTranslation } from 'next-i18next'
+import { useRef } from 'react'
 import { Button, sprinkles, Text } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
+import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import { ProductSelector } from './ProductSelector'
-import { productSingleOption, wrapper } from './QuickPurchaseForm.css'
+import {
+  productSingleOption,
+  stickyButton,
+  stickyButtonWrapper,
+  wrapper,
+} from './QuickPurchaseForm.css'
 import { SsnField } from './SsnField/SsnField'
 
 export const SSN_FIELDNAME = 'ssn'
@@ -42,9 +49,10 @@ export const QuickPurchaseForm = ({
   error,
 }: Props) => {
   const { t } = useTranslation('purchase-form')
+  const ref = useRef<HTMLDivElement>(null)
 
   return (
-    <div className={wrapper}>
+    <div className={wrapper} ref={ref}>
       {productOptions.length === 1 && (
         <>
           <input type="hidden" name={PRODUCT_FIELDNAME} value={productOptions[0].value} />
@@ -81,6 +89,14 @@ export const QuickPurchaseForm = ({
       <Button type="submit" loading={submitting} fullWidth={true}>
         {t('BUTTON_LABEL_GET_PRICE')}
       </Button>
+
+      <ScrollPast targetRef={ref}>
+        <div className={stickyButtonWrapper}>
+          <Button fullWidth={true} className={stickyButton}>
+            {t('BUTTON_LABEL_GET_PRICE')}
+          </Button>
+        </div>
+      </ScrollPast>
 
       {error?.general && <p className={sprinkles({ textAlign: 'center' })}>{error.general}</p>}
     </div>
