@@ -69,7 +69,6 @@ export default async function CmsPage({ params }: Props) {
     return (
       <>
         <PriceCalculatorCmsPage locale={params.locale} story={story} />
-        <StoryBreadcrumbs params={params} currentPageTitle={story.name} />
       </>
     )
   }
