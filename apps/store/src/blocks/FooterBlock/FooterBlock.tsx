@@ -1,8 +1,11 @@
+'use client'
 import { storyblokEditable } from '@storyblok/react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Text, yStack } from 'ui'
 import { LanguageSelector } from '@/blocks/FooterBlock/LanguageSelector'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
+import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
 import type { ExpectedBlockType, LinkField, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType, getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
 import { BUSINESS_REGISTRATION_NUMBER, organization } from '@/utils/jsonSchema'
@@ -62,7 +65,19 @@ export type FooterBlockProps = SbBaseBlockProps<{
   sections: ExpectedBlockType<FooterSectionProps>
 }>
 export const FooterBlock = ({ blok }: FooterBlockProps) => {
+  const pathname = usePathname()
+  const productMetadata = useProductMetadata()
+  const isPriceCalculatorPage = productMetadata?.find(
+    (product) => pathname === product.priceCalculatorPageLink,
+  )
+
+  // Hide footer on price calculator page
+  if (isPriceCalculatorPage) {
+    return null
+  }
+
   const footerSections = filterByBlockType(blok.sections, FooterSectionBlock.blockName)
+
   return (
     <footer className={wrapperStyle}>
       <GridLayout.Root className={gridLayout}>
