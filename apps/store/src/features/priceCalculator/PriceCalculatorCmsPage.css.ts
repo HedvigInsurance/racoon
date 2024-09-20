@@ -18,7 +18,7 @@ export const pageGrid = style({
 })
 
 export const productHeroSection = style([
-  yStack(),
+  yStack({ justifyContent: 'center' }),
   {
     height: '13rem',
     alignSelf: 'start',
@@ -37,13 +37,19 @@ export const productHeroSection = style([
 export const priceCalculatorSection = style({
   position: 'relative',
   padding: tokens.space.md,
-  backgroundColor: tokens.colors.white,
 })
 
 export const productHero = style({
-  marginBlock: 'auto',
-  gap: 'xs',
-  ...responsiveStyles({ lg: { gap: 'md' } }),
+  display: 'flex',
+  gap: tokens.space.xs,
+
+  ...responsiveStyles({
+    lg: {
+      gap: tokens.space.md,
+      // Visually center Product Hero
+      marginTop: `calc(-1 * ${HEADER_HEIGHT_DESKTOP})`,
+    },
+  }),
 })
 
 export const backLink = style([
