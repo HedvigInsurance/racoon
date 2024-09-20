@@ -1,7 +1,7 @@
 'use server'
 
 import type { FormStateWithErrors } from '@/app/types/formStateTypes'
-import {getEnvOrThrow} from "@/utils/getEnvOrThrow";
+import { getEnvOrThrow } from "@/utils/getEnvOrThrow";
 import { SebDebuggerFormElement } from './constants'
 
 export const createSebLead = async (
@@ -13,17 +13,21 @@ export const createSebLead = async (
   const lastName = formData.get(SebDebuggerFormElement.LastName) as string
   const email = formData.get(SebDebuggerFormElement.Email) as string
   const phoneNumber = formData.get(SebDebuggerFormElement.PhoneNumber) as string
-  let product = formData.get(SebDebuggerFormElement.Product) as string
-  let  maybeProductSubType: string | undefined
+  const products = formData.get(SebDebuggerFormElement.Products)
 
-  if (product === 'condoInsuranceBrf') {
-    product = 'condoInsurance'
-    maybeProductSubType = 'condoInsurance.condoInsuranceCondominium'
-  } else if (product === 'condoInsuranceRent') {
-    product = 'condoInsurance'
-    maybeProductSubType = 'condoInsurance.condoInsuranceRental'
+  let maybeProductSubType: string | undefined
+
+  if (products !== null && typeof products === "string") {
+    if (products.includes('condoInsuranceBrf')) {
+      maybeProductSubType = 'condoInsurance.condoInsuranceCondominium'
+    }
+    if (products.includes('condoInsuranceRent')) {
+      maybeProductSubType = 'condoInsurance.condoInsuranceRental'
+    }
+    if (products.includes('condoInsuranceBrf') && products.includes('condoInsuranceRent')) {
+      maybeProductSubType = 'condoInsurance.condoInsuranceCondominium,condoInsurance.condoInsuranceRental'
+    }
   }
-
 
   const parameters = {
     personalNumber: ssn,
@@ -32,10 +36,12 @@ export const createSebLead = async (
     contactPhone: phoneNumber,
     contactEmail: email,
     metadata: {
-      productType: product,
-      productSubType: maybeProductSubType
+      productType: products as string,
+      productSubType: maybeProductSubType ?? undefined,
     },
   }
+
+  console.table(parameters)
   let sebSessionId: string | null
 
   try {
@@ -67,7 +73,8 @@ type CreateSebLeadsParams = {
   contactPhone: string
   contactEmail: string
   metadata: {
-    productType: string
+    productType: string,
+    productSubType: string | undefined
   }
 }
 type CreateSebLeadsResponse = {
@@ -80,7 +87,7 @@ const createSebLeadStaging = async (
   params: CreateSebLeadsParams,
 ): Promise<CreateSebLeadsResponse> => {
   const API_URL = getEnvOrThrow('SEB_LEADS_INSURELY_API_URL')
-  const API_KEY = getEnvOrThrow ('SEB_LEADS_INSURELY_API_KEY')
+  const API_KEY = getEnvOrThrow('SEB_LEADS_INSURELY_API_KEY')
 
   const url = new URL(API_URL)
   const headers = new Headers({
