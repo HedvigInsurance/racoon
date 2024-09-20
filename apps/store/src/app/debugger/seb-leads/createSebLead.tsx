@@ -13,19 +13,28 @@ export const createSebLead = async (
   const lastName = formData.get(SebDebuggerFormElement.LastName) as string
   const email = formData.get(SebDebuggerFormElement.Email) as string
   const phoneNumber = formData.get(SebDebuggerFormElement.PhoneNumber) as string
-  const products = formData.get(SebDebuggerFormElement.Products)
+  let products = formData.get(SebDebuggerFormElement.Products)
 
   let maybeProductSubType: string | undefined
 
+  // very ugly code to handle the way SEB wants the productType and productSubType
   if (products !== null && typeof products === "string") {
-    if (products.includes('condoInsuranceBrf')) {
-      maybeProductSubType = 'condoInsurance.condoInsuranceCondominium'
-    }
-    if (products.includes('condoInsuranceRent')) {
-      maybeProductSubType = 'condoInsurance.condoInsuranceRental'
-    }
     if (products.includes('condoInsuranceBrf') && products.includes('condoInsuranceRent')) {
       maybeProductSubType = 'condoInsurance.condoInsuranceCondominium,condoInsurance.condoInsuranceRental'
+      const productsList = products.split(',')
+      console.log('productsList:', productsList)
+      products = productsList.filter((product) => product !== 'condoInsuranceBrf' && product !== 'condoInsuranceRent').join(',')
+      if (products.length === 0) {
+        products = products + 'condoInsurance'
+      }else {
+        products = products + ',condoInsurance'
+      }
+    } else if (products.includes('condoInsuranceBrf')) {
+      maybeProductSubType = 'condoInsurance.condoInsuranceCondominium'
+      products = products.replace('condoInsuranceBrf', 'condoInsurance')
+    } else if (products.includes('condoInsuranceRent')) {
+      maybeProductSubType = 'condoInsurance.condoInsuranceRental'
+      products = products.replace('condoInsuranceRent', 'condoInsurance')
     }
   }
 
