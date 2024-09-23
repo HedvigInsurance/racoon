@@ -1,5 +1,6 @@
 import { style } from '@vanilla-extract/css'
 import { hoverStyles, responsiveStyles, tokens, xStack, yStack } from 'ui'
+import { MAX_WIDTH } from '@/components/GridLayout/GridLayout.constants'
 import { HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header.css'
 import { HEADER_HEIGHT_MOBILE } from '@/components/Header/HeaderMenuMobile/HeaderMenuMobile.css'
 
@@ -9,6 +10,8 @@ export const pageGrid = style({
   gap: tokens.space.md,
   backgroundColor: tokens.colors.backgroundStandard,
   minHeight: `calc(100vh - ${HEADER_HEIGHT_MOBILE})`,
+  maxWidth: MAX_WIDTH,
+  marginInline: 'auto',
   ...responsiveStyles({
     lg: {
       gridTemplateColumns: '1fr 1fr',
