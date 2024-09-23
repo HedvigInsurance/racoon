@@ -6,9 +6,6 @@ import { useSearchParams } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import { useEffect } from 'react'
 import { Text, Divider, yStack } from 'ui'
-import { EditActionButton } from '@/components/ProductItem/EditActionButton'
-import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
-import { RemoveActionButton } from '@/components/ProductItem/RemoveActionButton'
 import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
 import { ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
@@ -23,6 +20,7 @@ import { readMoreLink } from '@/features/bundleDiscount/BundleDiscountSummary.cs
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { QueryParam } from './CheckoutPage.constants'
+import { Cartitem } from './components/CartItem/CartItem'
 
 export function CartEntries() {
   const { t } = useTranslation('cart')
@@ -70,17 +68,10 @@ export function CartEntries() {
               exit={{ opacity: 0, height: 0 }}
               style={{ position: 'relative' }}
             >
-              <ProductItemContainer
+              <Cartitem
                 offer={offer}
                 defaultExpanded={searchParams?.get(QueryParam.ExpandCart) === '1'}
-              >
-                <EditActionButton offer={offer} />
-                <RemoveActionButton
-                  shopSessionId={shopSession.id}
-                  offer={offer}
-                  title={offer.product.displayNameFull}
-                />
-              </ProductItemContainer>
+              />
             </motion.div>
           ))}
         </AnimatePresence>
