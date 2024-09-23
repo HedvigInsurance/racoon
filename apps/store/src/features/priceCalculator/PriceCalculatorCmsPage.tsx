@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { type ReactNode, Suspense } from 'react'
+import { StorePageProviders } from '@/appComponents/providers/StorePageProviders'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
 import { ProductPageDebugDialog } from '@/components/ProductPage/ProductPageDebugDialog'
@@ -31,20 +32,22 @@ export function PriceCalculatorCmsPage({ locale, story }: Props) {
     throw notFound()
   }
   return (
-    <div className={pageGrid}>
-      <Suspense fallback={<Skeleton style={{ height: '50vh' }} />}>
-        <PriceCalculatorProviders locale={locale} story={story}>
-          <section className={productHeroSection}>
-            <ProductHeroV2 className={productHero} />
-          </section>
-          <section className={priceCalculatorSection}>
-            <div className={purchaseFormWrapper}>
-              <PurchaseFormV2 />
-            </div>
-          </section>
-        </PriceCalculatorProviders>
-      </Suspense>
-    </div>
+    <StorePageProviders>
+      <div className={pageGrid}>
+        <Suspense fallback={<Skeleton style={{ height: '50vh' }} />}>
+          <PriceCalculatorProviders locale={locale} story={story}>
+            <section className={productHeroSection}>
+              <ProductHeroV2 className={productHero} />
+            </section>
+            <section className={priceCalculatorSection}>
+              <div className={purchaseFormWrapper}>
+                <PurchaseFormV2 />
+              </div>
+            </section>
+          </PriceCalculatorProviders>
+        </Suspense>
+      </div>
+    </StorePageProviders>
   )
 }
 

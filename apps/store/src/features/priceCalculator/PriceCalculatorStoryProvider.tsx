@@ -9,8 +9,6 @@ type Props = {
   children: ReactNode
 }
 export function PriceCalculatorStoryProvider({ story, children }: Props) {
-  useHydrateAtoms([[priceCalculatorDeductibleInfoAtom, story.content.deductibleInfo ?? null]], {
-    dangerouslyForceHydrate: true,
-  })
+  useHydrateAtoms([[priceCalculatorDeductibleInfoAtom, story.content.deductibleInfo ?? null]])
   return children
 }

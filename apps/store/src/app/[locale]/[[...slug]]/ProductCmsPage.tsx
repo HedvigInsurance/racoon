@@ -1,4 +1,5 @@
 import { StoryblokStory } from '@storyblok/react/rsc'
+import { StorePageProviders } from '@/appComponents/providers/StorePageProviders'
 import { storyblokBridgeOptions } from '@/appComponents/storyblokBridgeOptions'
 import { BankIdDialog } from '@/components/BankIdDialog/BankIdDialog'
 import { PageBannerTriggers } from '@/components/Banner/PageBannerTriggers'
@@ -43,22 +44,24 @@ export const ProductCmsPage = async ({ locale, story }: ProductCmsPageProps) => 
   const initialSelectedTypeOfContract = initialSelectedVariant?.typeOfContract
 
   return (
-    <ProductDataProvider
-      productData={productData}
-      selectedTypeOfContract={initialSelectedTypeOfContract}
-    >
-      <ProductPageDataProvider
-        productPageData={getProductPageData(story, productData)}
-        priceTemplate={priceTemplate}
+    <StorePageProviders>
+      <ProductDataProvider
+        productData={productData}
+        selectedTypeOfContract={initialSelectedTypeOfContract}
       >
-        <ProductReviewsMetadataProvider productReviewsMetadata={productReviewsMetadata}>
-          <BankIdContextProvider>
-            <StoryblokStory story={story} bridgeOptions={storyblokBridgeOptions} />
-            <PageBannerTriggers blok={story.content} />
-            <BankIdDialog />
-          </BankIdContextProvider>
-        </ProductReviewsMetadataProvider>
-      </ProductPageDataProvider>
-    </ProductDataProvider>
+        <ProductPageDataProvider
+          productPageData={getProductPageData(story, productData)}
+          priceTemplate={priceTemplate}
+        >
+          <ProductReviewsMetadataProvider productReviewsMetadata={productReviewsMetadata}>
+            <BankIdContextProvider>
+              <StoryblokStory story={story} bridgeOptions={storyblokBridgeOptions} />
+              <PageBannerTriggers blok={story.content} />
+              <BankIdDialog />
+            </BankIdContextProvider>
+          </ProductReviewsMetadataProvider>
+        </ProductPageDataProvider>
+      </ProductDataProvider>
+    </StorePageProviders>
   )
 }

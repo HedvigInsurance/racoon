@@ -227,11 +227,6 @@ export const useSyncPriceIntentState = ({
     }
   }, [entryToReplace, priceIntentId, productName, queryResult.data, syncSelectedOffer, store])
 
-  useEffect(() => {
-    // Cleanup key atom on navigation, prevents flash of previous content when navigating between price calculators
-    return () => store.set(currentPriceIntentIdAtom, null)
-  }, [store])
-
   const setIsLoading = useSetAtom(priceCalculatorLoadingAtom)
   useEffect(() => {
     setIsLoading(queryResult.loading || priceIntentId == null)
