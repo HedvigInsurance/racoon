@@ -1,4 +1,5 @@
 import { StoryblokStory } from '@storyblok/react/rsc'
+import { StorePageProviders } from '@/appComponents/providers/StorePageProviders'
 import { storyblokBridgeOptions } from '@/appComponents/storyblokBridgeOptions'
 import { DefaultDebugDialog } from '@/components/DebugDialog/DefaultDebugDialog'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
@@ -32,14 +33,16 @@ export const ProductCmsPageV2 = async ({ locale, story }: ProductCmsPageProps) =
   const initialSelectedTypeOfContract = initialSelectedVariant?.typeOfContract
 
   return (
-    <ProductDataProvider
-      productData={productData}
-      selectedTypeOfContract={initialSelectedTypeOfContract}
-    >
-      <ProductPageDataProviderV2 productPageData={getProductPageData(story, productData)}>
-        <StoryblokStory story={story} bridgeOptions={storyblokBridgeOptions} />
-        <DefaultDebugDialog />
-      </ProductPageDataProviderV2>
-    </ProductDataProvider>
+    <StorePageProviders>
+      <ProductDataProvider
+        productData={productData}
+        selectedTypeOfContract={initialSelectedTypeOfContract}
+      >
+        <ProductPageDataProviderV2 productPageData={getProductPageData(story, productData)}>
+          <StoryblokStory story={story} bridgeOptions={storyblokBridgeOptions} />
+          <DefaultDebugDialog />
+        </ProductPageDataProviderV2>
+      </ProductDataProvider>
+    </StorePageProviders>
   )
 }

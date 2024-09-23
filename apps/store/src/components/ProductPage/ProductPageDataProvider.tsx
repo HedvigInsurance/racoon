@@ -22,9 +22,7 @@ export function ProductPageDataProvider({ children, priceTemplate, productPageDa
 }
 
 export const useSyncProductPageData = (productPageData: ProductPageData) => {
-  useHydrateAtoms([[productPageDataAtom, productPageData]], {
-    dangerouslyForceHydrate: true,
-  })
+  useHydrateAtoms([[productPageDataAtom, productPageData]])
 }
 
 export const useProductPageData = () => {

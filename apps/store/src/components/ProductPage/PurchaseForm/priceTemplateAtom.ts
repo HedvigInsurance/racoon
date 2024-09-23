@@ -13,7 +13,5 @@ export const usePriceTemplate = () => {
 }
 
 export const useSyncPriceTemplate = (template: Template | TemplateV2) => {
-  useHydrateAtoms([[priceTemplateAtom, template]], {
-    dangerouslyForceHydrate: true,
-  })
+  useHydrateAtoms([[priceTemplateAtom, template]])
 }
