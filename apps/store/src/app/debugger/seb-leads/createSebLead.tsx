@@ -4,7 +4,7 @@ import type { FormStateWithErrors } from '@/app/types/formStateTypes'
 import { getEnvOrThrow } from '@/utils/getEnvOrThrow'
 import { SebDebuggerFormElement } from './constants'
 
-const updateProducts = (products: FormDataEntryValue | null) => {
+const transformProductsList = (products: FormDataEntryValue | null) => {
   if (products !== null && typeof products === 'string') {
     const productsArray = products.split(',')
     const hasBrf = productsArray.includes('condoInsuranceBrf')
@@ -21,12 +21,12 @@ const updateProducts = (products: FormDataEntryValue | null) => {
       maybeProductSubType = 'condoInsurance.condoInsuranceRental'
     }
 
-    // Replace specific products with 'condoInsurance'
+    // Replace specific products with 'condoInsurance' since SEB API is designed to have only one value
+    // for the productType field as 'condoInsurance' for both BRF and Rent
     if (hasBrf || hasRent) {
       const filteredProducts = productsArray.filter(
         (product) => product !== 'condoInsuranceBrf' && product !== 'condoInsuranceRent',
       )
-      // Add 'condoInsurance' to the list of products
       filteredProducts.push('condoInsurance')
       products = filteredProducts.join(',')
     }
@@ -46,7 +46,7 @@ export const createSebLead = async (
   const phoneNumber = formData.get(SebDebuggerFormElement.PhoneNumber) as string
   const productList = formData.get(SebDebuggerFormElement.Products)
 
-  const { products, maybeProductSubType } = updateProducts(productList)
+  const { products, maybeProductSubType } = transformProductsList(productList)
 
   const parameters = {
     personalNumber: ssn,
