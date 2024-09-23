@@ -75,7 +75,7 @@ export const createSebLead = async (
     contactPhone: phoneNumber,
     contactEmail: email,
     metadata: {
-      productType: products as string,
+      productType: products,
       productSubType: maybeProductSubType,
     },
   }
