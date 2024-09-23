@@ -20,23 +20,26 @@ import {
 } from '@/features/bundleDiscount/bundleDiscount'
 import { BundleDiscountExtraProductLinks } from '@/features/bundleDiscount/BundleDiscountExtraProductLinks'
 import { readMoreLink } from '@/features/bundleDiscount/BundleDiscountSummary.css'
-import { type ShopSessionFragment } from '@/services/graphql/generated'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { QueryParam } from './CheckoutPage.constants'
 
-type Props = { shopSession: ShopSessionFragment }
-
-export function CartEntries({ shopSession }: Props) {
+export function CartEntries() {
   const { t } = useTranslation('cart')
   const tracking = useTracking()
   const searchParams = useSearchParams()
 
-  // - Do not show if only accident is in the cart (confusing)
-  // - Do not show if there's a discount already (mostly not relevant anymore)
-  const shouldShowBundleDiscountProducts =
-    hasCartItemsEligibleForBundleDiscount(shopSession) && !hasBundleDiscount(shopSession)
+  const { shopSession } = useShopSession()
 
-  const lastItem = shopSession.cart.entries.at(-1)
+  const shouldShowBundleDiscountProducts =
+    shopSession &&
+    // - Do not show if only accident is in the cart (confusing)
+    hasCartItemsEligibleForBundleDiscount(shopSession) &&
+    // - Do not show if there's a discount already (mostly not relevant anymore)
+    !hasBundleDiscount(shopSession)
+
+  const lastItem = shopSession?.cart.entries.at(-1)
+
   // GOTCHA: useInView did not work on initial navigation for some reason, so let's just report as effect
   useEffect(() => {
     if (shouldShowBundleDiscountProducts && lastItem != null) {
@@ -50,6 +53,10 @@ export function CartEntries({ shopSession }: Props) {
       })
     }
   }, [shouldShowBundleDiscountProducts, tracking, lastItem])
+
+  if (!shopSession) {
+    return null
+  }
 
   return (
     <>
