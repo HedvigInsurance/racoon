@@ -9,7 +9,7 @@ const transformProductsList = (products: FormDataEntryValue | null) => {
     const productsArray = products.split(',')
     const hasBrf = productsArray.includes('condoInsuranceBrf')
     const hasRent = productsArray.includes('condoInsuranceRent')
-    let maybeProductSubType = ''
+    let maybeProductSubType: string | undefined
 
     // Determine the maybeProductSubType based on product presence
     if (hasBrf && hasRent) {
@@ -32,7 +32,7 @@ const transformProductsList = (products: FormDataEntryValue | null) => {
     }
     return { products, maybeProductSubType }
   }
-  return { products, maybeProductSubType: null }
+  return { products, maybeProductSubType: undefined }
 }
 
 export const createSebLead = async (
@@ -56,7 +56,7 @@ export const createSebLead = async (
     contactEmail: email,
     metadata: {
       productType: products as string,
-      productSubType: maybeProductSubType ?? undefined,
+      productSubType: maybeProductSubType,
     },
   }
 
