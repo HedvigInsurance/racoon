@@ -15,7 +15,11 @@ export const pillow = style({
   }),
 })
 
+export const priceWrapper = style({ position: 'relative', height: tokens.space.lg })
+
 export const priceLabel = style({
+  position: 'absolute',
+  inset: 0,
   // Make sure there's no layout shift when price appears
   minHeight: tokens.space.lg,
 })
