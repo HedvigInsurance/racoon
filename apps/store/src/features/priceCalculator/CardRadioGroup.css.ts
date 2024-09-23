@@ -1,10 +1,9 @@
 import { createVar, style } from '@vanilla-extract/css'
-import { tokens, yStack } from 'ui'
+import { tokens } from 'ui'
 
 export const labelBackground = createVar('cardRadioGroupLabelBackground')
 
 export const item = style([
-  yStack({ gap: 'sm' }),
   {
     borderRadius: tokens.radius.md,
     backgroundColor: tokens.colors.opaque1,

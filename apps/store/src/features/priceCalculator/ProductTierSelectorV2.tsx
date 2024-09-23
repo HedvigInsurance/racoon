@@ -1,9 +1,20 @@
 import { assignInlineVars } from '@vanilla-extract/dynamic'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { useRef } from 'react'
 import { badgeFontColor } from 'ui/src/components/Badge/Badge.css'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
-import { Badge, Button, Heading, PlusIcon, Text, tokens, xStack, yStack } from 'ui'
+import {
+  Badge,
+  Button,
+  framerTransitions,
+  Heading,
+  PlusIcon,
+  Text,
+  tokens,
+  xStack,
+  yStack,
+} from 'ui'
 import { ComparisonTableModal } from '@/components/ProductPage/PurchaseForm/ComparisonTableModal'
 import type { ProductOfferFragment } from '@/services/graphql/generated'
 import { useFormatter } from '@/utils/useFormatter'
@@ -29,39 +40,57 @@ export function ProductTierSelectorV2({ offers, selectedOffer, onValueChange }: 
       <CardRadioGroup.Root value={selectedOffer.id} onValueChange={onValueChange}>
         {offers.map((offer) => (
           <CardRadioGroup.Item key={offer.id} value={offer.id} style={{ padding: tokens.space.lg }}>
-            <div className={yStack()}>
-              <div
-                className={xStack({
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  gap: 'md',
-                })}
-              >
-                <Heading as="h2" variant="standard.24">
-                  {offer.variant.displayNameSubtype || offer.variant.displayName}
+            <div className={yStack({ gap: 'sm' })}>
+              <div className={yStack()}>
+                <div
+                  className={xStack({
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    gap: 'md',
+                  })}
+                >
+                  <Heading as="h2" variant="standard.24">
+                    {offer.variant.displayNameSubtype || offer.variant.displayName}
+                  </Heading>
+                  {isDefaultTier(offer) && (
+                    <Badge
+                      size="small"
+                      color="pinkFill3"
+                      style={assignInlineVars({ [badgeFontColor]: tokens.colors.gray1000 })}
+                    >
+                      {t('DEFAULT_TIER_LABEL')}
+                    </Badge>
+                  )}
+                </div>
+                <Heading as="h3" variant="standard.24" color="textSecondary">
+                  {formatter.monthlyPrice(offer.cost.net)}
                 </Heading>
-                {isDefaultTier(offer) && (
-                  <Badge
-                    size="small"
-                    color="pinkFill3"
-                    style={assignInlineVars({ [badgeFontColor]: tokens.colors.gray1000 })}
-                  >
-                    {t('DEFAULT_TIER_LABEL')}
-                  </Badge>
-                )}
               </div>
-              <Heading as="h3" variant="standard.24" color="textSecondary">
-                {formatter.monthlyPrice(offer.cost.net)}
-              </Heading>
+              <Text color="textSecondary" className={sprinkles({ marginTop: 'md' })}>
+                {getVariantDescription(offer.variant.typeOfContract)}
+              </Text>
             </div>
-            <Text color="textSecondary" className={sprinkles({ marginTop: 'md' })}>
-              {getVariantDescription(offer.variant.typeOfContract)}
-            </Text>
-            {offer.id === selectedOffer.id && (
-              <Button variant="secondary" fullWidth={true} size="medium" onClick={openTierDialog}>
-                {t('COMPARE_TIERS_LABEL')}
-              </Button>
-            )}
+            <AnimatePresence initial={false}>
+              {offer.id === selectedOffer.id && (
+                <motion.div
+                  key={selectedOffer.id}
+                  transition={{ duration: 0.4, ...framerTransitions.easeInOutCubic }}
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: '52px' }}
+                  exit={{ opacity: 0, height: 0 }}
+                >
+                  <Button
+                    className={sprinkles({ marginTop: 'sm' })}
+                    variant="secondary"
+                    fullWidth={true}
+                    size="medium"
+                    onClick={openTierDialog}
+                  >
+                    {t('COMPARE_TIERS_LABEL')}
+                  </Button>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </CardRadioGroup.Item>
         ))}
       </CardRadioGroup.Root>
