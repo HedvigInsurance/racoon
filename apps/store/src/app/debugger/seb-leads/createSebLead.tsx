@@ -4,35 +4,55 @@ import type { FormStateWithErrors } from '@/app/types/formStateTypes'
 import { getEnvOrThrow } from '@/utils/getEnvOrThrow'
 import { SebDebuggerFormElement } from './constants'
 
-const transformProductsList = (products: FormDataEntryValue | null) => {
-  if (products !== null && typeof products === 'string') {
-    const productsArray = products.split(',')
-    const hasBrf = productsArray.includes('condoInsuranceBrf')
-    const hasRent = productsArray.includes('condoInsuranceRent')
-    let maybeProductSubType: string | undefined
+type TransformResult = {
+  products: string
+  maybeProductSubType: string | undefined
+}
 
-    // Determine the maybeProductSubType based on product presence
-    if (hasBrf && hasRent) {
-      maybeProductSubType =
-        'condoInsurance.condoInsuranceCondominium,condoInsurance.condoInsuranceRental'
-    } else if (hasBrf) {
-      maybeProductSubType = 'condoInsurance.condoInsuranceCondominium'
-    } else if (hasRent) {
-      maybeProductSubType = 'condoInsurance.condoInsuranceRental'
-    }
+const PRODUCT_SUBTYPE_MAP: Record<string, string> = {
+  condoInsuranceBrf: 'condoInsurance.condoInsuranceCondominium',
+  condoInsuranceRent: 'condoInsurance.condoInsuranceRental',
+}
 
-    // Replace specific products with 'condoInsurance' since SEB API is designed to have only one value
-    // for the productType field as 'condoInsurance' for both BRF and Rent
-    if (hasBrf || hasRent) {
-      const filteredProducts = productsArray.filter(
-        (product) => product !== 'condoInsuranceBrf' && product !== 'condoInsuranceRent',
-      )
-      filteredProducts.push('condoInsurance')
-      products = filteredProducts.join(',')
-    }
-    return { products, maybeProductSubType }
+/**
+ * Transforms the products list to comply with SEB API requirements.
+ *
+ * - Consolidates specific condo insurance product types (e.g., 'condoInsuranceBrf', 'condoInsuranceRent') into a single 'condoInsurance' type.
+ * - Aggregates corresponding subtypes into the `maybeProductSubType` field.
+ * - Ensures that only condo insurance products include subtype details, while all other products remain unchanged without requiring subtypes.
+ *
+ * This transformation ensures that the product data is formatted as SEB expects.
+ *
+ * @param products - The original comma-separated list of product types from the form data.
+ * @returns An object containing the transformed products string and the aggregated `maybeProductSubType`.
+ */
+const transformProductsList = (products: FormDataEntryValue | null): TransformResult => {
+  if (typeof products !== 'string') {
+    console.warn('Invalid products input:', products)
+    return { products: '', maybeProductSubType: undefined }
   }
-  return { products, maybeProductSubType: undefined }
+
+  const productsArray = products.split(',')
+  const productSet = new Set<string>()
+  const subTypesArray: Array<string> = []
+
+  productsArray.forEach((product) => {
+    if (PRODUCT_SUBTYPE_MAP[product]) {
+      productSet.add('condoInsurance')
+      subTypesArray.push(PRODUCT_SUBTYPE_MAP[product])
+    } else {
+      productSet.add(product)
+    }
+  })
+
+  let maybeProductSubType: string | undefined
+  if (subTypesArray.length > 0) {
+    maybeProductSubType = Array.from(new Set(subTypesArray)).join(',')
+  }
+
+  const transformedProducts = Array.from(productSet).join(',')
+
+  return { products: transformedProducts, maybeProductSubType: maybeProductSubType }
 }
 
 export const createSebLead = async (
