@@ -60,7 +60,7 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
           </div>
 
           <section className={yStack({ gap: 'md' })}>
-            <CartEntries shopSession={shopSession} />
+            <CartEntries />
           </section>
 
           <section className={yStack({ gap: 'xl' })}>
