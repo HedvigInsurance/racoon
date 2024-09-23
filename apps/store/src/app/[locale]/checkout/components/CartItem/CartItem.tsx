@@ -1,7 +1,6 @@
 import { useTranslation } from 'next-i18next'
 import { type PropsWithChildren } from 'react'
-import { Card, CrossIcon, IconButton, SupText, Text, ToggleCard, sprinkles, yStack } from 'ui'
-import { InputStartDay } from '@/components/InputDay/InputStartDay'
+import { Card, CrossIcon, IconButton, SupText, Text, sprinkles, yStack } from 'ui'
 import { PDFViewer } from '@/components/PDFViewer'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Price } from '@/components/Price'
@@ -9,18 +8,14 @@ import { DetailsList } from '@/components/ProductCard/DetailsList/DetailsList'
 import { Divider } from '@/components/ProductCard/Divider'
 import { ProductCardDetails } from '@/components/ProductCard/ProductCardDetails'
 import { useOfferDetails } from '@/components/ProductItem/useOfferDetails'
-import {
-  useCancellationRequestedUpdateMutation,
-  useStartDateUpdateMutation,
-  type ProductOfferFragment,
-} from '@/services/graphql/generated'
+import { type ProductOfferFragment } from '@/services/graphql/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { convertToDate, formatAPIDate } from '@/utils/date'
 import { getOfferPrice } from '@/utils/getOfferPrice'
 import { useFormatter } from '@/utils/useFormatter'
 import { useIsEmbedded } from '@/utils/useIsEmbedded'
-import { EditCartItemDialog } from './EditCartItemDialog'
-import { RemoveCartItemDialog } from './RemoveCartItemDialog'
+import { CartItemInsuranceSwitcher } from './components/CartItemInsuranceSwitcher'
+import { EditCartItemDialog } from './components/EditCartItemDialog'
+import { RemoveCartItemDialog } from './components/RemoveCartItemDialog'
 
 type Props = {
   offer: ProductOfferFragment
@@ -40,34 +35,16 @@ export const Cartitem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
 
   const isEmbedded = useIsEmbedded()
 
-  const [mutateSwitchingRequest] = useCancellationRequestedUpdateMutation()
-  const [updateStartDate, updateStartDateResult] = useStartDateUpdateMutation()
-
   if (!shopSession) {
     return null
   }
 
   const { product, exposure, variant, cancellation, startDate } = offer
 
-  const insuranceStartDate = convertToDate(startDate) ?? undefined
-
   const productDocuments = variant.documents.map((item) => ({
     title: item.displayName,
     url: item.url,
   }))
-
-  const handleAutoSwitchChange = (checked: boolean) => {
-    mutateSwitchingRequest({ variables: { productOfferIds: offer.id, requested: checked } })
-  }
-
-  const handleChangeStartDate = (date: Date) => {
-    updateStartDate({
-      variables: {
-        productOfferIds: offer.id,
-        startDate: formatAPIDate(date),
-      },
-    })
-  }
 
   return (
     <Card.Root>
@@ -148,30 +125,11 @@ export const Cartitem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
         </ProductCardDetails.Content>
       </ProductCardDetails.Root>
 
-      {cancellation.externalInsurer ? (
-        <div className={yStack({ gap: 'xxs' })}>
-          <ToggleCard.Root>
-            <ToggleCard.Label>{t('purchase-form:AUTO_SWITCH_FIELD_LABEL')}</ToggleCard.Label>
-            <ToggleCard.Switch
-              checked={cancellation.requested}
-              onCheckedChange={handleAutoSwitchChange}
-            />
-            <ToggleCard.Description>
-              {t('purchase-form:AUTO_SWITCH_FIELD_MESSAGE', {
-                COMPANY: cancellation.externalInsurer.displayName,
-              })}
-            </ToggleCard.Description>
-          </ToggleCard.Root>
-
-          {!cancellation.requested ? (
-            <InputStartDay
-              date={insuranceStartDate}
-              onChange={handleChangeStartDate}
-              loading={updateStartDateResult.loading}
-            />
-          ) : null}
-        </div>
-      ) : null}
+      <CartItemInsuranceSwitcher
+        cancellation={cancellation}
+        offerId={offer.id}
+        startDate={startDate}
+      />
 
       <DetailsList.Root>
         <DetailsList.Item>
