@@ -35,14 +35,13 @@ export const SebLeadsDebuggerForm = () => {
     setSelectedProducts(newSelectedProducts)
   }
 
-  const items = PRODUCT_OPTIONS.filter((product) =>
+  const unselectedItems = PRODUCT_OPTIONS.filter((product) =>
     selectedProducts.every((selectedProduct) => selectedProduct.value !== product.value),
   )
 
   const [state, formAction] = useFormState(createSebLead, null)
 
   const handleAdded = (product: any) => {
-    console.log('product:', product)
     if (product) {
       setSelectedProducts([...selectedProducts, product])
     }
@@ -104,7 +103,7 @@ export const SebLeadsDebuggerForm = () => {
         )}
       </div>
       <Combobox
-        items={items}
+        items={unselectedItems}
         displayValue={(product) => product.name as string}
         selectedItem={selectedProducts.map((product) => product.value)}
         onSelectedItemChange={handleAdded}
