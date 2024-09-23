@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next'
 import { Button, Text } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import type { ProductOfferFragment } from '@/services/graphql/generated'
-import { useEditProductOffer } from './useEditProductOffer'
+import { useEditProductOffer } from '../hooks/useEditProductOffer'
 
 type Props = {
   offer: ProductOfferFragment
