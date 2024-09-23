@@ -8539,7 +8539,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storyblok/richtext@npm:^2.0.0":
+"@storyblok/richtext@npm:2.0.0, @storyblok/richtext@npm:^2.0.0":
   version: 2.0.0
   resolution: "@storyblok/richtext@npm:2.0.0"
   dependencies:
@@ -22822,6 +22822,7 @@ __metadata:
     "@radix-ui/react-tooltip": "npm:1.1.2"
     "@storyblok/js": "npm:3.1.4"
     "@storyblok/react": "npm:3.0.14"
+    "@storyblok/richtext": "npm:2.0.0"
     "@storybook/addon-actions": "npm:8.2.9"
     "@storybook/addon-designs": "npm:8.0.3"
     "@storybook/addon-essentials": "npm:8.2.9"
@@ -22894,7 +22895,6 @@ __metadata:
     react-dom: "npm:18.3.1"
     react-i18next: "npm:15.0.2"
     server-only: "npm:0.0.1"
-    storyblok-rich-text-react-renderer: "npm:2.9.2"
     storybook: "npm:8.2.9"
     storybook-addon-apollo-client: "npm:6.0.0"
     subscriptions-transport-ws: "npm:0.11.0"
@@ -22914,15 +22914,6 @@ __metadata:
   version: 6.9.2
   resolution: "storyblok-js-client@npm:6.9.2"
   checksum: 10c0/fe837e6e936defa0dd4955ab648b2537c5fb7066e378c23cac075e7925b1841c93fbdcb05157e92435462ae9d284392e7b84fd0eb773efa0f9085e402e874732
-  languageName: node
-  linkType: hard
-
-"storyblok-rich-text-react-renderer@npm:2.9.2":
-  version: 2.9.2
-  resolution: "storyblok-rich-text-react-renderer@npm:2.9.2"
-  peerDependencies:
-    react: ">=16.0.0"
-  checksum: 10c0/48ffdf31b7885ee3c5c0bd9402133915791a066c7e5170137bd1674ac4272bce2a510104532c0007e8e1c9e756169743796ff6ec58594bfa7a9fd4571f81dc34
   languageName: node
   linkType: hard
 

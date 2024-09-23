@@ -1,4 +1,6 @@
-import type { ISbRichtext, ISbStoryData, SbBlokData } from '@storyblok/react'
+import type { ISbStoryData, SbBlokData } from '@storyblok/react'
+import { type StoryblokRichTextNode } from '@storyblok/richtext'
+import { type ReactElement } from 'react'
 import type { SEOData, StoryblokAsset } from '@/services/storyblok/storyblok'
 
 export type BlogArticleContentType = ISbStoryData<
@@ -6,7 +8,7 @@ export type BlogArticleContentType = ISbStoryData<
     date: string
     footer: Array<SbBlokData>
     body: Array<SbBlokData>
-    content: ISbRichtext
+    content: StoryblokRichTextNode<ReactElement>
     // While editing, categories are just UUIDs
     categories: Array<ISbStoryData> | Array<string>
     teaser_text: string

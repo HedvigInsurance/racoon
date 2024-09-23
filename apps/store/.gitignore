@@ -2,3 +2,4 @@
 .vercel
 # Local cache, used in WebStorem GraphQL plugin
 schema.graphql
+stories.json

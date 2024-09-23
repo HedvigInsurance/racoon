@@ -1,4 +1,6 @@
-import { type SbBlokData, type ISbStoryData, type ISbRichtext } from '@storyblok/react'
+import { type SbBlokData, type ISbStoryData } from '@storyblok/react'
+import { type StoryblokRichTextNode } from '@storyblok/richtext'
+import { type ReactElement } from 'react'
 import { type SEOData, type StoryblokAsset, fetchStories } from '@/services/storyblok/storyblok'
 import { getImgSrc, getStoryblokImageSize } from '@/services/storyblok/Storyblok.helpers'
 import type { RoutingLocale } from '@/utils/l10n/types'
@@ -46,7 +48,7 @@ type BlogArticleContentType = ISbStoryData<
     date: string
     footer: Array<SbBlokData>
     body: Array<SbBlokData>
-    content: ISbRichtext
+    content: StoryblokRichTextNode<ReactElement>
     categories: Array<ISbStoryData>
     teaser_text: string
     page_heading: string

@@ -1,22 +1,23 @@
 'use client'
 import styled from '@emotion/styled'
-import type { ISbRichtext } from '@storyblok/react'
-import { renderRichText, storyblokEditable } from '@storyblok/react'
+import { storyblokEditable } from '@storyblok/react'
+import { type StoryblokRichTextNode } from '@storyblok/richtext'
 import { useMemo } from 'react'
 import { Space, Badge, mq, theme } from 'ui'
 import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
+import { renderRichTextToString } from './RichTextBlock/richTextReactRenderer'
 
 type Alignment = 'left' | 'center' | 'right' | 'justify'
 
 export type Props = SbBaseBlockProps<{
-  body: ISbRichtext
+  body: StoryblokRichTextNode
   heading?: string
   headingLevel?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
   alignment?: Alignment
 }>
 
 export const ContentBlock = ({ blok }: Props) => {
-  const contentHtml = useMemo(() => renderRichText(blok.body), [blok.body])
+  const contentHtml = useMemo(() => renderRichTextToString(blok.body), [blok.body])
 
   return (
     <Wrapper {...storyblokEditable(blok)} y={1}>
