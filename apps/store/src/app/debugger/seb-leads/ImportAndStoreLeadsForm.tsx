@@ -9,11 +9,11 @@ import { FormResults } from './FormResults'
 
 export function ImportAndStoreLeadsForm() {
   const today = new Date().toISOString()
-  const lastWeek = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString()
+  const yesterday = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString()
 
   const [state, formAction] = useFormState(importAnsSendLeads, {
     fields: {
-      fromDate: lastWeek,
+      fromDate: yesterday,
       toDate: today,
     },
   })
