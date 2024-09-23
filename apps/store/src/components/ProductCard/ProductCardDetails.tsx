@@ -20,8 +20,8 @@ const useProductDetails = () => {
 }
 
 type RootProps = ComponentProps<typeof Collapsible.Root>
-const Root = ({ children, ...props }: RootProps) => {
-  const [isOpen, setIsOpen] = useState(false)
+const Root = ({ children, defaultOpen, ...props }: RootProps) => {
+  const [isOpen, setIsOpen] = useState(defaultOpen || false)
 
   const toggle = () => {
     setIsOpen((isOpen) => !isOpen)
