@@ -24,7 +24,7 @@ type TextStyleProps = {
 }
 
 export type TextProps = {
-  as?: 'p' | 'span' | 'div'
+  as?: 'p' | 'span' | 'div' | 'sup'
   children?: ReactNode
   title?: string
 } & TextStyleProps

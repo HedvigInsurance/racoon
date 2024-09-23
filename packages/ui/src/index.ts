@@ -15,6 +15,8 @@ export type { InputBaseProps } from './components/InputBase'
 export { Heading } from './components/Heading/Heading'
 export type { HeadingProps, PossibleHeadingVariant } from './components/Heading/Heading'
 export { Text } from './components/Text/Text'
+export { SupText } from './components/SupText/SupText'
+
 export * as Dialog from './components/Dialog/Dialog'
 export { Badge, type BadgeProps } from './components/Badge/Badge'
 export { ConditionalWrapper } from './components/ConditionalWrapper'
