@@ -59,7 +59,6 @@ export const Perils = ({ items, missingItems = [] }: Props) => {
   useResizeObserver({ elementRef: containerRef, onResize: handleResize })
 
   const perilsByColumn = getPerilColumns(perilItems, columns)
-
   return (
     <div className={grid} ref={containerRef}>
       {columns == 0
