@@ -21,6 +21,11 @@ export const cardRoot = recipe({
       secondary: {
         background: tokens.colors.surfaceOpaqueSecondary,
       },
+      ghost: {
+        boxShadow: 'none',
+        border: 'none',
+        background: 'transparent',
+      },
     },
 
     size: {
