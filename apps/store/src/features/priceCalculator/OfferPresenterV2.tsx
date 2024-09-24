@@ -6,12 +6,12 @@ import { useTranslation } from 'next-i18next'
 import { memo, type MouseEventHandler, useEffect, useMemo, useRef, useState } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import { Button, tokens, yStack } from 'ui'
+import { useOfferDetails } from '@/app/[locale]/checkout/components/CartItem/hooks/useOfferDetails'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
 import Collapsible from '@/components/Collapsible/Collapsible'
 import { InfoCard } from '@/components/InfoCard/InfoCard'
 import { SSN_SE_SECTION_ID } from '@/components/PriceCalculator/SsnSeSection'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
-import { useOfferDetails } from '@/components/ProductItem/useOfferDetails'
 import { ProductDetails } from '@/components/ProductItemV2/ProductDetails'
 import {
   activeFormSectionIdAtom,
