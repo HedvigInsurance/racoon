@@ -19,6 +19,7 @@ import { type TemplateV2 } from '@/services/PriceCalculator/PriceCalculator.type
 import type { PriceCalculatorPageStory } from '@/services/storyblok/storyblok'
 import { Features } from '@/utils/Features'
 import { type RoutingLocale } from '@/utils/l10n/types'
+import { CartToast } from './CartToast'
 import { PriceTemplateProvider } from './PriceTemplateProvider'
 import { PurchaseFormV2 } from './PurchaseFormV2'
 
@@ -47,6 +48,7 @@ export function PriceCalculatorCmsPage({ locale, story }: Props) {
           </PriceCalculatorProviders>
         </Suspense>
       </div>
+      <CartToast />
     </StorePageProviders>
   )
 }

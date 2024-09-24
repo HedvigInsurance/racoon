@@ -25,11 +25,7 @@ export type HeaderMenuDesktopProps = {
   defaultValue?: string
 }
 
-export const HeaderMenu = ({
-  defaultValue,
-
-  items,
-}: HeaderMenuDesktopProps) => {
+export const HeaderMenu = ({ defaultValue, items }: HeaderMenuDesktopProps) => {
   const [activeItem, setActiveItem] = useState('')
   const pathname = usePathname()
   const variant = useResponsiveVariant('lg')

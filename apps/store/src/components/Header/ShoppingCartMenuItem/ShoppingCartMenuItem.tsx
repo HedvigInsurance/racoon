@@ -6,14 +6,18 @@ import { PageLink } from '@/utils/PageLink'
 import { ShoppingBagIcon } from './ShoppingBagIcon'
 import { cartLink, wrapper } from './ShoppingCartMenuItem.css'
 
-export const ShoppingCartMenuItem = () => {
+export const SHOP_CART_MENU_ITEM_ID = 'shopping-cart-menu-item'
+
+export function ShoppingCartMenuItem() {
+  const locale = useRoutingLocale()
   const { shopSession } = useShopSession()
+
   const cartLineCount = shopSession?.cart.entries.length
 
-  const locale = useRoutingLocale()
   return (
     <div className={wrapper}>
       <Link
+        id={SHOP_CART_MENU_ITEM_ID}
         className={cartLink}
         href={PageLink.checkout({ locale }).pathname}
         aria-label="shopping cart"
