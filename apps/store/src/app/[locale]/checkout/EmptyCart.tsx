@@ -2,13 +2,13 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
-import { Text, InfoIcon, yStack, theme } from 'ui'
+import { Text, InfoIcon, yStack, theme, Card } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { Pillow } from '@/components/Pillow/Pillow'
 import type { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
-import { layout } from './CheckoutPage.css'
-import { productsGrid, productGridItem, emptyCart } from './EmptyCart.css'
+import { container } from './CheckoutPage.css'
+import { productLinkCard, productsGrid } from './EmptyCart.css'
 
 export type Product = {
   id: string
@@ -30,8 +30,8 @@ export function EmptyCart({ locale, products }: Props) {
   const { t } = useTranslation('cart')
 
   return (
-    <main className={layout}>
-      <div className={clsx(emptyCart, yStack({ alignItems: 'center', gap: 'lg' }))}>
+    <main>
+      <div className={clsx(container, yStack({ alignItems: 'center', gap: 'lg' }))}>
         <div className={yStack({ alignItems: 'center', gap: 'md' })}>
           <InfoIcon size="2.5rem" color={theme.colors.signalBlueElement} />
           <Text>{t('CART_EMPTY_SUMMARY')}</Text>
@@ -45,13 +45,17 @@ export function EmptyCart({ locale, products }: Props) {
       <div className={productsGrid}>
         {products.map((product) => (
           <Link key={product.id} href={product.pageLink}>
-            <div className={productGridItem}>
-              <Pillow {...product.pillowImage} size="medium" />
-              <div>
-                <Text>{product.displayName}</Text>
-                <Text color="textSecondary">{product.tagline}</Text>
-              </div>
-            </div>
+            <Card.Root size="md" variant="ghost" className={productLinkCard}>
+              <Card.Header>
+                <Card.Media>
+                  <Pillow {...product.pillowImage} size="medium" />
+                </Card.Media>
+                <Card.Heading>
+                  <Card.Title>{product.displayName}</Card.Title>
+                  <Card.Subtitle>{product.tagline}</Card.Subtitle>
+                </Card.Heading>
+              </Card.Header>
+            </Card.Root>
           </Link>
         ))}
       </div>

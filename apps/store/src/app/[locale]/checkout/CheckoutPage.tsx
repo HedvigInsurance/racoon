@@ -1,6 +1,5 @@
 'use client'
 
-import { useTranslation } from 'next-i18next'
 import { Heading, yStack } from 'ui'
 import { BankIdDialog } from '@/components/BankIdDialog/BankIdDialog'
 import { type GlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
@@ -14,11 +13,10 @@ import { BonusOffer } from './BonusOffer'
 import { CartEntries } from './CartEntries'
 import { CheckoutDebugDialog } from './CheckoutDebugDialog'
 import { CheckoutForm } from './CheckoutForm'
-import { layout, content, headings } from './CheckoutPage.css'
+import { container } from './CheckoutPage.css'
 import { EmptyCart, type Product } from './EmptyCart'
 
 export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
-  const { t } = useTranslation(['cart', 'checkout'])
   const productMetadata = useProductMetadata()
   const { shopSession } = useShopSession()
 
@@ -42,42 +40,34 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
 
   return (
     <>
-      <main className={layout}>
-        <div className={content}>
-          <div className={headings}>
-            <Heading as="h2" align="center" variant="standard.24">
-              {t('CART_PAGE_HEADING')} ({shopSession.cart.entries.length})
+      <main className={container}>
+        <section className={yStack({ gap: 'md' })}>
+          <CartEntries />
+        </section>
+
+        <BonusOffer shopSession={shopSession} />
+
+        <section className={yStack({ gap: 'lg' })}>
+          <header>
+            <Heading as="h2" variant="standard.32">
+              Complete your purchase
             </Heading>
-            <Heading
-              as="h2"
-              balance={true}
-              color="textSecondary"
-              variant="standard.24"
-              align="center"
-            >
-              {t('CHECKOUT_PAGE_SUBHEADING', { ns: 'checkout' })}
+            <Heading as="h2" variant="standard.32" color="textSecondary">
+              Sign securely with BankID
             </Heading>
-          </div>
+          </header>
 
-          <section className={yStack({ gap: 'md' })}>
-            <CartEntries />
-          </section>
-
-          <section className={yStack({ gap: 'xl' })}>
-            <BonusOffer shopSession={shopSession} />
-
-            <BankIdContextProvider>
-              <CheckoutForm
-                shopSessionId={shopSession.id}
-                ssn={shopSession.customer.ssn}
-                cart={shopSession.cart}
-                shouldCollectName={getShouldCollectName(shopSession.customer)}
-                shouldCollectEmail={getShouldCollectEmail(shopSession.customer)}
-              />
-              <BankIdDialog />
-            </BankIdContextProvider>
-          </section>
-        </div>
+          <BankIdContextProvider>
+            <CheckoutForm
+              shopSessionId={shopSession.id}
+              ssn={shopSession.customer.ssn}
+              cart={shopSession.cart}
+              shouldCollectName={getShouldCollectName(shopSession.customer)}
+              shouldCollectEmail={getShouldCollectEmail(shopSession.customer)}
+            />
+            <BankIdDialog />
+          </BankIdContextProvider>
+        </section>
       </main>
 
       <CheckoutDebugDialog />
@@ -104,18 +94,16 @@ function getAvailableProducts(productMetadata: GlobalProductMetadata): Array<Pro
 
 export function CartSkeleton() {
   return (
-    <main className={layout}>
-      <div className={content}>
-        <section className={yStack({ gap: 'md' })}>
-          <Skeleton style={{ height: 200 }} />
-          <Skeleton style={{ height: 200 }} />
-        </section>
+    <main className={container}>
+      <section className={yStack({ gap: 'md' })}>
+        <Skeleton style={{ height: 200 }} />
+        <Skeleton style={{ height: 200 }} />
+      </section>
 
-        <section className={yStack({ gap: 'xl' })}>
-          <Skeleton style={{ height: 500 }} />
-          <Skeleton style={{ height: 180 }} />
-        </section>
-      </div>
+      <section className={yStack({ gap: 'xl' })}>
+        <Skeleton style={{ height: 500 }} />
+        <Skeleton style={{ height: 180 }} />
+      </section>
     </main>
   )
 }
