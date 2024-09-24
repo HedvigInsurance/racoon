@@ -1,5 +1,5 @@
 import { useTranslation } from 'next-i18next'
-import { Heading, Text } from 'ui'
+import { Heading, Text, yStack } from 'ui'
 import type { CartFragment } from '@/services/graphql/generated'
 import {
   type OfferRecommendationFragment,
@@ -7,7 +7,6 @@ import {
 } from '@/services/graphql/generated'
 import { ProductUsp } from './ProductUsp'
 import { QuickAddEditableView } from './QuickAddEditableView'
-import { quickAddSection } from './QuickAddOfferContainer.css'
 import { useShowQuickAdd } from './useShowQuickAdd'
 
 const ACCIDENT_INSURANCE = 'SE_ACCIDENT'
@@ -32,10 +31,15 @@ export function QuickAddOfferContainer(props: Props) {
   if (!show) return null
 
   return (
-    <div className={quickAddSection}>
-      <Heading variant="standard.18" as={'h2'}>
-        {t('QUICK_ADD_BUNDLE_HEADER')}
-      </Heading>
+    <section className={yStack({ gap: 'lg' })}>
+      <header>
+        <Heading as="h2" variant="standard.32">
+          {t('QUICK_ADD_BUNDLE_HEADER')}
+        </Heading>
+        <Heading as="h2" variant="standard.32" color="textSecondary">
+          Save up to 20% for 12 months
+        </Heading>
+      </header>
       <QuickAddEditableView
         shopSessionId={props.shopSessionId}
         initialOffer={props.offer}
@@ -53,6 +57,6 @@ export function QuickAddOfferContainer(props: Props) {
           </div>
         }
       />
-    </div>
+    </section>
   )
 }
