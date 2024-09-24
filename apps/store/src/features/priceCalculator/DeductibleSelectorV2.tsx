@@ -49,8 +49,14 @@ export function DeductibleSelectorV2({ offers, selectedOffer, onValueChange }: P
   return (
     <>
       <CardRadioGroup.Root value={selectedOffer.id} onValueChange={onValueChange}>
-        {deductibleLevels.map((item) => (
-          <CardRadioGroup.Item key={item.id} value={item.id}>
+        {deductibleLevels.map((item, index) => (
+          <CardRadioGroup.Item
+            // NOTE: We want to avoid remounting selected deductible element when changing tiers
+            // to avoid extra animation, hence index key
+            key={index}
+            value={item.id}
+            isSelected={selectedOffer.id === item.id}
+          >
             <div className={xStack({ gap: 'xs' })}>
               <CardRadioGroup.Indicator />
               <div className={yStack({ flexGrow: 1, gap: 'xs' })}>
