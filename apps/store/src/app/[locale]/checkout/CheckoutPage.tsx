@@ -10,11 +10,11 @@ import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
 import type { RoutingLocale } from '@/utils/l10n/types'
-import { BonusOffer } from './BonusOffer'
 import { container } from './CheckoutPage.css'
 import { CartEntries } from './components/CartEntries'
 import { CheckoutDebugDialog } from './components/CheckoutDebugDialog'
 import { CheckoutForm } from './components/CheckoutForm/CheckoutForm'
+import { CrossSell } from './components/CrossSell'
 import { EmptyCart, type Product } from './components/EmptyCart/EmptyCart'
 
 export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
@@ -57,7 +57,7 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
           <CartEntries />
         </section>
 
-        <BonusOffer shopSession={shopSession} />
+        <CrossSell shopSession={shopSession} />
 
         <section className={yStack({ gap: 'lg' })}>
           <header>
