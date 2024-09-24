@@ -6,7 +6,6 @@ import { useTranslation } from 'next-i18next'
 import { memo, type MouseEventHandler, useEffect, useMemo, useRef, useState } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import { Button, tokens, yStack } from 'ui'
-import { useCartToast } from '@/appComponents/providers/CartToastProvider'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
 import Collapsible from '@/components/Collapsible/Collapsible'
 import { InfoCard } from '@/components/InfoCard/InfoCard'
@@ -120,7 +119,6 @@ function OfferSummary() {
   const shopSessionId = useShopSessionIdOrThrow()
   const selectedOffer = useSelectedOfferValueOrThrow()
   const priceIntent = usePriceIntent()
-  const [, showCartToast] = useCartToast()
 
   const setPriceCalculatorStep = useSetAtom(priceCalculatorStepAtom)
 
@@ -153,10 +151,6 @@ function OfferSummary() {
     event.preventDefault()
     await addToCart(selectedOffer.id)
     setPriceCalculatorStep('viewBonusOffer')
-    const isEditing = entryToReplace !== undefined
-    if (!isEditing) {
-      showCartToast()
-    }
   }
 
   const productData = useProductData()

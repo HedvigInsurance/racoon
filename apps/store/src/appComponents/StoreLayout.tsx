@@ -3,7 +3,6 @@ import { cookies } from 'next/headers'
 import { type ReactNode, Suspense } from 'react'
 import { AppTrackingTriggers } from '@/app/[locale]/AppTrackingTriggers'
 import { StoryblokLayout } from '@/app/[locale]/StoryblokLayout'
-import { CartToastProvider } from '@/appComponents/providers/CartToastProvider'
 import { ProductMetadataProvider } from '@/appComponents/providers/ProductMetadataProvider'
 import { ShopSessionTrackingProvider } from '@/appComponents/providers/ShopSessionTrackingProvider'
 import { StoryblokProvider } from '@/appComponents/providers/StoryblokProvider'
@@ -45,19 +44,17 @@ export async function StoreLayout({ locale, children }: StoreLayoutProps) {
       <ShopSessionProvider shopSessionId={shopSessionId}>
         <ProductMetadataProvider productMetadata={productMetadata}>
           <CompanyReviewsMetadataProvider companyReviewsMetadata={companyReviewsMetadata}>
-            <CartToastProvider>
-              <ShopSessionTrackingProvider>
-                <AppErrorDialog />
-                <TranslationKeysDebugger />
-                <GlobalBannerDynamic />
-                <StoryblokProvider>
-                  <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
-                </StoryblokProvider>
-                <Suspense>
-                  <AppTrackingTriggers />
-                </Suspense>
-              </ShopSessionTrackingProvider>
-            </CartToastProvider>
+            <ShopSessionTrackingProvider>
+              <AppErrorDialog />
+              <TranslationKeysDebugger />
+              <GlobalBannerDynamic />
+              <StoryblokProvider>
+                <StoryblokLayout globalStory={globalStory}>{children}</StoryblokLayout>
+              </StoryblokProvider>
+              <Suspense>
+                <AppTrackingTriggers />
+              </Suspense>
+            </ShopSessionTrackingProvider>
           </CompanyReviewsMetadataProvider>
         </ProductMetadataProvider>
         {Features.enabled('COOKIE_BANNER') && <CookieConsent />}
