@@ -142,10 +142,11 @@ export const useSyncPriceIntentState = ({
       return
     }
     const service = priceIntentServiceInitClientSide(apolloClient)
-    const createPriceIntent = () =>
-      service.create({ productName, priceTemplate, shopSessionId }).then((priceIntent) => {
+    const createPriceIntent = () => {
+      service.getOrCreate({ productName, priceTemplate, shopSessionId }).then((priceIntent) => {
         setPriceIntentId(priceIntent.id)
       })
+    }
 
     if (entryToReplace != null) {
       if (entryToReplace.priceIntentId == null) {
