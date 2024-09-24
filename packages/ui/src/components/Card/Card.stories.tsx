@@ -16,7 +16,7 @@ const meta: Meta<Controls> = {
   component: Card.Root,
   argTypes: {
     variant: {
-      options: ['primary', 'secondary'],
+      options: ['primary', 'secondary', 'ghost'],
       control: { type: 'select' },
     },
     size: {
