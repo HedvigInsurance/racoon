@@ -25,6 +25,16 @@ export const trigger = style({
   ':focus-visible': {
     boxShadow: tokens.shadow.focus,
   },
+
+  ':disabled': {
+    cursor: 'not-allowed',
+  },
+
+  selectors: {
+    '&[data-loading=true]': {
+      cursor: 'wait',
+    },
+  },
 })
 
 export const label = style({
