@@ -4,15 +4,17 @@ import { assignInlineVars } from '@vanilla-extract/dynamic'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect, useMemo } from 'react'
-import { CrossIcon, Text, xStack } from 'ui'
+import { CrossIcon, Text } from 'ui'
 import { type HeaderMenuProps } from '@/blocks/HeaderBlock/HeaderBlock'
 import { NestedMenuBlock } from '@/blocks/HeaderBlock/NestedMenuBlock'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
 import { useResponsiveVariant } from '@/utils/useResponsiveVariant'
 import { navigationPrimaryList, HeaderMenuDesktop } from '../Header.css'
 import { HeaderMenuMobile } from '../HeaderMenuMobile/HeaderMenuMobile'
+import { ShoppingCartMenuItem } from '../ShoppingCartMenuItem/ShoppingCartMenuItem'
 import {
   backButtonText,
+  backLink,
   backWrapper,
   displayMobileMenu,
   displaySubmenus,
@@ -45,7 +47,7 @@ export const HeaderMenu = ({ defaultValue, items }: HeaderMenuDesktopProps) => {
     return (
       <>
         {product && (
-          <Link href={product.pageLink} className={xStack({ gap: 'md', alignItems: 'center' })}>
+          <Link href={product.pageLink} className={backLink}>
             <div className={backWrapper}>
               <CrossIcon size="1.5rem" />
             </div>
@@ -65,6 +67,7 @@ export const HeaderMenu = ({ defaultValue, items }: HeaderMenuDesktopProps) => {
       className={headerMenu}
       style={assignInlineVars({
         [displaySubmenus]: product ? 'none' : 'block',
+        [displayMobileMenu]: product ? 'none' : 'block',
       })}
     >
       {/* 'Desktop' menu is always rendered for SEO reasons so navigation links becomes accessible */}
@@ -83,16 +86,13 @@ export const HeaderMenu = ({ defaultValue, items }: HeaderMenuDesktopProps) => {
       {variant === 'mobile' && (
         <>
           {priceCalculatorMenu}
-          <div
-            className={headerMenuMobile}
-            style={assignInlineVars({
-              [displayMobileMenu]: product ? 'none' : 'flex',
-            })}
-          >
+          <div className={headerMenuMobile}>
             <HeaderMenuMobile defaultValue={defaultValue}>{content}</HeaderMenuMobile>
           </div>
         </>
       )}
+
+      <ShoppingCartMenuItem />
     </div>
   )
 }

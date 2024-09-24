@@ -2,7 +2,6 @@ import { storyblokEditable } from '@storyblok/react'
 import { useMemo } from 'react'
 import { Header } from '@/components/Header/Header'
 import { HeaderMenu } from '@/components/Header/HeaderMenu/HeaderMenu'
-import { ShoppingCartMenuItem } from '@/components/Header/ShoppingCartMenuItem/ShoppingCartMenuItem'
 import type { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { checkBlockType } from '@/services/storyblok/Storyblok.helpers'
 import { type GeneralMenuBlockProps } from './GeneralMenuBlock'
@@ -33,8 +32,6 @@ export const HeaderBlock = ({ blok }: HeaderBlockProps) => {
       {blok.headerMenu.length > 0 && (
         <HeaderMenu defaultValue={productNavItem} items={blok.headerMenu} />
       )}
-
-      <ShoppingCartMenuItem />
     </Header>
   )
 }
