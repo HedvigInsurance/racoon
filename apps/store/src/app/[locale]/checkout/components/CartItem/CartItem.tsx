@@ -6,7 +6,6 @@ import {
   Divider,
   IconButton,
   InfoIcon,
-  SupText,
   Text,
   Tooltip,
   sprinkles,
@@ -14,19 +13,21 @@ import {
   yStack,
 } from 'ui'
 import { PDFViewer } from '@/components/PDFViewer'
+
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Price } from '@/components/Price'
 import { DetailsList } from '@/components/ProductCard/DetailsList/DetailsList'
 import { ProductCardDetails } from '@/components/ProductCard/ProductCardDetails'
-import { useOfferDetails } from '@/components/ProductItem/useOfferDetails'
 import { type ProductOfferFragment } from '@/services/graphql/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { convertToDate } from '@/utils/date'
 import { getOfferPrice } from '@/utils/getOfferPrice'
 import { useFormatter } from '@/utils/useFormatter'
-import { useIsEmbedded } from '@/utils/useIsEmbedded'
+import { CartItemProductDetails } from './components/CartItemProductDetails'
+import { CartItemProductDocuments } from './components/CartItemProductDocuments'
 import { EditCartItemDialog } from './components/EditCartItemDialog'
 import { RemoveCartItemDialog } from './components/RemoveCartItemDialog'
+import { useOfferDetails } from './hooks/useOfferDetails'
 
 type Props = {
   offer: ProductOfferFragment
@@ -44,18 +45,11 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
 
   const productDetails = useOfferDetails(offer)
 
-  const isEmbedded = useIsEmbedded()
-
   if (!shopSession) {
     return null
   }
 
   const { product, exposure, variant, cancellation, startDate: offerStartDate } = offer
-
-  const productDocuments = variant.documents.map((item) => ({
-    title: item.displayName,
-    url: item.url,
-  }))
 
   const startDate = convertToDate(offerStartDate)
   const formattedStartDate = startDate ? formatter.fromNow(startDate) : null
@@ -97,49 +91,9 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
         </ProductCardDetails.Trigger>
 
         <ProductCardDetails.Content className={yStack({ paddingTop: 'md', gap: 'md' })}>
-          <div>
-            <Text className={sprinkles({ mb: 'xxs' })}>{t('VIEW_ENTRY_DETAILS_BUTTON')}</Text>
-
-            <DetailsList.Root size="md">
-              {productDetails.map(({ title, value }) => (
-                <DetailsList.Item key={title}>
-                  <DetailsList.Label>{title}</DetailsList.Label>
-                  <DetailsList.Value>{value}</DetailsList.Value>
-                </DetailsList.Item>
-              ))}
-            </DetailsList.Root>
-          </div>
-
+          <CartItemProductDetails details={productDetails} />
           <EditCartItemDialog offer={offer} />
-
-          {productDocuments.length ? (
-            <div>
-              <Text>{t('DOCUMENTS_SECTION_LABEL')}</Text>
-              <ul>
-                {productDocuments.map(({ title, url }) => (
-                  <li key={title}>
-                    {isEmbedded ? (
-                      <PDFViewer url={url}>
-                        <button>
-                          <Text as="span" color="textTranslucentSecondary">
-                            {title}
-                            <SupText>PDF</SupText>
-                          </Text>
-                        </button>
-                      </PDFViewer>
-                    ) : (
-                      <a href={url} target="_blank" rel="noopener noreferrer">
-                        <Text as="span" color="textTranslucentSecondary">
-                          {title}
-                          <SupText>PDF</SupText>
-                        </Text>
-                      </a>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
+          <CartItemProductDocuments documents={variant.documents} />
         </ProductCardDetails.Content>
       </ProductCardDetails.Root>
 
