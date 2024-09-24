@@ -1,5 +1,6 @@
 import { Heading, sprinkles, Text, yStack } from 'ui'
 import {GenerateAndSendOfferButton} from "@/app/debugger/seb-leads/GenerateAndSendOfferButton";
+import {ImportAndStoreLeadsForm} from "@/app/debugger/seb-leads/ImportAndStoreLeadsForm";
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { SebLeadsDebuggerForm } from './CreateSebLeadsForm'
 import { CreateWidgetSessionForm } from './CreateWidgetSessionForm'
@@ -27,6 +28,10 @@ function SebLeadsDebuggerPage() {
             Create widget session from existing leads And send offer to customer
           </Heading>
           <GenerateAndSendOfferButton />
+          <Heading as="h2" className={sprinkles({ marginTop: 'xl' })}>
+            Import and store SEB Leads
+          </Heading>
+          <ImportAndStoreLeadsForm />
         </div>
       </GridLayout.Content>
     </GridLayout.Root>
