@@ -27,8 +27,15 @@ export function ProductTierSelectorV2({ offers, selectedOffer, onValueChange }: 
   return (
     <>
       <CardRadioGroup.Root value={selectedOffer.id} onValueChange={onValueChange}>
-        {offers.map((offer) => (
-          <CardRadioGroup.Item key={offer.id} value={offer.id} style={{ padding: tokens.space.lg }}>
+        {offers.map((offer, index) => (
+          <CardRadioGroup.Item
+            // NOTE: We want to avoid remounting selected deductible element when changing tiers
+            // to avoid extra animation, hence index key
+            key={index}
+            value={offer.id}
+            isSelected={selectedOffer.id === offer.id}
+            className={sprinkles({ padding: 'lg' })}
+          >
             <div className={yStack()}>
               <div
                 className={xStack({

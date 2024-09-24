@@ -7,7 +7,6 @@ export const item = style([
   yStack({ gap: 'sm' }),
   {
     borderRadius: tokens.radius.md,
-    backgroundColor: tokens.colors.opaque1,
     padding: tokens.space.md,
     cursor: 'pointer',
 
@@ -19,7 +18,7 @@ export const item = style([
 
     selectors: {
       '&[data-state=checked]': {
-        backgroundColor: tokens.colors.buttonPrimary,
+        // backgroundColor: tokens.colors.buttonPrimary,
         vars: {
           [tokens.colors.textPrimary]: tokens.colors.textNegative,
           [tokens.colors.textSecondary]: tokens.colors.gray500,
