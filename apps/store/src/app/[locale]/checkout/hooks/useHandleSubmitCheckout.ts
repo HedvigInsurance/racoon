@@ -6,7 +6,7 @@ import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { useShopSessionCustomerUpdateMutation } from '@/services/graphql/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useErrorMessage } from '@/utils/useErrorMessage'
-import { FormElement } from './CheckoutPage.constants'
+import { FormElement } from '../CheckoutPage.constants'
 
 type Options = {
   shopSessionId: string

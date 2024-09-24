@@ -19,8 +19,8 @@ import { BundleDiscountExtraProductLinks } from '@/features/bundleDiscount/Bundl
 import { readMoreLink } from '@/features/bundleDiscount/BundleDiscountSummary.css'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
-import { QueryParam } from './CheckoutPage.constants'
-import { Cartitem } from './components/CartItem/CartItem'
+import { QueryParam } from '../CheckoutPage.constants'
+import { Cartitem } from './CartItem/CartItem'
 
 export function CartEntries() {
   const { t } = useTranslation('cart')

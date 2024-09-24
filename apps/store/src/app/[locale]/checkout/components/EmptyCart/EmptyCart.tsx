@@ -7,7 +7,7 @@ import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { Pillow } from '@/components/Pillow/Pillow'
 import type { RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
-import { container } from './CheckoutPage.css'
+import { container } from '../../CheckoutPage.css'
 import { productLinkCard, productsGrid } from './EmptyCart.css'
 
 export type Product = {
