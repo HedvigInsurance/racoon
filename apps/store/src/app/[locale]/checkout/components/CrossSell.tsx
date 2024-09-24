@@ -4,7 +4,7 @@ import { QuickAddOfferContainer } from '@/components/QuickAdd/QuickAddOfferConta
 import { useBonusOffer } from '@/components/QuickAdd/useBonusOffer'
 import { type ShopSessionFragment } from '@/services/graphql/generated'
 
-export function BonusOffer({ shopSession }: { shopSession: ShopSessionFragment }) {
+export function CrossSell({ shopSession }: { shopSession: ShopSessionFragment }) {
   const offerRecommendation = useBonusOffer()
 
   if (!offerRecommendation) {
