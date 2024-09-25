@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import { forwardRef, type ComponentProps, type PropsWithChildren } from 'react'
 import { Heading } from '../Heading/Heading'
 import { Text } from '../Text/Text'
-import { cardAside, cardHeader, cardRoot } from './Card.css'
+import { cardAside, cardFooter, cardHeader, cardRoot } from './Card.css'
 
 type RootStyleProps = RecipeVariants<typeof cardRoot>
 type RootProps = ComponentProps<'article'> & RootStyleProps
@@ -69,6 +69,26 @@ function CardAside({ className, children, ...props }: PropsWithChildren<AsidePro
   )
 }
 
+type FooterProps = ComponentProps<'footer'> & {
+  columns?: number
+}
+function CardFooter({
+  className,
+  children,
+  columns = 1,
+  ...props
+}: PropsWithChildren<FooterProps>) {
+  return (
+    <footer
+      className={clsx(cardFooter, className)}
+      style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}
+      {...props}
+    >
+      {children}
+    </footer>
+  )
+}
+
 export const Card = {
   Root: CardRoot,
   Header: CardHeader,
@@ -77,4 +97,5 @@ export const Card = {
   Title: CardTitle,
   Subtitle: CardSubtitle,
   Aside: CardAside,
+  Footer: CardFooter,
 }

@@ -71,3 +71,7 @@ export const cardAside = style({
   insetInlineEnd: cardPadding,
   zIndex: 1,
 })
+
+export const cardFooter = style({
+  display: 'grid',
+})
