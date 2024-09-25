@@ -66,8 +66,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
       locale: context.locale,
     })
   } catch (error) {
-    console.warn(`Widget | Failed to fetch story for slug: ${slug}`)
-    console.warn(error)
+    console.warn(`Widget | Failed to fetch story for slug: ${slug}`, error)
     return { notFound: true }
   }
 

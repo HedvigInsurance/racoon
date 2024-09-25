@@ -52,51 +52,46 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient })
 
-  try {
-    const [
-      translations,
+  const [
+    translations,
+    priceIntent,
+    story,
+    // Only loading for hydrating client-side apollo cache
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    shopSession,
+  ] = await Promise.all([
+    serverSideTranslations(context.locale),
+    fetchWidgetPriceIntent(apolloClient, context.params.priceIntentId),
+    fetchFlowStory(context.params.flow, context.draftMode),
+    shopSessionService.fetchById(context.params.shopSessionId),
+  ])
+
+  const compareInsurance = story.content.compareInsurance ?? false
+  const partnerName = story.content.partner
+  const productName = priceIntent.product.name
+  const priceTemplate = getWidgetPriceTemplate(priceIntent.product.name, compareInsurance)
+  const productData = await fetchProductData({
+    apolloClient,
+    productName,
+    partnerName,
+  })
+
+  console.info(`Widget | Calculate Price: ${priceIntent.product.name}/${priceTemplate.name}`)
+  console.info(`Widget | Compare insurance: ${compareInsurance}`)
+
+  return addApolloState(apolloClient, {
+    props: {
       priceIntent,
-      story,
-      // Only loading for hydrating client-side apollo cache
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      shopSession,
-    ] = await Promise.all([
-      serverSideTranslations(context.locale),
-      fetchWidgetPriceIntent(apolloClient, context.params.priceIntentId),
-      fetchFlowStory(context.params.flow, context.draftMode),
-      shopSessionService.fetchById(context.params.shopSessionId),
-    ])
-
-    const compareInsurance = story.content.compareInsurance ?? false
-    const partnerName = story.content.partner
-    const productName = priceIntent.product.name
-    const priceTemplate = getWidgetPriceTemplate(priceIntent.product.name, compareInsurance)
-    const productData = await fetchProductData({
-      apolloClient,
-      productName,
+      priceTemplate,
       partnerName,
-    })
-
-    console.info(`Widget | Calculate Price: ${priceIntent.product.name}/${priceTemplate.name}`)
-    console.info(`Widget | Compare insurance: ${compareInsurance}`)
-
-    return addApolloState(apolloClient, {
-      props: {
-        priceIntent,
-        priceTemplate,
-        partnerName,
-        productData,
-        ...hideChatOnPage(),
-        ...translations,
-        ...context.params,
-        showBackButton: story.content.showBackButton ?? false,
-        [SHOP_SESSION_PROP_NAME]: shopSession.id,
-      },
-    })
-  } catch (error) {
-    console.error('Widget Calculate Price | Unable to render', error)
-    return { notFound: true }
-  }
+      productData,
+      ...hideChatOnPage(),
+      ...translations,
+      ...context.params,
+      showBackButton: story.content.showBackButton ?? false,
+      [SHOP_SESSION_PROP_NAME]: shopSession.id,
+    },
+  })
 }
 
 export default function Page({
