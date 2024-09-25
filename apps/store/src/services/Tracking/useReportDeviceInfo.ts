@@ -4,9 +4,11 @@ import { useSendEventBatchMutation } from '@/services/graphql/generated'
 import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { TrackingEvent } from '@/services/Tracking/Tracking'
+import { useTracking } from './useTracking'
 
 export const useReportDeviceInfo = () => {
   const { onReady } = useShopSession()
+  const tracking = useTracking()
   const [sendEventBatch] = useSendEventBatchMutation({
     onError() {
       console.log('Failed to send internal events, ignoring the error')
@@ -29,7 +31,7 @@ export const useReportDeviceInfo = () => {
           osName,
           browserName,
         }
-        // console.debug('deviceInfo', data)
+        tracking.reportDeviceInfo(data)
 
         const deviceInfoEvent = {
           type: TrackingEvent.DeviceInfo,
@@ -40,6 +42,6 @@ export const useReportDeviceInfo = () => {
         }
         sendEventBatch({ variables: { inputList: [deviceInfoEvent] } })
       }),
-    [onReady, sendEventBatch],
+    [tracking, onReady, sendEventBatch],
   )
 }
