@@ -83,62 +83,57 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     res: context.res,
   })
 
-  try {
-    const [translations, shopSession, story, priceIntent] = await Promise.all([
-      serverSideTranslations(context.locale),
-      shopSessionService.fetchById(context.params.shopSessionId),
-      fetchFlowStory(context.params.flow, context.draftMode),
-      priceIntentService.get(context.params.priceIntentId),
-    ])
+  const [translations, shopSession, story, priceIntent] = await Promise.all([
+    serverSideTranslations(context.locale),
+    shopSessionService.fetchById(context.params.shopSessionId),
+    fetchFlowStory(context.params.flow, context.draftMode),
+    priceIntentService.get(context.params.priceIntentId),
+  ])
 
-    const customer = shopSession.customer
-    if (!customer) {
-      throw new Error(`Widget Sign | No customer in Shop Session: ${shopSession.id}`)
-    }
+  const customer = shopSession.customer
+  if (!customer) {
+    throw new Error(`Widget Sign | No customer in Shop Session: ${shopSession.id}`)
+  }
 
-    if (!customer.ssn) {
-      throw new Error(`Widget Sign | No SSN in Shop Session: ${shopSession.id}`)
-    }
+  if (!customer.ssn) {
+    throw new Error(`Widget Sign | No SSN in Shop Session: ${shopSession.id}`)
+  }
 
-    if (!priceIntent) {
-      throw new Error(`Widget Sign | No Price Intent: ${context.params.priceIntentId}`)
-    }
+  if (!priceIntent) {
+    throw new Error(`Widget Sign | No Price Intent: ${context.params.priceIntentId}`)
+  }
 
-    const partnerName = story.content.partner
-    const productName = priceIntent.product.name
+  const partnerName = story.content.partner
+  const productName = priceIntent.product.name
 
-    const productData = await fetchProductData({
-      apolloClient,
-      productName,
-      partnerName,
-    })
+  const productData = await fetchProductData({
+    apolloClient,
+    productName,
+    partnerName,
+  })
 
-    const initialSelectedTypeOfContract =
-      productData.variants.length > 1 ? productData.variants[0].typeOfContract : null
+  const initialSelectedTypeOfContract =
+    productData.variants.length > 1 ? productData.variants[0].typeOfContract : null
 
-    return {
-      props: {
-        ...translations,
-        ssn: customer.ssn,
-        shouldCollectEmail: getShouldCollectEmail(customer),
-        shouldCollectName: getShouldCollectName(customer),
-        shopSessionId: context.params.shopSessionId,
-        content: story.content.checkoutPageContent,
-        flow: context.params.flow,
-        partner: partnerName,
-        priceIntentId: priceIntent.id,
-        // TODO: check if we want to control this via CMS
-        ...hideChatOnPage(),
-        productName: priceIntent.product.name,
-        productData,
-        ...(initialSelectedTypeOfContract ? { initialSelectedTypeOfContract } : {}),
-        pageTitle: story.content.pageTitle ?? 'Hedvig',
-        showBackButton: story.content.showBackButton ?? false,
-      },
-    }
-  } catch (error) {
-    console.error('Widget Sign | Unable to render', error)
-    return { notFound: true }
+  return {
+    props: {
+      ...translations,
+      ssn: customer.ssn,
+      shouldCollectEmail: getShouldCollectEmail(customer),
+      shouldCollectName: getShouldCollectName(customer),
+      shopSessionId: context.params.shopSessionId,
+      content: story.content.checkoutPageContent,
+      flow: context.params.flow,
+      partner: partnerName,
+      priceIntentId: priceIntent.id,
+      // TODO: check if we want to control this via CMS
+      ...hideChatOnPage(),
+      productName: priceIntent.product.name,
+      productData,
+      ...(initialSelectedTypeOfContract ? { initialSelectedTypeOfContract } : {}),
+      pageTitle: story.content.pageTitle ?? 'Hedvig',
+      showBackButton: story.content.showBackButton ?? false,
+    },
   }
 }
 
