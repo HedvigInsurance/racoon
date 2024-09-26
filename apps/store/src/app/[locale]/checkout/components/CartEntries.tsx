@@ -5,9 +5,7 @@ import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import { useEffect } from 'react'
-import { Text, Divider, yStack } from 'ui'
-import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
-import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
+import { Text, yStack } from 'ui'
 import {
   BUNDLE_DISCOUNT_PERCENTAGE,
   BUNDLE_DISCOUNT_PROMO_PAGE_PATH,
@@ -75,9 +73,6 @@ export function CartEntries() {
           ))}
         </AnimatePresence>
       </div>
-      <DiscountFieldContainer shopSession={shopSession} />
-      <Divider />
-      <TotalAmountContainer cart={shopSession.cart} />
 
       {shouldShowBundleDiscountProducts && (
         <div className={yStack({ gap: 'md' })}>

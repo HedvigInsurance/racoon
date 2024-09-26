@@ -1,11 +1,15 @@
 'use client'
 
 import { useTranslation } from 'next-i18next'
-import { Heading, yStack } from 'ui'
+import { Card, Heading, Text, yStack } from 'ui'
 import { BankIdDialog } from '@/components/BankIdDialog/BankIdDialog'
 import { type GlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
+import { Divider } from '@/components/ProductCard/Divider'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
+import { TextWithLink } from '@/components/TextWithLink'
+import { CartDiscount } from '@/features/CartDiscount/CartDiscount'
+import { CartTotal } from '@/features/CartTotal/CartTotal'
 import { CrossSell } from '@/features/CrossSell/CrossSell'
 import { useRecommendations } from '@/features/CrossSell/hooks/useRecommendations'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
@@ -17,6 +21,8 @@ import { CartEntries } from './components/CartEntries'
 import { CheckoutDebugDialog } from './components/CheckoutDebugDialog'
 import { CheckoutForm } from './components/CheckoutForm/CheckoutForm'
 import { EmptyCart, type Product } from './components/EmptyCart/EmptyCart'
+import { OrderBreakdown } from './components/OrderBreakdown'
+import { PageLink } from '@/utils/PageLink'
 
 export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
   const { t } = useTranslation(['cart', 'checkout'])
@@ -83,16 +89,43 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
             </Heading>
           </header>
 
-          <BankIdContextProvider>
-            <CheckoutForm
-              shopSessionId={shopSession.id}
-              ssn={shopSession.customer.ssn}
-              cart={shopSession.cart}
-              shouldCollectName={getShouldCollectName(shopSession.customer)}
-              shouldCollectEmail={getShouldCollectEmail(shopSession.customer)}
-            />
-            <BankIdDialog />
-          </BankIdContextProvider>
+          <Card.Root variant="secondary">
+            <Text>Order summary</Text>
+
+            <OrderBreakdown cart={shopSession.cart} />
+
+            <Divider />
+
+            <CartDiscount shopSession={shopSession} />
+
+            <Divider />
+
+            <CartTotal cart={shopSession.cart} />
+
+            <BankIdContextProvider>
+              <CheckoutForm
+                shopSessionId={shopSession.id}
+                ssn={shopSession.customer.ssn}
+                cart={shopSession.cart}
+                shouldCollectName={getShouldCollectName(shopSession.customer)}
+                shouldCollectEmail={getShouldCollectEmail(shopSession.customer)}
+              />
+              <BankIdDialog />
+            </BankIdContextProvider>
+
+            <Text align="center">{t('USP_NO_BINDING_TIME')}</Text>
+          </Card.Root>
+
+          <TextWithLink
+            as="p"
+            size="xs"
+            align="center"
+            balance={true}
+            href={PageLink.privacyPolicy({ locale })}
+            target="_blank"
+          >
+            {t('checkout:SIGN_DISCLAIMER')}
+          </TextWithLink>
         </section>
       </main>
 
