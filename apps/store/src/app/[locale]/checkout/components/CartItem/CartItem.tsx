@@ -10,6 +10,7 @@ import { ProductCardDetails } from '@/components/ProductCard/ProductCardDetails'
 import { useOfferDetails } from '@/components/ProductItem/useOfferDetails'
 import { type ProductOfferFragment } from '@/services/graphql/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { convertToDate } from '@/utils/date'
 import { getOfferPrice } from '@/utils/getOfferPrice'
 import { useFormatter } from '@/utils/useFormatter'
 import { useIsEmbedded } from '@/utils/useIsEmbedded'
@@ -45,6 +46,13 @@ export const Cartitem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
     title: item.displayName,
     url: item.url,
   }))
+
+  const startDateValue = convertToDate(startDate)
+  const formattedStartDate = startDateValue ? formatter.fromNow(startDateValue) : null
+
+  // When having an external insurer we'll either automatically switch so start date is unknown at this moment
+  // or we the date selector is showing
+  const shouldShowStartDateDetail = formattedStartDate && !cancellation.externalInsurer
 
   return (
     <Card.Root>
@@ -153,6 +161,17 @@ export const Cartitem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
                   currencyCode: price.currencyCode,
                   amount: offer.cost.discount.amount,
                 })}
+              </Text>
+            </DetailsList.Value>
+          </DetailsList.Item>
+        ) : null}
+
+        {shouldShowStartDateDetail ? (
+          <DetailsList.Item>
+            <DetailsList.Label>{t('START_DATE_LABEL')}</DetailsList.Label>
+            <DetailsList.Value>
+              <Text as="span" size="md">
+                {formattedStartDate}
               </Text>
             </DetailsList.Value>
           </DetailsList.Item>
