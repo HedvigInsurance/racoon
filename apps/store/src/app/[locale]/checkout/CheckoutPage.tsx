@@ -11,16 +11,20 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
 import type { RoutingLocale } from '@/utils/l10n/types'
 import { container } from './CheckoutPage.css'
-import { CartEntries } from './components/CartEntries'
+import { CrossSell } from './components/CrossSell/CrossSell'
+import { useRecommendations } from './components/CrossSell/hooks/useRecommendations'
 import { CheckoutDebugDialog } from './components/CheckoutDebugDialog'
 import { CheckoutForm } from './components/CheckoutForm/CheckoutForm'
-import { CrossSell } from './components/CrossSell'
+import { CartEntries } from './components/CartEntries'
 import { EmptyCart, type Product } from './components/EmptyCart/EmptyCart'
 
 export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
   const { t } = useTranslation(['cart', 'checkout'])
 
   const productMetadata = useProductMetadata()
+
+  const recommendedOffer = useRecommendations()
+
   const { shopSession } = useShopSession()
 
   if (!shopSession) {
@@ -57,7 +61,20 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
           <CartEntries />
         </section>
 
-        <CrossSell shopSession={shopSession} />
+        {recommendedOffer ? (
+          <section className={yStack({ gap: 'lg' })}>
+            <header>
+              <Heading as="h2" variant="standard.32">
+                {t('QUICK_ADD_BUNDLE_HEADER')}
+              </Heading>
+              <Heading as="h2" variant="standard.32" color="textSecondary">
+                Save up to 20% for 12 months
+              </Heading>
+            </header>
+
+            <CrossSell recommendation={recommendedOffer} />
+          </section>
+        ) : null}
 
         <section className={yStack({ gap: 'lg' })}>
           <header>
