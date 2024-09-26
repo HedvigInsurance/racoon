@@ -154,7 +154,6 @@ export const FetchInsurance = (props: Props) => {
           <InsurelyIframe
             configName={props.insurely.configName}
             onCollection={handleInsurelyCollection}
-            onClose={dismiss}
             onLoaded={handleInsurelyLoaded}
             onCompleted={handleInsurelyCompleted}
           />

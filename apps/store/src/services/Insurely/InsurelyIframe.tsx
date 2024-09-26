@@ -19,7 +19,6 @@ enum EventName {
 // Non-exhaustive list of Insurely iframe messages
 type InsurelyMessage =
   | { name: EventName.APP_LOADED }
-  | { name: EventName.APP_CLOSE }
   | { name: EventName.COLLECTION_ID; value: string }
   | { name: EventName.RESULTS }
 
@@ -27,7 +26,6 @@ type InsurelyIframeProps = {
   configName: string
   className?: string
   onLoaded?: () => void
-  onClose?: () => void
   onCollection?: (collectionId: string) => void
   onCompleted?: () => void
 }
@@ -38,7 +36,6 @@ export function InsurelyIframe({
   configName,
   className,
   onLoaded,
-  onClose,
   onCollection,
   onCompleted,
 }: InsurelyIframeProps) {
@@ -47,9 +44,6 @@ export function InsurelyIframe({
       switch (data.name) {
         case EventName.APP_LOADED:
           return onLoaded?.()
-
-        case EventName.APP_CLOSE:
-          return onClose?.()
 
         case EventName.COLLECTION_ID:
           return onCollection?.(data.value)
@@ -60,7 +54,7 @@ export function InsurelyIframe({
     }
     window.addEventListener('message', handleMessage)
     return () => window.removeEventListener('message', handleMessage)
-  }, [onLoaded, onClose, onCollection, onCompleted])
+  }, [onLoaded, onCollection, onCompleted])
 
   const { language } = useCurrentLocale()
   useEffect(() => {
