@@ -1,10 +1,10 @@
 import { useTranslation } from 'next-i18next'
 import { type PropsWithChildren } from 'react'
-import { Card, CrossIcon, Divider, IconButton, Text, sprinkles, yStack } from 'ui'
+import { Card, CrossIcon, Divider, IconButton, Text, yStack } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
-import { Price } from '@/components/Price'
 import { DetailsList } from '@/components/ProductCard/DetailsList/DetailsList'
 import { ProductCardDetails } from '@/components/ProductCard/ProductCardDetails'
+import { TotalPrice } from '@/components/ProductCard/TotalPrice/TotalPrice'
 import { type ProductOfferFragment } from '@/services/graphql/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { convertToDate } from '@/utils/date'
@@ -132,14 +132,7 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
 
       <Divider />
 
-      <DetailsList.Root size="md">
-        <DetailsList.Item className={sprinkles({ color: 'textPrimary' })}>
-          <DetailsList.Label>{t('CHECKOUT_PRICE_TOTAL')}</DetailsList.Label>
-          <DetailsList.Value>
-            <Price className={sprinkles({ justifyContent: 'flex-end' })} {...price} />
-          </DetailsList.Value>
-        </DetailsList.Item>
-      </DetailsList.Root>
+      <TotalPrice {...price} />
     </Card.Root>
   )
 }
