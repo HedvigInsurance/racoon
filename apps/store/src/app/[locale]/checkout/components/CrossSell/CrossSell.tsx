@@ -30,8 +30,6 @@ export function CrossSell() {
     return null
   }
 
-  console.log(grid({ columns: '2' }))
-
   return (
     <section className={yStack({ gap: 'lg' })}>
       <header>
