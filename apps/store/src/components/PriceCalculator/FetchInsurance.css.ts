@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { tokens } from 'ui'
+import { tokens, xStack } from 'ui'
 import {
   INSURELY_IFRAME_MAX_HEIGHT,
   INSURELY_IFRAME_MAX_WIDTH,
@@ -37,3 +37,8 @@ export const dialogIframeWindow = style({
   overflowY: 'auto',
   borderRadius: tokens.radius.xxs,
 })
+
+export const actions = style([
+  xStack({ justifyContent: 'center' }),
+  { marginBottom: tokens.space.xl },
+])

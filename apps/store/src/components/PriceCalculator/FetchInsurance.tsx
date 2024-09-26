@@ -2,7 +2,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import { useTranslation } from 'next-i18next'
 import { type ComponentProps, useCallback, useState, useMemo, type ReactNode } from 'react'
-import { Dialog, Text, visuallyHidden } from 'ui'
+import { Button, Dialog, Text, visuallyHidden } from 'ui'
 import { FetchInsurancePrompt } from '@/components/FetchInsurancePrompt/FetchInsurancePrompt'
 import type { ExternalInsurer } from '@/services/graphql/generated'
 import {
@@ -15,6 +15,7 @@ import {
   dialogIframeContent,
   dialogIframeWindow,
   dialogWindow,
+  actions,
 } from './FetchInsurance.css'
 import { FetchInsuranceSuccess } from './FetchInsuranceSuccess'
 import {
@@ -48,6 +49,7 @@ export const FetchInsurance = (props: Props) => {
   const [state, setState] = useFetchInsuranceState()
   const fetchInsuranceCompare = useFetchInsuranceCompare()
   const fetchInsuraceSuccess = useFetchInsuranceSuccess()
+  const [hasInsurelyLoaded, setHasInsurelyLoaded] = useState(false)
   const isOpen = ['PROMPT', 'COMPARE', 'SUCCESS'].includes(state)
 
   const dismiss = () => setState('DISMISSED')
@@ -123,6 +125,8 @@ export const FetchInsurance = (props: Props) => {
     }
   }, [updateDataCollectionId, props.priceIntentId, dataCollectionId, loggingContext])
 
+  const handleInsurelyLoaded = useCallback(() => setHasInsurelyLoaded(true), [])
+
   const { t } = useTranslation('purchase-form')
 
   let content: ReactNode = null
@@ -151,8 +155,16 @@ export const FetchInsurance = (props: Props) => {
             configName={props.insurely.configName}
             onCollection={handleInsurelyCollection}
             onClose={dismiss}
+            onLoaded={handleInsurelyLoaded}
             onCompleted={handleInsurelyCompleted}
           />
+          {hasInsurelyLoaded && (
+            <div className={actions}>
+              <Dialog.Close asChild>
+                <Button>{t('DIALOG_BUTTON_CANCEL', { ns: 'common' })}</Button>
+              </Dialog.Close>
+            </div>
+          )}
         </Dialog.Window>
       </Dialog.Content>
     )
