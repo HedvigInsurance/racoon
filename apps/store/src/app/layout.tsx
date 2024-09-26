@@ -1,9 +1,9 @@
-import { Provider as JotaiProvider } from 'jotai'
 import type { Metadata, Viewport } from 'next'
 import type { ReactNode } from 'react'
 import { theme } from 'ui'
 import { ORIGIN_URL } from 'utils/url'
 import { AppInitTriggers } from './AppInitTriggers'
+import { LayoutJotaiProvider } from './LayoutJotaiProvider'
 
 type Props = {
   children: ReactNode
@@ -12,7 +12,7 @@ type Props = {
 export default function RootAppLayout({ children }: Props) {
   return (
     <>
-      <JotaiProvider>{children}</JotaiProvider>
+      <LayoutJotaiProvider>{children}</LayoutJotaiProvider>
       <AppInitTriggers />
     </>
   )
