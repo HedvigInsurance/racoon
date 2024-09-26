@@ -34,7 +34,7 @@ const DiscountRoot = ({ children, defaultOpen, ...props }: RootProps) => {
       </div>
 
       <Collapsible.Content>
-        <div className={sprinkles({ paddingBlock: 'sm' })}>{children}</div>
+        <div className={sprinkles({ paddingTop: 'md' })}>{children}</div>
       </Collapsible.Content>
     </Collapsible.Root>
   )
@@ -87,7 +87,7 @@ const DiscountCode = ({ children, className, code, ...props }: CodeProps) => {
     >
       <Badge
         className={xStack({ alignItems: 'center', paddingRight: 'none', gap: 'sm' })}
-        color="gray200"
+        color="translucent1"
       >
         <Text as="span" size="xs">
           {code}
