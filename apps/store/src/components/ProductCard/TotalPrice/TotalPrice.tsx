@@ -10,8 +10,10 @@ type Props = {
   reducedAmount?: number
   note?: string
 }
+
 export function TotalPrice({ label, currencyCode, amount, reducedAmount, note }: Props) {
   const { t } = useTranslation('cart')
+
   return (
     <DetailsList.Root size="md">
       <DetailsList.Item className={sprinkles({ color: 'textPrimary' })}>
