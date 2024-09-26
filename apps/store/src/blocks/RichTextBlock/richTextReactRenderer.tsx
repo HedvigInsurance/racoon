@@ -55,6 +55,13 @@ const resolver = richTextResolver({
         return <Link key={node.attrs.uuid} {...linkProps} />
       }
     },
+    [MarkTypes.STYLED]: (node) => {
+      return (
+        <span key={node.text} className={node.attrs?.class}>
+          {node.text}
+        </span>
+      )
+    },
     [BlockTypes.IMAGE]: (node: StoryblokRichTextNode<ReactElement>) => {
       const attrs = node.attrs!
       const blok = {
@@ -67,6 +74,9 @@ const resolver = richTextResolver({
     },
     [BlockTypes.COMPONENT]: componentResolver,
   },
+  // No need to escape quote marks [\'\"], it breaks final result
+  // From safety perspective quotes should only be escaped in attribute values
+  textFn: (text: string) => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'),
 })
 
 function componentResolver(node: StoryblokRichTextNode<ReactElement>) {
