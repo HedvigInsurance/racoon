@@ -32,7 +32,7 @@ export const backLink = style([
 export const backWrapper = style({
   backgroundColor: tokens.colors.buttonSecondary,
   borderRadius: tokens.radius.xxs,
-  padding: tokens.space.xs,
+  padding: tokens.space.xxs,
 
   ':hover': {
     backgroundColor: tokens.colors.buttonSecondaryHover,
