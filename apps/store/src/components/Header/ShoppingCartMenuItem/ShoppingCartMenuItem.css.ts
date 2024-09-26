@@ -1,10 +1,20 @@
 import { style } from '@vanilla-extract/css'
-import { tokens } from 'ui'
+import { responsiveStyles, tokens } from 'ui'
+import { displayMobileMenu } from '../HeaderMenu/HeaderMenu.css'
 
 export const wrapper = style({
+  // Hide shopping cart if mobile menu is hidden
+  display: displayMobileMenu,
   // Align to the right in the header
   marginLeft: 'auto',
   lineHeight: 0,
+
+  ...responsiveStyles({
+    lg: {
+      // Always visible in desktop
+      display: 'block',
+    },
+  }),
 })
 
 export const cartLink = style({
