@@ -22,7 +22,6 @@ import { BonusOfferPresenter } from './BonusOfferPresenter'
 import { InsuranceDataForm } from './InsuranceDataForm'
 
 export function PurchaseFormV2() {
-  useSyncPriceIntentState()
   useWarnOnPreloadedPriceIntentId()
 
   const isReady = useIsPriceIntentStateReady()

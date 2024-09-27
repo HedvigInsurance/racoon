@@ -44,6 +44,7 @@ export function InsuranceDataForm() {
 
   const form = useAtomValue(priceCalculatorFormAtom)
   const activeSectionId = useAtomValue(activeFormSectionIdAtom)
+  console.log('activeSectionId', activeSectionId)
   const step = useAtomValue(priceCalculatorStepAtom)
   const sections = form.sections.map((section, index) => {
     if (step !== 'fillForm' || section.id !== activeSectionId) {
