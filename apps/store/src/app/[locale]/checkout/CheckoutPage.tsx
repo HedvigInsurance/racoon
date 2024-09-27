@@ -16,13 +16,13 @@ import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
 import type { RoutingLocale } from '@/utils/l10n/types'
+import { PageLink } from '@/utils/PageLink'
 import { container } from './CheckoutPage.css'
 import { CartEntries } from './components/CartEntries'
 import { CheckoutDebugDialog } from './components/CheckoutDebugDialog'
 import { CheckoutForm } from './components/CheckoutForm/CheckoutForm'
 import { EmptyCart, type Product } from './components/EmptyCart/EmptyCart'
 import { OrderBreakdown } from './components/OrderBreakdown'
-import { PageLink } from '@/utils/PageLink'
 
 export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
   const { t } = useTranslation(['cart', 'checkout'])
