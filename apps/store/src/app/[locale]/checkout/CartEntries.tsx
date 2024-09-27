@@ -7,7 +7,6 @@ import { useTranslation } from 'next-i18next'
 import { useEffect } from 'react'
 import { Text, Divider, yStack } from 'ui'
 import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
-import { ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
 import {
   BUNDLE_DISCOUNT_PERCENTAGE,
@@ -58,7 +57,7 @@ export function CartEntries() {
 
   return (
     <>
-      <ShopBreakdown>
+      <div className={yStack({ gap: 'md' })}>
         <AnimatePresence initial={false}>
           {shopSession.cart.entries.map((offer) => (
             <motion.div
@@ -75,7 +74,7 @@ export function CartEntries() {
             </motion.div>
           ))}
         </AnimatePresence>
-      </ShopBreakdown>
+      </div>
       <DiscountFieldContainer shopSession={shopSession} />
       <Divider />
       <TotalAmountContainer cart={shopSession.cart} />
