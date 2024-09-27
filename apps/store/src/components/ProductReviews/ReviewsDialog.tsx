@@ -5,6 +5,7 @@ import { Skeleton } from '@/components/Skeleton/Skeleton'
 import type { Review, Score } from '@/features/memberReviews/memberReviews.types'
 import type { ReviewsDistribution } from '@/features/memberReviews/memberReviews.types'
 import type { ReviewsByScore } from '@/features/memberReviews/memberReviews.types'
+import { useTracking } from '@/services/Tracking/useTracking'
 import { ReviewComment } from './ReviewComment'
 import {
   dialogContent,
@@ -32,12 +33,16 @@ export function ReviewsDialog({
   onClose,
 }: Props) {
   const { state, fetchReviews, setSelectedScore } = useReviewsDialog()
+  const tracking = useTracking()
 
   return (
     <Dialog.Root
       onOpenChange={(isOpen) => {
         if (isOpen) {
           fetchReviews(productIds)
+          if (productIds.length > 0) {
+            tracking.reportOpenProductReviews(productIds[0])
+          }
         }
       }}
     >
@@ -51,7 +56,7 @@ export function ReviewsDialog({
 
           <Dialog.Window className={dialogWindow}>
             <Space y={2}>
-              {Header}
+              <Dialog.Title>{Header}</Dialog.Title>
 
               {state.status === 'loading' && <LoadingStateUI />}
 

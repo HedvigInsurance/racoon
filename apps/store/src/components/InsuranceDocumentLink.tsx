@@ -6,9 +6,10 @@ import { PDFViewer } from './PDFViewer'
 type Props = {
   url: string
   displayName: string
+  onClick?: () => void
 }
 
-export const InsuranceDocumentLink = ({ url, displayName }: Props) => {
+export const InsuranceDocumentLink = ({ url, displayName, onClick }: Props) => {
   const extension = getExtensionFromUrl(url)
   const isEmbedded = useIsEmbedded()
 
@@ -27,7 +28,7 @@ export const InsuranceDocumentLink = ({ url, displayName }: Props) => {
   }
 
   return (
-    <FileLink href={url} target="_blank" rel="noopener nofollow">
+    <FileLink href={url} target="_blank" rel="noopener nofollow" onClick={onClick}>
       <Ellipsis>
         {displayName} <DocumentType>{extension}</DocumentType>
       </Ellipsis>

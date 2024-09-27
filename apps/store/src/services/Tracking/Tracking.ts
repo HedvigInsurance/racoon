@@ -36,11 +36,14 @@ export enum TrackingEvent {
   AddToCart = 'add_to_cart',
   Adtraction = 'adtraction',
   BeginCheckout = 'begin_checkout',
+  ClickTermsAndConditions = 'clickTermsAndConditions',
   DeleteFromCart = 'delete_from_cart',
   DeviceInfo = 'deviceInfo',
+  ExpandPeril = 'expandPeril',
   // Website-driven experiments, as configured in experiment.json
   ExperimentImpression = 'experiment_impression',
   OpenPriceCalculator = 'open_price_calculator',
+  OpenProductReviews = 'openProductReviews',
   PageView = 'virtual_page_view',
   Purchase = 'purchase',
   SelectItem = 'select_item',
@@ -301,6 +304,31 @@ export class Tracking {
     datadogRum.addAction(event, dataFields)
     pushToGTMDataLayer(ecommerceEvent)
   }
+
+  ////////////////////////////
+  // Internal analytics events
+  public reportDeviceInfo(deviceInfo: DeviceInfo) {
+    console.log(TrackingEvent.DeviceInfo, deviceInfo)
+    // TODO: Connect with actually posing event
+  }
+
+  public reportExpandPeril(productName: string, perilTitle: string) {
+    console.log(TrackingEvent.ExpandPeril, { productName, perilTitle })
+  }
+
+  public reportClickTermsAndConditions(productName: string, productVariant: string) {
+    console.log(TrackingEvent.ClickTermsAndConditions, { productName, productVariant })
+  }
+
+  public reportOpenProductReviews(productName: string) {
+    console.log(TrackingEvent.OpenProductReviews, { productName })
+  }
+}
+
+type DeviceInfo = {
+  deviceType: string
+  osName: string
+  browserName: string
 }
 
 datadogLogs.createLogger(Tracking.LOGGER_NAME)
