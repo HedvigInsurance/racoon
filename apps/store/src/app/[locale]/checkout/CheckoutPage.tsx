@@ -13,10 +13,10 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
 import type { RoutingLocale } from '@/utils/l10n/types'
 import { container } from './CheckoutPage.css'
-import { EmptyCart, type Product } from './components/EmptyCart/EmptyCart'
 import { CartEntries } from './components/CartEntries'
-import { CheckoutForm } from './components/CheckoutForm/CheckoutForm'
 import { CheckoutDebugDialog } from './components/CheckoutDebugDialog'
+import { CheckoutForm } from './components/CheckoutForm/CheckoutForm'
+import { EmptyCart, type Product } from './components/EmptyCart/EmptyCart'
 
 export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
   const { t } = useTranslation(['cart', 'checkout'])
