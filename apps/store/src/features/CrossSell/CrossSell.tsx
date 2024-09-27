@@ -23,12 +23,6 @@ export function CrossSell({ recommendation }: Props) {
 
   const { product, offer } = recommendation
 
-  // We only support cross-selling of Accident insurance at the moment
-  if (product.name !== 'SE_ACCIDENT') {
-    console.log(`Cross sell | Unsupported product: ${product.name}`)
-    return null
-  }
-
   return (
     <Card.Root>
       <Card.Aside>

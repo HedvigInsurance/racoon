@@ -33,7 +33,19 @@ export const useRecommendations = (customShopSessionId?: string): OfferRecommend
 
   const offers = result.data ? getOfferRecommendations(result.data) : []
 
-  return offers[0] ?? null
+  if (!offers.length) {
+    return null
+  }
+
+  const [offer] = offers
+
+  // We only support cross-selling of Accident insurance at the moment
+  if (offer.product.name !== 'SE_ACCIDENT') {
+    console.log(`Cross sell | Unsupported product: ${offer.product.name}`)
+    return null
+  }
+
+  return offer
 }
 
 const getOfferRecommendations = (data: ProductRecommendationsQuery): Array<OfferRecommendation> => {
