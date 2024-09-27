@@ -11,7 +11,6 @@ const BOOTSTRAP_SCRIPT_URL = 'https://blocks.insurely.com/assets/bootstrap.js'
 
 enum EventName {
   APP_LOADED = 'APP_LOADED',
-  APP_CLOSE = 'APP_CLOSE',
   COLLECTION_ID = 'COLLECTION_ID',
   RESULTS = 'RESULTS',
 }
