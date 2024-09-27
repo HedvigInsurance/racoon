@@ -23,7 +23,7 @@ type Props = {
   defaultExpanded?: boolean
 }
 
-export const Cartitem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) => {
+export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) => {
   const { t } = useTranslation(['cart', 'purchase-form'])
 
   const formatter = useFormatter()
