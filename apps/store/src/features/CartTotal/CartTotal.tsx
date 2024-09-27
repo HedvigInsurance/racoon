@@ -1,4 +1,4 @@
-import { TotalPrice } from '@/components/ProductCard/TotalPrice'
+import { TotalPrice } from '@/components/ProductCard/TotalPrice/TotalPrice'
 import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useCartTotal } from './hooks/useCartTotal'
 
