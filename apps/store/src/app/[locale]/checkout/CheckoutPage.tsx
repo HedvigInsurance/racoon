@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslation } from 'next-i18next'
 import { Heading, yStack } from 'ui'
 import { BankIdDialog } from '@/components/BankIdDialog/BankIdDialog'
 import { type GlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
@@ -17,6 +18,8 @@ import { container } from './CheckoutPage.css'
 import { EmptyCart, type Product } from './EmptyCart'
 
 export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
+  const { t } = useTranslation(['cart', 'checkout'])
+
   const productMetadata = useProductMetadata()
   const { shopSession } = useShopSession()
 
@@ -41,7 +44,16 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
   return (
     <>
       <main className={container}>
-        <section className={yStack({ gap: 'md' })}>
+        <section className={yStack({ gap: 'lg' })}>
+          <header>
+            <Heading as="h2" variant="standard.32">
+              {t('CART_PAGE_HEADING')} ({shopSession.cart.entries.length})
+            </Heading>
+            <Heading as="h2" variant="standard.32" color="textSecondary">
+              {t('checkout:CHECKOUT_PAGE_SUBHEADING')}
+            </Heading>
+          </header>
+
           <CartEntries />
         </section>
 
@@ -50,10 +62,10 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
         <section className={yStack({ gap: 'lg' })}>
           <header>
             <Heading as="h2" variant="standard.32">
-              Complete your purchase
+              {t('checkout:COMPLETE_PURCHASE_TITLE')}
             </Heading>
             <Heading as="h2" variant="standard.32" color="textSecondary">
-              Sign securely with BankID
+              {t('checkout:COMPLETE_PURCHASE_SUBTITLE')}
             </Heading>
           </header>
 
