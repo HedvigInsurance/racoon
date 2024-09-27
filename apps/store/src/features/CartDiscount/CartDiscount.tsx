@@ -31,9 +31,7 @@ export function CartDiscount({ shopSession }: Props) {
   }
 
   const unredeem = (event?: FormEvent<HTMLFormElement>) => {
-    if (event) {
-      event.preventDefault()
-    }
+    event?.preventDefault()
 
     unredeemCampaign()
   }
