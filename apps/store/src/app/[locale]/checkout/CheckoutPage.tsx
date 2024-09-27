@@ -67,9 +67,6 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
               <Heading as="h2" variant="standard.32">
                 {t('QUICK_ADD_BUNDLE_HEADER')}
               </Heading>
-              <Heading as="h2" variant="standard.32" color="textSecondary">
-                Save up to 20% for 12 months
-              </Heading>
             </header>
 
             <CrossSell recommendation={recommendedOffer} />
