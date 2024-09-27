@@ -20,7 +20,7 @@ import { readMoreLink } from '@/features/bundleDiscount/BundleDiscountSummary.cs
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { QueryParam } from './CheckoutPage.constants'
-import { Cartitem } from './components/CartItem/CartItem'
+import { CartItem } from './components/CartItem/CartItem'
 
 export function CartEntries() {
   const { t } = useTranslation('cart')
@@ -68,7 +68,7 @@ export function CartEntries() {
               exit={{ opacity: 0, height: 0 }}
               style={{ position: 'relative' }}
             >
-              <Cartitem
+              <CartItem
                 offer={offer}
                 defaultExpanded={searchParams?.get(QueryParam.ExpandCart) === '1'}
               />
