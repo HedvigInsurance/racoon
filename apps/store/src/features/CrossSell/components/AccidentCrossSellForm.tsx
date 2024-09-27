@@ -2,10 +2,9 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { isSameDay } from 'date-fns'
 import { useTranslation } from 'next-i18next'
 import { type FormEvent, type ReactNode, useState } from 'react'
-import { sprinkles, yStack } from 'ui'
+import { yStack } from 'ui'
 import { InputDay } from '@/components/InputDay/InputDay'
-import { Price } from '@/components/Price'
-import { DetailsList } from '@/components/ProductCard/DetailsList/DetailsList'
+import { TotalPrice } from '@/components/ProductCard/TotalPrice/TotalPrice'
 import { StepperInput } from '@/components/StepperInput/StepperInput'
 import { type OfferRecommendationFragment } from '@/services/graphql/generated'
 import { useShopSessionIdOrThrow } from '@/services/shopSession/ShopSessionContext'
@@ -120,17 +119,7 @@ export function AccidentCrossSellForm({ offer: initialOffer, children }: Props) 
         />
       </div>
 
-      <DetailsList.Root size="md">
-        <DetailsList.Item className={sprinkles({ color: 'textPrimary' })}>
-          <DetailsList.Label>{t('CHECKOUT_PRICE_TOTAL')}</DetailsList.Label>
-          <DetailsList.Value>
-            <Price
-              className={sprinkles({ justifyContent: 'flex-end' })}
-              {...getOfferPrice(offer.cost)}
-            />
-          </DetailsList.Value>
-        </DetailsList.Item>
-      </DetailsList.Root>
+      <TotalPrice {...getOfferPrice(offer.cost)} />
 
       {children({ isCoInsuredUpdated, isPending })}
     </form>
