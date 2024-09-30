@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import type { ComponentPropsWithoutRef } from 'react'
 import { useMemo, useState } from 'react'
-import { BankIdIcon, Button, CheckIcon, Space, Text, theme } from 'ui'
+import { BankIdIcon, Button, CheckIcon, Space, Text, Divider, theme } from 'ui'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -195,19 +195,6 @@ const UspWrapper = styled.div({
   justifyContent: 'center',
   gap: theme.space.xs,
 })
-
-const Divider = () => {
-  return (
-    <div
-      style={{
-        height: 1,
-        borderBottomWidth: 1,
-        borderBottomStyle: 'solid',
-        borderBottomColor: theme.colors.borderOpaque1,
-      }}
-    />
-  )
-}
 
 const getSelectedOffer = (
   priceIntent: PriceIntentCarTrialExtensionFragment,
