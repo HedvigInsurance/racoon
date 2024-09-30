@@ -19,7 +19,9 @@ const CrossSellRoot = ({ children, ...props }: RootProps) => {
   return (
     <Card.Root {...props}>
       <Card.Aside>
-        <Badge color="pinkFill1">{t('QUICK_ADD_BADGE_LABEL')}</Badge>
+        <Badge color="pinkFill1" size="responsive">
+          {t('QUICK_ADD_BADGE_LABEL')}
+        </Badge>
       </Card.Aside>
 
       {children}

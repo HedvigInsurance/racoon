@@ -10,6 +10,10 @@ export const responsiveVariantStyles = responsiveVariants({
     whiteSpace: 'pre-wrap',
   },
   variants: {
+    'standard.16': {
+      fontSize: theme.fontSizes[2],
+      lineHeight: 1.4,
+    },
     'standard.18': {
       fontSize: theme.fontSizes[3],
       lineHeight: 1.32,

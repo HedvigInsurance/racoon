@@ -67,8 +67,10 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
         </Card.Media>
 
         <Card.Heading>
-          <Card.Title>{product.displayNameFull}</Card.Title>
-          <Card.Subtitle>{exposure.displayNameShort}</Card.Subtitle>
+          <Card.Title variant={{ _: 'standard.16', sm: 'standard.18' }}>
+            {product.displayNameFull}
+          </Card.Title>
+          <Card.Subtitle size={{ _: 'body', sm: 'md' }}>{exposure.displayNameShort}</Card.Subtitle>
         </Card.Heading>
       </Card.Header>
 
