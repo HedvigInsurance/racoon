@@ -12,6 +12,7 @@ import {
   sprinkles,
   Text,
   ToggleCard,
+  Divider,
   tokens,
   yStack,
 } from 'ui'
@@ -20,7 +21,6 @@ import { InputStartDay } from '../InputDay/InputStartDay'
 import { Price } from '../Price'
 import { DetailsList } from './DetailsList/DetailsList'
 import { Discount, FORM_CAMPAIGN_CODE } from './Discount/Discount'
-import { Divider } from './Divider'
 import { ProductCardDetails } from './ProductCardDetails'
 
 type Controls = ComponentProps<typeof Card.Root>
