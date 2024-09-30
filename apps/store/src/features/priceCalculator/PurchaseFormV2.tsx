@@ -19,7 +19,7 @@ import {
   priceCalculatorStepAtom,
 } from '@/features/priceCalculator/priceCalculatorAtoms'
 import { BonusOfferPresenter } from './BonusOfferPresenter'
-import { InsuranceDataForm } from './InsuranceDataForm'
+import { InsuranceDataForm } from './InsuranceDataForm/InsuranceDataForm'
 
 export function PurchaseFormV2() {
   useSyncPriceIntentState()

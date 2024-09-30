@@ -19,7 +19,10 @@ import { usePriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTem
 import { TextLink } from '@/components/TextLink/TextLink'
 import { EditSsnWarningContainer } from '@/features/priceCalculator/EditSsnWarningContainer'
 import { FormGridNew } from '@/features/priceCalculator/FormGridNew'
-import { gdprLink } from '@/features/priceCalculator/InsuranceDataForm.css'
+import {
+  formSection,
+  gdprLink,
+} from '@/features/priceCalculator/InsuranceDataForm/InsuranceDataForm.css'
 import { priceCalculatorStepAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
 import { SectionPreview } from '@/features/priceCalculator/SectionPreview'
 import { useConfirmPriceIntent } from '@/features/priceCalculator/useConfirmPriceIntent'
@@ -55,17 +58,10 @@ export function InsuranceDataForm() {
     }
 
     let sectionBody: ReactNode
-    let sectionStyle = {}
-    if (section.id === SSN_SE_SECTION_ID) {
-      sectionStyle = {
-        position: 'absolute',
-        top: '50%',
-        transform: 'translateY(-50%)',
-        maxWidth: '23rem',
-      }
+    const isSsnSection = section.id === SSN_SE_SECTION_ID
+    if (isSsnSection) {
       sectionBody = <SsnSeSection className={yStack({ gap: 'lg' })} />
     } else {
-      sectionStyle = { marginTop: '3.75rem' }
       const isLast = index === form.sections.length - 1
       sectionBody = (
         <>
@@ -84,7 +80,10 @@ export function InsuranceDataForm() {
       )
     }
     return (
-      <div key={section.id} className={yStack({ gap: 'lg' })} style={sectionStyle}>
+      <div
+        key={section.id}
+        className={clsx(yStack({ gap: 'lg' }), formSection.base, isSsnSection && formSection.ssn)}
+      >
         <SectionTitle section={section} />
         {sectionBody}
       </div>
