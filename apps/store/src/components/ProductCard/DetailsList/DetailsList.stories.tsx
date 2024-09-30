@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { type ComponentProps } from 'react'
-import { Badge, Text, yStack } from 'ui'
-import { CurrencyCode } from '@/services/graphql/graphql'
-import { Price } from '../../Price'
+import { Badge, Text } from 'ui'
 import { DetailsList } from './DetailsList'
 
 type Controls = ComponentProps<typeof DetailsList.Root>
@@ -63,22 +61,6 @@ export const Large: Story = {
         <DetailsList.Item>
           <DetailsList.Label>Zip code</DetailsList.Label>
           <DetailsList.Value>118 47</DetailsList.Value>
-        </DetailsList.Item>
-      </DetailsList.Root>
-    </div>
-  ),
-}
-
-export const TotalPrice: Story = {
-  render: () => (
-    <div style={{ maxWidth: '400px' }}>
-      <DetailsList.Root size="lg">
-        <DetailsList.Item>
-          <DetailsList.Label>Total</DetailsList.Label>
-          <DetailsList.Value className={yStack({ alignItems: 'flex-end' })}>
-            <Price currencyCode={CurrencyCode.Sek} reducedAmount={300} amount={379} />
-            <Text size="sm">-20% for 3 months, then 379 kr/mo</Text>
-          </DetailsList.Value>
         </DetailsList.Item>
       </DetailsList.Root>
     </div>

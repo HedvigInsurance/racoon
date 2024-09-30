@@ -18,10 +18,10 @@ import {
 } from 'ui'
 import { CurrencyCode } from '@/services/graphql/graphql'
 import { InputStartDay } from '../InputDay/InputStartDay'
-import { Price } from '../Price'
 import { DetailsList } from './DetailsList/DetailsList'
 import { Discount, FORM_CAMPAIGN_CODE } from './Discount/Discount'
 import { ProductCardDetails } from './ProductCardDetails'
+import { TotalPrice } from './TotalPrice/TotalPrice'
 
 type Controls = ComponentProps<typeof Card.Root>
 
@@ -115,18 +115,7 @@ export const Default: Story = {
 
         <Divider />
 
-        <DetailsList.Root size="md">
-          <DetailsList.Item className={sprinkles({ color: 'textPrimary' })}>
-            <DetailsList.Label>Total</DetailsList.Label>
-            <DetailsList.Value>
-              <Price
-                className={sprinkles({ justifyContent: 'flex-end' })}
-                currencyCode={CurrencyCode.Sek}
-                amount={458}
-              />
-            </DetailsList.Value>
-          </DetailsList.Item>
-        </DetailsList.Root>
+        <TotalPrice amount={458} currencyCode={CurrencyCode.Sek} />
       </Card.Root>
     </div>
   ),
@@ -216,18 +205,7 @@ export const Info: Story = {
 
         <Divider />
 
-        <DetailsList.Root size="md">
-          <DetailsList.Item className={sprinkles({ color: 'textPrimary' })}>
-            <DetailsList.Label>Total</DetailsList.Label>
-            <DetailsList.Value>
-              <Price
-                className={sprinkles({ justifyContent: 'flex-end' })}
-                currencyCode={CurrencyCode.Sek}
-                amount={458}
-              />
-            </DetailsList.Value>
-          </DetailsList.Item>
-        </DetailsList.Root>
+        <TotalPrice amount={458} currencyCode={CurrencyCode.Sek} />
       </Card.Root>
     </div>
   ),
@@ -319,18 +297,7 @@ export const WithSwitching: Story = {
 
           <Divider />
 
-          <DetailsList.Root size="md">
-            <DetailsList.Item className={sprinkles({ color: 'textPrimary' })}>
-              <DetailsList.Label>Total</DetailsList.Label>
-              <DetailsList.Value>
-                <Price
-                  className={sprinkles({ justifyContent: 'flex-end' })}
-                  currencyCode={CurrencyCode.Sek}
-                  amount={458}
-                />
-              </DetailsList.Value>
-            </DetailsList.Item>
-          </DetailsList.Root>
+          <TotalPrice amount={458} currencyCode={CurrencyCode.Sek} />
         </Card.Root>
       </div>
     )
@@ -450,18 +417,7 @@ export const WithDiscount: Story = {
 
           <Divider />
 
-          <DetailsList.Root size="md">
-            <DetailsList.Item className={sprinkles({ color: 'textPrimary' })}>
-              <DetailsList.Label>Total</DetailsList.Label>
-              <DetailsList.Value>
-                <Price
-                  className={sprinkles({ justifyContent: 'flex-end' })}
-                  currencyCode={CurrencyCode.Sek}
-                  amount={458}
-                />
-              </DetailsList.Value>
-            </DetailsList.Item>
-          </DetailsList.Root>
+          <TotalPrice amount={458} currencyCode={CurrencyCode.Sek} />
         </Card.Root>
       </div>
     )
