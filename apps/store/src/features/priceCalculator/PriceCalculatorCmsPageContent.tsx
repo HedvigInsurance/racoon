@@ -1,7 +1,6 @@
 'use client'
 
 import { useAtomValue } from 'jotai'
-import { ProductHeroV2 } from '@/features/priceCalculator/ProductHeroV2'
 import { useResponsiveVariant } from '@/utils/useResponsiveVariant'
 import { CartToast } from './CartToast'
 import { priceCalculatorStepAtom } from './priceCalculatorAtoms'
@@ -11,6 +10,7 @@ import {
   productHero,
   productHeroSection,
 } from './PriceCalculatorCmsPageContent.css'
+import { ProductHeroV2 } from './ProductHeroV2/ProductHeroV2'
 import { PurchaseFormV2 } from './PurchaseFormV2'
 
 export function PriceCalculatorCmsPageContent() {
