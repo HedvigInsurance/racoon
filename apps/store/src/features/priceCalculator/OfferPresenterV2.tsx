@@ -150,7 +150,7 @@ function OfferSummary() {
   const handleAddToCart: MouseEventHandler = async (event) => {
     event.preventDefault()
     await addToCart(selectedOffer.id)
-    setPriceCalculatorStep('viewBonusOffer')
+    setPriceCalculatorStep('purchaseSummary')
   }
 
   const productData = useProductData()

@@ -3,6 +3,8 @@ import { hoverStyles, responsiveStyles, tokens, xStack, yStack } from 'ui'
 import { HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header.css'
 import { HEADER_HEIGHT_MOBILE } from '@/components/Header/HeaderMenuMobile/HeaderMenuMobile.css'
 
+export const PRICE_CALCULATOR_SECTION_PADDING = tokens.space.md
+
 export const pageGrid = style({
   display: 'grid',
   gridTemplateRows: 'min-content 1fr',
@@ -36,7 +38,7 @@ export const productHeroSection = style([
 
 export const priceCalculatorSection = style({
   position: 'relative',
-  padding: tokens.space.md,
+  padding: PRICE_CALCULATOR_SECTION_PADDING,
 })
 
 export const productHero = style({
@@ -71,9 +73,4 @@ export const arrowBackWrapper = style({
   backgroundColor: tokens.colors.grayTranslucent100,
   borderRadius: tokens.radius.xxs,
   padding: tokens.space.xs,
-})
-
-export const purchaseFormWrapper = style({
-  maxWidth: '23rem',
-  marginInline: 'auto',
 })

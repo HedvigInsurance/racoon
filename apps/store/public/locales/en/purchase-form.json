@@ -1,4 +1,5 @@
 {
+  "ADDED_TO_CART_LABEL": "Added to cart",
   "ADD_TO_CART_BUTTON_LABEL": "Add to cart",
   "AUTO_SWITCH_FIELD_LABEL": "Switch automatically",
   "AUTO_SWITCH_FIELD_MESSAGE": "We cancel your insurance at {{COMPANY}}. Hedvig is activated when it expires.",
@@ -107,6 +108,7 @@
   "GDPR_LINK_BEFORE_OFFER": "How we handle personal data",
   "GENERAL_ERROR_DIALOG_PRIMARY_BUTTON": "Try again",
   "GENERAL_ERROR_DIALOG_PROMPT": "We cannot calculate your price at the moment.",
+  "GO_TO_CART_LABEL": "Go to cart",
   "HOUSEHOLD_SIZE_VALUE_one": "You + {{count}}",
   "HOUSEHOLD_SIZE_VALUE_other": "You + {{count}}",
   "HOUSEHOLD_SIZE_VALUE_zero": "Just you",
@@ -152,6 +154,7 @@
   "SECTION_TITLE_YOUR_HOME": "Your home",
   "SECTION_TITLE_YOUR_INFORMATION": "Your information",
   "SECTION_TOOLTIP_YOUR_CAR": "You need to be the owner, or within shortly register yourself as the owner of the car to sign an insurance.",
+  "SEE_MORE_INSURANCES_LABEL": "See more insurances",
   "SELF_SWICHER_MESSAGE": "Hedvig will be activated {{date}}. If your current insurance expires within a week, you need to cancel it yourself.",
   "SE_CAR_FULL_DESCRIPTION": "All in traffic and half, plus carriage damage",
   "SE_CAR_HALF_DESCRIPTION": "Theft & burglary, fire, glass damage, etc.",

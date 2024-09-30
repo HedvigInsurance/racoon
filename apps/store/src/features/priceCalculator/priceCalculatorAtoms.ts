@@ -14,7 +14,7 @@ type PriceCalculatorStep =
   | 'fillForm'
   | 'calculatingPrice'
   | 'viewOffers'
-  | 'viewBonusOffer'
+  | 'purchaseSummary'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const priceCalculatorStepAtomFamily = atomFamily((priceIntentId: string) =>
