@@ -1,7 +1,7 @@
 import { createVar, style } from '@vanilla-extract/css'
 import { recipe } from '@vanilla-extract/recipes'
 import { xStack, yStack } from '../../patterns'
-import { tokens } from '../../theme'
+import { responsiveStyles, tokens } from '../../theme'
 
 const cardPadding = createVar()
 
@@ -29,8 +29,16 @@ export const cardRoot = recipe({
         {
           borderRadius: tokens.radius.md,
           vars: {
-            [cardPadding]: tokens.space.md,
+            [cardPadding]: tokens.space.sm,
           },
+
+          ...responsiveStyles({
+            sm: {
+              vars: {
+                [cardPadding]: tokens.space.md,
+              },
+            },
+          }),
         },
       ],
       lg: [
@@ -38,8 +46,15 @@ export const cardRoot = recipe({
         {
           borderRadius: tokens.radius.xl,
           vars: {
-            [cardPadding]: tokens.space.lg,
+            [cardPadding]: tokens.space.md,
           },
+          ...responsiveStyles({
+            sm: {
+              vars: {
+                [cardPadding]: tokens.space.lg,
+              },
+            },
+          }),
         },
       ],
     },
