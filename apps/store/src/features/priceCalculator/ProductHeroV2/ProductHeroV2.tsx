@@ -3,7 +3,7 @@ import { clsx } from 'clsx'
 import type { Variants } from 'framer-motion'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useRef } from 'react'
-import { Badge, framerTransitions, Heading, sprinkles, Text, xStack, yStack } from 'ui'
+import { Badge, framerTransitions, Heading, sprinkles, Text, yStack } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { useSelectedOffer } from '@/components/ProductPage/PurchaseForm/useSelectedOffer'
@@ -13,11 +13,10 @@ import {
   pillowWrapper,
   priceLabel,
   priceWrapper,
-  stickyProductHeader,
-  stickyProductHeaderContent,
   subTypeBadge,
   subTypeLabel,
 } from './ProductHeroV2.css'
+import { StickyProductHeader } from './StickyProductHeader/StickyProductHeader'
 
 const TRAVEL_DISTANCE = '1em'
 const ANIMATION: Variants = {
@@ -66,23 +65,14 @@ export function ProductHeroV2({ className }: { className?: string }) {
 
   return (
     <>
-      <div className={stickyProductHeader}>
-        <div
-          className={clsx(
-            xStack({
-              gap: 'sm',
-              alignItems: 'center',
-              paddingBlock: 'sm',
-              paddingInline: 'md',
-            }),
-            stickyProductHeaderContent.base,
-            hasScrolledPast && stickyProductHeaderContent.visible,
-          )}
-        >
-          <Pillow size="small" {...productData.pillowImage} priority={true} />
-          <div>{productHeading}</div>
-        </div>
-      </div>
+      <StickyProductHeader hasScrolledPast={hasScrolledPast}>
+        {
+          <>
+            <Pillow size="small" {...productData.pillowImage} priority={true} />
+            <div>{productHeading}</div>
+          </>
+        }
+      </StickyProductHeader>
 
       <div ref={ref} className={clsx(yStack({ alignItems: 'center' }), className)}>
         <div className={pillowWrapper}>
