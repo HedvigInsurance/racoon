@@ -29,12 +29,6 @@ export const trigger = style({
   ':disabled': {
     cursor: 'not-allowed',
   },
-
-  selectors: {
-    '&[data-loading=true]': {
-      cursor: 'wait',
-    },
-  },
 })
 
 export const label = style({
