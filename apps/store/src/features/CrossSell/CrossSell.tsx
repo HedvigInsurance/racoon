@@ -26,15 +26,19 @@ export function CrossSell({ recommendation }: Props) {
   return (
     <Card.Root>
       <Card.Aside>
-        <Badge color="pinkFill1">{t('QUICK_ADD_BADGE_LABEL')}</Badge>
+        <Badge color="pinkFill1" size="responsive">
+          {t('QUICK_ADD_BADGE_LABEL')}
+        </Badge>
       </Card.Aside>
       <Card.Header>
         <Card.Media>
           <Pillow size="small" {...product.pillowImage} />
         </Card.Media>
         <Card.Heading>
-          <Card.Title>{product.displayNameFull}</Card.Title>
-          <Card.Subtitle>{t('USP_NO_BINDING_TIME')}</Card.Subtitle>
+          <Card.Title variant={{ _: 'standard.16', sm: 'standard.18' }}>
+            {product.displayNameFull}
+          </Card.Title>
+          <Card.Subtitle size={{ _: 'body', sm: 'md' }}>{t('USP_NO_BINDING_TIME')}</Card.Subtitle>
         </Card.Heading>
       </Card.Header>
 
