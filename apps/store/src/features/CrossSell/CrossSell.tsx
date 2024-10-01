@@ -1,19 +1,14 @@
-'use client'
-
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
-import { Badge, Button, Card, grid, yStack } from 'ui'
+import { type ComponentProps } from 'react'
+import { Badge, Card } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { AccidentCrossSellForm } from './components/AccidentCrossSellForm'
 import { type OfferRecommendation } from './hooks/useRecommendations'
 
-type Props = {
-  recommendation: OfferRecommendation
-}
-
-export function CrossSell({ recommendation }: Props) {
-  const { t } = useTranslation(['cart', 'common'])
+type RootProps = ComponentProps<typeof Card.Root>
+const CrossSellRoot = ({ children, ...props }: RootProps) => {
+  const { t } = useTranslation('cart')
 
   const { shopSession } = useShopSession()
 
@@ -21,40 +16,39 @@ export function CrossSell({ recommendation }: Props) {
     return null
   }
 
-  const { product, offer } = recommendation
-
   return (
-    <Card.Root>
+    <Card.Root {...props}>
       <Card.Aside>
         <Badge color="pinkFill1">{t('QUICK_ADD_BADGE_LABEL')}</Badge>
       </Card.Aside>
-      <Card.Header>
-        <Card.Media>
-          <Pillow size="small" {...product.pillowImage} />
-        </Card.Media>
-        <Card.Heading>
-          <Card.Title>
-            <Link href={product.pageLink}>{product.displayNameFull}</Link>
-          </Card.Title>
-          <Card.Subtitle size={{ _: 'body', sm: 'md' }}>{t('USP_NO_BINDING_TIME')}</Card.Subtitle>
-        </Card.Heading>
-      </Card.Header>
 
-      <AccidentCrossSellForm offer={offer}>
-        {({ isCoInsuredUpdated, isPending }) => (
-          <footer className={yStack({ gap: 'md' })}>
-            <div {...grid({ columns: '2', gap: 'xs' })}>
-              <Button as={Link} href={product.pageLink} variant="secondary" size="medium">
-                {t('common:READ_MORE')}
-              </Button>
-
-              <Button type="submit" size="medium" disabled={isPending} loading={isPending}>
-                {isCoInsuredUpdated ? t('QUICK_ADD_UPDATE') : t('QUICK_ADD_BUTTON')}
-              </Button>
-            </div>
-          </footer>
-        )}
-      </AccidentCrossSellForm>
+      {children}
     </Card.Root>
   )
+}
+
+type HeaderProps = ComponentProps<typeof Card.Header> & {
+  product: OfferRecommendation['product']
+}
+const CrossSellHeader = ({ product, ...props }: HeaderProps) => {
+  const { t } = useTranslation('cart')
+
+  return (
+    <Card.Header {...props}>
+      <Card.Media>
+        <Pillow size="small" {...product.pillowImage} />
+      </Card.Media>
+      <Card.Heading>
+        <Card.Title>
+          <Link href={product.pageLink}>{product.displayNameFull}</Link>
+        </Card.Title>
+        <Card.Subtitle size={{ _: 'body', sm: 'md' }}>{t('USP_NO_BINDING_TIME')}</Card.Subtitle>
+      </Card.Heading>
+    </Card.Header>
+  )
+}
+
+export const CrossSell = {
+  Root: CrossSellRoot,
+  Header: CrossSellHeader,
 }
