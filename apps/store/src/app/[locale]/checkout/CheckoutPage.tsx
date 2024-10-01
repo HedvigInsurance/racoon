@@ -61,14 +61,10 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
       <main className={container}>
         <section className={yStack({ gap: { _: 'md', sm: 'lg' } })}>
           <header>
-            <Heading as="h2" variant={{ _: 'standard.24', sm: 'standard.32' }}>
+            <Heading as="h2" variant="standard.24">
               {t('CART_PAGE_HEADING')} ({shopSession.cart.entries.length})
             </Heading>
-            <Heading
-              as="h2"
-              variant={{ _: 'standard.24', sm: 'standard.32' }}
-              color="textSecondary"
-            >
+            <Heading as="h2" variant="standard.24" color="textSecondary">
               {t('checkout:CHECKOUT_PAGE_SUBHEADING')}
             </Heading>
           </header>
@@ -83,14 +79,10 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
         {shouldShowBundleDiscountProducts ? (
           <section className={yStack({ gap: { _: 'md', sm: 'lg' } })}>
             <header>
-              <Heading as="h2" variant={{ _: 'standard.24', sm: 'standard.32' }}>
+              <Heading as="h2" variant="standard.24">
                 {t('BUNDLE_DISCOUNT_QUICK_LINKS_TITLE')}
               </Heading>
-              <Heading
-                as="h2"
-                variant={{ _: 'standard.24', sm: 'standard.32' }}
-                color="textSecondary"
-              >
+              <Heading as="h2" variant="standard.24" color="textSecondary">
                 {t('BUNDLE_DISCOUNT_QUICK_LINKS_SUBTITLE', {
                   percentage: BUNDLE_DISCOUNT_PERCENTAGE,
                 })}
@@ -104,7 +96,7 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
         {recommendedOffer ? (
           <section className={yStack({ gap: { _: 'md', sm: 'lg' } })}>
             <header>
-              <Heading as="h2" variant={{ _: 'standard.24', sm: 'standard.32' }}>
+              <Heading as="h2" variant="standard.24">
                 {t('QUICK_ADD_BUNDLE_HEADER')}
               </Heading>
             </header>
@@ -115,14 +107,10 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
 
         <section className={yStack({ gap: { _: 'md', sm: 'lg' } })}>
           <header>
-            <Heading as="h2" variant={{ _: 'standard.24', sm: 'standard.32' }}>
+            <Heading as="h2" variant="standard.24">
               {t('checkout:COMPLETE_PURCHASE_TITLE')}
             </Heading>
-            <Heading
-              as="h2"
-              variant={{ _: 'standard.24', sm: 'standard.32' }}
-              color="textSecondary"
-            >
+            <Heading as="h2" variant="standard.24" color="textSecondary">
               {t('checkout:COMPLETE_PURCHASE_SUBTITLE')}
             </Heading>
           </header>
@@ -153,8 +141,6 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
               />
               <BankIdDialog />
             </BankIdContextProvider>
-
-            <Text align="center">{t('USP_NO_BINDING_TIME')}</Text>
           </Card.Root>
 
           <TextWithLink
