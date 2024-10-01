@@ -1,14 +1,18 @@
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
+import { hasBundleDiscount } from '../bundleDiscount/bundleDiscount.utils'
 
-export const getDiscountsVisibility = (cart: ShopSession['cart']) => {
-  const campaign = cart.redeemedCampaign
+export const getDiscountsVisibility = (shopSession: ShopSession) => {
+  const hasBundleDiscountInCart = hasBundleDiscount(shopSession)
+
+  const IS_CAMPAIGNS_ENABLED = shopSession.cart.campaignsEnabled
+
+  const campaign = shopSession.cart.redeemedCampaign
   const campaignCode = campaign?.code
-
-  const IS_CAMPAIGNS_ENABLED = cart.campaignsEnabled
 
   const shouldShowToggle = IS_CAMPAIGNS_ENABLED
   const shouldShowDiscountForm = IS_CAMPAIGNS_ENABLED && !campaignCode
-  const shouldShowDiscountSection = campaignCode || shouldShowDiscountForm
+  const shouldShowDiscountSection =
+    !hasBundleDiscountInCart && (campaignCode || shouldShowDiscountForm)
 
   return {
     shouldShowToggle,
