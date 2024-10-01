@@ -89,7 +89,7 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
           </header>
 
           <Card.Root variant="secondary">
-            <Text>Order summary</Text>
+            <Text>{t('checkout:ORDER_SUMMARY_TITLE')}</Text>
 
             <OrderBreakdown cart={shopSession.cart} />
 
