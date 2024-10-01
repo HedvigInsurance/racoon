@@ -8,6 +8,7 @@ import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataH
 import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { TextWithLink } from '@/components/TextWithLink'
 import { BUNDLE_DISCOUNT_PERCENTAGE } from '@/features/bundleDiscount/bundleDiscount.constants'
+import { BundleDiscountCartSummary } from '@/features/bundleDiscount/components/BundleDiscountCartSummary'
 import { BundleDiscountProductLinks } from '@/features/bundleDiscount/components/BundleDiscountProductLinks/BundleDiscountProductLinks'
 import { useBundleDiscounts } from '@/features/bundleDiscount/hooks/useBundleDiscounts'
 import { CartDiscount } from '@/features/CartDiscount/CartDiscount'
@@ -27,13 +28,13 @@ import { EmptyCart, type Product } from './components/EmptyCart/EmptyCart'
 import { OrderBreakdown } from './components/OrderBreakdown'
 
 export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
-  const { t } = useTranslation(['cart', 'checkout'])
+  const { t } = useTranslation(['cart', 'checkout', 'purchase-form'])
 
   const productMetadata = useProductMetadata()
 
   const recommendedOffer = useRecommendations()
 
-  const { shouldShowBundleDiscountProducts } = useBundleDiscounts()
+  const { shouldShowBundleDiscountProducts, hasBundleDiscountInCart } = useBundleDiscounts()
 
   const { shopSession } = useShopSession()
 
@@ -72,7 +73,11 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
             </Heading>
           </header>
 
-          <CartEntries />
+          <div className={yStack({ gap: 'md' })}>
+            <CartEntries />
+
+            {hasBundleDiscountInCart ? <BundleDiscountCartSummary cart={shopSession.cart} /> : null}
+          </div>
         </section>
 
         {shouldShowBundleDiscountProducts ? (
@@ -129,9 +134,12 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
 
             <Divider />
 
-            <CartDiscount shopSession={shopSession} />
-
-            <Divider />
+            {hasBundleDiscountInCart ? null : (
+              <>
+                <CartDiscount shopSession={shopSession} />
+                <Divider />
+              </>
+            )}
 
             <CartTotal cart={shopSession.cart} />
 
