@@ -22,7 +22,7 @@ type Props = {
 }
 
 export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) => {
-  const { t } = useTranslation(['cart', 'purchase-form'])
+  const { t } = useTranslation(['cart', 'purchase-form', 'common'])
 
   const formatter = useFormatter()
 
@@ -43,7 +43,7 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
 
   const isAutoSwitch = cancellation.requested
 
-  const startDateValue = isAutoSwitch ? t('CART_ENTRY_AUTO_SWITCH') : formattedStartDate
+  const startDateValue = isAutoSwitch ? t('cart:CART_ENTRY_AUTO_SWITCH') : formattedStartDate
 
   return (
     <Card.Root>
@@ -76,7 +76,9 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
 
       <ProductCardDetails.Root defaultOpen={defaultExpanded}>
         <ProductCardDetails.Trigger>
-          {(isOpen) => (isOpen ? t('HIDE_DETAILS_BUTTON_LABEL') : t('SHOW_DETAILS_BUTTON_LABEL'))}
+          {(isOpen) =>
+            isOpen ? t('cart:HIDE_DETAILS_BUTTON_LABEL') : t('cart:SHOW_DETAILS_BUTTON_LABEL')
+          }
         </ProductCardDetails.Trigger>
 
         <ProductCardDetails.Content className={yStack({ paddingBlock: 'md', gap: 'md' })}>
@@ -115,7 +117,7 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
         ) : null}
 
         <DetailsList.Item>
-          <DetailsList.Label>{t('START_DATE_LABEL')}</DetailsList.Label>
+          <DetailsList.Label>{t('cart:START_DATE_LABEL')}</DetailsList.Label>
           <DetailsList.Value>
             <Tooltip.Root>
               <div className={xStack({ gap: 'xxs' })}>
@@ -129,7 +131,7 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
                   </Tooltip.Trigger>
                 ) : null}
               </div>
-              <Tooltip.Content>{t('CART_ITEM_TOOLTIP_AUTO_SWITCH')}</Tooltip.Content>
+              <Tooltip.Content>{t('cart:CART_ITEM_TOOLTIP_AUTO_SWITCH')}</Tooltip.Content>
             </Tooltip.Root>
           </DetailsList.Value>
         </DetailsList.Item>
@@ -137,7 +139,7 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
 
       <Divider />
 
-      <TotalPrice {...price} />
+      <TotalPrice {...price} label={t('common:YOUR_PRICE')} />
     </Card.Root>
   )
 }
