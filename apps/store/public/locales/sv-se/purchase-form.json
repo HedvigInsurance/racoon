@@ -1,4 +1,5 @@
 {
+  "ADDED_TO_CART_LABEL": "Tillag i varukorden",
   "ADD_TO_CART_BUTTON_LABEL": "Lägg i varukorgen",
   "AUTO_SWITCH_FIELD_LABEL": "Byt automatiskt",
   "AUTO_SWITCH_FIELD_MESSAGE": "Vi avslutar din försäkring hos {{COMPANY}} åt dig. Hedvig aktiveras när den går ut.",
@@ -107,6 +108,7 @@
   "GDPR_LINK_BEFORE_OFFER": "Så hanterar vi personuppgifter",
   "GENERAL_ERROR_DIALOG_PRIMARY_BUTTON": "Försök igen",
   "GENERAL_ERROR_DIALOG_PROMPT": "Tyvärr kan vi inte beräkna ditt pris för tillfället.",
+  "GO_TO_CART_LABEL": "Gå till varukorgen",
   "HOUSEHOLD_SIZE_VALUE_one": "Du + {{count}}",
   "HOUSEHOLD_SIZE_VALUE_other": "Du + {{count}}",
   "HOUSEHOLD_SIZE_VALUE_zero": "Bara du",
@@ -152,6 +154,7 @@
   "SECTION_TITLE_YOUR_HOME": "Ditt hem",
   "SECTION_TITLE_YOUR_INFORMATION": "Dina uppgifter",
   "SECTION_TOOLTIP_YOUR_CAR": "Du behöver stå som ägare, eller inom kort registrera dig som ägare av bilen för att teckna en försäkring.",
+  "SEE_MORE_INSURANCES_LABEL": "Se fler försäkringar",
   "SELF_SWICHER_MESSAGE": "Hedvig aktiveras {{date}}. Om din nuvarande försäkring går ut inom en vecka behöver du säga upp den själv.",
   "SE_CAR_FULL_DESCRIPTION": "Allt i trafik och halv, plus vagnskada",
   "SE_CAR_HALF_DESCRIPTION": "Stöld & inbrott, brand, glasskador, m.m.",

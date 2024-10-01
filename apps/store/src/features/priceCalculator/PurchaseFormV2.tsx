@@ -2,7 +2,6 @@
 
 import { useAtom } from 'jotai'
 import { useEffect } from 'react'
-import { yStack } from 'ui'
 import { PriceLoader } from '@/components/PriceLoader'
 import {
   useIsPriceIntentStateReady,
@@ -18,8 +17,15 @@ import {
   INITIAL_STEP_AFTER_NAVIGATION,
   priceCalculatorStepAtom,
 } from '@/features/priceCalculator/priceCalculatorAtoms'
-import { BonusOfferPresenter } from './BonusOfferPresenter'
 import { InsuranceDataForm } from './InsuranceDataForm'
+import {
+  centered,
+  priceLoaderWrapper,
+  viewOffersWrapper,
+  purchaseSummaryWrapper,
+  purchaseSummary,
+} from './PurchaseFormV2.css'
+import { PurchaseSummary } from './PurchaseSummary'
 
 export function PurchaseFormV2() {
   useSyncPriceIntentState()
@@ -35,27 +41,28 @@ export function PurchaseFormV2() {
 
   switch (step) {
     case 'loadingForm':
-      return <Skeleton style={{ height: '75vh' }} />
+      return <Skeleton className={centered} style={{ height: '75vh' }} />
     case 'fillForm':
-      return <InsuranceDataForm />
+      return <InsuranceDataForm className={centered} />
     case 'calculatingPrice':
       return (
-        <div
-          className={yStack({ gap: 'md', justifyContent: 'center' })}
-          style={{ minHeight: '75vh' }}
-        >
+        <div className={priceLoaderWrapper}>
           <PriceLoader />
         </div>
       )
     case 'viewOffers':
       return (
-        <div className={yStack({ gap: 'md' })} style={{ gap: '2.75rem' }}>
+        <div className={viewOffersWrapper}>
           <InsuranceDataForm />
           <OfferPresenterV2 />
         </div>
       )
-    case 'viewBonusOffer':
-      return <BonusOfferPresenter />
+    case 'purchaseSummary':
+      return (
+        <div className={purchaseSummaryWrapper}>
+          <PurchaseSummary className={purchaseSummary} />
+        </div>
+      )
     default:
       throw new Error(`Unexpected step: ${step}`)
   }

@@ -10,7 +10,6 @@ import {
   priceCalculatorSection,
   productHero,
   productHeroSection,
-  purchaseFormWrapper,
 } from '@/features/priceCalculator/PriceCalculatorCmsPage.css'
 import { PriceCalculatorStoryProvider } from '@/features/priceCalculator/PriceCalculatorStoryProvider'
 import { ProductHeroV2 } from '@/features/priceCalculator/ProductHeroV2'
@@ -41,9 +40,7 @@ export function PriceCalculatorCmsPage({ locale, story }: Props) {
               <ProductHeroV2 className={productHero} />
             </section>
             <section className={priceCalculatorSection}>
-              <div className={purchaseFormWrapper}>
-                <PurchaseFormV2 />
-              </div>
+              <PurchaseFormV2 />
             </section>
           </PriceCalculatorProviders>
         </Suspense>

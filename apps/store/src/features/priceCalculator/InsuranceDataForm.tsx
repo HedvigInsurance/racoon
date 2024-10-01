@@ -37,8 +37,9 @@ import {
 import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
+import { PRICE_CALCULATOR_SECTION_PADDING } from './PriceCalculatorCmsPage.css'
 
-export function InsuranceDataForm() {
+export function InsuranceDataForm({ className }: { className?: string }) {
   const locale = useRoutingLocale()
   const { t } = useTranslation('purchase-form')
 
@@ -57,11 +58,12 @@ export function InsuranceDataForm() {
     let sectionBody: ReactNode
     let sectionStyle = {}
     if (section.id === SSN_SE_SECTION_ID) {
+      // There's no easy way to centralize only SSN section, so doing it with positioned layout here
       sectionStyle = {
         position: 'absolute',
         top: '50%',
         transform: 'translateY(-50%)',
-        maxWidth: '23rem',
+        width: `min(23rem, calc(100% - 2 * ${PRICE_CALCULATOR_SECTION_PADDING}))`,
       }
       sectionBody = <SsnSeSection className={yStack({ gap: 'lg' })} />
     } else {
@@ -93,7 +95,7 @@ export function InsuranceDataForm() {
 
   return (
     <>
-      <div className={yStack({ gap: 'xs' })}>{sections}</div>
+      <div className={clsx(yStack({ gap: 'xs' }), className)}>{sections}</div>
       <EditSsnWarningContainer />
       <FetchInsuranceContainer />
     </>
