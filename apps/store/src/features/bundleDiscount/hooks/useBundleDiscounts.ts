@@ -7,12 +7,14 @@ export const useBundleDiscounts = () => {
   const tracking = useTracking()
   const { shopSession } = useShopSession()
 
+  const hasBundleDiscountInCart = shopSession ? hasBundleDiscount(shopSession) : false
+
   const shouldShowBundleDiscountProducts =
     shopSession &&
     // - Do not show if only accident is in the cart (confusing)
     hasCartItemsEligibleForBundleDiscount(shopSession) &&
     // - Do not show if there's a discount already (mostly not relevant anymore)
-    !hasBundleDiscount(shopSession)
+    !hasBundleDiscountInCart
 
   const lastItem = shopSession?.cart.entries.at(-1)
 
@@ -30,5 +32,5 @@ export const useBundleDiscounts = () => {
     }
   }, [shouldShowBundleDiscountProducts, tracking, lastItem])
 
-  return { shouldShowBundleDiscountProducts }
+  return { shouldShowBundleDiscountProducts, hasBundleDiscountInCart }
 }
