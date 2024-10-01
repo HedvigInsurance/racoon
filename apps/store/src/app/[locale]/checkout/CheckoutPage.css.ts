@@ -3,7 +3,10 @@ import { yStack } from 'ui'
 
 export const container = style([
   yStack({
-    gap: 'xxxl',
+    gap: {
+      _: 'xxl',
+      sm: 'xxxl',
+    },
     paddingInline: 'md',
     paddingBlock: 'xxl',
   }),
