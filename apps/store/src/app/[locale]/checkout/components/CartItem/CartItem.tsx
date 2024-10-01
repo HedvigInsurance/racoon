@@ -12,7 +12,6 @@ import {
   xStack,
   yStack,
 } from 'ui'
-
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Price } from '@/components/Price'
 import { DetailsList } from '@/components/ProductCard/DetailsList/DetailsList'
