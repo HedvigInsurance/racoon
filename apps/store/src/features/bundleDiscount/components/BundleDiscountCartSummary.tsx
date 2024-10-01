@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import type { ReactNode } from 'react'
-import { BUNDLE_DISCOUNT_PROMO_PAGE_PATH } from '@/features/bundleDiscount/bundleDiscount'
-import { readMoreLink } from '@/features/bundleDiscount/BundleDiscountSummary.css'
+import { BUNDLE_DISCOUNT_PROMO_PAGE_PATH } from '@/features/bundleDiscount/bundleDiscount.constants'
+import { readMoreLink } from '@/features/bundleDiscount/components/BundleDiscountSummary/BundleDiscountSummary.css'
 import type { CartFragment } from '@/services/graphql/generated'
 import { useFormatter } from '@/utils/useFormatter'
-import { BundleDiscountSummary } from './BundleDiscountSummary'
+import { BundleDiscountSummary } from './BundleDiscountSummary/BundleDiscountSummary'
 
 type Props = {
   cart: CartFragment

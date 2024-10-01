@@ -3,7 +3,7 @@ import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataH
 import type { StoryblokImageAsset } from '@/services/graphql/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 
-type ExtraProductLink = {
+type ProductLink = {
   url: string
   title: string
   subtitle: string
@@ -11,7 +11,7 @@ type ExtraProductLink = {
 }
 
 // TODO: Move to graphql API if we do non-experimental implementation
-const bundleExtraProductGroups = [
+const bundleProductGroups = [
   {
     headlineProductId: 'Product:SE_APARTMENT_RENT',
     productIds: new Set([
@@ -55,7 +55,7 @@ const bundleExtraProductGroups = [
   },
 ]
 
-export const useBundleDiscountExtraProductLinks = (): Array<ExtraProductLink> => {
+export const useBundleDiscountProductLinks = (): Array<ProductLink> => {
   const {
     i18n: { language },
   } = useTranslation()
@@ -68,7 +68,7 @@ export const useBundleDiscountExtraProductLinks = (): Array<ExtraProductLink> =>
   }
   const productMetadataById = Object.fromEntries(productMetadata.map((item) => [item.id, item]))
   const cartProductIds = shopSession.cart.entries.map((entry) => entry.product.id)
-  const extraProductLinks = bundleExtraProductGroups
+  const productLinks = bundleProductGroups
     .filter((group) => !cartProductIds.some((productId) => group.productIds.has(productId)))
     .map((group) => {
       const headlineProduct = productMetadataById[group.headlineProductId]
@@ -79,5 +79,5 @@ export const useBundleDiscountExtraProductLinks = (): Array<ExtraProductLink> =>
         pillowImage: headlineProduct.pillowImage,
       } as const
     })
-  return extraProductLinks
+  return productLinks
 }
