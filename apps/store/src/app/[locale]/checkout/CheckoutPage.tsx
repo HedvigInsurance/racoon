@@ -76,7 +76,7 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
           <CartEntries />
         </section>
 
-        {recommendedOffer ? (
+        {shouldShowCrossSell ? (
           <section className={yStack({ gap: { _: 'md', sm: 'lg' } })}>
             <header>
               <Heading as="h2" variant="standard.24">
