@@ -46,5 +46,6 @@
   "STORY_CAROUSEL_NEXT_BUTTON_LABEL": "Nästa bild",
   "STORY_CAROUSEL_PREVIOUS_BUTTON_LABEL": "Föregående bild",
   "TRUSTPILOT_REVIEWS_TAB_LABEL": "Trustpilot ({{score}})",
-  "UNKNOWN_ERROR_MESSAGE": "Något gick fel, försök igen."
+  "UNKNOWN_ERROR_MESSAGE": "Något gick fel, försök igen.",
+  "YOUR_PRICE": "Ditt pris"
 }
