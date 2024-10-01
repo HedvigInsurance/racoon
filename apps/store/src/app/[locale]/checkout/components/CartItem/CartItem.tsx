@@ -1,6 +1,6 @@
 import { useTranslation } from 'next-i18next'
 import { type PropsWithChildren } from 'react'
-import { Card, CrossIcon, IconButton, Text, Divider, yStack } from 'ui'
+import { Card, CrossIcon, IconButton, Text, Divider, yStack, Tooltip, InfoIcon, xStack } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { DetailsList } from '@/components/ProductCard/DetailsList/DetailsList'
 import { ProductCardDetails } from '@/components/ProductCard/ProductCardDetails'
@@ -10,7 +10,6 @@ import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { convertToDate } from '@/utils/date'
 import { getOfferPrice } from '@/utils/getOfferPrice'
 import { useFormatter } from '@/utils/useFormatter'
-import { CartItemInsuranceSwitcher } from './components/CartItemInsuranceSwitcher'
 import { CartItemProductDetails } from './components/CartItemProductDetails'
 import { CartItemProductDocuments } from './components/CartItemProductDocuments'
 import { EditCartItemDialog } from './components/EditCartItemDialog'
@@ -37,14 +36,14 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
     return null
   }
 
-  const { product, exposure, variant, cancellation, startDate } = offer
+  const { product, exposure, variant, cancellation, startDate: offerStartDate } = offer
 
-  const startDateValue = convertToDate(startDate)
-  const formattedStartDate = startDateValue ? formatter.fromNow(startDateValue) : null
+  const startDate = convertToDate(offerStartDate)
+  const formattedStartDate = startDate ? formatter.fromNow(startDate) : null
 
-  // When having an external insurer we'll either automatically switch so start date is unknown at this moment
-  // or we the date selector is showing
-  const shouldShowStartDateDetail = formattedStartDate && !cancellation.externalInsurer
+  const isAutoSwitch = cancellation.requested
+
+  const startDateValue = isAutoSwitch ? t('CART_ENTRY_AUTO_SWITCH') : formattedStartDate
 
   return (
     <Card.Root>
@@ -87,12 +86,6 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
         </ProductCardDetails.Content>
       </ProductCardDetails.Root>
 
-      <CartItemInsuranceSwitcher
-        cancellation={cancellation}
-        offerId={offer.id}
-        startDate={startDate}
-      />
-
       <DetailsList.Root>
         <DetailsList.Item>
           <DetailsList.Label>{variant.displayName}</DetailsList.Label>
@@ -120,16 +113,25 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
           </DetailsList.Item>
         ) : null}
 
-        {shouldShowStartDateDetail ? (
-          <DetailsList.Item>
-            <DetailsList.Label>{t('START_DATE_LABEL')}</DetailsList.Label>
-            <DetailsList.Value>
-              <Text as="span" size="xs">
-                {formattedStartDate}
-              </Text>
-            </DetailsList.Value>
-          </DetailsList.Item>
-        ) : null}
+        <DetailsList.Item>
+          <DetailsList.Label>{t('START_DATE_LABEL')}</DetailsList.Label>
+          <DetailsList.Value>
+            <Tooltip.Root>
+              <div className={xStack({ gap: 'xxs' })}>
+                <Text as="span" size="xs">
+                  {startDateValue}
+                </Text>
+
+                {isAutoSwitch ? (
+                  <Tooltip.Trigger>
+                    <InfoIcon />
+                  </Tooltip.Trigger>
+                ) : null}
+              </div>
+              <Tooltip.Content>{t('CART_ITEM_TOOLTIP_AUTO_SWITCH')}</Tooltip.Content>
+            </Tooltip.Root>
+          </DetailsList.Value>
+        </DetailsList.Item>
       </DetailsList.Root>
 
       <Divider />
