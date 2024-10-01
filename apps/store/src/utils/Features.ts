@@ -14,6 +14,7 @@ const config = {
 
   PRICE_CALCULATOR_PAGE: process.env.NEXT_PUBLIC_FEATURE_PRICE_CALCULATOR_PAGE === 'true',
   PRODUCT_PAGE_V2: process.env.NEXT_PUBLIC_FEATURE_PRODUCT_PAGE_V2 === 'true',
+  WIDGET_FEATURE_HOME_TIERS: process.env.NEXT_PUBLIC_WIDGET_FEATURE_HOME_TIERS === 'true',
 } as const
 
 export type FeatureFlag = keyof typeof config
