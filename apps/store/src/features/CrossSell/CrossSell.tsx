@@ -36,7 +36,7 @@ export function CrossSell({ recommendation }: Props) {
         </Card.Media>
         <Card.Heading>
           <Card.Title variant={{ _: 'standard.16', sm: 'standard.18' }}>
-            {product.displayNameFull}
+            <Link href={product.pageLink}>{product.displayNameFull}</Link>
           </Card.Title>
           <Card.Subtitle size={{ _: 'body', sm: 'md' }}>{t('USP_NO_BINDING_TIME')}</Card.Subtitle>
         </Card.Heading>
