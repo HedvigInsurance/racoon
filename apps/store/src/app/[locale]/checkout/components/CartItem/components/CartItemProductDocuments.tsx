@@ -18,6 +18,10 @@ export function CartItemProductDocuments({ documents }: Props) {
     url: item.url,
   }))
 
+  if (productDocuments.length === 0) {
+    return null
+  }
+
   return (
     <div>
       <Text size={{ _: 'body', sm: 'md' }}>{t('DOCUMENTS_SECTION_LABEL')}</Text>
