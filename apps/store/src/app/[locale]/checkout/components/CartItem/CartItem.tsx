@@ -34,7 +34,7 @@ type Props = {
 }
 
 export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) => {
-  const { t } = useTranslation(['cart', 'purchase-form'])
+  const { t } = useTranslation(['cart', 'purchase-form', 'common'])
 
   const formatter = useFormatter()
 
@@ -160,7 +160,8 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
           <DetailsList.Item>
             <DetailsList.Label>{t('purchase-form:OFFER_SUMMARY_DISCOUNT_LABEL')}</DetailsList.Label>
             <DetailsList.Value>
-              <Text as="span" size="md">
+              <Text as="span" size="xs">
+                -
                 {formatter.monthlyPrice({
                   currencyCode: price.currencyCode,
                   amount: offer.cost.discount.amount,
@@ -195,7 +196,7 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
 
       <DetailsList.Root size="md">
         <DetailsList.Item className={sprinkles({ color: 'textPrimary' })}>
-          <DetailsList.Label>{t('CHECKOUT_PRICE_TOTAL')}</DetailsList.Label>
+          <DetailsList.Label>{t('common:YOUR_PRICE')}</DetailsList.Label>
           <DetailsList.Value>
             <Price className={sprinkles({ justifyContent: 'flex-end' })} {...price} />
           </DetailsList.Value>
