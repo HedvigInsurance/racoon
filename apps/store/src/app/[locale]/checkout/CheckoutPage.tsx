@@ -7,6 +7,9 @@ import { type GlobalProductMetadata } from '@/components/LayoutWithMenu/fetchPro
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { TextWithLink } from '@/components/TextWithLink'
+import { BUNDLE_DISCOUNT_PERCENTAGE } from '@/features/bundleDiscount/bundleDiscount.constants'
+import { BundleDiscountProductLinks } from '@/features/bundleDiscount/components/BundleDiscountProductLinks/BundleDiscountProductLinks'
+import { useBundleDiscounts } from '@/features/bundleDiscount/hooks/useBundleDiscounts'
 import { CartDiscount } from '@/features/CartDiscount/CartDiscount'
 import { CartTotal } from '@/features/CartTotal/CartTotal'
 import { CrossSell } from '@/features/CrossSell/CrossSell'
@@ -29,6 +32,8 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
   const productMetadata = useProductMetadata()
 
   const recommendedOffer = useRecommendations()
+
+  const { shouldShowBundleDiscountProducts } = useBundleDiscounts()
 
   const { shopSession } = useShopSession()
 
@@ -69,6 +74,27 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
 
           <CartEntries />
         </section>
+
+        {shouldShowBundleDiscountProducts ? (
+          <section className={yStack({ gap: { _: 'md', sm: 'lg' } })}>
+            <header>
+              <Heading as="h2" variant={{ _: 'standard.24', sm: 'standard.32' }}>
+                {t('BUNDLE_DISCOUNT_QUICK_LINKS_TITLE')}
+              </Heading>
+              <Heading
+                as="h2"
+                variant={{ _: 'standard.24', sm: 'standard.32' }}
+                color="textSecondary"
+              >
+                {t('BUNDLE_DISCOUNT_QUICK_LINKS_SUBTITLE', {
+                  percentage: BUNDLE_DISCOUNT_PERCENTAGE,
+                })}
+              </Heading>
+            </header>
+
+            <BundleDiscountProductLinks />
+          </section>
+        ) : null}
 
         {recommendedOffer ? (
           <section className={yStack({ gap: { _: 'md', sm: 'lg' } })}>
