@@ -79,7 +79,7 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
           {(isOpen) => (isOpen ? t('HIDE_DETAILS_BUTTON_LABEL') : t('SHOW_DETAILS_BUTTON_LABEL'))}
         </ProductCardDetails.Trigger>
 
-        <ProductCardDetails.Content className={yStack({ paddingTop: 'md', gap: 'md' })}>
+        <ProductCardDetails.Content className={yStack({ paddingBlock: 'md', gap: 'md' })}>
           <CartItemProductDetails details={productDetails} />
           <EditCartItemDialog offer={offer} />
           <CartItemProductDocuments documents={variant.documents} />
