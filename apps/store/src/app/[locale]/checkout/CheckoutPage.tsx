@@ -1,11 +1,10 @@
 'use client'
 
 import { useTranslation } from 'next-i18next'
-import { Card, Heading, Text, yStack } from 'ui'
+import { Card, Divider, Heading, Text, yStack } from 'ui'
 import { BankIdDialog } from '@/components/BankIdDialog/BankIdDialog'
 import { type GlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
-import { Divider } from '@/components/ProductCard/Divider'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { TextWithLink } from '@/components/TextWithLink'
 import { CartDiscount } from '@/features/CartDiscount/CartDiscount'
