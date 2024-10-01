@@ -79,14 +79,10 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
         {shouldShowBundleDiscountProducts ? (
           <section className={yStack({ gap: { _: 'md', sm: 'lg' } })}>
             <header>
-              <Heading as="h2" variant={{ _: 'standard.24', sm: 'standard.32' }}>
+              <Heading as="h2" variant="standard.24">
                 {t('BUNDLE_DISCOUNT_QUICK_LINKS_TITLE')}
               </Heading>
-              <Heading
-                as="h2"
-                variant={{ _: 'standard.24', sm: 'standard.32' }}
-                color="textSecondary"
-              >
+              <Heading as="h2" variant="standard.24" color="textSecondary">
                 {t('BUNDLE_DISCOUNT_QUICK_LINKS_SUBTITLE', {
                   percentage: BUNDLE_DISCOUNT_PERCENTAGE,
                 })}
