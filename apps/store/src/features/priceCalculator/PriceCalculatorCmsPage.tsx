@@ -5,22 +5,14 @@ import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
 import { ProductPageDebugDialog } from '@/components/ProductPage/ProductPageDebugDialog'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
-import {
-  pageGrid,
-  priceCalculatorSection,
-  productHero,
-  productHeroSection,
-} from '@/features/priceCalculator/PriceCalculatorCmsPage.css'
 import { PriceCalculatorStoryProvider } from '@/features/priceCalculator/PriceCalculatorStoryProvider'
-import { ProductHeroV2 } from '@/features/priceCalculator/ProductHeroV2'
 import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
 import { type TemplateV2 } from '@/services/PriceCalculator/PriceCalculator.types'
 import type { PriceCalculatorPageStory } from '@/services/storyblok/storyblok'
 import { Features } from '@/utils/Features'
 import { type RoutingLocale } from '@/utils/l10n/types'
-import { CartToast } from './CartToast'
+import { PriceCalculatorCmsPageContent } from './PriceCalculatorCmsPageContent'
 import { PriceTemplateProvider } from './PriceTemplateProvider'
-import { PurchaseFormV2 } from './PurchaseFormV2'
 
 type Props = {
   locale: RoutingLocale
@@ -33,19 +25,11 @@ export function PriceCalculatorCmsPage({ locale, story }: Props) {
   }
   return (
     <StorePageProviders>
-      <div className={pageGrid}>
-        <Suspense fallback={<Skeleton style={{ height: '50vh' }} />}>
-          <PriceCalculatorProviders locale={locale} story={story}>
-            <section className={productHeroSection}>
-              <ProductHeroV2 className={productHero} />
-            </section>
-            <section className={priceCalculatorSection}>
-              <PurchaseFormV2 />
-            </section>
-          </PriceCalculatorProviders>
-        </Suspense>
-      </div>
-      <CartToast />
+      <Suspense fallback={<Skeleton style={{ height: '50vh' }} />}>
+        <PriceCalculatorProviders locale={locale} story={story}>
+          <PriceCalculatorCmsPageContent />
+        </PriceCalculatorProviders>
+      </Suspense>
     </StorePageProviders>
   )
 }
