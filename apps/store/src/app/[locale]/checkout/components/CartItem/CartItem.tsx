@@ -104,6 +104,7 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
             <DetailsList.Label>{t('purchase-form:OFFER_SUMMARY_DISCOUNT_LABEL')}</DetailsList.Label>
             <DetailsList.Value>
               <Text as="span" size="xs">
+                -
                 {formatter.monthlyPrice({
                   currencyCode: price.currencyCode,
                   amount: offer.cost.discount.amount,
