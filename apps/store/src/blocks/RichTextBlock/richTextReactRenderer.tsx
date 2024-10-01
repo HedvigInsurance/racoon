@@ -35,7 +35,6 @@ const resolver = richTextResolver({
           "[RichTextBlock]: No 'href' provided to link. This is probably a configuration issue. Using '' as placeholder",
         )
       }
-
       const linkProps = {
         href: appendAnchor(href, node.attrs.anchor),
         children: node.text,
@@ -58,6 +57,18 @@ const resolver = richTextResolver({
     [MarkTypes.STYLED]: (node) => {
       return (
         <span key={node.text} className={node.attrs?.class}>
+          {node.text}
+        </span>
+      )
+    },
+    [MarkTypes.ANCHOR]: (node): ReactElement => {
+      const id = node.attrs?.id
+      if (id == null) {
+        // Should not happen, but let's play it safe
+        return null as unknown as ReactElement
+      }
+      return (
+        <span key={`anchor-${id}`} id={id}>
           {node.text}
         </span>
       )
