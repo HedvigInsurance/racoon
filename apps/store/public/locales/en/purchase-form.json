@@ -1,5 +1,6 @@
 {
   "ADDED_TO_CART_LABEL": "Added to cart",
+  "ADD_ANOTHER_INSURANCE_LABEL": "Add another {{productName}}",
   "ADD_TO_CART_BUTTON_LABEL": "Add to cart",
   "AUTO_SWITCH_FIELD_LABEL": "Switch automatically",
   "AUTO_SWITCH_FIELD_MESSAGE": "We cancel your insurance at {{COMPANY}}. Hedvig is activated when it expires.",
