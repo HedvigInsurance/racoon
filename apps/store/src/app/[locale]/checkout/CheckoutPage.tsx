@@ -1,7 +1,8 @@
 'use client'
 
 import { useTranslation } from 'next-i18next'
-import { Card, Divider, Heading, Text, yStack } from 'ui'
+import { useState } from 'react'
+import { Button, Card, Divider, grid, Heading, Text, yStack } from 'ui'
 import { BankIdDialog } from '@/components/BankIdDialog/BankIdDialog'
 import { type GlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
@@ -13,6 +14,7 @@ import { BundleDiscountProductLinks } from '@/features/bundleDiscount/components
 import { useBundleDiscounts } from '@/features/bundleDiscount/hooks/useBundleDiscounts'
 import { CartDiscount } from '@/features/CartDiscount/CartDiscount'
 import { CartTotal } from '@/features/CartTotal/CartTotal'
+import { AccidentCrossSellForm } from '@/features/CrossSell/components/AccidentCrossSellForm'
 import { CrossSell } from '@/features/CrossSell/CrossSell'
 import { useRecommendations } from '@/features/CrossSell/hooks/useRecommendations'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
@@ -29,6 +31,8 @@ import { OrderBreakdown } from './components/OrderBreakdown'
 
 export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
   const { t } = useTranslation(['cart', 'checkout', 'purchase-form'])
+
+  const [isCrossSellDismissed, setIsCrossSellDismissed] = useState(false)
 
   const productMetadata = useProductMetadata()
 
@@ -52,9 +56,12 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
   if (!shopSession.customer) {
     throw new Error(`Checkout | No customer in shop session ${shopSession.id}`)
   }
+
   if (!shopSession.customer.ssn) {
     throw new Error(`Checkout | No SSN in shop session ${shopSession.id}`)
   }
+
+  const shouldShowCrossSell = !isCrossSellDismissed && recommendedOffer
 
   return (
     <>
@@ -97,7 +104,7 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
           </section>
         ) : null}
 
-        {recommendedOffer ? (
+        {shouldShowCrossSell ? (
           <section className={yStack({ gap: { _: 'md', sm: 'lg' } })}>
             <header>
               <Heading as="h2" variant="standard.24">
@@ -105,7 +112,29 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
               </Heading>
             </header>
 
-            <CrossSell recommendation={recommendedOffer} />
+            <CrossSell.Root>
+              <CrossSell.Header product={recommendedOffer.product} />
+
+              <AccidentCrossSellForm offer={recommendedOffer.offer}>
+                {({ isCoInsuredUpdated, isPending }) => (
+                  <footer className={yStack({ gap: 'md' })}>
+                    <div {...grid({ columns: '2', gap: 'xs' })}>
+                      <Button
+                        variant="secondary"
+                        size="medium"
+                        onClick={() => setIsCrossSellDismissed(true)}
+                      >
+                        {t('QUICK_ADD_DISMISS')}
+                      </Button>
+
+                      <Button type="submit" size="medium" disabled={isPending} loading={isPending}>
+                        {isCoInsuredUpdated ? t('QUICK_ADD_UPDATE') : t('QUICK_ADD_BUTTON')}
+                      </Button>
+                    </div>
+                  </footer>
+                )}
+              </AccidentCrossSellForm>
+            </CrossSell.Root>
           </section>
         ) : null}
 
