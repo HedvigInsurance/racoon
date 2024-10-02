@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { Badge, Card, ChevronIcon, theme, xStack, yStack } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
-import { useBundleDiscountProductLinks } from '@/features/bundleDiscount/hooks/useBundleDiscountProductLinks'
+import { useBundleDiscounts } from '../../hooks/useBundleDiscounts'
 import { bundleProductLink, bundleProductlinkAside } from './BundleDiscountProductLinks.css'
 
 const arrowIconStyle = { transform: 'rotate(-90deg)' }
@@ -10,7 +10,7 @@ const arrowIconStyle = { transform: 'rotate(-90deg)' }
 export function BundleDiscountProductLinks() {
   const { t } = useTranslation('cart')
 
-  const productLinks = useBundleDiscountProductLinks()
+  const { productLinks } = useBundleDiscounts()
 
   if (productLinks.length === 0) return null
 

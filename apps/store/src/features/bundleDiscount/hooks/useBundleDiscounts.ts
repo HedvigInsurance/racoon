@@ -2,10 +2,13 @@ import { useEffect } from 'react'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { hasBundleDiscount, hasCartItemsEligibleForBundleDiscount } from '../bundleDiscount.utils'
+import { useBundleDiscountProductLinks } from './useBundleDiscountProductLinks'
 
 export const useBundleDiscounts = () => {
   const tracking = useTracking()
   const { shopSession } = useShopSession()
+
+  const productLinks = useBundleDiscountProductLinks()
 
   const hasBundleDiscountInCart = shopSession ? hasBundleDiscount(shopSession) : false
 
@@ -32,5 +35,5 @@ export const useBundleDiscounts = () => {
     }
   }, [shouldShowBundleDiscountProducts, tracking, lastItem])
 
-  return { shouldShowBundleDiscountProducts, hasBundleDiscountInCart }
+  return { shouldShowBundleDiscountProducts, hasBundleDiscountInCart, productLinks }
 }
