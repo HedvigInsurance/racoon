@@ -16,6 +16,7 @@ import {
   yStack,
   theme,
   visuallyHidden,
+  Card,
 } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
@@ -25,7 +26,7 @@ import { BankIdState } from '@/services/bankId/bankId.types'
 import { bankIdLogger } from '@/services/bankId/bankId.utils'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import { useShopSessionId } from '@/services/shopSession/ShopSessionContext'
-import { hedvigLogo, qrCode, qrCodeSkeleton, contentWrapper, link } from './BankIdDialog.css'
+import { hedvigLogo, qrCodeSkeleton, contentWrapper, link } from './BankIdDialog.css'
 
 export function BankIdDialog() {
   const { t } = useTranslation('bankid')
@@ -70,7 +71,9 @@ export function BankIdDialog() {
                 <BankIdIcon color="black" size="4rem" />
 
                 {currentOperation.qrCodeData ? (
-                  <QRCodeSVG className={qrCode} size={200} value={currentOperation.qrCodeData} />
+                  <Card.Root size="md">
+                    <QRCodeSVG size={200} value={currentOperation.qrCodeData} />
+                  </Card.Root>
                 ) : (
                   <Skeleton className={qrCodeSkeleton} />
                 )}
