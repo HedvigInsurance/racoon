@@ -3,11 +3,11 @@
 import styled from '@emotion/styled'
 import { Heading, mq, Space, theme } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
-import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
-import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
 import { ProductItemContractContainerCar } from '@/features/carDealership/ProductItemContractContainer'
+import { CartTotal } from '@/features/CartTotal/CartTotal'
 import { SasEurobonusSectionContainer } from '@/features/sas/SasEurobonusSection'
+import { CartItem } from '../../checkout/components/CartItem/CartItem'
 import { StaticContent } from './components/StaticContent/StaticContent'
 import { SuccessAnimation } from './components/SuccessAnimation/SuccessAnimation'
 import { SwitchingAssistantSection } from './components/SwitchingAssistantSection/SwitchingAssistantSection'
@@ -33,11 +33,13 @@ export const ConfirmationPage = (props: ConfirmationPageProps) => {
                     {props.carTrialContract && (
                       <ProductItemContractContainerCar contract={props.carTrialContract} />
                     )}
-                    {props.cart.entries.map((item) => (
-                      <ProductItemContainer key={item.id} offer={item} />
+
+                    {props.cart.entries.map((offer) => (
+                      <CartItem key={offer.id} offer={offer} readOnly />
                     ))}
+
                     {/* We might have some cases of confirmation pages for shop sessions that doesn't include any products into the cart: car dealership */}
-                    {cartTotalCost > 0 && <TotalAmountContainer cart={props.cart} />}
+                    {cartTotalCost > 0 && <CartTotal cart={props.cart} />}
                   </ShopBreakdown>
                 </Space>
 
