@@ -1,9 +1,6 @@
 'use client'
 
-import styled from '@emotion/styled'
-import { Heading, mq, Space, theme } from 'ui'
-import * as GridLayout from '@/components/GridLayout/GridLayout'
-import { ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
+import { Heading, Text, yStack } from 'ui'
 import { ProductItemContractContainerCar } from '@/features/carDealership/ProductItemContractContainer'
 import { CartItem } from '@/features/CartItem/CartItem'
 import { CartTotal } from '@/features/CartTotal/CartTotal'
@@ -11,58 +8,55 @@ import { SasEurobonusSectionContainer } from '@/features/sas/SasEurobonusSection
 import { StaticContent } from './components/StaticContent/StaticContent'
 import { SuccessAnimation } from './components/SuccessAnimation/SuccessAnimation'
 import { SwitchingAssistantSection } from './components/SwitchingAssistantSection/SwitchingAssistantSection'
+import { container } from './ConfirmationPage.css'
 import { type ConfirmationPageProps } from './ConfirmationPage.types'
 
-export const ConfirmationPage = (props: ConfirmationPageProps) => {
-  const cartTotalCost = props.cart.cost.gross.amount
+export const ConfirmationPage = ({
+  story,
+  carTrialContract,
+  cart,
+  switching,
+  memberPartnerData,
+}: ConfirmationPageProps) => {
+  const cartTotalCost = cart.cost.gross.amount
 
   return (
     <SuccessAnimation>
-      <Wrapper>
-        <Space y={4}>
-          <GridLayout.Root>
-            <GridLayout.Content width="1/3" align="center">
-              <Space y={4}>
-                <Space y={{ base: 3, lg: 4.5 }}>
-                  {props.story && (
-                    <Heading as="h1" variant="standard.24" align="center">
-                      {props.story.content.title}
-                    </Heading>
-                  )}
-                  <ShopBreakdown>
-                    {props.carTrialContract && (
-                      <ProductItemContractContainerCar contract={props.carTrialContract} />
-                    )}
+      <main>
+        <div className={container}>
+          <section className={yStack({ gap: { _: 'md', sm: 'lg' } })}>
+            {story ? (
+              <header>
+                <Heading as="h2" variant="standard.24">
+                  {story.content.title}
+                </Heading>
+                <Text color="textSecondary" size="xl">
+                  We’ve sent a copy to your e-mail
+                </Text>
+              </header>
+            ) : null}
 
-                    {props.cart.entries.map((offer) => (
-                      <CartItem key={offer.id} offer={offer} readOnly />
-                    ))}
+            {carTrialContract && <ProductItemContractContainerCar contract={carTrialContract} />}
 
-                    {/* We might have some cases of confirmation pages for shop sessions that doesn't include any products into the cart: car dealership */}
-                    {cartTotalCost > 0 && <CartTotal cart={props.cart} />}
-                  </ShopBreakdown>
-                </Space>
+            {cart.entries.map((offer) => (
+              <CartItem key={offer.id} offer={offer} readOnly />
+            ))}
 
-                {props.switching && <SwitchingAssistantSection {...props.switching} />}
+            {cartTotalCost > 0 && <CartTotal cart={cart} />}
+          </section>
+        </div>
 
-                {props.memberPartnerData?.sas?.eligible && (
-                  <SasEurobonusSectionContainer
-                    initialValue={props.memberPartnerData.sas.eurobonusNumber ?? ''}
-                  />
-                )}
-              </Space>
-            </GridLayout.Content>
-          </GridLayout.Root>
+        {switching && <SwitchingAssistantSection {...switching} />}
 
-          {/* Treating 'story' as optional here to provide a fallback confirmation page instead crashing the page */}
-          {props.story && <StaticContent content={props.story.content} />}
-        </Space>
-      </Wrapper>
+        {memberPartnerData?.sas?.eligible && (
+          <SasEurobonusSectionContainer
+            initialValue={memberPartnerData.sas.eurobonusNumber ?? ''}
+          />
+        )}
+
+        {/* Treating 'story' as optional here to provide a fallback confirmation page instead crashing the page */}
+        {story && <StaticContent content={story.content} />}
+      </main>
     </SuccessAnimation>
   )
 }
-
-const Wrapper = styled.div({
-  paddingTop: theme.space.md,
-  [mq.lg]: { paddingTop: theme.space.xxxl },
-})
