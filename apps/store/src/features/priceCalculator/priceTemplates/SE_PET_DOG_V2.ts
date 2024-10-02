@@ -13,6 +13,7 @@ setI18nNamespace('purchase-form')
 const template: TemplateV2 = {
   name: 'SE_PET_DOG_V2',
   productName: 'SE_PET_DOG',
+  addMultiple: true,
   sections: [
     ssnSeSectionV2,
     {
