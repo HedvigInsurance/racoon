@@ -8,7 +8,7 @@ export const PRICE_CALCULATOR_SECTION_PADDING = tokens.space.md
 export const pageGrid = style({
   display: 'grid',
   gridTemplateRows: 'min-content 1fr',
-  gap: tokens.space.md,
+  columnGap: tokens.space.md,
   backgroundColor: tokens.colors.backgroundStandard,
   minHeight: `calc(100vh - ${HEADER_HEIGHT_MOBILE})`,
   ...responsiveStyles({

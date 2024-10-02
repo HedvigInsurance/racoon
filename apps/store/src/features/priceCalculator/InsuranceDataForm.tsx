@@ -19,7 +19,7 @@ import { usePriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTem
 import { TextLink } from '@/components/TextLink/TextLink'
 import { EditSsnWarningContainer } from '@/features/priceCalculator/EditSsnWarningContainer'
 import { FormGridNew } from '@/features/priceCalculator/FormGridNew'
-import { gdprLink } from '@/features/priceCalculator/InsuranceDataForm.css'
+import { formSection, gdprLink } from '@/features/priceCalculator/InsuranceDataForm.css'
 import { priceCalculatorStepAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
 import { SectionPreview } from '@/features/priceCalculator/SectionPreview'
 import { useConfirmPriceIntent } from '@/features/priceCalculator/useConfirmPriceIntent'
@@ -37,7 +37,6 @@ import {
 import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
-import { PRICE_CALCULATOR_SECTION_PADDING } from './PriceCalculatorCmsPageContent.css'
 
 export function InsuranceDataForm({ className }: { className?: string }) {
   const locale = useRoutingLocale()
@@ -56,18 +55,10 @@ export function InsuranceDataForm({ className }: { className?: string }) {
     }
 
     let sectionBody: ReactNode
-    let sectionStyle = {}
-    if (section.id === SSN_SE_SECTION_ID) {
-      // There's no easy way to centralize only SSN section, so doing it with positioned layout here
-      sectionStyle = {
-        position: 'absolute',
-        top: '50%',
-        transform: 'translateY(-50%)',
-        width: `min(23rem, calc(100% - 2 * ${PRICE_CALCULATOR_SECTION_PADDING}))`,
-      }
+    const isSsnSection = section.id === SSN_SE_SECTION_ID
+    if (isSsnSection) {
       sectionBody = <SsnSeSection className={yStack({ gap: 'lg' })} />
     } else {
-      sectionStyle = { marginTop: '3.75rem' }
       const isLast = index === form.sections.length - 1
       sectionBody = (
         <>
@@ -86,7 +77,10 @@ export function InsuranceDataForm({ className }: { className?: string }) {
       )
     }
     return (
-      <div key={section.id} className={yStack({ gap: 'lg' })} style={sectionStyle}>
+      <div
+        key={section.id}
+        className={clsx(yStack({ gap: 'lg' }), formSection.base, isSsnSection && formSection.ssn)}
+      >
         <SectionTitle section={section} />
         {sectionBody}
       </div>
