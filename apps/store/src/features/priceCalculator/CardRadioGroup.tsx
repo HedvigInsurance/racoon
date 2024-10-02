@@ -5,7 +5,8 @@ import {
   type RadioGroupProps,
 } from '@radix-ui/react-radio-group'
 import { clsx } from 'clsx'
-import { yStack } from 'ui'
+import { motion } from 'framer-motion'
+import { framerTransitions, tokens, yStack } from 'ui'
 import { RadioIndicatorIcon } from '@/features/priceCalculator/RadioIndicatorIcon'
 import { item } from './CardRadioGroup.css'
 
@@ -17,10 +18,35 @@ export function Root({ children, className, ...forwardedProps }: RadioGroupProps
   )
 }
 
-export function Item({ children, className, value, ...forwardedProps }: RadioGroupItemProps) {
+export function Item({
+  children,
+  className,
+  value,
+  isSelected,
+  ...forwardedProps
+}: RadioGroupItemProps & { isSelected?: boolean }) {
+  const variants = {
+    selected: {
+      backgroundColor: tokens.colors.buttonPrimary,
+    },
+    unselected: {
+      backgroundColor: tokens.colors.opaque1,
+    },
+  }
   return (
     <RadioGroup.Item value={value} {...forwardedProps} asChild>
-      <div className={clsx(item, className)}>{children}</div>
+      <motion.div
+        className={clsx(item, className)}
+        variants={variants}
+        animate={isSelected ? 'selected' : 'unselected'}
+        transition={{
+          duration: framerTransitions.defaultDuration,
+          ...framerTransitions.easeInOutCubic,
+        }}
+        initial={false}
+      >
+        {children}
+      </motion.div>
     </RadioGroup.Item>
   )
 }

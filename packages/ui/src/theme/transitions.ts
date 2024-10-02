@@ -12,4 +12,5 @@ export const framerTransitions = {
   easeInOutQuint: { ease: [0.86, 0, 0.07, 1] },
   easeInCubic: { ease: [0.55, 0.06, 0.68, 0.19] },
   easeOutCubic: { ease: [0.22, 0.61, 0.36, 1] },
+  defaultDuration: 0.4,
 } as const

@@ -1,13 +1,26 @@
 import { assignInlineVars } from '@vanilla-extract/dynamic'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { useRef } from 'react'
 import { badgeFontColor } from 'ui/src/components/Badge/Badge.css'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
-import { Badge, Button, Heading, PlusIcon, Text, tokens, xStack, yStack } from 'ui'
+import {
+  Badge,
+  Button,
+  framerTransitions,
+  Heading,
+  PlusIcon,
+  Text,
+  theme,
+  tokens,
+  xStack,
+  yStack,
+} from 'ui'
 import { ComparisonTableModal } from '@/components/ProductPage/PurchaseForm/ComparisonTableModal'
 import type { ProductOfferFragment } from '@/services/graphql/generated'
 import { useFormatter } from '@/utils/useFormatter'
 import * as CardRadioGroup from './CardRadioGroup'
+import { item } from './ProductTierSelectorV2.css'
 
 type Props = {
   offers: Array<ProductOfferFragment>
@@ -27,8 +40,15 @@ export function ProductTierSelectorV2({ offers, selectedOffer, onValueChange }: 
   return (
     <>
       <CardRadioGroup.Root value={selectedOffer.id} onValueChange={onValueChange}>
-        {offers.map((offer) => (
-          <CardRadioGroup.Item key={offer.id} value={offer.id} style={{ padding: tokens.space.lg }}>
+        {offers.map((offer, index) => (
+          <CardRadioGroup.Item
+            // NOTE: We want to avoid remounting selected deductible element when changing tiers
+            // to avoid extra animation, hence index key
+            key={index}
+            value={offer.id}
+            isSelected={selectedOffer.id === offer.id}
+            className={item}
+          >
             <div className={yStack()}>
               <div
                 className={xStack({
@@ -57,11 +77,28 @@ export function ProductTierSelectorV2({ offers, selectedOffer, onValueChange }: 
             <Text color="textSecondary" className={sprinkles({ marginTop: 'md' })}>
               {getVariantDescription(offer.variant.typeOfContract)}
             </Text>
-            {offer.id === selectedOffer.id && (
-              <Button variant="secondary" fullWidth={true} size="medium" onClick={openTierDialog}>
-                {t('COMPARE_TIERS_LABEL')}
-              </Button>
-            )}
+            <AnimatePresence initial={false}>
+              {offer.id === selectedOffer.id && (
+                <motion.div
+                  transition={{
+                    duration: framerTransitions.defaultDuration,
+                    ...framerTransitions.easeInOutCubic,
+                  }}
+                  initial={{ height: 0, marginTop: 0, opacity: 0 }}
+                  animate={{ height: 'fit-content', marginTop: theme.space.md, opacity: 1 }}
+                  exit={{ height: 0, marginTop: 0, opacity: 0 }}
+                >
+                  <Button
+                    variant="secondary"
+                    fullWidth={true}
+                    size="medium"
+                    onClick={openTierDialog}
+                  >
+                    {t('COMPARE_TIERS_LABEL')}
+                  </Button>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </CardRadioGroup.Item>
         ))}
       </CardRadioGroup.Root>
