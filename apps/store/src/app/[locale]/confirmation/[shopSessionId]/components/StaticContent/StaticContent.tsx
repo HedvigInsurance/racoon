@@ -10,9 +10,9 @@ import { type ConfirmationStory } from '@/services/storyblok/storyblok'
 import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
-import { CheckList, CheckListItem } from './CheckList'
+import { CheckList, CheckListItem } from '../CheckList'
+import { ImageSection } from '../ImageSection'
 import qrCodeImage from './download-app-qrcode.png'
-import { ImageSection } from './ImageSection'
 
 type Props = {
   content: ConfirmationStory['content']

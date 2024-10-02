@@ -9,7 +9,7 @@ import { useShowAppError } from '@/services/appErrors/appErrorAtom'
 import { BankSigneringEvent } from '@/services/bankSignering'
 import { useBankSigneringInitMutation } from '@/services/graphql/generated'
 import { useFormatter } from '@/utils/useFormatter'
-import type { BankSigneringContract } from './useSwitchingContracts'
+import type { BankSigneringContract } from '../hooks/useSwitchingContracts'
 
 const BANK_SIGNERING_LOGGER = datadogLogs.createLogger('bankSignering')
 

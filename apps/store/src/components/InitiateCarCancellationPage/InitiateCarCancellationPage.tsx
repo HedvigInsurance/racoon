@@ -5,8 +5,11 @@ import { useTranslation } from 'next-i18next'
 import type { ReactNode } from 'react'
 import { useMemo, type FormEventHandler, useState } from 'react'
 import { Button, Heading, Space, Text, mq, theme } from 'ui'
-import { CardSkeleton, ContractCard } from '@/components/ConfirmationPage/ContractCard'
-import { convertToBankSigneringContract } from '@/components/ConfirmationPage/useSwitchingContracts'
+import {
+  CardSkeleton,
+  ContractCard,
+} from '@/app/[locale]/confirmation/[shopSessionId]/components/ContractCard'
+import { convertToBankSigneringContract } from '@/app/[locale]/confirmation/[shopSessionId]/hooks/useSwitchingContracts'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'

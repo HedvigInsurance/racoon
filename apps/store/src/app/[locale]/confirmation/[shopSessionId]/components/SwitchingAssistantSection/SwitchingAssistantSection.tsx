@@ -1,7 +1,7 @@
 import { useTranslation } from 'next-i18next'
 import { Heading, Space, Text } from 'ui'
+import { useSwitchingContracts } from '../../hooks/useSwitchingContracts'
 import { CardSkeleton, ContractCard } from '../ContractCard'
-import { useSwitchingContracts } from '../useSwitchingContracts'
 import type { SwitchingAssistantData } from './SwitchingAssistantSection.types'
 
 export type Props = SwitchingAssistantData

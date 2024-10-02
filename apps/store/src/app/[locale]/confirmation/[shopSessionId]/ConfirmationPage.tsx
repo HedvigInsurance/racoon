@@ -8,10 +8,10 @@ import { ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
 import { ProductItemContractContainerCar } from '@/features/carDealership/ProductItemContractContainer'
 import { SasEurobonusSectionContainer } from '@/features/sas/SasEurobonusSection'
-import type { ConfirmationPageProps } from './ConfirmationPage.types'
-import { StaticContent } from './StaticContent'
-import { SuccessAnimation } from './SuccessAnimation/SuccessAnimation'
-import { SwitchingAssistantSection } from './SwitchingAssistantSection/SwitchingAssistantSection'
+import { StaticContent } from './components/StaticContent/StaticContent'
+import { SuccessAnimation } from './components/SuccessAnimation/SuccessAnimation'
+import { SwitchingAssistantSection } from './components/SwitchingAssistantSection/SwitchingAssistantSection'
+import { type ConfirmationPageProps } from './ConfirmationPage.types'
 
 export const ConfirmationPage = (props: ConfirmationPageProps) => {
   const cartTotalCost = props.cart.cost.gross.amount
