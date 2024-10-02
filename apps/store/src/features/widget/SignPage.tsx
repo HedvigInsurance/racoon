@@ -6,7 +6,7 @@ import { StoryblokComponent } from '@storyblok/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { type FormEvent, type MouseEvent, type PropsWithChildren, useState } from 'react'
+import { type FormEvent, type MouseEvent, type PropsWithChildren, useMemo, useState } from 'react'
 import { BankIdIcon, Button, CheckIcon, Heading, Divider, mq, Space, Text, theme } from 'ui'
 import { FormElement } from '@/app/[locale]/checkout/CheckoutPage.constants'
 import { useHandleSubmitCheckout } from '@/app/[locale]/checkout/useHandleSubmitCheckout'
@@ -30,6 +30,7 @@ import {
 } from '@/services/graphql/generated'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'
+import { Features } from '@/utils/Features'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { Header } from './Header'
@@ -141,6 +142,16 @@ export const SignPage = (props: Props) => {
     router.push(url)
   }
 
+  const offers = useMemo(() => {
+    if (isHomeInsurance(props.productName) && !Features.enabled('WIDGET_FEATURE_HOME_TIERS')) {
+      // Stripe out home insurance tiers. Tiers' type of contract include something more than
+      // just the product name. E.g: Basic: SE_HOUSE_BAS, Default: SE_HOUSE, Max: SE_HOUSE_MAX
+      return props.priceIntent.offers.filter((offer) => offer.product.name !== props.productName)
+    }
+
+    return props.priceIntent.offers
+  }, [props.priceIntent.offers, props.productName])
+
   return (
     <>
       <Wrapper y={3}>
@@ -163,7 +174,7 @@ export const SignPage = (props: Props) => {
                   {mainOffer && (
                     <ProductItemContainer
                       shopSessionId={props.shopSession.id}
-                      offers={props.priceIntent.offers}
+                      offers={offers}
                       selectedOffer={mainOffer}
                       onEdit={handleEditProductItem}
                     />
@@ -348,3 +359,8 @@ const UspWrapper = styled.div({
   justifyContent: 'center',
   gap: theme.space.xs,
 })
+
+const HOME_INSURANCE_PRODUCTS = new Set(['SE_HOUSE', 'SE_APARTMENT_RENT', 'SE_APARTMENT_BRF'])
+function isHomeInsurance(productName: string) {
+  return HOME_INSURANCE_PRODUCTS.has(productName)
+}
