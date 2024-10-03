@@ -8,6 +8,7 @@ type ProductLink = {
   title: string
   subtitle: string
   pillowImage: StoryblokImageAsset
+  priceCalculatorURL?: string | null
 }
 
 // TODO: Move to graphql API if we do non-experimental implementation
@@ -73,11 +74,13 @@ export const useBundleDiscountProductLinks = (): Array<ProductLink> => {
     .map((group) => {
       const headlineProduct = productMetadataById[group.headlineProductId]
       return {
+        priceCalculatorURL: headlineProduct.priceCalculatorPageLink,
         url: headlineProduct.categoryPageLink || headlineProduct.pageLink,
         title: group.title[language],
         subtitle: group.subtitle[language],
         pillowImage: headlineProduct.pillowImage,
       } as const
     })
+
   return productLinks
 }

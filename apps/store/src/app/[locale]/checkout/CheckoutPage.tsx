@@ -10,7 +10,7 @@ import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { TextWithLink } from '@/components/TextWithLink'
 import { BUNDLE_DISCOUNT_PERCENTAGE } from '@/features/bundleDiscount/bundleDiscount.constants'
 import { BundleDiscountCartSummary } from '@/features/bundleDiscount/components/BundleDiscountCartSummary'
-import { BundleDiscountProductLinks } from '@/features/bundleDiscount/components/BundleDiscountProductLinks/BundleDiscountProductLinks'
+import { BundleDiscountProductCards } from '@/features/bundleDiscount/components/BundleDiscountProductCards'
 import { useBundleDiscounts } from '@/features/bundleDiscount/hooks/useBundleDiscounts'
 import { CartDiscount } from '@/features/CartDiscount/CartDiscount'
 import { getDiscountsVisibility } from '@/features/CartDiscount/CartDiscount.utils'
@@ -99,7 +99,7 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
               </Heading>
             </header>
 
-            <BundleDiscountProductLinks />
+            <BundleDiscountProductCards />
           </section>
         ) : null}
 
