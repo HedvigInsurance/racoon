@@ -1,5 +1,0 @@
-mutation AdyenSubmitRedirection($md: String!, $pares: String!) {
-  submitAdyenRedirection2(req: { md: $md, pares: $pares }) {
-    resultCode
-  }
-}

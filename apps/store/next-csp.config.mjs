@@ -14,11 +14,6 @@ const gtmInjectedOrigins = [
   '*.ads.linkedin.com',
 ]
 
-const adyenOrigins = [
-  'https://checkoutshopper-live.adyen.com',
-  'https://checkoutshopper-test.adyen.com',
-]
-
 const scriptSrc = [
   // Storyblok
   'https://app.storyblok.com',
@@ -31,7 +26,6 @@ const scriptSrc = [
   'https://c1.hedvig.com',
 
   ...gtmInjectedOrigins,
-  ...adyenOrigins,
 
   // Adtraction
   'https://cdn.adt387.com',
@@ -101,7 +95,6 @@ const imgSrc = [
   // Server-side Google Tag Manager
   'https://sgtm.hedvig.com',
 
-  ...adyenOrigins,
   ...gtmInjectedOrigins,
 
   // OLD market web
@@ -141,7 +134,6 @@ const connectSrc = [
   // Linkedin
   'https://px.ads.linkedin.com',
 
-  ...adyenOrigins,
   ...gtmInjectedOrigins,
 
   // Affiliate tracking
@@ -185,8 +177,6 @@ const frameSrc = [
   'https://blocks.insurely.com',
 
   'https://dev.hedvigit.com',
-
-  ...adyenOrigins,
 
   "'self'",
 ]

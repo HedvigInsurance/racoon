@@ -14,8 +14,6 @@
 
   "labels": ["needs approval/merge"],
   "ignoreDeps": [
-    // Not actively used, only needed in closing markets
-    "@adyen/adyen-web",
     // Following dependencies are brought in as direct to solve versioning conflicts
     // Renovate should not try to update those
     "webpack", // storybook

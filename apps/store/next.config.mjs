@@ -76,22 +76,22 @@ const config = {
     // Redirect all NO/DK pages to home page (except customer service pages)
     const noDkRedirects = [
       {
-        source: '/no/((?!hjelp/kundeservice|payment/connect-legacy).*)',
+        source: '/no/((?!hjelp/kundeservice).*)',
         destination: '/no',
         permanent: true,
       },
       {
-        source: '/no-en/((?!help/customer-service|payment/connect-legacy).*)',
+        source: '/no-en/((?!help/customer-service).*)',
         destination: '/no-en',
         permanent: true,
       },
       {
-        source: '/dk/((?!hjaelp/kundeservice|payment/connect-legacy).*)',
+        source: '/dk/((?!hjaelp/kundeservice).*)',
         destination: '/dk',
         permanent: true,
       },
       {
-        source: '/dk-en/((?!help/customer-service|payment/connect-legacy).*)',
+        source: '/dk-en/((?!help/customer-service).*)',
         destination: '/dk-en',
         permanent: true,
       },
