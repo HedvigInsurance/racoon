@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { yStack } from 'ui'
+import { tokens, yStack } from 'ui'
 
 export const container = style([
   yStack({
@@ -8,10 +8,11 @@ export const container = style([
       sm: 'xxxl',
     },
     paddingInline: 'md',
-    paddingBlock: 'xxl',
+    paddingTop: 'xxl',
   }),
   {
     maxWidth: '500px',
-    margin: 'auto',
+    marginInline: 'auto',
+    marginBottom: tokens.space[10],
   },
 ])
