@@ -1,4 +1,14 @@
 import { style } from '@vanilla-extract/css'
+import { tokens, xStack } from 'ui'
+
+export const discountForm = style([
+  xStack({
+    position: 'relative',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    gap: 'sm',
+  }),
+])
 
 export const formInput = style({
   flex: 1,
@@ -6,5 +16,7 @@ export const formInput = style({
 })
 
 export const formSubmitButton = style({
-  minWidth: 'auto',
+  position: 'absolute',
+  top: tokens.space.sm,
+  right: tokens.space.sm,
 })
