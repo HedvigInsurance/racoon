@@ -1,6 +1,6 @@
 'use client'
 
-import { Heading, Text, yStack } from 'ui'
+import { Heading, sprinkles, Text, yStack } from 'ui'
 import { ProductItemContractContainerCar } from '@/features/carDealership/ProductItemContractContainer'
 import { CartItem } from '@/features/CartItem/CartItem'
 import { CartTotal } from '@/features/CartTotal/CartTotal'
@@ -55,15 +55,17 @@ export const ConfirmationPage = ({
 
             {cartTotalCost > 0 && <CartTotal cart={cart} />}
           </section>
+
+          <section>{switching && <SwitchingAssistantSection {...switching} />}</section>
+
+          {memberPartnerData?.sas?.eligible && (
+            <section>
+              <SasEurobonusSectionContainer
+                initialValue={memberPartnerData.sas.eurobonusNumber ?? ''}
+              />
+            </section>
+          )}
         </div>
-
-        {switching && <SwitchingAssistantSection {...switching} />}
-
-        {memberPartnerData?.sas?.eligible && (
-          <SasEurobonusSectionContainer
-            initialValue={memberPartnerData.sas.eurobonusNumber ?? ''}
-          />
-        )}
 
         {/* Treating 'story' as optional here to provide a fallback confirmation page instead crashing the page */}
         {story && <StaticContent content={story.content} />}
