@@ -2,7 +2,7 @@
 
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
-import { Button, grid, Heading, yStack } from 'ui'
+import { Button, CheckIcon, grid, Heading, Text, xStack, yStack } from 'ui'
 import { BankIdDialog } from '@/components/BankIdDialog/BankIdDialog'
 import { type GlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
@@ -78,6 +78,23 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
 
             <CrossSell.Root>
               <CrossSell.Header product={recommendedOffer.product} />
+
+              <ul className={yStack({ gap: 'sm', paddingBlock: 'md', paddingLeft: 'xs' })}>
+                <li className={xStack({ gap: 'sm', alignItems: 'center' })}>
+                  <CheckIcon size="1rem" role="presentation" />
+                  <Text color="textTranslucentSecondary">{t('ACCIDENT_OFFER_USP_1')}</Text>
+                </li>
+
+                <li className={xStack({ gap: 'sm', alignItems: 'center' })}>
+                  <CheckIcon size="1rem" role="presentation" />
+                  <Text color="textTranslucentSecondary">{t('ACCIDENT_OFFER_USP_2')}</Text>
+                </li>
+
+                <li className={xStack({ gap: 'sm', alignItems: 'center' })}>
+                  <CheckIcon size="1rem" role="presentation" />
+                  <Text color="textTranslucentSecondary">{t('ACCIDENT_OFFER_USP_3')}</Text>
+                </li>
+              </ul>
 
               <AccidentCrossSellForm offer={recommendedOffer.offer}>
                 {({ isCoInsuredUpdated, isPending }) => (
