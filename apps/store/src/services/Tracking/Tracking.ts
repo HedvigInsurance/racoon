@@ -7,8 +7,10 @@ import {
   type ProductOfferFragment,
   type ShopSessionExperiments,
 } from '@/services/graphql/generated'
-import { type EcommerceEvent, pushToGTMDataLayer, initializeGtm, setUserId } from '@/services/gtm'
+import { type EcommerceEvent, initializeGtm, pushToGTMDataLayer, setUserId } from '@/services/gtm'
 import { getAdtractionProductCategories } from './adtraction'
+import { type InternalEventReporter } from './InternalEventReporter'
+import { TrackingEvent } from './TrackingEvent'
 
 type TrackingProductData = {
   id: string
@@ -29,34 +31,6 @@ type TrackingOffer = {
 
 type ItemListSource = 'store' | 'recommendations'
 
-// Naming rules:
-// - snake_case for Analytics / ecommerce events (backward compatibility)
-// - camelCase for internal anayltics events
-export enum TrackingEvent {
-  AddToCart = 'add_to_cart',
-  Adtraction = 'adtraction',
-  BeginCheckout = 'begin_checkout',
-  ClickTermsAndConditions = 'clickTermsAndConditions',
-  DeleteFromCart = 'delete_from_cart',
-  DeviceInfo = 'deviceInfo',
-  ExpandPeril = 'expandPeril',
-  // Website-driven experiments, as configured in experiment.json
-  ExperimentImpression = 'experiment_impression',
-  OpenPriceCalculator = 'open_price_calculator',
-  OpenProductReviews = 'openProductReviews',
-  PageView = 'virtual_page_view',
-  Purchase = 'purchase',
-  SelectItem = 'select_item',
-  ViewCart = 'view_cart',
-  ViewItem = 'view_item',
-  ViewPromotion = 'view_promotion',
-  InsurelyPrompted = 'insurely_prompted',
-  InsurelyAccepted = 'insurely_accepted',
-  InsurelyCorrectlyFetched = 'insurely_correctly_fetched',
-  // Backend-driven experiments as defined in shopSession.experiments
-  ShopSessionExperiments = 'shop_session_experiments',
-}
-
 type TrackingContext = Partial<{
   city: string
   countryCode: CountryCode
@@ -71,8 +45,8 @@ type TrackingContext = Partial<{
 // Simple version with 2 destinations (GTM and Datadog) implemented inline
 export class Tracking {
   static LOGGER_NAME = 'tracking'
-
-  constructor(public context: TrackingContext = {}) {}
+  public context: TrackingContext = {}
+  public internalEventReporter: InternalEventReporter | null = null
 
   private logger = datadogLogs.getLogger(Tracking.LOGGER_NAME)!
 
@@ -308,20 +282,28 @@ export class Tracking {
   ////////////////////////////
   // Internal analytics events
   public reportDeviceInfo(deviceInfo: DeviceInfo) {
-    console.log(TrackingEvent.DeviceInfo, deviceInfo)
-    // TODO: Connect with actually posing event
+    this.reportInternalEvent(TrackingEvent.DeviceInfo, deviceInfo)
   }
 
   public reportExpandPeril(productName: string, perilTitle: string) {
-    console.log(TrackingEvent.ExpandPeril, { productName, perilTitle })
+    this.reportInternalEvent(TrackingEvent.ExpandPeril, { productName, perilTitle })
   }
 
   public reportClickTermsAndConditions(productName: string, productVariant: string) {
-    console.log(TrackingEvent.ClickTermsAndConditions, { productName, productVariant })
+    this.reportInternalEvent(TrackingEvent.ClickTermsAndConditions, {
+      productName,
+      productVariant,
+    })
   }
 
   public reportOpenProductReviews(productName: string) {
-    console.log(TrackingEvent.OpenProductReviews, { productName })
+    this.reportInternalEvent(TrackingEvent.OpenProductReviews, { productName })
+  }
+
+  private reportInternalEvent(type: TrackingEvent, data: object) {
+    if (this.internalEventReporter == null) return
+    this.logger.log(type, data)
+    this.internalEventReporter.enqueue(type, data)
   }
 }
 

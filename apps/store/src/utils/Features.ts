@@ -7,6 +7,7 @@ export const Features = {
 }
 
 const config = {
+  BEHAVIOR_EVENTS: process.env.NEXT_PUBLIC_FEATURE_BEHAVIOR_EVENTS === 'true',
   // We're using it to disable cookie banner outside of production and staging
   COOKIE_BANNER: process.env.NEXT_PUBLIC_FEATURE_COOKIE_BANNER === 'true',
   // Keeping it around as a way to quickly disable Insurely if anything goes wrong

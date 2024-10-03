@@ -8,6 +8,7 @@ import { contentFontClassName } from '@/utils/fonts'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 import type { RoutingLocale } from '@/utils/l10n/types'
 import { ApolloProvider } from '../providers/ApolloProvider'
+import { InternalReporterProvider } from '../providers/InternalReporterProvider'
 import { DebugError } from './DebugError'
 
 // Trick compiler into thinking we need global.css import for anything other than side effects
@@ -32,7 +33,9 @@ export function RootLayout({
         </Suspense>
         <NavigationProgressIndicator />
 
-        <ApolloProvider locale={locale}>{children}</ApolloProvider>
+        <ApolloProvider locale={locale}>
+          <InternalReporterProvider>{children}</InternalReporterProvider>
+        </ApolloProvider>
       </body>
     </html>
   )
