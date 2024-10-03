@@ -157,9 +157,9 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
               />
               <BankIdDialog />
             </BankIdContextProvider>
-
-            <Text align="center">{t('USP_NO_BINDING_TIME')}</Text>
           </Card.Root>
+
+          <Text align="center">{t('USP_NO_BINDING_TIME')}</Text>
 
           <TextWithLink
             as="p"
