@@ -220,18 +220,6 @@ export const PageLink = {
     return url
   },
 
-  paymentConnectLegacy: ({ locale }: BaseParams) => {
-    return new URL(`/${locale}/payment/connect-legacy`, ORIGIN_URL)
-  },
-  apiAdyenCallback: ({ locale }: BaseParams) => {
-    return new URL(`api/adyen-callback/${locale}`, ORIGIN_URL)
-  },
-  paymentConnectLegacySuccess: ({ locale }: BaseParams) => {
-    return new URL(`/${locale}/payment/connect-legacy/success`, ORIGIN_URL)
-  },
-  paymentConnectLegacyError: ({ locale }: BaseParams) => {
-    return new URL(`/${locale}/payment/connect-legacy/error`, ORIGIN_URL)
-  },
   apiAuthExchange: ({ authorizationCode, next }: AuthExchangeRoute) => {
     const url = new URL(`/api/auth/exchange/${authorizationCode}`, ORIGIN_URL)
 
