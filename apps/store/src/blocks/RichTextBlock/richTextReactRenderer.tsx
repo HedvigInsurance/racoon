@@ -85,9 +85,8 @@ const resolver = richTextResolver({
     },
     [BlockTypes.COMPONENT]: componentResolver,
   },
-  // No need to escape quote marks [\'\"], it breaks final result
-  // From safety perspective quotes should only be escaped in attribute values
-  textFn: (text: string) => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'),
+  // No need to escape anything, React does this already
+  textFn: (text: string) => text,
 })
 
 function componentResolver(node: StoryblokRichTextNode<ReactElement>) {
