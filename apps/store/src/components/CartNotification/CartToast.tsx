@@ -85,7 +85,7 @@ export const CartToast = forwardRef<CartToastAttributes>((_, forwardedRef) => {
               {hasCartItemsEligibleForBundleDiscount(shopSession) && (
                 <div className={yStack({ gap: 'md' })}>
                   {bundleDiscountHeader}
-                  <BundleDiscountProductLinks />
+                  <BundleDiscountProductLinks variant="secondary" size="md" />
                 </div>
               )}
               <div className={yStack({ gap: 'xs' })}>
