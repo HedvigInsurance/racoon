@@ -9,6 +9,7 @@ import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataH
 import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { TextWithLink } from '@/components/TextWithLink'
 import { CartDiscount } from '@/features/CartDiscount/CartDiscount'
+import { getDiscountsVisibility } from '@/features/CartDiscount/CartDiscount.utils'
 import { CartTotal } from '@/features/CartTotal/CartTotal'
 import { AccidentCrossSellForm } from '@/features/CrossSell/components/AccidentCrossSellForm'
 import { CrossSell } from '@/features/CrossSell/CrossSell'
@@ -41,6 +42,7 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
   }
 
   const isCartEmpty = shopSession.cart.entries.length === 0
+
   if (isCartEmpty) {
     const products = getAvailableProducts(productMetadata ?? [])
 
@@ -56,6 +58,7 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
   }
 
   const shouldShowCrossSell = !isCrossSellDismissed && recommendedOffer
+  const { shouldShowDiscountSection } = getDiscountsVisibility(shopSession.cart)
 
   return (
     <>
@@ -141,9 +144,12 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
 
             <Divider />
 
-            <CartDiscount shopSession={shopSession} />
-
-            <Divider />
+            {shouldShowDiscountSection ? (
+              <>
+                <CartDiscount shopSession={shopSession} />
+                <Divider />
+              </>
+            ) : null}
 
             <CartTotal cart={shopSession.cart} />
 

@@ -3,7 +3,7 @@ import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useRedeemCampaign, useUnredeemCampaign } from '@/utils/useCampaign'
 import { useGetCampaignCodeExplanation } from './useGetCodeExplanation'
 
-export const useDiscount = (shopSession: ShopSession) => {
+export const useCartDiscount = (shopSession: ShopSession) => {
   const [redeemCampaign, { loading: loadingRedeem, errorMessage }] = useRedeemCampaign({
     shopSessionId: shopSession.id,
   })
