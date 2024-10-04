@@ -47,6 +47,7 @@ type Props = {
   productName: string
   suggestedEmail?: string
   showBackButton?: boolean
+  showRecommendations: boolean
   content?: Array<SbBlokData>
 }
 
@@ -54,7 +55,10 @@ export const SignPage = (props: Props) => {
   const { t } = useTranslation(['widget', 'checkout', 'cart'])
   const locale = useRoutingLocale()
 
-  const offerRecommendation = useBonusOffer(props.shopSession.id)
+  let offerRecommendation = useBonusOffer(props.shopSession.id)
+  if (!props.showRecommendations) {
+    offerRecommendation = null
+  }
 
   const [fetchCurrentMember] = useCurrentMemberLazyQuery()
   const [showSignError, setShowSignError] = useState(false)
