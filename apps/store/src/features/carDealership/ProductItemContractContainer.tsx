@@ -59,7 +59,9 @@ export const ProductItemContractContainerCar = ({ contract, crossedOutAmount }: 
       <ProductCardDetails.Root>
         <ProductCardDetails.Trigger>
           {(isOpen) =>
-            isOpen ? t('cart:HIDE_DETAILS_BUTTON_LABEL') : t('cart:SHOW_DETAILS_BUTTON_LABEL')
+            isOpen
+              ? t('HIDE_DETAILS_BUTTON_LABEL', { ns: 'cart' })
+              : t('SHOW_DETAILS_BUTTON_LABEL', { ns: 'cart' })
           }
         </ProductCardDetails.Trigger>
 
