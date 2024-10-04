@@ -1,9 +1,9 @@
 import clsx from 'clsx'
 import Link from 'next/link'
+import { useTranslation } from 'next-i18next'
 import { type ComponentProps } from 'react'
 import { Badge, Card, ChevronIcon, theme, xStack, yStack } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
-import { BUNDLE_DISCOUNT_PERCENTAGE } from '../../bundleDiscount.constants'
 import { useBundleDiscounts } from '../../hooks/useBundleDiscounts'
 import { bundleProductLink, bundleProductlinkAside } from './BundleDiscountProductLinks.css'
 
@@ -15,6 +15,7 @@ type Props = {
 }
 
 export function BundleDiscountProductLinks({ variant, size }: Props) {
+  const { t } = useTranslation()
   const { productLinks } = useBundleDiscounts()
 
   if (productLinks.length === 0) return null
@@ -31,7 +32,7 @@ export function BundleDiscountProductLinks({ variant, size }: Props) {
             <Card.Aside className={bundleProductlinkAside}>
               <div className={xStack({ gap: 'sm', alignItems: 'center' })}>
                 <Badge color="signalGreenFill" size="xsmall">
-                  {BUNDLE_DISCOUNT_PERCENTAGE}
+                  {t('BUNDLE_DISCOUNT_QUICK_LINKS_LABEL', { ns: 'cart' })}
                 </Badge>
                 <ChevronIcon size={theme.fontSizes.xs} style={arrowIconStyle} />
               </div>
