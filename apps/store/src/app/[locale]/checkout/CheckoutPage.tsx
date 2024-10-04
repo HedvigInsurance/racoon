@@ -177,6 +177,7 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
             balance={true}
             href={PageLink.privacyPolicy({ locale })}
             target="_blank"
+            color="textSecondary"
           >
             {t('checkout:SIGN_DISCLAIMER')}
           </TextWithLink>
