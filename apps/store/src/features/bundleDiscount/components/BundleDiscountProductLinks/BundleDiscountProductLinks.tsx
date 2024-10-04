@@ -27,7 +27,7 @@ export function BundleDiscountProductLinks({ variant, size }: Props) {
           <Card.Root
             variant={variant}
             size={size}
-            className={clsx(variant === 'secondary' && bundleProductLink)}
+            className={clsx(variant && bundleProductLink[variant])}
           >
             <Card.Aside className={bundleProductlinkAside}>
               <div className={xStack({ gap: 'sm', alignItems: 'center' })}>

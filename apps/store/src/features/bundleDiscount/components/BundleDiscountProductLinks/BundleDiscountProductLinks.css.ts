@@ -1,12 +1,27 @@
-import { style } from '@vanilla-extract/css'
+import { style, styleVariants } from '@vanilla-extract/css'
 import { hoverStyles, tokens } from 'ui/src/theme'
 
-export const bundleProductLink = style({
-  position: 'relative',
+export const bundleProductLink = styleVariants({
+  primary: {
+    position: 'relative',
+    ...hoverStyles({
+      backgroundColor: tokens.colors.gray50,
+    }),
+  },
 
-  ...hoverStyles({
-    backgroundColor: tokens.colors.gray200,
-  }),
+  secondary: {
+    position: 'relative',
+    ...hoverStyles({
+      backgroundColor: tokens.colors.gray200,
+    }),
+  },
+
+  ghost: {
+    position: 'relative',
+    ...hoverStyles({
+      backgroundColor: 'transparent',
+    }),
+  },
 })
 
 export const bundleProductlinkAside = style({
