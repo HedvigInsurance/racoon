@@ -24,6 +24,7 @@ type Props = Omit<ComponentPropsWithoutRef<typeof SignPage>, 'shopSession' | 'pr
   pageTitle: string
   initialSelectedTypeOfContract?: string
   partner?: string
+  showRecommendations?: boolean
 }
 
 const NextWidgetSignPage = (props: Props) => {
@@ -133,6 +134,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       ...(initialSelectedTypeOfContract ? { initialSelectedTypeOfContract } : {}),
       pageTitle: story.content.pageTitle ?? 'Hedvig',
       showBackButton: story.content.showBackButton ?? false,
+      showRecommendations: story.content.showRecommendations ?? false,
     },
   }
 }
