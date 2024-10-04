@@ -56,7 +56,11 @@ export const ConfirmationPage = ({
             {cartTotalCost > 0 && <CartTotal cart={cart} />}
           </section>
 
-          <section>{switching && <SwitchingAssistantSection {...switching} />}</section>
+          {switching && (
+            <section>
+              <SwitchingAssistantSection {...switching} />
+            </section>
+          )}
 
           {memberPartnerData?.sas?.eligible && (
             <section>
