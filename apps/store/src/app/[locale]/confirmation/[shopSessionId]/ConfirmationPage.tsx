@@ -30,9 +30,12 @@ export const ConfirmationPage = ({
                 <Heading as="h2" variant="standard.24">
                   {story.content.title}
                 </Heading>
-                <Text color="textSecondary" size="xl">
-                  We’ve sent a copy to your e-mail
-                </Text>
+
+                {story.content.subTitle ? (
+                  <Text color="textSecondary" size="xl">
+                    {story.content.subTitle}
+                  </Text>
+                ) : null}
               </header>
             ) : null}
 
