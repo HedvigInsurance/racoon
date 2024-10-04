@@ -165,7 +165,10 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
             </BankIdContextProvider>
           </Card.Root>
 
-          <Text align="center">{t('USP_NO_BINDING_TIME')}</Text>
+          <div className={xStack({ gap: 'sm', justifyContent: 'center', alignItems: 'center' })}>
+            <CheckIcon size="1rem" role="presentation" />
+            <Text align="center">{t('USP_NO_BINDING_TIME')}</Text>
+          </div>
 
           <TextWithLink
             as="p"
