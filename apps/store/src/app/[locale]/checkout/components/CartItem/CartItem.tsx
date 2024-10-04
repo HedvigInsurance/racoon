@@ -98,9 +98,11 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
 
         <ProductCardDetails.Content className={yStack({ paddingTop: 'md', gap: 'md' })}>
           <div>
-            <Text className={sprinkles({ mb: 'xxs' })}>{t('VIEW_ENTRY_DETAILS_BUTTON')}</Text>
+            <Text size={{ _: 'body', sm: 'md' }} className={sprinkles({ mb: 'xxs' })}>
+              {t('VIEW_ENTRY_DETAILS_BUTTON')}
+            </Text>
 
-            <DetailsList.Root size="md">
+            <DetailsList.Root size={{ _: 'body', sm: 'md' }} gap={{ _: 'none', sm: 'xxs' }}>
               {productDetails.map(({ title, value }) => (
                 <DetailsList.Item key={title}>
                   <DetailsList.Label>{title}</DetailsList.Label>
@@ -114,14 +116,18 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
 
           {productDocuments.length ? (
             <div>
-              <Text>{t('DOCUMENTS_SECTION_LABEL')}</Text>
+              <Text size={{ _: 'body', sm: 'md' }}>{t('DOCUMENTS_SECTION_LABEL')}</Text>
               <ul>
                 {productDocuments.map(({ title, url }) => (
                   <li key={title}>
                     {isEmbedded ? (
                       <PDFViewer url={url}>
                         <button>
-                          <Text as="span" color="textTranslucentSecondary">
+                          <Text
+                            size={{ _: 'body', sm: 'md' }}
+                            as="span"
+                            color="textTranslucentSecondary"
+                          >
                             {title}
                             <SupText>PDF</SupText>
                           </Text>
@@ -129,7 +135,11 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
                       </PDFViewer>
                     ) : (
                       <a href={url} target="_blank" rel="noopener noreferrer">
-                        <Text as="span" color="textTranslucentSecondary">
+                        <Text
+                          size={{ _: 'body', sm: 'md' }}
+                          as="span"
+                          color="textTranslucentSecondary"
+                        >
                           {title}
                           <SupText>PDF</SupText>
                         </Text>
@@ -143,11 +153,11 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
         </ProductCardDetails.Content>
       </ProductCardDetails.Root>
 
-      <DetailsList.Root>
+      <DetailsList.Root gap="sm">
         <DetailsList.Item>
           <DetailsList.Label>{variant.displayName}</DetailsList.Label>
           <DetailsList.Value>
-            <Text as="span" size="md">
+            <Text as="span" size="xs">
               {formatter.monthlyPrice({
                 currencyCode: price.currencyCode,
                 amount: offer.cost.gross.amount,
