@@ -56,7 +56,8 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
           </RemoveCartItemDialog.Trigger>
         </Card.Aside>
       </RemoveCartItemDialog.Root>
-      <Card.Header>
+
+      <Card.Header className={xStack({ alignItems: 'center' })}>
         <Card.Media>
           <Pillow
             size="small"

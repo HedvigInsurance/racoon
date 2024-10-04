@@ -90,17 +90,23 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
               <ul className={yStack({ gap: 'sm', pt: 'xs', pb: 'md', paddingLeft: 'xs' })}>
                 <li className={xStack({ gap: 'sm', alignItems: 'center' })}>
                   <CheckIcon size="1rem" role="presentation" />
-                  <Text color="textTranslucentSecondary">{t('ACCIDENT_OFFER_USP_1')}</Text>
+                  <Text color="textTranslucentSecondary" size={{ _: 'body', sm: 'md' }}>
+                    {t('ACCIDENT_OFFER_USP_1')}
+                  </Text>
                 </li>
 
                 <li className={xStack({ gap: 'sm', alignItems: 'center' })}>
                   <CheckIcon size="1rem" role="presentation" />
-                  <Text color="textTranslucentSecondary">{t('ACCIDENT_OFFER_USP_2')}</Text>
+                  <Text color="textTranslucentSecondary" size={{ _: 'body', sm: 'md' }}>
+                    {t('ACCIDENT_OFFER_USP_2')}
+                  </Text>
                 </li>
 
                 <li className={xStack({ gap: 'sm', alignItems: 'center' })}>
                   <CheckIcon size="1rem" role="presentation" />
-                  <Text color="textTranslucentSecondary">{t('ACCIDENT_OFFER_USP_3')}</Text>
+                  <Text color="textTranslucentSecondary" size={{ _: 'body', sm: 'md' }}>
+                    {t('ACCIDENT_OFFER_USP_3')}
+                  </Text>
                 </li>
               </ul>
 

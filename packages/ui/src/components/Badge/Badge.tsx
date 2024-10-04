@@ -22,7 +22,7 @@ export type BadgeProps = {
   as?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span' | 'div'
   className?: string
   color?: keyof BadgeColors
-  size?: 'tiny' | 'small' | 'big' | 'responsive'
+  size?: 'tiny' | 'xsmall' | 'small' | 'big' | 'responsive'
   style?: CSSProperties
 }
 
