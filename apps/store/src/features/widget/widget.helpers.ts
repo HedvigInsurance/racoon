@@ -57,5 +57,6 @@ export const fetchFlowStory = (flow: string, draft?: boolean) => {
   return getStoryById<WidgetFlowStory>({
     id: flow,
     version: draft ? 'draft' : undefined,
+    resolve_relations: 'reusableBlockReference.reference',
   })
 }

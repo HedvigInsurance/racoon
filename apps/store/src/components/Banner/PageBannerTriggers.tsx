@@ -1,6 +1,6 @@
 'use client'
 import { type StoryblokRichTextNode } from '@storyblok/richtext'
-import { useAtom, useSetAtom } from 'jotai'
+import { useAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { useEffect } from 'react'
 import type { ReusableBlockReferenceProps } from '@/blocks/ReusableBlockReference'
@@ -20,28 +20,14 @@ type Props = {
 
 // Optimization - this effect should run in component without children to avoid rerenders
 export function PageBannerTriggers({ blok }: Props) {
-  useCampaignBanner()
-
-  // Announcements are added as reusable blocks for Page and ProductPage content types
+  // Announcements are added as reusable blocks for Page, ProductPage and Widget content types
   const announcementBlocks = filterByBlockType(blok.announcement, 'reusableBlockReference')
-  usePageAnnouncement(
+
+  usePageBanner(
     announcementBlocks.at(0)?.reference.content?.body[0] as AnnouncementBlok | undefined,
   )
 
   return null
-}
-
-export const useCampaignBanner = () => {
-  const { t } = useTranslation()
-  const { shopSession } = useShopSession()
-  const setGlobalBanner = useSetAtom(globalBannerAtom)
-
-  const showCampaignBanner = !!shopSession?.cart.redeemedCampaign && !hasBundleDiscount(shopSession)
-  useEffect(() => {
-    if (showCampaignBanner) {
-      setGlobalBanner({ id: 'campaign', content: t('GLOBAL_BANNER_CAMPAIGN'), variant: 'campaign' })
-    }
-  }, [showCampaignBanner, setGlobalBanner, t])
 }
 
 type AnnouncementBlok = {
@@ -50,8 +36,13 @@ type AnnouncementBlok = {
   variant?: BannerVariant
 }
 
-const usePageAnnouncement = (blok?: AnnouncementBlok) => {
+const usePageBanner = (blok?: AnnouncementBlok) => {
+  const { t } = useTranslation()
+  const { shopSession } = useShopSession()
   const [globalBanner, setGlobalBanner] = useAtom(globalBannerAtom)
+  const globalBannerId = globalBanner?.id
+
+  const showCampaignBanner = !!shopSession?.cart.redeemedCampaign && !hasBundleDiscount(shopSession)
   useEffect(() => {
     if (blok != null) {
       setGlobalBanner({
@@ -60,10 +51,22 @@ const usePageAnnouncement = (blok?: AnnouncementBlok) => {
         variant: blok.variant ?? 'info',
       })
     }
-  }, [blok, setGlobalBanner])
+
+    // Show campaign banner only if there is no page specific announcement
+    if (showCampaignBanner && blok == null) {
+      setGlobalBanner({ id: 'campaign', content: t('GLOBAL_BANNER_CAMPAIGN'), variant: 'campaign' })
+    }
+
+    return () => {
+      // Make sure to remove campaign banner if navigating to a page with a page specific announcment
+      if (blok?.id != null && globalBannerId === 'campaign') {
+        setGlobalBanner(null)
+      }
+    }
+  }, [blok, setGlobalBanner, showCampaignBanner, globalBannerId, t])
+
   // NOTE: Cleanup has to be separate effect, we need to check current banner to see if `setGlobalBanner` actually succeeded
   // It's possible that other banner was visible (ex. campaign announcement) and in this case we don't want to remove it
-  const globalBannerId = globalBanner?.id
   useEffect(() => {
     return () => {
       if (globalBannerId != null && globalBannerId === blok?.id) {

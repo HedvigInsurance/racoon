@@ -171,6 +171,7 @@ export type WidgetFlowStory = ISbStoryData<{
   checkoutPageContent?: Array<SbBlokData>
   pageTitle?: string
   showBackButton?: boolean
+  announcement?: ExpectedBlockType<ReusableBlockReferenceProps>
 }>
 
 export type PriceCalculatorPageStory = ISbStoryData<{
