@@ -42,7 +42,7 @@ const CrossSellHeader = ({ product, ...props }: HeaderProps) => {
         <Card.Title>
           <Link href={product.pageLink}>{product.displayNameFull}</Link>
         </Card.Title>
-        <Card.Subtitle size={{ _: 'body', sm: 'md' }}>{t('USP_NO_BINDING_TIME')}</Card.Subtitle>
+        <Card.Subtitle size={{ _: 'body', sm: 'md' }}>{t('CROSS_SELL_SUBTITLE')}</Card.Subtitle>
       </Card.Heading>
     </Card.Header>
   )
