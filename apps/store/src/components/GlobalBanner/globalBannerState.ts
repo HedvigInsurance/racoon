@@ -3,8 +3,6 @@ import { atomWithStorage, createJSONStorage } from 'jotai/utils'
 import type { Banner } from '@/components/Banner/Banner.types'
 import { globalStore } from 'globalStore'
 
-type BannerWithId = Banner & { id: string }
-
 type SetBannerOptions = {
   force: boolean // If true, replace existing banner when present and reset dismissed flag
 }
@@ -22,7 +20,7 @@ const globalBannerAtom = atom(
     }
     return null
   },
-  (get, set, newBanner: BannerWithId | null, options?: SetBannerOptions) => {
+  (get, set, newBanner: Banner | null, options?: SetBannerOptions) => {
     if (newBanner == null) {
       set(currentBannerAtom, null)
       return
@@ -39,7 +37,7 @@ const globalBannerAtom = atom(
   },
 )
 
-const currentBannerAtom = atom<BannerWithId | null>(null)
+const currentBannerAtom = atom<Banner | null>(null)
 
 const dismissedBannerIdAtom = atomWithStorage<string | null>(
   'dismissedGlobalBannerId',

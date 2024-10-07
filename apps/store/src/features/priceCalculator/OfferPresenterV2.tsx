@@ -151,6 +151,8 @@ function OfferSummary() {
     event.preventDefault()
     await addToCart(selectedOffer.id)
     setPriceCalculatorStep('purchaseSummary')
+    // Make sure user views "added to cart" notification and/or bundle discount banner
+    window.scrollTo({ top: 0, behavior: 'instant' })
   }
 
   const productData = useProductData()
