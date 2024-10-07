@@ -2,6 +2,7 @@ import { type GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { type ComponentPropsWithoutRef } from 'react'
+import { PageBannerTriggers } from '@/components/Banner/PageBannerTriggers'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import type { ProductData } from '@/components/ProductData/ProductData.types'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
@@ -12,6 +13,7 @@ import { usePriceIntentQuery, useShopSessionQuery } from '@/services/graphql/gen
 import { hideChatOnPage } from '@/services/pageChat'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { type WidgetFlowStory } from '@/services/storyblok/storyblok'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
@@ -25,6 +27,7 @@ type Props = Omit<ComponentPropsWithoutRef<typeof SignPage>, 'shopSession' | 'pr
   initialSelectedTypeOfContract?: string
   partner?: string
   showRecommendations?: boolean
+  story: WidgetFlowStory
 }
 
 const NextWidgetSignPage = (props: Props) => {
@@ -55,6 +58,7 @@ const NextWidgetSignPage = (props: Props) => {
           partner={props.partner}
         >
           <SignPage shopSession={shopSession} priceIntent={priceIntent} {...props} />
+          <PageBannerTriggers blok={props.story.content} />
         </TrackingProvider>
       </ProductDataProvider>
     </>
@@ -135,6 +139,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       pageTitle: story.content.pageTitle ?? 'Hedvig',
       showBackButton: story.content.showBackButton ?? false,
       showRecommendations: story.content.showRecommendations ?? false,
+      story: story,
     },
   }
 }

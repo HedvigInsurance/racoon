@@ -100,6 +100,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       partner,
       compareInsurance,
       showBackButton: story.content.showBackButton ?? false,
+      story: story,
     },
   }
 }

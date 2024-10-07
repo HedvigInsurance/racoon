@@ -4,6 +4,7 @@ import Head from 'next/head'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import type { ComponentPropsWithoutRef, ReactNode } from 'react'
+import { PageBannerTriggers } from '@/components/Banner/PageBannerTriggers'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import { type ProductData } from '@/components/ProductData/ProductData.types'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
@@ -20,6 +21,7 @@ import { hideChatOnPage } from '@/services/pageChat'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { ShopSessionProvider, useShopSessionId } from '@/services/shopSession/ShopSessionContext'
+import { type WidgetFlowStory } from '@/services/storyblok/storyblok'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
@@ -89,6 +91,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
       ...translations,
       ...context.params,
       showBackButton: story.content.showBackButton ?? false,
+      story: story,
       [SHOP_SESSION_PROP_NAME]: shopSession.id,
     },
   })
@@ -99,8 +102,9 @@ export default function Page({
   shopSessionId,
   priceIntentId,
   productData,
+  story,
   ...forwardedProps
-}: Props) {
+}: Props & { story: WidgetFlowStory }) {
   const { t } = useTranslation('widget')
 
   const shopSessionResult = useShopSessionQuery({
@@ -125,6 +129,7 @@ export default function Page({
           <ProductDataProvider productData={productData}>
             <ShopSessionLoader>
               <CalculatePricePage {...forwardedProps} priceIntentId={priceIntentId} />
+              <PageBannerTriggers blok={story.content} />
             </ShopSessionLoader>
           </ProductDataProvider>
         </TrackingProvider>
