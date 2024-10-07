@@ -1,5 +1,6 @@
 {
   "ADDED_TO_CART_LABEL": "Tillag i varukorden",
+  "ADD_ANOTHER_INSURANCE_LABEL": "Lägg till en {{productName}}",
   "ADD_TO_CART_BUTTON_LABEL": "Lägg i varukorgen",
   "AUTO_SWITCH_FIELD_LABEL": "Byt automatiskt",
   "AUTO_SWITCH_FIELD_MESSAGE": "Vi avslutar din försäkring hos {{COMPANY}} åt dig. Hedvig aktiveras när den går ut.",

@@ -1,7 +1,7 @@
 import { style } from '@vanilla-extract/css'
 import { yStack, responsiveStyles } from 'ui'
 
-const CONTENT_MAX_WIDTH = '23rem'
+export const CONTENT_MAX_WIDTH = '23rem'
 
 export const centered = style({
   maxWidth: CONTENT_MAX_WIDTH,

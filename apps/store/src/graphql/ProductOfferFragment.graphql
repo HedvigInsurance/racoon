@@ -7,6 +7,7 @@ fragment ProductOffer on ProductOffer {
     priceCalculatorPageLink
     displayNameShort
     displayNameFull
+    multiple
     pillowImage {
       id
       alt
