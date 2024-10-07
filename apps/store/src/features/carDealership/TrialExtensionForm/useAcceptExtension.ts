@@ -1,8 +1,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import { useSetAtom } from 'jotai'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { dismissedBannerIdAtom } from '@/components/GlobalBanner/globalBannerState'
+import { useDismissBanner } from '@/components/GlobalBanner/globalBannerState'
 import { CarDealershipBanners } from '@/features/carDealership/carDearlership.constants'
 import { useShowAppError } from '@/services/appErrors/appErrorAtom'
 import { BankIdState } from '@/services/bankId/bankId.types'
@@ -27,7 +26,7 @@ type Params = {
 export const useAcceptExtension = (params: Params) => {
   const { startCheckoutSign, currentOperation } = useBankIdContext()
   const router = useRouter()
-  const setDismissedBannerId = useSetAtom(dismissedBannerIdAtom)
+  const dismissBanner = useDismissBanner()
   const showError = useShowAppError()
   const [getCurrentMember] = useCurrentMemberLazyQuery()
   const locale = useRoutingLocale()
@@ -58,7 +57,7 @@ export const useAcceptExtension = (params: Params) => {
           return
         }
 
-        setDismissedBannerId(CarDealershipBanners.Extend)
+        dismissBanner(CarDealershipBanners.Extend)
 
         const nextUrl = PageLink.carDealershipConfirmation({
           locale,

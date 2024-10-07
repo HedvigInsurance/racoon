@@ -1,12 +1,11 @@
 'use client'
 import { type StoryblokRichTextNode } from '@storyblok/richtext'
-import { useAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { useEffect } from 'react'
 import type { ReusableBlockReferenceProps } from '@/blocks/ReusableBlockReference'
 import { renderRichTextToString } from '@/blocks/RichTextBlock/richTextReactRenderer'
 import type { BannerVariant } from '@/components/Banner/Banner.types'
-import { globalBannerAtom } from '@/components/GlobalBanner/globalBannerState'
+import { useGlobalBanner, useSetGlobalBanner } from '@/components/GlobalBanner/globalBannerState'
 import { hasBundleDiscount } from '@/features/bundleDiscount/bundleDiscount.utils'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import type { ExpectedBlockType } from '@/services/storyblok/storyblok'
@@ -30,6 +29,19 @@ export function PageBannerTriggers({ blok }: Props) {
   return null
 }
 
+export const useCampaignBanner = () => {
+  const { t } = useTranslation()
+  const { shopSession } = useShopSession()
+  const setGlobalBanner = useSetGlobalBanner()
+
+  const showCampaignBanner = !!shopSession?.cart.redeemedCampaign && !hasBundleDiscount(shopSession)
+  useEffect(() => {
+    if (showCampaignBanner) {
+      setGlobalBanner({ id: 'campaign', content: t('GLOBAL_BANNER_CAMPAIGN'), variant: 'campaign' })
+    }
+  }, [showCampaignBanner, setGlobalBanner, t])
+}
+
 type AnnouncementBlok = {
   id: string
   content: StoryblokRichTextNode
@@ -39,7 +51,7 @@ type AnnouncementBlok = {
 const usePageBanner = (blok?: AnnouncementBlok) => {
   const { t } = useTranslation()
   const { shopSession } = useShopSession()
-  const [globalBanner, setGlobalBanner] = useAtom(globalBannerAtom)
+  const [globalBanner, setGlobalBanner] = useGlobalBanner()
   const globalBannerId = globalBanner?.id
 
   const showCampaignBanner = !!shopSession?.cart.redeemedCampaign && !hasBundleDiscount(shopSession)

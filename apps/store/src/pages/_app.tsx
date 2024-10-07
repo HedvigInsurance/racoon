@@ -36,6 +36,7 @@ import { useDebugTranslationKeys } from '@/utils/l10n/useDebugTranslationKeys'
 import { useForceHtmlLangAttribute } from '@/utils/l10n/useForceHtmlLangAttribute'
 import { useAllowActiveStylesInSafari } from '@/utils/useAllowActiveStylesInSafari'
 import { useReloadOnCountryChange } from '@/utils/useReloadOnCountryChange'
+import { globalStore } from 'globalStore'
 
 // GOTCHA: Here we need to trick compiler into thinking we need global.css import
 // for anything other than side effects
@@ -99,7 +100,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       <OneTrustStyles />
       <PageTransitionProgressBar />
       <ApolloProvider client={apolloClient}>
-        <JotaiProvider>
+        <JotaiProvider store={globalStore}>
           <ShopSessionProvider shopSessionId={pageProps[SHOP_SESSION_PROP_NAME]}>
             <ShopSessionTrackingProvider>
               <BankIdContextProvider>

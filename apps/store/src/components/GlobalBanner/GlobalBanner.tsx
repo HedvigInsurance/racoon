@@ -1,15 +1,11 @@
 'use client'
-import { useAtomValue, useSetAtom } from 'jotai'
 import { Banner } from '@/components/Banner/Banner'
-import {
-  dismissedBannerIdAtom,
-  globalBannerAtom,
-} from '@/components/GlobalBanner/globalBannerState'
+import { useGlobalBannerValue, useDismissBanner } from '@/components/GlobalBanner/globalBannerState'
 import { useDebugShopSessionId } from '@/utils/useDebugShopSessionId'
 
 const GlobalBanner = () => {
-  const globalBanner = useAtomValue(globalBannerAtom)
-  const setDismissedBannerId = useSetAtom(dismissedBannerIdAtom)
+  const globalBanner = useGlobalBannerValue()
+  const dismissBanner = useDismissBanner()
 
   // Show standard banners if applicable
   useDebugShopSessionId()
@@ -17,7 +13,7 @@ const GlobalBanner = () => {
   if (globalBanner == null) return null
 
   return (
-    <Banner variant={globalBanner.variant} onClose={() => setDismissedBannerId(globalBanner.id)}>
+    <Banner variant={globalBanner.variant} onClose={() => dismissBanner(globalBanner.id)}>
       <span dangerouslySetInnerHTML={{ __html: globalBanner.content }} />
     </Banner>
   )

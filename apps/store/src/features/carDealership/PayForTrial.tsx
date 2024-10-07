@@ -1,9 +1,8 @@
 import { datadogRum } from '@datadog/browser-rum'
-import { useSetAtom } from 'jotai'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { Space } from 'ui'
-import { dismissedBannerIdAtom } from '@/components/GlobalBanner/globalBannerState'
+import { useDismissBanner } from '@/components/GlobalBanner/globalBannerState'
 import { CarDealershipBanners } from '@/features/carDealership/carDearlership.constants'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import type { ProductOfferFragment } from '@/services/graphql/generated'
@@ -29,7 +28,7 @@ export const PayForTrial = ({ trialContract, shopSessionId, defaultOffer, ssn }:
   const { t } = useTranslation('carDealership')
   const formatter = useFormatter()
   const locale = useRoutingLocale()
-  const setDismissedBannerId = useSetAtom(dismissedBannerIdAtom)
+  const dismissBanner = useDismissBanner()
   const { startLogin } = useBankIdContext()
 
   const handleConfirmPay = () => {
@@ -47,7 +46,7 @@ export const PayForTrial = ({ trialContract, shopSessionId, defaultOffer, ssn }:
           locale,
           contractId: trialContract.id,
         }).pathname
-        setDismissedBannerId(CarDealershipBanners.ConnectPayment)
+        dismissBanner(CarDealershipBanners.ConnectPayment)
         await router.push(
           PageLink.checkoutPaymentTrustly({ locale, shopSessionId: shopSessionId, nextUrl }),
         )
