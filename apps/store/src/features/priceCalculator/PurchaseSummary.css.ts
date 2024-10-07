@@ -7,12 +7,12 @@ export const actions = style([
   {
     position: 'fixed',
     bottom: tokens.space.md,
-    width: `calc(100% - ${tokens.space.md} * 2)`,
-    maxWidth: CONTENT_MAX_WIDTH,
+    width: `min(100%, ${CONTENT_MAX_WIDTH})`,
+    marginInline: 'auto',
     ...responsiveStyles({
       lg: {
         position: 'revert',
-        width: '100%',
+        width: `max(100%, ${CONTENT_MAX_WIDTH})`,
       },
     }),
   },
