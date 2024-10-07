@@ -24,7 +24,7 @@ const ANIMATION: Variants = {
   original: { y: 0, opacity: 1 },
   pushUp: { y: `-${TRAVEL_DISTANCE}`, opacity: 0 },
 }
-const TRANSITION = { duration: 0.5, ...framerTransitions.easeInOutCubic }
+const TRANSITION = { duration: 0.3, ...framerTransitions.easeInOutCubic }
 
 export function ProductHeroV2({ className }: { className?: string }) {
   const ref = useRef(null)
@@ -43,7 +43,7 @@ export function ProductHeroV2({ className }: { className?: string }) {
 
       {selectedOffer && (
         <div className={priceWrapper}>
-          <AnimatePresence>
+          <AnimatePresence initial={false}>
             <motion.div
               key={selectedOffer.id}
               className={priceLabel}
