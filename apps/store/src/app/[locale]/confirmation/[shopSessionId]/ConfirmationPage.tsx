@@ -1,6 +1,6 @@
 'use client'
 
-import { Heading, sprinkles, Text, yStack } from 'ui'
+import { Heading, Text, yStack } from 'ui'
 import { ProductItemContractContainerCar } from '@/features/carDealership/ProductItemContractContainer'
 import { CartItem } from '@/features/CartItem/CartItem'
 import { CartTotal } from '@/features/CartTotal/CartTotal'
