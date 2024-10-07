@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { Fragment } from 'react'
-import { AndroidIcon, AppleIcon, Button, Heading, Space, Text, theme, yStack } from 'ui'
+import { AndroidIcon, AppleIcon, Button, Heading, Text, theme, yStack } from 'ui'
 import { ConfirmationPageBlock } from '@/blocks/ConfirmationPageBlock'
 import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWithPlaceholder'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -23,7 +23,14 @@ export const StaticContent = (props: Props) => {
   const checklistItems = props.content.checklist.split('\n')
 
   return (
-    <Space y={4}>
+    <div
+      className={yStack({
+        gap: {
+          _: 'xxl',
+          sm: 'xxxl',
+        },
+      })}
+    >
       <div className={container}>
         <section className={yStack({ gap: { _: 'md', sm: 'lg' } })}>
           <header>
@@ -75,7 +82,7 @@ export const StaticContent = (props: Props) => {
 
         <ConfirmationPageBlock blok={props.content} />
       </div>
-    </Space>
+    </div>
   )
 }
 

@@ -22,7 +22,15 @@ export const ConfirmationPage = ({
 
   return (
     <SuccessAnimation>
-      <main>
+      <main
+        className={yStack({
+          gap: {
+            _: 'xxl',
+            sm: 'xxxl',
+          },
+          paddingTop: 'xxl',
+        })}
+      >
         <div className={container}>
           <section className={yStack({ gap: { _: 'md', sm: 'lg' } })}>
             {story ? (

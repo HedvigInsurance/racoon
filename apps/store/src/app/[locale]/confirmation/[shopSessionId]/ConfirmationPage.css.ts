@@ -8,9 +8,9 @@ export const container = style([
       sm: 'xxxl',
     },
     paddingInline: 'md',
-    paddingTop: 'xxl',
   }),
   {
+    width: '100%',
     maxWidth: '500px',
     marginInline: 'auto',
   },
