@@ -6,6 +6,12 @@ const CONTENT_MAX_WIDTH = '23rem'
 export const centered = style({
   maxWidth: CONTENT_MAX_WIDTH,
   marginInline: 'auto',
+  ...responsiveStyles({
+    lg: {
+      width: `max(${CONTENT_MAX_WIDTH}, 100%)`,
+      maxWidth: 'unset',
+    },
+  }),
 })
 
 export const priceLoaderWrapper = style([
@@ -24,7 +30,3 @@ export const purchaseSummaryWrapper = style([
   yStack({ alignItems: 'center', justifyContent: 'center' }),
   { height: '100%' },
 ])
-
-export const purchaseSummary = style({
-  width: `min(${CONTENT_MAX_WIDTH}, 100%)`,
-})

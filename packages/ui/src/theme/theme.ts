@@ -20,6 +20,9 @@ export const theme = {
     focus: `0 0 0 2px ${colors.textPrimary}`,
     focusAlt: `0 0 0 2px ${colors.signalBlueElement}`,
   },
+  width: {
+    layoutMax: '90rem',
+  },
   components: {
     input: {
       background: {
