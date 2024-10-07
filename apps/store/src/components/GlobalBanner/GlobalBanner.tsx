@@ -14,7 +14,7 @@ const GlobalBanner = () => {
 
   return (
     <Banner variant={globalBanner.variant} onClose={() => dismissBanner(globalBanner.id)}>
-      <span dangerouslySetInnerHTML={{ __html: globalBanner.content }} />
+      {globalBanner.content}
     </Banner>
   )
 }

@@ -1,14 +1,26 @@
 import clsx from 'clsx'
 import { useTranslation } from 'next-i18next'
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import { Text, Card, Divider, Button, yStack } from 'ui'
+import type { Banner } from '@/components/Banner/Banner.types'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
+import { useSetGlobalBanner } from '@/components/GlobalBanner/globalBannerState'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { TotalPrice } from '@/components/ProductCard/TotalPrice/TotalPrice'
 import { useResetPriceIntent } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { usePriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
 import { useSelectedOfferValueOrThrow } from '@/components/ProductPage/PurchaseForm/useSelectedOffer'
+import { TextWithLink } from '@/components/TextWithLink'
+import {
+  BUNDLE_DISCOUNT_PERCENTAGE,
+  BUNDLE_DISCOUNT_PROMO_PAGE_PATH,
+} from '@/features/bundleDiscount/bundleDiscount.constants'
+import {
+  hasBundleDiscount,
+  hasCartItemsEligibleForBundleDiscount,
+} from '@/features/bundleDiscount/bundleDiscount.utils'
 import type { TemplateV2 } from '@/services/PriceCalculator/PriceCalculator.types'
+import { useShopSessionValueOrThrow } from '@/services/shopSession/ShopSessionContext'
 import { getOfferPrice } from '@/utils/getOfferPrice'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
@@ -20,6 +32,8 @@ export function PurchaseSummary({ className }: { className?: string }) {
   const offer = useSelectedOfferValueOrThrow()
   const priceTemplate = usePriceTemplate() as TemplateV2
   const resetPriceIntent = useResetPriceIntent()
+
+  useNotifyAboutBundleDiscounts()
 
   const handleAddMore = useCallback(() => {
     resetPriceIntent()
@@ -60,4 +74,39 @@ export function PurchaseSummary({ className }: { className?: string }) {
       </div>
     </div>
   )
+}
+
+function useNotifyAboutBundleDiscounts() {
+  const { t } = useTranslation('purchase-form')
+  const shopSession = useShopSessionValueOrThrow()
+  const setGlobalBanner = useSetGlobalBanner()
+
+  useEffect(() => {
+    let banner: Banner | null = null
+    if (hasBundleDiscount(shopSession)) {
+      banner = {
+        id: 'bundle-discount-applied',
+        content: t('BUNDLE_DISCOUNT_CART_TOAST_SUMMARY', {
+          percentage: BUNDLE_DISCOUNT_PERCENTAGE,
+        }),
+        variant: 'campaign',
+      }
+    } else if (hasCartItemsEligibleForBundleDiscount(shopSession)) {
+      banner = {
+        id: 'eligible-for-bundle-discount',
+        content: (
+          <TextWithLink as="span" size="xs" href={BUNDLE_DISCOUNT_PROMO_PAGE_PATH}>
+            {t('BUNDLE_DISCOUNT_TEASER', {
+              percentage: BUNDLE_DISCOUNT_PERCENTAGE,
+            })}
+          </TextWithLink>
+        ),
+        variant: 'campaign',
+      }
+    }
+
+    if (banner) {
+      setGlobalBanner(banner, { force: true })
+    }
+  }, [shopSession, t, setGlobalBanner])
 }
