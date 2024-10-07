@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
 
 export const appDownloadText = style({
-  maxWidth: '50%',
+  maxWidth: '65%',
 })
