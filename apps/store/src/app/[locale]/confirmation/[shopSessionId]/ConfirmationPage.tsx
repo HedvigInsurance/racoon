@@ -55,15 +55,21 @@ export const ConfirmationPage = ({
 
             {cartTotalCost > 0 && <CartTotal cart={cart} />}
           </section>
+
+          {switching && (
+            <section>
+              <SwitchingAssistantSection {...switching} />
+            </section>
+          )}
+
+          {memberPartnerData?.sas?.eligible && (
+            <section>
+              <SasEurobonusSectionContainer
+                initialValue={memberPartnerData.sas.eurobonusNumber ?? ''}
+              />
+            </section>
+          )}
         </div>
-
-        {switching && <SwitchingAssistantSection {...switching} />}
-
-        {memberPartnerData?.sas?.eligible && (
-          <SasEurobonusSectionContainer
-            initialValue={memberPartnerData.sas.eurobonusNumber ?? ''}
-          />
-        )}
 
         {/* Treating 'story' as optional here to provide a fallback confirmation page instead crashing the page */}
         {story && <StaticContent content={story.content} />}
