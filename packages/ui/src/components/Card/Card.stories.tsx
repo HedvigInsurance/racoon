@@ -16,7 +16,7 @@ const meta: Meta<Controls> = {
   component: Card.Root,
   argTypes: {
     variant: {
-      options: ['primary', 'secondary'],
+      options: ['primary', 'secondary', 'ghost'],
       control: { type: 'select' },
     },
     size: {
@@ -159,6 +159,28 @@ export const Secondary: Story = {
   ),
   args: {
     variant: 'secondary',
+    size: 'md',
+  },
+}
+
+export const Ghost: Story = {
+  render: (args: Controls) => (
+    <div style={{ maxWidth: '400px' }}>
+      <Card.Root variant={args.variant} size={args.size}>
+        <Card.Header>
+          <Card.Media>
+            <BasePillow fill={tokens.colors.amber300} />
+          </Card.Media>
+          <Card.Heading>
+            <Card.Title>Homeowner Insurance</Card.Title>
+            <Card.Subtitle>Bellmansgatan 19A</Card.Subtitle>
+          </Card.Heading>
+        </Card.Header>
+      </Card.Root>
+    </div>
+  ),
+  args: {
+    variant: 'ghost',
     size: 'md',
   },
 }
