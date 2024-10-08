@@ -23,6 +23,7 @@ import {
   priceLoaderWrapper,
   viewOffersWrapper,
   purchaseSummaryWrapper,
+  purchaseSummary,
 } from './PurchaseFormV2.css'
 import { PurchaseSummary } from './PurchaseSummary'
 
@@ -59,7 +60,7 @@ export function PurchaseFormV2() {
     case 'purchaseSummary':
       return (
         <div className={purchaseSummaryWrapper}>
-          <PurchaseSummary className={centered} />
+          <PurchaseSummary className={purchaseSummary} />
         </div>
       )
     default:

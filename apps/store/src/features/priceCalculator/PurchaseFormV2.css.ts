@@ -30,3 +30,13 @@ export const purchaseSummaryWrapper = style([
   yStack({ alignItems: 'center', justifyContent: 'center' }),
   { height: '100%' },
 ])
+
+export const purchaseSummary = style({
+  width: `min(100%, ${CONTENT_MAX_WIDTH})`,
+  marginInline: 'auto',
+  ...responsiveStyles({
+    lg: {
+      width: `max(100%, ${CONTENT_MAX_WIDTH})`,
+    },
+  }),
+})
