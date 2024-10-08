@@ -63,12 +63,12 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
   return (
     <>
       <main className={container}>
-        <section className={yStack({ gap: 'lg' })}>
+        <section className={yStack({ gap: { _: 'md', sm: 'lg' } })}>
           <header>
-            <Heading as="h2" variant="standard.32">
+            <Heading as="h2" variant="standard.24">
               {t('CART_PAGE_HEADING')} ({shopSession.cart.entries.length})
             </Heading>
-            <Heading as="h2" variant="standard.32" color="textSecondary">
+            <Heading as="h2" variant="standard.24" color="textSecondary">
               {t('checkout:CHECKOUT_PAGE_SUBHEADING')}
             </Heading>
           </header>
@@ -77,9 +77,9 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
         </section>
 
         {shouldShowCrossSell ? (
-          <section className={yStack({ gap: 'lg' })}>
+          <section className={yStack({ gap: { _: 'md', sm: 'lg' } })}>
             <header>
-              <Heading as="h2" variant="standard.32">
+              <Heading as="h2" variant="standard.24">
                 {t('QUICK_ADD_BUNDLE_HEADER')}
               </Heading>
             </header>
@@ -90,17 +90,23 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
               <ul className={yStack({ gap: 'sm', pt: 'xs', pb: 'md', paddingLeft: 'xs' })}>
                 <li className={xStack({ gap: 'sm', alignItems: 'center' })}>
                   <CheckIcon size="1rem" role="presentation" />
-                  <Text color="textTranslucentSecondary">{t('ACCIDENT_OFFER_USP_1')}</Text>
+                  <Text color="textTranslucentSecondary" size={{ _: 'body', sm: 'md' }}>
+                    {t('ACCIDENT_OFFER_USP_1')}
+                  </Text>
                 </li>
 
                 <li className={xStack({ gap: 'sm', alignItems: 'center' })}>
                   <CheckIcon size="1rem" role="presentation" />
-                  <Text color="textTranslucentSecondary">{t('ACCIDENT_OFFER_USP_2')}</Text>
+                  <Text color="textTranslucentSecondary" size={{ _: 'body', sm: 'md' }}>
+                    {t('ACCIDENT_OFFER_USP_2')}
+                  </Text>
                 </li>
 
                 <li className={xStack({ gap: 'sm', alignItems: 'center' })}>
                   <CheckIcon size="1rem" role="presentation" />
-                  <Text color="textTranslucentSecondary">{t('ACCIDENT_OFFER_USP_3')}</Text>
+                  <Text color="textTranslucentSecondary" size={{ _: 'body', sm: 'md' }}>
+                    {t('ACCIDENT_OFFER_USP_3')}
+                  </Text>
                 </li>
               </ul>
 
@@ -127,12 +133,12 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
           </section>
         ) : null}
 
-        <section className={yStack({ gap: 'lg' })}>
+        <section className={yStack({ gap: { _: 'md', sm: 'lg' } })}>
           <header>
-            <Heading as="h2" variant="standard.32">
+            <Heading as="h2" variant="standard.24">
               {t('checkout:COMPLETE_PURCHASE_TITLE')}
             </Heading>
-            <Heading as="h2" variant="standard.32" color="textSecondary">
+            <Heading as="h2" variant="standard.24" color="textSecondary">
               {t('checkout:COMPLETE_PURCHASE_SUBTITLE')}
             </Heading>
           </header>

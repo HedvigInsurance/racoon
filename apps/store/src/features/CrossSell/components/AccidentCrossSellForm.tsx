@@ -119,7 +119,7 @@ export function AccidentCrossSellForm({ offer: initialOffer, children }: Props) 
         />
       </div>
 
-      <TotalPrice {...getOfferPrice(offer.cost)} />
+      <TotalPrice {...getOfferPrice(offer.cost)} label={t('YOUR_PRICE', { ns: 'common' })} />
 
       {children({ isCoInsuredUpdated, isPending })}
     </form>

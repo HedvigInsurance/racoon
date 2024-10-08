@@ -56,7 +56,8 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
           </RemoveCartItemDialog.Trigger>
         </Card.Aside>
       </RemoveCartItemDialog.Root>
-      <Card.Header>
+
+      <Card.Header className={xStack({ alignItems: 'center' })}>
         <Card.Media>
           <Pillow
             size="small"
@@ -67,8 +68,10 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
         </Card.Media>
 
         <Card.Heading>
-          <Card.Title>{product.displayNameFull}</Card.Title>
-          <Card.Subtitle>{exposure.displayNameShort}</Card.Subtitle>
+          <Card.Title variant={{ _: 'standard.16', sm: 'standard.18' }}>
+            {product.displayNameFull}
+          </Card.Title>
+          <Card.Subtitle size={{ _: 'body', sm: 'md' }}>{exposure.displayNameShort}</Card.Subtitle>
         </Card.Heading>
       </Card.Header>
 
@@ -77,7 +80,7 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
           {(isOpen) => (isOpen ? t('HIDE_DETAILS_BUTTON_LABEL') : t('SHOW_DETAILS_BUTTON_LABEL'))}
         </ProductCardDetails.Trigger>
 
-        <ProductCardDetails.Content className={yStack({ paddingTop: 'md', gap: 'md' })}>
+        <ProductCardDetails.Content className={yStack({ paddingBlock: 'md', gap: 'md' })}>
           <CartItemProductDetails details={productDetails} />
           <EditCartItemDialog offer={offer} />
           <CartItemProductDocuments documents={variant.documents} />
