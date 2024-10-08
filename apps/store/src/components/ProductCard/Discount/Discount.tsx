@@ -14,7 +14,7 @@ import {
 } from 'ui'
 import Collapsible from '@/components/Collapsible/Collapsible'
 import { TextField } from '@/components/TextField/TextField'
-import { formInput, formSubmitButton } from './Discount.css'
+import { discountForm, formInput, formSubmitButton } from './Discount.css'
 
 export const FORM_CAMPAIGN_CODE = 'campaignCode'
 
@@ -48,18 +48,12 @@ const DiscountForm = ({ className, errorMessage, loading, ...props }: FormProps)
   const { t } = useTranslation('cart')
 
   return (
-    <form
-      className={clsx(
-        xStack({ justifyContent: 'space-between', alignItems: 'flex-start', gap: 'sm' }),
-        className,
-      )}
-      {...props}
-    >
+    <form className={clsx(discountForm, className)} {...props}>
       <TextField
         className={formInput}
         name={FORM_CAMPAIGN_CODE}
         label={t('CAMPAIGN_CODE_INPUT_LABEL')}
-        size="small"
+        size="medium"
         warning={!!errorMessage}
         message={errorMessage}
         required={true}
@@ -71,7 +65,8 @@ const DiscountForm = ({ className, errorMessage, loading, ...props }: FormProps)
       <Button
         className={formSubmitButton}
         type="submit"
-        variant="primary-alt"
+        size="medium"
+        variant="primary"
         loading={loading}
         disabled={loading}
       >
