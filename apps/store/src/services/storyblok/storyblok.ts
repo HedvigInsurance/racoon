@@ -197,6 +197,7 @@ export type ConfirmationStory = ISbStoryData & {
   content: ISbStoryData['content'] & {
     body?: Array<SbBlokData>
     title: string
+    subTitle?: string
     checklistTitle: string
     checklistSubtitle: string
     checklist: string

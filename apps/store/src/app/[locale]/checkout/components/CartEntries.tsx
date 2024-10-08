@@ -3,9 +3,9 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useSearchParams } from 'next/navigation'
 import { yStack } from 'ui'
+import { CartItem } from '@/features/CartItem/CartItem'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { QueryParam } from '../CheckoutPage.constants'
-import { CartItem } from './CartItem/CartItem'
 
 export function CartEntries() {
   const searchParams = useSearchParams()

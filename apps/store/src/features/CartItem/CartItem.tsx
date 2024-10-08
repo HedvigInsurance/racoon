@@ -19,9 +19,10 @@ import { useOfferDetails } from './hooks/useOfferDetails'
 type Props = {
   offer: ProductOfferFragment
   defaultExpanded?: boolean
+  readOnly?: boolean
 }
 
-export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) => {
+export const CartItem = ({ offer, defaultExpanded, readOnly }: PropsWithChildren<Props>) => {
   const { t } = useTranslation(['cart', 'purchase-form', 'common'])
 
   const formatter = useFormatter()
@@ -47,15 +48,17 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
 
   return (
     <Card.Root>
-      <RemoveCartItemDialog.Root shopSessionId={shopSession.id} offer={offer}>
-        <Card.Aside>
-          <RemoveCartItemDialog.Trigger>
-            <IconButton variant="secondary">
-              <CrossIcon />
-            </IconButton>
-          </RemoveCartItemDialog.Trigger>
-        </Card.Aside>
-      </RemoveCartItemDialog.Root>
+      {readOnly ? null : (
+        <RemoveCartItemDialog.Root shopSessionId={shopSession.id} offer={offer}>
+          <Card.Aside>
+            <RemoveCartItemDialog.Trigger>
+              <IconButton variant="secondary">
+                <CrossIcon />
+              </IconButton>
+            </RemoveCartItemDialog.Trigger>
+          </Card.Aside>
+        </RemoveCartItemDialog.Root>
+      )}
 
       <Card.Header className={xStack({ alignItems: 'center' })}>
         <Card.Media>
@@ -82,7 +85,9 @@ export const CartItem = ({ offer, defaultExpanded }: PropsWithChildren<Props>) =
 
         <ProductCardDetails.Content className={yStack({ paddingBlock: 'md', gap: 'md' })}>
           <CartItemProductDetails details={productDetails} />
-          <EditCartItemDialog offer={offer} />
+
+          {readOnly ? null : <EditCartItemDialog offer={offer} />}
+
           <CartItemProductDocuments documents={variant.documents} />
         </ProductCardDetails.Content>
       </ProductCardDetails.Root>
