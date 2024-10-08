@@ -7,7 +7,7 @@ export const actions = style([
   {
     position: 'fixed',
     bottom: tokens.space.md,
-    width: `min(100%, ${CONTENT_MAX_WIDTH})`,
+    width: `min(calc(100% - 2 * ${tokens.space.md}) , ${CONTENT_MAX_WIDTH})`,
     marginInline: 'auto',
     ...responsiveStyles({
       lg: {
