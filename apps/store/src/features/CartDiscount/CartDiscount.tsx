@@ -24,7 +24,7 @@ export function CartDiscount({ shopSession }: Props) {
     unredeemCampaign,
   } = useCartDiscount(shopSession)
 
-  const { shouldShowDiscountForm, shouldShowToggle } = getDiscountsVisibility(shopSession.cart)
+  const { shouldShowDiscountForm, shouldShowToggle } = getDiscountsVisibility(shopSession)
 
   const redeem = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()

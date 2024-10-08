@@ -10,7 +10,7 @@ import { useCartEntryToReplace } from '@/components/ProductPage/useCartEntryToRe
 import {
   BUNDLE_DISCOUNT_ELIGIBLE_PRODUCT_IDS,
   BUNDLE_DISCOUNT_PERCENTAGE,
-} from '@/features/bundleDiscount/bundleDiscount'
+} from '@/features/bundleDiscount/bundleDiscount.constants'
 import { type ProductOfferFragment } from '@/services/graphql/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'

@@ -7,7 +7,7 @@ import type { ReusableBlockReferenceProps } from '@/blocks/ReusableBlockReferenc
 import { renderRichTextToString } from '@/blocks/RichTextBlock/richTextReactRenderer'
 import type { BannerVariant } from '@/components/Banner/Banner.types'
 import { globalBannerAtom } from '@/components/GlobalBanner/globalBannerState'
-import { hasBundleDiscount } from '@/features/bundleDiscount/bundleDiscount'
+import { hasBundleDiscount } from '@/features/bundleDiscount/bundleDiscount.utils'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import type { ExpectedBlockType } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'
