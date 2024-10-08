@@ -25,6 +25,10 @@ export const trigger = style({
   ':focus-visible': {
     boxShadow: tokens.shadow.focus,
   },
+
+  ':disabled': {
+    cursor: 'not-allowed',
+  },
 })
 
 export const label = style({
