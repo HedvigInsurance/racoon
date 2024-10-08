@@ -1,11 +1,15 @@
 'use client'
 
 import { useTranslation } from 'next-i18next'
-import { Heading, yStack } from 'ui'
+import { useState } from 'react'
+import { Button, CheckIcon, grid, Heading, Text, xStack, yStack } from 'ui'
 import { BankIdDialog } from '@/components/BankIdDialog/BankIdDialog'
 import { type GlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
+import { AccidentCrossSellForm } from '@/features/CrossSell/components/AccidentCrossSellForm'
+import { CrossSell } from '@/features/CrossSell/CrossSell'
+import { useRecommendations } from '@/features/CrossSell/hooks/useRecommendations'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
@@ -14,13 +18,17 @@ import { container } from './CheckoutPage.css'
 import { CartEntries } from './components/CartEntries'
 import { CheckoutDebugDialog } from './components/CheckoutDebugDialog'
 import { CheckoutForm } from './components/CheckoutForm/CheckoutForm'
-import { CrossSell } from './components/CrossSell'
 import { EmptyCart, type Product } from './components/EmptyCart/EmptyCart'
 
 export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
   const { t } = useTranslation(['cart', 'checkout'])
 
+  const [isCrossSellDismissed, setIsCrossSellDismissed] = useState(false)
+
   const productMetadata = useProductMetadata()
+
+  const recommendedOffer = useRecommendations()
+
   const { shopSession } = useShopSession()
 
   if (!shopSession) {
@@ -37,9 +45,12 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
   if (!shopSession.customer) {
     throw new Error(`Checkout | No customer in shop session ${shopSession.id}`)
   }
+
   if (!shopSession.customer.ssn) {
     throw new Error(`Checkout | No SSN in shop session ${shopSession.id}`)
   }
+
+  const shouldShowCrossSell = !isCrossSellDismissed && recommendedOffer
 
   return (
     <>
@@ -57,7 +68,56 @@ export function CheckoutPage({ locale }: { locale: RoutingLocale }) {
           <CartEntries />
         </section>
 
-        <CrossSell shopSession={shopSession} />
+        {shouldShowCrossSell ? (
+          <section className={yStack({ gap: 'lg' })}>
+            <header>
+              <Heading as="h2" variant="standard.32">
+                {t('QUICK_ADD_BUNDLE_HEADER')}
+              </Heading>
+            </header>
+
+            <CrossSell.Root>
+              <CrossSell.Header product={recommendedOffer.product} />
+
+              <ul className={yStack({ gap: 'sm', pt: 'xs', pb: 'md', paddingLeft: 'xs' })}>
+                <li className={xStack({ gap: 'sm', alignItems: 'center' })}>
+                  <CheckIcon size="1rem" role="presentation" />
+                  <Text color="textTranslucentSecondary">{t('ACCIDENT_OFFER_USP_1')}</Text>
+                </li>
+
+                <li className={xStack({ gap: 'sm', alignItems: 'center' })}>
+                  <CheckIcon size="1rem" role="presentation" />
+                  <Text color="textTranslucentSecondary">{t('ACCIDENT_OFFER_USP_2')}</Text>
+                </li>
+
+                <li className={xStack({ gap: 'sm', alignItems: 'center' })}>
+                  <CheckIcon size="1rem" role="presentation" />
+                  <Text color="textTranslucentSecondary">{t('ACCIDENT_OFFER_USP_3')}</Text>
+                </li>
+              </ul>
+
+              <AccidentCrossSellForm offer={recommendedOffer.offer}>
+                {({ isCoInsuredUpdated, isPending }) => (
+                  <footer className={yStack({ gap: 'md' })}>
+                    <div {...grid({ columns: '2', gap: 'xs' })}>
+                      <Button
+                        variant="secondary"
+                        size="medium"
+                        onClick={() => setIsCrossSellDismissed(true)}
+                      >
+                        {t('QUICK_ADD_DISMISS')}
+                      </Button>
+
+                      <Button type="submit" size="medium" disabled={isPending} loading={isPending}>
+                        {isCoInsuredUpdated ? t('QUICK_ADD_UPDATE') : t('QUICK_ADD_BUTTON')}
+                      </Button>
+                    </div>
+                  </footer>
+                )}
+              </AccidentCrossSellForm>
+            </CrossSell.Root>
+          </section>
+        ) : null}
 
         <section className={yStack({ gap: 'lg' })}>
           <header>
