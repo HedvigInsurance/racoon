@@ -1,13 +1,12 @@
-import { useSetAtom } from 'jotai'
 import { useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
-import { globalBannerAtom } from '@/components/GlobalBanner/globalBannerState'
+import { useSetGlobalBanner } from '@/components/GlobalBanner/globalBannerState'
 import { getShopSessionId } from '@/services/shopSession/ShopSession.helpers'
 
 export const useDebugShopSessionId = () => {
   const searchParams = useSearchParams()
   const isDebug = searchParams?.has('debug', 'session')
-  const setGlobalBanner = useSetAtom(globalBannerAtom)
+  const setGlobalBanner = useSetGlobalBanner()
 
   useEffect(() => {
     if (!isDebug) return

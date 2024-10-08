@@ -1,6 +1,7 @@
-import { atom } from 'jotai'
+import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { atomWithStorage, createJSONStorage } from 'jotai/utils'
 import type { Banner } from '@/components/Banner/Banner.types'
+import { globalStore } from 'globalStore'
 
 type BannerWithId = Banner & { id: string }
 
@@ -12,7 +13,7 @@ type SetBannerOptions = {
 // Banner is identified by string id, so dismissing a banner does not prevent banner with different id from being shown
 //
 // We intentionally don't support banner stack or any other forms of multiple banners being tracked or displayed
-export const globalBannerAtom = atom(
+const globalBannerAtom = atom(
   (get) => {
     const currentBanner = get(currentBannerAtom)
     const dismissedBannerId = get(dismissedBannerIdAtom)
@@ -40,8 +41,22 @@ export const globalBannerAtom = atom(
 
 const currentBannerAtom = atom<BannerWithId | null>(null)
 
-export const dismissedBannerIdAtom = atomWithStorage<string | null>(
+const dismissedBannerIdAtom = atomWithStorage<string | null>(
   'dismissedGlobalBannerId',
   null,
   createJSONStorage(() => window.sessionStorage),
 )
+
+export function useGlobalBanner() {
+  return useAtom(globalBannerAtom, { store: globalStore })
+}
+export function useGlobalBannerValue() {
+  return useAtomValue(globalBannerAtom, { store: globalStore })
+}
+export function useSetGlobalBanner() {
+  return useSetAtom(globalBannerAtom, { store: globalStore })
+}
+
+export function useDismissBanner() {
+  return useSetAtom(dismissedBannerIdAtom, { store: globalStore })
+}

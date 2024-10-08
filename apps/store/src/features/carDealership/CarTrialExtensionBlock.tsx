@@ -4,12 +4,11 @@ import { type QueryHookOptions } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
 import { storyblokEditable } from '@storyblok/react'
 import { addDays } from 'date-fns'
-import { useSetAtom } from 'jotai'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { useCallback, useMemo } from 'react'
 import { Space } from 'ui'
-import { globalBannerAtom } from '@/components/GlobalBanner/globalBannerState'
+import { useSetGlobalBanner } from '@/components/GlobalBanner/globalBannerState'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { CarDealershipBanners } from '@/features/carDealership/carDearlership.constants'
 import { useCarTrialExtensionQuery } from '@/services/graphql/generated'
@@ -121,7 +120,7 @@ type AddNotificationBannerOptions = {
 }
 
 const useAddNotificationBanner = () => {
-  const setGlobalBanner = useSetAtom(globalBannerAtom)
+  const setGlobalBanner = useSetGlobalBanner()
   const { dateFull } = useFormatter()
   const { t } = useTranslation('carDealership')
 
