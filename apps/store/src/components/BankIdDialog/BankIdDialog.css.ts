@@ -6,14 +6,6 @@ export const hedvigLogo = style({
   marginInline: 'auto',
 })
 
-export const qrCode = style({
-  padding: tokens.space.md,
-  borderRadius: tokens.radius.xl,
-  border: `1px solid ${tokens.colors.grayTranslucent200}`,
-  backgroundColor: tokens.colors.white,
-  boxShadow: tokens.shadow.default,
-})
-
 export const qrCodeSkeleton = style({
   width: 200,
   aspectRatio: '1 / 1',
