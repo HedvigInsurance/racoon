@@ -31,7 +31,7 @@ export function ProductHeroV2({ className }: { className?: string }) {
   const productData = useProductData()
   const [selectedOffer] = useSelectedOffer()
   const subType = selectedOffer?.variant.displayNameSubtype
-  const hasScrolledPast = useHasScrolledPast({ targetRef: ref })
+  const hasScrolledPast = useHasScrolledPast({ targetRef: ref, offset: -100 })
   const formatter = useFormatter()
 
   const productHeading = (
