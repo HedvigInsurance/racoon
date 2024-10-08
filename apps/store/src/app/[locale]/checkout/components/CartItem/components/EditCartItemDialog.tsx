@@ -1,16 +1,15 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { Button, Text } from 'ui'
-import { useEditProductOffer } from '@/app/[locale]/checkout/components/CartItem/hooks/useEditProductOffer'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import type { ProductOfferFragment } from '@/services/graphql/generated'
-import { ActionButton } from './ProductItem'
+import { useEditProductOffer } from '../hooks/useEditProductOffer'
 
 type Props = {
   offer: ProductOfferFragment
 }
 
-export const EditActionButton = ({ offer }: Props) => {
+export const EditCartItemDialog = ({ offer }: Props) => {
   const { t } = useTranslation(['cart', 'common'])
   const [editProductOffer, state] = useEditProductOffer()
 
@@ -18,8 +17,10 @@ export const EditActionButton = ({ offer }: Props) => {
 
   return (
     <FullscreenDialog.Root>
-      <FullscreenDialog.Trigger asChild={true}>
-        <ActionButton>{t('CART_ENTRY_EDIT_BUTTON')}</ActionButton>
+      <FullscreenDialog.Trigger asChild>
+        <Button variant="secondary" size="medium" fullWidth>
+          {t('CART_ENTRY_EDIT_BUTTON')}
+        </Button>
       </FullscreenDialog.Trigger>
 
       <FullscreenDialog.Modal

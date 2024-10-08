@@ -7,6 +7,7 @@ import {
   ExternalInsuranceCancellationOption,
 } from '@/services/graphql/generated'
 import { convertToDate, formatAPIDate } from '@/utils/date'
+import { useOptimisticValue } from '@/utils/useOptimisticValue'
 import { InfoCard } from '../InfoCard/InfoCard'
 import { BankSigneringCancellation } from './BankSigneringCancellation'
 import { BankSigneringInvalidRenewalDateCancellation } from './BankSigneringInvalidRenewalDateCancellation'
@@ -18,15 +19,24 @@ type Props = {
 }
 
 export const CancellationForm = (props: Props) => {
-  const [mutate] = useCancellationRequestedUpdateMutation()
-  const handleAutoSwitchChange = (checked: boolean) => {
-    mutate({ variables: { productOfferIds: props.productOfferIds, requested: checked } })
-  }
-
-  const startDate = convertToDate(props.offer.startDate) ?? undefined
   const { t } = useTranslation('purchase-form')
 
+  const [isChecked, setIsChecked, revertToOriginalChecked] = useOptimisticValue(
+    props.offer.cancellation.requested,
+  )
+
+  const [updateSwitchingRequest, updateSwitchingResult] = useCancellationRequestedUpdateMutation()
   const [updateStartDate, updateStartDateResult] = useStartDateUpdateMutation()
+
+  const handleAutoSwitchChange = (checked: boolean) => {
+    setIsChecked(!isChecked)
+
+    updateSwitchingRequest({
+      variables: { productOfferIds: props.productOfferIds, requested: checked },
+      onError: () => revertToOriginalChecked(),
+    })
+  }
+
   const handleChangeStartDate = (date: Date) => {
     updateStartDate({
       variables: {
@@ -36,16 +46,18 @@ export const CancellationForm = (props: Props) => {
     })
   }
 
+  const startDate = convertToDate(props.offer.startDate) ?? undefined
+
   const startDateProps = {
     startDate,
     onStartDateChange: handleChangeStartDate,
-    loading: updateStartDateResult.loading,
+    loading: updateStartDateResult.loading || updateSwitchingResult.loading,
   }
 
   const switcherCompanyName = props.offer.cancellation.externalInsurer?.displayName
 
   const autoSwitchProps = {
-    requested: props.offer.cancellation.requested,
+    requested: isChecked,
     onAutoSwitchChange: handleAutoSwitchChange,
     companyName: switcherCompanyName ?? 'Unknown',
   }
