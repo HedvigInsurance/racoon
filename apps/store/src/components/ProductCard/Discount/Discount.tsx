@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { useTranslation } from 'next-i18next'
-import { type ComponentProps, useState } from 'react'
+import { type ComponentProps, createContext, useContext, useState } from 'react'
 import {
   xStack,
   Text,
@@ -18,25 +18,61 @@ import { discountForm, formInput, formSubmitButton } from './Discount.css'
 
 export const FORM_CAMPAIGN_CODE = 'campaignCode'
 
+type DiscountContext = {
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
+}
+const Context = createContext<DiscountContext | null>(null)
+
+const useDiscount = () => {
+  const context = useContext(Context)
+
+  if (!context) {
+    throw new Error('useDiscount must be used inside Discount.Root')
+  }
+
+  return context
+}
+
 type RootProps = Omit<ComponentProps<typeof Collapsible.Root>, 'open'>
 const DiscountRoot = ({ children, defaultOpen, ...props }: RootProps) => {
-  const { t } = useTranslation('cart')
-
   const [isOpen, setIsOpen] = useState(defaultOpen || false)
 
   return (
-    <Collapsible.Root open={isOpen} {...props}>
-      <div className={xStack({ justifyContent: 'space-between', alignItems: 'center' })}>
-        <Text>{t('CAMPAIGN_CODE_HEADING')}</Text>
-        <Collapsible.Trigger asChild>
-          <Switch checked={isOpen} onCheckedChange={setIsOpen} />
-        </Collapsible.Trigger>
-      </div>
+    <Context.Provider value={{ isOpen, setIsOpen }}>
+      <Collapsible.Root open={isOpen} {...props}>
+        {children}
+      </Collapsible.Root>
+    </Context.Provider>
+  )
+}
 
-      <Collapsible.Content>
-        <div className={sprinkles({ paddingBlock: 'sm' })}>{children}</div>
-      </Collapsible.Content>
-    </Collapsible.Root>
+const DiscountHeader = ({ className, children, ...props }: ComponentProps<'div'>) => {
+  return (
+    <div
+      className={clsx(xStack({ justifyContent: 'space-between', alignItems: 'center' }), className)}
+      {...props}
+    >
+      {children}
+    </div>
+  )
+}
+
+const DiscountToggle = () => {
+  const { isOpen, setIsOpen } = useDiscount()
+
+  return (
+    <Collapsible.Trigger asChild>
+      <Switch checked={isOpen} onCheckedChange={setIsOpen} />
+    </Collapsible.Trigger>
+  )
+}
+
+const DiscountContent = ({ children, ...props }: ComponentProps<typeof Collapsible.Content>) => {
+  return (
+    <Collapsible.Content {...props}>
+      <div className={sprinkles({ paddingTop: 'md' })}>{children}</div>
+    </Collapsible.Content>
   )
 }
 
@@ -87,7 +123,7 @@ const DiscountCode = ({ children, className, code, ...props }: CodeProps) => {
     >
       <Badge
         className={xStack({ alignItems: 'center', paddingRight: 'none', gap: 'sm' })}
-        color="gray200"
+        color="translucent1"
       >
         <Text as="span" size="xs">
           {code}
@@ -104,6 +140,9 @@ const DiscountCode = ({ children, className, code, ...props }: CodeProps) => {
 
 export const Discount = {
   Root: DiscountRoot,
+  Header: DiscountHeader,
+  Toggle: DiscountToggle,
+  Content: DiscountContent,
   Form: DiscountForm,
   Code: DiscountCode,
 }

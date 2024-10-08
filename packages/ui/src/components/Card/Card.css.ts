@@ -19,7 +19,7 @@ export const cardRoot = recipe({
         boxShadow: tokens.shadow.card,
       },
       secondary: {
-        background: tokens.colors.surfaceOpaqueSecondary,
+        background: tokens.colors.surfaceOpaquePrimary,
       },
       ghost: {
         boxShadow: 'none',

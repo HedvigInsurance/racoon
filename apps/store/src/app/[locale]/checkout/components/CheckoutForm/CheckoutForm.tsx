@@ -9,7 +9,6 @@ import { useAsyncRouterPush } from '@/appComponents/useAsyncRouterPush'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { TextField } from '@/components/TextField/TextField'
-import { TextWithLink } from '@/components/TextWithLink'
 import { SIGN_FORM_ID } from '@/constants/sign.constants'
 import {
   CurrentMemberDocument,
@@ -21,7 +20,6 @@ import {
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
-import { PageLink } from '@/utils/PageLink'
 import { CheckoutStep, FormElement } from '../../CheckoutPage.constants'
 import { getCheckoutStepLink } from '../../CheckoutPage.helpers'
 import { errorPrompt } from './CheckoutForm.css'
@@ -43,7 +41,7 @@ export function CheckoutForm({
 }: CheckoutFormProps) {
   const { reset: resetShopSession } = useShopSession()
 
-  const { t } = useTranslation('checkout')
+  const { t } = useTranslation(['checkout', 'cart'])
   const tracking = useTracking()
   const locale = useRoutingLocale()
 
@@ -77,64 +75,46 @@ export function CheckoutForm({
   })
 
   return (
-    <>
-      <form id={SIGN_FORM_ID} onSubmit={handleSubmitSign}>
-        <div className={yStack({ gap: 'xxs' })}>
-          <PersonalNumberField
-            label={t('FIELD_PERSONAL_NUMBER_SE_LABEL')}
-            value={ssn}
-            readOnly
-            disabled
-          />
-          {shouldCollectName && (
-            <>
-              <TextField
-                type="text"
-                label={t('FORM_FIRST_NAME_LABEL')}
-                name={FormElement.FirstName}
-                required
-              />
-              <TextField
-                type="text"
-                label={t('FORM_LAST_NAME_LABEL')}
-                name={FormElement.LastName}
-                required
-              />
-            </>
-          )}
-          {shouldCollectEmail && (
+    <form id={SIGN_FORM_ID} onSubmit={handleSubmitSign}>
+      <div className={yStack({ gap: 'xxs' })}>
+        <PersonalNumberField
+          label={t('FIELD_PERSONAL_NUMBER_SE_LABEL')}
+          value={ssn}
+          readOnly
+          disabled
+        />
+        {shouldCollectName && (
+          <>
             <TextField
-              type="email"
-              label={t('FORM_EMAIL_LABEL')}
-              name={FormElement.Email}
+              type="text"
+              label={t('FORM_FIRST_NAME_LABEL')}
+              name={FormElement.FirstName}
               required
             />
-          )}
+            <TextField
+              type="text"
+              label={t('FORM_LAST_NAME_LABEL')}
+              name={FormElement.LastName}
+              required
+            />
+          </>
+        )}
+        {shouldCollectEmail && (
+          <TextField type="email" label={t('FORM_EMAIL_LABEL')} name={FormElement.Email} required />
+        )}
 
-          <div className={yStack({ gap: 'xs' })}>
-            <Button Icon={<BankIdIcon color="white" />} loading={loading}>
-              {t('SIGN_BUTTON', { count: cart.entries.length })}
-            </Button>
-            {userError ? (
-              <Text as="p" size="xs" color="textSecondary" align="center">
-                {userError}
-              </Text>
-            ) : (
-              <TextWithLink
-                as="p"
-                size="xs"
-                align="center"
-                balance={true}
-                href={PageLink.privacyPolicy({ locale })}
-                target="_blank"
-              >
-                {t('SIGN_DISCLAIMER')}
-              </TextWithLink>
-            )}
-          </div>
+        <div className={yStack({ gap: 'xs' })}>
+          <Button Icon={<BankIdIcon color="white" />} loading={loading}>
+            {t('SIGN_BUTTON', { count: cart.entries.length })}
+          </Button>
+
+          {userError ? (
+            <Text as="p" size="xs" color="textSecondary" align="center">
+              {userError}
+            </Text>
+          ) : null}
         </div>
-      </form>
-
+      </div>
       <FullscreenDialog.Root open={shouldShowSignError} onOpenChange={setShouldShowSignError}>
         <FullscreenDialog.Modal
           center={true}
@@ -151,7 +131,7 @@ export function CheckoutForm({
           </Text>
         </FullscreenDialog.Modal>
       </FullscreenDialog.Root>
-    </>
+    </form>
   )
 }
 

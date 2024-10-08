@@ -11,6 +11,7 @@ type BadgeColors = Pick<
   | 'blueFill3'
   | 'green50'
   | 'gray200'
+  | 'translucent1'
   | 'signalAmberHighlight'
   | 'signalGreenFill'
   | 'pinkFill1'

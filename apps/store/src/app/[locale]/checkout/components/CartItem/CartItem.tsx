@@ -1,6 +1,6 @@
 import { useTranslation } from 'next-i18next'
 import { type PropsWithChildren } from 'react'
-import { Card, CrossIcon, Divider, IconButton, InfoIcon, Text, Tooltip, xStack, yStack } from 'ui'
+import { Card, CrossIcon, IconButton, Text, Divider, yStack, Tooltip, xStack, InfoIcon } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { DetailsList } from '@/components/ProductCard/DetailsList/DetailsList'
 import { ProductCardDetails } from '@/components/ProductCard/ProductCardDetails'

@@ -1,7 +1,10 @@
+import { useTranslation } from 'next-i18next'
 import { type FormEvent } from 'react'
+import { Text } from 'ui'
 import { Discount } from '@/components/ProductCard/Discount/Discount'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
-import { useDiscount } from './hooks/useDiscount'
+import { getDiscountsVisibility } from './CartDiscount.utils'
+import { useCartDiscount } from './hooks/useCartDiscount'
 
 const FORM_CAMPAIGN_CODE = 'campaignCode'
 
@@ -10,6 +13,8 @@ type Props = {
 }
 
 export function CartDiscount({ shopSession }: Props) {
+  const { t } = useTranslation('cart')
+
   const {
     campaignCode,
     codeExplanation,
@@ -17,7 +22,9 @@ export function CartDiscount({ shopSession }: Props) {
     errorMessage,
     redeemCampaign,
     unredeemCampaign,
-  } = useDiscount(shopSession)
+  } = useCartDiscount(shopSession)
+
+  const { shouldShowDiscountForm, shouldShowToggle } = getDiscountsVisibility(shopSession.cart)
 
   const redeem = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -38,13 +45,23 @@ export function CartDiscount({ shopSession }: Props) {
 
   return (
     <Discount.Root defaultOpen={!!campaignCode} onOpenChange={(isOpen) => !isOpen && unredeem()}>
-      {campaignCode ? (
-        <Discount.Code code={campaignCode} onSubmit={unredeem}>
-          {codeExplanation}
-        </Discount.Code>
-      ) : (
-        <Discount.Form onSubmit={redeem} loading={isLoading} errorMessage={errorMessage} />
-      )}
+      <Discount.Header>
+        <Text>{t('CAMPAIGN_CODE_HEADING')}</Text>
+
+        {shouldShowToggle ? <Discount.Toggle /> : null}
+      </Discount.Header>
+
+      <Discount.Content>
+        {campaignCode ? (
+          <Discount.Code code={campaignCode} onSubmit={unredeem}>
+            {codeExplanation}
+          </Discount.Code>
+        ) : null}
+
+        {shouldShowDiscountForm ? (
+          <Discount.Form onSubmit={redeem} loading={isLoading} errorMessage={errorMessage} />
+        ) : null}
+      </Discount.Content>
     </Discount.Root>
   )
 }
