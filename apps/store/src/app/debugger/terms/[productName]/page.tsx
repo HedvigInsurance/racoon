@@ -18,6 +18,16 @@ const LOCALES = ['sv-SE', 'en-SE'] as const
 async function ProductTermsPage({ params }: Props) {
   const apolloClient = setupApolloClient({ locale: toRoutingLocale(LOCALES[0]) }).getApolloClient()
   const { productName } = params
+
+  const excludedVariants = [
+    'SE_APARTMENT_BRF_BAS',
+    'SE_APARTMENT_BRF_MAX',
+    'SE_APARTMENT_RENT_BAS',
+    'SE_APARTMENT_RENT_MAX',
+    'SE_HOUSE_BAS',
+    'SE_HOUSE_MAX'
+  ];
+
   const defaultData = await fetchProductData({
     apolloClient,
     productName,
@@ -30,7 +40,7 @@ async function ProductTermsPage({ params }: Props) {
       <Heading as="h1" align="center">
         {getTitle(params.productName)}
       </Heading>
-      {defaultData.variants.map((variant) => (
+      {defaultData.variants.filter((variant) => !excludedVariants.includes(variant.typeOfContract)).map((variant) => (
         <VariantDetails
           key={variant.typeOfContract}
           termsVersion={variant.termsVersion}
