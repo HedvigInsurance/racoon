@@ -19,8 +19,12 @@ export const bannerRoot = styleVariants({
     paddingBlock: tokens.space.sm,
     paddingInline: tokens.space.md,
     fontSize: tokens.fontSizes.xs,
-
     borderBottom: `0.5px solid ${tokens.colors.borderTranslucent1}`,
+    '& a': {
+      textDecorationLine: 'underline',
+      textDecorationThickness: 'clamp(1px, 0.07em, 2px);',
+      textUnderlineOffset: '2px',
+    },
 
     '@media': {
       [minWidth.lg]: {

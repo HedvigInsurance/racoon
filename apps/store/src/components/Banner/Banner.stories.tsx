@@ -22,10 +22,7 @@ export const Info: Story = {
   render: () => (
     <Banner onClose={noopHandleClose}>
       <span>
-        Here’s a message with random information ·{' '}
-        <a style={{ textDecoration: 'underline' }} href="#">
-          Read more
-        </a>
+        Here’s a message with random information · <a href="#">Read more</a>
       </span>
     </Banner>
   ),
