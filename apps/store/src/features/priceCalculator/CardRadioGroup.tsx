@@ -1,13 +1,8 @@
 import * as RadioGroup from '@radix-ui/react-radio-group'
-import {
-  type RadioGroupIndicatorProps,
-  type RadioGroupItemProps,
-  type RadioGroupProps,
-} from '@radix-ui/react-radio-group'
+import { type RadioGroupItemProps, type RadioGroupProps } from '@radix-ui/react-radio-group'
 import { clsx } from 'clsx'
 import { motion } from 'framer-motion'
 import { framerTransitions, tokens, yStack } from 'ui'
-import { RadioIndicatorIcon } from '@/features/priceCalculator/RadioIndicatorIcon'
 import { item } from './CardRadioGroup.css'
 
 export function Root({ children, className, ...forwardedProps }: RadioGroupProps) {
@@ -48,13 +43,5 @@ export function Item({
         {children}
       </motion.div>
     </RadioGroup.Item>
-  )
-}
-
-export function Indicator({ forceMount = true, ...forwardedProps }: RadioGroupIndicatorProps) {
-  return (
-    <RadioGroup.Indicator forceMount={forceMount} {...forwardedProps} asChild={true}>
-      <RadioIndicatorIcon />
-    </RadioGroup.Indicator>
   )
 }
