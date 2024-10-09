@@ -5,7 +5,7 @@ import { useSetAtom, useStore } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { memo, type MouseEventHandler, useEffect, useMemo, useRef, useState } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
-import { Button, tokens, yStack } from 'ui'
+import { Button, Heading, tokens, yStack } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
 import Collapsible from '@/components/Collapsible/Collapsible'
 import { InfoCard } from '@/components/InfoCard/InfoCard'
@@ -40,6 +40,7 @@ import { useAddToCart } from '@/utils/useAddToCart'
 import { OfferPriceDetails } from './OfferPriceDetails'
 
 export const OfferPresenterV2 = memo(() => {
+  const { t } = useTranslation('purchase-form')
   const priceIntent = usePriceIntent()
   const [selectedOffer, setSelectedOffer] = useSelectedOffer()
   if (selectedOffer == null) {
@@ -87,24 +88,56 @@ export const OfferPresenterV2 = memo(() => {
   }, [tiers, selectedOffer])
 
   return (
-    <div className={yStack({ gap: 'md' })}>
+    <div className={yStack({ gap: 'xxxl' })}>
       {tiers.length > 1 && (
-        <div className={yStack({ alignItems: 'stretch', gap: 'md' })}>
-          <ProductTierSelectorV2
-            offers={tiers}
-            selectedOffer={selectedTier}
-            onValueChange={handleOfferChange}
-          />
+        <div>
+          <Heading as="h2" variant="standard.24">
+            {t('OFFER_PRESENTER_TIERS_TITLE')}
+          </Heading>
+
+          <Heading
+            as="h3"
+            balance={true}
+            color="textSecondary"
+            variant="standard.24"
+            className={sprinkles({ marginBottom: 'lg' })}
+          >
+            {t('OFFER_PRESENTER_TIERS_SUBTITLE')}
+          </Heading>
+
+          <div className={yStack({ alignItems: 'stretch', gap: 'md' })}>
+            <ProductTierSelectorV2
+              offers={tiers}
+              selectedOffer={selectedTier}
+              onValueChange={handleOfferChange}
+            />
+          </div>
         </div>
       )}
 
       {deductibles.length > 1 && (
-        <div className={yStack({ alignItems: 'stretch', gap: 'md' })}>
-          <DeductibleSelectorV2
-            offers={deductibles}
-            selectedOffer={selectedOffer}
-            onValueChange={handleOfferChange}
-          />
+        <div>
+          <Heading as="h2" variant="standard.24">
+            {t('OFFER_PRESENTER_DEDUCTIBLE_TITLE')}
+          </Heading>
+
+          <Heading
+            as="h3"
+            balance={true}
+            color="textSecondary"
+            variant="standard.24"
+            className={sprinkles({ marginBottom: 'lg' })}
+          >
+            {t('OFFER_PRESENTER_DEDUCTIBLE_SUBTITLE')}
+          </Heading>
+
+          <div className={yStack({ alignItems: 'stretch', gap: 'md' })}>
+            <DeductibleSelectorV2
+              offers={deductibles}
+              selectedOffer={selectedOffer}
+              onValueChange={handleOfferChange}
+            />
+          </div>
         </div>
       )}
 
@@ -164,37 +197,53 @@ function OfferSummary() {
   const shopSession = useShopSessionValueOrThrow()
 
   return (
-    <ProductCardSmall
-      productName={productData.displayNameFull}
-      pillowImageSrc={productData.pillowImage.src}
-      subtitle={selectedOffer.exposure.displayNameShort}
-    >
-      <OfferDetails />
+    <div>
+      <Heading as="h2" variant="standard.24">
+        {t('OFFER_PRESENTER_SUMMARY_TITLE')}
+      </Heading>
 
-      {priceIntent.notifications?.map((notification, index) => (
-        <InfoCard key={index}>{notification.message}</InfoCard>
-      ))}
-
-      <CancellationForm productOfferIds={productOfferIds} offer={selectedOffer} />
-
-      {shopSession.cart.campaignsEnabled && (
-        <>
-          <DiscountFieldContainer shopSession={shopSession} />
-          <Separator />
-        </>
-      )}
-
-      <OfferPriceDetails />
-
-      <Button
-        variant="primary"
-        onClick={handleAddToCart}
-        loading={loadingAddToCart}
-        fullWidth={true}
+      <Heading
+        as="h3"
+        balance={true}
+        color="textSecondary"
+        variant="standard.24"
+        className={sprinkles({ marginBottom: 'lg' })}
       >
-        {t('ADD_TO_CART_BUTTON_LABEL')}
-      </Button>
-    </ProductCardSmall>
+        {t('OFFER_PRESENTER_SUMMARY_SUBTITLE')}
+      </Heading>
+
+      <ProductCardSmall
+        productName={productData.displayNameFull}
+        pillowImageSrc={productData.pillowImage.src}
+        subtitle={selectedOffer.exposure.displayNameShort}
+      >
+        <OfferDetails />
+
+        {priceIntent.notifications?.map((notification, index) => (
+          <InfoCard key={index}>{notification.message}</InfoCard>
+        ))}
+
+        <CancellationForm productOfferIds={productOfferIds} offer={selectedOffer} />
+
+        {shopSession.cart.campaignsEnabled && (
+          <>
+            <DiscountFieldContainer shopSession={shopSession} />
+            <Separator />
+          </>
+        )}
+
+        <OfferPriceDetails />
+
+        <Button
+          variant="primary"
+          onClick={handleAddToCart}
+          loading={loadingAddToCart}
+          fullWidth={true}
+        >
+          {t('ADD_TO_CART_BUTTON_LABEL')}
+        </Button>
+      </ProductCardSmall>
+    </div>
   )
 }
 
