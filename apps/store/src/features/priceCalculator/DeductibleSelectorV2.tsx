@@ -58,7 +58,6 @@ export function DeductibleSelectorV2({ offers, selectedOffer, onValueChange }: P
             isSelected={selectedOffer.id === item.id}
           >
             <div className={xStack({ gap: 'xs' })}>
-              <CardRadioGroup.Indicator />
               <div className={yStack({ flexGrow: 1, gap: 'xs' })}>
                 <div
                   className={xStack({

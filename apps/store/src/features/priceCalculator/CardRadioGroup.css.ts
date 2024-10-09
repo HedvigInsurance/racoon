@@ -7,7 +7,7 @@ export const item = style([
   yStack({ gap: 'sm' }),
   {
     borderRadius: tokens.radius.md,
-    padding: tokens.space.md,
+    padding: tokens.space.lg,
     cursor: 'pointer',
 
     vars: {
