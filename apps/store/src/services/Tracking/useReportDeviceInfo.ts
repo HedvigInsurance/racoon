@@ -3,7 +3,8 @@ import { browserName, deviceType, osName } from 'react-device-detect'
 import { useSendEventBatchMutation } from '@/services/graphql/generated'
 import type { ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
-import { TrackingEvent } from '@/services/Tracking/Tracking'
+import { Features } from '@/utils/Features'
+import { TrackingEvent } from './TrackingEvent'
 import { useTracking } from './useTracking'
 
 export const useReportDeviceInfo = () => {
@@ -32,15 +33,17 @@ export const useReportDeviceInfo = () => {
           browserName,
         }
         tracking.reportDeviceInfo(data)
-
-        const deviceInfoEvent = {
-          type: TrackingEvent.DeviceInfo,
-          data,
-          id: crypto.randomUUID(),
-          sessionId: shopSession.id,
-          clientTimestamp: new Date().toISOString(),
+        // Old manual reporting, remove when BEHAVIOR_EVENTS becomes always on
+        if (!Features.enabled('BEHAVIOR_EVENTS')) {
+          const deviceInfoEvent = {
+            type: TrackingEvent.DeviceInfo,
+            data,
+            id: crypto.randomUUID(),
+            sessionId: shopSession.id,
+            clientTimestamp: new Date().toISOString(),
+          }
+          sendEventBatch({ variables: { inputList: [deviceInfoEvent] } })
         }
-        sendEventBatch({ variables: { inputList: [deviceInfoEvent] } })
       }),
     [tracking, onReady, sendEventBatch],
   )
