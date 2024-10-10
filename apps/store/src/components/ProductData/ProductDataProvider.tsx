@@ -27,7 +27,11 @@ type Props = {
 
 const ProductKeyContext = createContext<string | null>(null)
 
-// NOTE: No cleanup on atomFamilies here - we don't have that many products, so it's easier to retain all data
+// NOTE:
+// - Maybe this setup could be simplified to use plain atoms instead of `atomFamily`
+//   If you try to do this, test /debugger/terms/[productName] page - it shows multiple product variants
+//   and 2 languages at the same time. This might still work with plain atoms if properly surrounded by JotaiProvider wrappers
+// - No cleanup on atomFamilies here - we don't have that many products, so it's easier to retain all data
 export const ProductDataProvider = (props: Props) => {
   const locale = useRoutingLocale()
   // Custom key is only used in terms debugger page when we want to have several providers (one per variant)

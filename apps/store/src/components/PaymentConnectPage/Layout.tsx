@@ -3,11 +3,9 @@ import { useTranslation } from 'next-i18next'
 import { type ReactNode } from 'react'
 import { Heading, Space, mq, theme } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
-import {
-  MENU_BAR_HEIGHT_MOBILE,
-  MENU_BAR_HEIGHT_DESKTOP,
-} from '@/components/Header/Header.constants'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
+import { MENU_BAR_HEIGHT_DESKTOP } from '../Header/Header.css'
+import { MENU_BAR_HEIGHT_MOBILE } from '../Header/HeaderMenuMobile/HeaderMenuMobile.css'
 
 type Props = {
   title?: string

@@ -1,11 +1,10 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import Balancer from 'react-wrap-balancer'
 import { Button, Text } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
+import { useEditProductOffer } from '@/features/CartItem/hooks/useEditProductOffer'
 import type { ProductOfferFragment } from '@/services/graphql/generated'
 import { ActionButton } from './ProductItem'
-import { useEditProductOffer } from './useEditProductOffer'
 
 type Props = {
   offer: ProductOfferFragment
@@ -39,8 +38,8 @@ export const EditActionButton = ({ offer }: Props) => {
         }
       >
         <FullscreenDialog.Title asChild={true}>
-          <CappedText size={{ _: 'md', lg: 'xl' }} align="center">
-            <Balancer>{t('EDIT_CONFIRMATION_MODAL_PROMPT')}</Balancer>
+          <CappedText size={{ _: 'md', lg: 'xl' }} align="center" balance={true}>
+            {t('EDIT_CONFIRMATION_MODAL_PROMPT')}
           </CappedText>
         </FullscreenDialog.Title>
       </FullscreenDialog.Modal>

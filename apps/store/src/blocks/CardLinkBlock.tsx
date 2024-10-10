@@ -1,9 +1,9 @@
 'use client'
 import styled from '@emotion/styled'
 import { ArrowForwardIcon, theme, mq } from 'ui'
+import * as GridLayout from '@/components/GridLayout/GridLayout'
 import type { SbBaseBlockProps, LinkField } from '@/services/storyblok/storyblok'
 import { getLinkFieldURL } from '@/services/storyblok/Storyblok.helpers'
-import { Grid } from './CardLinkListBlock'
 
 type CardVariant = 'primary' | 'secondary'
 
@@ -25,6 +25,16 @@ export const CardLinkBlock = ({ blok }: CardLinkBlockProps) => {
     </Card>
   )
 }
+
+export const Grid = styled(GridLayout.Root)({
+  gap: theme.space.xs,
+  gridAutoRows: '9rem', // 144px
+
+  [mq.lg]: {
+    gap: theme.space.md,
+    gridAutoRows: '16rem', // 256px
+  },
+})
 
 const Card = styled.a({
   display: 'inline-flex',

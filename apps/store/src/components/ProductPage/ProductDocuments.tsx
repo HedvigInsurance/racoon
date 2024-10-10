@@ -2,8 +2,10 @@ import styled from '@emotion/styled'
 import { Heading, mq, Space, Text, theme } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { InsuranceDocumentLink } from '@/components/InsuranceDocumentLink'
-import type { InsuranceDocumentFragment } from '@/services/graphql/generated'
+import { type InsuranceDocumentFragment, InsuranceDocumentType } from '@/services/graphql/generated'
+import { useTracking } from '@/services/Tracking/useTracking'
 import { TEXT_CONTENT_MAX_WIDTH } from '../GridLayout/GridLayout.constants'
+import { useProductData, useSelectedProductVariant } from '../ProductData/ProductDataProvider'
 
 type Props = {
   heading: string
@@ -12,6 +14,10 @@ type Props = {
 }
 
 export const ProductDocuments = ({ heading, description, docs }: Props) => {
+  const tracking = useTracking()
+  const selectedVariant = useSelectedProductVariant()
+  const productData = useProductData()
+
   return (
     <Layout>
       <GridLayout.Content width="1/2" align="left">
@@ -26,9 +32,23 @@ export const ProductDocuments = ({ heading, description, docs }: Props) => {
       </GridLayout.Content>
       <GridLayout.Content width="1/2" align="right">
         <Space y={{ base: 0.25, lg: 0.5 }}>
-          {docs.map((doc, index) => (
-            <InsuranceDocumentLink key={index} url={doc.url} displayName={doc.displayName} />
-          ))}
+          {docs.map((doc, index) => {
+            const handleClick = () => {
+              if (doc.type === InsuranceDocumentType.TermsAndConditions)
+                tracking.reportClickTermsAndConditions(
+                  productData.name,
+                  selectedVariant!.typeOfContract,
+                )
+            }
+            return (
+              <InsuranceDocumentLink
+                key={index}
+                url={doc.url}
+                displayName={doc.displayName}
+                onClick={handleClick}
+              />
+            )
+          })}
         </Space>
       </GridLayout.Content>
     </Layout>

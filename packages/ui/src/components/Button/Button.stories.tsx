@@ -1,8 +1,10 @@
 import type { Meta, StoryFn } from '@storybook/react'
-import { CheckIcon, yStack } from 'ui'
+import { type ComponentProps } from 'react'
+import { CheckIcon, CrossIcon, yStack } from 'ui'
 import { Button } from './Button'
+import { IconButton } from './IconButton'
 
-type Controls = typeof Button
+type Controls = ComponentProps<typeof Button>
 
 const meta: Meta<Controls> = {
   title: 'Button',
@@ -30,6 +32,9 @@ const Template: StoryFn<Controls> = (props: Controls) => {
         <div>
           <Button {...props} variant="ghost" />
         </div>
+        <div>
+          <Button {...props} variant="outline" />
+        </div>
       </div>
 
       <div className={yStack({ gap: 'md' })}>
@@ -48,6 +53,9 @@ const Template: StoryFn<Controls> = (props: Controls) => {
         <div>
           <Button {...props} variant="ghost" disabled />
         </div>
+        <div>
+          <Button {...props} variant="outline" disabled />
+        </div>
       </div>
 
       <div className={yStack({ gap: 'md' })}>
@@ -65,6 +73,9 @@ const Template: StoryFn<Controls> = (props: Controls) => {
         </div>
         <div>
           <Button {...props} variant="ghost" loading />
+        </div>
+        <div>
+          <Button {...props} variant="outline" loading />
         </div>
       </div>
     </div>
@@ -107,5 +118,13 @@ export const WithIcon = {
   args: {
     children: 'Button label',
     Icon: <CheckIcon size="18px" />,
+  },
+}
+
+export const IconButtonDefault = {
+  render: (args: Controls) => <IconButton variant={args.variant}>{args.Icon}</IconButton>,
+  args: {
+    Icon: <CrossIcon size="18px" />,
+    variant: 'primary',
   },
 }

@@ -1,7 +1,7 @@
 import {
   LAYOUT,
   livingSpaceField,
-  ssnSeSection,
+  ssnSeSectionV2,
   postalCodeField,
   streetAddressField,
   emailField,
@@ -16,7 +16,7 @@ const template: TemplateV2 = {
   name: 'SE_ACCIDENT_V2',
   productName: 'SE_ACCIDENT',
   sections: [
-    ssnSeSection,
+    ssnSeSectionV2,
     {
       id: 'your-information',
       title: { key: tKey('SECTION_TITLE_YOUR_INFORMATION') },

@@ -2,7 +2,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import { useTranslation } from 'next-i18next'
 import { type ComponentProps, useCallback, useState, useMemo, type ReactNode } from 'react'
-import { Dialog, Text, visuallyHidden } from 'ui'
+import { Button, Dialog, Text, visuallyHidden } from 'ui'
 import { FetchInsurancePrompt } from '@/components/FetchInsurancePrompt/FetchInsurancePrompt'
 import type { ExternalInsurer } from '@/services/graphql/generated'
 import {
@@ -10,12 +10,12 @@ import {
   usePriceIntentInsurelyUpdateMutation,
 } from '@/services/graphql/generated'
 import { InsurelyIframe, setInsurelyConfig } from '@/services/Insurely/InsurelyIframe'
-import { Features } from '@/utils/Features'
 import {
   dialogContent,
   dialogIframeContent,
   dialogIframeWindow,
   dialogWindow,
+  actions,
 } from './FetchInsurance.css'
 import { FetchInsuranceSuccess } from './FetchInsuranceSuccess'
 import {
@@ -49,6 +49,7 @@ export const FetchInsurance = (props: Props) => {
   const [state, setState] = useFetchInsuranceState()
   const fetchInsuranceCompare = useFetchInsuranceCompare()
   const fetchInsuraceSuccess = useFetchInsuranceSuccess()
+  const [hasInsurelyLoaded, setHasInsurelyLoaded] = useState(false)
   const isOpen = ['PROMPT', 'COMPARE', 'SUCCESS'].includes(state)
 
   const dismiss = () => setState('DISMISSED')
@@ -124,6 +125,8 @@ export const FetchInsurance = (props: Props) => {
     }
   }, [updateDataCollectionId, props.priceIntentId, dataCollectionId, loggingContext])
 
+  const handleInsurelyLoaded = useCallback(() => setHasInsurelyLoaded(true), [])
+
   const { t } = useTranslation('purchase-form')
 
   let content: ReactNode = null
@@ -139,10 +142,7 @@ export const FetchInsurance = (props: Props) => {
         </Dialog.Window>
       </Dialog.Content>
     )
-  } else if (
-    state === 'COMPARE' ||
-    (state === 'SUCCESS' && Features.enabled('INSURELY_NATIVE_SUCCESS'))
-  ) {
+  } else if (state === 'COMPARE') {
     content = (
       <Dialog.Content className={dialogIframeContent} onClose={dismiss} centerContent={true}>
         <Dialog.Window className={dialogIframeWindow}>
@@ -154,13 +154,20 @@ export const FetchInsurance = (props: Props) => {
           <InsurelyIframe
             configName={props.insurely.configName}
             onCollection={handleInsurelyCollection}
-            onClose={dismiss}
+            onLoaded={handleInsurelyLoaded}
             onCompleted={handleInsurelyCompleted}
           />
+          {hasInsurelyLoaded && (
+            <div className={actions}>
+              <Dialog.Close asChild>
+                <Button>{t('DIALOG_BUTTON_CANCEL', { ns: 'common' })}</Button>
+              </Dialog.Close>
+            </div>
+          )}
         </Dialog.Window>
       </Dialog.Content>
     )
-  } else if (state === 'SUCCESS' && !Features.enabled('INSURELY_NATIVE_SUCCESS')) {
+  } else if (state === 'SUCCESS') {
     content = (
       <Dialog.Content className={dialogContent} onClose={dismiss} centerContent={true}>
         <Dialog.Window className={dialogWindow}>

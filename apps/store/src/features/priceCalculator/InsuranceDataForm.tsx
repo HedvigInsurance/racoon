@@ -19,7 +19,7 @@ import { usePriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTem
 import { TextLink } from '@/components/TextLink/TextLink'
 import { EditSsnWarningContainer } from '@/features/priceCalculator/EditSsnWarningContainer'
 import { FormGridNew } from '@/features/priceCalculator/FormGridNew'
-import { gdprLink } from '@/features/priceCalculator/InsuranceDataForm.css'
+import { formSection, gdprLink } from '@/features/priceCalculator/InsuranceDataForm.css'
 import { priceCalculatorStepAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
 import { SectionPreview } from '@/features/priceCalculator/SectionPreview'
 import { useConfirmPriceIntent } from '@/features/priceCalculator/useConfirmPriceIntent'
@@ -38,7 +38,7 @@ import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 
-export function InsuranceDataForm() {
+export function InsuranceDataForm({ className }: { className?: string }) {
   const locale = useRoutingLocale()
   const { t } = useTranslation('purchase-form')
 
@@ -55,11 +55,10 @@ export function InsuranceDataForm() {
     }
 
     let sectionBody: ReactNode
-    let sectionStyle = {}
-    if (section.id === SSN_SE_SECTION_ID) {
-      sectionBody = <SsnSeSection />
+    const isSsnSection = section.id === SSN_SE_SECTION_ID
+    if (isSsnSection) {
+      sectionBody = <SsnSeSection className={yStack({ gap: 'lg' })} />
     } else {
-      sectionStyle = { marginTop: '3.75rem' }
       const isLast = index === form.sections.length - 1
       sectionBody = (
         <>
@@ -78,7 +77,10 @@ export function InsuranceDataForm() {
       )
     }
     return (
-      <div key={section.id} className={yStack({ gap: 'xl' })} style={sectionStyle}>
+      <div
+        key={section.id}
+        className={clsx(yStack({ gap: 'lg' }), formSection.base, isSsnSection && formSection.ssn)}
+      >
         <SectionTitle section={section} />
         {sectionBody}
       </div>
@@ -87,7 +89,7 @@ export function InsuranceDataForm() {
 
   return (
     <>
-      <div className={yStack({ gap: 'xs' })}>{sections}</div>
+      <div className={clsx(yStack({ gap: 'xs' }), className)}>{sections}</div>
       <EditSsnWarningContainer />
       <FetchInsuranceContainer />
     </>

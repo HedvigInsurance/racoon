@@ -5,7 +5,6 @@ import Head from 'next/head'
 import Router from 'next/router'
 import { appWithTranslation } from 'next-i18next'
 import { type ReactNode } from 'react'
-import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import globalCss from 'ui/src/global.css'
 import { theme } from 'ui'
 import { AppErrorDialog } from '@/components/AppErrorDialog'
@@ -13,15 +12,14 @@ import { BankIdDialogDynamic } from '@/components/BankIdDialog/BankIdDialogDynam
 import { ContactUs } from '@/components/ContactUs/ContactUs'
 import { CookieConsent } from '@/components/CookieConsent/CookieConsent'
 import { GlobalBannerDynamic } from '@/components/GlobalBanner/GlobalBannerDynamic'
-import { GTMLoader } from '@/components/GTMLoader'
 import { GlobalLinkStyles } from '@/components/RichText/RichText.styles'
 import { usePublishWidgetInitEvent } from '@/features/widget/usePublishWidgetInitEvent'
 import { useApollo } from '@/services/apollo/client'
 import { BankIdContextProvider } from '@/services/bankId/BankIdContext'
-import { CustomerFirstScript, hasHiddenChat } from '@/services/CustomerFirst'
 import { useInitDatadogAfterInteractive } from '@/services/logger/client'
 import { PageTransitionProgressBar } from '@/services/nprogress/pageTransition'
 import { OneTrustStyles } from '@/services/OneTrust'
+import { hasHiddenChat } from '@/services/pageChat'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { ShopSessionProvider, useShopSessionId } from '@/services/shopSession/ShopSessionContext'
 import { initStoryblok } from '@/services/storyblok/storyblok'
@@ -38,6 +36,7 @@ import { useDebugTranslationKeys } from '@/utils/l10n/useDebugTranslationKeys'
 import { useForceHtmlLangAttribute } from '@/utils/l10n/useForceHtmlLangAttribute'
 import { useAllowActiveStylesInSafari } from '@/utils/useAllowActiveStylesInSafari'
 import { useReloadOnCountryChange } from '@/utils/useReloadOnCountryChange'
+import { globalStore } from 'globalStore'
 
 // GOTCHA: Here we need to trick compiler into thinking we need global.css import
 // for anything other than side effects
@@ -86,9 +85,9 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   const apolloClient = useApollo(pageProps)
   const getLayout = Component.getLayout ?? ((page) => page)
 
-  let Chat: ReactNode = null
+  let chat: ReactNode = null
   if (!hasHiddenChat(pageProps)) {
-    Chat = Features.enabled('CUSTOM_CHAT') ? <ContactUs /> : <CustomerFirstScript />
+    chat = <ContactUs />
   }
 
   return (
@@ -96,26 +95,23 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       <Head>
         <meta key="viewport" name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      {Features.enabled('COOKIE_BANNER') && <GTMLoader />}
-      {Features.enabled('COOKIE_BANNER_INP_IMPROVEMENT') && <CookieConsent />}
+      {Features.enabled('COOKIE_BANNER') && <CookieConsent />}
       <GlobalLinkStyles />
       <OneTrustStyles />
       <PageTransitionProgressBar />
       <ApolloProvider client={apolloClient}>
-        <JotaiProvider>
+        <JotaiProvider store={globalStore}>
           <ShopSessionProvider shopSessionId={pageProps[SHOP_SESSION_PROP_NAME]}>
             <ShopSessionTrackingProvider>
               <BankIdContextProvider>
-                <BalancerProvider>
-                  <AppErrorDialog />
-                  <GlobalBannerDynamic />
-                  {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
-                </BalancerProvider>
+                <AppErrorDialog />
+                <GlobalBannerDynamic />
+                {getLayout(<Component {...pageProps} className={contentFontClassName} />)}
                 <BankIdDialogDynamic />
               </BankIdContextProvider>
             </ShopSessionTrackingProvider>
           </ShopSessionProvider>
-          {Chat}
+          {chat}
         </JotaiProvider>
       </ApolloProvider>
     </>

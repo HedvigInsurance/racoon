@@ -1,10 +1,9 @@
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
-import { useAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import type { ComponentPropsWithoutRef } from 'react'
 import { useMemo, useState } from 'react'
-import { BankIdIcon, Button, CheckIcon, Space, Text, theme } from 'ui'
+import { BankIdIcon, Button, CheckIcon, Space, Text, Divider, theme } from 'ui'
 import { ProductItemContainer } from '@/components/ProductItem/ProductItemContainer'
 import { TotalAmount } from '@/components/ShopBreakdown/TotalAmount'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
@@ -20,39 +19,27 @@ import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
 import { type TrialContract } from '../carDealership.types'
 import { ExtensionOfferToggle } from '../ExtensionOfferToggle'
-import { concentAcceptedAtom } from '../MyMoneyConsent/myMoneyConcentAtom'
-import { MyMoneyConsent } from '../MyMoneyConsent/MyMoneyConsent'
-import { myMoneyConsentConfirmationFlagAtom } from '../MyMoneyConsentConfirmation/myMoneyConcentConfirmationAtom'
-import { MyMoneyConsentConfirmation } from '../MyMoneyConsentConfirmation/MyMoneyConsentConfirmation'
 import { PriceBreakdown } from '../PriceBreakdown'
 import { ProductItemContractContainerCar } from '../ProductItemContractContainer'
 import { EditActionButton } from './EditActionButton'
 import { useAcceptExtension } from './useAcceptExtension'
-
-export type MyMoneyConsentProps = {
-  collectConsent?: boolean
-  onConsentChange?: (consentGiven: boolean) => void
-}
 
 type Props = {
   trialContract: TrialContract
   priceIntent: PriceIntentCarTrialExtensionFragment
   shopSession: ShopSessionFragment
   requirePaymentConnection: boolean
-} & MyMoneyConsentProps
+}
 
 export const TrialExtensionForm = ({
   trialContract,
   priceIntent,
   shopSession,
   requirePaymentConnection,
-  collectConsent,
-  onConsentChange,
 }: Props) => {
   const { t } = useTranslation(['carDealership', 'checkout'])
   const locale = useRoutingLocale()
   const formatter = useFormatter()
-  const [concentAccepted] = useAtom(concentAcceptedAtom)
 
   const [acceptExtension, loading] = useAcceptExtension({
     shopSession: shopSession,
@@ -66,12 +53,6 @@ export const TrialExtensionForm = ({
       priceIntent.offers[0].variant.typeOfContract
     )
   })
-
-  const [wasMyMoneyConsentShown, setWasMyMoneyConsentShown] = useAtom(
-    myMoneyConsentConfirmationFlagAtom,
-  )
-
-  const shouldShowMyMoneyConsentConfirmation = !concentAccepted && !wasMyMoneyConsentShown
 
   const selectedOffer = useMemo(
     () => getSelectedOffer(priceIntent, tierLevel),
@@ -98,13 +79,9 @@ export const TrialExtensionForm = ({
     setTierLevel(tierLevel)
   }
 
-  const markMyMoneyConsentConfirmationAsShown = () => setWasMyMoneyConsentShown(true)
-
   const handleClickSign = () => {
     datadogRum.addAction('Car dealership | Click Sign')
     acceptExtension(selectedOffer.id)
-    // Send MyMoney consent state
-    onConsentChange?.(concentAccepted)
   }
 
   const signButtonLabel = requirePaymentConnection ? t('SIGN_AND_PAY_BUTTON') : t('SIGN_BUTTON')
@@ -172,21 +149,10 @@ export const TrialExtensionForm = ({
           />
         )}
 
-        {collectConsent && <MyMoneyConsent />}
-
         <Space y={1}>
-          {shouldShowMyMoneyConsentConfirmation ? (
-            <MyMoneyConsentConfirmation
-              onClose={markMyMoneyConsentConfirmationAsShown}
-              onContinue={handleClickSign}
-            >
-              <SignButton>{signButtonLabel}</SignButton>
-            </MyMoneyConsentConfirmation>
-          ) : (
-            <SignButton onClick={handleClickSign} loading={loading}>
-              {signButtonLabel}
-            </SignButton>
-          )}
+          <SignButton onClick={handleClickSign} loading={loading}>
+            {signButtonLabel}
+          </SignButton>
 
           <UspWrapper>
             <CheckIcon size="1rem" />
@@ -229,19 +195,6 @@ const UspWrapper = styled.div({
   justifyContent: 'center',
   gap: theme.space.xs,
 })
-
-const Divider = () => {
-  return (
-    <div
-      style={{
-        height: 1,
-        borderBottomWidth: 1,
-        borderBottomStyle: 'solid',
-        borderBottomColor: theme.colors.borderOpaque1,
-      }}
-    />
-  )
-}
 
 const getSelectedOffer = (
   priceIntent: PriceIntentCarTrialExtensionFragment,

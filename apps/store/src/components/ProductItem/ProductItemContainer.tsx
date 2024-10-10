@@ -1,5 +1,5 @@
 import { type ComponentProps, type ReactNode } from 'react'
-import { useOfferDetails } from '@/components/ProductItem/useOfferDetails'
+import { useOfferDetails } from '@/features/CartItem/hooks/useOfferDetails'
 import { type ProductOfferFragment } from '@/services/graphql/generated'
 import { getOfferPrice } from '@/utils/getOfferPrice'
 import { ProductItem } from './ProductItem'

@@ -1,8 +1,9 @@
 import { type Meta, type StoryObj } from '@storybook/react'
+import { Divider } from 'ui'
 import { ActionButton, ProductItem } from '@/components/ProductItem/ProductItem'
 import { CurrencyCode } from '@/services/graphql/generated'
 import { DiscountField } from './DiscountField'
-import { Divider, ShopBreakdown } from './ShopBreakdown'
+import { ShopBreakdown } from './ShopBreakdown'
 import { TotalAmount } from './TotalAmount'
 
 const meta: Meta<typeof ShopBreakdown> = {

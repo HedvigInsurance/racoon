@@ -1,6 +1,5 @@
 import clsx from 'clsx'
 import { Suspense, type PropsWithChildren } from 'react'
-import { Provider as BalancerProvider } from 'react-wrap-balancer'
 import globalCss from 'ui/src/global.css'
 import { mainTheme } from 'ui'
 import { NavigationProgressIndicator } from '@/appComponents/RootLayout/NavigationProgressIndicator'
@@ -9,6 +8,7 @@ import { contentFontClassName } from '@/utils/fonts'
 import { getLocaleOrFallback } from '@/utils/l10n/localeUtils'
 import type { RoutingLocale } from '@/utils/l10n/types'
 import { ApolloProvider } from '../providers/ApolloProvider'
+import { InternalReporterProvider } from '../providers/InternalReporterProvider'
 import { DebugError } from './DebugError'
 
 // Trick compiler into thinking we need global.css import for anything other than side effects
@@ -34,7 +34,7 @@ export function RootLayout({
         <NavigationProgressIndicator />
 
         <ApolloProvider locale={locale}>
-          <BalancerProvider>{children}</BalancerProvider>
+          <InternalReporterProvider>{children}</InternalReporterProvider>
         </ApolloProvider>
       </body>
     </html>

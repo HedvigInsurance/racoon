@@ -4,22 +4,24 @@ import Head from 'next/head'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import type { ComponentPropsWithoutRef, ReactNode } from 'react'
+import { PageBannerTriggers } from '@/components/Banner/PageBannerTriggers'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import { type ProductData } from '@/components/ProductData/ProductData.types'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
 import { CalculatePricePage } from '@/features/widget/CalculatePricePage'
 import { fetchFlowStory, getWidgetPriceTemplate } from '@/features/widget/widget.helpers'
 import { addApolloState, initializeApolloServerSide } from '@/services/apollo/client'
-import { hideChatOnPage } from '@/services/CustomerFirst'
 import {
   useShopSessionQuery,
   useWidgetPriceIntentQuery,
   WidgetPriceIntentDocument,
   type WidgetPriceIntentQuery,
 } from '@/services/graphql/generated'
+import { hideChatOnPage } from '@/services/pageChat'
 import { SHOP_SESSION_PROP_NAME } from '@/services/shopSession/ShopSession.constants'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
 import { ShopSessionProvider, useShopSessionId } from '@/services/shopSession/ShopSessionContext'
+import { type WidgetFlowStory } from '@/services/storyblok/storyblok'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { patchNextI18nContext } from '@/utils/patchNextI18nContext'
@@ -52,51 +54,47 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
   })
   const shopSessionService = setupShopSessionServiceServerSide({ apolloClient })
 
-  try {
-    const [
-      translations,
+  const [
+    translations,
+    priceIntent,
+    story,
+    // Only loading for hydrating client-side apollo cache
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    shopSession,
+  ] = await Promise.all([
+    serverSideTranslations(context.locale),
+    fetchWidgetPriceIntent(apolloClient, context.params.priceIntentId),
+    fetchFlowStory(context.params.flow, context.draftMode),
+    shopSessionService.fetchById(context.params.shopSessionId),
+  ])
+
+  const compareInsurance = story.content.compareInsurance ?? false
+  const partnerName = story.content.partner
+  const productName = priceIntent.product.name
+  const priceTemplate = getWidgetPriceTemplate(priceIntent.product.name, compareInsurance)
+  const productData = await fetchProductData({
+    apolloClient,
+    productName,
+    partnerName,
+  })
+
+  console.info(`Widget | Calculate Price: ${priceIntent.product.name}/${priceTemplate.name}`)
+  console.info(`Widget | Compare insurance: ${compareInsurance}`)
+
+  return addApolloState(apolloClient, {
+    props: {
       priceIntent,
-      story,
-      // Only loading for hydrating client-side apollo cache
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      shopSession,
-    ] = await Promise.all([
-      serverSideTranslations(context.locale),
-      fetchWidgetPriceIntent(apolloClient, context.params.priceIntentId),
-      fetchFlowStory(context.params.flow, context.draftMode),
-      shopSessionService.fetchById(context.params.shopSessionId),
-    ])
-
-    const compareInsurance = story.content.compareInsurance ?? false
-    const partnerName = story.content.partner
-    const productName = priceIntent.product.name
-    const priceTemplate = getWidgetPriceTemplate(priceIntent.product.name, compareInsurance)
-    const productData = await fetchProductData({
-      apolloClient,
-      productName,
+      priceTemplate,
       partnerName,
-    })
-
-    console.info(`Widget | Calculate Price: ${priceIntent.product.name}/${priceTemplate.name}`)
-    console.info(`Widget | Compare insurance: ${compareInsurance}`)
-
-    return addApolloState(apolloClient, {
-      props: {
-        priceIntent,
-        priceTemplate,
-        partnerName,
-        productData,
-        ...hideChatOnPage(),
-        ...translations,
-        ...context.params,
-        showBackButton: story.content.showBackButton ?? false,
-        [SHOP_SESSION_PROP_NAME]: shopSession.id,
-      },
-    })
-  } catch (error) {
-    console.error('Widget Calculate Price | Unable to render', error)
-    return { notFound: true }
-  }
+      productData,
+      ...hideChatOnPage(),
+      ...translations,
+      ...context.params,
+      showBackButton: story.content.showBackButton ?? false,
+      story: story,
+      [SHOP_SESSION_PROP_NAME]: shopSession.id,
+    },
+  })
 }
 
 export default function Page({
@@ -104,8 +102,9 @@ export default function Page({
   shopSessionId,
   priceIntentId,
   productData,
+  story,
   ...forwardedProps
-}: Props) {
+}: Props & { story: WidgetFlowStory }) {
   const { t } = useTranslation('widget')
 
   const shopSessionResult = useShopSessionQuery({
@@ -130,6 +129,7 @@ export default function Page({
           <ProductDataProvider productData={productData}>
             <ShopSessionLoader>
               <CalculatePricePage {...forwardedProps} priceIntentId={priceIntentId} />
+              <PageBannerTriggers blok={story.content} />
             </ShopSessionLoader>
           </ProductDataProvider>
         </TrackingProvider>

@@ -25,6 +25,10 @@ export const trigger = style({
   ':focus-visible': {
     boxShadow: tokens.shadow.focus,
   },
+
+  ':disabled': {
+    cursor: 'not-allowed',
+  },
 })
 
 export const label = style({
@@ -85,6 +89,7 @@ export const popoverContent = style({
       animationFillMode: 'forwards',
     },
   },
+  zIndex: 1,
 })
 
 export const dayPicker = style({

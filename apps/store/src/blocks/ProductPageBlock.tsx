@@ -9,7 +9,7 @@ import { useCallback, useState, useEffect, useRef } from 'react'
 import { theme, mq } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { MAX_WIDTH } from '@/components/GridLayout/GridLayout.constants'
-import { HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header.constants'
+import { HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header.css'
 import {
   PurchaseForm,
   type PurchaseFormProps,

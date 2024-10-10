@@ -1,5 +1,3 @@
-// TODO: get rid of this import, services should avoid feature-imports
-import { STORYBLOK_MANYPETS_FOLDER_SLUG } from '@/features/manyPets/manyPets.constants'
 import { STORYBLOK_WIDGET_FOLDER_SLUG } from '@/features/widget/widget.constants'
 
 export const GLOBAL_STORY_PROP_NAME = 'globalStory'
@@ -11,7 +9,6 @@ export const LINKS_EXCLUDE_PATHS = new Set([
   'product-metadata',
   'car-buyer',
   'global',
-  STORYBLOK_MANYPETS_FOLDER_SLUG,
   STORYBLOK_WIDGET_FOLDER_SLUG,
 ])
 

@@ -31,34 +31,19 @@ export class PriceIntentService {
     private readonly persister: SimplePersister,
     private readonly apolloClient: ApolloClient<unknown>,
   ) {}
-  private createParams: PriceIntentCreateParams | null = null
   private createPromise: Promise<PriceIntent> | null = null
 
-  public async create({ productName, priceTemplate, shopSessionId }: PriceIntentCreateParams) {
-    const result = await this.apolloClient.mutate<
-      PriceIntentCreateMutation,
-      PriceIntentCreateMutationVariables
-    >({
-      mutation: PriceIntentCreateDocument,
-      variables: { productName, shopSessionId },
-      update: (cache, result) => {
-        const priceIntent = result.data?.priceIntentCreate
-        if (priceIntent) {
-          cache.writeQuery({
-            query: PriceIntentDocument,
-            variables: { priceIntentId: priceIntent.id },
-            data: { priceIntent },
-          })
-        }
-      },
+  public async create(params: PriceIntentCreateParams) {
+    if (this.createPromise) return await this.createPromise
+
+    // Deduplicate calls to create price intent
+    this.createPromise = new Promise((resolve) => {
+      this.createPriceIntent(params)
+        .then((result) => resolve(result))
+        .finally(() => (this.createPromise = null))
     })
 
-    const priceIntent = result.data?.priceIntentCreate
-    if (!priceIntent) throw new Error('Could not create price intent')
-
-    this.save({ priceIntentId: priceIntent.id, templateName: priceTemplate.name, shopSessionId })
-
-    return priceIntent
+    return await this.createPromise
   }
 
   public async get(priceIntentId: string) {
@@ -89,17 +74,11 @@ export class PriceIntentService {
       }
     }
 
-    // Deduplicate mutation, Apollo won't do this for us
-    const isEqual =
-      params.shopSessionId === this.createParams?.shopSessionId &&
-      params.productName === this.createParams.productName &&
-      params.priceTemplate.name === this.createParams.priceTemplate.name
-
-    if (!this.createPromise || !isEqual) {
-      this.createParams = params
-      this.createPromise = this.create(params)
-    }
-    return await this.createPromise
+    return await this.create({
+      shopSessionId: params.shopSessionId,
+      productName: params.productName,
+      priceTemplate: params.priceTemplate,
+    })
   }
 
   public async update(variables: PriceIntentDataUpdateMutationVariables) {
@@ -145,10 +124,6 @@ export class PriceIntentService {
     return priceIntent
   }
 
-  private getPriceIntentKey(templateName: string, shopSessionId: string) {
-    return `HEDVIG_${shopSessionId}_${templateName}`
-  }
-
   public getStoredId(templateName: string, shopSessionId: string) {
     return this.persister.fetch(this.getPriceIntentKey(templateName, shopSessionId))
   }
@@ -161,7 +136,6 @@ export class PriceIntentService {
   }
 
   public clear(templateName: string, shopSessionId: string) {
-    this.createParams = null
     this.persister.reset(this.getPriceIntentKey(templateName, shopSessionId))
   }
 
@@ -171,6 +145,41 @@ export class PriceIntentService {
         this.persister.reset(key)
       }
     }
+  }
+
+  private getPriceIntentKey(templateName: string, shopSessionId: string) {
+    return `HEDVIG_${shopSessionId}_${templateName}`
+  }
+
+  private async createPriceIntent({
+    productName,
+    priceTemplate,
+    shopSessionId,
+  }: PriceIntentCreateParams) {
+    const result = await this.apolloClient.mutate<
+      PriceIntentCreateMutation,
+      PriceIntentCreateMutationVariables
+    >({
+      mutation: PriceIntentCreateDocument,
+      variables: { productName, shopSessionId },
+      update: (cache, result) => {
+        const priceIntent = result.data?.priceIntentCreate
+        if (priceIntent) {
+          cache.writeQuery({
+            query: PriceIntentDocument,
+            variables: { priceIntentId: priceIntent.id },
+            data: { priceIntent },
+          })
+        }
+      },
+    })
+
+    const priceIntent = result.data?.priceIntentCreate
+    if (!priceIntent) throw new Error('Could not create price intent')
+
+    this.save({ priceIntentId: priceIntent.id, templateName: priceTemplate.name, shopSessionId })
+
+    return priceIntent
   }
 }
 

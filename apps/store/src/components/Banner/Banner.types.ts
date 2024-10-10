@@ -1,5 +1,8 @@
+import type { ReactNode } from 'react'
+
 export type Banner = {
-  content: string
+  id: string
+  content: NonNullable<ReactNode>
   variant: BannerVariant
 }
 

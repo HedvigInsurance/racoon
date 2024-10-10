@@ -1,6 +1,7 @@
 import { createVar, style } from '@vanilla-extract/css'
 import { minWidth, tokens } from 'ui'
-import { HEADER_HEIGHT_MOBILE, HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header.constants'
+import { HEADER_HEIGHT_DESKTOP } from '../Header/Header.css'
+import { HEADER_HEIGHT_MOBILE } from '../Header/HeaderMenuMobile/HeaderMenuMobile.css'
 
 const headerHeight = createVar()
 

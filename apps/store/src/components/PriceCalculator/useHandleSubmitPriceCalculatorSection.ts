@@ -1,4 +1,6 @@
-import { startTransition, useCallback } from 'react'
+import { useApolloClient } from '@apollo/client'
+import { startTransition, useCallback, useContext } from 'react'
+import { InternalReporterContext } from '@/appComponents/providers/InternalReporterProvider'
 import { useUpdatePriceIntent } from '@/components/PriceCalculator/useUpdatePriceIntent'
 import { usePriceIntentId } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import type { JSONData } from '@/services/PriceCalculator/PriceCalculator.types'
@@ -14,6 +16,8 @@ export const useHandleSubmitPriceCalculatorSection = (params: Params) => {
   const shopSessionId = useShopSessionId()!
   const priceIntentId = usePriceIntentId()
   const updatePriceIntent = useUpdatePriceIntent({ onSuccess: params.onSuccess })
+  const apolloClient = useApolloClient()
+  const internalEventReporter = useContext(InternalReporterContext)
 
   // NOTE: We probably want to refactor this in the future
   // and stop editing priceIntent and customer data as a mix.
@@ -30,6 +34,7 @@ export const useHandleSubmitPriceCalculatorSection = (params: Params) => {
         return
       }
       startTransition(() => {
+        internalEventReporter?.flush(apolloClient, shopSessionId)
         updatePriceIntent({
           variables: {
             priceIntentId,
@@ -39,7 +44,7 @@ export const useHandleSubmitPriceCalculatorSection = (params: Params) => {
         })
       })
     },
-    [priceIntentId, shopSessionId, updatePriceIntent],
+    [apolloClient, internalEventReporter, priceIntentId, shopSessionId, updatePriceIntent],
   )
 
   return handleSubmitSection

@@ -7,22 +7,15 @@ export const Features = {
 }
 
 const config = {
+  BEHAVIOR_EVENTS: process.env.NEXT_PUBLIC_FEATURE_BEHAVIOR_EVENTS === 'true',
+  // We're using it to disable cookie banner outside of production and staging
   COOKIE_BANNER: process.env.NEXT_PUBLIC_FEATURE_COOKIE_BANNER === 'true',
-  COOKIE_BANNER_INP_IMPROVEMENT:
-    process.env.NEXT_PUBLIC_FEATURE_COOKIE_BANNER_INP_IMPROVEMENT === 'true',
+  // Keeping it around as a way to quickly disable Insurely if anything goes wrong
   INSURELY: process.env.NEXT_PUBLIC_FEATURE_INSURELY === 'true',
-  MANYPETS_MIGRATION: process.env.NEXT_PUBLIC_FEATURE_MANYPETS_MIGRATION === 'true',
-  SAS_PARTNERSHIP: process.env.NEXT_PUBLIC_FEATURE_SAS_PARTNERSHIP === 'true',
-  INSURELY_CAR: process.env.NEXT_PUBLIC_FEATURE_INSURELY_CAR === 'true',
-  INSURELY_NATIVE_SUCCESS: process.env.NEXT_PUBLIC_FEATURE_INSURELY_NATIVE_SUCCESS === 'true',
-  CUSTOM_CHAT: process.env.NEXT_PUBLIC_FEATURE_CUSTOM_CHAT === 'true',
-  MYMONEY: process.env.NEXT_PUBLIC_FEATURE_MYMONEY === 'true',
-  CROSS_SELL_CARD_V2: process.env.NEXT_PUBLIC_CROSS_SELL_CARD_V2 === 'true',
-  HIDE_REVIEWS_FROM_PRODUCT_AVERAGE_RATING:
-    process.env.NEXT_PUBLIC_HIDE_REVIEWS_FROM_PRODUCT_AVERAGE_RATING === 'true',
-  NEW_HEADER: process.env.NEXT_PUBLIC_FEATURE_NEW_HEADER === 'true',
+
   PRICE_CALCULATOR_PAGE: process.env.NEXT_PUBLIC_FEATURE_PRICE_CALCULATOR_PAGE === 'true',
   PRODUCT_PAGE_V2: process.env.NEXT_PUBLIC_FEATURE_PRODUCT_PAGE_V2 === 'true',
+  WIDGET_FEATURE_HOME_TIERS: process.env.NEXT_PUBLIC_WIDGET_FEATURE_HOME_TIERS === 'true',
 } as const
 
 export type FeatureFlag = keyof typeof config

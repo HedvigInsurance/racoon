@@ -6,8 +6,14 @@ import { bodyBgColor } from 'ui/src/theme/vars.css'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
 import { isBrowser } from '@/utils/env'
 import { useScrollState } from '@/utils/useScrollState'
-import { MENU_BAR_HEIGHT_PX } from './Header.constants'
-import { menuWrapper, ghostWrapper, logoWrapper, wrapper, contentWrapper } from './Header.css'
+import {
+  menuWrapper,
+  ghostWrapper,
+  logoWrapper,
+  wrapper,
+  contentWrapper,
+  MENU_BAR_HEIGHT_PX,
+} from './Header.css'
 
 const ANIMATION_VARIANTS = {
   SLIDE_IN: {
@@ -67,10 +73,10 @@ export const Header = (props: PropsWithChildren<unknown>) => {
         transition={TRANSITION}
       >
         <div className={contentWrapper}>
+          {children ? <div className={menuWrapper}>{children}</div> : null}
           <div className={logoWrapper}>
             <LogoHomeLink />
           </div>
-          {children ? <div className={menuWrapper}>{children}</div> : null}
         </div>
       </motion.header>
     </div>

@@ -8,6 +8,7 @@ type Props = {
   date?: Date
   onChange?: (date: Date) => void
   loading?: boolean
+  disabled?: boolean
 }
 
 export const InputStartDay = (props: Props) => {
@@ -32,6 +33,7 @@ export const InputStartDay = (props: Props) => {
       toDate={toDate}
       onSelect={handleSelect}
       loading={props.loading}
+      disabled={props.disabled}
     />
   )
 }

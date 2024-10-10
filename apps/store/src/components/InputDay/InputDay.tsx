@@ -4,13 +4,12 @@ import { sv } from 'date-fns/locale'
 import { useTranslation } from 'next-i18next'
 import { type CSSProperties, startTransition, useId, useState } from 'react'
 import { useInput, DayPicker, type SelectSingleEventHandler } from 'react-day-picker'
-import { ChevronIcon, Text, LockIcon, theme } from 'ui'
+import { ChevronIcon, Text, LockIcon, theme, useHighlightAnimation } from 'ui'
 import { LoadingDots } from '@/components/LoadingDots/LoadingDots'
 import { convertToDate } from '@/utils/date'
 import { Language } from '@/utils/l10n/types'
 import { useCurrentLocale } from '@/utils/l10n/useCurrentLocale'
 import { useFormatter } from '@/utils/useFormatter'
-import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
 import { trigger, label, iconWrapper, chevronIcon, popoverContent, dayPicker } from './InputDay.css'
 
 import 'react-day-picker/dist/style.css'
@@ -50,6 +49,8 @@ export const InputDay = (props: InputDayProps) => {
   const autoIdentifier = useId()
   const inputId = props.id ?? autoIdentifier
 
+  const shouldBeDisabled = props.disabled || props.loading
+
   const { highlight, animationProps } = useHighlightAnimation<HTMLButtonElement>()
 
   const handleSelect: SelectSingleEventHandler = (day) => {
@@ -59,7 +60,7 @@ export const InputDay = (props: InputDayProps) => {
   }
 
   const handleOpenChange = (open: boolean) => {
-    if (open && (props.disabled || props.loading)) return
+    if (open && shouldBeDisabled) return
     startTransition(() => {
       setOpen(open)
     })
@@ -72,15 +73,21 @@ export const InputDay = (props: InputDayProps) => {
       <Popover.Trigger
         {...animationProps}
         className={clsx(trigger, props.className)}
-        disabled={props.disabled}
+        disabled={shouldBeDisabled}
+        data-loading={props.loading}
       >
         <div>
           <label htmlFor={inputId}>
-            <Text className={label} as="span" size="xs" color="textTranslucentSecondary">
+            <Text
+              className={label}
+              as="span"
+              size="xs"
+              color={shouldBeDisabled ? 'textTertiary' : 'textTranslucentSecondary'}
+            >
               {props.label}
             </Text>
           </label>
-          <Text size="xl" color={dateValue ? 'textPrimary' : 'textTertiary'}>
+          <Text size="xl" color={!dateValue || shouldBeDisabled ? 'textTertiary' : 'textPrimary'}>
             {dateValue ? formatter.fromNow(dateValue) : t('DATE_INPUT_EMPTY_LABEL')}
           </Text>
         </div>

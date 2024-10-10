@@ -9,7 +9,7 @@ import { fetchCompanyReviewsMetadata } from '@/features/memberReviews/memberRevi
 import type { ReviewsMetadata } from '@/features/memberReviews/memberReviews.types'
 import { HeaderFrame, LogoArea } from '@/features/widget/Header'
 import { STORYBLOK_WIDGET_FOLDER_SLUG } from '@/features/widget/widget.constants'
-import { hideChatOnPage } from '@/services/CustomerFirst'
+import { hideChatOnPage } from '@/services/pageChat'
 import {
   getPageLinks,
   getRevalidate,
@@ -66,8 +66,7 @@ export const getStaticProps: GetStaticProps<PageProps, StoryblokQueryParams> = a
       locale: context.locale,
     })
   } catch (error) {
-    console.warn(`Widget | Failed to fetch story for slug: ${slug}`)
-    console.warn(error)
+    console.warn(`Widget | Failed to fetch story for slug: ${slug}`, error)
     return { notFound: true }
   }
 

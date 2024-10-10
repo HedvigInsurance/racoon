@@ -1,10 +1,7 @@
 import styled from '@emotion/styled'
 import { mq, theme } from 'ui'
-import {
-  MENU_BAR_HEIGHT_MOBILE,
-  MENU_BAR_HEIGHT_DESKTOP,
-} from '@/components/Header/Header.constants'
-import { logoWrapper } from '@/components/Header/Header.css'
+import { logoWrapper, MENU_BAR_HEIGHT_DESKTOP } from '@/components/Header/Header.css'
+import { MENU_BAR_HEIGHT_MOBILE } from '@/components/Header/HeaderMenuMobile/HeaderMenuMobile.css'
 import { LogoHomeLink } from '@/components/LogoHomeLink'
 
 export const Header = () => (

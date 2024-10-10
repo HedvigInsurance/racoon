@@ -1,14 +1,13 @@
 'use client'
 
 import { clsx } from 'clsx'
-import Balancer from 'react-wrap-balancer'
 import type { UIColors, Level } from '../../theme'
 import { sprinkles } from '../../theme/sprinkles.css'
 import type { PolymorphicComponentsProps } from '../TypeUtils'
-import { responsiveVariantStyles } from './Heading.css'
+import { balanceTextStyles, responsiveVariantStyles } from './Heading.css'
 
-type StandardHeadingSize = '18' | '20' | '24' | '32' | '40' | '48' | '56' | '72' | '96'
-type SerifHeadingSize = Exclude<StandardHeadingSize, '18'>
+type StandardHeadingSize = '16' | '18' | '20' | '24' | '32' | '40' | '48' | '56' | '72' | '96'
+type SerifHeadingSize = Exclude<StandardHeadingSize, '16' | '18'>
 export type PossibleHeadingVariant = `standard.${StandardHeadingSize}` | `serif.${SerifHeadingSize}`
 
 type HeadingColors = Pick<
@@ -48,11 +47,12 @@ export function Heading({
       className={clsx(
         responsiveVariantStyles(variant),
         sprinkles({ color, textAlign: align }),
+        balance && balanceTextStyles,
         className,
       )}
       {...rest}
     >
-      {balance ? <Balancer>{children}</Balancer> : children}
+      {children}
     </Component>
   )
 }

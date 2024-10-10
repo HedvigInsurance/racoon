@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
-import { motion, useScroll } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
 import { theme } from 'ui'
 import { zIndexes } from '@/utils/zIndex'
+import { useHasScrolledPast } from './useHasScrolledPast'
 
 export type ScrollPastProps = {
   targetRef: React.RefObject<HTMLElement>
@@ -11,17 +11,7 @@ export type ScrollPastProps = {
 }
 
 export const ScrollPast = ({ targetRef, children, className }: ScrollPastProps) => {
-  const { scrollY } = useScroll()
-
-  const [hasScrolledPassed, setHasScrolledPassed] = useState(false)
-  useEffect(() => {
-    return scrollY.on('change', (latest) => {
-      if (targetRef.current) {
-        const elementEnd = targetRef.current.offsetTop + targetRef.current.clientHeight
-        setHasScrolledPassed(latest > elementEnd)
-      }
-    })
-  }, [scrollY, targetRef])
+  const hasScrolledPast = useHasScrolledPast({ targetRef })
 
   return (
     <StyledWrapper
@@ -31,7 +21,7 @@ export const ScrollPast = ({ targetRef, children, className }: ScrollPastProps) 
         visible: { opacity: 1, display: 'block' },
       }}
       initial="hidden"
-      animate={hasScrolledPassed ? 'visible' : 'hidden'}
+      animate={hasScrolledPast ? 'visible' : 'hidden'}
     >
       {children}
     </StyledWrapper>

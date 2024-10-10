@@ -1,9 +1,8 @@
 import { datadogRum } from '@datadog/browser-rum'
-import { useAtom, useSetAtom } from 'jotai'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { Space } from 'ui'
-import { dismissedBannerIdAtom } from '@/components/GlobalBanner/globalBannerState'
+import { useDismissBanner } from '@/components/GlobalBanner/globalBannerState'
 import { CarDealershipBanners } from '@/features/carDealership/carDearlership.constants'
 import { useBankIdContext } from '@/services/bankId/BankIdContext'
 import type { ProductOfferFragment } from '@/services/graphql/generated'
@@ -14,34 +13,23 @@ import { useFormatter } from '@/utils/useFormatter'
 import { type TrialContract } from './carDealership.types'
 import { ConfirmPayWithoutExtensionButton } from './ConfirmPayWithoutExtensionButton'
 import { ExtensionOfferToggle } from './ExtensionOfferToggle'
-import { concentAcceptedAtom } from './MyMoneyConsent/myMoneyConcentAtom'
-import { MyMoneyConsent } from './MyMoneyConsent/MyMoneyConsent'
 import { PriceBreakdown } from './PriceBreakdown'
 import { ProductItemContractContainerCar } from './ProductItemContractContainer'
-import { type MyMoneyConsentProps } from './TrialExtensionForm/TrialExtensionForm'
 
 type Props = {
   trialContract: TrialContract
   shopSessionId: string
   defaultOffer?: ProductOfferFragment
   ssn?: string
-} & MyMoneyConsentProps
+}
 
-export const PayForTrial = ({
-  trialContract,
-  shopSessionId,
-  defaultOffer,
-  ssn,
-  collectConsent,
-  onConsentChange,
-}: Props) => {
+export const PayForTrial = ({ trialContract, shopSessionId, defaultOffer, ssn }: Props) => {
   const router = useRouter()
   const { t } = useTranslation('carDealership')
   const formatter = useFormatter()
   const locale = useRoutingLocale()
-  const setDismissedBannerId = useSetAtom(dismissedBannerIdAtom)
+  const dismissBanner = useDismissBanner()
   const { startLogin } = useBankIdContext()
-  const [concentAccepted] = useAtom(concentAcceptedAtom)
 
   const handleConfirmPay = () => {
     datadogRum.addAction('Car dealership | Decline extension offer')
@@ -49,9 +37,6 @@ export const PayForTrial = ({
     if (!ssn) {
       throw new Error('Must have customer ssn')
     }
-
-    // Send MyMoney consent state
-    onConsentChange?.(concentAccepted)
 
     startLogin({
       ssn,
@@ -61,7 +46,7 @@ export const PayForTrial = ({
           locale,
           contractId: trialContract.id,
         }).pathname
-        setDismissedBannerId(CarDealershipBanners.ConnectPayment)
+        dismissBanner(CarDealershipBanners.ConnectPayment)
         await router.push(
           PageLink.checkoutPaymentTrustly({ locale, shopSessionId: shopSessionId, nextUrl }),
         )
@@ -98,8 +83,6 @@ export const PayForTrial = ({
           }),
         })}
       />
-
-      {collectConsent && <MyMoneyConsent />}
 
       <ConfirmPayWithoutExtensionButton onConfirm={handleConfirmPay} />
     </Space>

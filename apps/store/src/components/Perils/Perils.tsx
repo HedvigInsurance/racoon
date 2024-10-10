@@ -4,8 +4,10 @@ import { useCallback, useMemo, useRef, useState } from 'react'
 import { Text, tokens } from 'ui'
 import * as Accordion from '@/components/Accordion/Accordion'
 import type { PerilFragment } from '@/services/graphql/generated'
+import { useTracking } from '@/services/Tracking/useTracking'
 import { isBrowser } from '@/utils/env'
 import { useResizeObserver } from '@/utils/useResizeObserver'
+import { useProductData } from '../ProductData/ProductDataProvider'
 import { CoverageList } from './CoverageList'
 import {
   colorIcon,
@@ -86,10 +88,19 @@ const getColumnsCount = (width: number) => {
 const PerilsAccordion = ({ peril }: { peril: Peril }) => {
   const { title, description, covered, colorCode } = peril
   const [openItems, setOpenItems] = useState<Array<string>>()
+  const tracking = useTracking()
+  const productData = useProductData()
 
-  const handleValueChange = useCallback((value: Array<string>) => {
-    setOpenItems(value)
-  }, [])
+  const handleValueChange = useCallback(
+    (value: Array<string>) => {
+      const perilTitle = value.at(0)
+      if (perilTitle != null) {
+        tracking.reportExpandPeril(productData.name, perilTitle)
+      }
+      setOpenItems(value)
+    },
+    [productData.name, tracking],
+  )
 
   if (peril.disabled) {
     return (

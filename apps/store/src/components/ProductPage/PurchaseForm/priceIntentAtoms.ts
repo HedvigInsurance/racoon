@@ -1,8 +1,8 @@
 import { useApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
-import { atom, useAtomValue, useSetAtom, useStore } from 'jotai'
+import { atom, useAtom, useAtomValue, useSetAtom, useStore } from 'jotai'
 import { atomFamily } from 'jotai/utils'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import {
   priceTemplateAtom,
@@ -17,7 +17,7 @@ import {
   usePriceIntentQuery,
 } from '@/services/graphql/generated'
 import { setupForm } from '@/services/PriceCalculator/PriceCalculator.helpers'
-import { type Form } from '@/services/PriceCalculator/PriceCalculator.types'
+import type { Form } from '@/services/PriceCalculator/PriceCalculator.types'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 import { useShopSession, useShopSessionId } from '@/services/shopSession/ShopSessionContext'
 import { getOffersByPrice } from '@/utils/getOffersByPrice'
@@ -133,19 +133,20 @@ export const useSyncPriceIntentState = ({
   const { shopSession } = useShopSession()
   const shopSessionId = shopSession?.id
   const apolloClient = useApolloClient()
+  const [priceIntentId, setPriceIntentId] = useAtom(currentPriceIntentIdAtom)
 
   const cart = shopSession?.cart
-  const [priceIntentId, setPriceIntentId] = useState<string | null>(null)
 
   useEffect(() => {
     if (shopSessionId == null || priceTemplate == null) {
       return
     }
     const service = priceIntentServiceInitClientSide(apolloClient)
-    const createPriceIntent = () =>
+    const createPriceIntent = () => {
       service.create({ productName, priceTemplate, shopSessionId }).then((priceIntent) => {
         setPriceIntentId(priceIntent.id)
       })
+    }
 
     if (entryToReplace != null) {
       if (entryToReplace.priceIntentId == null) {
@@ -204,6 +205,7 @@ export const useSyncPriceIntentState = ({
     priceTemplate,
     productName,
     shopSessionId,
+    setPriceIntentId,
   ])
 
   const queryResult = usePriceIntentQuery({
@@ -226,11 +228,6 @@ export const useSyncPriceIntentState = ({
       syncSelectedOffer(priceIntent)
     }
   }, [entryToReplace, priceIntentId, productName, queryResult.data, syncSelectedOffer, store])
-
-  useEffect(() => {
-    // Cleanup key atom on navigation, prevents flash of previous content when navigating between price calculators
-    return () => store.set(currentPriceIntentIdAtom, null)
-  }, [store])
 
   const setIsLoading = useSetAtom(priceCalculatorLoadingAtom)
   useEffect(() => {
@@ -281,7 +278,8 @@ const compareOffer = (a: ComparableProductOffer, b: ComparableProductOffer) => {
 }
 
 export const useIsPriceIntentStateReady = (): boolean => {
-  return !!useAtomValue(currentPriceIntentIdAtom)
+  const priceIntentId = useAtomValue(currentPriceIntentIdAtom)
+  return !!useAtomValue(priceIntentAtomFamily(priceIntentId))
 }
 
 export const priceCalculatorLoadingAtom = atom(false)
@@ -296,16 +294,19 @@ export const usePriceIntentId = (): string => {
 
 export const useResetPriceIntent = () => {
   const shopSessionId = useShopSessionId()
+  // When we start using TemplateV2 exclusively, we can remove this
+  // and retrieve the name from the template directly
+  const productName = useProductData().name
   const apolloClient = useApolloClient()
-  const templateName = usePriceTemplate().name
-  const [, setSelectedOffer] = useSelectedOffer()
+  const priceTemplate = usePriceTemplate()
   const setCurrentPriceIntentId = useSetAtom(currentPriceIntentIdAtom)
+  const priceIntentService = priceIntentServiceInitClientSide(apolloClient)
 
   return useCallback(() => {
     if (shopSessionId == null) return
-    const service = priceIntentServiceInitClientSide(apolloClient)
-    service.clear(shopSessionId, templateName)
     setCurrentPriceIntentId(null)
-    setSelectedOffer(null)
-  }, [apolloClient, setCurrentPriceIntentId, setSelectedOffer, shopSessionId, templateName])
+    priceIntentService.create({ productName, priceTemplate, shopSessionId }).then((priceIntent) => {
+      setCurrentPriceIntentId(priceIntent.id)
+    })
+  }, [priceIntentService, setCurrentPriceIntentId, shopSessionId, priceTemplate, productName])
 }

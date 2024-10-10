@@ -5,7 +5,7 @@ import {
   LAYOUT,
   livingSpaceField,
   postalCodeField,
-  ssnSeSection,
+  ssnSeSectionV2,
   streetAddressField,
   useRegistrationAddressField,
 } from '@/services/PriceCalculator/formFragments'
@@ -16,7 +16,7 @@ const SE_HOUSE_V2: TemplateV2 = {
   name: 'SE_HOUSE_V2',
   productName: 'SE_HOUSE',
   sections: [
-    ssnSeSection,
+    ssnSeSectionV2,
     {
       id: 'your-home',
       title: { key: tKey('SECTION_TITLE_YOUR_HOME') },

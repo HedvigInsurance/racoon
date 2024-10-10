@@ -11,7 +11,6 @@ import Collapsible from '@/components/Collapsible/Collapsible'
 import { InfoCard } from '@/components/InfoCard/InfoCard'
 import { SSN_SE_SECTION_ID } from '@/components/PriceCalculator/SsnSeSection'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
-import { useOfferDetails } from '@/components/ProductItem/useOfferDetails'
 import { ProductDetails } from '@/components/ProductItemV2/ProductDetails'
 import {
   activeFormSectionIdAtom,
@@ -25,6 +24,7 @@ import {
 import { useTiersAndDeductibles } from '@/components/ProductPage/PurchaseForm/useTiersAndDeductibles'
 import { useCartEntryToReplace } from '@/components/ProductPage/useCartEntryToReplace'
 import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
+import { useOfferDetails } from '@/features/CartItem/hooks/useOfferDetails'
 import { DeductibleSelectorV2 } from '@/features/priceCalculator/DeductibleSelectorV2'
 import { priceCalculatorStepAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
 import { ProductCardSmall } from '@/features/priceCalculator/ProductCardSmall'
@@ -150,7 +150,9 @@ function OfferSummary() {
   const handleAddToCart: MouseEventHandler = async (event) => {
     event.preventDefault()
     await addToCart(selectedOffer.id)
-    setPriceCalculatorStep('viewBonusOffer')
+    setPriceCalculatorStep('purchaseSummary')
+    // Make sure user views "added to cart" notification and/or bundle discount banner
+    window.scrollTo({ top: 0, behavior: 'instant' })
   }
 
   const productData = useProductData()

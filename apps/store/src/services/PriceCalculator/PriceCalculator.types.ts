@@ -31,6 +31,7 @@ export type Template = {
 
 export type TemplateV2 = Template & {
   productName: string
+  addMultiple?: boolean
 }
 
 export type TemplateSection = {

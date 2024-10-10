@@ -7,8 +7,10 @@ import {
   type ProductOfferFragment,
   type ShopSessionExperiments,
 } from '@/services/graphql/generated'
-import { type EcommerceEvent, pushToGTMDataLayer, initializeGtm, setUserId } from '@/services/gtm'
+import { type EcommerceEvent, initializeGtm, pushToGTMDataLayer, setUserId } from '@/services/gtm'
 import { getAdtractionProductCategories } from './adtraction'
+import { type InternalEventReporter } from './InternalEventReporter'
+import { TrackingEvent } from './TrackingEvent'
 
 type TrackingProductData = {
   id: string
@@ -29,31 +31,6 @@ type TrackingOffer = {
 
 type ItemListSource = 'store' | 'recommendations'
 
-// Naming rules:
-// - snake_case for Analytics / ecommerce events (backward compatibility)
-// - camelCase for internal anayltics events
-export enum TrackingEvent {
-  AddToCart = 'add_to_cart',
-  Adtraction = 'adtraction',
-  BeginCheckout = 'begin_checkout',
-  DeleteFromCart = 'delete_from_cart',
-  DeviceInfo = 'deviceInfo',
-  // Website-driven experiments, as configured in experiment.json
-  ExperimentImpression = 'experiment_impression',
-  OpenPriceCalculator = 'open_price_calculator',
-  PageView = 'virtual_page_view',
-  Purchase = 'purchase',
-  SelectItem = 'select_item',
-  ViewCart = 'view_cart',
-  ViewItem = 'view_item',
-  ViewPromotion = 'view_promotion',
-  InsurelyPrompted = 'insurely_prompted',
-  InsurelyAccepted = 'insurely_accepted',
-  InsurelyCorrectlyFetched = 'insurely_correctly_fetched',
-  // Backend-driven experiments as defined in shopSession.experiments
-  ShopSessionExperiments = 'shop_session_experiments',
-}
-
 type TrackingContext = Partial<{
   city: string
   countryCode: CountryCode
@@ -68,8 +45,8 @@ type TrackingContext = Partial<{
 // Simple version with 2 destinations (GTM and Datadog) implemented inline
 export class Tracking {
   static LOGGER_NAME = 'tracking'
-
-  constructor(public context: TrackingContext = {}) {}
+  public context: TrackingContext = {}
+  public internalEventReporter: InternalEventReporter | null = null
 
   private logger = datadogLogs.getLogger(Tracking.LOGGER_NAME)!
 
@@ -301,6 +278,39 @@ export class Tracking {
     datadogRum.addAction(event, dataFields)
     pushToGTMDataLayer(ecommerceEvent)
   }
+
+  ////////////////////////////
+  // Internal analytics events
+  public reportDeviceInfo(deviceInfo: DeviceInfo) {
+    this.reportInternalEvent(TrackingEvent.DeviceInfo, deviceInfo)
+  }
+
+  public reportExpandPeril(productName: string, perilTitle: string) {
+    this.reportInternalEvent(TrackingEvent.ExpandPeril, { productName, perilTitle })
+  }
+
+  public reportClickTermsAndConditions(productName: string, productVariant: string) {
+    this.reportInternalEvent(TrackingEvent.ClickTermsAndConditions, {
+      productName,
+      productVariant,
+    })
+  }
+
+  public reportOpenProductReviews(productName: string) {
+    this.reportInternalEvent(TrackingEvent.OpenProductReviews, { productName })
+  }
+
+  private reportInternalEvent(type: TrackingEvent, data: object) {
+    if (this.internalEventReporter == null) return
+    this.logger.log(type, data)
+    this.internalEventReporter.enqueue(type, data)
+  }
+}
+
+type DeviceInfo = {
+  deviceType: string
+  osName: string
+  browserName: string
 }
 
 datadogLogs.createLogger(Tracking.LOGGER_NAME)

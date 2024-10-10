@@ -1,5 +1,5 @@
 import type { ProductData } from '@/components/ProductData/ProductData.types'
-import { InsurableLimitType } from '@/services/graphql/generated'
+import { InsurableLimitType, InsuranceDocumentType } from '@/services/graphql/generated'
 
 export const productData: ProductData = {
   __typename: 'Product',
@@ -280,16 +280,19 @@ export const productData: ProductData = {
         {
           __typename: 'InsuranceDocument',
           displayName: 'SE Apartment Terms and Conditions',
+          type: InsuranceDocumentType.TermsAndConditions,
           url: 'https://promise-cms.s3.eu-central-1.amazonaws.com/SE_APARTMENT_BRF_T_and_C_2022_11_01_HEDVIG_4b078e6dc8.pdf',
         },
         {
           __typename: 'InsuranceDocument',
           displayName: 'SE Apartment BRF IPID',
+          type: InsuranceDocumentType.PreSaleInfoEuStandard,
           url: 'https://promise-cms.s3.eu-central-1.amazonaws.com/SE_APARTMENT_BRF_IPID_2022_11_01_20c6e37d9f.pdf',
         },
         {
           __typename: 'InsuranceDocument',
           displayName: 'SE Apartment BRF Presale',
+          type: InsuranceDocumentType.PreSaleInfo,
           url: 'https://promise-cms.s3.eu-central-1.amazonaws.com/SE_APARTMENT_BRF_PRESALE_2022_11_01_990f775ff6.pdf',
         },
       ],

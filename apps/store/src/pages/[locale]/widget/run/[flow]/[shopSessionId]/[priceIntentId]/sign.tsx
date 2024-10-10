@@ -2,16 +2,18 @@ import { type GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { type ComponentPropsWithoutRef } from 'react'
+import { PageBannerTriggers } from '@/components/Banner/PageBannerTriggers'
 import { fetchProductData } from '@/components/ProductData/fetchProductData'
 import type { ProductData } from '@/components/ProductData/ProductData.types'
 import { ProductDataProvider } from '@/components/ProductData/ProductDataProvider'
 import { SignPage } from '@/features/widget/SignPage'
 import { fetchFlowStory } from '@/features/widget/widget.helpers'
 import { initializeApolloServerSide } from '@/services/apollo/client'
-import { hideChatOnPage } from '@/services/CustomerFirst'
 import { usePriceIntentQuery, useShopSessionQuery } from '@/services/graphql/generated'
+import { hideChatOnPage } from '@/services/pageChat'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { type WidgetFlowStory } from '@/services/storyblok/storyblok'
 import { TrackingProvider } from '@/services/Tracking/TrackingContext'
 import { getShouldCollectEmail, getShouldCollectName } from '@/utils/customer'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
@@ -24,6 +26,8 @@ type Props = Omit<ComponentPropsWithoutRef<typeof SignPage>, 'shopSession' | 'pr
   pageTitle: string
   initialSelectedTypeOfContract?: string
   partner?: string
+  showRecommendations?: boolean
+  story: WidgetFlowStory
 }
 
 const NextWidgetSignPage = (props: Props) => {
@@ -54,6 +58,7 @@ const NextWidgetSignPage = (props: Props) => {
           partner={props.partner}
         >
           <SignPage shopSession={shopSession} priceIntent={priceIntent} {...props} />
+          <PageBannerTriggers blok={props.story.content} />
         </TrackingProvider>
       </ProductDataProvider>
     </>
@@ -83,62 +88,59 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (cont
     res: context.res,
   })
 
-  try {
-    const [translations, shopSession, story, priceIntent] = await Promise.all([
-      serverSideTranslations(context.locale),
-      shopSessionService.fetchById(context.params.shopSessionId),
-      fetchFlowStory(context.params.flow, context.draftMode),
-      priceIntentService.get(context.params.priceIntentId),
-    ])
+  const [translations, shopSession, story, priceIntent] = await Promise.all([
+    serverSideTranslations(context.locale),
+    shopSessionService.fetchById(context.params.shopSessionId),
+    fetchFlowStory(context.params.flow, context.draftMode),
+    priceIntentService.get(context.params.priceIntentId),
+  ])
 
-    const customer = shopSession.customer
-    if (!customer) {
-      throw new Error(`Widget Sign | No customer in Shop Session: ${shopSession.id}`)
-    }
+  const customer = shopSession.customer
+  if (!customer) {
+    throw new Error(`Widget Sign | No customer in Shop Session: ${shopSession.id}`)
+  }
 
-    if (!customer.ssn) {
-      throw new Error(`Widget Sign | No SSN in Shop Session: ${shopSession.id}`)
-    }
+  if (!customer.ssn) {
+    throw new Error(`Widget Sign | No SSN in Shop Session: ${shopSession.id}`)
+  }
 
-    if (!priceIntent) {
-      throw new Error(`Widget Sign | No Price Intent: ${context.params.priceIntentId}`)
-    }
+  if (!priceIntent) {
+    throw new Error(`Widget Sign | No Price Intent: ${context.params.priceIntentId}`)
+  }
 
-    const partnerName = story.content.partner
-    const productName = priceIntent.product.name
+  const partnerName = story.content.partner
+  const productName = priceIntent.product.name
 
-    const productData = await fetchProductData({
-      apolloClient,
-      productName,
-      partnerName,
-    })
+  const productData = await fetchProductData({
+    apolloClient,
+    productName,
+    partnerName,
+  })
 
-    const initialSelectedTypeOfContract =
-      productData.variants.length > 1 ? productData.variants[0].typeOfContract : null
+  const initialSelectedTypeOfContract =
+    productData.variants.length > 1 ? productData.variants[0].typeOfContract : null
 
-    return {
-      props: {
-        ...translations,
-        ssn: customer.ssn,
-        shouldCollectEmail: getShouldCollectEmail(customer),
-        shouldCollectName: getShouldCollectName(customer),
-        shopSessionId: context.params.shopSessionId,
-        content: story.content.checkoutPageContent,
-        flow: context.params.flow,
-        partner: partnerName,
-        priceIntentId: priceIntent.id,
-        // TODO: check if we want to control this via CMS
-        ...hideChatOnPage(),
-        productName: priceIntent.product.name,
-        productData,
-        ...(initialSelectedTypeOfContract ? { initialSelectedTypeOfContract } : {}),
-        pageTitle: story.content.pageTitle ?? 'Hedvig',
-        showBackButton: story.content.showBackButton ?? false,
-      },
-    }
-  } catch (error) {
-    console.error('Widget Sign | Unable to render', error)
-    return { notFound: true }
+  return {
+    props: {
+      ...translations,
+      ssn: customer.ssn,
+      shouldCollectEmail: getShouldCollectEmail(customer),
+      shouldCollectName: getShouldCollectName(customer),
+      shopSessionId: context.params.shopSessionId,
+      content: story.content.checkoutPageContent,
+      flow: context.params.flow,
+      partner: partnerName,
+      priceIntentId: priceIntent.id,
+      // TODO: check if we want to control this via CMS
+      ...hideChatOnPage(),
+      productName: priceIntent.product.name,
+      productData,
+      ...(initialSelectedTypeOfContract ? { initialSelectedTypeOfContract } : {}),
+      pageTitle: story.content.pageTitle ?? 'Hedvig',
+      showBackButton: story.content.showBackButton ?? false,
+      showRecommendations: story.content.showRecommendations ?? false,
+      story: story,
+    },
   }
 }
 

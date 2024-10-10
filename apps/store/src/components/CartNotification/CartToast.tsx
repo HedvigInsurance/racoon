@@ -5,16 +5,17 @@ import type { ReactNode } from 'react'
 import { forwardRef, useImperativeHandle, useState } from 'react'
 import { Button, Text, yStack } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
+import { BUNDLE_DISCOUNT_PERCENTAGE } from '@/features/bundleDiscount/bundleDiscount.constants'
 import {
-  BUNDLE_DISCOUNT_PERCENTAGE,
   hasBundleDiscount,
   hasCartItemsEligibleForBundleDiscount,
-} from '@/features/bundleDiscount/bundleDiscount'
-import { BundleDiscountExtraProductLinks } from '@/features/bundleDiscount/BundleDiscountExtraProductLinks'
-import { BundleDiscountSummary } from '@/features/bundleDiscount/BundleDiscountSummary'
+} from '@/features/bundleDiscount/bundleDiscount.utils'
+import { BundleDiscountProductLinks } from '@/features/bundleDiscount/components/BundleDiscountProductLinks/BundleDiscountProductLinks'
+import { BundleDiscountSummary } from '@/features/bundleDiscount/components/BundleDiscountSummary/BundleDiscountSummary'
 import type { CartFragment } from '@/services/graphql/generated'
 import { ExternalInsuranceCancellationOption } from '@/services/graphql/generated'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
+import { useTracking } from '@/services/Tracking/useTracking'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
@@ -39,10 +40,13 @@ export const CartToast = forwardRef<CartToastAttributes>((_, forwardedRef) => {
   const locale = useRoutingLocale()
   const { shopSession } = useShopSession()
   const { cart } = shopSession ?? {}
+  const tracking = useTracking()
+
   if (shopSession == null || cart == null) return null
 
   const handleClickLink = (type: 'Primary' | 'Secondary') => () => {
     datadogRum.addAction(`CartToast Link ${type}`)
+    tracking.reportBeginCheckout(cart)
   }
 
   let bundleDiscountHeader: ReactNode
@@ -80,9 +84,8 @@ export const CartToast = forwardRef<CartToastAttributes>((_, forwardedRef) => {
               ))}
               {hasCartItemsEligibleForBundleDiscount(shopSession) && (
                 <div className={yStack({ gap: 'md' })}>
-                  <BundleDiscountExtraProductLinks>
-                    {bundleDiscountHeader}
-                  </BundleDiscountExtraProductLinks>
+                  {bundleDiscountHeader}
+                  <BundleDiscountProductLinks variant="secondary" size="md" />
                 </div>
               )}
               <div className={yStack({ gap: 'xs' })}>

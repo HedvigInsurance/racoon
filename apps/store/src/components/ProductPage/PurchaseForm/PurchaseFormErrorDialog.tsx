@@ -1,5 +1,4 @@
 import { useTranslation } from 'next-i18next'
-import { Balancer } from 'react-wrap-balancer'
 import { Button, Text, theme, WarningTriangleIcon } from 'ui'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
@@ -39,11 +38,14 @@ export const PurchaseFormErrorDialog = (props: Props) => {
                   {t('GENERAL_ERROR_DIALOG_TITLE', { ns: 'common' })}
                 </SpaceFlex>
               </Text>
-              <Balancer ratio={0.5}>
-                <Text size={{ _: 'lg', lg: 'xl' }} align="center" color="textSecondary">
-                  {props.errorMessage ? props.errorMessage : t('GENERAL_ERROR_DIALOG_PROMPT')}
-                </Text>
-              </Balancer>
+              <Text
+                size={{ _: 'lg', lg: 'xl' }}
+                align="center"
+                color="textSecondary"
+                balance={true}
+              >
+                {props.errorMessage ? props.errorMessage : t('GENERAL_ERROR_DIALOG_PROMPT')}
+              </Text>
             </SpaceFlex>
           </GridLayout.Content>
         </GridLayout.Root>

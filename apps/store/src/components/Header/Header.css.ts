@@ -2,12 +2,15 @@ import { createVar, style } from '@vanilla-extract/css'
 import { minWidth, tokens, yStack } from 'ui'
 import { zIndexes } from '@/utils/zIndex'
 import { MAX_WIDTH } from '../GridLayout/GridLayout.constants'
+import { displaySubmenus } from './HeaderMenu/HeaderMenu.css'
 import {
-  HEADER_HEIGHT_DESKTOP,
   HEADER_HEIGHT_MOBILE,
-  MENU_BAR_HEIGHT_DESKTOP,
   MENU_BAR_HEIGHT_MOBILE,
-} from './Header.constants'
+} from './HeaderMenuMobile/HeaderMenuMobile.css'
+
+export const MENU_BAR_HEIGHT_DESKTOP = '4.5rem'
+export const MENU_BAR_HEIGHT_PX = 72
+export const HEADER_HEIGHT_DESKTOP = `calc(${MENU_BAR_HEIGHT_DESKTOP} + ${tokens.space.xs})`
 
 export const focusableStyles = style({
   cursor: 'pointer',
@@ -26,7 +29,6 @@ export const ghostWrapper = style({
 
   position: 'relative',
   height: ghostWrapperHeight,
-
   zIndex: zIndexes.header,
 
   '@media': {
@@ -55,24 +57,25 @@ export const wrapper = style({
 })
 
 export const contentWrapper = style({
+  position: 'relative',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
   maxWidth: MAX_WIDTH,
   marginInline: 'auto',
-  paddingInline: tokens.space.md,
   height: MENU_BAR_HEIGHT_MOBILE,
 
   '@media': {
     [minWidth.lg]: {
       height: MENU_BAR_HEIGHT_DESKTOP,
-
-      paddingInline: tokens.space.lg,
     },
   },
 })
 
 export const logoWrapper = style({
+  position: 'absolute',
+  left: '50%',
+  transform: 'translateX(-50%)',
   // Fix to make sure line-height doesn't affect wrapper height
   fontSize: 0,
   flex: 1,
@@ -81,10 +84,10 @@ export const logoWrapper = style({
 export const menuWrapper = style({
   display: 'flex',
   flexDirection: 'row',
-  justifyContent: 'flex-end',
+  justifyContent: 'space-between',
   alignItems: 'center',
   flex: 1,
-  gap: tokens.space.xs,
+  paddingInline: tokens.space.md,
 })
 
 export const navigation = style({
@@ -98,7 +101,7 @@ export const navigation = style({
   },
 })
 
-export const topMenuDesktop = style([
+export const HeaderMenuDesktop = style([
   navigation,
   {
     // Visually hide menu on mobile. It still needs to be present in the DOM for SEO purposes
@@ -115,12 +118,6 @@ export const topMenuDesktop = style([
 ])
 
 export const navigationItem = style({
-  selectors: {
-    '&:not(:last-child)': {
-      borderBottom: `1px solid ${tokens.colors.borderOpaque1}`,
-    },
-  },
-
   '@media': {
     [minWidth.lg]: {
       selectors: {
@@ -130,50 +127,61 @@ export const navigationItem = style({
   },
 })
 
-export const navigationTriggerLink = style([
-  focusableStyles,
-  {
-    paddingBlock: tokens.space.lg,
-    display: 'flex',
-    alignItems: 'center',
-    gap: tokens.space.xxxl,
-    whiteSpace: 'nowrap',
-
-    '@media': {
-      [minWidth.lg]: {
-        paddingBlock: tokens.space.xs,
-        paddingInline: tokens.space.md,
-
-        borderRadius: tokens.radius.sm,
-
-        ':hover': {
-          backgroundColor: tokens.colors.grayTranslucent100,
-        },
-
-        selectors: {
-          '&[data-state="open"]': {
-            backgroundColor: tokens.colors.grayTranslucent100,
-          },
-        },
-      },
+export const navigationItemProductMenu = style({
+  '@media': {
+    [minWidth.lg]: {
+      display: displaySubmenus,
     },
   },
-])
+})
 
-export const navigationSecondaryItem = style({
-  padding: tokens.space.md,
-  marginLeft: tokens.space.md,
-  color: tokens.colors.textPrimary,
+export const navigationItemSubMenu = style({
+  marginBottom: tokens.space.xxs,
+  paddingBottom: tokens.space.md,
+  borderRadius: tokens.radius.md,
+  backgroundColor: tokens.colors.buttonSecondary,
 
   '@media': {
     [minWidth.lg]: {
-      padding: `${tokens.space.xs} ${tokens.space.sm}`,
-      margin: 0,
-      borderRadius: tokens.radius.sm,
+      marginBottom: tokens.space.none,
+      paddingBottom: tokens.space.none,
+      backgroundColor: 'transparent',
+    },
+  },
+})
 
-      ':hover': {
-        backgroundColor: tokens.colors.grayTranslucent100,
+export const navigationItemSupportMenu = style({
+  '@media': {
+    [minWidth.lg]: {
+      marginLeft: 'auto',
+    },
+  },
+})
+
+export const navigationContentMinWidth = createVar()
+
+export const navigationItemGeneralMenu = style({
+  vars: {
+    [navigationContentMinWidth]: '16rem',
+  },
+
+  '@media': {
+    [minWidth.lg]: {
+      // Make general menu item first in the header menu in desktop
+      ':last-child': {
+        order: -1,
       },
+      display: displaySubmenus,
+    },
+  },
+})
+
+export const navigationSecondaryItem = style({
+  color: tokens.colors.textSecondaryOnGray,
+
+  '@media': {
+    [minWidth.lg]: {
+      color: tokens.colors.textPrimary,
     },
   },
 })
@@ -191,23 +199,31 @@ export const navigationContent = style({
   '@media': {
     [minWidth.lg]: {
       position: 'absolute',
+      minWidth: navigationContentMinWidth,
       paddingTop: `calc(${tokens.space.sm} + ${tokens.space.xs})`,
+
+      selectors: {
+        // Make sure the menu item to the right doesn't expand outside the viewport
+        [`${navigationItem}:nth-child(2) &`]: {
+          right: '0',
+        },
+      },
     },
   },
 })
 
 // Same component reused between mobile and desktop menus
 export const navigationMenuWrapper = style({
-  paddingBottom: tokens.space.xl,
   rowGap: tokens.space.lg,
 
   '@media': {
     [minWidth.lg]: {
       backgroundColor: tokens.colors.light,
-      boxShadow: tokens.shadow.default,
-      borderRadius: tokens.radius.sm,
+      boxShadow: `0px 4px 10px -2px ${tokens.colors.translucent1}, 0px 2px 2px -1px ${tokens.colors.translucent2}`,
+      border: `1px solid ${tokens.colors.borderTranslucent1}`,
+      borderRadius: tokens.radius.xl,
       padding: tokens.space.md,
-      rowGap: tokens.space.md,
+      rowGap: tokens.space.xs,
     },
   },
 })
@@ -229,18 +245,19 @@ export const navigationPrimaryList = style({
       flexDirection: 'row',
       alignItems: 'center',
       height: MENU_BAR_HEIGHT_DESKTOP,
-      padding: tokens.space.none,
-      gap: tokens.space.xxs,
+      paddingInline: tokens.space.xs,
+      paddingBottom: tokens.space.none,
+      gap: tokens.space.xs,
     },
   },
 })
 
 export const navigationSecondaryList = style({
-  display: 'block',
+  paddingTop: tokens.space.xs,
 
   '@media': {
     [minWidth.lg]: {
-      padding: 0,
+      paddingTop: tokens.space.none,
     },
   },
 })
@@ -248,14 +265,13 @@ export const navigationSecondaryList = style({
 export const navigationProductList = style([
   yStack({ gap: 'xs' }),
   {
-    marginBottom: tokens.space.lg,
+    marginBottom: tokens.space.md,
     fontSize: tokens.fontSizes.md,
     color: tokens.colors.textPrimary,
 
     '@media': {
       [minWidth.lg]: {
         minWidth: '16rem',
-        marginBottom: tokens.space.md,
       },
     },
   },

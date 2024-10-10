@@ -187,7 +187,10 @@ const PurchaseFormInner = (props: PurchaseFormInnerProps) => {
     <motion.div
       initial={{ opacity: 0, y: '1vh' }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ...framerTransitions.easeInOutCubic }}
+      transition={{
+        duration: framerTransitions.defaultDuration,
+        ...framerTransitions.easeInOutCubic,
+      }}
     >
       <ProductHeroContainer size="small" compact={true}>
         {editingStateForm}

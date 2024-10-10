@@ -6,17 +6,17 @@ import { StoryblokComponent } from '@storyblok/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { type FormEvent, type MouseEvent, type PropsWithChildren, useState } from 'react'
-import { BankIdIcon, Button, CheckIcon, Heading, mq, Space, Text, theme } from 'ui'
+import { type FormEvent, type MouseEvent, type PropsWithChildren, useMemo, useState } from 'react'
+import { BankIdIcon, Button, CheckIcon, Heading, Divider, mq, Space, Text, theme } from 'ui'
 import { FormElement } from '@/app/[locale]/checkout/CheckoutPage.constants'
-import { useHandleSubmitCheckout } from '@/app/[locale]/checkout/useHandleSubmitCheckout'
+import { useHandleSubmitCheckout } from '@/app/[locale]/checkout/hooks/useHandleSubmitCheckout'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { QuickAddOfferContainer } from '@/components/QuickAdd/QuickAddOfferContainer'
 import { useBonusOffer } from '@/components/QuickAdd/useBonusOffer'
 import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
-import { Divider, ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
+import { ShopBreakdown } from '@/components/ShopBreakdown/ShopBreakdown'
 import { TotalAmountContainer } from '@/components/ShopBreakdown/TotalAmountContainer'
 import { TextField } from '@/components/TextField/TextField'
 import { TextWithLink } from '@/components/TextWithLink'
@@ -30,6 +30,7 @@ import {
 } from '@/services/graphql/generated'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useTracking } from '@/services/Tracking/useTracking'
+import { Features } from '@/utils/Features'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { Header } from './Header'
@@ -46,6 +47,7 @@ type Props = {
   productName: string
   suggestedEmail?: string
   showBackButton?: boolean
+  showRecommendations: boolean
   content?: Array<SbBlokData>
 }
 
@@ -53,7 +55,10 @@ export const SignPage = (props: Props) => {
   const { t } = useTranslation(['widget', 'checkout', 'cart'])
   const locale = useRoutingLocale()
 
-  const offerRecommendation = useBonusOffer(props.shopSession.id)
+  let offerRecommendation = useBonusOffer(props.shopSession.id)
+  if (!props.showRecommendations) {
+    offerRecommendation = null
+  }
 
   const [fetchCurrentMember] = useCurrentMemberLazyQuery()
   const [showSignError, setShowSignError] = useState(false)
@@ -141,6 +146,16 @@ export const SignPage = (props: Props) => {
     router.push(url)
   }
 
+  const offers = useMemo(() => {
+    if (isHomeInsurance(props.productName) && !Features.enabled('WIDGET_FEATURE_HOME_TIERS')) {
+      // Stripe out home insurance tiers. Tiers' type of contract include something more than
+      // just the product name. E.g: Basic: SE_HOUSE_BAS, Default: SE_HOUSE, Max: SE_HOUSE_MAX
+      return props.priceIntent.offers.filter((offer) => offer.product.name !== props.productName)
+    }
+
+    return props.priceIntent.offers
+  }, [props.priceIntent.offers, props.productName])
+
   return (
     <>
       <Wrapper y={3}>
@@ -163,7 +178,7 @@ export const SignPage = (props: Props) => {
                   {mainOffer && (
                     <ProductItemContainer
                       shopSessionId={props.shopSession.id}
-                      offers={props.priceIntent.offers}
+                      offers={offers}
                       selectedOffer={mainOffer}
                       onEdit={handleEditProductItem}
                     />
@@ -348,3 +363,8 @@ const UspWrapper = styled.div({
   justifyContent: 'center',
   gap: theme.space.xs,
 })
+
+const HOME_INSURANCE_PRODUCTS = new Set(['SE_HOUSE', 'SE_APARTMENT_RENT', 'SE_APARTMENT_BRF'])
+function isHomeInsurance(productName: string) {
+  return HOME_INSURANCE_PRODUCTS.has(productName)
+}

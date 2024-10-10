@@ -17,6 +17,7 @@ const config = {
       // Fixes next-i18next config and resources not loading specifically in Vercel environment
       '*': ['./next-i18next.config.cjs', './public/locales/**/*'],
     },
+    webpackBuildWorker: true,
   },
   logging: {
     fetches: {
@@ -43,7 +44,7 @@ const config = {
     ],
   },
   productionBrowserSourceMaps: true,
-  transpilePackages: ['ui', 'i18next'],
+  transpilePackages: ['ui'],
   // Docs: https://nextjs.org/docs/advanced-features/security-headers
   async headers() {
     return [
@@ -62,11 +63,6 @@ const config = {
       },
     ]
   },
-  webpack(config) {
-    // Suppress known warnings from webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo complaining about PNP modules
-    config.infrastructureLogging = { level: 'error' }
-    return config
-  },
   async rewrites() {
     const foreverRedirect = {
       source: '/forever',
@@ -80,22 +76,22 @@ const config = {
     // Redirect all NO/DK pages to home page (except customer service pages)
     const noDkRedirects = [
       {
-        source: '/no/((?!hjelp/kundeservice|payment/connect-legacy).*)',
+        source: '/no/((?!hjelp/kundeservice).*)',
         destination: '/no',
         permanent: true,
       },
       {
-        source: '/no-en/((?!help/customer-service|payment/connect-legacy).*)',
+        source: '/no-en/((?!help/customer-service).*)',
         destination: '/no-en',
         permanent: true,
       },
       {
-        source: '/dk/((?!hjaelp/kundeservice|payment/connect-legacy).*)',
+        source: '/dk/((?!hjaelp/kundeservice).*)',
         destination: '/dk',
         permanent: true,
       },
       {
-        source: '/dk-en/((?!help/customer-service|payment/connect-legacy).*)',
+        source: '/dk-en/((?!help/customer-service).*)',
         destination: '/dk-en',
         permanent: true,
       },
@@ -131,6 +127,7 @@ const config = {
     ]
 
     let storyblokRedirects = []
+    // It's OK to skip it locally to make startup a bit faster
     if (process.env.NEXT_PUBLIC_FEATURE_STORYBLOK_REDIRECTS === 'true') {
       storyblokRedirects = await getStoryblokRedirects()
       console.log(`Loaded ${storyblokRedirects.length} redirects from storyblok`)

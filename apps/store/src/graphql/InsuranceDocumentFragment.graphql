@@ -1,4 +1,5 @@
 fragment InsuranceDocument on InsuranceDocument {
   displayName
+  type
   url
 }

@@ -1,9 +1,9 @@
 import clsx from 'clsx'
 import type { ReactNode, CSSProperties } from 'react'
-import Balancer from 'react-wrap-balancer'
 import type { FontSizeProps } from '../../theme'
 import { type Sprinkles, sprinkles } from '../../theme/sprinkles.css'
 import {
+  balanceTextStyles,
   textBase,
   textFallbackColor,
   textSingleLine,
@@ -24,13 +24,14 @@ type TextStyleProps = {
 }
 
 export type TextProps = {
-  as?: 'p' | 'span' | 'div'
+  as?: 'p' | 'span' | 'div' | 'sup'
   children?: ReactNode
   title?: string
 } & TextStyleProps
 
 export const getTextStyles = ({
   align,
+  balance,
   color,
   singleLine,
   size = 'md',
@@ -46,6 +47,7 @@ export const getTextStyles = ({
     singleLine && textSingleLine,
     strikethrough && textStrikethrough,
     uppercase && textUppercase,
+    balance && balanceTextStyles,
     className,
   )
 }
@@ -73,11 +75,12 @@ export const Text = ({
         size,
         strikethrough,
         uppercase,
+        balance,
         className,
       })}
       {...rest}
     >
-      {!balance ? children : <Balancer>{children}</Balancer>}
+      {children}
     </Component>
   )
 }

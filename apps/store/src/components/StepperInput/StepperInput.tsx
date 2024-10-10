@@ -8,8 +8,7 @@ import {
   useState,
   useId,
 } from 'react'
-import { MinusIcon, PlusIcon, xStack, yStack } from 'ui'
-import { useHighlightAnimation } from '@/utils/useHighlightAnimation'
+import { MinusIcon, PlusIcon, useHighlightAnimation, xStack, yStack } from 'ui'
 import { outerWrapper, select, inputLabel, stepButton } from './StepperInput.css'
 
 export type StepperInputProps = {

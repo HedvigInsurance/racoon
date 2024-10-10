@@ -1,8 +1,59 @@
 'use server'
 
 import type { FormStateWithErrors } from '@/app/types/formStateTypes'
-import {getEnvOrThrow} from "@/utils/getEnvOrThrow";
+import { getEnvOrThrow } from '@/utils/getEnvOrThrow'
 import { SebDebuggerFormElement } from './constants'
+
+type TransformResult = {
+  products: string
+  maybeProductSubType: string | undefined
+}
+
+const PRODUCT_SUBTYPE_MAP: Record<string, string> = {
+  condoInsuranceBrf: 'condoInsurance.condoInsuranceCondominium',
+  condoInsuranceRent: 'condoInsurance.condoInsuranceRental',
+}
+
+/**
+ * Transforms the products list to comply with SEB API requirements.
+ *
+ * - Consolidates specific condo insurance product types (e.g., 'condoInsuranceBrf', 'condoInsuranceRent') into a single 'condoInsurance' type.
+ * - Aggregates corresponding subtypes into the `maybeProductSubType` field.
+ * - Ensures that only condo insurance products include subtype details, while all other products remain unchanged without requiring subtypes.
+ *
+ * This transformation ensures that the product data is formatted as SEB expects.
+ *
+ * @param products - The original comma-separated list of product types from the form data.
+ * @returns An object containing the transformed products string and the aggregated `maybeProductSubType`.
+ */
+const transformProductsList = (products: FormDataEntryValue | null): TransformResult => {
+  if (typeof products !== 'string') {
+    console.warn('Invalid products input:', products)
+    return { products: '', maybeProductSubType: undefined }
+  }
+
+  const productsArray = products.split(',')
+  const productSet = new Set<string>()
+  const subTypesArray: Array<string> = []
+
+  productsArray.forEach((product) => {
+    if (PRODUCT_SUBTYPE_MAP[product]) {
+      productSet.add('condoInsurance')
+      subTypesArray.push(PRODUCT_SUBTYPE_MAP[product])
+    } else {
+      productSet.add(product)
+    }
+  })
+
+  let maybeProductSubType: string | undefined
+  if (subTypesArray.length > 0) {
+    maybeProductSubType = Array.from(new Set(subTypesArray)).join(',')
+  }
+
+  const transformedProducts = Array.from(productSet).join(',')
+
+  return { products: transformedProducts, maybeProductSubType: maybeProductSubType }
+}
 
 export const createSebLead = async (
   _: FormStateWithErrors,
@@ -13,17 +64,9 @@ export const createSebLead = async (
   const lastName = formData.get(SebDebuggerFormElement.LastName) as string
   const email = formData.get(SebDebuggerFormElement.Email) as string
   const phoneNumber = formData.get(SebDebuggerFormElement.PhoneNumber) as string
-  let product = formData.get(SebDebuggerFormElement.Product) as string
-  let  maybeProductSubType = null
+  const productList = formData.get(SebDebuggerFormElement.Products)
 
-  if (product === 'condoInsuranceBrf') {
-    product = 'condoInsurance'
-    maybeProductSubType = 'condoInsurance.condoInsuranceCondominium'
-  } else if (product === 'condoInsuranceRent') {
-    product = 'condoInsurance'
-    maybeProductSubType = 'condoInsurance.condoInsuranceRental'
-  }
-
+  const { products, maybeProductSubType } = transformProductsList(productList)
 
   const parameters = {
     personalNumber: ssn,
@@ -32,10 +75,12 @@ export const createSebLead = async (
     contactPhone: phoneNumber,
     contactEmail: email,
     metadata: {
-      productType: product,
-      productSubType: maybeProductSubType
+      productType: products,
+      productSubType: maybeProductSubType,
     },
   }
+
+  console.table(parameters)
   let sebSessionId: string | null
 
   try {
@@ -68,6 +113,7 @@ type CreateSebLeadsParams = {
   contactEmail: string
   metadata: {
     productType: string
+    productSubType: string | undefined
   }
 }
 type CreateSebLeadsResponse = {
@@ -79,8 +125,8 @@ type CreateSebLeadsResponse = {
 const createSebLeadStaging = async (
   params: CreateSebLeadsParams,
 ): Promise<CreateSebLeadsResponse> => {
-  const API_URL = getEnvOrThrow('SEB_LEADS_API_URL')
-  const API_KEY = getEnvOrThrow ('SEB_LEADS_API_KEY')
+  const API_URL = getEnvOrThrow('SEB_LEADS_INSURELY_API_URL')
+  const API_KEY = getEnvOrThrow('SEB_LEADS_INSURELY_API_KEY')
 
   const url = new URL(API_URL)
   const headers = new Headers({

@@ -129,12 +129,12 @@ export const buttonVariant = styleVariants({
     color: tokens.colors.textPrimary,
 
     '@media (hover: hover)': {
-      '&:hover': {
+      '&:hover:not([data-no-hover])': {
         backgroundColor: tokens.colors.buttonGhostHover,
       },
     },
 
-    ':active': {
+    '&:active:not([data-no-hover])': {
       backgroundColor: tokens.colors.buttonGhostHover,
     },
 
@@ -159,6 +159,24 @@ export const buttonVariant = styleVariants({
     ':active': {
       backgroundColor: tokens.colors.buttonGhostAltHover,
       color: tokens.colors.textPrimary,
+    },
+
+    selectors: {
+      '&:disabled:not([data-loading])': {
+        color: tokens.colors.buttonDisabledText,
+        backgroundColor: 'transparent',
+      },
+    },
+  },
+
+  outline: {
+    backgroundColor: 'transparent',
+    color: tokens.colors.textPrimary,
+    border: '1px solid',
+    borderColor: tokens.colors.borderPrimary,
+
+    ':active': {
+      backgroundColor: tokens.colors.buttonGhostHover,
     },
 
     selectors: {
@@ -197,6 +215,10 @@ const SIZE_STYLES = {
     textAlign: 'center',
     borderRadius: tokens.radius.md,
   },
+  icon: {
+    borderRadius: tokens.radius.xxs,
+    padding: tokens.space.xxxs,
+  },
 } as const
 
 export const buttonSizeStyles = {
@@ -204,6 +226,7 @@ export const buttonSizeStyles = {
     small: style(SIZE_STYLES.small),
     medium: style(SIZE_STYLES.medium),
     large: style(SIZE_STYLES.large),
+    icon: style(SIZE_STYLES.icon),
   },
   lg: {
     small: style({
@@ -221,8 +244,15 @@ export const buttonSizeStyles = {
         [minWidth.lg]: SIZE_STYLES.large,
       },
     }),
+    icon: style({
+      '@media': {
+        [minWidth.lg]: SIZE_STYLES.icon,
+      },
+    }),
   },
 }
+
+export const iconButtonStyles = style({ aspectRatio: '1', height: 'auto' })
 
 export const childrenWrapper = style({
   display: 'flex',
