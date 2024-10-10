@@ -1,6 +1,6 @@
 import { style, createVar } from '@vanilla-extract/css'
 import { responsiveStyles, tokens } from 'ui'
-import { CONTENT_MAX_WIDTH } from './PurchaseFormV2.css'
+import { CONTENT_MAX_WIDTH } from '../../PurchaseFormV2.css'
 
 // Offset for fixed formFooter
 const GRID_PADDING_BOTTOM = '7rem'

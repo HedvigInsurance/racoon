@@ -5,7 +5,7 @@ import type { ReactNode } from 'react'
 import { cache } from 'react'
 import { ContactUs } from '@/components/ContactUs/ContactUs'
 import { DefaultDebugDialog } from '@/components/DebugDialog/DefaultDebugDialog'
-import { PriceCalculatorCmsPage } from '@/features/priceCalculator/PriceCalculatorCmsPage'
+import { PriceCalculatorCmsPage } from '@/features/priceCalculator/PriceCalculatorCmsPage/PriceCalculatorCmsPage'
 import type { PageStory } from '@/services/storyblok/storyblok'
 import { MOST_VISITED_PATHS } from '@/services/storyblok/Storyblok.constant'
 import {

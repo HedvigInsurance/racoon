@@ -10,7 +10,7 @@ import {
   GOTO_NEXT_SECTION,
   shopSessionCustomerAtom,
 } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
-import { formFooter } from '@/features/priceCalculator/FormGridNew.css'
+import { formFooter } from '@/features/priceCalculator/PurchaseFormV2/InsuranceDataForm/FormGridNew/FormGridNew.css'
 import { useShopSessionCustomerUpdateMutation } from '@/services/graphql/generated'
 import { useShopSessionId } from '@/services/shopSession/ShopSessionContext'
 import { useErrorMessage } from '@/utils/useErrorMessage'
