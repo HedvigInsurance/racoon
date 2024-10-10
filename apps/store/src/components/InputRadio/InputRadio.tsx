@@ -10,7 +10,7 @@ import {
   type ComponentPropsWithoutRef,
 } from 'react'
 import { Text, useHighlightAnimation } from 'ui'
-import { RadioIndicatorIcon } from '@/features/priceCalculator/RadioIndicatorIcon'
+import { RadioIndicatorIcon } from '@/features/priceCalculator/PurchaseFormV2/OfferPresenterV2/CardRadioGroup/RadioIndicatorIcon/RadioIndicatorIcon'
 import { horizontalRadioGroup, card, item, paddedItem, radioButton } from './InputRadio.css'
 
 type Option = { label: string; value: string; autoFocus?: boolean }

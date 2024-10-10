@@ -19,7 +19,7 @@ import {
 import { ComparisonTableModal } from '@/components/ProductPage/PurchaseForm/ComparisonTableModal'
 import type { ProductOfferFragment } from '@/services/graphql/generated'
 import { useFormatter } from '@/utils/useFormatter'
-import * as CardRadioGroup from './CardRadioGroup'
+import * as CardRadioGroup from '../CardRadioGroup/CardRadioGroup'
 import { item } from './ProductTierSelectorV2.css'
 
 type Props = {

@@ -8,7 +8,7 @@ import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialo
 import { usePriceCalculatorDeductibleInfo } from '@/features/priceCalculator/priceCalculatorAtoms'
 import type { Money, ProductOfferFragment } from '@/services/graphql/generated'
 import { useFormatter } from '@/utils/useFormatter'
-import * as CardRadioGroup from './CardRadioGroup'
+import * as CardRadioGroup from '../CardRadioGroup/CardRadioGroup'
 import { priceLabel } from './DeductibleSelectorV2.css'
 
 type Deductible = {

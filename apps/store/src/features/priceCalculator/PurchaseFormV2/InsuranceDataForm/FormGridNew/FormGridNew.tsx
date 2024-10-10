@@ -6,7 +6,7 @@ import { useTranslateFieldLabel } from '@/components/PriceCalculator/useTranslat
 import { priceCalculatorLoadingAtom } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { type InputField } from '@/services/PriceCalculator/Field.types'
 import type { Label, SectionItem } from '@/services/PriceCalculator/PriceCalculator.types'
-import { columnSpan, grid, gridItem, submitButton } from './FormGridNew.css'
+import { columnSpan, formFooter, grid, gridItem, submitButton } from './FormGridNew.css'
 
 type FormSectionProps = {
   items: Array<SectionItem>
@@ -35,9 +35,11 @@ export function FormGridNew({ items, autofocusFirst, submitLabel }: FormSectionP
         </div>
       ))}
 
-      <Button type="submit" loading={isLoading} fullWidth={true} className={submitButton}>
-        {translateLabel(submitLabel)}
-      </Button>
+      <div className={formFooter}>
+        <Button type="submit" loading={isLoading} fullWidth={true} className={submitButton}>
+          {translateLabel(submitLabel)}
+        </Button>
+      </div>
     </div>
   )
 }

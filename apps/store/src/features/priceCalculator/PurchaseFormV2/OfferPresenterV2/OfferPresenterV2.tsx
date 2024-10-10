@@ -25,10 +25,10 @@ import { useTiersAndDeductibles } from '@/components/ProductPage/PurchaseForm/us
 import { useCartEntryToReplace } from '@/components/ProductPage/useCartEntryToReplace'
 import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
 import { useOfferDetails } from '@/features/CartItem/hooks/useOfferDetails'
-import { DeductibleSelectorV2 } from '@/features/priceCalculator/DeductibleSelectorV2'
 import { priceCalculatorStepAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
-import { ProductCardSmall } from '@/features/priceCalculator/ProductCardSmall'
-import { ProductTierSelectorV2 } from '@/features/priceCalculator/ProductTierSelectorV2'
+import { DeductibleSelectorV2 } from '@/features/priceCalculator/PurchaseFormV2/OfferPresenterV2/DeductibleSelectorV2/DeductibleSelectorV2'
+import { ProductCardSmall } from '@/features/priceCalculator/PurchaseFormV2/OfferPresenterV2/ProductCardSmall/ProductCardSmall'
+import { ProductTierSelectorV2 } from '@/features/priceCalculator/PurchaseFormV2/OfferPresenterV2/ProductTierSelectorV2/ProductTierSelectorV2'
 import { BankSigneringEvent } from '@/services/bankSignering'
 import { ExternalInsuranceCancellationOption } from '@/services/graphql/generated'
 import {
@@ -37,9 +37,11 @@ import {
 } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useAddToCart } from '@/utils/useAddToCart'
+import { SectionTitle, SectionSubtitle } from '../SectionHeading'
 import { OfferPriceDetails } from './OfferPriceDetails'
 
 export const OfferPresenterV2 = memo(() => {
+  const { t } = useTranslation('purchase-form')
   const priceIntent = usePriceIntent()
   const [selectedOffer, setSelectedOffer] = useSelectedOffer()
   if (selectedOffer == null) {
@@ -87,24 +89,40 @@ export const OfferPresenterV2 = memo(() => {
   }, [tiers, selectedOffer])
 
   return (
-    <div className={yStack({ gap: 'md' })}>
+    <div className={yStack({ gap: 'xxxl' })}>
       {tiers.length > 1 && (
-        <div className={yStack({ alignItems: 'stretch', gap: 'md' })}>
-          <ProductTierSelectorV2
-            offers={tiers}
-            selectedOffer={selectedTier}
-            onValueChange={handleOfferChange}
-          />
+        <div>
+          <SectionTitle>{t('OFFER_PRESENTER_TIERS_TITLE')}</SectionTitle>
+
+          <SectionSubtitle className={sprinkles({ marginBottom: 'lg' })}>
+            {t('OFFER_PRESENTER_TIERS_SUBTITLE')}
+          </SectionSubtitle>
+
+          <div className={yStack({ alignItems: 'stretch', gap: 'md' })}>
+            <ProductTierSelectorV2
+              offers={tiers}
+              selectedOffer={selectedTier}
+              onValueChange={handleOfferChange}
+            />
+          </div>
         </div>
       )}
 
       {deductibles.length > 1 && (
-        <div className={yStack({ alignItems: 'stretch', gap: 'md' })}>
-          <DeductibleSelectorV2
-            offers={deductibles}
-            selectedOffer={selectedOffer}
-            onValueChange={handleOfferChange}
-          />
+        <div>
+          <SectionTitle>{t('OFFER_PRESENTER_DEDUCTIBLE_TITLE')}</SectionTitle>
+
+          <SectionSubtitle className={sprinkles({ marginBottom: 'lg' })}>
+            {t('OFFER_PRESENTER_DEDUCTIBLE_SUBTITLE')}
+          </SectionSubtitle>
+
+          <div className={yStack({ alignItems: 'stretch', gap: 'md' })}>
+            <DeductibleSelectorV2
+              offers={deductibles}
+              selectedOffer={selectedOffer}
+              onValueChange={handleOfferChange}
+            />
+          </div>
         </div>
       )}
 
@@ -164,37 +182,45 @@ function OfferSummary() {
   const shopSession = useShopSessionValueOrThrow()
 
   return (
-    <ProductCardSmall
-      productName={productData.displayNameFull}
-      pillowImageSrc={productData.pillowImage.src}
-      subtitle={selectedOffer.exposure.displayNameShort}
-    >
-      <OfferDetails />
+    <div>
+      <SectionTitle>{t('OFFER_PRESENTER_SUMMARY_TITLE')}</SectionTitle>
 
-      {priceIntent.notifications?.map((notification, index) => (
-        <InfoCard key={index}>{notification.message}</InfoCard>
-      ))}
+      <SectionSubtitle className={sprinkles({ marginBottom: 'lg' })}>
+        {t('OFFER_PRESENTER_SUMMARY_SUBTITLE')}
+      </SectionSubtitle>
 
-      <CancellationForm productOfferIds={productOfferIds} offer={selectedOffer} />
-
-      {shopSession.cart.campaignsEnabled && (
-        <>
-          <DiscountFieldContainer shopSession={shopSession} />
-          <Separator />
-        </>
-      )}
-
-      <OfferPriceDetails />
-
-      <Button
-        variant="primary"
-        onClick={handleAddToCart}
-        loading={loadingAddToCart}
-        fullWidth={true}
+      <ProductCardSmall
+        productName={productData.displayNameFull}
+        pillowImageSrc={productData.pillowImage.src}
+        subtitle={selectedOffer.exposure.displayNameShort}
       >
-        {t('ADD_TO_CART_BUTTON_LABEL')}
-      </Button>
-    </ProductCardSmall>
+        <OfferDetails />
+
+        {priceIntent.notifications?.map((notification, index) => (
+          <InfoCard key={index}>{notification.message}</InfoCard>
+        ))}
+
+        <CancellationForm productOfferIds={productOfferIds} offer={selectedOffer} />
+
+        {shopSession.cart.campaignsEnabled && (
+          <>
+            <DiscountFieldContainer shopSession={shopSession} />
+            <Separator />
+          </>
+        )}
+
+        <OfferPriceDetails />
+
+        <Button
+          variant="primary"
+          onClick={handleAddToCart}
+          loading={loadingAddToCart}
+          fullWidth={true}
+        >
+          {t('ADD_TO_CART_BUTTON_LABEL')}
+        </Button>
+      </ProductCardSmall>
+    </div>
   )
 }
 
