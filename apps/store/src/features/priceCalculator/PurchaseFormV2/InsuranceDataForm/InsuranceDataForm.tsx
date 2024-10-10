@@ -17,12 +17,15 @@ import {
 } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { usePriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
 import { TextLink } from '@/components/TextLink/TextLink'
-import { EditSsnWarningContainer } from '@/features/priceCalculator/EditSsnWarningContainer'
-import { FormGridNew } from '@/features/priceCalculator/FormGridNew'
-import { formSection, gdprLink } from '@/features/priceCalculator/InsuranceDataForm.css'
 import { priceCalculatorStepAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
-import { SectionPreview } from '@/features/priceCalculator/SectionPreview'
-import { useConfirmPriceIntent } from '@/features/priceCalculator/useConfirmPriceIntent'
+import { EditSsnWarningContainer } from '@/features/priceCalculator/PurchaseFormV2/InsuranceDataForm/EditSsnWarningContainer'
+import { FormGridNew } from '@/features/priceCalculator/PurchaseFormV2/InsuranceDataForm/FormGridNew/FormGridNew'
+import {
+  formSection,
+  gdprLink,
+} from '@/features/priceCalculator/PurchaseFormV2/InsuranceDataForm/InsuranceDataForm.css'
+import { SectionPreview } from '@/features/priceCalculator/PurchaseFormV2/InsuranceDataForm/SectionPreview/SectionPreview'
+import { useConfirmPriceIntent } from '@/features/priceCalculator/PurchaseFormV2/InsuranceDataForm/useConfirmPriceIntent'
 import {
   deserializeField,
   prefillData,
@@ -37,7 +40,7 @@ import {
 import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
-import { SectionTitle, SectionSubtitle } from './SectionHeading'
+import { SectionTitle, SectionSubtitle } from '../SectionHeading'
 
 export function InsuranceDataForm({ className }: { className?: string }) {
   const locale = useRoutingLocale()

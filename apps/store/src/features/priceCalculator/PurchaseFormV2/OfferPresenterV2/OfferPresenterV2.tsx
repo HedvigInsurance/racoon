@@ -25,10 +25,10 @@ import { useTiersAndDeductibles } from '@/components/ProductPage/PurchaseForm/us
 import { useCartEntryToReplace } from '@/components/ProductPage/useCartEntryToReplace'
 import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
 import { useOfferDetails } from '@/features/CartItem/hooks/useOfferDetails'
-import { DeductibleSelectorV2 } from '@/features/priceCalculator/DeductibleSelectorV2'
 import { priceCalculatorStepAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
-import { ProductCardSmall } from '@/features/priceCalculator/ProductCardSmall'
-import { ProductTierSelectorV2 } from '@/features/priceCalculator/ProductTierSelectorV2'
+import { DeductibleSelectorV2 } from '@/features/priceCalculator/PurchaseFormV2/OfferPresenterV2/DeductibleSelectorV2/DeductibleSelectorV2'
+import { ProductCardSmall } from '@/features/priceCalculator/PurchaseFormV2/OfferPresenterV2/ProductCardSmall/ProductCardSmall'
+import { ProductTierSelectorV2 } from '@/features/priceCalculator/PurchaseFormV2/OfferPresenterV2/ProductTierSelectorV2/ProductTierSelectorV2'
 import { BankSigneringEvent } from '@/services/bankSignering'
 import { ExternalInsuranceCancellationOption } from '@/services/graphql/generated'
 import {
@@ -37,8 +37,8 @@ import {
 } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useAddToCart } from '@/utils/useAddToCart'
+import { SectionTitle, SectionSubtitle } from '../SectionHeading'
 import { OfferPriceDetails } from './OfferPriceDetails'
-import { SectionTitle, SectionSubtitle } from './SectionHeading'
 
 export const OfferPresenterV2 = memo(() => {
   const { t } = useTranslation('purchase-form')

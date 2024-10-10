@@ -2,16 +2,16 @@
 
 import { useAtomValue } from 'jotai'
 import { useResponsiveVariant } from '@/utils/useResponsiveVariant'
-import { CartToast } from './CartToast'
-import { priceCalculatorStepAtom } from './priceCalculatorAtoms'
+import { priceCalculatorStepAtom } from '../../priceCalculatorAtoms'
+import { ProductHeroV2 } from '../../ProductHeroV2/ProductHeroV2'
+import { PurchaseFormV2 } from '../../PurchaseFormV2/PurchaseFormV2'
+import { CartToast } from './CartToast/CartToast'
 import {
   pageGrid,
   priceCalculatorSection,
   productHero,
   productHeroSection,
 } from './PriceCalculatorCmsPageContent.css'
-import { ProductHeroV2 } from './ProductHeroV2/ProductHeroV2'
-import { PurchaseFormV2 } from './PurchaseFormV2'
 
 export function PriceCalculatorCmsPageContent() {
   const variant = useResponsiveVariant('lg')

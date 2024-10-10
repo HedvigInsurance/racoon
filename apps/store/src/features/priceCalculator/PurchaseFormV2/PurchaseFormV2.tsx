@@ -12,12 +12,12 @@ import {
   usePreloadedPriceIntentId,
 } from '@/components/ProductPage/PurchaseForm/usePreloadedPriceIntentId'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
-import { OfferPresenterV2 } from '@/features/priceCalculator/OfferPresenterV2'
 import {
   INITIAL_STEP_AFTER_NAVIGATION,
   priceCalculatorStepAtom,
 } from '@/features/priceCalculator/priceCalculatorAtoms'
-import { InsuranceDataForm } from './InsuranceDataForm'
+import { OfferPresenterV2 } from '@/features/priceCalculator/PurchaseFormV2/OfferPresenterV2/OfferPresenterV2'
+import { InsuranceDataForm } from './InsuranceDataForm/InsuranceDataForm'
 import {
   centered,
   priceLoaderWrapper,
@@ -25,7 +25,7 @@ import {
   purchaseSummaryWrapper,
   purchaseSummary,
 } from './PurchaseFormV2.css'
-import { PurchaseSummary } from './PurchaseSummary'
+import { PurchaseSummary } from './PurchaseSummary/PurchaseSummary'
 
 export function PurchaseFormV2() {
   useSyncPriceIntentState()
