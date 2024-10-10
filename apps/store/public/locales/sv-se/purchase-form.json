@@ -13,7 +13,7 @@
   "BUNDLE_DISCOUNT_SECOND_OFFER": "Ger dig {{percentage}} rabatt på hela köpet",
   "BUNDLE_DISCOUNT_TEASER": "Lägg till fler försäkringar och få {{percentage}} rabatt på hela ditt köp. [[Läs mer]]",
   "BUTTON_LABEL_GET_PRICE": "Se ditt pris",
-  "CART_TOAST_CONTENT": "Gå till varukorgen för att avsluta ditt köp",
+  "CART_TOAST_CONTENT": "Avsluta ditt köp i varukorgen",
   "CART_TOAST_HEADING": "Försäkringen är tillagd",
   "CART_TOAST_PRIMARY_LINK": "Visa varukorgen",
   "CART_TOAST_SECONDARY_LINK": "Gå till kassan",
