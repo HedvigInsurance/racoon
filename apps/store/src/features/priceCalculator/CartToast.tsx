@@ -16,7 +16,7 @@ import { SHOP_CART_MENU_ITEM_ID } from '@/components/Header/ShoppingCartMenuItem
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { toast, TOAST_BG_COLOR } from './CartToast.css'
 
-const DEFAULT_SHOW_DURATION = 3500
+const DEFAULT_SHOW_DURATION = 5500
 const ARROW_HEIGHT = 8
 const ARROW_WIDTH = ARROW_HEIGHT * 2
 const VERTICAL_OFFSET = 12 + ARROW_HEIGHT
@@ -87,7 +87,7 @@ function useCartToastState() {
   useEffect(() => {
     if (shopSession?.cart.entries.length == null) return
 
-    // 'prevCartEntryCount' being 'null' means 'shopSession' just becaome available
+    // 'prevCartEntryCount' being 'null' means 'shopSession' just became available
     // for the first time, so we don't want to show the toast in this case
     if (
       prevCartEntryCount.current !== null &&
