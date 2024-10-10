@@ -5,18 +5,19 @@
 import { assignInlineVars } from '@vanilla-extract/dynamic'
 import { clsx } from 'clsx'
 import { forwardRef, type ComponentProps } from 'react'
-import { iconRoot, iconSize, iconColor } from './Root.css'
+import { iconRoot, iconSize, iconColor, rotateIcon } from './Root.css'
 
 export type IconRootProps = ComponentProps<'svg'> & {
   color?: string
   size?: string
+  direction?: 'up' | 'down' | 'left' | 'right'
 }
 
 export const IconRoot = forwardRef<SVGSVGElement, IconRootProps>(
-  ({ className, size, color, ...props }, ref) => (
+  ({ className, size, color, direction, ...props }, ref) => (
     <svg
       ref={ref}
-      className={clsx(iconRoot, className)}
+      className={clsx(iconRoot, direction && rotateIcon[direction], className)}
       style={assignInlineVars({
         [iconSize]: size,
         [iconColor]: color,
