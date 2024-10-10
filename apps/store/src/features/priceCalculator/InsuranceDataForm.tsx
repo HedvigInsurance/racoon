@@ -5,7 +5,7 @@ import { useAtomValue, useSetAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { type FormEventHandler, type ReactNode } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
-import { Heading, yStack } from 'ui'
+import { yStack } from 'ui'
 import { FetchInsuranceContainer } from '@/components/PriceCalculator/FetchInsuranceContainer'
 import { SSN_SE_SECTION_ID, SsnSeSection } from '@/components/PriceCalculator/SsnSeSection'
 import { useHandleSubmitPriceCalculatorSection } from '@/components/PriceCalculator/useHandleSubmitPriceCalculatorSection'
@@ -37,6 +37,7 @@ import {
 import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
+import { SectionTitle, SectionSubtitle } from './SectionHeading'
 
 export function InsuranceDataForm({ className }: { className?: string }) {
   const locale = useRoutingLocale()
@@ -81,7 +82,7 @@ export function InsuranceDataForm({ className }: { className?: string }) {
         key={section.id}
         className={clsx(yStack({ gap: 'lg' }), formSection.base, isSsnSection && formSection.ssn)}
       >
-        <SectionTitle section={section} />
+        <SectionHeadings section={section} />
         {sectionBody}
       </div>
     )
@@ -96,17 +97,13 @@ export function InsuranceDataForm({ className }: { className?: string }) {
   )
 }
 
-function SectionTitle({ section }: { section: FormSection }) {
+function SectionHeadings({ section }: { section: FormSection }) {
   const translateLabel = useTranslateFieldLabel()
   return (
     <div>
-      <Heading as="h2" variant="standard.24">
-        {translateLabel(section.title)}
-      </Heading>
+      <SectionTitle>{translateLabel(section.title)}</SectionTitle>
       {section.subtitle != null && (
-        <Heading as="h3" variant="standard.24" color="textSecondary">
-          {translateLabel(section.subtitle)}
-        </Heading>
+        <SectionSubtitle>{translateLabel(section.subtitle)}</SectionSubtitle>
       )}
     </div>
   )

@@ -5,7 +5,7 @@ import { useSetAtom, useStore } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { memo, type MouseEventHandler, useEffect, useMemo, useRef, useState } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
-import { Button, Heading, tokens, yStack } from 'ui'
+import { Button, tokens, yStack } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
 import Collapsible from '@/components/Collapsible/Collapsible'
 import { InfoCard } from '@/components/InfoCard/InfoCard'
@@ -38,6 +38,7 @@ import {
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useAddToCart } from '@/utils/useAddToCart'
 import { OfferPriceDetails } from './OfferPriceDetails'
+import { SectionTitle, SectionSubtitle } from './SectionHeading'
 
 export const OfferPresenterV2 = memo(() => {
   const { t } = useTranslation('purchase-form')
@@ -91,19 +92,11 @@ export const OfferPresenterV2 = memo(() => {
     <div className={yStack({ gap: 'xxxl' })}>
       {tiers.length > 1 && (
         <div>
-          <Heading as="h2" variant="standard.24">
-            {t('OFFER_PRESENTER_TIERS_TITLE')}
-          </Heading>
+          <SectionTitle>{t('OFFER_PRESENTER_TIERS_TITLE')}</SectionTitle>
 
-          <Heading
-            as="h3"
-            balance={true}
-            color="textSecondary"
-            variant="standard.24"
-            className={sprinkles({ marginBottom: 'lg' })}
-          >
+          <SectionSubtitle className={sprinkles({ marginBottom: 'lg' })}>
             {t('OFFER_PRESENTER_TIERS_SUBTITLE')}
-          </Heading>
+          </SectionSubtitle>
 
           <div className={yStack({ alignItems: 'stretch', gap: 'md' })}>
             <ProductTierSelectorV2
@@ -117,19 +110,11 @@ export const OfferPresenterV2 = memo(() => {
 
       {deductibles.length > 1 && (
         <div>
-          <Heading as="h2" variant="standard.24">
-            {t('OFFER_PRESENTER_DEDUCTIBLE_TITLE')}
-          </Heading>
+          <SectionTitle>{t('OFFER_PRESENTER_DEDUCTIBLE_TITLE')}</SectionTitle>
 
-          <Heading
-            as="h3"
-            balance={true}
-            color="textSecondary"
-            variant="standard.24"
-            className={sprinkles({ marginBottom: 'lg' })}
-          >
+          <SectionSubtitle className={sprinkles({ marginBottom: 'lg' })}>
             {t('OFFER_PRESENTER_DEDUCTIBLE_SUBTITLE')}
-          </Heading>
+          </SectionSubtitle>
 
           <div className={yStack({ alignItems: 'stretch', gap: 'md' })}>
             <DeductibleSelectorV2
@@ -198,19 +183,11 @@ function OfferSummary() {
 
   return (
     <div>
-      <Heading as="h2" variant="standard.24">
-        {t('OFFER_PRESENTER_SUMMARY_TITLE')}
-      </Heading>
+      <SectionTitle>{t('OFFER_PRESENTER_SUMMARY_TITLE')}</SectionTitle>
 
-      <Heading
-        as="h3"
-        balance={true}
-        color="textSecondary"
-        variant="standard.24"
-        className={sprinkles({ marginBottom: 'lg' })}
-      >
+      <SectionSubtitle className={sprinkles({ marginBottom: 'lg' })}>
         {t('OFFER_PRESENTER_SUMMARY_SUBTITLE')}
-      </Heading>
+      </SectionSubtitle>
 
       <ProductCardSmall
         productName={productData.displayNameFull}
