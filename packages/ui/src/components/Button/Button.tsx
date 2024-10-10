@@ -1,7 +1,7 @@
 'use client'
 
 import clsx from 'clsx'
-import { forwardRef, type ReactNode } from 'react'
+import { forwardRef, type ReactNode, type ForwardedRef } from 'react'
 import type { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../TypeUtils'
 import {
   baseButton,
@@ -60,7 +60,7 @@ export const Button: PolymorphicComponent = forwardRef(function Button<
     iconPosition = 'left',
     ...props
   }: ButtonProps<C>,
-  ref?: PolymorphicRef<C>,
+  ref?: ForwardedRef<PolymorphicRef<C>>,
 ) {
   const sizeStyles = getButtonSizeStyles(size)
 
