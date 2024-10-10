@@ -36,7 +36,7 @@ export function PriceCalculatorCmsPage({ locale, story }: Props) {
 
 const getPriceTemplate = async (templateName: string): Promise<TemplateV2> => {
   try {
-    const module_ = await import(`./priceTemplates/${templateName}`)
+    const module_ = await import(`../priceTemplates/${templateName}`)
     const template = module_.default
     if (typeof template !== 'object' || template.name !== templateName) {
       throw new Error('Template module does not export expected default value')
