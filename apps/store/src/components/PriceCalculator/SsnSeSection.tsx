@@ -10,7 +10,10 @@ import {
   GOTO_NEXT_SECTION,
   shopSessionCustomerAtom,
 } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
-import { formFooter } from '@/features/priceCalculator/PurchaseFormV2/InsuranceDataForm/FormGridNew/FormGridNew.css'
+import {
+  formFooter,
+  formFooterButton,
+} from '@/features/priceCalculator/PurchaseFormV2/InsuranceDataForm/FormGridNew/FormGridNew.css'
 import { useShopSessionCustomerUpdateMutation } from '@/services/graphql/generated'
 import { useShopSessionId } from '@/services/shopSession/ShopSessionContext'
 import { useErrorMessage } from '@/utils/useErrorMessage'
@@ -63,7 +66,7 @@ export const SsnSeSection = memo(({ className }: { className?: string }) => {
       />
 
       <div className={formFooter}>
-        <Button type="submit" loading={result.loading} fullWidth={true}>
+        <Button type="submit" loading={result.loading} className={formFooterButton}>
           {t('SUBMIT_LABEL_PROCEED')}
         </Button>
       </div>
