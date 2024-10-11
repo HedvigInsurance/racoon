@@ -3,9 +3,12 @@ import { responsiveStyles, tokens, yStack } from 'ui'
 import { HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header.css'
 import { HEADER_HEIGHT_MOBILE } from '@/components/Header/HeaderMenuMobile/HeaderMenuMobile.css'
 
+// Offset for fixed formFooter
+export const FORM_FOOTER = '7rem'
+
 export const pageGrid = style({
   display: 'grid',
-  gridTemplateRows: 'min-content 1fr',
+  gridTemplateRows: `min-content 1fr ${FORM_FOOTER}`,
   columnGap: tokens.space.md,
   maxWidth: tokens.width.layoutMax,
   minHeight: `calc(100vh - ${HEADER_HEIGHT_MOBILE})`,
@@ -15,6 +18,7 @@ export const pageGrid = style({
 
   ...responsiveStyles({
     lg: {
+      gridTemplateRows: 'auto',
       gridTemplateColumns: 'repeat(14, 1fr)',
       minHeight: `calc(100vh - ${HEADER_HEIGHT_DESKTOP})`,
       paddingInline: tokens.space.lg,

@@ -2,20 +2,10 @@ import { style, createVar } from '@vanilla-extract/css'
 import { responsiveStyles, tokens } from 'ui'
 import { CONTENT_MAX_WIDTH } from '../../PurchaseFormV2.css'
 
-// Offset for fixed formFooter
-const GRID_PADDING_BOTTOM = '7rem'
-
 export const grid = style({
   display: 'grid',
   gridTemplateColumns: 'repeat(6, 1fr)',
   gap: tokens.space.xxs,
-  paddingBottom: GRID_PADDING_BOTTOM,
-
-  ...responsiveStyles({
-    lg: {
-      paddingBottom: 0,
-    },
-  }),
 })
 
 export const columnSpan = createVar()
