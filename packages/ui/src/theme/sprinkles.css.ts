@@ -24,6 +24,7 @@ const textColors = {
 } as const
 
 const mediaQueriesSubset = createSubset(mediaQueries, ['sm', 'md', 'lg'])
+const marginProperties = { ...tokens.space, auto: 'auto' }
 
 const unresponsiveProperties = defineProperties({
   properties: {
@@ -35,11 +36,11 @@ const unresponsiveProperties = defineProperties({
     display: ['flex', 'grid', 'none'],
     flexDirection: ['row', 'column'],
     flexGrow: [1],
-    marginInline: tokens.space,
-    marginTop: tokens.space,
-    marginBottom: tokens.space,
-    marginLeft: tokens.space,
-    marginRight: tokens.space,
+    marginInline: marginProperties,
+    marginTop: marginProperties,
+    marginBottom: marginProperties,
+    marginLeft: marginProperties,
+    marginRight: marginProperties,
     overflow: ['hidden'],
     padding: tokens.space,
     paddingBlock: tokens.space,
