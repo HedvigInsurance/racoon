@@ -11376,15 +11376,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/babel-plugin-debug-ids@npm:^1.0.6":
-  version: 1.0.6
-  resolution: "@vanilla-extract/babel-plugin-debug-ids@npm:1.0.6"
-  dependencies:
-    "@babel/core": "npm:^7.23.9"
-  checksum: 10c0/ddf52ff1134f721bb14a8ffe5e5f5b982f3681390a2ccadcf37d08073102bacbb995dfb213cc73e4ad847d3cff21bca8af5d511808f22950d04b4c36de214e61
-  languageName: node
-  linkType: hard
-
 "@vanilla-extract/babel-plugin-debug-ids@npm:^1.1.0":
   version: 1.1.0
   resolution: "@vanilla-extract/babel-plugin-debug-ids@npm:1.1.0"
@@ -11394,7 +11385,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/css@npm:1.15.5, @vanilla-extract/css@npm:^1.15.5":
+"@vanilla-extract/css@npm:1.15.5":
   version: 1.15.5
   resolution: "@vanilla-extract/css@npm:1.15.5"
   dependencies:
@@ -11463,26 +11454,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/integration@npm:^7.1.9":
-  version: 7.1.9
-  resolution: "@vanilla-extract/integration@npm:7.1.9"
-  dependencies:
-    "@babel/core": "npm:^7.23.9"
-    "@babel/plugin-syntax-typescript": "npm:^7.23.3"
-    "@vanilla-extract/babel-plugin-debug-ids": "npm:^1.0.6"
-    "@vanilla-extract/css": "npm:^1.15.5"
-    dedent: "npm:^1.5.3"
-    esbuild: "npm:esbuild@>=0.17.6 <0.24.0"
-    eval: "npm:0.1.8"
-    find-up: "npm:^5.0.0"
-    javascript-stringify: "npm:^2.0.1"
-    mlly: "npm:^1.4.2"
-    vite: "npm:^5.0.11"
-    vite-node: "npm:^1.2.0"
-  checksum: 10c0/d5d63225cccfcabadae4577db5fd542af209bbf0282987df3213a4049999475345b4a545e257f0a9797750f00c426d2786079129e0d456df3567391fc1fb7f0e
-  languageName: node
-  linkType: hard
-
 "@vanilla-extract/next-plugin@npm:2.4.6":
   version: 2.4.6
   resolution: "@vanilla-extract/next-plugin@npm:2.4.6"
@@ -11519,21 +11490,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/webpack-plugin@npm:2.3.13":
-  version: 2.3.13
-  resolution: "@vanilla-extract/webpack-plugin@npm:2.3.13"
-  dependencies:
-    "@vanilla-extract/integration": "npm:^7.1.9"
-    debug: "npm:^4.3.1"
-    loader-utils: "npm:^2.0.0"
-    picocolors: "npm:^1.0.0"
-  peerDependencies:
-    webpack: ^4.30.0 || ^5.20.2
-  checksum: 10c0/1efdaa9b6dffb0376995975c01bf1bf883c1b503550b15ec1d66d0e5e376fca21a7d93aa36729b0fe3e176c2d48044ac0a5f01ac9d7b09f60d3e9b9f96d951b9
-  languageName: node
-  linkType: hard
-
-"@vanilla-extract/webpack-plugin@npm:^2.3.14":
+"@vanilla-extract/webpack-plugin@npm:2.3.14, @vanilla-extract/webpack-plugin@npm:^2.3.14":
   version: 2.3.14
   resolution: "@vanilla-extract/webpack-plugin@npm:2.3.14"
   dependencies:
@@ -24192,7 +24149,7 @@ __metadata:
     "@vanilla-extract/next-plugin": "npm:2.4.6"
     "@vanilla-extract/recipes": "npm:0.5.5"
     "@vanilla-extract/sprinkles": "npm:1.6.3"
-    "@vanilla-extract/webpack-plugin": "npm:2.3.13"
+    "@vanilla-extract/webpack-plugin": "npm:2.3.14"
     "@vercel/edge-config": "npm:1.2.1"
     "@vercel/kv": "npm:2.0.0"
     "@vercel/otel": "npm:1.10.0"
