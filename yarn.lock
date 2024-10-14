@@ -7758,7 +7758,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mswjs/interceptors@npm:^0.35.6":
+"@mswjs/interceptors@npm:^0.35.8":
   version: 0.35.9
   resolution: "@mswjs/interceptors@npm:0.35.9"
   dependencies:
@@ -20584,15 +20584,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"msw@npm:2.4.7":
-  version: 2.4.7
-  resolution: "msw@npm:2.4.7"
+"msw@npm:2.4.10":
+  version: 2.4.10
+  resolution: "msw@npm:2.4.10"
   dependencies:
     "@bundled-es-modules/cookie": "npm:^2.0.0"
     "@bundled-es-modules/statuses": "npm:^1.0.1"
     "@bundled-es-modules/tough-cookie": "npm:^0.1.6"
     "@inquirer/confirm": "npm:^3.0.0"
-    "@mswjs/interceptors": "npm:^0.35.6"
+    "@mswjs/interceptors": "npm:^0.35.8"
     "@open-draft/until": "npm:^2.1.0"
     "@types/cookie": "npm:^0.6.0"
     "@types/statuses": "npm:^2.0.4"
@@ -20601,7 +20601,7 @@ __metadata:
     headers-polyfill: "npm:^4.0.2"
     is-node-process: "npm:^1.2.0"
     outvariant: "npm:^1.4.2"
-    path-to-regexp: "npm:^6.2.0"
+    path-to-regexp: "npm:^6.3.0"
     strict-event-emitter: "npm:^0.5.1"
     type-fest: "npm:^4.9.0"
     yargs: "npm:^17.7.2"
@@ -20612,7 +20612,7 @@ __metadata:
       optional: true
   bin:
     msw: cli/index.js
-  checksum: 10c0/d0aa43aab753d98c1953b083f9fab168e9a7375a4afb66b93332196efbaada82e02ead7807a958ce12a5a1204084e05eb0023cee6020b49e4d0de5b4b91f9ab7
+  checksum: 10c0/f6418b2ead58ff7d3e0a962fe59c31222a1b25d31f1cdab2957592e76086a5d8c73ed0e7ed0ba209e3c01f2638d6692bd3f8615e4144c9337f82affa7cda2fc1
   languageName: node
   linkType: hard
 
@@ -21608,10 +21608,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"path-to-regexp@npm:^6.2.0":
-  version: 6.2.2
-  resolution: "path-to-regexp@npm:6.2.2"
-  checksum: 10c0/4b60852d3501fd05ca9dd08c70033d73844e5eca14e41f499f069afa8364f780f15c5098002f93bd42af8b3514de62ac6e82a53b5662de881d2b08c9ef21ea6b
+"path-to-regexp@npm:^6.3.0":
+  version: 6.3.0
+  resolution: "path-to-regexp@npm:6.3.0"
+  checksum: 10c0/73b67f4638b41cde56254e6354e46ae3a2ebc08279583f6af3d96fe4664fc75788f74ed0d18ca44fa4a98491b69434f9eee73b97bb5314bd1b5adb700f5c18d6
   languageName: node
   linkType: hard
 
@@ -24165,7 +24165,7 @@ __metadata:
     jwt-decode: "npm:4.0.0"
     md5: "npm:2.3.0"
     mini-css-extract-plugin: "npm:2.9.1"
-    msw: "npm:2.4.7"
+    msw: "npm:2.4.10"
     next: "npm:14.2.12"
     next-i18next: "npm:15.3.1"
     next-router-mock: "npm:0.9.13"
