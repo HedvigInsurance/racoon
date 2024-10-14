@@ -145,6 +145,8 @@
   "PRICE_MATCH_BUBBLE_SUCCESS_SUBTITLE": "jämfört med {{company}}",
   "PRICE_MATCH_BUBBLE_SUCCESS_TITLE": "Du sparar {{amount}}",
   "QUICK_CHECKOUT_BUTTON_LABEL": "Gå till kassan",
+  "SECTION_NAVIGATION_BUTTON_LABEL": "Tillbaka",
+  "SECTION_NAVIGATION_INDICATOR_LABEL": "{{currentSection}} av {{totalSections}}",
   "SECTION_SUBTITLE_BUILDING_DETAILS": "Fyll i ytterligare uppgifter om villan du vill försäkra",
   "SECTION_SUBTITLE_YOUR_CAR": "Fyll i ytterligare uppgifter om bilen du vill försäkra",
   "SECTION_SUBTITLE_YOUR_CAT": "Fyll i ytterligare uppgifter om din katt som du vill försäkra",

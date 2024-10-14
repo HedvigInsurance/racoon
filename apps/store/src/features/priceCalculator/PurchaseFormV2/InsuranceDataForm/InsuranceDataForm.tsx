@@ -24,7 +24,6 @@ import {
   formSection,
   gdprLink,
 } from '@/features/priceCalculator/PurchaseFormV2/InsuranceDataForm/InsuranceDataForm.css'
-import { SectionPreview } from '@/features/priceCalculator/PurchaseFormV2/InsuranceDataForm/SectionPreview/SectionPreview'
 import { useConfirmPriceIntent } from '@/features/priceCalculator/PurchaseFormV2/InsuranceDataForm/useConfirmPriceIntent'
 import {
   deserializeField,
@@ -41,6 +40,7 @@ import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { SectionTitle, SectionSubtitle } from '../SectionHeading'
+import { SectionNavigation } from './SectionNavigation'
 
 export function InsuranceDataForm({ className }: { className?: string }) {
   const locale = useRoutingLocale()
@@ -49,13 +49,11 @@ export function InsuranceDataForm({ className }: { className?: string }) {
   const form = useAtomValue(priceCalculatorFormAtom)
   const activeSectionId = useAtomValue(activeFormSectionIdAtom)
   const step = useAtomValue(priceCalculatorStepAtom)
+
   const sections = form.sections.map((section, index) => {
     if (step !== 'fillForm' || section.id !== activeSectionId) {
-      // No preview needed for sections that are not yet touched
-      if (section.state === 'initial') {
-        return null
-      }
-      return <SectionPreview key={section.id} section={section} />
+      // Skip rendering inactive sections
+      return null
     }
 
     let sectionBody: ReactNode
@@ -85,6 +83,7 @@ export function InsuranceDataForm({ className }: { className?: string }) {
         key={section.id}
         className={clsx(yStack({ gap: 'lg' }), formSection.base, isSsnSection && formSection.ssn)}
       >
+        {!isSsnSection && <SectionNavigation />}
         <SectionHeadings section={section} />
         {sectionBody}
       </div>
