@@ -24,9 +24,15 @@ export const gridItem = style({
   gridColumn: `span ${columnSpan}`,
 })
 
-export const submitButton = style({
+export const formFooterButton = style({
   width: `min(100%, ${CONTENT_MAX_WIDTH})`,
   marginInline: 'auto',
+
+  ...responsiveStyles({
+    lg: {
+      width: '100%',
+    },
+  }),
 })
 
 export const formFooter = style({
