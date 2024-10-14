@@ -5,7 +5,7 @@ import { useSetAtom, useStore } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { memo, type MouseEventHandler, useEffect, useMemo, useRef, useState } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
-import { Button, tokens, yStack } from 'ui'
+import { Button, ChevronIcon, tokens, yStack } from 'ui'
 import { CancellationForm } from '@/components/Cancellation/CancellationForm'
 import Collapsible from '@/components/Collapsible/Collapsible'
 import { InfoCard } from '@/components/InfoCard/InfoCard'
@@ -43,6 +43,7 @@ import { OfferPriceDetails } from './OfferPriceDetails'
 export const OfferPresenterV2 = memo(() => {
   const { t } = useTranslation('purchase-form')
   const priceIntent = usePriceIntent()
+  const setStep = useSetAtom(priceCalculatorStepAtom)
   const [selectedOffer, setSelectedOffer] = useSelectedOffer()
   if (selectedOffer == null) {
     throw new Error('selectedOffer must be defined')
@@ -61,6 +62,10 @@ export const OfferPresenterV2 = memo(() => {
     }
 
     setSelectedOffer(offer)
+  }
+
+  const handleEditInformation = () => {
+    setStep('fillForm')
   }
 
   const offerRef = useRef(null)
@@ -90,6 +95,16 @@ export const OfferPresenterV2 = memo(() => {
 
   return (
     <div className={yStack({ gap: 'xxxl' })}>
+      <Button
+        className={sprinkles({ marginRight: 'auto' })}
+        size="small"
+        variant="secondary"
+        Icon={<ChevronIcon size="0.75rem" direction="left" />}
+        onClick={handleEditInformation}
+      >
+        {t('OFFER_PRESENTER_EDIT_INFO_BUTTON_LABEL')}
+      </Button>
+
       {tiers.length > 1 && (
         <div>
           <SectionTitle>{t('OFFER_PRESENTER_TIERS_TITLE')}</SectionTitle>

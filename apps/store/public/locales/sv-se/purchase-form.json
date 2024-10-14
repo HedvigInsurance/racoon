@@ -123,6 +123,7 @@
   "MANUAL_SWITCH_INFO": "Tyvärr kan vi inte säga upp din gamla försäkring hos {{COMPANY_NAME}}. Ange ditt slutdatum hos {{COMPANY_NAME}} nedan.",
   "OFFER_PRESENTER_DEDUCTIBLE_SUBTITLE": "Ju högre självrisk, ju lägre pris",
   "OFFER_PRESENTER_DEDUCTIBLE_TITLE": "Välj din självrisk",
+  "OFFER_PRESENTER_EDIT_INFO_BUTTON_LABEL": "Redigera din information",
   "OFFER_PRESENTER_SUMMARY_SUBTITLE": "Se över din försäkring och lägg till i varukorgen",
   "OFFER_PRESENTER_SUMMARY_TITLE": "Sammanfattning",
   "OFFER_PRESENTER_TIERS_SUBTITLE": "Välj ditt skydd och självrisk",
