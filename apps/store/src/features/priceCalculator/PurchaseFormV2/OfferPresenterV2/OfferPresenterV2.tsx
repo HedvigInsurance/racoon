@@ -38,6 +38,7 @@ import {
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useAddToCart } from '@/utils/useAddToCart'
 import { SectionTitle, SectionSubtitle } from '../SectionHeading'
+import { offerPresenterWrapper } from './OfferPresenterV2.css'
 import { OfferPriceDetails } from './OfferPriceDetails'
 
 export const OfferPresenterV2 = memo(() => {
@@ -94,7 +95,7 @@ export const OfferPresenterV2 = memo(() => {
   }, [tiers, selectedOffer])
 
   return (
-    <div className={yStack({ gap: 'xxxl' })}>
+    <div className={offerPresenterWrapper}>
       <Button
         className={sprinkles({ marginRight: 'auto' })}
         size="small"

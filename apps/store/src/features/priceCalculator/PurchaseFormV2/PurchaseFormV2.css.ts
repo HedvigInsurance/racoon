@@ -10,6 +10,7 @@ export const centered = style({
     lg: {
       width: `max(${CONTENT_MAX_WIDTH}, 100%)`,
       maxWidth: 'unset',
+      height: '100%',
     },
   }),
 })

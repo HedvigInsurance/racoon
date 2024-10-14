@@ -21,7 +21,7 @@ import { priceCalculatorStepAtom } from '@/features/priceCalculator/priceCalcula
 import { EditSsnWarningContainer } from '@/features/priceCalculator/PurchaseFormV2/InsuranceDataForm/EditSsnWarningContainer'
 import { FormGridNew } from '@/features/priceCalculator/PurchaseFormV2/InsuranceDataForm/FormGridNew/FormGridNew'
 import {
-  formSection,
+  ssnSectionWrapper,
   gdprLink,
 } from '@/features/priceCalculator/PurchaseFormV2/InsuranceDataForm/InsuranceDataForm.css'
 import { useConfirmPriceIntent } from '@/features/priceCalculator/PurchaseFormV2/InsuranceDataForm/useConfirmPriceIntent'
@@ -81,18 +81,21 @@ export function InsuranceDataForm({ className }: { className?: string }) {
     return (
       <div
         key={section.id}
-        className={clsx(yStack({ gap: 'lg' }), formSection.base, isSsnSection && formSection.ssn)}
+        className={clsx(yStack({ gap: 'lg' }), isSsnSection && ssnSectionWrapper, className)}
       >
         {!isSsnSection && <SectionNavigation />}
-        <SectionHeadings section={section} />
-        {sectionBody}
+
+        <div className={yStack({ gap: 'lg' })}>
+          <SectionHeadings section={section} />
+          {sectionBody}
+        </div>
       </div>
     )
   })
 
   return (
     <>
-      <div className={clsx(yStack({ gap: 'xs' }), className)}>{sections}</div>
+      {sections}
       <EditSsnWarningContainer />
       <FetchInsuranceContainer />
     </>
