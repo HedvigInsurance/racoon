@@ -1,7 +1,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import { useInView } from 'framer-motion'
-import { useSetAtom, useStore } from 'jotai'
+import { useAtomValue, useSetAtom, useStore } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { memo, type MouseEventHandler, useEffect, useMemo, useRef, useState } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
@@ -45,6 +45,8 @@ export const OfferPresenterV2 = memo(() => {
   const { t } = useTranslation('purchase-form')
   const priceIntent = usePriceIntent()
   const setStep = useSetAtom(priceCalculatorStepAtom)
+  const setActiveSectionId = useSetAtom(activeFormSectionIdAtom)
+  const form = useAtomValue(priceCalculatorFormAtom)
   const [selectedOffer, setSelectedOffer] = useSelectedOffer()
   if (selectedOffer == null) {
     throw new Error('selectedOffer must be defined')
@@ -67,6 +69,9 @@ export const OfferPresenterV2 = memo(() => {
 
   const handleEditInformation = () => {
     setStep('fillForm')
+    // Make sure to always go to the last section of the form when editing
+    const lastFormSectionId = form.sections[form.sections.length - 1].id
+    setActiveSectionId(lastFormSectionId)
   }
 
   const offerRef = useRef(null)
