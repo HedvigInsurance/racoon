@@ -34,11 +34,21 @@ export const ProductDocuments = ({ heading, description, docs }: Props) => {
         <Space y={{ base: 0.25, lg: 0.5 }}>
           {docs.map((doc, index) => {
             const handleClick = () => {
-              if (doc.type === InsuranceDocumentType.TermsAndConditions)
-                tracking.reportClickTermsAndConditions(
-                  productData.name,
-                  selectedVariant!.typeOfContract,
-                )
+              if (doc.type === InsuranceDocumentType.TermsAndConditions) {
+                let { typeOfContract } = selectedVariant ?? {}
+                if (typeOfContract == null) {
+                  if (productData.variants.length === 1) {
+                    // Single tier products do not have `selectedVariant` in page state
+                    typeOfContract = productData.variants[0].typeOfContract
+                  } else {
+                    console.error(
+                      'Cannot report click on terms because selectedVariant is undefined. This should never happen',
+                    )
+                    return
+                  }
+                }
+                tracking.reportClickTermsAndConditions(productData.name, typeOfContract)
+              }
             }
             return (
               <InsuranceDocumentLink
