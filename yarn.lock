@@ -5355,9 +5355,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@datadog/datadog-ci@npm:2.42.0":
-  version: 2.42.0
-  resolution: "@datadog/datadog-ci@npm:2.42.0"
+"@datadog/datadog-ci@npm:2.43.0":
+  version: 2.43.0
+  resolution: "@datadog/datadog-ci@npm:2.43.0"
   dependencies:
     "@aws-sdk/client-cloudwatch-logs": "npm:^3.624.0"
     "@aws-sdk/client-iam": "npm:^3.624.0"
@@ -5371,7 +5371,6 @@ __metadata:
     "@smithy/property-provider": "npm:^2.0.12"
     "@smithy/util-retry": "npm:^2.0.4"
     "@types/datadog-metrics": "npm:0.6.1"
-    "@types/retry": "npm:0.12.0"
     ajv: "npm:^8.12.0"
     ajv-formats: "npm:^2.1.1"
     async-retry: "npm:1.3.1"
@@ -5408,7 +5407,7 @@ __metadata:
     yamux-js: "npm:0.1.2"
   bin:
     datadog-ci: dist/cli.js
-  checksum: 10c0/e60069c860ed070526696be26150f456ad9dfd2791d1582ab8b6ae85423c31b871dd1c25c5722f49adbfae327d8b9faf991778535c8dce2b4874e70a0c87934f
+  checksum: 10c0/5d07afce5c4d68cbef4de3a46719280504ef80245eaeb909361a3c0e5da0b9ae2ab10bc3095cb72212cc83975c6c75a94b2a9a1d9b149654a90a5ec68d026bf9
   languageName: node
   linkType: hard
 
@@ -10711,13 +10710,6 @@ __metadata:
   version: 1.20.6
   resolution: "@types/resolve@npm:1.20.6"
   checksum: 10c0/a9b0549d816ff2c353077365d865a33655a141d066d0f5a3ba6fd4b28bc2f4188a510079f7c1f715b3e7af505a27374adce2a5140a3ece2a059aab3d6e1a4244
-  languageName: node
-  linkType: hard
-
-"@types/retry@npm:0.12.0":
-  version: 0.12.0
-  resolution: "@types/retry@npm:0.12.0"
-  checksum: 10c0/7c5c9086369826f569b83a4683661557cab1361bac0897a1cefa1a915ff739acd10ca0d62b01071046fe3f5a3f7f2aec80785fe283b75602dc6726781ea3e328
   languageName: node
   linkType: hard
 
@@ -23868,7 +23860,7 @@ __metadata:
     "@babel/preset-typescript": "npm:7.25.7"
     "@datadog/browser-logs": "npm:5.26.0"
     "@datadog/browser-rum": "npm:5.26.0"
-    "@datadog/datadog-ci": "npm:2.42.0"
+    "@datadog/datadog-ci": "npm:2.43.0"
     "@emotion/babel-plugin": "npm:11.12.0"
     "@emotion/is-prop-valid": "npm:1.3.1"
     "@emotion/react": "npm:11.13.3"
