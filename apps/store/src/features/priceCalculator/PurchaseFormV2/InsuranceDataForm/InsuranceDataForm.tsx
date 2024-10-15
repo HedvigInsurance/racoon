@@ -136,7 +136,10 @@ function InsuranceDataSection({ section }: InsuranceDataSectionProps) {
         template: priceTemplate,
       })
       if (isFormReadyToConfirm({ form, priceIntent, customer })) {
+        const lastFormSectionId = form.sections[form.sections.length - 1].id
         setStep('calculatingPrice')
+        // Make sure the last section is active when confirming price intent
+        setActiveSectionId(lastFormSectionId)
         confirmPriceIntent()
         return
       }
