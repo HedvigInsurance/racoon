@@ -4,7 +4,7 @@ import { useCallback, useEffect } from 'react'
 import { Text, Card, Divider, Button, yStack } from 'ui'
 import type { Banner } from '@/components/Banner/Banner.types'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
-import { useSetGlobalBanner } from '@/components/GlobalBanner/globalBannerState'
+import { useSetGlobalBanner, useDismissBanner } from '@/components/GlobalBanner/globalBannerState'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { TotalPrice } from '@/components/ProductCard/TotalPrice/TotalPrice'
 import { useResetPriceIntent } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
@@ -80,6 +80,7 @@ function useNotifyAboutBundleDiscounts() {
   const { t } = useTranslation('purchase-form')
   const shopSession = useShopSessionValueOrThrow()
   const setGlobalBanner = useSetGlobalBanner()
+  const dismissBanner = useDismissBanner()
 
   useEffect(() => {
     let banner: Banner | null = null
@@ -93,7 +94,7 @@ function useNotifyAboutBundleDiscounts() {
       }
     } else if (hasCartItemsEligibleForBundleDiscount(shopSession)) {
       banner = {
-        id: 'ellegible-for-bundle-discount',
+        id: 'eligible-for-bundle-discount',
         content: (
           <TextWithLink as="span" size="xs" href={BUNDLE_DISCOUNT_PROMO_PAGE_PATH}>
             {t('BUNDLE_DISCOUNT_TEASER', {
@@ -107,6 +108,12 @@ function useNotifyAboutBundleDiscounts() {
 
     if (banner) {
       setGlobalBanner(banner, { force: true })
+
+      // We only want to show the bundle discount related banners at the "purchase summary" step
+      // so I'm dismissing bundle discount banners when the user navigates away from this step
+      return () => {
+        dismissBanner(banner.id)
+      }
     }
-  }, [shopSession, t, setGlobalBanner])
+  }, [shopSession, t, setGlobalBanner, dismissBanner])
 }
