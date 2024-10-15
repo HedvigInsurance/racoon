@@ -27,8 +27,8 @@ const TEMPLATES: Record<string, Template | undefined> = {
   SE_WIDGET_APARTMENT_NO_COMPARE,
 }
 
-export const getPriceTemplate = (id: string) => {
-  return TEMPLATES[id]
+export const getPriceTemplate = (productName: string) => {
+  return TEMPLATES[productName]
 }
 
 const convertTemplateIntoForm = (template: Template): Form => {

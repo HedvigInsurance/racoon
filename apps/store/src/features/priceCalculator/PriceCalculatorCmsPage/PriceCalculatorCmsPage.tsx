@@ -7,10 +7,10 @@ import { ProductPageDebugDialog } from '@/components/ProductPage/ProductPageDebu
 import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { PriceCalculatorStoryProvider } from '@/features/priceCalculator/PriceCalculatorCmsPage/PriceCalculatorStoryProvider'
 import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
-import { type TemplateV2 } from '@/services/PriceCalculator/PriceCalculator.types'
 import type { PriceCalculatorPageStory } from '@/services/storyblok/storyblok'
 import { Features } from '@/utils/Features'
 import { type RoutingLocale } from '@/utils/l10n/types'
+import { getPriceTemplate } from './PriceCalculatorCmsPage.helpers'
 import { PriceCalculatorCmsPageContent } from './PriceCalculatorCmsPageContent/PriceCalculatorCmsPageContent'
 import { PriceTemplateProvider } from './PriceTemplateProvider'
 
@@ -32,19 +32,6 @@ export function PriceCalculatorCmsPage({ locale, story }: Props) {
       </Suspense>
     </StorePageProviders>
   )
-}
-
-const getPriceTemplate = async (templateName: string): Promise<TemplateV2> => {
-  try {
-    const module_ = await import(`../priceTemplates/${templateName}`)
-    const template = module_.default
-    if (typeof template !== 'object' || template.name !== templateName) {
-      throw new Error('Template module does not export expected default value')
-    }
-    return template as TemplateV2
-  } catch (err) {
-    throw new Error(`Failed to find priceTemplate ${templateName}`, { cause: err })
-  }
 }
 
 const getProductData = async (locale: RoutingLocale, productName: string) => {

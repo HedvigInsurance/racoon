@@ -1,15 +1,18 @@
 import { type ResponseCookies } from 'next/dist/compiled/@edge-runtime/cookies'
 import { redirect } from 'next/navigation'
 import { type NextRequest, NextResponse } from 'next/server'
+import { getPriceTemplate as getPriceTemplateV2 } from '@/features/priceCalculator/PriceCalculatorCmsPage/PriceCalculatorCmsPage.helpers'
 import { setupApolloClient } from '@/services/apollo/app-router/rscClient'
 import {
+  type PriceIntentFragment,
   RedeemCampaignDocument,
   type RedeemCampaignMutation,
   type RedeemCampaignMutationVariables,
 } from '@/services/graphql/generated'
-import { getPriceTemplate } from '@/services/PriceCalculator/PriceCalculator.helpers'
+import { getPriceTemplate as getPriceTemplateV1 } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import { priceIntentServiceInitServerSide } from '@/services/priceIntent/PriceIntentService'
 import { setupShopSessionServiceServerSide } from '@/services/shopSession/ShopSession.helpers'
+import { Features } from '@/utils/Features'
 import { isRoutingLocale } from '@/utils/l10n/localeUtils'
 import { type RoutingLocale } from '@/utils/l10n/types'
 import { PageLink } from '@/utils/PageLink'
@@ -60,11 +63,10 @@ export async function GET(req: NextRequest, { params }: { params: Params }) {
       const priceIntentService = priceIntentServiceInitServerSide({ apolloClient, req, res })
       const priceIntent = await priceIntentService.get(priceIntentId)
       if (priceIntent) {
-        const templateName = getPriceTemplate(priceIntent.product.name)?.name
+        const templateName = (await getPriceTemplate(priceIntent))?.name
         if (templateName != null) {
           priceIntentService.save({ shopSessionId, priceIntentId, templateName })
-          // TODO: use price calculator page depending on feature flag
-          targetUrl.pathname = priceIntent.product.pageLink
+          targetUrl.pathname = getProductTargetUrl(priceIntent)
         } else {
           console.warn(
             'Found priceIntent, but no priceTemplate for it. "' +
@@ -100,4 +102,25 @@ const redirectWithCookies = (targetUrl: URL, cookies: ResponseCookies) => {
     result.cookies.set(cookie)
   }
   return result
+}
+
+// We'll start using the new price calculator only for pet insurance products for now.
+// That means only checking for 'PRICE_CALCULATOR_PAGE' feature flag is not enough.
+function shouldUseNewPriceCalculator(priceIntent: PriceIntentFragment) {
+  return (
+    Features.enabled('PRICE_CALCULATOR_PAGE') && priceIntent.product.priceCalculatorPageLink != null
+  )
+}
+
+async function getPriceTemplate(priceIntent: PriceIntentFragment) {
+  const productName = priceIntent.product.name
+  return shouldUseNewPriceCalculator(priceIntent)
+    ? await getPriceTemplateV2(productName + '_V2')
+    : getPriceTemplateV1(productName)
+}
+
+function getProductTargetUrl(priceIntent: PriceIntentFragment) {
+  return shouldUseNewPriceCalculator(priceIntent)
+    ? (priceIntent.product.priceCalculatorPageLink ?? priceIntent.product.pageLink)
+    : priceIntent.product.pageLink
 }
