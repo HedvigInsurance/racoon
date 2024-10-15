@@ -79,7 +79,7 @@
     "react-day-picker": "8.10.1",
     "react-device-detect": "2.2.3",
     "react-dom": "18.3.1",
-    "react-i18next": "15.0.2",
+    "react-i18next": "15.0.3",
     "server-only": "0.0.1",
     "tss-react": "4.9.13",
     "ui": "workspace:",
