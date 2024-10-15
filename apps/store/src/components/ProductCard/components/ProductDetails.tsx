@@ -1,13 +1,13 @@
 import { useTranslation } from 'next-i18next'
 import { Text, sprinkles } from 'ui'
-import { DetailsList } from '@/components/ProductCard/DetailsList/DetailsList'
-import { type useOfferDetails } from '../hooks/useOfferDetails'
+import { DetailsList } from '@/components/DetailsList/DetailsList'
+import { type useOfferDetails } from '../useOfferDetails'
 
 type Props = {
   details: ReturnType<typeof useOfferDetails>
 }
 
-export function CartItemProductDetails({ details }: Props) {
+export function ProductDetails({ details }: Props) {
   const { t } = useTranslation('cart')
 
   return (

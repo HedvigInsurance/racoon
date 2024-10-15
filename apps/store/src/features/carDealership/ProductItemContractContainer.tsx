@@ -1,14 +1,14 @@
 import { useTranslation } from 'next-i18next'
 import { Text, Card, yStack, Divider } from 'ui'
+import { DetailsList } from '@/components/DetailsList/DetailsList'
 import { Pillow } from '@/components/Pillow/Pillow'
-import { DetailsList } from '@/components/ProductCard/DetailsList/DetailsList'
+import { ProductDetails } from '@/components/ProductCard/components/ProductDetails'
+import { ProductDocuments } from '@/components/ProductCard/components/ProductDocuments'
 import { ProductCardDetails } from '@/components/ProductCard/ProductCardDetails'
-import { TotalPrice } from '@/components/ProductCard/TotalPrice/TotalPrice'
+import { TotalPrice } from '@/components/TotalPrice/TotalPrice'
 import type { Money } from '@/services/graphql/generated'
 import { convertToDate } from '@/utils/date'
 import { useFormatter } from '@/utils/useFormatter'
-import { CartItemProductDetails } from '../CartItem/components/CartItemProductDetails'
-import { CartItemProductDocuments } from '../CartItem/components/CartItemProductDocuments'
 import { type TrialContract } from './carDealership.types'
 
 type Props = {
@@ -66,8 +66,8 @@ export const ProductItemContractContainerCar = ({ contract, crossedOutAmount }: 
         </ProductCardDetails.Trigger>
 
         <ProductCardDetails.Content className={yStack({ paddingBlock: 'md', gap: 'md' })}>
-          <CartItemProductDetails details={productDetails} />
-          <CartItemProductDocuments documents={contract.productVariant.documents} />
+          <ProductDetails details={productDetails} />
+          <ProductDocuments documents={contract.productVariant.documents} />
         </ProductCardDetails.Content>
       </ProductCardDetails.Root>
 

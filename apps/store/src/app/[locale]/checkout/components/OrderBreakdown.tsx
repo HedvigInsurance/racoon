@@ -1,4 +1,4 @@
-import { DetailsList } from '@/components/ProductCard/DetailsList/DetailsList'
+import { DetailsList } from '@/components/DetailsList/DetailsList'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { useFormatter } from '@/utils/useFormatter'
 

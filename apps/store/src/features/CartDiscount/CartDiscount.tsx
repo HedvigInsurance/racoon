@@ -1,7 +1,7 @@
 import { useTranslation } from 'next-i18next'
 import { type FormEvent } from 'react'
 import { Text } from 'ui'
-import { Discount } from '@/components/ProductCard/Discount/Discount'
+import { Discount } from '@/components/Discount/Discount'
 import { type ShopSession } from '@/services/shopSession/ShopSession.types'
 import { getDiscountsVisibility } from './CartDiscount.utils'
 import { useCartDiscount } from './hooks/useCartDiscount'

@@ -6,11 +6,11 @@ import type { Banner } from '@/components/Banner/Banner.types'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { useSetGlobalBanner, useDismissBanner } from '@/components/GlobalBanner/globalBannerState'
 import { Pillow } from '@/components/Pillow/Pillow'
-import { TotalPrice } from '@/components/ProductCard/TotalPrice/TotalPrice'
 import { useResetPriceIntent } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { usePriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
 import { useSelectedOfferValueOrThrow } from '@/components/ProductPage/PurchaseForm/useSelectedOffer'
 import { TextWithLink } from '@/components/TextWithLink'
+import { TotalPrice } from '@/components/TotalPrice/TotalPrice'
 import {
   BUNDLE_DISCOUNT_PERCENTAGE,
   BUNDLE_DISCOUNT_PROMO_PAGE_PATH,

@@ -1,8 +1,8 @@
 'use client'
 
-import { Heading, Text, yStack } from 'ui'
+import { Divider, Heading, Text, yStack } from 'ui'
+import { ProductCard } from '@/components/ProductCard/ProductCard'
 import { ProductItemContractContainerCar } from '@/features/carDealership/ProductItemContractContainer'
-import { CartItem } from '@/features/CartItem/CartItem'
 import { CartTotal } from '@/features/CartTotal/CartTotal'
 import { SasEurobonusSectionContainer } from '@/features/sas/SasEurobonusSection'
 import { StaticContent } from './components/StaticContent/StaticContent'
@@ -50,7 +50,13 @@ export const ConfirmationPage = ({
             {carTrialContract && <ProductItemContractContainerCar contract={carTrialContract} />}
 
             {cart.entries.map((offer) => (
-              <CartItem key={offer.id} offer={offer} readOnly />
+              <ProductCard.Root key={offer.id} offer={offer}>
+                <ProductCard.Header />
+                <ProductCard.Details />
+                <ProductCard.Breakdown />
+                <Divider />
+                <ProductCard.TotalPrice />
+              </ProductCard.Root>
             ))}
 
             {cartTotalCost > 0 && <CartTotal cart={cart} />}

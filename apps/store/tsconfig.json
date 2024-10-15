@@ -41,6 +41,15 @@
     "forceConsistentCasingInFileNames": true,
     "module": "esnext"
   },
-  "include": ["src", "*.d.ts", ".next/types/**/*.ts", "./codegen.ts", "./jest-setup.ts"],
+  "include": [
+    "src",
+    "*.d.ts",
+    ".next/types/**/*.ts",
+    "./codegen.ts",
+    "./jest-setup.ts",
+    "src/components/DetailsList",
+    "src/components/Discount",
+    "src/components/TotalPrice"
+  ],
   "exclude": ["node_modules"]
 }
