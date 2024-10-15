@@ -1,0 +1,25 @@
+fragment ProductVariant on ProductVariant {
+    typeOfContract
+    termsVersion
+    displayName
+    displayNameSubtype
+    perils {
+        ...Peril
+    }
+    insurableLimits {
+        type
+        label
+        limit
+        description
+    }
+    documents {
+        ...InsuranceDocument
+    }
+}
+
+
+query ProductVariant($termsVersion: ID!) {
+    productVariant(termsVersion: $termsVersion) {
+        ...ProductVariant
+    }
+}
