@@ -268,7 +268,7 @@ function OfferDetails() {
   return (
     <Collapsible.Root open={expanded} onOpenChange={setExpanded}>
       <Collapsible.Trigger asChild>
-        <Button variant="secondary-alt" size="medium" fullWidth={true}>
+        <Button variant="outline" size="medium" fullWidth={true}>
           {expanded ? t('HIDE_DETAILS_BUTTON_LABEL') : t('SHOW_DETAILS_BUTTON_LABEL')}
         </Button>
       </Collapsible.Trigger>
