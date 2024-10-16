@@ -143,10 +143,9 @@ const ProductCardBreakdown = () => {
           </DetailsList.Label>
           <DetailsList.Value>
             <Text as="span" size="xs">
-              -
               {formatter.monthlyPrice({
                 currencyCode: price.currencyCode,
-                amount: offer.cost.discount.amount,
+                amount: -offer.cost.discount.amount,
               })}
             </Text>
           </DetailsList.Value>
