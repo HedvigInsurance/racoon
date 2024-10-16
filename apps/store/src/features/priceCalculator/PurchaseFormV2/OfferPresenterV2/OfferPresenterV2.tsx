@@ -1,3 +1,4 @@
+import { useApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import { useInView } from 'framer-motion'
@@ -18,6 +19,7 @@ import {
   priceCalculatorFormAtom,
   usePriceIntent,
 } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
+import { usePriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
 import {
   useSelectedOffer,
   useSelectedOfferValueOrThrow,
@@ -31,6 +33,7 @@ import { ProductCardSmall } from '@/features/priceCalculator/PurchaseFormV2/Offe
 import { ProductTierSelectorV2 } from '@/features/priceCalculator/PurchaseFormV2/OfferPresenterV2/ProductTierSelectorV2/ProductTierSelectorV2'
 import { BankSigneringEvent } from '@/services/bankSignering'
 import { ExternalInsuranceCancellationOption } from '@/services/graphql/generated'
+import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 import {
   useShopSessionIdOrThrow,
   useShopSessionValueOrThrow,
@@ -160,6 +163,8 @@ function OfferSummary() {
   const shopSessionId = useShopSessionIdOrThrow()
   const selectedOffer = useSelectedOfferValueOrThrow()
   const priceIntent = usePriceIntent()
+  const apolloClient = useApolloClient()
+  const priceTemplate = usePriceTemplate()
 
   const setPriceCalculatorStep = useSetAtom(priceCalculatorStepAtom)
 
@@ -194,6 +199,16 @@ function OfferSummary() {
     setPriceCalculatorStep('purchaseSummary')
     // Make sure user views "added to cart" notification and/or bundle discount banner
     window.scrollTo({ top: 0, behavior: 'instant' })
+    // Creates a new price intent but NOT synchronizing it with the price intent atoms like
+    // useResetPriceIntent does. By doing that user can see 'purchase summary' at the end of
+    // the flow while still can load price calculator for that product again by refreshing the
+    // page or navigating back.
+    const priceIntentService = priceIntentServiceInitClientSide(apolloClient)
+    priceIntentService.create({
+      shopSessionId,
+      productName: selectedOffer.product.name,
+      priceTemplate,
+    })
   }
 
   const productData = useProductData()
