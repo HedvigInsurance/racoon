@@ -204,7 +204,7 @@ function OfferSummary() {
     // the flow while still can load price calculator for that product again by refreshing the
     // page or navigating back.
     const priceIntentService = priceIntentServiceInitClientSide(apolloClient)
-    priceIntentService.create({
+    await priceIntentService.create({
       shopSessionId,
       productName: selectedOffer.product.name,
       priceTemplate,
