@@ -8,7 +8,7 @@ type Props = {
   documents: ProductOfferFragment['variant']['documents']
 }
 
-export function CartItemProductDocuments({ documents }: Props) {
+export function ProductDocuments({ documents }: Props) {
   const { t } = useTranslation('cart')
 
   const isEmbedded = useIsEmbedded()

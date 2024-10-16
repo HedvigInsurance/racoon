@@ -17,11 +17,11 @@ import {
   yStack,
 } from 'ui'
 import { CurrencyCode } from '@/services/graphql/graphql'
+import { DetailsList } from '../DetailsList/DetailsList'
+import { Discount, FORM_CAMPAIGN_CODE } from '../Discount/Discount'
 import { InputStartDay } from '../InputDay/InputStartDay'
-import { DetailsList } from './DetailsList/DetailsList'
-import { Discount, FORM_CAMPAIGN_CODE } from './Discount/Discount'
+import { TotalPrice } from '../TotalPrice/TotalPrice'
 import { ProductCardDetails } from './ProductCardDetails'
-import { TotalPrice } from './TotalPrice/TotalPrice'
 
 type Controls = ComponentProps<typeof Card.Root>
 

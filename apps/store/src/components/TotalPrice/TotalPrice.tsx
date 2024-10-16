@@ -1,8 +1,9 @@
 import { useTranslation } from 'next-i18next'
 import { sprinkles, Text } from 'ui'
 import { type CurrencyCode } from '@/services/graphql/generated'
-import { Price } from '../../Price'
 import { DetailsList } from '../DetailsList/DetailsList'
+import { Price } from '../Price'
+
 type Props = {
   label?: string
   currencyCode: CurrencyCode
