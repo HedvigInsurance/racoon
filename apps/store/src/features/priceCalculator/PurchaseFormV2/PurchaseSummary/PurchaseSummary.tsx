@@ -62,7 +62,9 @@ export function PurchaseSummary({ className }: { className?: string }) {
       <div className={actions}>
         {showAddMoreButton && (
           <Button onClick={handleAddMore} variant="secondary">
-            {t('ADD_ANOTHER_INSURANCE_LABEL', { productName: offer.product.displayNameShort })}
+            {t('ADD_ANOTHER_INSURANCE_LABEL', {
+              productName: offer.product.displayNameShort.toLowerCase(),
+            })}
           </Button>
         )}
         <ButtonNextLink href={PageLink.checkout({ locale })} variant="primary">
