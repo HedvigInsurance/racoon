@@ -44,9 +44,9 @@ const ProductCardRoot = ({ offer, children }: PropsWithChildren<RootProps>) => {
 }
 
 const ProductCardHeader = () => {
-  const { offer } = useProductCard()
-
-  const { product, exposure } = offer
+  const {
+    offer: { product, exposure },
+  } = useProductCard()
 
   return (
     <Card.Header className={xStack({ alignItems: 'center' })}>
@@ -107,11 +107,11 @@ const ProductCardBreakdown = () => {
 
   const formatter = useFormatter()
 
-  const { offer } = useProductCard()
+  const {
+    offer: { cost, variant, cancellation, startDate: offerStartDate },
+  } = useProductCard()
 
-  const price = getOfferPrice(offer.cost)
-
-  const { variant, cancellation, startDate: offerStartDate } = offer
+  const price = getOfferPrice(cost)
 
   const startDate = convertToDate(offerStartDate)
   const formattedStartDate = startDate ? formatter.fromNow(startDate) : null
@@ -130,13 +130,13 @@ const ProductCardBreakdown = () => {
           <Text as="span" size="xs">
             {formatter.monthlyPrice({
               currencyCode: price.currencyCode,
-              amount: offer.cost.gross.amount,
+              amount: cost.gross.amount,
             })}
           </Text>
         </DetailsList.Value>
       </DetailsList.Item>
 
-      {!!offer.cost.discount.amount && (
+      {!!cost.discount.amount && (
         <DetailsList.Item>
           <DetailsList.Label>
             {t('OFFER_SUMMARY_DISCOUNT_LABEL', { ns: 'purchase-form' })}
@@ -145,7 +145,7 @@ const ProductCardBreakdown = () => {
             <Text as="span" size="xs">
               {formatter.monthlyPrice({
                 currencyCode: price.currencyCode,
-                amount: -offer.cost.discount.amount,
+                amount: -cost.discount.amount,
               })}
             </Text>
           </DetailsList.Value>
@@ -178,9 +178,11 @@ const ProductCardBreakdown = () => {
 const ProductCardTotalPrice = () => {
   const { t } = useTranslation('common')
 
-  const { offer } = useProductCard()
+  const {
+    offer: { cost },
+  } = useProductCard()
 
-  const price = getOfferPrice(offer.cost)
+  const price = getOfferPrice(cost)
 
   return <TotalPrice {...price} label={t('YOUR_PRICE')} />
 }
