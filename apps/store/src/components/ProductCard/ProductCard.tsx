@@ -136,7 +136,7 @@ const ProductCardBreakdown = () => {
         </DetailsList.Value>
       </DetailsList.Item>
 
-      {offer.cost.discount.amount ? (
+      {!!offer.cost.discount.amount && (
         <DetailsList.Item>
           <DetailsList.Label>
             {t('OFFER_SUMMARY_DISCOUNT_LABEL', { ns: 'purchase-form' })}
@@ -150,7 +150,7 @@ const ProductCardBreakdown = () => {
             </Text>
           </DetailsList.Value>
         </DetailsList.Item>
-      ) : null}
+      )}
 
       <DetailsList.Item>
         <DetailsList.Label>{t('START_DATE_LABEL', { ns: 'cart' })}</DetailsList.Label>
@@ -161,11 +161,11 @@ const ProductCardBreakdown = () => {
                 {startDateValue}
               </Text>
 
-              {isAutoSwitch ? (
+              {isAutoSwitch && (
                 <Tooltip.Trigger>
                   <InfoIcon />
                 </Tooltip.Trigger>
-              ) : null}
+              )}
             </div>
             <Tooltip.Content>{t('CART_ITEM_TOOLTIP_AUTO_SWITCH', { ns: 'cart' })}</Tooltip.Content>
           </Tooltip.Root>
