@@ -15,6 +15,7 @@ fragment PriceIntent on PriceIntent {
     name
     displayNameShort
     pageLink
+    priceCalculatorPageLink
   }
   insurely {
     configName
