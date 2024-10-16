@@ -94,7 +94,6 @@ const DiscountForm = ({ className, errorMessage, loading, ...props }: FormProps)
         message={errorMessage}
         required={true}
         upperCaseInput={true}
-        readOnly={loading}
         disabled={loading}
       />
 
@@ -104,7 +103,6 @@ const DiscountForm = ({ className, errorMessage, loading, ...props }: FormProps)
         size="medium"
         variant="primary"
         loading={loading}
-        disabled={loading}
       >
         {t('CHECKOUT_ADD_DISCOUNT_BUTTON')}
       </Button>
