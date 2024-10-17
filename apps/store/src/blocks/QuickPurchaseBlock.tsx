@@ -14,7 +14,7 @@ type QuickPurchaseBlockProps = SbBaseBlockProps<{
 }>
 
 export const QuickPurchaseBlock = ({ blok, nested }: QuickPurchaseBlockProps) => {
-  if (Features.enabled('PRICE_CALCULATOR_PAGE')) {
+  if (Features.enabled('QUICK_PURCHASE_V2')) {
     return (
       <QuickPurchaseV2
         products={blok.products}
