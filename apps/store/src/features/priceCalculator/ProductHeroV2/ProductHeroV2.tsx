@@ -1,9 +1,8 @@
 'use client'
-import { clsx } from 'clsx'
 import type { Variants } from 'framer-motion'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useRef } from 'react'
-import { Badge, framerTransitions, Heading, sprinkles, Text, yStack } from 'ui'
+import { Badge, framerTransitions, Heading, sprinkles, Text } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { useSelectedOffer } from '@/components/ProductPage/PurchaseForm/useSelectedOffer'
@@ -13,6 +12,7 @@ import {
   pillowWrapper,
   priceLabel,
   priceWrapper,
+  productHeroWrapper,
   subTypeBadge,
   subTypeLabel,
 } from './ProductHeroV2.css'
@@ -26,7 +26,7 @@ const ANIMATION: Variants = {
 }
 const TRANSITION = { duration: 0.3, ...framerTransitions.easeInOutCubic }
 
-export function ProductHeroV2({ className }: { className?: string }) {
+export function ProductHeroV2() {
   const ref = useRef(null)
   const productData = useProductData()
   const [selectedOffer] = useSelectedOffer()
@@ -74,7 +74,7 @@ export function ProductHeroV2({ className }: { className?: string }) {
         }
       </StickyProductHeader>
 
-      <div ref={ref} className={clsx(yStack({ alignItems: 'center' }), className)}>
+      <div ref={ref} className={productHeroWrapper}>
         <div className={pillowWrapper}>
           <Pillow
             size={{ _: 'xlarge', lg: 'xxlarge' }}
