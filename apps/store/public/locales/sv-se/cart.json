@@ -9,7 +9,7 @@
   "BUNDLE_DISCOUNT_QUICK_LINKS_LABEL": "-15%",
   "BUNDLE_DISCOUNT_QUICK_LINKS_SUBTITLE": "Få {{percentage}} rabatt på hela ditt köp",
   "BUNDLE_DISCOUNT_QUICK_LINKS_TITLE": "Lägg till försäkring",
-  "BUNDLE_DISCOUNT_SUMMARY": "Du har {{percentage}} samlingsrabatt och sparar {{totalSaved}} det första året. Kan inte kombineras med andra erbjudanden.",
+  "BUNDLE_DISCOUNT_SUMMARY": "Du har {{percentage}} samlingsrabatt och sparar {{totalSaved}} under det första året. Kan ej kombineras med andra erbjudanden.",
   "BUNDLE_DISCOUNT_SUMMARY_WITHOUT_TOTAL": "Du har {{percentage}} samlingsrabatt i 1 år fr.o.m. {{startDate}}. Kan inte kombineras med andra erbjudanden.",
   "CAMPAIGN_CODE_HEADING": "Lägg till rabattkod",
   "CAMPAIGN_CODE_INPUT_LABEL": "Rabattkod",
