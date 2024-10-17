@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { responsiveStyles, tokens, yStack } from 'ui'
+import { responsiveStyles, sprinkles, tokens } from 'ui'
 import { HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header.css'
 import { HEADER_HEIGHT_MOBILE } from '@/components/Header/HeaderMenuMobile/HeaderMenuMobile.css'
 
@@ -27,11 +27,8 @@ export const pageGrid = style({
 })
 
 export const productHeroSection = style([
-  yStack({ justifyContent: 'center' }),
+  sprinkles({ display: 'flex', flexDirection: 'column', justifyContent: 'center' }),
   {
-    height: '13rem',
-    alignSelf: 'start',
-
     ...responsiveStyles({
       lg: {
         position: 'sticky',
@@ -49,19 +46,6 @@ export const priceCalculatorSection = style({
   ...responsiveStyles({
     lg: {
       gridColumn: '9 / span 4',
-    },
-  }),
-})
-
-export const productHero = style({
-  display: 'flex',
-  gap: tokens.space.xs,
-
-  ...responsiveStyles({
-    lg: {
-      gap: tokens.space.md,
-      // Visually center Product Hero
-      marginTop: `calc(-1 * ${HEADER_HEIGHT_DESKTOP})`,
     },
   }),
 })
