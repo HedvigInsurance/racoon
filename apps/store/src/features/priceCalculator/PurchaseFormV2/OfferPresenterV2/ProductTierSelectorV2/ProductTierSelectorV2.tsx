@@ -1,8 +1,8 @@
 import { assignInlineVars } from '@vanilla-extract/dynamic'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
-import { useRef } from 'react'
 import { badgeFontColor } from 'ui/src/components/Badge/Badge.css'
+import * as Dialog from 'ui/src/components/Dialog/Dialog'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import {
   Badge,
@@ -16,10 +16,10 @@ import {
   xStack,
   yStack,
 } from 'ui'
-import { ComparisonTableModal } from '@/components/ProductPage/PurchaseForm/ComparisonTableModal'
 import type { ProductOfferFragment } from '@/services/graphql/generated'
 import { useFormatter } from '@/utils/useFormatter'
 import * as CardRadioGroup from '../CardRadioGroup/CardRadioGroup'
+import { TierComparisonDialogContent } from '../TierComparisonDialog/TierComparisonDialogContent'
 import { item } from './ProductTierSelectorV2.css'
 
 type Props = {
@@ -33,91 +33,84 @@ export function ProductTierSelectorV2({ offers, selectedOffer, onValueChange }: 
   const formatter = useFormatter()
   const { t } = useTranslation('purchase-form')
 
-  const tierDialogRef = useRef<{ open: () => void }>(null)
-
-  const openTierDialog = () => tierDialogRef.current?.open()
-
   return (
     <>
-      <CardRadioGroup.Root value={selectedOffer.id} onValueChange={onValueChange}>
-        {offers.map((offer, index) => (
-          <CardRadioGroup.Item
-            // NOTE: We want to avoid remounting selected deductible element when changing tiers
-            // to avoid extra animation, hence index key
-            key={index}
-            value={offer.id}
-            isSelected={selectedOffer.id === offer.id}
-            className={item}
-          >
-            <div className={yStack()}>
-              <div
-                className={xStack({
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  gap: 'md',
-                })}
-              >
-                <Heading as="h2" variant="standard.24">
-                  {offer.variant.displayNameSubtype || offer.variant.displayName}
-                </Heading>
-                {isDefaultTier(offer) && (
-                  <Badge
-                    size="small"
-                    color="pinkFill3"
-                    style={assignInlineVars({ [badgeFontColor]: tokens.colors.gray1000 })}
-                  >
-                    {t('DEFAULT_TIER_LABEL')}
-                  </Badge>
-                )}
-              </div>
-              <Heading as="h3" variant="standard.24" color="textSecondary">
-                {formatter.monthlyPrice(offer.cost.net)}
-              </Heading>
-            </div>
-            <Text color="textSecondary" className={sprinkles({ marginTop: 'md' })}>
-              {getVariantDescription(offer.variant.typeOfContract)}
-            </Text>
-            <AnimatePresence initial={false}>
-              {offer.id === selectedOffer.id && (
-                <motion.div
-                  transition={{
-                    duration: framerTransitions.defaultDuration,
-                    ...framerTransitions.easeInOutCubic,
-                  }}
-                  initial={{ height: 0, marginTop: 0, opacity: 0 }}
-                  animate={{ height: 'fit-content', marginTop: theme.space.md, opacity: 1 }}
-                  exit={{ height: 0, marginTop: 0, opacity: 0 }}
+      <Dialog.Root>
+        <CardRadioGroup.Root value={selectedOffer.id} onValueChange={onValueChange}>
+          {offers.map((offer, index) => (
+            <CardRadioGroup.Item
+              // NOTE: We want to avoid remounting selected deductible element when changing tiers
+              // to avoid extra animation, hence index key
+              key={index}
+              value={offer.id}
+              isSelected={selectedOffer.id === offer.id}
+              className={item}
+            >
+              <div className={yStack()}>
+                <div
+                  className={xStack({
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    gap: 'md',
+                  })}
                 >
-                  <Button
-                    variant="secondary"
-                    fullWidth={true}
-                    size="medium"
-                    onClick={openTierDialog}
+                  <Heading as="h2" variant="standard.24">
+                    {offer.variant.displayNameSubtype || offer.variant.displayName}
+                  </Heading>
+                  {isDefaultTier(offer) && (
+                    <Badge
+                      size="small"
+                      color="pinkFill3"
+                      style={assignInlineVars({ [badgeFontColor]: tokens.colors.gray1000 })}
+                    >
+                      {t('DEFAULT_TIER_LABEL')}
+                    </Badge>
+                  )}
+                </div>
+                <Heading as="h3" variant="standard.24" color="textSecondary">
+                  {formatter.monthlyPrice(offer.cost.net)}
+                </Heading>
+              </div>
+              <Text color="textSecondary" className={sprinkles({ marginTop: 'md' })}>
+                {getVariantDescription(offer.variant.typeOfContract)}
+              </Text>
+              <AnimatePresence initial={false}>
+                {offer.id === selectedOffer.id && (
+                  <motion.div
+                    transition={{
+                      duration: framerTransitions.defaultDuration,
+                      ...framerTransitions.easeInOutCubic,
+                    }}
+                    initial={{ height: 0, marginTop: 0, opacity: 0 }}
+                    animate={{ height: 'fit-content', marginTop: theme.space.md, opacity: 1 }}
+                    exit={{ height: 0, marginTop: 0, opacity: 0 }}
                   >
-                    {t('COMPARE_TIERS_LABEL')}
-                  </Button>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </CardRadioGroup.Item>
-        ))}
-      </CardRadioGroup.Root>
+                    <Dialog.Trigger asChild>
+                      <Button variant="secondary" fullWidth={true} size="medium">
+                        {t('COMPARE_TIERS_LABEL')}
+                      </Button>
+                    </Dialog.Trigger>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </CardRadioGroup.Item>
+          ))}
+        </CardRadioGroup.Root>
 
-      <ComparisonTableModal
-        controlRef={tierDialogRef}
-        tiers={offers}
-        selectedTierId={selectedOffer.id}
-      >
-        <Button
-          variant="secondary"
-          size="small"
-          className={sprinkles({ alignSelf: 'center' })}
-          Icon={<PlusIcon />}
-          iconPosition="right"
-        >
-          {t('COMPARE_COVERAGE_BUTTON')}
-        </Button>
-      </ComparisonTableModal>
+        <Dialog.Trigger asChild>
+          <Button
+            variant="secondary"
+            size="small"
+            className={sprinkles({ alignSelf: 'center' })}
+            Icon={<PlusIcon />}
+            iconPosition="right"
+          >
+            {t('COMPARE_COVERAGE_BUTTON')}
+          </Button>
+        </Dialog.Trigger>
+
+        <TierComparisonDialogContent tiers={offers} selectedTierId={selectedOffer.id} />
+      </Dialog.Root>
     </>
   )
 }
