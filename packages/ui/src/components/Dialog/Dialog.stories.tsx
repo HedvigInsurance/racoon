@@ -16,7 +16,7 @@ export default {
   },
 } as Meta<typeof Dialog>
 
-export const Default: StoryFn<typeof Dialog> = () => {
+export const Base: StoryFn<typeof Dialog> = () => {
   const [open, setOpen] = useState(false)
 
   return (
