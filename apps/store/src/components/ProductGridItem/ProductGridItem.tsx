@@ -2,7 +2,8 @@ import { assignInlineVars } from '@vanilla-extract/dynamic'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
-import { Button, Text, sprinkles, breakpoints } from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
+import { Text, sprinkles, breakpoints } from 'ui'
 import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWithPlaceholder'
 import type { ImageSize } from '../../blocks/ProductGridItemBlock/ProductGridItemBlock'
 import {
@@ -16,7 +17,6 @@ import {
 } from './ProductGridItem.css'
 import { ProductGridItemBlockCategoryCTA } from './ProductGridItemCategoryCTA'
 import { ProductGridItemBlockProductCTA } from './ProductGridItemProductCTA'
-
 
 type ImageProps = {
   src: string

@@ -1,10 +1,10 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useMemo, type ReactNode, type RefObject, useImperativeHandle, useState } from 'react'
+import { Button } from 'ui/src/components/Button/Button'
 import { Dialog } from 'ui/src/components/Dialog/Dialog'
 import { FullscreenDialog } from 'ui/src/components/Dialog/FullscreenDialog'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
-import { Button } from 'ui'
 import {
   TableMarkers,
   type Table,

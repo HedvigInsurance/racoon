@@ -1,17 +1,8 @@
 import clsx from 'clsx'
 import { useTranslation } from 'next-i18next'
 import { type ComponentProps, createContext, useContext, useState } from 'react'
-import {
-  xStack,
-  Text,
-  Switch,
-  sprinkles,
-  Button,
-  Badge,
-  IconButton,
-  CrossIconSmall,
-  tokens,
-} from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
+import { xStack, Text, Switch, sprinkles, Badge, IconButton, CrossIconSmall, tokens } from 'ui'
 import Collapsible from '@/components/Collapsible/Collapsible'
 import { TextField } from '@/components/TextField/TextField'
 import { discountForm, formInput, formSubmitButton } from './Discount.css'

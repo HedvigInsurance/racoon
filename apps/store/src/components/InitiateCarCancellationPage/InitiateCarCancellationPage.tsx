@@ -4,7 +4,8 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import type { ReactNode } from 'react'
 import { useMemo, type FormEventHandler, useState } from 'react'
-import { Button, Heading, Space, Text, mq, theme } from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
+import { Heading, Space, Text, mq, theme } from 'ui'
 import {
   CardSkeleton,
   ContractCard,

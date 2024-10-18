@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { type FormEvent, useState, type ComponentProps } from 'react'
+import { Button } from 'ui/src/components/Button/Button'
 import {
   Alert,
   Badge,
   BasePillow,
-  Button,
   Card,
   CrossIcon,
   IconButton,

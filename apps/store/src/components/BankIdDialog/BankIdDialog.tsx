@@ -5,10 +5,9 @@ import { useTranslation } from 'next-i18next'
 import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useRef, type ReactNode } from 'react'
 import { isMobile, isIOS, isChrome, isFirefox, isOpera } from 'react-device-detect'
+import { Button, type ButtonProps } from 'ui/src/components/Button/Button'
 import { FullscreenDialog } from 'ui/src/components/Dialog/FullscreenDialog'
 import {
-  Button,
-  type ButtonProps,
   Text,
   HedvigLogo,
   RoundCheckIcon,

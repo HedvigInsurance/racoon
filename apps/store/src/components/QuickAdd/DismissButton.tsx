@@ -1,6 +1,6 @@
 import { datadogRum } from '@datadog/browser-rum'
 import { useTranslation } from 'next-i18next'
-import { Button, type ButtonProps } from 'ui'
+import { Button, type ButtonProps } from 'ui/src/components/Button/Button'
 import { useShowQuickAdd } from './useShowQuickAdd'
 
 type Props = Omit<ButtonProps<'button'>, 'onClick' | 'children'>

@@ -1,7 +1,8 @@
 import { useTranslation } from 'next-i18next'
 import { type ReactNode } from 'react'
+import { Button } from 'ui/src/components/Button/Button'
 import { Dialog } from 'ui/src/components/Dialog/Dialog'
-import { Button, Heading, yStack } from 'ui'
+import { Heading, yStack } from 'ui'
 import { grayCard } from './FetchInsuranceSuccess.css'
 
 type Props = {

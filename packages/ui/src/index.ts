@@ -4,7 +4,6 @@ export { pillowSize, pillowSizeStyles } from './components/BasePillow/BasePillow
 export { HedvigLogo } from './components/HedvigLogo/HedvigLogo'
 export { HedvigSymbol } from './components/HedvigSymbol/HedvigSymbol'
 export { Space } from './components/Space'
-export { Button, type ButtonProps } from './components/Button/Button'
 export { IconButton } from './components/Button/IconButton'
 export { Tooltip } from './components/Tooltip/Tooltip'
 export { Card } from './components/Card/Card'

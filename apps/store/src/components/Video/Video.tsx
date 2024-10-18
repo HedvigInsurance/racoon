@@ -3,7 +3,8 @@ import { assignInlineVars } from '@vanilla-extract/dynamic'
 import clsx from 'clsx'
 import { useInView } from 'framer-motion'
 import React, { useCallback, useEffect, useId, useRef, useState } from 'react'
-import { PlayIcon, PauseIcon, Button, visuallyHidden } from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
+import { PlayIcon, PauseIcon, visuallyHidden } from 'ui'
 import { useDialogEvent } from '@/utils/dialogEvent'
 import {
   controlButton,

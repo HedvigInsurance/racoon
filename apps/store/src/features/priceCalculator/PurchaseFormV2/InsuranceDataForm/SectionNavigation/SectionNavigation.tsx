@@ -1,7 +1,8 @@
 import { useAtomValue, useSetAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { startTransition } from 'react'
-import { Button, ChevronIcon, Text } from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
+import { ChevronIcon, Text } from 'ui'
 import { SSN_SE_SECTION_ID } from '@/components/PriceCalculator/SsnSeSection'
 import {
   priceCalculatorFormAtom,

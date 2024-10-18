@@ -1,6 +1,7 @@
 import { useTranslation } from 'next-i18next'
 import { type MouseEventHandler, useCallback, useState } from 'react'
-import { Button, sprinkles, Text } from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
+import { sprinkles, Text } from 'ui'
 import { ChangeSsnWarningDialog } from '@/components/ChangeSsnWarningDialog/ChangeSsnWarningDialog'
 import type { Props as PersonalNumberFieldProps } from '@/components/PersonalNumberField/PersonalNumberField'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'

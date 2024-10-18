@@ -1,8 +1,9 @@
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
+import { Button } from 'ui/src/components/Button/Button'
 import { FullscreenDialog } from 'ui/src/components/Dialog/FullscreenDialog'
-import { BankIdIcon, Button, Text, WarningTriangleIcon, theme } from 'ui'
+import { BankIdIcon, Text, WarningTriangleIcon, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 
 type Props = {

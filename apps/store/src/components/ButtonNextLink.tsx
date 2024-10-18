@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { forwardRef } from 'react'
-import { Button, type ButtonProps } from 'ui'
+import { Button, type ButtonProps } from 'ui/src/components/Button/Button'
 
 export type ButtonNextLinkProps = ButtonProps<typeof Link>
 

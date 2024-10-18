@@ -2,11 +2,11 @@ import { assignInlineVars } from '@vanilla-extract/dynamic'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { badgeFontColor } from 'ui/src/components/Badge/Badge.css'
+import { Button } from 'ui/src/components/Button/Button'
 import * as Dialog from 'ui/src/components/Dialog/Dialog'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import {
   Badge,
-  Button,
   framerTransitions,
   Heading,
   PlusIcon,

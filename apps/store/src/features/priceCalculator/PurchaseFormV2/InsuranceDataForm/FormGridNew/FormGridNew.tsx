@@ -1,6 +1,6 @@
 import { assignInlineVars } from '@vanilla-extract/dynamic'
 import { useAtomValue } from 'jotai'
-import { Button } from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
 import { AutomaticField } from '@/components/PriceCalculator/AutomaticField'
 import { useTranslateFieldLabel } from '@/components/PriceCalculator/useTranslateFieldLabel'
 import { priceCalculatorLoadingAtom } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'

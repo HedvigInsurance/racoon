@@ -1,6 +1,6 @@
 'use client'
 import { useTranslation } from 'next-i18next'
-import { Button } from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
 import { AverageRating } from '@/components/ProductReviews/AverageRating'
 import { PillowHeader } from '@/components/ProductReviews/PillowHeader'
 import { ReviewsDialog } from '@/components/ProductReviews/ReviewsDialog'

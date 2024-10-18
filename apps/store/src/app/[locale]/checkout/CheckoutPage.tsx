@@ -2,7 +2,8 @@
 
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
-import { Card, Heading, Text, Divider, yStack, grid, Button, xStack, CheckIcon } from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
+import { Card, Heading, Text, Divider, yStack, grid, xStack, CheckIcon } from 'ui'
 import { BankIdDialog } from '@/components/BankIdDialog/BankIdDialog'
 import { type GlobalProductMetadata } from '@/components/LayoutWithMenu/fetchProductMetadata'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'

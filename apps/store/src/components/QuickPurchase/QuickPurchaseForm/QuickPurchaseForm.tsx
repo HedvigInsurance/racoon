@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { Button, Space } from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
+import { Space } from 'ui'
 import { ProductSelector } from './ProductSelector'
 import { SsnField } from './SsnField'
 

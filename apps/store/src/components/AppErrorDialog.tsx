@@ -1,8 +1,9 @@
 'use client'
 import { useAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
+import { Button } from 'ui/src/components/Button/Button'
 import { FullscreenDialog } from 'ui/src/components/Dialog/FullscreenDialog'
-import { Button, Text, theme, WarningTriangleIcon, xStack } from 'ui'
+import { Text, theme, WarningTriangleIcon, xStack } from 'ui'
 import { appErrorAtom } from '@/services/appErrors/appErrorAtom'
 import { useErrorMessage } from '@/utils/useErrorMessage'
 

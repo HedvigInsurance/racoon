@@ -1,6 +1,7 @@
 import { datadogRum } from '@datadog/browser-rum'
 import { useTranslation } from 'next-i18next'
-import { Text, Button, Heading, Space, Divider, theme, LockIcon } from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
+import { Text, Heading, Space, Divider, theme, LockIcon } from 'ui'
 import { StaticContent } from '@/app/[locale]/confirmation/[shopSessionId]/components/StaticContent/StaticContent'
 import { SwitchingAssistantSection } from '@/app/[locale]/confirmation/[shopSessionId]/components/SwitchingAssistantSection/SwitchingAssistantSection'
 import type { SwitchingAssistantData } from '@/app/[locale]/confirmation/[shopSessionId]/components/SwitchingAssistantSection/SwitchingAssistantSection.types'

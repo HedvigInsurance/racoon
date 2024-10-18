@@ -3,17 +3,8 @@
 import * as Popover from '@radix-ui/react-popover'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
-import {
-  AndroidIcon,
-  AppleIcon,
-  Button,
-  Heading,
-  HedvigSymbol,
-  MinusIcon,
-  Text,
-  yStack,
-  xStack,
-} from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
+import { AndroidIcon, AppleIcon, Heading, HedvigSymbol, MinusIcon, Text, yStack, xStack } from 'ui'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
