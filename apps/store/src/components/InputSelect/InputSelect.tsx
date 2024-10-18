@@ -3,8 +3,8 @@
 import { assignInlineVars } from '@vanilla-extract/dynamic'
 import { clsx } from 'clsx'
 import { type ChangeEventHandler, useId } from 'react'
+import { ChevronIcon } from 'ui/src/icons/Chevron'
 import {
-  ChevronIcon,
   InputBase,
   type InputBaseProps,
   type UIColorKeys,

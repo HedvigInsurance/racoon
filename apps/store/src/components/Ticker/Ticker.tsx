@@ -2,9 +2,10 @@ import clsx from 'clsx'
 import type { Variants } from 'framer-motion'
 import { motion } from 'framer-motion'
 import { useEffect, useRef, type ReactNode } from 'react'
+import { CheckIcon } from 'ui/src/icons/CheckIcon'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import type { FontSizeProps, FontSizes } from 'ui'
-import { CheckIcon, framerTransitions } from 'ui'
+import { framerTransitions } from 'ui'
 import { list, listItem, tickerItemWrapper } from './Ticker.css'
 
 export type TickerHeight = {

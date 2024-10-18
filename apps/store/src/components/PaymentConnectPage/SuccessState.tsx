@@ -1,5 +1,6 @@
 import { useTranslation } from 'next-i18next'
-import { CheckIcon, Text, theme } from 'ui'
+import { CheckIcon } from 'ui/src/icons/CheckIcon'
+import { Text, theme } from 'ui'
 import { IframePlaceholder } from './IdleState'
 import { Layout } from './Layout'
 

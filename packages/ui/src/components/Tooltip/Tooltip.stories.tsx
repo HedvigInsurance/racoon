@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState, type ComponentProps } from 'react'
-import { InfoIcon } from '../../icons'
+import { InfoIcon } from '../../icons/InfoIcon'
 import { Button } from '../Button/Button'
 import { IconButton } from '../Button/IconButton'
 import { Tooltip } from './Tooltip'

@@ -1,6 +1,7 @@
 import { type ReactNode, type ReactElement } from 'react'
 import { Dialog } from 'ui/src/components/Dialog/Dialog'
-import { Space, CrossIcon } from 'ui'
+import { CrossIcon } from 'ui/src/icons/CrossIcon'
+import { Space } from 'ui'
 import type { ReviewsDistribution } from '@/features/memberReviews/memberReviews.types'
 import { dialogContent, dialogCloseBtn, dialogWindow } from './dialogStyles.css'
 import { ReviewsDistributionByScore } from './ReviewsDistributionByScore'

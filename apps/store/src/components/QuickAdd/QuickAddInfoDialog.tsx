@@ -2,7 +2,8 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useState, type ReactNode } from 'react'
 import { Dialog } from 'ui/src/components/Dialog/Dialog'
-import { CrossIconSmall, Space, mq, theme } from 'ui'
+import { CrossIconSmall } from 'ui/src/icons/CrossIconSmall'
+import { Space, mq, theme } from 'ui'
 
 type Props = {
   children: ReactNode

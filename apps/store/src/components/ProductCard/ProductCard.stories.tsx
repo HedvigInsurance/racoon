@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { type FormEvent, useState, type ComponentProps } from 'react'
 import { Button } from 'ui/src/components/Button/Button'
+import { CrossIcon } from 'ui/src/icons/CrossIcon'
+import { InfoIcon } from 'ui/src/icons/InfoIcon'
 import {
   Alert,
   Badge,
   BasePillow,
   Card,
-  CrossIcon,
   IconButton,
-  InfoIcon,
   sprinkles,
   Text,
   ToggleCard,

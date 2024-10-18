@@ -24,8 +24,6 @@ export * from './components/ThemeProvider'
 export { visuallyHidden } from './utils/visuallyHidden.css'
 export { useHighlightAnimation } from './utils/useHighlightAnimation'
 
-export * from './icons'
-
 export * from './theme'
 
 export * from './patterns'

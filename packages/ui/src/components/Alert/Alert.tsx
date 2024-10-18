@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import type { ComponentProps, ElementType } from 'react'
-import type { IconRootProps } from '../../icons'
+import { type IconRootProps } from '../../icons/Root'
 import { Button } from '../Button/Button'
 import { Text } from '../Text/Text'
 import {

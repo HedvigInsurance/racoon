@@ -1,6 +1,8 @@
 import type { Meta, StoryFn } from '@storybook/react'
 import { type ComponentProps } from 'react'
-import { CheckIcon, CrossIcon, yStack } from 'ui'
+import { yStack } from 'ui'
+import { CheckIcon } from '../../icons/CheckIcon'
+import { CrossIcon } from '../../icons/CrossIcon'
 import { Button } from './Button'
 import { IconButton } from './IconButton'
 

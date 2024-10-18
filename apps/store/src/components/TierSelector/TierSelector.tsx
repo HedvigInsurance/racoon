@@ -1,7 +1,8 @@
 import * as RadioGroup from '@radix-ui/react-radio-group'
 import { clsx } from 'clsx'
 import { type ReactNode, type ComponentProps } from 'react'
-import { Space, Text, ChevronIcon, theme } from 'ui'
+import { ChevronIcon } from 'ui/src/icons/Chevron'
+import { Space, Text, theme } from 'ui'
 import Collapsible from '@/components/Collapsible/Collapsible'
 import {
   root,

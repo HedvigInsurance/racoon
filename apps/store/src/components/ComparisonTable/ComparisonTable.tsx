@@ -1,15 +1,12 @@
 import { clsx } from 'clsx'
 import { type ComponentPropsWithoutRef } from 'react'
 import {
-  Text,
   CheckIcon as PerilsCheckIcon,
-  MinusIcon,
-  ChevronIcon,
-  theme,
   type CheckIconProps as PerilsCheckIconProps,
-  type MinusIconProps,
-  sprinkles,
-} from 'ui'
+} from 'ui/src/icons/CheckIcon'
+import { ChevronIcon } from 'ui/src/icons/Chevron'
+import { MinusIcon, type MinusIconProps } from 'ui/src/icons/MinusIcon'
+import { Text, theme, sprinkles } from 'ui'
 import Collapsible from '@/components/Collapsible/Collapsible'
 import { ColorIcon } from '../Perils/Perils'
 import {

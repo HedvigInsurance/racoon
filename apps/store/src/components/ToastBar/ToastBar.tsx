@@ -1,7 +1,9 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import { type PropsWithChildren } from 'react'
-import { InfoIcon, WarningTriangleIcon, Text, theme } from 'ui'
+import { InfoIcon } from 'ui/src/icons/InfoIcon'
+import { WarningTriangleIcon } from 'ui/src/icons/WarningTriangleIcon'
+import { Text, theme } from 'ui'
 
 type Props = PropsWithChildren<unknown>
 

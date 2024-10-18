@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { WarningTriangleIcon } from '../icons'
+import { WarningTriangleIcon } from '../icons/WarningTriangleIcon'
 import { theme } from '../theme'
 import { Space } from './Space'
 

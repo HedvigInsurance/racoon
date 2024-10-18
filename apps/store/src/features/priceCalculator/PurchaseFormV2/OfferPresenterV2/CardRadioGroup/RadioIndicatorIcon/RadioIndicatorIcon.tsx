@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { forwardRef } from 'react'
-import { IconRoot, type IconRootProps } from 'ui'
+import { IconRoot, type IconRootProps } from 'ui/src/icons/Root'
 import { icon, indicatorBorderColor, indicatorMarkerColor } from './RadioIndicatorIcon.css'
 
 // Single icon can cover all possible radio indicator states based on

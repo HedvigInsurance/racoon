@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import type { ComponentProps } from 'react'
-import { CheckIcon, InfoIcon, StarIcon, WarningTriangleIcon } from '../../icons'
+import { CheckIcon } from '../../icons/CheckIcon'
+import { InfoIcon } from '../../icons/InfoIcon'
+import { StarIcon } from '../../icons/StarIcon'
+import { WarningTriangleIcon } from '../../icons/WarningTriangleIcon'
 import { Alert } from './Alert'
 
 const iconNameMap = {

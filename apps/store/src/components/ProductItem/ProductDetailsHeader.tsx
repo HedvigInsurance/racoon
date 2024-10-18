@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { type ComponentProps } from 'react'
-import { ChevronIcon, Text, theme } from 'ui'
+import { ChevronIcon } from 'ui/src/icons/Chevron'
+import { Text, theme } from 'ui'
 import { Price } from '@/components/Price'
 
 type Props = {

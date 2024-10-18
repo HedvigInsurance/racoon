@@ -1,6 +1,6 @@
 import { motion, type Transition } from 'framer-motion'
 import { type ReactNode } from 'react'
-import { CrossIcon } from '../../icons'
+import { CrossIcon } from '../../icons/CrossIcon'
 import { framerTransitions } from '../../theme'
 import { Dialog } from './Dialog'
 import {

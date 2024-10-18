@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
 import type { ReactNode } from 'react'
 import { Dialog } from 'ui/src/components/Dialog/Dialog'
-import { theme, CrossIcon } from 'ui'
+import { CrossIcon } from 'ui/src/icons/CrossIcon'
+import { theme } from 'ui'
 
 type Props = {
   url: string

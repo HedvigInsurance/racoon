@@ -4,7 +4,9 @@ import clsx from 'clsx'
 import { useInView } from 'framer-motion'
 import React, { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { Button } from 'ui/src/components/Button/Button'
-import { PlayIcon, PauseIcon, visuallyHidden } from 'ui'
+import { PauseIcon } from 'ui/src/icons/PauseIcon'
+import { PlayIcon } from 'ui/src/icons/PlayIcon'
+import { visuallyHidden } from 'ui'
 import { useDialogEvent } from '@/utils/dialogEvent'
 import {
   controlButton,

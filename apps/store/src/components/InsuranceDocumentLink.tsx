@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
-import { mq, NeArrow, theme } from 'ui'
+import { NeArrow } from 'ui/src/icons/NeArrow'
+import { mq, theme } from 'ui'
 import { useIsEmbedded } from '@/utils/useIsEmbedded'
 import { PDFViewer } from './PDFViewer'
 

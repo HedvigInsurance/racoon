@@ -2,7 +2,8 @@
 
 import { useState } from 'react'
 import { useFormState } from 'react-dom'
-import { CrossIconSmall, Text, xStack, yStack } from 'ui'
+import { CrossIconSmall } from 'ui/src/icons/CrossIconSmall'
+import { Text, xStack, yStack } from 'ui'
 import { FormResults } from '@/app/debugger/seb-leads/FormResults'
 import { SubmitButton } from '@/appComponents/SubmitButton'
 import { Combobox } from '@/components/Combobox/Combobox'

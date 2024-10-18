@@ -1,5 +1,5 @@
 import { type Meta, type StoryObj } from '@storybook/react'
-import { CheckIcon } from 'ui'
+import { CheckIcon } from 'ui/src/icons/CheckIcon'
 import * as ProgressIndicator from './ProgressIndicator'
 
 type Args = React.ComponentProps<typeof ProgressIndicator.Root> & {

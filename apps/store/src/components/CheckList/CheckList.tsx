@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import type { PropsWithChildren } from 'react'
-import { CheckIcon, theme } from 'ui'
+import { CheckIcon } from 'ui/src/icons/CheckIcon'
+import { theme } from 'ui'
 
 export const Root = styled.ul({
   padding: 0,

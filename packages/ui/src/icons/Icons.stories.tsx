@@ -4,7 +4,51 @@ import { useCallback } from 'react'
 import { Heading } from '../components/Heading/Heading'
 import { Space } from '../components/Space'
 import { theme } from '../theme'
-import * as AllIcons from './index'
+import { AndroidIcon } from './AndroidIcon'
+import { AppleIcon } from './AppleIcon'
+import { ArrowForwardIcon } from './ArrowIcon'
+import { BankIdIcon } from './BankIdIcon'
+import { CheckIcon } from './CheckIcon'
+import { ChevronIcon } from './Chevron'
+import { CrossIcon } from './CrossIcon'
+import { CrossIconSmall } from './CrossIconSmall'
+import { InfoIcon } from './InfoIcon'
+import { LockIcon } from './LockIcon'
+import { MailIcon } from './MailIcon'
+import { MinusIcon } from './MinusIcon'
+import { NeArrow } from './NeArrow'
+import { PauseIcon } from './PauseIcon'
+import { PhoneIcon } from './PhoneIcon'
+import { PlayIcon } from './PlayIcon'
+import { PlusIcon } from './PlusIcon'
+import { RestartIcon } from './RestartIcon'
+import { RoundCheckIcon } from './RoundCheckIcon'
+import { StarIcon } from './StarIcon'
+import { WarningTriangleIcon } from './WarningTriangleIcon'
+
+const AllIcons = {
+  AndroidIcon,
+  AppleIcon,
+  ArrowForwardIcon,
+  BankIdIcon,
+  CheckIcon,
+  ChevronIcon,
+  CrossIcon,
+  CrossIconSmall,
+  InfoIcon,
+  LockIcon,
+  MailIcon,
+  MinusIcon,
+  NeArrow,
+  PauseIcon,
+  PhoneIcon,
+  PlayIcon,
+  PlusIcon,
+  RestartIcon,
+  RoundCheckIcon,
+  StarIcon,
+  WarningTriangleIcon,
+}
 
 type IconProps = {
   icon: string
