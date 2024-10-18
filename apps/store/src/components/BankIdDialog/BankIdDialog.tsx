@@ -5,6 +5,7 @@ import { useTranslation } from 'next-i18next'
 import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useRef, type ReactNode } from 'react'
 import { isMobile, isIOS, isChrome, isFirefox, isOpera } from 'react-device-detect'
+import { FullscreenDialog } from 'ui/src/components/Dialog/FullscreenDialog'
 import {
   Button,
   type ButtonProps,
@@ -17,7 +18,6 @@ import {
   theme,
   visuallyHidden,
   Card,
-  FullscreenDialog,
 } from 'ui'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { SIGN_FORM_ID } from '@/constants/sign.constants'

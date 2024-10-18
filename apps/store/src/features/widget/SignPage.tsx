@@ -7,18 +7,8 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type FormEvent, type MouseEvent, type PropsWithChildren, useMemo, useState } from 'react'
-import {
-  BankIdIcon,
-  Button,
-  CheckIcon,
-  FullscreenDialog,
-  Heading,
-  Divider,
-  mq,
-  Space,
-  Text,
-  theme,
-} from 'ui'
+import { FullscreenDialog } from 'ui/src/components/Dialog/FullscreenDialog'
+import { BankIdIcon, Button, CheckIcon, Heading, Divider, mq, Space, Text, theme } from 'ui'
 import { FormElement } from '@/app/[locale]/checkout/CheckoutPage.constants'
 import { useHandleSubmitCheckout } from '@/app/[locale]/checkout/hooks/useHandleSubmitCheckout'
 import * as GridLayout from '@/components/GridLayout/GridLayout'

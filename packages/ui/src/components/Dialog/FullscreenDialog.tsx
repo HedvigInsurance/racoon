@@ -18,7 +18,7 @@ type Props = {
   center?: boolean
 }
 
-export const Modal = ({ children, Header, Footer, center = false }: Props) => {
+const Modal = ({ children, Header, Footer, center = false }: Props) => {
   return (
     <Dialog.Content className={dialogContent} frostedOverlay>
       {/* When not provided `Header` we display a fallback header. */}
@@ -68,10 +68,13 @@ export function AnimateContentWrapper({ children }: { children: ReactNode }) {
   )
 }
 
-export const Root = Dialog.Root
-export const Close = Dialog.Close
-export const Trigger = Dialog.Trigger
-export const Title = Dialog.Title
+export const FullscreenDialog = {
+  Root: Dialog.Root,
+  Modal,
+  Close: Dialog.Close,
+  Trigger: Dialog.Trigger,
+  Title: Dialog.Title,
+}
 
 const ANIMATE_TRANSITION: Transition = {
   duration: 0.5,
