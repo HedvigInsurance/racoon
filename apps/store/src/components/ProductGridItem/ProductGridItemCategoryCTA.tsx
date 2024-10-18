@@ -1,7 +1,6 @@
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
-import { Button, visuallyHidden } from 'ui'
-import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
+import { Button, FullscreenDialog, visuallyHidden } from 'ui'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
 import { SelectInsuranceGrid } from '@/components/SelectInsuranceGrid/SelectInsuranceGrid'
 import { isSameLink } from '@/utils/url'

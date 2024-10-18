@@ -16579,6 +16579,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"framer-motion@npm:11.11.7":
+  version: 11.11.7
+  resolution: "framer-motion@npm:11.11.7"
+  dependencies:
+    tslib: "npm:^2.4.0"
+  peerDependencies:
+    "@emotion/is-prop-valid": "*"
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  peerDependenciesMeta:
+    "@emotion/is-prop-valid":
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: 10c0/3ea38038c4ff7e421c22811109ebe0aced595afcf8a204b2548c137b5d73cea983bc78d8fd2fb43406636f848bd53414eb41afb9fe182bb23afcddb2dccd98bb
+  languageName: node
+  linkType: hard
+
 "fresh@npm:0.5.2":
   version: 0.5.2
   resolution: "fresh@npm:0.5.2"
@@ -25464,6 +25484,7 @@ __metadata:
     eslint-config-prettier: "npm:9.1.0"
     eslint-plugin-jest: "npm:28.8.3"
     eslint-plugin-testing-library: "npm:6.3.0"
+    framer-motion: "npm:11.11.7"
     jest: "npm:29.7.0"
     jest-environment-jsdom: "npm:29.7.0"
     react: "npm:18.3.1"

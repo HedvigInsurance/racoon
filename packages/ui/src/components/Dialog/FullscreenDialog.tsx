@@ -1,6 +1,8 @@
 import { motion, type Transition } from 'framer-motion'
 import { type ReactNode } from 'react'
-import { CrossIcon, Dialog, framerTransitions } from 'ui'
+import { CrossIcon } from '../../icons'
+import { framerTransitions } from '../../theme'
+import * as Dialog from './Dialog'
 import {
   dialogCloseIcon,
   dialogContent,
@@ -47,6 +49,7 @@ export const Modal = ({ children, Header, Footer, center = false }: Props) => {
   )
 }
 
+// TODO: Stop exporting this when PriceCalculatorDialog is removed. Exposing such deep detail in not very good API
 export function AnimateContentWrapper({ children }: { children: ReactNode }) {
   return (
     <motion.div
