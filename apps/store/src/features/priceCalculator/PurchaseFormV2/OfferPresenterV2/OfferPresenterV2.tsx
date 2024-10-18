@@ -38,7 +38,7 @@ import {
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useAddToCart } from '@/utils/useAddToCart'
 import { SectionTitle, SectionSubtitle } from '../SectionHeading'
-import { offerPresenterWrapper } from './OfferPresenterV2.css'
+import { offerPresenterWrapper, tiersWrapper } from './OfferPresenterV2.css'
 import { OfferPriceDetails } from './OfferPriceDetails'
 
 export const OfferPresenterV2 = memo(() => {
@@ -111,43 +111,45 @@ export const OfferPresenterV2 = memo(() => {
         {t('OFFER_PRESENTER_EDIT_INFO_BUTTON_LABEL')}
       </Button>
 
-      {tiers.length > 1 && (
-        <div>
-          <SectionTitle>{t('OFFER_PRESENTER_TIERS_TITLE')}</SectionTitle>
+      <div className={tiersWrapper}>
+        {tiers.length > 1 && (
+          <div>
+            <SectionTitle>{t('OFFER_PRESENTER_TIERS_TITLE')}</SectionTitle>
 
-          <SectionSubtitle className={sprinkles({ marginBottom: 'lg' })}>
-            {t('OFFER_PRESENTER_TIERS_SUBTITLE')}
-          </SectionSubtitle>
+            <SectionSubtitle className={sprinkles({ marginBottom: 'lg' })}>
+              {t('OFFER_PRESENTER_TIERS_SUBTITLE')}
+            </SectionSubtitle>
 
-          <div className={yStack({ alignItems: 'stretch', gap: 'md' })}>
-            <ProductTierSelectorV2
-              offers={tiers}
-              selectedOffer={selectedTier}
-              onValueChange={handleOfferChange}
-            />
+            <div className={yStack({ alignItems: 'stretch', gap: 'md' })}>
+              <ProductTierSelectorV2
+                offers={tiers}
+                selectedOffer={selectedTier}
+                onValueChange={handleOfferChange}
+              />
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {deductibles.length > 1 && (
-        <div>
-          <SectionTitle>{t('OFFER_PRESENTER_DEDUCTIBLE_TITLE')}</SectionTitle>
+        {deductibles.length > 1 && (
+          <div>
+            <SectionTitle>{t('OFFER_PRESENTER_DEDUCTIBLE_TITLE')}</SectionTitle>
 
-          <SectionSubtitle className={sprinkles({ marginBottom: 'lg' })}>
-            {t('OFFER_PRESENTER_DEDUCTIBLE_SUBTITLE')}
-          </SectionSubtitle>
+            <SectionSubtitle className={sprinkles({ marginBottom: 'lg' })}>
+              {t('OFFER_PRESENTER_DEDUCTIBLE_SUBTITLE')}
+            </SectionSubtitle>
 
-          <div className={yStack({ alignItems: 'stretch', gap: 'md' })}>
-            <DeductibleSelectorV2
-              offers={deductibles}
-              selectedOffer={selectedOffer}
-              onValueChange={handleOfferChange}
-            />
+            <div className={yStack({ alignItems: 'stretch', gap: 'md' })}>
+              <DeductibleSelectorV2
+                offers={deductibles}
+                selectedOffer={selectedOffer}
+                onValueChange={handleOfferChange}
+              />
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      <OfferSummary />
+        <OfferSummary />
+      </div>
     </div>
   )
 })
