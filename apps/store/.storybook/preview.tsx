@@ -2,7 +2,7 @@ import { MockedProvider } from '@apollo/client/testing'
 import './i18next'
 import { Preview } from '@storybook/react'
 import { appProvidersDecorator, gridDecorator, themeDecorator, tokensDecorator } from './decorators'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 import globalCss from 'ui/src/global.css'
 
 // GOTCHA: Here we need to trick compiler into thinking we need global.css import

@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { tokens } from 'ui'
+import { tokens } from 'ui/src/theme/theme.css'
 
 export const MENU_BAR_HEIGHT_MOBILE = '3.5rem'
 export const HEADER_HEIGHT_MOBILE = `calc(${MENU_BAR_HEIGHT_MOBILE} + ${tokens.space.xs})`

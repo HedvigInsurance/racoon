@@ -1,5 +1,5 @@
 import { style, keyframes, styleVariants, globalStyle } from '@vanilla-extract/css'
-import { tokens } from 'ui'
+import { tokens } from 'ui/src/theme/theme.css'
 
 const slideUpAndFadeAnimation = keyframes({
   '0%': { opacity: 0, transform: 'translateY(10px)' },

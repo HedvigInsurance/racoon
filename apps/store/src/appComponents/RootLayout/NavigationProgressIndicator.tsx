@@ -4,7 +4,7 @@ import { setElementVars } from '@vanilla-extract/dynamic'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { useEffect } from 'react'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 import { navigationProgressColor } from '@/appComponents/RootLayout/NavigationProgressIndicator.css'
 
 // Adaptation to NextJs app router copied from https://github.com/tomcru/holy-loader/blob/main/src/index.tsx

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import * as Accordion from '@radix-ui/react-accordion'
 import type { ReactNode } from 'react'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 
 export const Header = Accordion.Header
 

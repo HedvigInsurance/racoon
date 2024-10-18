@@ -2,7 +2,7 @@
 
 import styled from '@emotion/styled'
 import { StoryblokComponent, storyblokEditable } from '@storyblok/react'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import {
   type ExpectedBlockType,

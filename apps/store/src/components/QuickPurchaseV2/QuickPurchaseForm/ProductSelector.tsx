@@ -4,7 +4,7 @@ import { useTranslation } from 'next-i18next'
 import { Fragment } from 'react'
 import { CheckIcon } from 'ui/src/icons/CheckIcon'
 import { ChevronIcon } from 'ui/src/icons/Chevron'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { type ProductOption } from './QuickPurchaseForm'
 

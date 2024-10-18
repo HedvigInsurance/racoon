@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { WarningTriangleIcon } from 'ui/src/icons/WarningTriangleIcon'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 
 export const PaymentFailurePage = () => {
   return (

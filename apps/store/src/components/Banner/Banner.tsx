@@ -5,7 +5,7 @@ import { CampaignIcon } from 'ui/src/icons/CampaignIcon'
 import { CrossIconSmall } from 'ui/src/icons/CrossIconSmall'
 import { InfoIcon } from 'ui/src/icons/InfoIcon'
 import { WarningTriangleIcon } from 'ui/src/icons/WarningTriangleIcon'
-import { tokens } from 'ui'
+import { tokens } from 'ui/src/theme/theme.css'
 import {
   bannerCloseButton,
   bannerContent,

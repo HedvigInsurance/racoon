@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import { type FormEventHandler, useMemo, useState } from 'react'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import type {

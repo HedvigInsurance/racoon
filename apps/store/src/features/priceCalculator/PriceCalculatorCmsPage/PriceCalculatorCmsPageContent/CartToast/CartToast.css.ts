@@ -1,5 +1,5 @@
 import { style, keyframes } from '@vanilla-extract/css'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 
 const slideInd = keyframes({
   from: {

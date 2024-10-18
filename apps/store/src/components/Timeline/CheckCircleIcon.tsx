@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 
 type Props = {
   color?: string

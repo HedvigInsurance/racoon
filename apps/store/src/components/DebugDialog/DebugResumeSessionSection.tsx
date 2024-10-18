@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { usePathname } from 'next/navigation'
 import { Button } from 'ui/src/components/Button/Button'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 import { TextField } from '@/components/TextField/TextField'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'

@@ -1,4 +1,5 @@
 import { ApolloProvider } from '@apollo/client'
+import { globalStore } from 'globalStore'
 import { Provider as JotaiProvider } from 'jotai'
 import type { AppPropsWithLayout } from 'next/app'
 import Head from 'next/head'
@@ -6,7 +7,7 @@ import Router from 'next/router'
 import { appWithTranslation } from 'next-i18next'
 import { type ReactNode } from 'react'
 import globalCss from 'ui/src/global.css'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 import { AppErrorDialog } from '@/components/AppErrorDialog'
 import { BankIdDialogDynamic } from '@/components/BankIdDialog/BankIdDialogDynamic'
 import { ContactUs } from '@/components/ContactUs/ContactUs'
@@ -36,7 +37,6 @@ import { useDebugTranslationKeys } from '@/utils/l10n/useDebugTranslationKeys'
 import { useForceHtmlLangAttribute } from '@/utils/l10n/useForceHtmlLangAttribute'
 import { useAllowActiveStylesInSafari } from '@/utils/useAllowActiveStylesInSafari'
 import { useReloadOnCountryChange } from '@/utils/useReloadOnCountryChange'
-import { globalStore } from 'globalStore'
 
 // GOTCHA: Here we need to trick compiler into thinking we need global.css import
 // for anything other than side effects

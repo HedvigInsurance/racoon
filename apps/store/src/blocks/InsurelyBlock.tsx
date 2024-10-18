@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
 import { useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import {
   INSURELY_IFRAME_MAX_HEIGHT,

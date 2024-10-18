@@ -1,5 +1,5 @@
 import { IconRoot, type IconRootProps } from 'ui/src/icons/Root'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 
 type Props = IconRootProps
 

@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { StarIcon } from 'ui/src/icons/StarIcon'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 import { wrapper } from './Stars.css'
 
 type Props = {

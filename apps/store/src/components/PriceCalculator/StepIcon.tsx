@@ -1,6 +1,6 @@
 import isValidProp from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 
 type Props = {
   state: 'muted' | 'filled' | 'valid'

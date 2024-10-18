@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import React from 'react'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 import type { StoryblokAsset } from '@/services/storyblok/storyblok'
 import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 import { ImageWithPlaceholder } from '../ImageWithPlaceholder/ImageWithPlaceholder'

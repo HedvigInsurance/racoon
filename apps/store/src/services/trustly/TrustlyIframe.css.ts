@@ -1,5 +1,5 @@
 import { style, keyframes } from '@vanilla-extract/css'
-import { tokens } from 'ui'
+import { tokens } from 'ui/src/theme/theme.css'
 
 export const TRUSTLY_IFRAME_MAX_WIDTH = 600
 const TRUSTLY_IFRAME_MIN_HEIGHT = 500

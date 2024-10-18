@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import type { Meta, StoryFn } from '@storybook/react'
 import { useState } from 'react'
 import { Button } from 'ui/src/components/Button/Button'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 import type { PerilFragment } from '@/services/graphql/generated'
 import { Perils } from './Perils'
 

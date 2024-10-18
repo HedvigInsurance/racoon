@@ -2,7 +2,7 @@
 
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type SpaceSize = 'sm' | 'md' | 'lg' | 'xl'
