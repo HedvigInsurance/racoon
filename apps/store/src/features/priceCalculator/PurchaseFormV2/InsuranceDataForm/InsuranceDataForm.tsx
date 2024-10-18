@@ -40,7 +40,7 @@ import type { PriceIntent } from '@/services/priceIntent/priceIntent.types'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { SectionTitle, SectionSubtitle } from '../SectionHeading'
-import { SectionNavigation } from './SectionNavigation'
+import { SectionNavigation } from './SectionNavigation/SectionNavigation'
 
 export function InsuranceDataForm({ className }: { className?: string }) {
   const locale = useRoutingLocale()
