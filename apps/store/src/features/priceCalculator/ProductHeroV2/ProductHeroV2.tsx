@@ -1,14 +1,22 @@
 'use client'
+import clsx from 'clsx'
 import type { Variants } from 'framer-motion'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useRef } from 'react'
+import { useAtomValue } from 'jotai'
+import { type ReactNode, useRef } from 'react'
 import { Badge, framerTransitions, Heading, sprinkles, Text } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
+import {
+  activeFormSectionIdAtom,
+  useIsPriceIntentStateReady,
+} from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { useSelectedOffer } from '@/components/ProductPage/PurchaseForm/useSelectedOffer'
 import { useHasScrolledPast } from '@/components/ProductPage/ScrollPast/useHasScrolledPast'
 import { useFormatter } from '@/utils/useFormatter'
+import { priceCalculatorStepAtom } from '../priceCalculatorAtoms'
 import {
+  pillow,
   pillowWrapper,
   priceLabel,
   priceWrapper,
@@ -28,11 +36,12 @@ const TRANSITION = { duration: 0.3, ...framerTransitions.easeInOutCubic }
 
 export function ProductHeroV2() {
   const ref = useRef(null)
+  const formatter = useFormatter()
   const productData = useProductData()
   const [selectedOffer] = useSelectedOffer()
-  const subType = selectedOffer?.variant.displayNameSubtype
+  const isReady = useIsPriceIntentStateReady()
   const hasScrolledPast = useHasScrolledPast({ targetRef: ref, offset: -100 })
-  const formatter = useFormatter()
+  const subType = selectedOffer?.variant.displayNameSubtype
 
   const productHeading = (
     <>
@@ -65,33 +74,42 @@ export function ProductHeroV2() {
 
   return (
     <>
-      <StickyProductHeader hasScrolledPast={hasScrolledPast}>
-        {
-          <>
-            <Pillow size="small" {...productData.pillowImage} priority={true} />
-            <div>{productHeading}</div>
-          </>
-        }
-      </StickyProductHeader>
+      {isReady && (
+        <StickyProductHeader hasScrolledPast={hasScrolledPast}>
+          {
+            <>
+              <Pillow size="small" {...productData.pillowImage} priority={true} />
+              <div>{productHeading}</div>
+            </>
+          }
+        </StickyProductHeader>
+      )}
 
-      <div ref={ref} className={productHeroWrapper}>
-        <div className={pillowWrapper}>
-          <Pillow
-            size={{ _: 'xlarge', lg: 'xxlarge' }}
-            {...productData.pillowImage}
-            priority={true}
-          />
-          {subType && (
-            <Badge className={subTypeBadge} size="big">
-              {subType}
-            </Badge>
-          )}
-        </div>
-
-        <div className={sprinkles({ position: 'relative', textAlign: 'center' })}>
-          {productHeading}
-        </div>
+      <div ref={ref}>
+        {isReady && <ProductHeroPillow subType={subType}>{productHeading}</ProductHeroPillow>}
       </div>
     </>
+  )
+}
+
+function ProductHeroPillow({ children, subType }: { children: ReactNode; subType?: string }) {
+  const { pillowImage } = useProductData()
+  const step = useAtomValue(priceCalculatorStepAtom)
+  const activeSectionId = useAtomValue(activeFormSectionIdAtom)
+  const hideProductPillow = step === 'fillForm' && activeSectionId !== 'ssn-se'
+
+  return (
+    <div className={clsx(productHeroWrapper.base, hideProductPillow && productHeroWrapper.hidden)}>
+      <div className={pillowWrapper}>
+        <Pillow className={pillow} size={{ lg: 'xxlarge' }} {...pillowImage} priority={true} />
+        {subType && (
+          <Badge className={subTypeBadge} size="big">
+            {subType}
+          </Badge>
+        )}
+      </div>
+
+      <div className={sprinkles({ position: 'relative', textAlign: 'center' })}>{children}</div>
+    </div>
   )
 }
