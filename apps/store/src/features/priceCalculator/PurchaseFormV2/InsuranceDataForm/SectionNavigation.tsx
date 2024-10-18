@@ -39,7 +39,13 @@ export function SectionNavigation() {
   }
 
   return (
-    <div className={xStack({ alignItems: 'center', justifyContent: 'space-between' })}>
+    <div
+      className={xStack({
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: 'xxl',
+      })}
+    >
       <Button
         size="small"
         variant="secondary"

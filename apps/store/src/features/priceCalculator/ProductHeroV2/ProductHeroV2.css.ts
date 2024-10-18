@@ -1,24 +1,39 @@
-import { style } from '@vanilla-extract/css'
+import { style, styleVariants } from '@vanilla-extract/css'
 import { badgeFontColor } from 'ui/src/components/Badge/Badge.css'
-import { responsiveStyles, tokens, yStack } from 'ui'
+import { pillowSize, responsiveStyles, tokens, yStack } from 'ui'
 import { HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header.css'
 
-export const productHeroWrapper = style([
-  yStack({ justifyContent: 'center', alignItems: 'center', gap: { _: 'xs', lg: 'md' } }),
-  {
-    height: '13rem',
-
+export const productHeroWrapper = styleVariants({
+  base: [
+    yStack({ justifyContent: 'center', alignItems: 'center', gap: 'md' }),
+    {
+      paddingBlock: tokens.space.xxl,
+      ...responsiveStyles({
+        lg: {
+          // Visually center Product Hero
+          marginTop: `calc(-1 * ${HEADER_HEIGHT_DESKTOP})`,
+        },
+      }),
+    },
+  ],
+  hidden: {
+    display: 'none',
     ...responsiveStyles({
       lg: {
-        // Visually center Product Hero
-        marginTop: `calc(-1 * ${HEADER_HEIGHT_DESKTOP})`,
+        display: 'flex',
       },
     }),
   },
-])
+})
 
 export const pillowWrapper = style({
   position: 'relative',
+})
+
+export const pillow = style({
+  vars: {
+    [pillowSize]: '10rem',
+  },
 })
 
 export const priceWrapper = style({ position: 'relative', height: tokens.space.lg })

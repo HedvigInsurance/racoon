@@ -1,6 +1,8 @@
 import clsx from 'clsx'
+import { useAtomValue } from 'jotai'
 import { yStack, xStack } from 'ui'
-import { useIsPriceIntentStateReady } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
+import { activeFormSectionIdAtom } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
+import { priceCalculatorStepAtom } from '../../priceCalculatorAtoms'
 import { ProgressBar } from '../ProgressBar/ProgressBar'
 import { stickyProductHeader, stickyProductHeaderContent } from './StickyProductHeader.css'
 
@@ -10,7 +12,14 @@ type Props = {
 }
 
 export function StickyProductHeader({ children, hasScrolledPast }: Props) {
-  const isReady = useIsPriceIntentStateReady()
+  const step = useAtomValue(priceCalculatorStepAtom)
+  const activeSectionId = useAtomValue(activeFormSectionIdAtom)
+  const showStickyHeader = (step === 'fillForm' && activeSectionId !== 'ssn-se') || hasScrolledPast
+
+  // Scroll to top when calculating price to reset haseScrolledPast value
+  if (step === 'calculatingPrice') {
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }
 
   return (
     <div className={stickyProductHeader}>
@@ -22,7 +31,7 @@ export function StickyProductHeader({ children, hasScrolledPast }: Props) {
             paddingInline: 'md',
           }),
           stickyProductHeaderContent.base,
-          hasScrolledPast && stickyProductHeaderContent.visible,
+          showStickyHeader && stickyProductHeaderContent.visible,
         )}
       >
         <div
@@ -36,7 +45,7 @@ export function StickyProductHeader({ children, hasScrolledPast }: Props) {
           {children}
         </div>
 
-        {isReady && <ProgressBar />}
+        <ProgressBar />
       </div>
     </div>
   )
