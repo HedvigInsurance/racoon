@@ -119,6 +119,15 @@ export const PageLink = {
     return url
   },
 
+  bundleDiscount: ({ locale }: BaseParams) => {
+    const url = BUNDLE_DISCOUNT_URL[locale]
+    if (!url) {
+      datadogLogs.logger.error('Missing bundle discount link for locale', { locale })
+      return PageLink.home({ locale })
+    }
+    return url
+  },
+
   memberArea: ({ locale }: BaseParams) => {
     return new URL(`${locale}/member`, ORIGIN_URL)
   },
@@ -332,4 +341,9 @@ const PRIVACY_POLICY_URL: Partial<Record<RoutingLocale, URL>> = {
 const REVIEWS_URL: Partial<Record<RoutingLocale, URL>> = {
   se: new URL('/se/hedvig/omdomen', ORIGIN_URL),
   'se-en': new URL('/se-en/hedvig/reviews', ORIGIN_URL),
+}
+
+const BUNDLE_DISCOUNT_URL: Partial<Record<RoutingLocale, URL>> = {
+  se: new URL('/se/hedvig/flerkopsrabatt', ORIGIN_URL),
+  'se-en': new URL('/se-en/hedvig/bundle-discount', ORIGIN_URL),
 }
