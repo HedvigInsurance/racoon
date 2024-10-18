@@ -1,6 +1,21 @@
 import { style } from '@vanilla-extract/css'
 import { badgeFontColor } from 'ui/src/components/Badge/Badge.css'
-import { responsiveStyles, tokens } from 'ui'
+import { responsiveStyles, tokens, yStack } from 'ui'
+import { HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header.css'
+
+export const productHeroWrapper = style([
+  yStack({ justifyContent: 'center', alignItems: 'center', gap: { _: 'xs', lg: 'md' } }),
+  {
+    height: '13rem',
+
+    ...responsiveStyles({
+      lg: {
+        // Visually center Product Hero
+        marginTop: `calc(-1 * ${HEADER_HEIGHT_DESKTOP})`,
+      },
+    }),
+  },
+])
 
 export const pillowWrapper = style({
   position: 'relative',
