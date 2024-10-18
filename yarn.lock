@@ -25444,6 +25444,7 @@ __metadata:
     eslint-config-prettier: "npm:9.1.0"
     eslint-plugin-jest: "npm:28.8.3"
     eslint-plugin-testing-library: "npm:6.4.0"
+    framer-motion: "npm:11.1.7"
     jest: "npm:29.7.0"
     jest-environment-jsdom: "npm:29.7.0"
     react: "npm:18.3.1"
