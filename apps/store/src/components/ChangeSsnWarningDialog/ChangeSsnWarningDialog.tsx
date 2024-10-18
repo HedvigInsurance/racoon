@@ -1,6 +1,7 @@
 import { useTranslation } from 'next-i18next'
 import { useState, useCallback } from 'react'
-import { Button, FullscreenDialog, Text, WarningTriangleIcon, theme } from 'ui'
+import { Button, Text, WarningTriangleIcon, theme } from 'ui'
+import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { resetAuthTokens } from '@/services/authApi/persist'
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { title } from './ChangeSsnWarningDialog.css'

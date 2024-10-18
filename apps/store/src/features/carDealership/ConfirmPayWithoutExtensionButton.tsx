@@ -1,7 +1,8 @@
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { BankIdIcon, Button, FullscreenDialog, Text, WarningTriangleIcon, theme } from 'ui'
+import { BankIdIcon, Button, Text, WarningTriangleIcon, theme } from 'ui'
+import * as FullScreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 
 type Props = {
@@ -17,28 +18,28 @@ export const ConfirmPayWithoutExtensionButton = (props: Props) => {
   }
 
   return (
-    <FullscreenDialog.Root>
-      <FullscreenDialog.Trigger asChild={true}>
+    <FullScreenDialog.Root>
+      <FullScreenDialog.Trigger asChild={true}>
         <Button variant="primary" fullWidth={true}>
           <SpaceFlex space={0.5} align="center">
             <BankIdIcon />
             {t('CONNECT_PAYMENT_BUTTON')}
           </SpaceFlex>
         </Button>
-      </FullscreenDialog.Trigger>
+      </FullScreenDialog.Trigger>
 
-      <FullscreenDialog.Modal
+      <FullScreenDialog.Modal
         center={true}
         Footer={
           <>
             <Button onClick={handleClick} fullWidth={true}>
               {t('PAY_WITHOUT_EXTENSION_DIALOG_CONFIRM')}
             </Button>
-            <FullscreenDialog.Close asChild={true}>
+            <FullScreenDialog.Close asChild={true}>
               <Button type="button" variant="ghost" fullWidth={true}>
                 {t('PAY_WITHOUT_EXTENSION_DIALOG_CANCEL')}
               </Button>
-            </FullscreenDialog.Close>
+            </FullScreenDialog.Close>
           </>
         }
       >
@@ -53,8 +54,8 @@ export const ConfirmPayWithoutExtensionButton = (props: Props) => {
             </Text>
           </TextWrapper>
         </SpaceFlex>
-      </FullscreenDialog.Modal>
-    </FullscreenDialog.Root>
+      </FullScreenDialog.Modal>
+    </FullScreenDialog.Root>
   )
 }
 

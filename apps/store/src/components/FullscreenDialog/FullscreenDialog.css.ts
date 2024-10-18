@@ -1,5 +1,5 @@
 import { createVar, style, styleVariants } from '@vanilla-extract/css'
-import { minWidth, tokens } from '../../theme'
+import { minWidth, tokens } from 'ui'
 
 const BUTTON_HEIGHT = '3.25rem'
 

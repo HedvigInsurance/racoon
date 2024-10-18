@@ -4,7 +4,8 @@ import type { SbBlokData } from '@storyblok/react'
 import { StoryblokComponent, storyblokEditable } from '@storyblok/react'
 import type { ComponentProps } from 'react'
 import { useState } from 'react'
-import { Button, FullscreenDialog, theme, visuallyHidden } from 'ui'
+import { Button, theme, visuallyHidden } from 'ui'
+import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 export type ModalBlockProps = SbBaseBlockProps<{

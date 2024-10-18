@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
 import { useMemo, type ReactNode, type RefObject, useImperativeHandle, useState } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
-import { Button, Dialog, FullscreenDialog } from 'ui'
+import { Button, Dialog } from 'ui'
 import {
   TableMarkers,
   type Table,
@@ -11,6 +11,7 @@ import {
 } from '@/components/ComparisonTable/ComparisonTable.types'
 import { DesktopComparisonTable } from '@/components/ComparisonTable/DesktopComparisonTable'
 import { MobileComparisonTable } from '@/components/ComparisonTable/MobileComparisonTable'
+import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import type { ProductOfferFragment } from '@/services/graphql/generated'
 import { sendDialogEvent } from '@/utils/dialogEvent'

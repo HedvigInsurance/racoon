@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { Button, FullscreenDialog, Text } from 'ui'
+import { Button, Text } from 'ui'
+import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import type { ProductOfferFragment } from '@/services/graphql/generated'
 import { useEditProductOffer } from '../useEditProductOffer'
 
