@@ -1,6 +1,7 @@
 import { type ReactNode } from 'react'
+import { Dialog } from 'ui/src/components/Dialog/Dialog'
 import { AnimateContentWrapper } from 'ui/src/components/Dialog/FullscreenDialog'
-import { CrossIcon, Dialog, Heading, yStack } from 'ui'
+import { CrossIcon, Heading, yStack } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { sendDialogEvent } from '@/utils/dialogEvent'

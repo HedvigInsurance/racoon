@@ -1,6 +1,7 @@
 import { useTranslation } from 'next-i18next'
 import { useReducer, useCallback, type ReactElement, type ReactNode } from 'react'
-import { Dialog, Text, Space, CrossIcon } from 'ui'
+import { Dialog } from 'ui/src/components/Dialog/Dialog'
+import { Text, Space, CrossIcon } from 'ui'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
 import type { Review, Score } from '@/features/memberReviews/memberReviews.types'
 import type { ReviewsDistribution } from '@/features/memberReviews/memberReviews.types'

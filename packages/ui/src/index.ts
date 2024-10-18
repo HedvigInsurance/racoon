@@ -17,7 +17,6 @@ export type { HeadingProps, PossibleHeadingVariant } from './components/Heading/
 export { Text } from './components/Text/Text'
 export { SupText } from './components/SupText/SupText'
 
-export * as Dialog from './components/Dialog/Dialog'
 export { Badge, type BadgeProps } from './components/Badge/Badge'
 export { ConditionalWrapper } from './components/ConditionalWrapper'
 export { Divider } from './components/Divider/Divider'

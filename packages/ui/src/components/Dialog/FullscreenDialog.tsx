@@ -2,7 +2,7 @@ import { motion, type Transition } from 'framer-motion'
 import { type ReactNode } from 'react'
 import { CrossIcon } from '../../icons'
 import { framerTransitions } from '../../theme'
-import * as Dialog from './Dialog'
+import { Dialog } from './Dialog'
 import {
   dialogCloseIcon,
   dialogContent,

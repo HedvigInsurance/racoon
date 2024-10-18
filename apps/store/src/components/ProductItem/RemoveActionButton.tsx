@@ -1,7 +1,8 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { useTranslation } from 'next-i18next'
+import { Dialog } from 'ui/src/components/Dialog/Dialog'
 import { FullscreenDialog } from 'ui/src/components/Dialog/FullscreenDialog'
-import { Button, Dialog, Text } from 'ui'
+import { Button, Text } from 'ui'
 import { useShowAppError } from '@/services/appErrors/appErrorAtom'
 import {
   type CartFragment,
