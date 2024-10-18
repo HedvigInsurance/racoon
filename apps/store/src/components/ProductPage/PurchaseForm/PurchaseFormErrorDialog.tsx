@@ -1,6 +1,5 @@
 import { useTranslation } from 'next-i18next'
-import { Button, Text, theme, WarningTriangleIcon } from 'ui'
-import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
+import { Button, FullscreenDialog, Text, theme, WarningTriangleIcon } from 'ui'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 

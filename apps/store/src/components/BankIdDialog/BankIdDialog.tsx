@@ -17,8 +17,8 @@ import {
   theme,
   visuallyHidden,
   Card,
+  FullscreenDialog,
 } from 'ui'
-import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { SIGN_FORM_ID } from '@/constants/sign.constants'
 import type { BankIdOperation } from '@/services/bankId/bankId.types'
