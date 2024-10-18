@@ -5,16 +5,16 @@ import { Button } from '../Button/Button'
 import type { ButtonSize } from '../Button/Button.helpers'
 import { tabButton, tabsListBase, tabsListSize, tabsListType, tabsRoot } from './Tabs.css'
 
-export const Root = ({ ...forwardedProps }: ComponentProps<typeof RadixTabs.Root>) => {
+const Root = ({ ...forwardedProps }: ComponentProps<typeof RadixTabs.Root>) => {
   return <RadixTabs.Root {...forwardedProps} className={tabsRoot} />
 }
 
-export type ListProps = {
+type ListProps = {
   size?: 'small' | 'medium' | 'large'
   type: 'default' | 'filled'
 } & ComponentProps<typeof RadixTabs.List>
 
-export const List = ({ size = 'medium', type, ...forwardedProps }: ListProps) => {
+const List = ({ size = 'medium', type, ...forwardedProps }: ListProps) => {
   return (
     <RadixTabs.List
       {...forwardedProps}
@@ -27,7 +27,7 @@ type TriggerProps = {
   size?: ButtonSize
 } & ComponentProps<typeof RadixTabs.Trigger>
 
-export const Trigger = ({ children, size = 'medium', ...forwardedProps }: TriggerProps) => {
+const Trigger = ({ children, size = 'medium', ...forwardedProps }: TriggerProps) => {
   return (
     <RadixTabs.Trigger {...forwardedProps} asChild={true}>
       <Button className={tabButton} variant="ghost" size={size}>
@@ -37,4 +37,9 @@ export const Trigger = ({ children, size = 'medium', ...forwardedProps }: Trigge
   )
 }
 
-export const Content = RadixTabs.Content
+export const Tabs = {
+  Content: RadixTabs.Content,
+  List,
+  Root,
+  Trigger,
+}
