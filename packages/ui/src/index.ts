@@ -19,6 +19,7 @@ export { SupText } from './components/SupText/SupText'
 
 export * as Dialog from './components/Dialog/Dialog'
 export * as FullscreenDialog from './components/Dialog/FullscreenDialog'
+export { LargeDialog } from './components/Dialog/LargeDialog'
 export { Badge, type BadgeProps } from './components/Badge/Badge'
 export { ConditionalWrapper } from './components/ConditionalWrapper'
 export { Divider } from './components/Divider/Divider'
