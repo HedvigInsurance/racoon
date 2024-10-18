@@ -1,12 +1,14 @@
+import { useApolloClient } from '@apollo/client'
 import clsx from 'clsx'
+import { useSetAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
-import { useCallback, useEffect } from 'react'
+import { useEffect } from 'react'
 import { Text, Card, Divider, Button, yStack } from 'ui'
 import type { Banner } from '@/components/Banner/Banner.types'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { useSetGlobalBanner, useDismissBanner } from '@/components/GlobalBanner/globalBannerState'
 import { Pillow } from '@/components/Pillow/Pillow'
-import { useResetPriceIntent } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
+import { currentPriceIntentIdAtom } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { usePriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
 import { useSelectedOfferValueOrThrow } from '@/components/ProductPage/PurchaseForm/useSelectedOffer'
 import { TextWithLink } from '@/components/TextWithLink'
@@ -17,7 +19,11 @@ import {
   hasCartItemsEligibleForBundleDiscount,
 } from '@/features/bundleDiscount/bundleDiscount.utils'
 import type { TemplateV2 } from '@/services/PriceCalculator/PriceCalculator.types'
-import { useShopSessionValueOrThrow } from '@/services/shopSession/ShopSessionContext'
+import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
+import {
+  useShopSessionIdOrThrow,
+  useShopSessionValueOrThrow,
+} from '@/services/shopSession/ShopSessionContext'
 import { getOfferPrice } from '@/utils/getOfferPrice'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
@@ -26,15 +32,22 @@ import { actions } from './PurchaseSummary.css'
 export function PurchaseSummary({ className }: { className?: string }) {
   const { t } = useTranslation('purchase-form')
   const locale = useRoutingLocale()
+  const apolloClient = useApolloClient()
+  const shopSessionId = useShopSessionIdOrThrow()
   const offer = useSelectedOfferValueOrThrow()
   const priceTemplate = usePriceTemplate() as TemplateV2
-  const resetPriceIntent = useResetPriceIntent()
+  const setCurrentPriceIntentId = useSetAtom(currentPriceIntentIdAtom)
 
   useNotifyAboutBundleDiscounts()
 
-  const handleAddMore = useCallback(() => {
-    resetPriceIntent()
-  }, [resetPriceIntent])
+  const handleAddMore = () => {
+    const priceIntentService = priceIntentServiceInitClientSide(apolloClient)
+    const priceIntentId = priceIntentService.getStoredId(priceTemplate.name, shopSessionId)
+    if (!priceIntentId) {
+      throw new Error('Price intent id should be stored in a cookie at this point')
+    }
+    setCurrentPriceIntentId(priceIntentId)
+  }
 
   const showAddMoreButton = offer.product.multiple && priceTemplate.addMultiple
 
