@@ -10,5 +10,3 @@ export const BUNDLE_DISCOUNT_ELIGIBLE_PRODUCT_IDS = new Set([
   'Product:SE_PET_CAT',
   'Product:SE_PET_DOG',
 ])
-// Only Swedish
-export const BUNDLE_DISCOUNT_PROMO_PAGE_PATH = '/se/hedvig/flerkopsrabatt'

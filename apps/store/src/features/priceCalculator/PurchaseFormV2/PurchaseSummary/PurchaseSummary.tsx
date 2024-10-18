@@ -11,10 +11,7 @@ import { usePriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTem
 import { useSelectedOfferValueOrThrow } from '@/components/ProductPage/PurchaseForm/useSelectedOffer'
 import { TextWithLink } from '@/components/TextWithLink'
 import { TotalPrice } from '@/components/TotalPrice/TotalPrice'
-import {
-  BUNDLE_DISCOUNT_PERCENTAGE,
-  BUNDLE_DISCOUNT_PROMO_PAGE_PATH,
-} from '@/features/bundleDiscount/bundleDiscount.constants'
+import { BUNDLE_DISCOUNT_PERCENTAGE } from '@/features/bundleDiscount/bundleDiscount.constants'
 import {
   hasBundleDiscount,
   hasCartItemsEligibleForBundleDiscount,
@@ -80,6 +77,7 @@ export function PurchaseSummary({ className }: { className?: string }) {
 
 function useNotifyAboutBundleDiscounts() {
   const { t } = useTranslation('purchase-form')
+  const locale = useRoutingLocale()
   const shopSession = useShopSessionValueOrThrow()
   const setGlobalBanner = useSetGlobalBanner()
   const dismissBanner = useDismissBanner()
@@ -98,7 +96,7 @@ function useNotifyAboutBundleDiscounts() {
       banner = {
         id: 'eligible-for-bundle-discount',
         content: (
-          <TextWithLink as="span" size="xs" href={BUNDLE_DISCOUNT_PROMO_PAGE_PATH}>
+          <TextWithLink as="span" size="xs" href={PageLink.bundleDiscount({ locale })}>
             {t('BUNDLE_DISCOUNT_TEASER', {
               percentage: BUNDLE_DISCOUNT_PERCENTAGE,
             })}
@@ -117,5 +115,5 @@ function useNotifyAboutBundleDiscounts() {
         dismissBanner(banner.id)
       }
     }
-  }, [shopSession, t, setGlobalBanner, dismissBanner])
+  }, [t, locale, shopSession, setGlobalBanner, dismissBanner])
 }

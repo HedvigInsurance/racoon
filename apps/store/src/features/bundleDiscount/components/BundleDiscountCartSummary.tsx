@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
-import type { ReactNode } from 'react'
-import { BUNDLE_DISCOUNT_PROMO_PAGE_PATH } from '@/features/bundleDiscount/bundleDiscount.constants'
+import { type ReactNode } from 'react'
 import { readMoreLink } from '@/features/bundleDiscount/components/BundleDiscountSummary/BundleDiscountSummary.css'
 import type { CartFragment } from '@/services/graphql/generated'
+import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
+import { PageLink } from '@/utils/PageLink'
 import { useFormatter } from '@/utils/useFormatter'
 import { BundleDiscountSummary } from './BundleDiscountSummary/BundleDiscountSummary'
 
@@ -14,6 +15,7 @@ type Props = {
 export function BundleDiscountCartSummary({ cart }: Props) {
   const formatter = useFormatter()
   const { t } = useTranslation('cart')
+  const locale = useRoutingLocale()
   const { cost, redeemedCampaign, entries } = cart
 
   if (redeemedCampaign == null) {
@@ -51,7 +53,7 @@ export function BundleDiscountCartSummary({ cart }: Props) {
   return (
     <BundleDiscountSummary>
       {content}{' '}
-      <Link href={BUNDLE_DISCOUNT_PROMO_PAGE_PATH} target="_blank" className={readMoreLink}>
+      <Link href={PageLink.bundleDiscount({ locale })} target="_blank" className={readMoreLink}>
         {t('READ_MORE', { ns: 'common' })}
       </Link>
     </BundleDiscountSummary>
