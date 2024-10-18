@@ -56,7 +56,7 @@ export function PurchaseSummary({ className }: { className?: string }) {
           </Card.Heading>
         </Card.Header>
         <Divider />
-        <TotalPrice label="Price" {...getOfferPrice(offer.cost)} />
+        <TotalPrice label={t('YOUR_PRICE', { ns: 'common' })} {...getOfferPrice(offer.cost)} />
       </Card.Root>
 
       <div className={actions}>
