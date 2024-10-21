@@ -1,4 +1,3 @@
-import { useApolloClient } from '@apollo/client'
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogRum } from '@datadog/browser-rum'
 import { useInView } from 'framer-motion'
@@ -19,7 +18,6 @@ import {
   priceCalculatorFormAtom,
   usePriceIntent,
 } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
-import { usePriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
 import {
   useSelectedOffer,
   useSelectedOfferValueOrThrow,
@@ -27,13 +25,15 @@ import {
 import { useTiersAndDeductibles } from '@/components/ProductPage/PurchaseForm/useTiersAndDeductibles'
 import { useCartEntryToReplace } from '@/components/ProductPage/useCartEntryToReplace'
 import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
-import { priceCalculatorStepAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
+import {
+  priceCalculatorStepAtom,
+  priceCalculatorShowPurchaseSummaryAtom,
+} from '@/features/priceCalculator/priceCalculatorAtoms'
 import { DeductibleSelectorV2 } from '@/features/priceCalculator/PurchaseFormV2/OfferPresenterV2/DeductibleSelectorV2/DeductibleSelectorV2'
 import { ProductCardSmall } from '@/features/priceCalculator/PurchaseFormV2/OfferPresenterV2/ProductCardSmall/ProductCardSmall'
 import { ProductTierSelectorV2 } from '@/features/priceCalculator/PurchaseFormV2/OfferPresenterV2/ProductTierSelectorV2/ProductTierSelectorV2'
 import { BankSigneringEvent } from '@/services/bankSignering'
 import { ExternalInsuranceCancellationOption } from '@/services/graphql/generated'
-import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
 import {
   useShopSessionIdOrThrow,
   useShopSessionValueOrThrow,
@@ -163,10 +163,7 @@ function OfferSummary() {
   const shopSessionId = useShopSessionIdOrThrow()
   const selectedOffer = useSelectedOfferValueOrThrow()
   const priceIntent = usePriceIntent()
-  const apolloClient = useApolloClient()
-  const priceTemplate = usePriceTemplate()
-
-  const setPriceCalculatorStep = useSetAtom(priceCalculatorStepAtom)
+  const setShowPurchaseSummary = useSetAtom(priceCalculatorShowPurchaseSummaryAtom)
 
   const entryToReplace = useCartEntryToReplace()
   const tracking = useTracking()
@@ -196,19 +193,9 @@ function OfferSummary() {
   const handleAddToCart: MouseEventHandler = async (event) => {
     event.preventDefault()
     await addToCart(selectedOffer.id)
-    setPriceCalculatorStep('purchaseSummary')
     // Make sure user views "added to cart" notification and/or bundle discount banner
     window.scrollTo({ top: 0, behavior: 'instant' })
-    // Creates a new price intent but NOT synchronizing it with the price intent atoms like
-    // useResetPriceIntent does. By doing that user can see 'purchase summary' at the end of
-    // the flow while still can load price calculator for that product again by refreshing the
-    // page or navigating back.
-    const priceIntentService = priceIntentServiceInitClientSide(apolloClient)
-    priceIntentService.create({
-      shopSessionId,
-      productName: selectedOffer.product.name,
-      priceTemplate,
-    })
+    setShowPurchaseSummary(true)
   }
 
   const productData = useProductData()

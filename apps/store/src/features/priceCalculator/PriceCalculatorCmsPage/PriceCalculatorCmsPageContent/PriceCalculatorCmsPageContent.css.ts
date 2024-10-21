@@ -2,6 +2,7 @@ import { style } from '@vanilla-extract/css'
 import { responsiveStyles, tokens, yStack } from 'ui'
 import { HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header.css'
 import { HEADER_HEIGHT_MOBILE } from '@/components/Header/HeaderMenuMobile/HeaderMenuMobile.css'
+import { CONTENT_MAX_WIDTH } from '@/features/priceCalculator/PurchaseFormV2/PurchaseFormV2.css'
 
 // Offset for fixed formFooter
 export const FORM_FOOTER = '7rem'
@@ -62,6 +63,21 @@ export const productHero = style({
       gap: tokens.space.md,
       // Visually center Product Hero
       marginTop: `calc(-1 * ${HEADER_HEIGHT_DESKTOP})`,
+    },
+  }),
+})
+
+export const purchaseSummaryWrapper = style([
+  yStack({ alignItems: 'center', justifyContent: 'center' }),
+  { height: '100%' },
+])
+
+export const purchaseSummary = style({
+  width: `min(100%, ${CONTENT_MAX_WIDTH})`,
+  marginInline: 'auto',
+  ...responsiveStyles({
+    lg: {
+      width: `max(100%, ${CONTENT_MAX_WIDTH})`,
     },
   }),
 })

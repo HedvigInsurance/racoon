@@ -9,12 +9,7 @@ import {
 } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { getAtomValueOrThrow } from '@/utils/jotaiUtils'
 
-type PriceCalculatorStep =
-  | 'loadingForm'
-  | 'fillForm'
-  | 'calculatingPrice'
-  | 'viewOffers'
-  | 'purchaseSummary'
+type PriceCalculatorStep = 'loadingForm' | 'fillForm' | 'calculatingPrice' | 'viewOffers'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const priceCalculatorStepAtomFamily = atomFamily((priceIntentId: string) =>
@@ -57,3 +52,5 @@ export const usePriceCalculatorDeductibleInfo = () => {
 }
 
 export const priceCalculatorShowEditSsnWarningAtom = atom(false)
+
+export const priceCalculatorShowPurchaseSummaryAtom = atom(false)

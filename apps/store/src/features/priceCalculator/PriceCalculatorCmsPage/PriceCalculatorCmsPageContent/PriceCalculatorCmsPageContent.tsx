@@ -1,8 +1,9 @@
 'use client'
 
 import { useAtomValue } from 'jotai'
+import { priceCalculatorShowPurchaseSummaryAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
+import { PurchaseSummary } from '@/features/priceCalculator/PurchaseFormV2/PurchaseSummary/PurchaseSummary'
 import { useResponsiveVariant } from '@/utils/useResponsiveVariant'
-import { priceCalculatorStepAtom } from '../../priceCalculatorAtoms'
 import { ProductHeroV2 } from '../../ProductHeroV2/ProductHeroV2'
 import { PurchaseFormV2 } from '../../PurchaseFormV2/PurchaseFormV2'
 import { CartToast } from './CartToast/CartToast'
@@ -11,13 +12,15 @@ import {
   priceCalculatorSection,
   productHero,
   productHeroSection,
+  purchaseSummaryWrapper,
+  purchaseSummary,
 } from './PriceCalculatorCmsPageContent.css'
 
 export function PriceCalculatorCmsPageContent() {
   const variant = useResponsiveVariant('lg')
-  const step = useAtomValue(priceCalculatorStepAtom)
+  const showPurchaseSummary = useAtomValue(priceCalculatorShowPurchaseSummaryAtom)
 
-  const showProductHero = variant === 'desktop' || step !== 'purchaseSummary'
+  const showProductHero = variant === 'desktop' || !showPurchaseSummary
 
   return (
     <div className={pageGrid}>
@@ -27,7 +30,13 @@ export function PriceCalculatorCmsPageContent() {
         </section>
       )}
       <section className={priceCalculatorSection}>
-        <PurchaseFormV2 />
+        {showPurchaseSummary ? (
+          <div className={purchaseSummaryWrapper}>
+            <PurchaseSummary className={purchaseSummary} />
+          </div>
+        ) : (
+          <PurchaseFormV2 />
+        )}
       </section>
       {/* We don't mount CartToast on mobile as we hide ShoppingCartMenuItem at that level */}
       {variant === 'desktop' && <CartToast />}
