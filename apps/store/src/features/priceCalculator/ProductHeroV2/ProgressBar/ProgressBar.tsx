@@ -14,6 +14,11 @@ export function ProgressBar() {
   const form = useAtomValue(priceCalculatorFormAtom)
   const progress = getPriceCalculatorProgress(step, activeSectionId, form.sections)
 
+  // Hide progress bar in viewOffers step
+  if (step === 'viewOffers') {
+    return null
+  }
+
   return (
     <div className={bar}>
       <motion.div
@@ -40,24 +45,15 @@ function getPriceCalculatorProgress(
           // Don't show any progress in first section
           break
         default: {
-          // +1 because we want to account for two additional steps:
-          // 'calculatingPrice' and 'viewOffers' but excluding 'ssn' step
-          const nrOfSteps = sections.length + 1
           const activeSectionIndex = sections.findIndex((section) => section.id === activeSectionId)
 
           if (activeSectionIndex !== -1) {
-            progress = `${(activeSectionIndex / nrOfSteps) * 100}%`
+            progress = `${(activeSectionIndex / sections.length) * 100}%`
           }
         }
       }
       break
     case 'calculatingPrice':
-      progress = '70%'
-      break
-    case 'viewOffers':
-      progress = '80%'
-      break
-    case 'purchaseSummary':
       progress = '100%'
       break
   }
