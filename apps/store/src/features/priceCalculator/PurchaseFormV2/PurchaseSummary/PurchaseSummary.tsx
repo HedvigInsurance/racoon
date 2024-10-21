@@ -23,6 +23,9 @@ import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { actions } from './PurchaseSummary.css'
 
+// No meaningful changes here. Just for testing purposes
+export function noop() {}
+
 export function PurchaseSummary({ className }: { className?: string }) {
   const { t } = useTranslation('purchase-form')
   const locale = useRoutingLocale()
