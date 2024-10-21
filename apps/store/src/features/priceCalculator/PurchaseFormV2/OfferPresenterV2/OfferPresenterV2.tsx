@@ -25,7 +25,10 @@ import {
 import { useTiersAndDeductibles } from '@/components/ProductPage/PurchaseForm/useTiersAndDeductibles'
 import { useCartEntryToReplace } from '@/components/ProductPage/useCartEntryToReplace'
 import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
-import { priceCalculatorStepAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
+import {
+  priceCalculatorStepAtom,
+  priceCalculatorShowPurchaseSummaryAtom,
+} from '@/features/priceCalculator/priceCalculatorAtoms'
 import { DeductibleSelectorV2 } from '@/features/priceCalculator/PurchaseFormV2/OfferPresenterV2/DeductibleSelectorV2/DeductibleSelectorV2'
 import { ProductCardSmall } from '@/features/priceCalculator/PurchaseFormV2/OfferPresenterV2/ProductCardSmall/ProductCardSmall'
 import { ProductTierSelectorV2 } from '@/features/priceCalculator/PurchaseFormV2/OfferPresenterV2/ProductTierSelectorV2/ProductTierSelectorV2'
@@ -160,8 +163,7 @@ function OfferSummary() {
   const shopSessionId = useShopSessionIdOrThrow()
   const selectedOffer = useSelectedOfferValueOrThrow()
   const priceIntent = usePriceIntent()
-
-  const setPriceCalculatorStep = useSetAtom(priceCalculatorStepAtom)
+  const setShowPurchaseSummary = useSetAtom(priceCalculatorShowPurchaseSummaryAtom)
 
   const entryToReplace = useCartEntryToReplace()
   const tracking = useTracking()
@@ -191,9 +193,9 @@ function OfferSummary() {
   const handleAddToCart: MouseEventHandler = async (event) => {
     event.preventDefault()
     await addToCart(selectedOffer.id)
-    setPriceCalculatorStep('purchaseSummary')
     // Make sure user views "added to cart" notification and/or bundle discount banner
     window.scrollTo({ top: 0, behavior: 'instant' })
+    setShowPurchaseSummary(true)
   }
 
   const productData = useProductData()

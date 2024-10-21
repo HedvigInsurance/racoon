@@ -18,17 +18,10 @@ import {
 } from '@/features/priceCalculator/priceCalculatorAtoms'
 import { OfferPresenterV2 } from '@/features/priceCalculator/PurchaseFormV2/OfferPresenterV2/OfferPresenterV2'
 import { InsuranceDataForm } from './InsuranceDataForm/InsuranceDataForm'
-import {
-  centered,
-  priceLoaderWrapper,
-  viewOffersWrapper,
-  purchaseSummaryWrapper,
-  purchaseSummary,
-} from './PurchaseFormV2.css'
-import { PurchaseSummary } from './PurchaseSummary/PurchaseSummary'
+import { centered, priceLoaderWrapper, viewOffersWrapper } from './PurchaseFormV2.css'
 
 export function PurchaseFormV2() {
-  useSyncPriceIntentState()
+  useSyncPriceIntentState({ replacePriceIntentWhenCurrentIsAddedToCart: true })
   useWarnOnPreloadedPriceIntentId()
 
   const isReady = useIsPriceIntentStateReady()
@@ -57,12 +50,7 @@ export function PurchaseFormV2() {
           <OfferPresenterV2 />
         </div>
       )
-    case 'purchaseSummary':
-      return (
-        <div className={purchaseSummaryWrapper}>
-          <PurchaseSummary className={purchaseSummary} />
-        </div>
-      )
+
     default:
       throw new Error(`Unexpected step: ${step}`)
   }

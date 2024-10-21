@@ -4,10 +4,7 @@ import { atom, useAtom, useAtomValue, useSetAtom, useStore } from 'jotai'
 import { atomFamily } from 'jotai/utils'
 import { useCallback, useEffect } from 'react'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
-import {
-  priceTemplateAtom,
-  usePriceTemplate,
-} from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
+import { priceTemplateAtom } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
 import { useSelectedOffer } from '@/components/ProductPage/PurchaseForm/useSelectedOffer'
 import { useCartEntryToReplace } from '@/components/ProductPage/useCartEntryToReplace'
 import {
@@ -19,7 +16,7 @@ import {
 import { setupForm } from '@/services/PriceCalculator/PriceCalculator.helpers'
 import type { Form } from '@/services/PriceCalculator/PriceCalculator.types'
 import { priceIntentServiceInitClientSide } from '@/services/priceIntent/PriceIntentService'
-import { useShopSession, useShopSessionId } from '@/services/shopSession/ShopSessionContext'
+import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { getOffersByPrice } from '@/utils/getOffersByPrice'
 import { getAtomValueOrThrow } from '@/utils/jotaiUtils'
 
@@ -182,8 +179,7 @@ export const useSyncPriceIntentState = ({
     } else {
       // This is a workaround as 'priceIntentAtoms' is used for new and old price calculator.
       // For the old price calculator, we need to created a new price intent if there's a cart entry
-      // for that price intent. When we remove support for the old price calculator, we'll be able to
-      // remove of the config paramenters that can be provided to 'useSyncPriceIntentState'
+      // for that price intent.
       if (replacePriceIntentWhenCurrentIsAddedToCart) {
         const cartPriceIntentIds = new Set(cart?.entries.map((item) => item.priceIntentId))
         if (cartPriceIntentIds.has(savedId)) {
@@ -290,23 +286,4 @@ export const usePriceIntentId = (): string => {
     throw new Error('priceIntentId must be defined')
   }
   return priceIntentId
-}
-
-export const useResetPriceIntent = () => {
-  const shopSessionId = useShopSessionId()
-  // When we start using TemplateV2 exclusively, we can remove this
-  // and retrieve the name from the template directly
-  const productName = useProductData().name
-  const apolloClient = useApolloClient()
-  const priceTemplate = usePriceTemplate()
-  const setCurrentPriceIntentId = useSetAtom(currentPriceIntentIdAtom)
-  const priceIntentService = priceIntentServiceInitClientSide(apolloClient)
-
-  return useCallback(() => {
-    if (shopSessionId == null) return
-    setCurrentPriceIntentId(null)
-    priceIntentService.create({ productName, priceTemplate, shopSessionId }).then((priceIntent) => {
-      setCurrentPriceIntentId(priceIntent.id)
-    })
-  }, [priceIntentService, setCurrentPriceIntentId, shopSessionId, priceTemplate, productName])
 }

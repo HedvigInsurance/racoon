@@ -1,12 +1,12 @@
 import clsx from 'clsx'
+import { useSetAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
-import { useCallback, useEffect } from 'react'
+import { useEffect } from 'react'
 import { Text, Card, Divider, Button, yStack } from 'ui'
 import type { Banner } from '@/components/Banner/Banner.types'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { useSetGlobalBanner, useDismissBanner } from '@/components/GlobalBanner/globalBannerState'
 import { Pillow } from '@/components/Pillow/Pillow'
-import { useResetPriceIntent } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { usePriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
 import { useSelectedOfferValueOrThrow } from '@/components/ProductPage/PurchaseForm/useSelectedOffer'
 import { TextWithLink } from '@/components/TextWithLink'
@@ -16,6 +16,7 @@ import {
   hasBundleDiscount,
   hasCartItemsEligibleForBundleDiscount,
 } from '@/features/bundleDiscount/bundleDiscount.utils'
+import { priceCalculatorShowPurchaseSummaryAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
 import type { TemplateV2 } from '@/services/PriceCalculator/PriceCalculator.types'
 import { useShopSessionValueOrThrow } from '@/services/shopSession/ShopSessionContext'
 import { getOfferPrice } from '@/utils/getOfferPrice'
@@ -26,15 +27,20 @@ import { actions } from './PurchaseSummary.css'
 export function PurchaseSummary({ className }: { className?: string }) {
   const { t } = useTranslation('purchase-form')
   const locale = useRoutingLocale()
+  // Selected offer is not price intent dependent but defined at page level. So even
+  // though at this point a new price intent is loaded the selected offer will remain
+  // referencing to an offer created by the previous price intent
   const offer = useSelectedOfferValueOrThrow()
   const priceTemplate = usePriceTemplate() as TemplateV2
-  const resetPriceIntent = useResetPriceIntent()
+  const setShowPurchaseSummary = useSetAtom(priceCalculatorShowPurchaseSummaryAtom)
 
   useNotifyAboutBundleDiscounts()
 
-  const handleAddMore = useCallback(() => {
-    resetPriceIntent()
-  }, [resetPriceIntent])
+  const handleAddMore = () => {
+    // Price intent is reset whenever a product is added to the cart so the only thing
+    // we need to do in order to add another product is to close the purchase summary
+    setShowPurchaseSummary(false)
+  }
 
   const showAddMoreButton = offer.product.multiple && priceTemplate.addMultiple
 
@@ -64,7 +70,7 @@ export function PurchaseSummary({ className }: { className?: string }) {
             })}
           </Button>
         )}
-        <ButtonNextLink href={PageLink.checkout({ locale })} variant="primary">
+        <ButtonNextLink href={PageLink.checkout({ locale }).toRelative()} variant="primary">
           {t('GO_TO_CART_LABEL')}
         </ButtonNextLink>
         <ButtonNextLink href={PageLink.store({ locale })} variant="ghost">

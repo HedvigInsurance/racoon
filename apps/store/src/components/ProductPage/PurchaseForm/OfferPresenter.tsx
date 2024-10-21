@@ -28,7 +28,7 @@ import { ComparisonTableModal } from './ComparisonTableModal'
 import { DeductibleSelector } from './DeductibleSelector'
 import { DiscountTooltip } from './DiscountTooltip/DiscountTooltip'
 import { useDiscountTooltipProps } from './DiscountTooltip/useDiscountTooltipProps'
-import { usePriceIntent, useResetPriceIntent } from './priceIntentAtoms'
+import { usePriceIntent } from './priceIntentAtoms'
 import { ProductTierSelector } from './ProductTierSelector'
 import { useSelectedOffer } from './useSelectedOffer'
 import { useTiersAndDeductibles } from './useTiersAndDeductibles'
@@ -149,14 +149,12 @@ export const OfferPresenter = memo((props: Props) => {
     [priceIntent.offers],
   )
 
-  const resetPriceIntent = useResetPriceIntent()
   const handleAddToCart: MouseEventHandler = (event) => {
     event.preventDefault()
     datadogRum.addAction(`PriceCalculator AddToCart Cart`)
     setAddToCartRedirect(AddToCartRedirect.Cart)
     onSuccessRef.current = (addedProductOffer: ProductOfferFragment) => {
       props.notifyProductAdded(addedProductOffer)
-      resetPriceIntent()
     }
     addToCart(selectedOffer.id)
   }
