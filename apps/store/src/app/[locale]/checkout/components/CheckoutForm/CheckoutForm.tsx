@@ -3,7 +3,7 @@
 import { useApolloClient } from '@apollo/client'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
-import { Text, Button, BankIdIcon, yStack } from 'ui'
+import { Text, Button, BankIdIcon, yStack, visuallyHidden } from 'ui'
 import { useHandleSubmitCheckout } from '@/app/[locale]/checkout/hooks/useHandleSubmitCheckout'
 import { useAsyncRouterPush } from '@/appComponents/useAsyncRouterPush'
 import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
@@ -126,6 +126,9 @@ export function CheckoutForm({
             </FullscreenDialog.Close>
           }
         >
+          <FullscreenDialog.Title className={visuallyHidden}>
+            {t('GENERAL_ERROR_DIALOG_TITLE', { ns: 'common' })}
+          </FullscreenDialog.Title>
           <Text className={errorPrompt} size={{ _: 'md', lg: 'lg' }} align="center">
             {t('ERROR_GENERAL_DIALOG_PROMPT')}
           </Text>
