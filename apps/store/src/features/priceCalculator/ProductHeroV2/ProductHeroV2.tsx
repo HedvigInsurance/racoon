@@ -1,14 +1,17 @@
 'use client'
+import clsx from 'clsx'
 import type { Variants } from 'framer-motion'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useRef } from 'react'
+import { type ReactNode, useRef } from 'react'
 import { Badge, framerTransitions, Heading, sprinkles, Text } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
+import { useIsPriceIntentStateReady } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { useSelectedOffer } from '@/components/ProductPage/PurchaseForm/useSelectedOffer'
 import { useHasScrolledPast } from '@/components/ProductPage/ScrollPast/useHasScrolledPast'
 import { useFormatter } from '@/utils/useFormatter'
 import {
+  pillow,
   pillowWrapper,
   priceLabel,
   priceWrapper,
@@ -17,6 +20,7 @@ import {
   subTypeLabel,
 } from './ProductHeroV2.css'
 import { StickyProductHeader } from './StickyProductHeader/StickyProductHeader'
+import { useCondensedProductHero } from './useCondensedProductHero'
 
 const TRAVEL_DISTANCE = '1em'
 const ANIMATION: Variants = {
@@ -28,11 +32,12 @@ const TRANSITION = { duration: 0.3, ...framerTransitions.easeInOutCubic }
 
 export function ProductHeroV2() {
   const ref = useRef(null)
+  const formatter = useFormatter()
   const productData = useProductData()
   const [selectedOffer] = useSelectedOffer()
-  const subType = selectedOffer?.variant.displayNameSubtype
+  const isReady = useIsPriceIntentStateReady()
   const hasScrolledPast = useHasScrolledPast({ targetRef: ref, offset: -100 })
-  const formatter = useFormatter()
+  const subType = selectedOffer?.variant.displayNameSubtype
 
   const productHeading = (
     <>
@@ -65,33 +70,44 @@ export function ProductHeroV2() {
 
   return (
     <>
-      <StickyProductHeader hasScrolledPast={hasScrolledPast}>
-        {
-          <>
-            <Pillow size="small" {...productData.pillowImage} priority={true} />
-            <div>{productHeading}</div>
-          </>
-        }
-      </StickyProductHeader>
+      {isReady && (
+        <StickyProductHeader hasScrolledPast={hasScrolledPast}>
+          {
+            <>
+              <Pillow size="small" {...productData.pillowImage} priority={true} />
+              <div>{productHeading}</div>
+            </>
+          }
+        </StickyProductHeader>
+      )}
 
-      <div ref={ref} className={productHeroWrapper}>
-        <div className={pillowWrapper}>
-          <Pillow
-            size={{ _: 'xlarge', lg: 'xxlarge' }}
-            {...productData.pillowImage}
-            priority={true}
-          />
-          {subType && (
-            <Badge className={subTypeBadge} size="big">
-              {subType}
-            </Badge>
-          )}
+      {isReady && (
+        <div ref={ref}>
+          <ProductHeroPillow subType={subType}>{productHeading}</ProductHeroPillow>
         </div>
-
-        <div className={sprinkles({ position: 'relative', textAlign: 'center' })}>
-          {productHeading}
-        </div>
-      </div>
+      )}
     </>
+  )
+}
+
+function ProductHeroPillow({ children, subType }: { children: ReactNode; subType?: string }) {
+  const { pillowImage } = useProductData()
+  const isCondensedProductHero = useCondensedProductHero()
+
+  return (
+    <div
+      className={clsx(productHeroWrapper.base, isCondensedProductHero && productHeroWrapper.hidden)}
+    >
+      <div className={pillowWrapper}>
+        <Pillow className={pillow} size={{ lg: 'xxlarge' }} {...pillowImage} priority={true} />
+        {subType && (
+          <Badge className={subTypeBadge} size="big">
+            {subType}
+          </Badge>
+        )}
+      </div>
+
+      <div className={sprinkles({ position: 'relative', textAlign: 'center' })}>{children}</div>
+    </div>
   )
 }

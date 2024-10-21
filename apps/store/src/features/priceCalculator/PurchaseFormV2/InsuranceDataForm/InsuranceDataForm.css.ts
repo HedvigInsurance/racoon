@@ -7,7 +7,6 @@ export const gdprLink = style({
 })
 
 export const ssnSectionWrapper = style({
-  marginTop: '3.75rem',
   ...responsiveStyles({
     lg: {
       display: 'flex',

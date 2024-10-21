@@ -1,7 +1,7 @@
 import { useAtomValue, useSetAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { startTransition } from 'react'
-import { xStack, Button, ChevronIcon, Text } from 'ui'
+import { Button, ChevronIcon, Text } from 'ui'
 import { SSN_SE_SECTION_ID } from '@/components/PriceCalculator/SsnSeSection'
 import {
   priceCalculatorFormAtom,
@@ -10,7 +10,8 @@ import {
 import {
   priceCalculatorShowEditSsnWarningAtom,
   priceCalculatorStepAtom,
-} from '../../priceCalculatorAtoms'
+} from '../../../priceCalculatorAtoms'
+import { sectionNavigationWrapper } from './SectionNavigation.css'
 
 export function SectionNavigation() {
   const { t } = useTranslation('purchase-form')
@@ -39,7 +40,7 @@ export function SectionNavigation() {
   }
 
   return (
-    <div className={xStack({ alignItems: 'center', justifyContent: 'space-between' })}>
+    <div className={sectionNavigationWrapper}>
       <Button
         size="small"
         variant="secondary"
