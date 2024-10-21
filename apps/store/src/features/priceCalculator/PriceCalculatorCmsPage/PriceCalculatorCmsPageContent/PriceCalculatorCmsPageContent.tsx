@@ -10,7 +10,6 @@ import { CartToast } from './CartToast/CartToast'
 import {
   pageGrid,
   priceCalculatorSection,
-  productHero,
   productHeroSection,
   purchaseSummaryWrapper,
   purchaseSummary,
@@ -26,7 +25,7 @@ export function PriceCalculatorCmsPageContent() {
     <div className={pageGrid}>
       {showProductHero && (
         <section className={productHeroSection}>
-          <ProductHeroV2 className={productHero} />
+          <ProductHeroV2 />
         </section>
       )}
       <section className={priceCalculatorSection}>
