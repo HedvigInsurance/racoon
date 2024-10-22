@@ -1,7 +1,8 @@
 'use client'
 
 import { useAtomValue } from 'jotai'
-import { priceCalculatorShowPurchaseSummaryAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
+import { useSyncPriceIntentState } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
+import { priceCalculatorAddedOffer } from '@/features/priceCalculator/priceCalculatorAtoms'
 import { PurchaseSummary } from '@/features/priceCalculator/PurchaseFormV2/PurchaseSummary/PurchaseSummary'
 import { useResponsiveVariant } from '@/utils/useResponsiveVariant'
 import { ProductHeroV2 } from '../../ProductHeroV2/ProductHeroV2'
@@ -17,9 +18,11 @@ import {
 
 export function PriceCalculatorCmsPageContent() {
   const variant = useResponsiveVariant('lg')
-  const showPurchaseSummary = useAtomValue(priceCalculatorShowPurchaseSummaryAtom)
+  const addedOfferToCart = useAtomValue(priceCalculatorAddedOffer)
 
-  const showProductHero = variant === 'desktop' || !showPurchaseSummary
+  useSyncPriceIntentState({ replacePriceIntentWhenCurrentIsAddedToCart: true })
+
+  const showProductHero = variant === 'desktop' || !addedOfferToCart
 
   return (
     <div className={pageGrid}>
@@ -29,7 +32,7 @@ export function PriceCalculatorCmsPageContent() {
         </section>
       )}
       <section className={priceCalculatorSection}>
-        {showPurchaseSummary ? (
+        {addedOfferToCart ? (
           <div className={purchaseSummaryWrapper}>
             <PurchaseSummary className={purchaseSummary} />
           </div>

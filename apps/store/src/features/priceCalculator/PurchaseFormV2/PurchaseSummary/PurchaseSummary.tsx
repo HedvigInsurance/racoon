@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { useSetAtom } from 'jotai'
+import { useAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { useEffect } from 'react'
 import { Text, Card, Divider, Button, yStack } from 'ui'
@@ -8,7 +8,6 @@ import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { useSetGlobalBanner, useDismissBanner } from '@/components/GlobalBanner/globalBannerState'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { usePriceTemplate } from '@/components/ProductPage/PurchaseForm/priceTemplateAtom'
-import { useSelectedOfferValueOrThrow } from '@/components/ProductPage/PurchaseForm/useSelectedOffer'
 import { TextWithLink } from '@/components/TextWithLink'
 import { TotalPrice } from '@/components/TotalPrice/TotalPrice'
 import { BUNDLE_DISCOUNT_PERCENTAGE } from '@/features/bundleDiscount/bundleDiscount.constants'
@@ -16,7 +15,7 @@ import {
   hasBundleDiscount,
   hasCartItemsEligibleForBundleDiscount,
 } from '@/features/bundleDiscount/bundleDiscount.utils'
-import { priceCalculatorShowPurchaseSummaryAtom } from '@/features/priceCalculator/priceCalculatorAtoms'
+import { priceCalculatorAddedOffer } from '@/features/priceCalculator/priceCalculatorAtoms'
 import type { TemplateV2 } from '@/services/PriceCalculator/PriceCalculator.types'
 import { useShopSessionValueOrThrow } from '@/services/shopSession/ShopSessionContext'
 import { getOfferPrice } from '@/utils/getOfferPrice'
@@ -27,22 +26,22 @@ import { actions } from './PurchaseSummary.css'
 export function PurchaseSummary({ className }: { className?: string }) {
   const { t } = useTranslation('purchase-form')
   const locale = useRoutingLocale()
-  // Selected offer is not price intent dependent but defined at page level. So even
-  // though at this point a new price intent is loaded the selected offer will remain
-  // referencing to an offer created by the previous price intent
-  const offer = useSelectedOfferValueOrThrow()
+  const [addedOffer, setAddedOffer] = useAtom(priceCalculatorAddedOffer)
   const priceTemplate = usePriceTemplate() as TemplateV2
-  const setShowPurchaseSummary = useSetAtom(priceCalculatorShowPurchaseSummaryAtom)
 
   useNotifyAboutBundleDiscounts()
+
+  if (!addedOffer) {
+    return null
+  }
 
   const handleAddMore = () => {
     // Price intent is reset whenever a product is added to the cart so the only thing
     // we need to do in order to add another product is to close the purchase summary
-    setShowPurchaseSummary(false)
+    setAddedOffer(null)
   }
 
-  const showAddMoreButton = offer.product.multiple && priceTemplate.addMultiple
+  const showAddMoreButton = addedOffer.product.multiple && priceTemplate.addMultiple
 
   return (
     <div className={clsx(yStack({ gap: 'xl' }), className)}>
@@ -51,22 +50,22 @@ export function PurchaseSummary({ className }: { className?: string }) {
       <Card.Root>
         <Card.Header>
           <Card.Media>
-            <Pillow size="small" {...offer.product.pillowImage} />
+            <Pillow size="small" {...addedOffer.product.pillowImage} />
           </Card.Media>
           <Card.Heading>
-            <Card.Title>{offer.product.displayNameFull}</Card.Title>
-            <Card.Subtitle>{offer.exposure.displayNameShort}</Card.Subtitle>
+            <Card.Title>{addedOffer.product.displayNameFull}</Card.Title>
+            <Card.Subtitle>{addedOffer.exposure.displayNameShort}</Card.Subtitle>
           </Card.Heading>
         </Card.Header>
         <Divider />
-        <TotalPrice label={t('YOUR_PRICE', { ns: 'common' })} {...getOfferPrice(offer.cost)} />
+        <TotalPrice label={t('YOUR_PRICE', { ns: 'common' })} {...getOfferPrice(addedOffer.cost)} />
       </Card.Root>
 
       <div className={actions}>
         {showAddMoreButton && (
           <Button onClick={handleAddMore} variant="secondary">
             {t('ADD_ANOTHER_INSURANCE_LABEL', {
-              productName: offer.product.displayNameShort.toLowerCase(),
+              productName: addedOffer.product.displayNameShort.toLowerCase(),
             })}
           </Button>
         )}
