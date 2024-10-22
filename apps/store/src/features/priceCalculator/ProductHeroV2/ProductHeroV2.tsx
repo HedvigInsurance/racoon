@@ -2,13 +2,12 @@
 import clsx from 'clsx'
 import type { Variants } from 'framer-motion'
 import { AnimatePresence, motion } from 'framer-motion'
-import { type ReactNode, useRef } from 'react'
+import { type ReactNode } from 'react'
 import { Badge, framerTransitions, Heading, sprinkles, Text } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { useIsPriceIntentStateReady } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { useSelectedOffer } from '@/components/ProductPage/PurchaseForm/useSelectedOffer'
-import { useHasScrolledPast } from '@/components/ProductPage/ScrollPast/useHasScrolledPast'
 import { useFormatter } from '@/utils/useFormatter'
 import {
   pillow,
@@ -31,12 +30,10 @@ const ANIMATION: Variants = {
 const TRANSITION = { duration: 0.3, ...framerTransitions.easeInOutCubic }
 
 export function ProductHeroV2() {
-  const ref = useRef(null)
   const formatter = useFormatter()
   const productData = useProductData()
   const [selectedOffer] = useSelectedOffer()
   const isReady = useIsPriceIntentStateReady()
-  const hasScrolledPast = useHasScrolledPast({ targetRef: ref, offset: -100 })
   const subType = selectedOffer?.variant.displayNameSubtype
 
   const productHeading = (
@@ -71,7 +68,7 @@ export function ProductHeroV2() {
   return (
     <>
       {isReady && (
-        <StickyProductHeader hasScrolledPast={hasScrolledPast}>
+        <StickyProductHeader>
           {
             <>
               <Pillow size="small" {...productData.pillowImage} priority={true} />
@@ -81,11 +78,7 @@ export function ProductHeroV2() {
         </StickyProductHeader>
       )}
 
-      {isReady && (
-        <div ref={ref}>
-          <ProductHeroPillow subType={subType}>{productHeading}</ProductHeroPillow>
-        </div>
-      )}
+      {isReady && <ProductHeroPillow subType={subType}>{productHeading}</ProductHeroPillow>}
     </>
   )
 }
