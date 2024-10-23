@@ -23,6 +23,7 @@ import { FormGridNew } from '@/features/priceCalculator/PurchaseFormV2/Insurance
 import {
   ssnSectionWrapper,
   gdprLink,
+  formWrapper,
 } from '@/features/priceCalculator/PurchaseFormV2/InsuranceDataForm/InsuranceDataForm.css'
 import { useConfirmPriceIntent } from '@/features/priceCalculator/PurchaseFormV2/InsuranceDataForm/useConfirmPriceIntent'
 import {
@@ -85,7 +86,7 @@ export function InsuranceDataForm({ className }: { className?: string }) {
       >
         {!isSsnSection && <SectionNavigation />}
 
-        <div className={yStack({ gap: 'lg' })}>
+        <div className={clsx(yStack({ gap: 'lg' }), formWrapper)}>
           <SectionHeadings section={section} />
           {sectionBody}
         </div>
