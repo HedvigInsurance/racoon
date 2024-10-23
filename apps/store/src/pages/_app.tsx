@@ -1,5 +1,4 @@
 import { ApolloProvider } from '@apollo/client'
-import { globalStore } from 'globalStore'
 import { Provider as JotaiProvider } from 'jotai'
 import type { AppPropsWithLayout } from 'next/app'
 import Head from 'next/head'
@@ -37,6 +36,7 @@ import { useDebugTranslationKeys } from '@/utils/l10n/useDebugTranslationKeys'
 import { useForceHtmlLangAttribute } from '@/utils/l10n/useForceHtmlLangAttribute'
 import { useAllowActiveStylesInSafari } from '@/utils/useAllowActiveStylesInSafari'
 import { useReloadOnCountryChange } from '@/utils/useReloadOnCountryChange'
+import { globalStore } from '../globalStore'
 
 // GOTCHA: Here we need to trick compiler into thinking we need global.css import
 // for anything other than side effects
