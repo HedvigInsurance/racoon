@@ -2,9 +2,10 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { StoryblokComponent } from '@storyblok/react'
 import { useTranslation } from 'next-i18next'
 import { useMemo } from 'react'
+import * as Dialog from 'ui/src/components/Dialog/Dialog'
+import { LargeDialog } from 'ui/src/components/Dialog/LargeDialog'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import { Badge, Button, Heading, PlusIcon, Text, xStack, yStack } from 'ui'
-import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { usePriceCalculatorDeductibleInfo } from '@/features/priceCalculator/priceCalculatorAtoms'
 import type { Money, ProductOfferFragment } from '@/services/graphql/generated'
 import { useFormatter } from '@/utils/useFormatter'
@@ -90,8 +91,8 @@ function DeductibleInfo() {
   const { t } = useTranslation('purchase-form')
   const deductibleInfo = usePriceCalculatorDeductibleInfo()
   return (
-    <FullscreenDialog.Root>
-      <FullscreenDialog.Trigger asChild={true}>
+    <Dialog.Root>
+      <Dialog.Trigger asChild={true}>
         <Button
           variant="secondary"
           size="small"
@@ -101,15 +102,17 @@ function DeductibleInfo() {
         >
           {t('DEDUCTIBLE_SELECTOR_FOOTER_LINK')}
         </Button>
-      </FullscreenDialog.Trigger>
-      <FullscreenDialog.Modal>
-        <FullscreenDialog.Title className={sprinkles({ display: 'none' })}>
+      </Dialog.Trigger>
+      <LargeDialog.Content>
+        <Dialog.Title className={sprinkles({ display: 'none' })}>
           {t('DEDUCTIBLE_SELECTOR_FOOTER_LINK')}
-        </FullscreenDialog.Title>
-        {deductibleInfo.map((blok) => (
-          <StoryblokComponent key={blok._uid} blok={blok} />
-        ))}
-      </FullscreenDialog.Modal>
-    </FullscreenDialog.Root>
+        </Dialog.Title>
+        <LargeDialog.ScrollableInnerContent>
+          {deductibleInfo.map((blok) => (
+            <StoryblokComponent key={blok._uid} blok={blok} />
+          ))}
+        </LargeDialog.ScrollableInnerContent>
+      </LargeDialog.Content>
+    </Dialog.Root>
   )
 }
