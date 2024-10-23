@@ -34,6 +34,13 @@ export const pillow = style({
   vars: {
     [pillowSize]: '10rem',
   },
+  ...responsiveStyles({
+    lg: {
+      vars: {
+        [pillowSize]: '13rem',
+      },
+    },
+  }),
 })
 
 export const priceWrapper = style({ position: 'relative', height: tokens.space.lg })
