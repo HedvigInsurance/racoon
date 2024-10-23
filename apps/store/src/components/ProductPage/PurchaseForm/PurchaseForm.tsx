@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { useTranslation } from 'next-i18next'
 import { Suspense, useCallback, useRef, useState, useMemo, memo, type ReactNode } from 'react'
-import { Button, framerTransitions, Space } from 'ui'
+import { Button, framerTransitions, yStack } from 'ui'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import type { CartToastAttributes } from '@/components/CartNotification/CartToast'
 import { CartToast } from '@/components/CartNotification/CartToast'
@@ -75,10 +75,12 @@ export function PurchaseForm(props: PurchaseFormProps) {
     return (
       <div className={purchaseFormTop}>
         <ProductHeroContainer size="large">
-          <ButtonNextLink fullWidth={true} href={productData.priceCalculatorPageLink}>
-            {t('OPEN_PRICE_CALCULATOR_BUTTON')}
-          </ButtonNextLink>
-          {props.showAverageRating && <ProductAverageRating />}
+          <div className={yStack({ gap: 'md' })}>
+            <ButtonNextLink fullWidth={true} href={productData.priceCalculatorPageLink}>
+              {t('OPEN_PRICE_CALCULATOR_BUTTON')}
+            </ButtonNextLink>
+            {props.showAverageRating && <ProductAverageRating />}
+          </div>
         </ProductHeroContainer>
       </div>
     )
@@ -267,12 +269,12 @@ const IdleState = ({ loading, onClick, showAverageRating }: IdleStateProps) => {
     <>
       <div ref={ref}>
         <ProductHeroContainer size="large">
-          <Space y={1}>
+          <div className={yStack({ gap: 'md' })}>
             <Button loading={loading} onClick={onClick} fullWidth={true}>
               {t('OPEN_PRICE_CALCULATOR_BUTTON')}
             </Button>
             {showAverageRating && <ProductAverageRating />}
-          </Space>
+          </div>
         </ProductHeroContainer>
       </div>
       <ScrollPast targetRef={ref}>
