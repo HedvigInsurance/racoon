@@ -27,7 +27,7 @@ import { useCartEntryToReplace } from '@/components/ProductPage/useCartEntryToRe
 import { DiscountFieldContainer } from '@/components/ShopBreakdown/DiscountFieldContainer'
 import {
   priceCalculatorStepAtom,
-  priceCalculatorShowPurchaseSummaryAtom,
+  priceCalculatorAddedOffer,
 } from '@/features/priceCalculator/priceCalculatorAtoms'
 import { DeductibleSelectorV2 } from '@/features/priceCalculator/PurchaseFormV2/OfferPresenterV2/DeductibleSelectorV2/DeductibleSelectorV2'
 import { ProductCardSmall } from '@/features/priceCalculator/PurchaseFormV2/OfferPresenterV2/ProductCardSmall/ProductCardSmall'
@@ -163,7 +163,7 @@ function OfferSummary() {
   const shopSessionId = useShopSessionIdOrThrow()
   const selectedOffer = useSelectedOfferValueOrThrow()
   const priceIntent = usePriceIntent()
-  const setShowPurchaseSummary = useSetAtom(priceCalculatorShowPurchaseSummaryAtom)
+  const setAddedOffer = useSetAtom(priceCalculatorAddedOffer)
 
   const entryToReplace = useCartEntryToReplace()
   const tracking = useTracking()
@@ -195,7 +195,7 @@ function OfferSummary() {
     await addToCart(selectedOffer.id)
     // Make sure user views "added to cart" notification and/or bundle discount banner
     window.scrollTo({ top: 0, behavior: 'instant' })
-    setShowPurchaseSummary(true)
+    setAddedOffer(selectedOffer)
   }
 
   const productData = useProductData()

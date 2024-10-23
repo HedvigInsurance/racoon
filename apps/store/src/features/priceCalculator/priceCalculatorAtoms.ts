@@ -7,6 +7,7 @@ import {
   currentPriceIntentIdAtom,
   priceIntentAtom,
 } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
+import { type ProductOfferFragment } from '@/services/graphql/generated'
 import { getAtomValueOrThrow } from '@/utils/jotaiUtils'
 
 type PriceCalculatorStep = 'loadingForm' | 'fillForm' | 'calculatingPrice' | 'viewOffers'
@@ -53,4 +54,4 @@ export const usePriceCalculatorDeductibleInfo = () => {
 
 export const priceCalculatorShowEditSsnWarningAtom = atom(false)
 
-export const priceCalculatorShowPurchaseSummaryAtom = atom(false)
+export const priceCalculatorAddedOffer = atom<ProductOfferFragment | null>(null)

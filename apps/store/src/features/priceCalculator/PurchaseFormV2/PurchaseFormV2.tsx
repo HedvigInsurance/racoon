@@ -3,10 +3,7 @@
 import { useAtom } from 'jotai'
 import { useEffect } from 'react'
 import { PriceLoader } from '@/components/PriceLoader'
-import {
-  useIsPriceIntentStateReady,
-  useSyncPriceIntentState,
-} from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
+import { useIsPriceIntentStateReady } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import {
   PRELOADED_PRICE_INTENT_QUERY_PARAM,
   usePreloadedPriceIntentId,
@@ -21,7 +18,6 @@ import { InsuranceDataForm } from './InsuranceDataForm/InsuranceDataForm'
 import { centered, priceLoaderWrapper, viewOffersWrapper } from './PurchaseFormV2.css'
 
 export function PurchaseFormV2() {
-  useSyncPriceIntentState({ replacePriceIntentWhenCurrentIsAddedToCart: true })
   useWarnOnPreloadedPriceIntentId()
 
   const isReady = useIsPriceIntentStateReady()
