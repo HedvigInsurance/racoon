@@ -7,7 +7,6 @@ import { type FormEventHandler, type ReactNode } from 'react'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
 import { yStack } from 'ui'
 import { FetchInsuranceContainer } from '@/components/PriceCalculator/FetchInsuranceContainer'
-import { SSN_SE_SECTION_ID, SsnSeSection } from '@/components/PriceCalculator/SsnSeSection'
 import { useHandleSubmitPriceCalculatorSection } from '@/components/PriceCalculator/useHandleSubmitPriceCalculatorSection'
 import { useTranslateFieldLabel } from '@/components/PriceCalculator/useTranslateFieldLabel'
 import {
@@ -41,6 +40,7 @@ import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
 import { PageLink } from '@/utils/PageLink'
 import { SectionTitle, SectionSubtitle } from '../SectionHeading'
 import { SectionNavigation } from './SectionNavigation/SectionNavigation'
+import { SSN_SE_SECTION_ID, SsnSeSectionV2 } from './SsnSeSectionV2'
 
 export function InsuranceDataForm({ className }: { className?: string }) {
   const locale = useRoutingLocale()
@@ -59,7 +59,7 @@ export function InsuranceDataForm({ className }: { className?: string }) {
     let sectionBody: ReactNode
     const isSsnSection = section.id === SSN_SE_SECTION_ID
     if (isSsnSection) {
-      sectionBody = <SsnSeSection className={yStack({ gap: 'lg' })} />
+      sectionBody = <SsnSeSectionV2 className={yStack({ gap: 'lg' })} />
     } else {
       const isLast = index === form.sections.length - 1
       sectionBody = (
