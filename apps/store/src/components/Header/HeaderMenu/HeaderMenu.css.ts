@@ -1,5 +1,5 @@
 import { createVar, style } from '@vanilla-extract/css'
-import { minWidth, responsiveStyles, tokens, xStack } from 'ui'
+import { minWidth, responsiveStyles, sprinkles, tokens, xStack } from 'ui'
 
 export const displaySubmenus = createVar()
 export const displayMobileMenu = createVar()
@@ -29,15 +29,23 @@ export const backLink = style([
   },
 ])
 
-export const backWrapper = style({
-  backgroundColor: tokens.colors.buttonSecondary,
-  borderRadius: tokens.radius.xxs,
-  padding: tokens.space.xxs,
+export const backWrapper = style([
+  sprinkles({ display: 'flex', alignItems: 'center', justifyContent: 'center' }),
+  {
+    width: '2rem',
+    aspectRatio: '1 / 1',
+    backgroundColor: tokens.colors.buttonSecondary,
+    borderRadius: tokens.radius.xxs,
 
-  ':hover': {
-    backgroundColor: tokens.colors.buttonSecondaryHover,
+    ':hover': {
+      backgroundColor: tokens.colors.buttonSecondaryHover,
+    },
+
+    ...responsiveStyles({
+      lg: { width: '2.5rem' },
+    }),
   },
-})
+])
 
 export const backButtonText = style({
   display: 'none',
