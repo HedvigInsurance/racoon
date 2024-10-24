@@ -26,6 +26,8 @@ export const SsnSeSectionV2 = memo(({ className }: { className?: string }) => {
     awaitRefetchQueries: true,
     onCompleted() {
       setActiveSectionId(GOTO_NEXT_SECTION)
+      // Scroll to top when going to next step to avoid sticky header overlap
+      window.scrollTo({ top: 0, behavior: 'instant' })
     },
     onError(error) {
       datadogLogs.logger.debug(`Failed to update customer ssn: ${error.message}`, { error })
