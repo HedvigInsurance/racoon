@@ -3,7 +3,8 @@ import { clsx } from 'clsx'
 import { motion } from 'framer-motion'
 import type { ComponentProps, PropsWithChildren, ReactElement } from 'react'
 import { forwardRef } from 'react'
-import { MinusIcon, PlusIcon } from 'ui'
+import { MinusIcon } from 'ui/src/icons/MinusIcon'
+import { PlusIcon } from 'ui/src/icons/PlusIcon'
 import {
   closeIcon,
   content,

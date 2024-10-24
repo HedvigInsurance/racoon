@@ -3,7 +3,8 @@
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { type ReactNode, useEffect, useState } from 'react'
-import { Dialog, mq, theme } from 'ui'
+import { Dialog } from 'ui/src/components/Dialog/Dialog'
+import { mq, theme } from 'ui'
 
 const CTRL_SHIFT_D = '∆'
 

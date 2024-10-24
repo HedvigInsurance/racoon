@@ -1,5 +1,7 @@
 import { useTranslation } from 'next-i18next'
-import { Button, Text, grid, yStack } from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
+import { grid } from 'ui/src/patterns/grid'
+import { Text, yStack } from 'ui'
 import { ImageWithPlaceholder } from '@/components/ImageWithPlaceholder/ImageWithPlaceholder'
 import { getAppStoreLink } from '@/utils/appStoreLinks'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'

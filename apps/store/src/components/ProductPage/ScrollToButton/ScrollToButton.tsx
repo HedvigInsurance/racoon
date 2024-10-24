@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { type ReactNode } from 'react'
-import { Button, mq, theme } from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
+import { mq, theme } from 'ui'
 
 type ScrollToTopButtonProps = {
   type: 'button' | 'submit'

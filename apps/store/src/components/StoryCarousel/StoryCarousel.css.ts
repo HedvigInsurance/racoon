@@ -1,5 +1,5 @@
 import { createVar, style, keyframes } from '@vanilla-extract/css'
-import { tokens } from 'ui'
+import { tokens } from 'ui/src/theme/theme.css'
 
 const fill = keyframes({
   from: { width: '0%' },

@@ -2,7 +2,8 @@
 
 import { useTranslation } from 'next-i18next'
 import type { ComponentProps } from 'react'
-import { Alert, CheckIcon } from 'ui'
+import { CheckIcon } from 'ui/src/icons/CheckIcon'
+import { Alert } from 'ui'
 import { handledMessage } from './InsuranceSwitcherExpirationDateForm.css'
 
 type Props = ComponentProps<typeof Alert.Root>

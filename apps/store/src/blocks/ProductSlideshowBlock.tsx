@@ -2,7 +2,7 @@
 
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 import { Slideshow } from '@/components/Slideshow/Slideshow'
 import type { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import { filterByBlockType } from '@/services/storyblok/Storyblok.helpers'

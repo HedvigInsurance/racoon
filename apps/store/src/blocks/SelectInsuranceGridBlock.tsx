@@ -2,7 +2,7 @@
 
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import { mq } from 'ui'
+import { mq } from 'ui/src/theme/media-query'
 import { useProductMetadata } from '@/components/LayoutWithMenu/productMetadataHooks'
 import { OPEN_PRICE_CALCULATOR_QUERY_PARAM } from '@/components/ProductPage/PurchaseForm/useOpenPriceCalculatorQueryParam'
 import { SelectInsuranceGrid } from '@/components/SelectInsuranceGrid/SelectInsuranceGrid'

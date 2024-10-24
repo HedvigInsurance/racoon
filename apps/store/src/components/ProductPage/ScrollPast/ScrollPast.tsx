@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 import { zIndexes } from '@/utils/zIndex'
 import { useHasScrolledPast } from './useHasScrolledPast'
 

@@ -1,5 +1,5 @@
 import { usePathname } from 'next/navigation'
-import { Button } from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
 import { useShopSessionId } from '@/services/shopSession/ShopSessionContext'
 import { PageLink } from '@/utils/PageLink'
 import { CopyToClipboard } from './CopyToClipboard'

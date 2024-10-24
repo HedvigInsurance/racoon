@@ -3,7 +3,8 @@ import clsx from 'clsx'
 import { useAtomValue, useSetAtom } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import { type FormEventHandler, memo } from 'react'
-import { Button, yStack } from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
+import { yStack } from 'ui'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import {
   activeFormSectionIdAtom,

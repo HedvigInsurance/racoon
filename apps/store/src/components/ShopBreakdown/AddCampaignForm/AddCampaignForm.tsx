@@ -1,6 +1,6 @@
 import { useTranslation } from 'next-i18next'
 import type { FormEventHandler } from 'react'
-import { Button } from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
 import { TextField } from '@/components/TextField/TextField'
 import { button, wrapper } from './AddCampaignForm.css'
 

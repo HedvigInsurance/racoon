@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import type { StoryObj } from '@storybook/react'
 import { type Meta } from '@storybook/react'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 import { FetchInsurancePrompt } from './FetchInsurancePrompt'
 
 const meta: Meta<typeof FetchInsurancePrompt> = {

@@ -1,4 +1,4 @@
-import * as Tabs from 'ui'
+import { Tabs } from 'ui/src/components/Tabs/Tabs'
 import { yStack, Heading } from 'ui'
 import { Perils } from '../Perils'
 import type { PerilsTableProps, VariantPerils } from './PerilsTable'

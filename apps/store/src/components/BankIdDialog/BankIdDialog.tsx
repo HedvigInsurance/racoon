@@ -5,20 +5,12 @@ import { useTranslation } from 'next-i18next'
 import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useRef, type ReactNode } from 'react'
 import { isMobile, isIOS, isChrome, isFirefox, isOpera } from 'react-device-detect'
-import {
-  Button,
-  type ButtonProps,
-  Text,
-  HedvigLogo,
-  RoundCheckIcon,
-  BankIdIcon,
-  WarningTriangleIcon,
-  yStack,
-  theme,
-  visuallyHidden,
-  Card,
-} from 'ui'
-import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
+import { Button, type ButtonProps } from 'ui/src/components/Button/Button'
+import { FullscreenDialog } from 'ui/src/components/Dialog/FullscreenDialog'
+import { BankIdIcon } from 'ui/src/icons/BankIdIcon'
+import { RoundCheckIcon } from 'ui/src/icons/RoundCheckIcon'
+import { WarningTriangleIcon } from 'ui/src/icons/WarningTriangleIcon'
+import { Text, HedvigLogo, yStack, theme, visuallyHidden, Card } from 'ui'
 import { Skeleton } from '@/components/Skeleton/Skeleton'
 import { SIGN_FORM_ID } from '@/constants/sign.constants'
 import type { BankIdOperation } from '@/services/bankId/bankId.types'

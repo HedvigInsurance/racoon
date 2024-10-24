@@ -1,6 +1,7 @@
 import { useTranslation } from 'next-i18next'
 import { useRef } from 'react'
-import { Button, sprinkles, Text } from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
+import { sprinkles, Text } from 'ui'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { ScrollPast } from '@/components/ProductPage/ScrollPast/ScrollPast'
 import { ProductSelector } from './ProductSelector'

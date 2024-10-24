@@ -1,8 +1,11 @@
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { BankIdIcon, Button, Text, WarningTriangleIcon, theme } from 'ui'
-import * as FullScreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
+import { Button } from 'ui/src/components/Button/Button'
+import { FullscreenDialog } from 'ui/src/components/Dialog/FullscreenDialog'
+import { BankIdIcon } from 'ui/src/icons/BankIdIcon'
+import { WarningTriangleIcon } from 'ui/src/icons/WarningTriangleIcon'
+import { Text, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 
 type Props = {
@@ -18,28 +21,28 @@ export const ConfirmPayWithoutExtensionButton = (props: Props) => {
   }
 
   return (
-    <FullScreenDialog.Root>
-      <FullScreenDialog.Trigger asChild={true}>
+    <FullscreenDialog.Root>
+      <FullscreenDialog.Trigger asChild={true}>
         <Button variant="primary" fullWidth={true}>
           <SpaceFlex space={0.5} align="center">
             <BankIdIcon />
             {t('CONNECT_PAYMENT_BUTTON')}
           </SpaceFlex>
         </Button>
-      </FullScreenDialog.Trigger>
+      </FullscreenDialog.Trigger>
 
-      <FullScreenDialog.Modal
+      <FullscreenDialog.Modal
         center={true}
         Footer={
           <>
             <Button onClick={handleClick} fullWidth={true}>
               {t('PAY_WITHOUT_EXTENSION_DIALOG_CONFIRM')}
             </Button>
-            <FullScreenDialog.Close asChild={true}>
+            <FullscreenDialog.Close asChild={true}>
               <Button type="button" variant="ghost" fullWidth={true}>
                 {t('PAY_WITHOUT_EXTENSION_DIALOG_CANCEL')}
               </Button>
-            </FullScreenDialog.Close>
+            </FullscreenDialog.Close>
           </>
         }
       >
@@ -54,8 +57,8 @@ export const ConfirmPayWithoutExtensionButton = (props: Props) => {
             </Text>
           </TextWrapper>
         </SpaceFlex>
-      </FullScreenDialog.Modal>
-    </FullScreenDialog.Root>
+      </FullscreenDialog.Modal>
+    </FullscreenDialog.Root>
   )
 }
 

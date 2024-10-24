@@ -1,5 +1,6 @@
 import { headers } from 'next/headers'
-import { Button, Space } from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
+import { Space } from 'ui'
 import { TextField } from '@/components/TextField/TextField'
 import { MessageLogger } from './components/MessageLogger/MessageLogger'
 import { iframe, sidebar, wrapper } from './iframeDebugger.css'

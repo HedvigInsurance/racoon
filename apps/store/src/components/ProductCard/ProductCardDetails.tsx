@@ -1,5 +1,5 @@
 import { type ComponentProps, createContext, type ReactNode, useContext, useState } from 'react'
-import { Button } from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
 import Collapsible from '@/components/Collapsible/Collapsible'
 
 type ContextValue = {

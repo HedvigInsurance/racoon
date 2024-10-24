@@ -1,5 +1,5 @@
 import { assignVars, style } from '@vanilla-extract/css'
-import { tokens } from 'ui'
+import { tokens } from 'ui/src/theme/theme.css'
 
 // This makes sure inputs used inside ProductItem card has the correct
 // background color when used in the context of ProductItemContainer

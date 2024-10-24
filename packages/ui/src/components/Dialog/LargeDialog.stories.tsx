@@ -2,7 +2,7 @@ import { type Meta, type StoryFn } from '@storybook/react'
 import { yStack } from '../../patterns'
 import { Button } from '../Button/Button'
 import { Text } from '../Text/Text'
-import * as Dialog from './Dialog'
+import { Dialog } from './Dialog'
 import { LargeDialog } from './LargeDialog'
 
 export default {

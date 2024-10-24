@@ -2,7 +2,9 @@ import styled from '@emotion/styled'
 import * as SelectPrimitive from '@radix-ui/react-select'
 import { useTranslation } from 'next-i18next'
 import { Fragment } from 'react'
-import { CheckIcon, ChevronIcon, theme } from 'ui'
+import { CheckIcon } from 'ui/src/icons/CheckIcon'
+import { ChevronIcon } from 'ui/src/icons/Chevron'
+import { theme } from 'ui/src/theme/theme'
 import { Pillow } from '@/components/Pillow/Pillow'
 
 export type ProductOption = {

@@ -1,5 +1,6 @@
 import { useTranslation } from 'next-i18next'
-import { Button, Space } from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
+import { Space } from 'ui'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'
 import { useProuctReviewsMetadata } from '@/features/memberReviews/ProductReviewsMetadataProvider'

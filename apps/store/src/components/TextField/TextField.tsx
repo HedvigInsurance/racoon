@@ -3,16 +3,11 @@
 import clsx from 'clsx'
 import type { ChangeEventHandler, InputHTMLAttributes, MouseEventHandler, ReactNode } from 'react'
 import { useId, useRef, useState } from 'react'
+import { CrossIcon } from 'ui/src/icons/CrossIcon'
+import { LockIcon } from 'ui/src/icons/LockIcon'
+import { WarningTriangleIcon } from 'ui/src/icons/WarningTriangleIcon'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
-import {
-  LockIcon,
-  Text,
-  WarningTriangleIcon,
-  theme,
-  yStack,
-  CrossIcon,
-  useHighlightAnimation,
-} from 'ui'
+import { Text, theme, yStack, useHighlightAnimation } from 'ui'
 import {
   deleteButton,
   input,

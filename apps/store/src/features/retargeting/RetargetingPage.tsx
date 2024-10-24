@@ -1,7 +1,7 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { type ComponentProps } from 'react'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 import { Pillow } from '@/components/Pillow/Pillow'
 
 type Props = {

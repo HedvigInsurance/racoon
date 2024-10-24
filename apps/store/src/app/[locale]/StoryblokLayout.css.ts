@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
+import { tokens } from 'ui/src/theme/theme.css'
 import { bodyBgColor, bodyTextColor, footerBgColor } from 'ui/src/theme/vars.css'
-import { tokens } from 'ui'
 
 export const wrapper = style({
   minHeight: '100vh',

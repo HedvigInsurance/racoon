@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useCallback } from 'react'
-import { Button } from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
 import { useMemberAreaInfo } from '@/features/memberArea/useMemberAreaInfo'
 import { useTravelCertificateCreateMutation } from '@/services/graphql/generated'
 import { formatAPIDate } from '@/utils/date'

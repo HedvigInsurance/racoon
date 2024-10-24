@@ -2,7 +2,7 @@
 
 import type { ComponentPropsWithoutRef } from 'react'
 import { useFormStatus } from 'react-dom'
-import { Button } from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
 
 export function SubmitButton({ children, ...props }: ComponentPropsWithoutRef<'button'>) {
   const { pending } = useFormStatus()

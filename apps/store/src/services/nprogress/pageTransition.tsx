@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import NProgress from 'nprogress'
 import { useEffect, useState } from 'react'
 import 'nprogress/nprogress.css'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 
 if (typeof window !== 'undefined') {
   NProgress.configure({ showSpinner: false })

@@ -1,6 +1,7 @@
 import { useTranslation } from 'next-i18next'
 import { useMemo, useState } from 'react'
-import { Text, CrossIconSmall, xStack, yStack } from 'ui'
+import { CrossIconSmall } from 'ui/src/icons/CrossIconSmall'
+import { Text, xStack, yStack } from 'ui'
 import { Combobox } from '@/components/Combobox/Combobox'
 import type { Breed } from '@/services/PriceCalculator/Field.types'
 import { wrapper, content, deleteButton, combobox } from './MixedBreedPicker.css'
@@ -60,6 +61,7 @@ export const MixedBreedPicker = ({
                     onClick={handleDelete(breed.id)}
                     disabled={loading}
                   >
+                    {/* eslint-disable-next-line react/jsx-no-undef */}
                     <CrossIconSmall />
                   </button>
                 </li>

@@ -1,12 +1,12 @@
 import { clsx } from 'clsx'
 import { motion } from 'framer-motion'
 import { type ComponentProps } from 'react'
-import { CrossIcon } from '../../icons'
+import { CrossIcon } from '../../icons/CrossIcon'
 import { framerTransitions } from '../../theme'
 import { IconButton } from '../Button/IconButton'
 import { Card } from '../Card/Card'
 import { Heading } from '../Heading/Heading'
-import * as Dialog from './Dialog'
+import { Dialog } from './Dialog'
 import { card, closeButton, content, heading, scrollableInnerContent } from './LargeDialog.css'
 
 // Large modal, full-screen on mobile. Uses `Root` and `Trigger` from default `Dialog`

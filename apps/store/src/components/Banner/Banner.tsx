@@ -1,7 +1,11 @@
 import { clsx } from 'clsx'
 import type { ComponentPropsWithoutRef } from 'react'
 import { type ReactNode } from 'react'
-import { InfoIcon, CampaignIcon, WarningTriangleIcon, CrossIconSmall, tokens } from 'ui'
+import { CampaignIcon } from 'ui/src/icons/CampaignIcon'
+import { CrossIconSmall } from 'ui/src/icons/CrossIconSmall'
+import { InfoIcon } from 'ui/src/icons/InfoIcon'
+import { WarningTriangleIcon } from 'ui/src/icons/WarningTriangleIcon'
+import { tokens } from 'ui/src/theme/theme.css'
 import {
   bannerCloseButton,
   bannerContent,

@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
 import type { Meta, StoryFn } from '@storybook/react'
 import { useRef } from 'react'
-import { Button, theme } from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
+import { theme } from 'ui/src/theme/theme'
 import type { ScrollPastProps } from './ScrollPast'
 import { ScrollPast } from './ScrollPast'
 

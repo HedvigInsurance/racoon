@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { sprinkles } from '../../theme'
-import * as Tabs from './Tabs'
+import { Tabs } from './Tabs'
 
 const meta: Meta<typeof Tabs> = {
   title: 'Tabs',

@@ -1,6 +1,8 @@
 import { motion, type Transition } from 'framer-motion'
 import { type ReactNode } from 'react'
-import { CrossIcon, Dialog, framerTransitions } from 'ui'
+import { CrossIcon } from '../../icons/CrossIcon'
+import { framerTransitions } from '../../theme'
+import { Dialog } from './Dialog'
 import {
   dialogCloseIcon,
   dialogContent,
@@ -16,7 +18,7 @@ type Props = {
   center?: boolean
 }
 
-export const Modal = ({ children, Header, Footer, center = false }: Props) => {
+const Modal = ({ children, Header, Footer, center = false }: Props) => {
   return (
     <Dialog.Content className={dialogContent} frostedOverlay>
       {/* When not provided `Header` we display a fallback header. */}
@@ -47,6 +49,7 @@ export const Modal = ({ children, Header, Footer, center = false }: Props) => {
   )
 }
 
+// TODO: Stop exporting this when PriceCalculatorDialog is removed. Exposing such deep detail in not very good API
 export function AnimateContentWrapper({ children }: { children: ReactNode }) {
   return (
     <motion.div
@@ -65,10 +68,13 @@ export function AnimateContentWrapper({ children }: { children: ReactNode }) {
   )
 }
 
-export const Root = Dialog.Root
-export const Close = Dialog.Close
-export const Trigger = Dialog.Trigger
-export const Title = Dialog.Title
+export const FullscreenDialog = {
+  Root: Dialog.Root,
+  Modal,
+  Close: Dialog.Close,
+  Trigger: Dialog.Trigger,
+  Title: Dialog.Title,
+}
 
 const ANIMATE_TRANSITION: Transition = {
   duration: 0.5,

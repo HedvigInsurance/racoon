@@ -1,7 +1,8 @@
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import { storyblokEditable } from '@storyblok/react'
 import clsx from 'clsx'
-import { MinusIcon, PlusIcon } from 'ui'
+import { MinusIcon } from 'ui/src/icons/MinusIcon'
+import { PlusIcon } from 'ui/src/icons/PlusIcon'
 import { MenuItemBlock, type MenuItemBlockProps } from '@/blocks/HeaderBlock/MenuItemBlock'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import {

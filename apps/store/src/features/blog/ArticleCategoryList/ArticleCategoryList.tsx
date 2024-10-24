@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { type ReactNode } from 'react'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 
 const Root = (props: { children: ReactNode }) => {
   return <Wrapper>{props.children}</Wrapper>

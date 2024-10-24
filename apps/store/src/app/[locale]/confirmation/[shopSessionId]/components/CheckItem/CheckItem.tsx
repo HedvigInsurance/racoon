@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { type PropsWithChildren } from 'react'
-import { Card, CheckIcon, xStack } from 'ui'
+import { CheckIcon } from 'ui/src/icons/CheckIcon'
+import { Card, xStack } from 'ui'
 import { checkItemWrapper, checkItemWrapperChecked } from './CheckItem.css'
 
 type Props = {

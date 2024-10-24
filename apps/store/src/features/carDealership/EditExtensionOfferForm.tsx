@@ -1,7 +1,7 @@
 import { datadogRum } from '@datadog/browser-rum'
 import styled from '@emotion/styled'
 import { useTranslation } from 'next-i18next'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { CarMileageField } from '@/components/PriceCalculator/CarMileageField'
 import { ActionButton } from '@/components/ProductItem/ProductItem'

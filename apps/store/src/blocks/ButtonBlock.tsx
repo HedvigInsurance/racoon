@@ -1,7 +1,7 @@
 'use client'
 import { storyblokEditable } from '@storyblok/react'
 import { type ComponentProps } from 'react'
-import type { Button } from 'ui'
+import { type Button } from 'ui/src/components/Button/Button'
 import { buttonWrapper } from '@/blocks/ButtonBlock.css'
 import { ButtonNextLink } from '@/components/ButtonNextLink'
 import type { LinkField } from '@/services/storyblok/storyblok'

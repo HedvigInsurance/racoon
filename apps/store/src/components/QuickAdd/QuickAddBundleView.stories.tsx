@@ -1,6 +1,7 @@
 import { type Meta, type StoryObj } from '@storybook/react'
+import { Button } from 'ui/src/components/Button/Button'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
-import { Button, Heading, Text } from 'ui'
+import { Heading, Text } from 'ui'
 import { Perils } from '@/components/Perils/Perils'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { Price } from '@/components/Price'

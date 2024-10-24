@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import type { ReactNode } from 'react'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 import { ORIGIN_URL } from 'utils/url'
 import { AppInitTriggers } from './AppInitTriggers'
 import { LayoutJotaiProvider } from './LayoutJotaiProvider'

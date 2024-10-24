@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import Image from 'next/image'
-import { mq } from 'ui'
+import { mq } from 'ui/src/theme/media-query'
 import { getImgSrc } from '@/services/storyblok/Storyblok.helpers'
 import { DEFAULT_IMAGE_QUALITY } from '@/utils/config'
 

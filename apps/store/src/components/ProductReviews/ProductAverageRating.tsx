@@ -1,5 +1,5 @@
 import { useTranslation } from 'next-i18next'
-import { CertifiedIcon } from 'ui'
+import { CertifiedIcon } from 'ui/src/icons/CertifiedIcon'
 import type { ProductData } from '@/components/ProductData/ProductData.types'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { MAX_SCORE } from '@/features/memberReviews/memberReviews.constants'

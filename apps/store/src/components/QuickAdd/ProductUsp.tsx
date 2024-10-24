@@ -1,5 +1,6 @@
 import { type PropsWithChildren } from 'react'
-import { Text, CheckIcon } from 'ui'
+import { CheckIcon } from 'ui/src/icons/CheckIcon'
+import { Text } from 'ui'
 import { productUsp, checkicon } from './ProductUsp.css'
 
 export function ProductUsp({ children }: PropsWithChildren) {

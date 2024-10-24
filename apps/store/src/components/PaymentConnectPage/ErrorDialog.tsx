@@ -1,6 +1,8 @@
 import { useTranslation } from 'next-i18next'
-import { Button, Text, WarningTriangleIcon, theme } from 'ui'
-import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
+import { Button } from 'ui/src/components/Button/Button'
+import { FullscreenDialog } from 'ui/src/components/Dialog/FullscreenDialog'
+import { WarningTriangleIcon } from 'ui/src/icons/WarningTriangleIcon'
+import { Text, theme } from 'ui'
 import { SpaceFlex } from '@/components/SpaceFlex/SpaceFlex'
 
 type Props = {

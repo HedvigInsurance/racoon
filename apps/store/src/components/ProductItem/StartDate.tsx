@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
-import { InfoIcon, Text, theme } from 'ui'
+import { InfoIcon } from 'ui/src/icons/InfoIcon'
+import { Text, theme } from 'ui'
 import { Tooltip } from '@/components/Tooltip/Tooltip'
 
 type Props = {

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { type ComponentProps } from 'react'
-import { CrossIcon, InfoIcon } from '../../icons'
+import { CrossIcon } from '../../icons/CrossIcon'
+import { InfoIcon } from '../../icons/InfoIcon'
 import { tokens } from '../../theme'
 import { Badge } from '../Badge/Badge'
 import { BasePillow } from '../BasePillow/BasePillow'

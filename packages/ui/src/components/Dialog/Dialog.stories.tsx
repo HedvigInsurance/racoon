@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Button } from '../Button/Button'
 import { Heading } from '../Heading/Heading'
 import { Space } from '../Space'
-import * as Dialog from './Dialog'
+import { Dialog } from './Dialog'
 
 export default {
   title: 'Dialog',

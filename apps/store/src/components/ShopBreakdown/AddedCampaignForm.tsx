@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import type { FormEventHandler } from 'react'
-import { CrossIconSmall, Text, theme } from 'ui'
+import { CrossIconSmall } from 'ui/src/icons/CrossIconSmall'
+import { Text, theme } from 'ui'
 
 type Props = {
   onRemove: () => void

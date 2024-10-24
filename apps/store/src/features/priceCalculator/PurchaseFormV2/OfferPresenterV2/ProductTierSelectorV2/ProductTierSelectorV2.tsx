@@ -2,20 +2,11 @@ import { assignInlineVars } from '@vanilla-extract/dynamic'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { badgeFontColor } from 'ui/src/components/Badge/Badge.css'
-import * as Dialog from 'ui/src/components/Dialog/Dialog'
+import { Button } from 'ui/src/components/Button/Button'
+import { Dialog } from 'ui/src/components/Dialog/Dialog'
+import { PlusIcon } from 'ui/src/icons/PlusIcon'
 import { sprinkles } from 'ui/src/theme/sprinkles.css'
-import {
-  Badge,
-  Button,
-  framerTransitions,
-  Heading,
-  PlusIcon,
-  Text,
-  theme,
-  tokens,
-  xStack,
-  yStack,
-} from 'ui'
+import { Badge, framerTransitions, Heading, Text, theme, tokens, xStack, yStack } from 'ui'
 import type { ProductOfferFragment } from '@/services/graphql/generated'
 import { useFormatter } from '@/utils/useFormatter'
 import * as CardRadioGroup from '../CardRadioGroup/CardRadioGroup'
@@ -40,7 +31,7 @@ export function ProductTierSelectorV2({ offers, selectedOffer, onValueChange }: 
           {offers.map((offer, index) => (
             <CardRadioGroup.Item
               // NOTE: We want to avoid remounting selected deductible element when changing tiers
-              // to avoid extra animation, hence index key
+              // to avoid extra animation, hence index as key
               key={index}
               value={offer.id}
               isSelected={selectedOffer.id === offer.id}

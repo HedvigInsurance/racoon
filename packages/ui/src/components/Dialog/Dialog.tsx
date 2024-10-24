@@ -12,7 +12,7 @@ type ContentProps = {
   centerContent?: boolean
 }
 
-export const Content = (props: ContentProps) => {
+const Content = (props: ContentProps) => {
   const handleClose = () => props.onClose?.()
 
   return (
@@ -45,10 +45,7 @@ const Overlay = forwardRef<HTMLDivElement, OverlayProps>(({ frosted }, ref) => {
 })
 Overlay.displayName = 'Overlay'
 
-export const Root = ({
-  onOpenChange,
-  ...forwardedProps
-}: ComponentProps<typeof DialogPrimitive.Root>) => {
+const Root = ({ onOpenChange, ...forwardedProps }: ComponentProps<typeof DialogPrimitive.Root>) => {
   // Optimization: dialogs can get quite large, so it's good idea to treat opening/closing as transition
   const handleOpenChange = useCallback(
     (newValue: boolean) => {
@@ -63,13 +60,18 @@ export const Root = ({
 
 export const Trigger = DialogPrimitive.Trigger
 export const Title = DialogPrimitive.Title
-export const Description = DialogPrimitive.Description
 export const Close = DialogPrimitive.Close
 
 // Example of exposing base component for further styling by either vanilla-extract or emotion
-export const Window = ({
-  className,
-  ...forwardedProps
-}: { className?: string } & PropsWithChildren) => (
+const Window = ({ className, ...forwardedProps }: { className?: string } & PropsWithChildren) => (
   <div className={clsx(dialogWindow, className)} {...forwardedProps} />
 )
+
+export const Dialog = {
+  Content,
+  Close: DialogPrimitive.Close,
+  Root,
+  Title: DialogPrimitive.Title,
+  Trigger: DialogPrimitive.Trigger,
+  Window,
+}

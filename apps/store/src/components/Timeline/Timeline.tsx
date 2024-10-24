@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { theme } from 'ui'
+import { theme } from 'ui/src/theme/theme'
 import { CheckCircleIcon } from './CheckCircleIcon'
 
 const ICON_SIZE = '2.5rem'

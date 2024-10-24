@@ -3,17 +3,12 @@ import { useAtomValue } from 'jotai'
 import { useTranslation } from 'next-i18next'
 import type { FormEventHandler } from 'react'
 import { useState } from 'react'
-import {
-  Button,
-  Heading,
-  Space,
-  Dialog,
-  Text,
-  theme,
-  PlusIcon,
-  CrossIcon,
-  CrossIconSmall,
-} from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
+import { Dialog } from 'ui/src/components/Dialog/Dialog'
+import { CrossIcon } from 'ui/src/icons/CrossIcon'
+import { CrossIconSmall } from 'ui/src/icons/CrossIconSmall'
+import { PlusIcon } from 'ui/src/icons/PlusIcon'
+import { Heading, Space, Text, theme } from 'ui'
 import { InputRadio } from '@/components/InputRadio/InputRadio'
 import { InputSelect } from '@/components/InputSelect/InputSelect'
 import { useUpdatePriceIntent } from '@/components/PriceCalculator/useUpdatePriceIntent'

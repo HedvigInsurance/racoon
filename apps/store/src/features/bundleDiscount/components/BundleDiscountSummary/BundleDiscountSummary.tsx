@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
-import { Alert, CampaignIcon } from 'ui'
+import { CampaignIcon } from 'ui/src/icons/CampaignIcon'
+import { Alert } from 'ui'
 
 type Props = {
   children: ReactNode

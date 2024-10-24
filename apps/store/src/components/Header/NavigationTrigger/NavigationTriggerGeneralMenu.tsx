@@ -1,6 +1,7 @@
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
 import clsx from 'clsx'
-import { PlusIcon, MinusIcon } from 'ui'
+import { MinusIcon } from 'ui/src/icons/MinusIcon'
+import { PlusIcon } from 'ui/src/icons/PlusIcon'
 import { HamburgerCloseIcon, HamburgerOpenIcon } from '../HamburgerIcon/HamburgerIcon'
 import {
   navigationTrigger,

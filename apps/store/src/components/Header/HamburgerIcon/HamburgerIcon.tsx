@@ -1,5 +1,5 @@
 import { type ComponentPropsWithoutRef } from 'react'
-import { tokens } from 'ui'
+import { tokens } from 'ui/src/theme/theme.css'
 
 export const HamburgerOpenIcon = ({ className }: ComponentPropsWithoutRef<'svg'>) => {
   return (

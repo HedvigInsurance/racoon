@@ -1,5 +1,7 @@
 import type { ComponentProps } from 'react'
-import { InfoIcon, WarningTriangleIcon, Alert } from 'ui'
+import { InfoIcon } from 'ui/src/icons/InfoIcon'
+import { WarningTriangleIcon } from 'ui/src/icons/WarningTriangleIcon'
+import { Alert } from 'ui'
 
 type Props = Omit<ComponentProps<typeof Alert.Root>, 'variant'>
 

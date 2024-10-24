@@ -1,5 +1,8 @@
 import { useTranslation } from 'next-i18next'
-import { Button, CheckIcon, Dialog, Heading, Text, xStack, yStack } from 'ui'
+import { Button } from 'ui/src/components/Button/Button'
+import { Dialog } from 'ui/src/components/Dialog/Dialog'
+import { CheckIcon } from 'ui/src/icons/CheckIcon'
+import { Heading, Text, xStack, yStack } from 'ui'
 
 type Props = {
   company: string

@@ -1,6 +1,7 @@
 import { atom, useAtom, useAtomValue } from 'jotai'
 import { useTranslation } from 'next-i18next'
-import { CampaignIcon, sprinkles, theme, ToggleCard } from 'ui'
+import { CampaignIcon } from 'ui/src/icons/CampaignIcon'
+import { sprinkles, theme, ToggleCard } from 'ui'
 
 export const ExtensionOfferToggle = () => {
   const { t } = useTranslation('carDealership')
