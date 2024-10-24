@@ -75,6 +75,8 @@ export const OfferPresenterV2 = memo(() => {
     // Make sure to always go to the last section of the form when editing
     const lastFormSectionId = form.sections[form.sections.length - 1].id
     setActiveSectionId(lastFormSectionId)
+    // Make sure the user is viewing the start of the form when editing
+    window.scrollTo({ top: 0, behavior: 'instant' })
   }
 
   const offerRef = useRef(null)

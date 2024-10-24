@@ -22,11 +22,6 @@ export function StickyProductHeader({ children }: Props) {
     setScrolledPast(latest > HERO_TRESHOLD)
   })
 
-  // Scroll to top when going to next step to avoid sticky header overlap
-  if (isCondensedProductHero) {
-    window.scrollTo({ top: 0, behavior: 'instant' })
-  }
-
   return (
     <div className={stickyProductHeader}>
       <div
