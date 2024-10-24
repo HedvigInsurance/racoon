@@ -1,6 +1,6 @@
 import { style, styleVariants } from '@vanilla-extract/css'
 import { badgeFontColor } from 'ui/src/components/Badge/Badge.css'
-import { pillowSize, responsiveStyles, tokens, yStack } from 'ui'
+import { pillowSize, responsiveStyles, sprinkles, tokens, yStack } from 'ui'
 import { HEADER_HEIGHT_DESKTOP } from '@/components/Header/Header.css'
 
 export const productHeroWrapper = styleVariants({
@@ -75,3 +75,11 @@ export const subTypeBadge = style({
     },
   }),
 })
+
+export const mobileCloseButton = style([
+  sprinkles({
+    marginBottom: 'auto',
+    marginLeft: 'auto',
+  }),
+  { width: tokens.space.xl, height: tokens.space.xl },
+])

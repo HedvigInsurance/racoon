@@ -3,13 +3,15 @@ import clsx from 'clsx'
 import type { Variants } from 'framer-motion'
 import { AnimatePresence, motion } from 'framer-motion'
 import { type ReactNode } from 'react'
-import { Badge, framerTransitions, Heading, sprinkles, Text } from 'ui'
+import { Badge, CrossIcon, framerTransitions, Heading, sprinkles, Text } from 'ui'
+import { ButtonNextLink } from '@/components/ButtonNextLink'
 import { Pillow } from '@/components/Pillow/Pillow'
 import { useProductData } from '@/components/ProductData/ProductDataProvider'
 import { useIsPriceIntentStateReady } from '@/components/ProductPage/PurchaseForm/priceIntentAtoms'
 import { useSelectedOffer } from '@/components/ProductPage/PurchaseForm/useSelectedOffer'
 import { useFormatter } from '@/utils/useFormatter'
 import {
+  mobileCloseButton,
   pillow,
   pillowWrapper,
   priceLabel,
@@ -73,6 +75,13 @@ export function ProductHeroV2() {
             <>
               <Pillow size="small" {...productData.pillowImage} priority={true} />
               <div>{productHeading}</div>
+              <ButtonNextLink
+                className={mobileCloseButton}
+                href={productData.pageLink}
+                variant="secondary"
+                Icon={<CrossIcon size="1.5rem" />}
+                size="icon"
+              />
             </>
           }
         </StickyProductHeader>
