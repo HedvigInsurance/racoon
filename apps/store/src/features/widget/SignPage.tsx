@@ -6,11 +6,10 @@ import { StoryblokComponent } from '@storyblok/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { type FormEvent, type MouseEvent, type PropsWithChildren, useMemo, useState } from 'react'
+import { type FormEvent, type MouseEvent, type PropsWithChildren, useMemo } from 'react'
 import { BankIdIcon, Button, CheckIcon, Heading, Divider, mq, Space, Text, theme } from 'ui'
 import { FormElement } from '@/app/[locale]/checkout/CheckoutPage.constants'
 import { useHandleSubmitCheckout } from '@/app/[locale]/checkout/hooks/useHandleSubmitCheckout'
-import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import * as GridLayout from '@/components/GridLayout/GridLayout'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { QuickAddOfferContainer } from '@/components/QuickAdd/QuickAddOfferContainer'
@@ -61,7 +60,6 @@ export const SignPage = (props: Props) => {
   }
 
   const [fetchCurrentMember] = useCurrentMemberLazyQuery()
-  const [showSignError, setShowSignError] = useState(false)
   const tracking = useTracking()
   const router = useRouter()
   const [handleSubmitSign, { loading, userError }] = useHandleSubmitCheckout({
@@ -100,7 +98,6 @@ export const SignPage = (props: Props) => {
     },
     onError() {
       datadogLogs.logger.warn('Widget Sign | Sign Error', { shopSessionId: props.shopSession.id })
-      setShowSignError(true)
     },
   })
 
@@ -298,23 +295,6 @@ export const SignPage = (props: Props) => {
           ))}
         </div>
       </Wrapper>
-
-      <FullscreenDialog.Root open={showSignError} onOpenChange={setShowSignError}>
-        <FullscreenDialog.Modal
-          center={true}
-          Footer={
-            <FullscreenDialog.Close asChild>
-              <Button type="button" variant="primary">
-                {t('checkout:ERROR_GENERAL_DIALOG_ACTION_TRY_AGAIN')}
-              </Button>
-            </FullscreenDialog.Close>
-          }
-        >
-          <ErrorPrompt size={{ _: 'md', lg: 'lg' }} align="center">
-            {t('checkout:ERROR_GENERAL_DIALOG_PROMPT')}
-          </ErrorPrompt>
-        </FullscreenDialog.Modal>
-      </FullscreenDialog.Root>
     </>
   )
 }
@@ -349,12 +329,6 @@ const StyledSignButtonContent = styled.div({
   justifyContent: 'center',
   gap: theme.space.sm,
   width: '100%',
-})
-
-const ErrorPrompt = styled(Text)({
-  maxWidth: '42rem',
-  marginLeft: 'auto',
-  marginRight: 'auto',
 })
 
 const UspWrapper = styled.div({
