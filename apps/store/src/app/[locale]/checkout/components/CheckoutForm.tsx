@@ -2,11 +2,9 @@
 
 import { useApolloClient } from '@apollo/client'
 import { useTranslation } from 'next-i18next'
-import { useState } from 'react'
-import { Text, Button, BankIdIcon, yStack, visuallyHidden } from 'ui'
+import { Text, Button, BankIdIcon, yStack } from 'ui'
 import { useHandleSubmitCheckout } from '@/app/[locale]/checkout/hooks/useHandleSubmitCheckout'
 import { useAsyncRouterPush } from '@/appComponents/useAsyncRouterPush'
-import * as FullscreenDialog from '@/components/FullscreenDialog/FullscreenDialog'
 import { PersonalNumberField } from '@/components/PersonalNumberField/PersonalNumberField'
 import { TextField } from '@/components/TextField/TextField'
 import { SIGN_FORM_ID } from '@/constants/sign.constants'
@@ -20,9 +18,8 @@ import {
 import { useShopSession } from '@/services/shopSession/ShopSessionContext'
 import { useTracking } from '@/services/Tracking/useTracking'
 import { useRoutingLocale } from '@/utils/l10n/useRoutingLocale'
-import { CheckoutStep, FormElement } from '../../CheckoutPage.constants'
-import { getCheckoutStepLink } from '../../CheckoutPage.helpers'
-import { errorPrompt } from './CheckoutForm.css'
+import { CheckoutStep, FormElement } from '../CheckoutPage.constants'
+import { getCheckoutStepLink } from '../CheckoutPage.helpers'
 
 type CheckoutFormProps = {
   shopSessionId: string
@@ -48,8 +45,6 @@ export function CheckoutForm({
   const push = useAsyncRouterPush()
   const apolloClient = useApolloClient()
 
-  const [shouldShowSignError, setShouldShowSignError] = useState(false)
-
   const [handleSubmitSign, { loading, userError }] = useHandleSubmitCheckout({
     shopSessionId,
     ssn,
@@ -68,9 +63,6 @@ export function CheckoutForm({
 
       const nextCheckoutStep = getNextCheckoutStep(data.currentMember.paymentInformation.status)
       await push(getCheckoutStepLink({ locale, step: nextCheckoutStep, shopSessionId }))
-    },
-    onError() {
-      setShouldShowSignError(true)
     },
   })
 
@@ -115,25 +107,6 @@ export function CheckoutForm({
           ) : null}
         </div>
       </div>
-      <FullscreenDialog.Root open={shouldShowSignError} onOpenChange={setShouldShowSignError}>
-        <FullscreenDialog.Modal
-          center={true}
-          Footer={
-            <FullscreenDialog.Close asChild>
-              <Button type="button" variant="primary">
-                {t('ERROR_GENERAL_DIALOG_ACTION_TRY_AGAIN')}
-              </Button>
-            </FullscreenDialog.Close>
-          }
-        >
-          <FullscreenDialog.Title className={visuallyHidden}>
-            {t('GENERAL_ERROR_DIALOG_TITLE', { ns: 'common' })}
-          </FullscreenDialog.Title>
-          <Text className={errorPrompt} size={{ _: 'md', lg: 'lg' }} align="center">
-            {t('ERROR_GENERAL_DIALOG_PROMPT')}
-          </Text>
-        </FullscreenDialog.Modal>
-      </FullscreenDialog.Root>
     </form>
   )
 }

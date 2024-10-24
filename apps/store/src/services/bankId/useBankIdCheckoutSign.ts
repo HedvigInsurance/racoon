@@ -114,11 +114,11 @@ const useBankIdCheckoutSignApi = ({ dispatch }: Options) => {
               }
             },
             onError(error) {
-              signingResult.stopPolling()
               if (error.networkError) {
                 bankIdLogger.warn('SigningQuery | Network error', { error: error.message })
-                subscriber.error(t('ERROR_GENERAL_DIALOG_PROMPT'))
+                // TODO: better error handling for network errors. E.g: show a offline message to the user
               } else {
+                signingResult.stopPolling()
                 bankIdLogger.warn('SigningQuery | Failed to sign', { error: error.message })
                 subscriber.error(error.message)
               }

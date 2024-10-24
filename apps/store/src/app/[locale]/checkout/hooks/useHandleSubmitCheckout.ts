@@ -11,8 +11,8 @@ import { FormElement } from '../CheckoutPage.constants'
 type Options = {
   shopSessionId: string
   ssn: string
-  onError: () => void
   onSuccess: () => void
+  onError?: () => void
 }
 
 export function useHandleSubmitCheckout(options: Options) {
