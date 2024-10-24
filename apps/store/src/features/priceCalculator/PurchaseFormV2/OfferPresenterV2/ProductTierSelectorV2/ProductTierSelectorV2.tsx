@@ -31,7 +31,7 @@ export function ProductTierSelectorV2({ offers, selectedOffer, onValueChange }: 
           {offers.map((offer, index) => (
             <CardRadioGroup.Item
               // NOTE: We want to avoid remounting selected deductible element when changing tiers
-              // to avoid extra animation, hence index key
+              // to avoid extra animation, hence index as key
               key={index}
               value={offer.id}
               isSelected={selectedOffer.id === offer.id}

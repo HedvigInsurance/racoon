@@ -1,7 +1,7 @@
 'use client'
 import styled from '@emotion/styled'
 import { storyblokEditable } from '@storyblok/react'
-import { mq } from 'ui'
+import { mq } from 'ui/src/theme/media-query'
 import type { SbBaseBlockProps } from '@/services/storyblok/storyblok'
 
 type Props = {

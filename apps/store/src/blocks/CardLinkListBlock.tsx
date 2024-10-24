@@ -1,6 +1,6 @@
 'use client'
 import styled from '@emotion/styled'
-import { mq } from 'ui'
+import { mq } from 'ui/src/theme/media-query'
 import type { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import type { CardLinkBlockProps } from './CardLinkBlock'
 import { CardLinkBlock, Grid } from './CardLinkBlock'

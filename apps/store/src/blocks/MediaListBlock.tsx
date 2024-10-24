@@ -1,7 +1,7 @@
 'use client'
 import styled from '@emotion/styled'
 import { StoryblokComponent, storyblokEditable } from '@storyblok/react'
-import { mq } from 'ui'
+import { mq } from 'ui/src/theme/media-query'
 import { Slideshow } from '@/components/Slideshow/Slideshow'
 import type { ExpectedBlockType, SbBaseBlockProps } from '@/services/storyblok/storyblok'
 import type { ImageBlockProps } from './ImageBlock'
